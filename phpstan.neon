@@ -1,0 +1,14 @@
+includes:
+     - vendor/larastan/larastan/extension.neon
+
+parameters:
+    universalObjectCratesClasses:
+        - Illuminate\Http\Resources\Json\JsonResource
+    paths:
+        - app/
+
+    level: 9
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
+    inferPrivatePropertyTypeFromConstructor: true

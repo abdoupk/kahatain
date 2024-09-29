@@ -1,0 +1,134 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "ext-intl": "*",
+        "ext-zip": "*",
+        "calebporzio/sushi": "^2.5",
+        "guzzlehttp/guzzle": "^7.8",
+        "inertiajs/inertia-laravel": "^1.0",
+        "laravel/breeze": "^2.0",
+        "laravel/fortify": "^1.21",
+        "laravel/framework": "^11.6",
+        "laravel/octane": "^2.5",
+        "laravel/prompts": "^0.1.21",
+        "laravel/pulse": "^1.1",
+        "laravel/reverb": "@beta",
+        "laravel/sanctum": "^4.0",
+        "laravel/scout": "^10.8",
+        "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
+        "meilisearch/meilisearch-php": "^1.7",
+        "predis/predis": "^2.2",
+        "simshaun/recurr": "^5.0",
+        "spatie/browsershot": "^4.1",
+        "spatie/laravel-permission": "^6.7",
+        "spiral/roadrunner-cli": "^2.6.0",
+        "spiral/roadrunner-http": "^3.3.0",
+        "stancl/tenancy": "^3.8",
+        "tightenco/ziggy": "^2.1"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
+        "barryvdh/laravel-ide-helper": "^3.0",
+        "enlightn/enlightn": "^2.10",
+        "fakerphp/faker": "^1.23",
+        "kitloong/laravel-migrations-generator": "^7.0",
+        "larastan/larastan": "^2.9",
+        "laravel/dusk": "^8.2",
+        "laravel/pint": "^1.15",
+        "laravel/sail": "^1.29",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.1",
+        "nunomaduro/phpinsights": "^2.11",
+        "pestphp/pest": "^2.35",
+        "pestphp/pest-plugin-faker": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.4",
+        "pestphp/pest-plugin-stressless": "^2.2",
+        "spatie/laravel-ignition": "^2.6",
+        "spatie/laravel-ray": "^1.36",
+        "spatie/pest-plugin-route-testing": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "app/Helpers/families.php",
+            "app/Helpers/archive.php",
+            "app/Helpers/constants.php",
+            "app/Helpers/occasions.php",
+            "app/Helpers/statistics/families_statistics.php",
+            "app/Helpers/statistics/sponsors_statistics.php",
+            "app/Helpers/statistics/orphans_statistics.php",
+            "app/Helpers/statistics/financial_statistics.php",
+            "app/Helpers/dashboard.php",
+            "app/Helpers/exports.php",
+            "app/Helpers/members.php",
+            "app/Helpers/zones.php",
+            "app/Helpers/branches.php",
+            "app/Helpers/orphans.php",
+            "app/Helpers/inventory.php",
+            "app/Helpers/sponsors.php",
+            "app/Helpers/roles.php",
+            "app/Helpers/needs.php",
+            "app/Helpers/finances.php",
+            "app/Helpers/private-schools.php",
+            "app/Helpers/global.php"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse ./app --memory-limit=2G --level=9"
+        ],
+        "pint": [
+            "./vendor/bin/pint --config ./pint.json"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

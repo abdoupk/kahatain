@@ -1,0 +1,179 @@
+.tinker {
+    .top-nav {
+        animation: 0.4s intro-top-menu ease-in-out 0.2s;
+        animation-fill-mode: forwards;
+        & > ul {
+            & > li {
+                /* First level */
+                &:hover {
+                    position: relative;
+                    & > .top-menu {
+                        background: theme('colors.theme.1'/ 60%);
+                        &:before {
+                            content: '';
+                            display: block;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background-color: theme('colors.white' / 4%);
+                            border-radius: theme('borderRadius.full');
+                            position: absolute;
+                            z-index: -1;
+                            @media screen(xl) {
+                                background-color: theme('colors.white' / 10%);
+                                border-radius: theme('borderRadius.xl');
+                            }
+                        }
+                    }
+                    & > ul {
+                        display: block;
+                    }
+                }
+                & > ul {
+                    box-shadow: 0 3px 20px #0000000b;
+                    background-color: theme('colors.theme.1');
+                    display: none;
+                    width: theme('spacing.56');
+                    position: absolute;
+                    border-radius: theme('borderRadius.md');
+                    z-index: 20;
+                    padding-left: 0;
+                    padding-right: 0;
+                    margin-top: theme('spacing.1');
+                    &:before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        background-color: theme('colors.white' / 4%);
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        border-radius: theme('borderRadius.md');
+                        z-index: -1;
+                    }
+                    &:after {
+                        content: '';
+                        width: 100%;
+                        height: theme('spacing.1');
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        margin-top: calc(theme('spacing.1') * -1);
+                        cursor: pointer;
+                    }
+                    & > li {
+                        /* Second level */
+                        padding-left: theme('spacing.5');
+                        padding-right: theme('spacing.5');
+                        position: relative;
+                        &:hover {
+                            position: relative;
+                            & > ul {
+                                display: block;
+                            }
+                        }
+                        & > .top-menu {
+                            padding-left: 0;
+                            padding-right: 0;
+                            margin-right: 0;
+                        }
+                        & > ul {
+                            box-shadow: 0 3px 20px #0000000b;
+                            left: 100%;
+                            background-color: theme('colors.theme.1');
+                            display: none;
+                            border-radius: theme('borderRadius.md');
+                            margin-top: 0;
+                            margin-left: 0;
+                            top: 0;
+                            width: theme('spacing.56');
+                            position: absolute;
+                            z-index: 20;
+                            padding-left: 0;
+                            padding-right: 0;
+                            &:before {
+                                content: '';
+                                display: block;
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                background-color: theme('colors.white' / 4%);
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                border-radius: theme('borderRadius.md');
+                                z-index: -1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes intro-top-menu {
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes intro-menu-animation {
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.dark {
+    .tinker {
+        .top-nav {
+            & > ul {
+                & > li {
+                    /* First level */
+                    &:hover {
+                        & > .top-menu {
+                            &:not(.top-menu--active) {
+                                background-color: transparent;
+                                &:before {
+                                    background-color: theme('colors.darkmode.700');
+                                }
+                            }
+                        }
+                    }
+                    & > .top-menu {
+                        &.top-menu--active {
+                            background-color: theme('colors.darkmode.700');
+                            &:before {
+                                background-color: theme('colors.darkmode.700');
+                            }
+                        }
+                    }
+                    & > ul {
+                        background-color: theme('colors.darkmode.600');
+                        box-shadow: 0 3px 7px #0000001c;
+                        &:before {
+                            background-color: theme('colors.black' / 10%);
+                        }
+                        & > li {
+                            /* Second level */
+                            & > ul {
+                                background-color: theme('colors.darkmode.600');
+                                box-shadow: 0 3px 7px #0000001c;
+                                &:before {
+                                    background-color: theme('colors.black' / 10%);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

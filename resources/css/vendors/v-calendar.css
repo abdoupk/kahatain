@@ -1,0 +1,71 @@
+.vc-popover-content-wrapper {
+    z-index: 50 !important;
+}
+
+:dir(rtl) {
+    .vc-arrow,
+    .vc-nav-arrow {
+        transform: rotate(180deg) !important;
+    }
+}
+
+:root,
+.theme_2 {
+    .vc-primary {
+        --vc-accent-50: theme('colors.blue.50');
+        --vc-accent-100: theme('colors.blue.100');
+        --vc-accent-200: theme('colors.blue.200');
+        --vc-accent-300: theme('colors.blue.300');
+        --vc-accent-400: theme('colors.blue.400');
+        --vc-accent-500: theme('colors.blue.500');
+        --vc-accent-600: theme('colors.blue.600');
+        --vc-accent-700: theme('colors.blue.700');
+        --vc-accent-800: theme('colors.blue.800');
+        --vc-accent-900: theme('colors.blue.900');
+    }
+}
+
+.theme_1 {
+    .vc-primary {
+        --vc-accent-50: theme('colors.emerald.50');
+        --vc-accent-100: theme('colors.emerald.100');
+        --vc-accent-200: theme('colors.emerald.200');
+        --vc-accent-300: theme('colors.emerald.300');
+        --vc-accent-400: theme('colors.emerald.400');
+        --vc-accent-500: theme('colors.emerald.500');
+        --vc-accent-600: theme('colors.emerald.600');
+        --vc-accent-700: theme('colors.emerald.700');
+        --vc-accent-800: theme('colors.emerald.800');
+        --vc-accent-900: theme('colors.emerald.900');
+    }
+}
+
+.theme_3 {
+    .vc-primary {
+        --vc-accent-50: theme('colors.cyan.50');
+        --vc-accent-100: theme('colors.cyan.100');
+        --vc-accent-200: theme('colors.cyan.200');
+        --vc-accent-300: theme('colors.cyan.300');
+        --vc-accent-400: theme('colors.cyan.400');
+        --vc-accent-500: theme('colors.cyan.500');
+        --vc-accent-600: theme('colors.cyan.600');
+        --vc-accent-700: theme('colors.cyan.700');
+        --vc-accent-800: theme('colors.cyan.800');
+        --vc-accent-900: theme('colors.cyan.900');
+    }
+}
+
+.theme_4 {
+    .vc-primary {
+        --vc-accent-50: theme('colors.indigo.50');
+        --vc-accent-100: theme('colors.indigo.100');
+        --vc-accent-200: theme('colors.indigo.200');
+        --vc-accent-300: theme('colors.indigo.300');
+        --vc-accent-400: theme('colors.indigo.400');
+        --vc-accent-500: theme('colors.indigo.500');
+        --vc-accent-600: theme('colors.indigo.600');
+        --vc-accent-700: theme('colors.indigo.700');
+        --vc-accent-800: theme('colors.indigo.800');
+        --vc-accent-900: theme('colors.indigo.900');
+    }
+}

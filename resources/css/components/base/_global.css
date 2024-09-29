@@ -1,0 +1,49 @@
+html {
+    &.dark {
+        body {
+            color: theme('colors.slate.300');
+
+            *,
+            ::before,
+            ::after {
+                border-color: theme('colors.white' / 5%);
+            }
+        }
+    }
+
+    body {
+        letter-spacing: theme('letterSpacing.wide');
+        font-size: theme('fontSize.sm');
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: theme('fontFamily.public-sans');
+        color: theme('colors.slate.600');
+        line-height: theme('lineHeight.5');
+    }
+
+    :dir(rtl) {
+        select {
+            background-position: left 5px center; /* Change the px value here to change the distance */
+        }
+
+        .top-nav > ul > li > ul > li > ul {
+            right: 100% !important;
+        }
+
+        .dialog *:focus {
+            outline: none !important;
+        }
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
