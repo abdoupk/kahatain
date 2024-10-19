@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import type {
+import {
     ComingEventsType,
     FamiliesByBranchType,
     FamiliesByZoneType,
+    FamiliesForMapType,
     FinancialReportsType,
     GeneralReportsType,
     NeedsByCreatedDateType,
@@ -14,15 +15,19 @@ import type {
     RecentNeedsType,
     RecentTransactionsType
 } from '@/types/dashboard'
+import { PositionType } from '@/types/types'
 
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import TheFamiliesDistribution from '@/Pages/Tenant/dashboard/families-distribution/TheFamiliesDistribution.vue'
+
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { hasPermission } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const TheGeneralReports = defineAsyncComponent(
     () => import('@/Pages/Tenant/dashboard/general-reports/TheGeneralReports.vue')
@@ -64,7 +69,7 @@ defineOptions({
     layout: TheLayout
 })
 
-defineProps<{
+const props = defineProps<{
     reports: GeneralReportsType
     financialReports: FinancialReportsType
     recentActivities: RecentActivitiesType
@@ -78,6 +83,7 @@ defineProps<{
     needsByCreatedDate: NeedsByCreatedDateType
     familiesByZone: FamiliesByZoneType
     familiesByBranch: FamiliesByBranchType
+    familiesForMap: FamiliesForMapType[]
 }>()
 </script>
 
@@ -107,6 +113,10 @@ defineProps<{
                 <the-recent-families :recentFamilies></the-recent-families>
             </suspense>
             <!--End: Recent Families-->
+
+            <!--Begin: Families Distribution-->
+            <the-families-distribution :familiesForMap></the-families-distribution>
+            <!--End: Families Distribution-->
 
             <!--Begin: Overview-->
             <div class="col-span-12 mt-8 grid grid-cols-12 gap-6">

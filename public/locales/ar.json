@@ -180,6 +180,7 @@
     "hints.eid_al_adha": "تم فلتره النتائج لعرض فقط الأسر المستفيدة من الأضحية، يجب تحديث الأسر المراد عرضها هنا. ",
     "hints.babies_milk_and_diapers": "تم فلتره النتائج لعرض فقط الأسر المستفيدة من الحفاضات وحليب الأطفال، يجب تحديث الأسر المراد عرضها هنا. ",
     "hints.school_entry": "تم فلتره النتائج لعرض فقط الأيتام المستفيدين من الحقائب المدرسية، يجب تحديث الأيتام المراد عرضهم هنا. ",
+    "hints.select_location": "حدد موقع الأسرة على الخريطة",
     "housing.label.independent": "خاص (مستقل)",
     "housing.label.with_family": "مع العائلة",
     "housing.label.inheritance": "ميراث",
@@ -1172,5 +1173,6 @@
     "diploma": "الدبلوم",
     "father_name": "اسم الاب",
     "mother_name": "اسم ولقب الام",
-    "neighborhoods": "الأحياء"
+    "neighborhoods": "الأحياء",
+    "select_location": "حدد الموقع"
 }

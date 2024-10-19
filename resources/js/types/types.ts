@@ -883,3 +883,8 @@ export type SiteSettingsType = {
 }
 
 export type NeedStatusType = 'pending' | 'in_progress' | 'completed' | 'rejected'
+
+export type PositionType = {
+    lat: number
+    lng: number
+}

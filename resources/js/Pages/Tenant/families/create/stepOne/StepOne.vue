@@ -31,7 +31,7 @@ const location = defineModel('location')
 
 const fileNumber = defineModel('fileNumber')
 
-const showMapModalStatus = ref(false)
+const showMapModalStatus = ref(true)
 
 const showMapModal = () => {
     showMapModalStatus.value = true

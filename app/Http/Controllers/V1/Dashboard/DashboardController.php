@@ -28,6 +28,7 @@ class DashboardController extends Controller
             'orphansGroupByCreatedDate' => fn () => getOrphansGroupByCreatedDate(),
             'needsByNeedableType' => fn () => getNeedsGroupByType(),
             'needsByCreatedDate' => fn () => getNeedsGroupByCreatedDate(),
+            'familiesForMap' => fn () => $this->getFamiliesPosition(),
         ]);
     }
 
@@ -137,5 +138,11 @@ class DashboardController extends Controller
                     ],
                 ];
             })->toArray();
+    }
+
+    private function getFamiliesPosition(): array
+    {
+        return Family::select(['location', 'address', 'name'])
+            ->get()->toArray();
     }
 }

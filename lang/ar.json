@@ -428,5 +428,6 @@
     "diploma": "الدبلوم",
     "father_name": "اسم الاب",
     "mother_name": "اسم ولقب الام",
-    "neighborhoods": "الأحياء"
+    "neighborhoods": "الأحياء",
+    "select_location": "حدد الموقع"
 }

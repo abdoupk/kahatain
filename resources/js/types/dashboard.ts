@@ -1,4 +1,4 @@
-import type { Branch, NeedStatusType, Zone } from '@/types/types'
+import { Branch, NeedStatusType, PositionType, Zone } from '@/types/types'
 
 interface Stats {
     total: number
@@ -79,9 +79,16 @@ export type FamiliesByZoneType = {
     labels: string[]
     data: number[]
 }
+
 export type FamiliesByBranchType = {
     labels: string[]
     data: number[]
+}
+
+export type FamiliesForMapType = {
+    address: string
+    name: string
+    location: PositionType
 }
 export type OrphansGroupByCreatedDateType = {}
 export type NeedsByNeedableTypeType = {
