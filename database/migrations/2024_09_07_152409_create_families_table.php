@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,6 +16,7 @@ return new class extends Migration
             $table->uuid('zone_id')->index('idx_families_zone_id');
             $table->uuid('branch_id')->nullable();
             $table->text('address');
+            $table->json('location')->nullable();
             $table->text('file_number');
             $table->date('start_date');
             $table->float('income_rate')->nullable();
