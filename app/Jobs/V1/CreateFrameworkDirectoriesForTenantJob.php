@@ -13,9 +13,7 @@ class CreateFrameworkDirectoriesForTenantJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private readonly Tenant $tenant)
-    {
-    }
+    public function __construct(private readonly Tenant $tenant) {}
 
     public function handle(): void
     {

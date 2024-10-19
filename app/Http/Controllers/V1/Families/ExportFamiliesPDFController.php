@@ -20,6 +20,7 @@ class ExportFamiliesPDFController extends Controller implements HasMiddleware
             return getFamiliesForExport();
         });
     }
+
     public static function middleware()
     {
         return ['can:export_families'];

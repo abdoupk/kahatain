@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $demand
  * @property string $subject
@@ -35,6 +33,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read User|null $creator
  * @property-read Model|Eloquent $needable
  * @property-read Tenant $tenant
+ *
  * @method static NeedFactory factory($count = null, $state = [])
  * @method static Builder|Need newModelQuery()
  * @method static Builder|Need newQuery()
@@ -55,6 +54,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Need whereUpdatedAt($value)
  * @method static Builder|Need withTrashed()
  * @method static Builder|Need withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Need extends Model

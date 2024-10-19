@@ -16,8 +16,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property float $amount
  * @property string|null $description
@@ -33,6 +31,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read User $creator
  * @property-read User $receiver
  * @property-read Tenant $tenant
+ *
  * @method static FinanceFactory factory($count = null, $state = [])
  * @method static Builder|Finance newModelQuery()
  * @method static Builder|Finance newQuery()
@@ -52,6 +51,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Finance whereUpdatedAt($value)
  * @method static Builder|Finance withTrashed()
  * @method static Builder|Finance withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Finance extends Model

@@ -64,7 +64,7 @@ class SponsorsExport implements FromCollection, WithEvents, WithHeadings, WithMa
             $row->function,
             $row->health_status,
             $row->diploma,
-            __('sponsor_types.' . $row->sponsor_type),
+            __('sponsor_types.'.$row->sponsor_type),
             $row->ccp,
             $row->birth_certificate_number,
             __($row->gender),

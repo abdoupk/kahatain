@@ -19,8 +19,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string|null $first_name
  * @property string|null $last_name
@@ -54,6 +52,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $orphans_count
  * @property-read SponsorSponsorship|null $sponsorships
  * @property-read Tenant $tenant
+ *
  * @method static SponsorFactory factory($count = null, $state = [])
  * @method static Builder|Sponsor newModelQuery()
  * @method static Builder|Sponsor newQuery()
@@ -84,6 +83,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Sponsor whereUpdatedAt($value)
  * @method static Builder|Sponsor withTrashed()
  * @method static Builder|Sponsor withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Sponsor extends Model
@@ -148,12 +148,12 @@ class Sponsor extends Model
             'name' => $this->getName(),
             'phone_number' => $this->phone_number,
             'sponsor_type' => $this->sponsor_type,
-            'birth_date' => (int)strtotime($this->birth_date),
+            'birth_date' => (int) strtotime($this->birth_date),
             'father_name' => $this->father_name,
             'mother_name' => $this->mother_name,
             'birth_certificate_number' => $this->birth_certificate_number,
             'academic_level_id' => $this->academic_level_id,
-            'income' => (float)$this->incomes?->total_income,
+            'income' => (float) $this->incomes?->total_income,
             'orphans_count' => $this->orphans?->count(),
             'academic_level' => [
                 'id' => $this->academic_level_id,
@@ -178,7 +178,7 @@ class Sponsor extends Model
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function creator(): BelongsTo

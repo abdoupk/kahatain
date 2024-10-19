@@ -20,7 +20,7 @@ class UpdateSiteInfosRequest extends FormRequest
     {
         return [
             'association' => 'required|string|max:255',
-            'domain' => [new RegistrationDomainRequiredRule(), 'string', 'max:255'],
+            'domain' => [new RegistrationDomainRequiredRule, 'string', 'max:255'],
             'address' => 'nullable',
             'city_id' => 'nullable',
             'super_admin' => 'required|uuid|exists:users,id',

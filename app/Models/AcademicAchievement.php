@@ -14,8 +14,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property int|null $academic_level_id
  * @property int|null $academic_year
@@ -32,6 +30,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read AcademicLevel|null $academicLevel
  * @property-read Orphan $orphan
  * @property-read Tenant $tenant
+ *
  * @method static AcademicAchievementFactory factory($count = null, $state = [])
  * @method static Builder|AcademicAchievement newModelQuery()
  * @method static Builder|AcademicAchievement newQuery()
@@ -52,6 +51,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|AcademicAchievement whereUpdatedAt($value)
  * @method static Builder|AcademicAchievement withTrashed()
  * @method static Builder|AcademicAchievement withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class AcademicAchievement extends Model

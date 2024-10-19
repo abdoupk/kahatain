@@ -13,9 +13,7 @@ class CreateBranchNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Branch $branch, public User $user)
-    {
-    }
+    public function __construct(public Branch $branch, public User $user) {}
 
     public function via(): array
     {
@@ -38,7 +36,7 @@ class CreateBranchNotification extends Notification implements ShouldQueue
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.branches.index'
-                ) . '?show=' . $this->branch->id,
+                ).'?show='.$this->branch->id,
             ],
         ];
     }

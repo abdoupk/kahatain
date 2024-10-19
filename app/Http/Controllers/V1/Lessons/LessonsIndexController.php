@@ -16,6 +16,7 @@ class LessonsIndexController extends Controller implements HasMiddleware
             'events' => getLessons(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:list_lessons'];

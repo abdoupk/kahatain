@@ -99,7 +99,7 @@ function listOfOrphansBenefitingFromTheEidSuitSponsorship(): LengthAwarePaginato
 
 function listOfBabies(): LengthAwarePaginator
 {
-    return search(Baby::getModel(), 'AND orphan.birth_date > ' . strtotime('now - 2 years'))
+    return search(Baby::getModel(), 'AND orphan.birth_date > '.strtotime('now - 2 years'))
         ->query(
             fn ($query) => $query
                 ->whereHas('orphan.family')

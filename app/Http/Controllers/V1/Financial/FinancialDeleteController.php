@@ -16,6 +16,7 @@ class FinancialDeleteController extends Controller implements HasMiddleware
 
         return redirect()->back();
     }
+
     public static function middleware()
     {
         return ['can:delete_financial_transactions'];

@@ -10,8 +10,6 @@ use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
 /**
- *
- *
  * @property string $uuid
  * @property string $name
  * @property string $guard_name
@@ -23,6 +21,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
  * @property-read int|null $roles_count
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
+ *
  * @method static Builder|Permission newModelQuery()
  * @method static Builder|Permission newQuery()
  * @method static Builder|Permission permission($permissions, $without = false)
@@ -35,6 +34,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
  * @method static Builder|Permission whereUuid($value)
  * @method static Builder|Permission withoutPermission($permissions)
  * @method static Builder|Permission withoutRole($roles, $guard = null)
+ *
  * @mixin Eloquent
  */
 class Permission extends SpatiePermission

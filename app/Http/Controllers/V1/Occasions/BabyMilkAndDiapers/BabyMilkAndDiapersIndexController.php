@@ -24,6 +24,7 @@ class BabyMilkAndDiapersIndexController extends Controller implements HasMiddlew
                 ->first(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_occasions'];

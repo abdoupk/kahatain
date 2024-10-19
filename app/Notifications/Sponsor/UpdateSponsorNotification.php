@@ -13,9 +13,7 @@ class UpdateSponsorNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Sponsor $sponsor, public User $user)
-    {
-    }
+    public function __construct(public Sponsor $sponsor, public User $user) {}
 
     public function via(): array
     {

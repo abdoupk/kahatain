@@ -19,6 +19,7 @@ class ExportBabiesPDFController extends Controller implements HasMiddleware
             return getBabiesForExport();
         }, now()->translatedFormat('F Y'));
     }
+
     public static function middleware()
     {
         return ['can:export_occasions'];

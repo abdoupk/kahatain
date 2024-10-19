@@ -12,8 +12,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $first_name
  * @property string $last_name
@@ -26,6 +24,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Tenant $tenant
+ *
  * @method static SpouseFactory factory($count = null, $state = [])
  * @method static Builder|Spouse newModelQuery()
  * @method static Builder|Spouse newQuery()
@@ -41,6 +40,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Spouse whereLastName($value)
  * @method static Builder|Spouse whereTenantId($value)
  * @method static Builder|Spouse whereUpdatedAt($value)
+ *
  * @mixin Eloquent
  */
 class Spouse extends Model
@@ -59,7 +59,7 @@ class Spouse extends Model
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     protected function casts(): array

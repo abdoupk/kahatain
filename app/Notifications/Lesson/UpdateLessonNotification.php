@@ -13,9 +13,7 @@ class UpdateLessonNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Event $event, public User $user)
-    {
-    }
+    public function __construct(public Event $event, public User $user) {}
 
     public function via(): array
     {

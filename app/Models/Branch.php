@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $name
  * @property string $tenant_id
@@ -35,6 +33,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $families_count
  * @property-read User $president
  * @property-read Tenant $tenant
+ *
  * @method static BranchFactory factory($count = null, $state = [])
  * @method static Builder|Branch newModelQuery()
  * @method static Builder|Branch newQuery()
@@ -52,6 +51,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Branch whereUpdatedAt($value)
  * @method static Builder|Branch withTrashed()
  * @method static Builder|Branch withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Branch extends Model

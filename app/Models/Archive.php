@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $tenant_id
  * @property string $saved_by
@@ -39,6 +37,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $orphans_count
  * @property-read User $savedBy
  * @property-read Tenant $tenant
+ *
  * @method static ArchiveFactory factory($count = null, $state = [])
  * @method static Builder|Archive newModelQuery()
  * @method static Builder|Archive newQuery()
@@ -49,6 +48,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Archive whereSavedBy($value)
  * @method static Builder|Archive whereTenantId($value)
  * @method static Builder|Archive whereUpdatedAt($value)
+ *
  * @mixin Eloquent
  */
 class Archive extends Model

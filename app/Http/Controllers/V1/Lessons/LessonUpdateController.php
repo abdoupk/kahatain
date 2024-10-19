@@ -42,6 +42,7 @@ class LessonUpdateController extends Controller implements HasMiddleware
             dispatch(new LessonUpdatedJob($eventOccurrence->event, auth()->user()));
         }
     }
+
     public static function middleware()
     {
         return ['can:update_lessons'];

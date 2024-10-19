@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonResource::withoutWrapping();
 
-        Carbon::setLocale(config('app.locale') . '_DZ');
+        Carbon::setLocale(config('app.locale').'_DZ');
 
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
 
@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
 
         Str::macro('domain', function (?string $domain): string {
             if (is_null($domain)) {
-                return '.' . config('tenancy.central_domains')[0];
+                return '.'.config('tenancy.central_domains')[0];
             }
             $domain = preg_replace(
                 '/[^a-zA-Z\d\s-]|^\d+|([a-zA-Z-])\d+(?=[a-zA-Z-\s])/',
@@ -58,8 +58,8 @@ class AppServiceProvider extends ServiceProvider
             // Remove hyphens before digits
             $domain = preg_replace('/-(?=\d+)/', '', (string) $domain);
 
-            return trim((string) $domain, '-') .
-                '.' . config('tenancy.central_domains')[0];
+            return trim((string) $domain, '-').
+                '.'.config('tenancy.central_domains')[0];
         });
 
         Gate::before(static function ($user, $ability) {

@@ -15,6 +15,7 @@ class VocationalTrainingAchievementsStoreController extends Controller implement
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:update_orphans'];

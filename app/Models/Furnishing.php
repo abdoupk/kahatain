@@ -13,8 +13,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $television
  * @property string $refrigerator
@@ -33,6 +31,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $updated_at
  * @property-read Family $family
  * @property-read Tenant $tenant
+ *
  * @method static FurnishingFactory factory($count = null, $state = [])
  * @method static Builder|Furnishing newModelQuery()
  * @method static Builder|Furnishing newQuery()
@@ -53,6 +52,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Furnishing whereWardrobe($value)
  * @method static Builder|Furnishing whereWashingMachine($value)
  * @method static Builder|Furnishing whereWaterHeater($value)
+ *
  * @mixin Eloquent
  */
 class Furnishing extends Model

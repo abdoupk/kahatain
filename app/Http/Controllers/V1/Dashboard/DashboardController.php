@@ -44,7 +44,7 @@ class DashboardController extends Controller
                 'formatted_date' => $notification->created_at->translatedFormat('H:i A'),
                 'date' => $notification->created_at,
                 'message' => trans_choice(
-                    'notifications.' . $notification->type,
+                    'notifications.'.$notification->type,
                     $notification->data['user']['gender'] === 'male' ? 1 : 0,
                     $notification->data['data']
                 ),

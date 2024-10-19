@@ -13,9 +13,7 @@ class UpdateNeedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Need $need, public User $user)
-    {
-    }
+    public function __construct(public Need $need, public User $user) {}
 
     public function via(): array
     {
@@ -39,7 +37,7 @@ class UpdateNeedNotification extends Notification implements ShouldQueue
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.needs.index'
-                ) . '?show=' . $this->need->id,
+                ).'?show='.$this->need->id,
             ],
         ];
     }

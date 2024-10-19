@@ -29,6 +29,7 @@ class ArchiveDetailsSchoolEntryController extends Controller implements HasMiddl
             'params' => getParams(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_archive'];

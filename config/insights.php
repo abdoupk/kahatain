@@ -175,7 +175,7 @@ return [
         SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class => [
             'exclude' => [
                 'app/Models',
-                'app\Providers\TenancyServiceProvider.php'
+                'app\Providers\TenancyServiceProvider.php',
             ],
         ],
     ],

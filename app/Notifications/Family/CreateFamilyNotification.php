@@ -13,9 +13,7 @@ class CreateFamilyNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Family $family, public User $user)
-    {
-    }
+    public function __construct(public Family $family, public User $user) {}
 
     public function via(): array
     {

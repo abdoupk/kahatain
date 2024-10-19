@@ -15,6 +15,7 @@ class ZoneForceDeleteController extends Controller implements HasMiddleware
 
         return response('', 204);
     }
+
     public static function middleware()
     {
         return ['can:destroy_trash'];

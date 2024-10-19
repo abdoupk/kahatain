@@ -40,6 +40,10 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
     zone_id: '',
     inspectors_members: [],
     address: '',
+    location: {
+        lat: null,
+        lng: null
+    },
     start_date: new Date(),
     sponsor: {
         first_name: '',

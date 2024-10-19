@@ -16,7 +16,7 @@ class ExportFamiliesRamadanBasketXlsxController extends Controller
      */
     public function __invoke(): BinaryFileResponse
     {
-        return Excel::download(new FamiliesRamadanBasketIndexExport(), 'exports.ramadan_basket_'.now()->year.'.xlsx');
+        return Excel::download(new FamiliesRamadanBasketIndexExport, 'exports.ramadan_basket_'.now()->year.'.xlsx');
     }
 
     public static function middleware()

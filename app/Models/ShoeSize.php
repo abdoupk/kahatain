@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use Sushi\Sushi;
 
 /**
- *
- *
  * @property int $id
  * @property float|null $label
+ *
  * @method static Builder|ShoeSize newModelQuery()
  * @method static Builder|ShoeSize newQuery()
  * @method static Builder|ShoeSize query()
  * @method static Builder|ShoeSize whereId($value)
  * @method static Builder|ShoeSize whereLabel($value)
+ *
  * @mixin Eloquent
  */
 class ShoeSize extends Model

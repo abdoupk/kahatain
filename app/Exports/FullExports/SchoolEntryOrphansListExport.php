@@ -8,9 +8,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class SchoolEntryOrphansListExport implements WithEvents, WithMultipleSheets
 {
-    public function __construct(public array $years)
-    {
-    }
+    public function __construct(public array $years) {}
 
     public function registerEvents(): array
     {

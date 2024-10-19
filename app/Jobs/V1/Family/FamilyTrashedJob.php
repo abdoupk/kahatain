@@ -16,9 +16,7 @@ class FamilyTrashedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public Family $family, public User $user)
-    {
-    }
+    public function __construct(public Family $family, public User $user) {}
 
     public function handle(): void
     {

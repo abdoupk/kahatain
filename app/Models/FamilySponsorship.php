@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $family_id
  * @property string|null $monthly_allowance
@@ -34,6 +32,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, Orphan> $orphans
  * @property-read int|null $orphans_count
  * @property-read Tenant $tenant
+ *
  * @method static FamilySponsorshipFactory factory($count = null, $state = [])
  * @method static Builder|FamilySponsorship newModelQuery()
  * @method static Builder|FamilySponsorship newQuery()
@@ -52,6 +51,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|FamilySponsorship whereZakat($value)
  * @method static Builder|FamilySponsorship withTrashed()
  * @method static Builder|FamilySponsorship withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class FamilySponsorship extends Model
@@ -116,7 +116,7 @@ class FamilySponsorship extends Model
                     'name' => $this->family->branch->name,
                 ],
                 'orphans_count' => $this->family->orphans->count(),
-                'income_rate' => (float)$this->family->income_rate,
+                'income_rate' => (float) $this->family->income_rate,
                 'total_income' => $this->family->total_income,
             ],
             'sponsor' => [

@@ -32,6 +32,7 @@ class ArchiveDetailsEidSuitController extends Controller implements HasMiddlewar
             'params' => getParams(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_archive'];

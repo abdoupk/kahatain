@@ -12,13 +12,14 @@ class ExportFamiliesMonthlyBasketXlsxController extends Controller implements Ha
     public function __invoke()
     {
         return Excel::download(
-            new FamiliesMonthlyBasketIndexExport(),
+            new FamiliesMonthlyBasketIndexExport,
             __(
                 'exports.monthly_basket',
                 ['date' => now()->translatedFormat('F Y')]
-            ) . '.xlsx'
+            ).'.xlsx'
         );
     }
+
     public static function middleware()
     {
         return ['can:export_occasions'];

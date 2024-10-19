@@ -14,6 +14,7 @@ class BranchForceDeleteController extends Controller implements HasMiddleware
 
         return response('', 204);
     }
+
     public static function middleware()
     {
         return [

@@ -15,8 +15,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $sponsor_id
  * @property string|null $medical_sponsorship
@@ -29,6 +27,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property string|null $updated_at
  * @property-read Sponsor $sponsor
  * @property-read Tenant $tenant
+ *
  * @method static SponsorSponsorshipFactory factory($count = null, $state = [])
  * @method static Builder|SponsorSponsorship newModelQuery()
  * @method static Builder|SponsorSponsorship newQuery()
@@ -46,6 +45,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|SponsorSponsorship whereUpdatedAt($value)
  * @method static Builder|SponsorSponsorship withTrashed()
  * @method static Builder|SponsorSponsorship withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class SponsorSponsorship extends Model

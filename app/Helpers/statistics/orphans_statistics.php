@@ -9,7 +9,7 @@ function getOrphansByFamilyStatus(): array
 
     return [
         'labels' => $orphans->pluck('family_status')->map(function (string $familyStatus) {
-            return __('family_statuses.' . $familyStatus);
+            return __('family_statuses.'.$familyStatus);
         })->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];
@@ -125,8 +125,10 @@ function getByPantsAndShirtSize(): array
         ->groupBy('shirt_size')
         ->get()
         ->mapWithKeys(function ($item) {
-            if ($item->shirtSize?->label)
+            if ($item->shirtSize?->label) {
                 return [$item->shirtSize->label => $item->total];
+            }
+
             return [];
         });
 
@@ -135,8 +137,10 @@ function getByPantsAndShirtSize(): array
         ->groupBy('pants_size')
         ->get()
         ->mapWithKeys(function ($item) {
-            if ($item->pantsSize?->label)
+            if ($item->pantsSize?->label) {
                 return [$item->pantsSize->label => $item->total];
+            }
+
             return [];
         });
 
@@ -223,7 +227,7 @@ function getOrphansGroupHealthStatus(): array
 
     return [
         'labels' => $orphans->pluck('is_handicapped')
-            ->map(fn($is_handicapped) => $is_handicapped
+            ->map(fn ($is_handicapped) => $is_handicapped
                 ? __('statistics.handicapped')
                 : __('statistics.healthy'))->toArray(),
         'data' => $orphans->pluck('total')->toArray(),

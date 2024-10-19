@@ -71,6 +71,7 @@ function calculateOrphanIncomes(Orphan $orphan): float
     if ($orphan->gender === 'male') {
         return calculateContributionsForMaleOrphan($orphan, $calculation);
     }
+
     return calculateContributionsForFemaleOrphan($orphan, $calculation);
 }
 
@@ -125,9 +126,11 @@ function calculateOrphanWeights(Orphan $orphan, array $orphanWeights): float
     if ($orphan->birth_date->age < 18) {
         return calculateWeightForOrphanBelow18($orphan, $orphanWeights);
     }
+
     if ($orphan->gender === 'male') {
         return calculateWeightForOrphanMaleOlderThan18($orphan, $orphanWeights);
     }
+
     return calculateWeightForOrphanFemaleOlderThan18($orphan, $orphanWeights);
 }
 
@@ -187,6 +190,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
             default => 1
         };
     }
+
     if ($orphan->birth_date->age < 2) {
         return $weights['lt_18']['during_academic_season']['baby'];
     }
@@ -237,6 +241,7 @@ function calculateContributionsForSponsor(Sponsor $sponsor): float
                 $sponsor->incomes->total_income,
         };
     }
+
     return match ($sponsor->sponsor_type) {
         'other' => $sponsorContributions['other'],
         'widower' => $sponsorContributions['widower'],

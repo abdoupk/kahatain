@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 /**
- *
- *
  * @property int $id
  * @property string $commune_name
  * @property string $commune_name_ascii
@@ -21,6 +19,7 @@ use Laravel\Scout\Searchable;
  * @property string $latitude
  * @property string $longitude
  * @property string $post_code
+ *
  * @method static Builder|City newModelQuery()
  * @method static Builder|City newQuery()
  * @method static Builder|City query()
@@ -35,6 +34,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|City whereWilayaCode($value)
  * @method static Builder|City whereWilayaName($value)
  * @method static Builder|City whereWilayaNameAscii($value)
+ *
  * @mixin Eloquent
  */
 class City extends Model
@@ -59,9 +59,9 @@ class City extends Model
     public function getFullName(?string $locale = 'ar'): string
     {
         if ($locale === 'ar') {
-            return $this->wilaya_name . trans('glue') . $this->daira_name . '، ' . $this->commune_name;
+            return $this->wilaya_name.trans('glue').$this->daira_name.'، '.$this->commune_name;
         }
 
-        return $this->wilaya_name_ascii . ', ' . $this->daira_name_ascii . ', ' . $this->commune_name_ascii;
+        return $this->wilaya_name_ascii.', '.$this->daira_name_ascii.', '.$this->commune_name_ascii;
     }
 }

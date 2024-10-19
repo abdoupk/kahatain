@@ -29,6 +29,7 @@ class ArchiveDetailsRamadanBasketController extends Controller implements HasMid
             'params' => getParams(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_archive'];

@@ -14,8 +14,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property int $subject_id
  * @property int $academic_level_id
@@ -29,6 +27,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read PrivateSchool $school
  * @property-read Subject|null $subject
  * @property-read Tenant $tenant
+ *
  * @method static LessonFactory factory($count = null, $state = [])
  * @method static Builder|Lesson newModelQuery()
  * @method static Builder|Lesson newQuery()
@@ -45,6 +44,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Lesson whereUpdatedAt($value)
  * @method static Builder|Lesson withTrashed()
  * @method static Builder|Lesson withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Lesson extends Model
@@ -77,7 +77,7 @@ class Lesson extends Model
 
     public function getName(): string
     {
-        return $this->subject->getName() . ' - ' . $this->academicLevel->level;
+        return $this->subject->getName().' - '.$this->academicLevel->level;
     }
 
     protected function casts(): array

@@ -30,6 +30,7 @@ class SaveFamiliesMonthlyBasketToArchiveController extends Controller implements
             $this->dispatchJob($archive);
         });
     }
+
     public static function middleware()
     {
         return ['can:save_occasions'];

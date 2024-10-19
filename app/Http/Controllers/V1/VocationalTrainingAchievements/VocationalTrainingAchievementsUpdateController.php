@@ -22,6 +22,7 @@ class VocationalTrainingAchievementsUpdateController extends Controller implemen
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:update_orphans'];

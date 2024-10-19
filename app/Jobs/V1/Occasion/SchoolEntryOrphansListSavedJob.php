@@ -16,9 +16,7 @@ class SchoolEntryOrphansListSavedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public Archive $archive, public User $user)
-    {
-    }
+    public function __construct(public Archive $archive, public User $user) {}
 
     public function handle(): void
     {

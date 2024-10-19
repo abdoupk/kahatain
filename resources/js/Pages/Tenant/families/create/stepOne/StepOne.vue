@@ -1,14 +1,21 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
+import { ref } from 'vue'
+
+import FamilyAddressSelector from '@/Pages/Tenant/families/create/stepOne/FamilyAddressSelector.vue'
+
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheBranchSelector from '@/Components/Global/TheBranchSelector.vue'
 import TheZoneSelector from '@/Components/Global/TheZoneSelector.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<CreateFamilyStepProps>()
 
@@ -20,7 +27,15 @@ const startDate = defineModel('startDate', { default: '' })
 
 const address = defineModel('address')
 
+const location = defineModel('location')
+
 const fileNumber = defineModel('fileNumber')
+
+const showMapModalStatus = ref(false)
+
+const showMapModal = () => {
+    showMapModalStatus.value = true
+}
 </script>
 
 <template>
@@ -125,13 +140,23 @@ const fileNumber = defineModel('fileNumber')
                 <base-form-label for="address">
                     {{ $t('validation.attributes.address') }}
                 </base-form-label>
-                <base-form-input
-                    id="address"
-                    v-model="address"
-                    placeholder="حي الحياة تجزئة ب رقم '89' البيض"
-                    type="text"
-                    @input="form?.validate('address')"
-                ></base-form-input>
+
+                <div class="flex w-full items-center">
+                    <base-form-input
+                        id="address"
+                        v-model="address"
+                        placeholder="حي الحياة تجزئة ب رقم '89' البيض"
+                        type="text"
+                        @input="form?.validate('address')"
+                    ></base-form-input>
+
+                    <base-tippy :content="$t('hints.select_location')" class="ms-2">
+                        <button type="button" @click.prevent="showMapModal">
+                            <svg-loader class="h-6 w-6" name="icon-location"></svg-loader>
+                        </button>
+                    </base-tippy>
+                </div>
+
                 <base-form-input-error>
                     <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
                         {{ form.errors.address }}
@@ -142,4 +167,10 @@ const fileNumber = defineModel('fileNumber')
             <slot></slot>
         </div>
     </div>
+
+    <family-address-selector
+        :open="showMapModalStatus"
+        :title="$t('select_location')"
+        @close="showMapModalStatus = false"
+    ></family-address-selector>
 </template>

@@ -29,6 +29,7 @@ class SaveOrphansSchoolEntryToArchiveController extends Controller implements Ha
 
         dispatch(new SchoolEntryOrphansListSavedJob($archive, auth()->user()));
     }
+
     public static function middleware()
     {
         return ['can:save_occasions'];

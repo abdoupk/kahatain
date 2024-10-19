@@ -20,6 +20,7 @@ class ExportSponsorsPDFController extends Controller implements HasMiddleware
             return getSponsorsForExport();
         });
     }
+
     public static function middleware()
     {
         return ['can:export_sponsors'];

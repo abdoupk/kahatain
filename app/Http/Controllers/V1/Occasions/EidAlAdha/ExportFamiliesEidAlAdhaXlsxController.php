@@ -18,13 +18,14 @@ class ExportFamiliesEidAlAdhaXlsxController extends Controller implements HasMid
     public function __invoke(): BinaryFileResponse
     {
         return Excel::download(
-            new FamiliesEidAlAdhaIndexExport(),
+            new FamiliesEidAlAdhaIndexExport,
             __(
                 'exports.eid_al_adha_families',
                 ['date' => now()->year]
-            ) . '.xlsx'
+            ).'.xlsx'
         );
     }
+
     public static function middleware()
     {
         return ['can:export_occasions'];

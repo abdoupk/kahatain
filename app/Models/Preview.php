@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $report
  * @property Carbon $preview_date
@@ -32,6 +30,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, User> $inspectors
  * @property-read int|null $inspectors_count
  * @property-read Tenant|null $tenant
+ *
  * @method static PreviewFactory factory($count = null, $state = [])
  * @method static Builder|Preview newModelQuery()
  * @method static Builder|Preview newQuery()
@@ -47,6 +46,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Preview whereUpdatedAt($value)
  * @method static Builder|Preview withTrashed()
  * @method static Builder|Preview withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Preview extends Model

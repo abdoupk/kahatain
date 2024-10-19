@@ -23,6 +23,7 @@ class BranchDetailsController extends Controller implements HasMiddleware
             ),
         ]);
     }
+
     public static function middleware()
     {
         return [

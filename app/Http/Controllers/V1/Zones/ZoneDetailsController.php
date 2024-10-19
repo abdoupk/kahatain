@@ -18,6 +18,7 @@ class ZoneDetailsController extends Controller implements HasMiddleware
             )->loadCount(['families', 'members'])),
         ]);
     }
+
     public static function middleware()
     {
         return [

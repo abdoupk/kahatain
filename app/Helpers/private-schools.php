@@ -70,15 +70,15 @@ function getSchoolsForAddLesson(): Collection
 
 function getOrphansForAddLesson(): \Illuminate\Database\Eloquent\Collection
 {
-    return search(Orphan::getModel(), 'AND academic_level.id = ' . request()->input('academic_level_id'))->get();
+    return search(Orphan::getModel(), 'AND academic_level.id = '.request()->input('academic_level_id'))->get();
 }
 
 function formatDateFromTo($dateFrom, $dateTo): string
 {
     return Carbon::parse($dateFrom)
         ->translatedFormat(
-            'd M' . __('glue') . ' g:i A'
-        ) . ' - ' . Carbon::parse($dateTo)
+            'd M'.__('glue').' g:i A'
+        ).' - '.Carbon::parse($dateTo)
         ->translatedFormat('g:i A');
 }
 
@@ -116,7 +116,7 @@ function generateOccurrences(Event $event, string $lesson_id, array $orphans): v
         $interval = 7 * $event->interval;
     }
 
-    $rule = new Rule();
+    $rule = new Rule;
     $rule->setStartDate($event->start_date);
     $rule->setEndDate($event->end_date);
     $rule->setFreq(Str::upper($frequency));
@@ -124,7 +124,7 @@ function generateOccurrences(Event $event, string $lesson_id, array $orphans): v
     $rule->setUntil(Carbon::parse($event->until));
     $rule->setWeekStart('SU');
 
-    $transformer = new ArrayTransformer();
+    $transformer = new ArrayTransformer;
     $occurrences = $transformer->transform($rule);
 
     foreach ($occurrences as $occurrence) {

@@ -13,9 +13,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class EidAlAdhaFamiliesListPerYearSheet implements FromCollection, WithEvents, WithHeadings, WithTitle
 {
-    public function __construct(public int $year)
-    {
-    }
+    public function __construct(public int $year) {}
 
     public function collection(): Collection
     {

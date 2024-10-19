@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $orphan_id
  * @property bool|null $medical_sponsorship
@@ -36,6 +34,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $archives_count
  * @property-read Orphan $orphan
  * @property-read Tenant $tenant
+ *
  * @method static OrphanSponsorshipFactory factory($count = null, $state = [])
  * @method static Builder|OrphanSponsorship newModelQuery()
  * @method static Builder|OrphanSponsorship newQuery()
@@ -56,6 +55,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|OrphanSponsorship whereUpdatedAt($value)
  * @method static Builder|OrphanSponsorship withTrashed()
  * @method static Builder|OrphanSponsorship withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class OrphanSponsorship extends Model
@@ -121,9 +121,9 @@ class OrphanSponsorship extends Model
                 'academic_achievement' => [
                     'academic_level' => $this->orphan->academicLevel,
                     'academic_year' => $this->orphan->lastAcademicYearAchievement?->academic_year,
-                    'last_year_average' => (float)$this->orphan->lastAcademicYearAchievement?->average,
+                    'last_year_average' => (float) $this->orphan->lastAcademicYearAchievement?->average,
                 ],
-                'year_average' => (float)$this->orphan?->lastAcademicYearAchievement?->average,
+                'year_average' => (float) $this->orphan?->lastAcademicYearAchievement?->average,
                 'shirt_size' => $this->orphan->shirt_size,
                 'pants_size' => $this->orphan->pants_size,
                 'shoes_size' => $this->orphan->shoes_size,

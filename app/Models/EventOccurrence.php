@@ -14,8 +14,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $start_date
  * @property string $end_date
@@ -31,6 +29,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, Orphan> $orphans
  * @property-read int|null $orphans_count
  * @property-read Tenant $tenant
+ *
  * @method static Builder|EventOccurrence newModelQuery()
  * @method static Builder|EventOccurrence newQuery()
  * @method static Builder|EventOccurrence onlyTrashed()
@@ -46,6 +45,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|EventOccurrence whereUpdatedAt($value)
  * @method static Builder|EventOccurrence withTrashed()
  * @method static Builder|EventOccurrence withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class EventOccurrence extends Model

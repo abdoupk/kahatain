@@ -13,8 +13,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $event_occurrence_id
  * @property string $lesson_id
@@ -24,6 +22,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read Tenant $tenant
+ *
  * @method static EventOccurrenceOrphanFactory factory($count = null, $state = [])
  * @method static Builder|EventOccurrenceOrphan newModelQuery()
  * @method static Builder|EventOccurrenceOrphan newQuery()
@@ -39,6 +38,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|EventOccurrenceOrphan whereUpdatedAt($value)
  * @method static Builder|EventOccurrenceOrphan withTrashed()
  * @method static Builder|EventOccurrenceOrphan withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class EventOccurrenceOrphan extends Pivot

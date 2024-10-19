@@ -14,8 +14,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $tenant_id
  * @property string $orphan_id
@@ -29,6 +27,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Orphan $orphan
  * @property-read Tenant $tenant
  * @property-read VocationalTraining|null $vocationalTraining
+ *
  * @method static VocationalTrainingAchievementFactory factory($count = null, $state = [])
  * @method static Builder|VocationalTrainingAchievement newModelQuery()
  * @method static Builder|VocationalTrainingAchievement newQuery()
@@ -46,6 +45,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|VocationalTrainingAchievement whereYear($value)
  * @method static Builder|VocationalTrainingAchievement withTrashed()
  * @method static Builder|VocationalTrainingAchievement withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class VocationalTrainingAchievement extends Model

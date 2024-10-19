@@ -21,8 +21,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Str;
 
 /**
- *
- *
  * @property string $id
  * @property string $title
  * @property string $lesson_id
@@ -44,6 +42,7 @@ use Str;
  * @property-read PrivateSchool|null $school
  * @property-read Subject|null $subject
  * @property-read Tenant $tenant
+ *
  * @method static EventFactory factory($count = null, $state = [])
  * @method static Builder|Event newModelQuery()
  * @method static Builder|Event newQuery()
@@ -66,6 +65,7 @@ use Str;
  * @method static Builder|Event whereUpdatedAt($value)
  * @method static Builder|Event withTrashed()
  * @method static Builder|Event withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Event extends Model
@@ -122,7 +122,7 @@ class Event extends Model
      */
     public function humanReadable()
     {
-        $rule = new Rule();
+        $rule = new Rule;
         $rule->setStartDate($this->start_date);
         $rule->setEndDate($this->end_date);
         $rule->setFreq(Str::upper($this->frequency));

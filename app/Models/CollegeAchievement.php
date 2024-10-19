@@ -14,8 +14,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $orphan_id
  * @property float|null $first_semester
@@ -33,6 +31,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read AcademicLevel|null $academicLevel
  * @property-read Orphan $orphan
  * @property-read Tenant $tenant
+ *
  * @method static CollegeAchievementFactory factory($count = null, $state = [])
  * @method static Builder|CollegeAchievement newModelQuery()
  * @method static Builder|CollegeAchievement newQuery()
@@ -54,6 +53,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|CollegeAchievement whereYear($value)
  * @method static Builder|CollegeAchievement withTrashed()
  * @method static Builder|CollegeAchievement withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class CollegeAchievement extends Model

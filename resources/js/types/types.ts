@@ -70,6 +70,7 @@ export interface ISettingState {
 export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-trash-undo'
+    | 'icon-location'
     | 'icon-kahatain'
     | 'icon-diapers'
     | 'icon-eye'
@@ -639,6 +640,10 @@ export type FurnishingsType =
 
 export type CreateFamilyForm = {
     address: string
+    location: {
+        lat: number | null
+        lng: number | null
+    }
     zone_id: string
     start_date: string
     file_number: string

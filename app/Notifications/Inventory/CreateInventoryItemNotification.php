@@ -13,9 +13,7 @@ class CreateInventoryItemNotification extends Notification implements ShouldQueu
 {
     use Queueable;
 
-    public function __construct(public Inventory $item, public User $user)
-    {
-    }
+    public function __construct(public Inventory $item, public User $user) {}
 
     public function via(): array
     {
@@ -39,7 +37,7 @@ class CreateInventoryItemNotification extends Notification implements ShouldQueu
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.inventory.index'
-                ) . '?show=' . $this->item->id,
+                ).'?show='.$this->item->id,
             ],
         ];
     }

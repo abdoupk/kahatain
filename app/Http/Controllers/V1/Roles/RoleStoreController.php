@@ -29,6 +29,7 @@ class RoleStoreController extends Controller implements HasMiddleware
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:create_roles'];

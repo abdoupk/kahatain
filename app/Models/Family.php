@@ -231,7 +231,7 @@ class Family extends Model
             'id' => $this->id,
             'name' => $this->name,
             'tenant_id' => $this->tenant_id,
-            'start_date' => (int)strtotime($this->start_date),
+            'start_date' => (int) strtotime($this->start_date),
             'file_number' => $this->file_number,
             'address' => [
                 'address' => $this->address,
