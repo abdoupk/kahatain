@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../utils/i18n'
-
 import type { BranchesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
@@ -17,6 +15,7 @@ import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { hasPermission } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{ branches: PaginationData<BranchesIndexResource>; params: IndexParams }>()
 
@@ -26,7 +25,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
 
 <template>
     <div v-if="branches.data.length > 0" class="@container">
-        <div class="intro-y col-span-12 hidden overflow-auto @4xl:block lg:overflow-visible">
+        <div class="intro-y !z-30 col-span-12 hidden overflow-auto @4xl:block lg:overflow-visible">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
