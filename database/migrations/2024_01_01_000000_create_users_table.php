@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->text('last_name')->nullable(false);
             $table->text('phone')->nullable();
             $table->text('address')->nullable();
-            $table->text('zone_id')->nullable();
-            $table->text('branch_id')->nullable();
+            $table->uuid('zone_id')->nullable();
+            $table->uuid('branch_id')->nullable();
             $table->text('email')->nullable(false);
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('qualification')->nullable();
@@ -29,6 +29,7 @@ return new class extends Migration {
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
             $table->uuid('deleted_by')->nullable();
+            $table->uuid('created_by')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
         });
 

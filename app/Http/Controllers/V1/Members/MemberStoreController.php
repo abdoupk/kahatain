@@ -14,12 +14,16 @@ class MemberStoreController extends Controller implements HasMiddleware
     public function __invoke(MemberCreateRequest $request): Response
     {
         $user = User::create(
-            $request->only(
-                [
-                    'password', 'email', 'last_name', 'first_name', 'phone',
-                    'zone_id', 'branch_id', 'qualification', 'gender',
-                ]
-            )
+            [
+                ...$request->only(
+                    [
+                        'password', 'email', 'last_name', 'first_name', 'phone',
+                        'zone_id', 'branch_id', 'qualification', 'gender',
+                    ]
+                ),
+                'created_by' => auth()->id(),
+            ],
+
         );
 
         $user->syncRoles($request->roles);
@@ -32,6 +36,7 @@ class MemberStoreController extends Controller implements HasMiddleware
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:create_members'];
