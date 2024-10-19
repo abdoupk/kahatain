@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,6 +14,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->text('name');
             $table->text('description');
+            $table->geometry('geom');
             $table->uuid('tenant_id');
             $table->timestamps();
             $table->softDeletes();

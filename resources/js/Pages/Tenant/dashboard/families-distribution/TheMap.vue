@@ -103,7 +103,7 @@ const init: Init = async (initializeMap) => {
             </svg>
           `)
 
-        props.familiesForMap.map(function (markerElem, index) {
+        props.familiesForMap.map(function (markerElem) {
             const marker = leaflet.marker(
                 {
                     lat: parseFloat(markerElem.location.lat),

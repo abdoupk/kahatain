@@ -10,17 +10,21 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class FamilyUpdateInfoController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_families'];
+    }
+
     public function __invoke(FamilyInfosUpdateRequest $request, Family $family)
     {
         $family->update($request->validated());
 
+        if ($request->zone_id !== $family->zone_id) {
+            $family->zone()->searchable();
+        }
+
         dispatch(new FamilyUpdatedJob($family, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_families'];
     }
 }
