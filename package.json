@@ -90,6 +90,8 @@
         "chart.js": "^4.4.1",
         "dayjs": "^1.11.10",
         "laravel-precognition-vue": "^0.5.4",
+        "leaflet": "^1.9.4",
+        "leaflet.markercluster": "^1.5.3",
         "meilisearch": "^0.35.1",
         "pinia": "^2.1.7",
         "print-js": "^1.6.0",
