@@ -28,7 +28,7 @@ onMounted(() => {
                     <a class="-intro-x flex items-center pt-5" href="/">
                         <img alt="Tinker Starter" class="w-6" src="/images/logo.svg" />
 
-                        <span class="ms-3 text-lg text-white"> Kafil el yatim </span>
+                        <span class="ms-3 text-lg text-white"> أنا وَكافلُ اليتيمِ في الجنَّةِ كَهاتين </span>
                     </a>
 
                     <div class="my-auto">

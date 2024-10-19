@@ -38,7 +38,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </the-table-th>
 
                         <the-table-th class="text-center">
-                            {{ $t('validation.attributes.description') }}
+                            {{ $t('neighborhoods') }}
                         </the-table-th>
 
                         <the-table-th
