@@ -2,6 +2,7 @@
 import { PositionType } from '@/types/types'
 
 import { useSettingsStore } from '@/stores/settings'
+import { usePage } from '@inertiajs/vue3'
 import 'leaflet/dist/leaflet.css'
 import { computed, ref, watch } from 'vue'
 
@@ -22,7 +23,7 @@ const colorScheme = computed(() => useSettingsStore().colorScheme)
 const init: Init = async (initializeMap) => {
     const mapInstance = await initializeMap({
         config: {
-            center: [33.6854, 1.0304],
+            center: [usePage().props.association_coordinates.lat, usePage().props.association_coordinates.lng],
             zoom: 13,
             minZoom: 6,
             gestureHandling: false,

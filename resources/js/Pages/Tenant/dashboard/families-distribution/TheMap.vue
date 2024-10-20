@@ -2,6 +2,7 @@
 import { FamiliesForMapType } from '@/types/dashboard'
 
 import { useSettingsStore } from '@/stores/settings'
+import { usePage } from '@inertiajs/vue3'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 import 'leaflet/dist/leaflet.css'
 import { computed, watch } from 'vue'
@@ -21,7 +22,9 @@ const colorScheme = computed(() => useSettingsStore().colorScheme)
 const init: Init = async (initializeMap) => {
     const mapInstance = await initializeMap({
         config: {
-            center: [33.6854, 1.0304],
+            center: [usePage().props.association_coordinates.lat, usePage().props.association_coordinates.lng],
+            lat: '',
+            lon: '1.1259581442818078',
             zoom: 13,
             minZoom: 6,
             gestureHandling: true,
