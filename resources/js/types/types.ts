@@ -285,6 +285,7 @@ export interface CreateMemberForm {
     phone: string
     zone_id: string
     qualification: string
+    competences: { id: string; name: string }[]
     password: string
     password_confirmation: string
     address: string

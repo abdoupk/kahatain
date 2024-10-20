@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('competence_user', function (Blueprint $table) {
-            $table->id()->primary()->index();
+            $table->uuid('id')->primary()->index();
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignUuid('competence_id')->references('id')->on('competences')->onDelete('cascade');
             $table->foreignUuid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');

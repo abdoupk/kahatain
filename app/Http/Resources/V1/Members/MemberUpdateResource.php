@@ -20,12 +20,13 @@ class MemberUpdateResource extends JsonResource
             'email' => $this->email,
             'gender' => $this->gender,
             'qualification' => $this->qualification,
+            'competences' => $this->competences,
 
-            'zone' => $this->whenLoaded('zone', fn () => [
+            'zone' => $this->whenLoaded('zone', fn() => [
                 'id' => $this->zone->id,
                 'name' => $this->zone->name,
             ]),
-            'branch' => $this->whenLoaded('branch', fn () => [
+            'branch' => $this->whenLoaded('branch', fn() => [
                 'id' => $this->branch->id,
                 'name' => $this->branch->name,
             ]),

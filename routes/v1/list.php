@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\V1\AcademicLevel\AcademicLevelIndexController;
 use App\Http\Controllers\V1\Branches\ListBranchesController;
+use App\Http\Controllers\V1\Competences\CompetenceIndexController;
 use App\Http\Controllers\V1\List\ListBabyMilkController;
 use App\Http\Controllers\V1\List\ListClothesSizesController;
 use App\Http\Controllers\V1\List\ListDiapersController;
@@ -76,4 +77,9 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'vocational-training',
         VocationalTrainingIndexController::class
     )->name('vocational-trainings-specialities');
+
+    Route::get(
+        'competences',
+        CompetenceIndexController::class
+    )->name('competences');
 });

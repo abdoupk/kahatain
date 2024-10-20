@@ -51,6 +51,7 @@ export const useMembersStore = defineStore('members', {
             },
             function: '',
             workplace: '',
+            competences: [],
             readable_roles: ''
         },
         members: []

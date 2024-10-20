@@ -8,6 +8,7 @@ import BaseSlideoverDescription from '@/Components/Base/headless/Slideover/BaseS
 import CreateEditSlideOver from '@/Components/Global/CreateEditSlideOver.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
+import TheCompetenceSelector from '@/Components/Global/TheCompetenceSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
@@ -120,7 +121,7 @@ const modalType = computed(() => {
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <base-slideover-description class="grid grid-cols-12 gap-4 gap-y-3 p-0 px-1 pb-5">
+            <base-slideover-description class="grid grid-cols-12 gap-4 gap-y-3 overflow-hidden p-0 px-1 pb-5">
                 <!-- Begin: First name-->
                 <div class="col-span-12 sm:col-span-6">
                     <base-form-label htmlFor="first_name">
@@ -297,15 +298,7 @@ const modalType = computed(() => {
                     </base-form-label>
 
                     <div>
-                        <base-form-input
-                            id="qualification"
-                            v-model="form.qualification"
-                            :placeholder="
-                                $t('auth.placeholders.fill', { attribute: $t('validation.attributes.qualification') })
-                            "
-                            type="text"
-                            @change="form.validate('qualification')"
-                        />
+                        <the-competence-selector v-model:competences="form.competences"></the-competence-selector>
                     </div>
 
                     <div v-if="form.errors?.qualification" class="mt-2">
@@ -402,7 +395,6 @@ const modalType = computed(() => {
 
                     <base-form-input
                         id="function"
-                        ref="firstInputRef"
                         v-model="form.function"
                         :placeholder="$t('auth.placeholders.fill', { attribute: $t('filters.function') })"
                         type="text"

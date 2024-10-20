@@ -1175,5 +1175,7 @@
     "father_name": "اسم الاب",
     "mother_name": "اسم ولقب الام",
     "neighborhoods": "الاحياء التابعة للمنطقة",
-    "select_location": "حدد الموقع"
+    "select_location": "حدد الموقع",
+    "search_or_add_a_competence": "ابحث عن مهارة او أضفها",
+    "add_this_competence": "اضف هذه المهارة"
 }

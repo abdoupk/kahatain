@@ -1,50 +1,47 @@
 <script lang="ts" setup>
 import { useCompetencesStore } from '@/stores/competences'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
+import { $t } from '@/utils/i18n'
+
+const competences = defineModel('competences')
+
 const competencesStore = useCompetencesStore()
 
-const competences = defineModel<string>('competences', { default: '' })
-
-const selectedCompetences = ref('')
+const options = ref([])
 
 onMounted(async () => {
     await competencesStore.fetchCompetences()
 
-    selectedCompetences.value = competencesStore.findClothesSizeById(c.value)
+    options.value = competencesStore.competences
 })
 
-watch(
-    () => competences.value,
-    () => {
-        selectedCompetences.value = sizesStore.findClothesSizeById(size.value)
-    }
-)
-
-const addTag = (newCompetence: string) => {
-    const competence = {
-        name: newCompetence,
-        code: newCompetence.substring(0, 2) + Math.floor(Math.random() * 10000000)
+const addCompetence = (newTag: string) => {
+    const tag = {
+        name: newTag,
+        id: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
     }
 
-    selectedCompetences.value.push(competence)
+    options.value.push(tag)
 
-    competences.value.push(competence)
+    competences.value.push(tag)
+
+    // HandleUpdate(tag)
 }
 </script>
 
 <template>
     <base-vue-select
-        v-model:value="selectedCompetences"
-        :multiple="true"
-        :options="competencesStore.competences"
+        v-model="competences"
+        :options="options"
+        :placeholder="$t('search_or_add_a_competence')"
+        :tag-placeholder="$t('add_this_competence')"
         :taggable="true"
         label="name"
-        placeholder="Search or add a tag"
-        tag-placeholder="Add this as new tag"
+        multiple
         track-by="id"
-        @tag="addTag"
+        @tag="addCompetence"
     ></base-vue-select>
 </template>

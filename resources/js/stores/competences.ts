@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { defineStore } from 'pinia'
 
 export const useCompetencesStore = defineStore('competences', {
@@ -6,12 +7,12 @@ export const useCompetencesStore = defineStore('competences', {
     }),
     actions: {
         async fetchCompetences() {
-            if (this.comptences.length === 0) {
-                const {
-                    data: { competences }
-                } = await axios.get(route('api.list-competences'))
+            if (this.competences.length === 0) {
+                const response = await axios.get(route('tenant.list.competences'))
 
-                this.competences = competences
+                this.competences = response.data
+
+                console.log(this.competences)
             }
         }
     }
