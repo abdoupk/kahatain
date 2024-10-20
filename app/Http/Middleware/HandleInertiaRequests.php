@@ -60,7 +60,13 @@ class HandleInertiaRequests extends Middleware
 
     private function getCoordinates(): ?City
     {
-        return City::whereId(tenant()['infos']['city_id'])
+        $city_id = tenant()['infos']['city_id'] ?? null;
+
+        if (! $city_id) {
+            return null;
+        }
+
+        return City::whereId($city_id)
             ->select(['latitude', 'longitude'])
             ->first();
     }

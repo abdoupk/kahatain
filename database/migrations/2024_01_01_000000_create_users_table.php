@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('last_name')->nullable(false);
             $table->text('phone')->nullable();
             $table->text('address')->nullable();
+            $table->json('location')->nullable();
             $table->uuid('zone_id')->nullable();
             $table->uuid('branch_id')->nullable();
             $table->text('email')->nullable(false);
@@ -28,10 +29,10 @@ return new class extends Migration
             $table->uuid('tenant_id')->nullable(false);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->softDeletes();
             $table->uuid('deleted_by')->nullable();
             $table->uuid('created_by')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', static function (Blueprint $table) {
