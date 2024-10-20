@@ -114,6 +114,11 @@ class User extends Authenticatable
         'address',
         'qualification',
         'created_by',
+        'deleted_by',
+        'tenant_id',
+        'location',
+        'workplace',
+        'function',
     ];
 
     /**
@@ -191,7 +196,7 @@ class User extends Authenticatable
 
     public function shouldBeSearchable(): bool
     {
-        return !$this->roles->pluck('name')->contains('super_admin');
+        return ! $this->roles->pluck('name')->contains('super_admin');
     }
 
     public function toSearchableArray(): array
@@ -209,7 +214,7 @@ class User extends Authenticatable
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function previews(): BelongsToMany
@@ -242,6 +247,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'location' => 'array',
         ];
     }
 }

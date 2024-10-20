@@ -29,10 +29,6 @@ class FamilySeeder extends Seeder
                     'branch_id' => Branch::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
                     'zone_id' => Zone::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
                     'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
-                    'location' => [
-                        'lat' => fake()->latitude(33.67, 33.69),
-                        'lng' => fake()->longitude(1.011577, 1.016476),
-                    ],
                 ]);
 
                 Spouse::factory()->create([

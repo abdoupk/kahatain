@@ -29,7 +29,13 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail,
             'zone_id' => Zone::inRandomOrder()->first()?->id,
             'gender' => fake()->randomElement(['male', 'female']),
-            'address' => fake()->address,
+            'address' => fake('ar_SA')->address,
+            'workplace' => fake('ar_SA')->realText(50),
+            'location' => [
+                'lat' => fake()->latitude(33.67, 33.69),
+                'lng' => fake()->longitude(1.011577, 1.016476),
+            ],
+            'function' => fake('ar_SA')->realText(50),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -44,7 +50,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

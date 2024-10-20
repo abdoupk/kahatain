@@ -287,6 +287,10 @@ export interface CreateMemberForm {
     qualification: string
     password: string
     password_confirmation: string
+    address: string
+    location: PositionType
+    function: string
+    workplace: string
     branch_id: string
     roles: string[]
     gender: 'male' | 'female'

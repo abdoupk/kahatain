@@ -20,13 +20,25 @@ const darkMode = computed(() => useSettingsStore().appearance === 'dark')
 const colorScheme = computed(() => useSettingsStore().colorScheme)
 
 const init: Init = async (initializeMap) => {
+    let config = {
+        center: [28.0339, 1.6596],
+        zoom: 4,
+        minZoom: 4
+    }
+
+    if (usePage().props.association_coordinates.lat && usePage().props.association_coordinates.lng) {
+        config = {
+            center: [usePage().props.association_coordinates.lat, usePage().props.association_coordinates.lng],
+            zoom: 13,
+            minZoom: 6
+        }
+    }
+
     const mapInstance = await initializeMap({
         config: {
-            center: [usePage().props.association_coordinates.lat, usePage().props.association_coordinates.lng],
-            lat: '',
-            lon: '1.1259581442818078',
-            zoom: 13,
-            minZoom: 6,
+            center: config.center,
+            zoom: config.zoom,
+            minZoom: config.minZoom,
             gestureHandling: true,
             zoomControl: false,
             attributionControl: false,

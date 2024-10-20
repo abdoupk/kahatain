@@ -16,6 +16,10 @@ class FamilyFactory extends Factory
             'name' => fake('ar_SA')->name,
             'zone_id' => fake()->uuid,
             'address' => fake('ar_SA')->address,
+            'location' => [
+                'lat' => fake()->latitude(33.67, 33.69),
+                'lng' => fake()->longitude(1.011577, 1.016476),
+            ],
             'file_number' => fake()->randomNumber(),
             'start_date' => now()->subDays(fake()->numberBetween(1, 10000)),
             'income_rate' => fake()->randomFloat(2, 0, 100),

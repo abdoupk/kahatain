@@ -11,6 +11,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class MemberStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:create_members'];
+    }
+
     public function __invoke(MemberCreateRequest $request): Response
     {
         $user = User::create(
@@ -18,12 +23,11 @@ class MemberStoreController extends Controller implements HasMiddleware
                 ...$request->only(
                     [
                         'password', 'email', 'last_name', 'first_name', 'phone',
-                        'zone_id', 'branch_id', 'qualification', 'gender',
+                        'zone_id', 'branch_id', 'qualification', 'gender', 'address', 'workplace', 'function', 'location',
                     ]
                 ),
                 'created_by' => auth()->id(),
             ],
-
         );
 
         $user->syncRoles($request->roles);
@@ -35,10 +39,5 @@ class MemberStoreController extends Controller implements HasMiddleware
         dispatch(new MemberCreatedJob($user, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:create_members'];
     }
 }

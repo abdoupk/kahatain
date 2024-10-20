@@ -43,7 +43,15 @@ export const useMembersStore = defineStore('members', {
             roles: [''],
             branch_id: '',
             password: '',
-            password_confirmation: ''
+            password_confirmation: '',
+            address: '',
+            location: {
+                lat: null,
+                lng: null
+            },
+            function: '',
+            workplace: '',
+            readable_roles: ''
         },
         members: []
     }),

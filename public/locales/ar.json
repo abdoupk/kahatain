@@ -595,6 +595,7 @@
     "validation.url": "صيغة رابط حقل :attribute غير صحيحة.",
     "validation.uuid": "حقل :attribute يجب أن يكون بصيغة UUID سليمة.",
     "validation.attributes.address": "العنوان",
+    "validation.attributes.workplace": "مكان العمل",
     "validation.attributes.housing_type.value": "نوع السكن",
     "validation.attributes.qty": "الكمية",
     "validation.attributes.note": "الملاحظة",

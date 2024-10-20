@@ -12,7 +12,7 @@ const address = defineModel('address')
 
 const location = defineModel('location')
 
-const showMapModalStatus = ref(true)
+const showMapModalStatus = ref(false)
 
 const showMapModal = () => {
     showMapModalStatus.value = true
