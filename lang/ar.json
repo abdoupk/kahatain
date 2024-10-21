@@ -436,5 +436,6 @@
     "leaflet.touch": "استخدم إصبعين لتحريك الخريطة",
     "leaflet.scroll": "استخدم Ctrl + التمرير لتكبير الخريطة",
     "leaflet.scrollMac": "استخدم ⌘ + التمرير لتكبير الخريطة",
-    "address_selected": "تم تحديد العنوان"
+    "address_selected": "تم تحديد العنوان",
+    "benefactors": "المحسنين"
 }

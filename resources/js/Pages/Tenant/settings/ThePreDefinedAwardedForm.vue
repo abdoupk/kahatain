@@ -54,7 +54,7 @@ const submit = () => {
                         </base-form-label>
                     </div>
 
-                    <div class="col-span-10 lg:col-span-8">
+                    <div class="col-span-6 lg:col-span-5">
                         <base-input-group>
                             <!-- @vue-ignore -->
                             <base-form-input
@@ -89,7 +89,7 @@ const submit = () => {
                         </base-form-label>
                     </div>
 
-                    <div class="col-span-10 lg:col-span-8">
+                    <div class="col-span-6 lg:col-span-5">
                         <base-input-group>
                             <base-form-input
                                 id="university_scholarship"

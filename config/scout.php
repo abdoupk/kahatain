@@ -536,19 +536,33 @@ return [
                 'searchableAttributes' => ['report', 'inspectors', 'family.name'],
                 'sortableAttributes' => ['created_at', 'preview_date'],
             ],
+            'benefactors' => [
+                'filterableAttributes' => [
+                    'created_at',
+                    'tenant_id',
+                ],
+                'searchableAttributes' => [
+                    'first_name',
+                    'last_name',
+                    'phone',
+                ],
+                'sortableAttributes' => [
+                    'created_at',
+                ],
+            ],
         ],
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Typesense Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure your Typesense settings. Typesense is an open
-    | source search engine using minimal configuration. Below, you will
-    | state the host, key, and schema configuration for the instance.
-    |
-    */
+        |--------------------------------------------------------------------------
+        | Typesense Configuration
+        |--------------------------------------------------------------------------
+        |
+        | Here you may configure your Typesense settings. Typesense is an open
+        | source search engine using minimal configuration. Below, you will
+        | state the host, key, and schema configuration for the instance.
+        |
+        */
 
     'typesense' => [
         'client-settings' => [

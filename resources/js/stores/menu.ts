@@ -216,6 +216,13 @@ export const useMenuStore = defineStore('menu', {
                 title: $t('private_schools'),
                 url: '/dashboard/schools'
             },
+            {
+                icon: 'icon-donate',
+                // ignore: !hasPermission('list_schools'),
+                routeName: 'tenant.benefactors.index',
+                title: $t('benefactors'),
+                url: '/dashboard/benefactors'
+            },
             // eslint-disable-next-line array-element-newline
             hasPermission(['list_archive', 'list_items', 'list_trash', 'view_settings']) ? 'divider' : '',
             {

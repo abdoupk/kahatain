@@ -10,41 +10,41 @@ use App\Http\Controllers\V1\Benefactors\BenefactorStoreController;
 use App\Http\Controllers\V1\Benefactors\BenefactorUpdateController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
-Route::prefix('benefactors')->name('branches.')->group(function (): void {
+Route::prefix('benefactors')->name('benefactors.')->group(function (): void {
     Route::get(
         '',
         BenefactorIndexController::class
     )
-        ->name('benefactors.index');
+        ->name('index');
 
     Route::get(
         'show/{benefactor}',
         BenefactorShowController::class
     )
-        ->name('benefactors.show');
+        ->name('show');
 
     Route::get(
         'details/{benefactor}',
         BenefactorDetailsController::class
     )
-        ->name('benefactors.details');
+        ->name('details');
 
     Route::put(
         '{benefactor}',
         BenefactorUpdateController::class
     )
-        ->name('benefactors.update')
+        ->name('update')
         ->middleware([HandlePrecognitiveRequests::class]);
 
     Route::post(
         '',
         BenefactorStoreController::class
     )
-        ->name('benefactors.store');
+        ->name('store');
 
     Route::delete(
         '{benefactor}',
         BenefactorDestroyController::class
     )
-        ->name('benefactors.destroy');
+        ->name('destroy');
 });
