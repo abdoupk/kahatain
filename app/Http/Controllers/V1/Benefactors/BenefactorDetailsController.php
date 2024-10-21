@@ -6,8 +6,5 @@ use App\Http\Controllers\Controller;
 
 class BenefactorDetailsController extends Controller
 {
-    public function __invoke()
-    {
-
-    }
+    public function __invoke() {}
 }

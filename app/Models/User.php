@@ -118,6 +118,7 @@ class User extends Authenticatable
         'tenant_id',
         'location',
         'workplace',
+        'academic_level_id',
         'function',
     ];
 
@@ -196,7 +197,7 @@ class User extends Authenticatable
 
     public function shouldBeSearchable(): bool
     {
-        return !$this->roles->pluck('name')->contains('super_admin');
+        return ! $this->roles->pluck('name')->contains('super_admin');
     }
 
     public function toSearchableArray(): array
@@ -214,7 +215,7 @@ class User extends Authenticatable
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function previews(): BelongsToMany
@@ -235,6 +236,14 @@ class User extends Authenticatable
     public function competences(): BelongsToMany
     {
         return $this->belongsToMany(Competence::class)->using(CompetenceUser::class);
+    }
+
+    public function academicLevel(): BelongsTo
+    {
+        return $this->belongsTo(
+            AcademicLevel::class,
+            'academic_level_id'
+        );
     }
 
     /**

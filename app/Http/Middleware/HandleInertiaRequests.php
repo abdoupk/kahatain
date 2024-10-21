@@ -48,11 +48,11 @@ class HandleInertiaRequests extends Middleware
                 }
             ) +
                 [
-                'permissions' => auth()->user()
-                    ->getPermissionsViaRoles()
-                    ->pluck('name')
-                    ->toArray(),
-            ];
+                    'permissions' => auth()->user()
+                        ->getPermissionsViaRoles()
+                        ->pluck('name')
+                        ->toArray(),
+                ];
         }
 
         return null;

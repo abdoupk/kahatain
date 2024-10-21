@@ -22,7 +22,7 @@ class competence extends Model
         return [
             'name' => $this->name,
             'id' => $this->id,
-            'tenant_id' => $this->tenant_id
+            'tenant_id' => $this->tenant_id,
         ];
     }
 

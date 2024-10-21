@@ -295,6 +295,7 @@ export interface CreateMemberForm {
     branch_id: string
     roles: string[]
     gender: 'male' | 'female'
+    academic_level_id: number | null
 }
 
 export type CreateLessonForm = {

@@ -1,12 +1,16 @@
 <script lang="ts" setup>
+import type { AcademicLevelType } from '@/types/lessons'
+
+import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useMembersStore } from '@/stores/members'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref } from 'vue'
 
 import BaseSlideoverDescription from '@/Components/Base/headless/Slideover/BaseSlideoverDescription.vue'
 import CreateEditSlideOver from '@/Components/Global/CreateEditSlideOver.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 import TheCompetenceSelector from '@/Components/Global/TheCompetenceSelector.vue'
 
@@ -48,6 +52,13 @@ const form = computed(() => {
 // Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
+const academicLevels = ref<AcademicLevelType[]>([])
+
+const academicLevelsStore = useAcademicLevelsStore()
+
+onMounted(async () => {
+    academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
+})
 // Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
     setTimeout(() => {
@@ -306,6 +317,27 @@ const modalType = computed(() => {
                     </div>
                 </div>
                 <!-- End: qualification-->
+
+                <!-- Begin: Academic Level-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="zone">
+                        {{ $t('validation.attributes.academic_level_id') }}
+                    </base-form-label>
+
+                    <div>
+                        <the-academic-level-selector
+                            id="zone"
+                            v-model:academic-level="form.academic_level_id"
+                            :academic-levels
+                        >
+                        </the-academic-level-selector>
+                    </div>
+
+                    <div v-if="form.errors?.academic_level_id" class="mt-2">
+                        <base-input-error :message="form.errors.academic_level_id"></base-input-error>
+                    </div>
+                </div>
+                <!-- End: Academic Level-->
 
                 <!-- Begin: zone-->
                 <div class="col-span-12 sm:col-span-6">

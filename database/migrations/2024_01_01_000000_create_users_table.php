@@ -27,7 +27,8 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->text('password')->nullable(false);
             $table->text('remember_token')->nullable();
-            $table->uuid('tenant_id')->nullable(false);
+            $table->uuid('tenant_id');
+            $table->integer('academic_level_id')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->uuid('deleted_by')->nullable();

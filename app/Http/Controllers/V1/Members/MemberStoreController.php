@@ -24,22 +24,22 @@ class MemberStoreController extends Controller implements HasMiddleware
                 ...$request->only(
                     [
                         'password', 'email', 'last_name', 'first_name', 'phone',
-                        'zone_id', 'branch_id', 'qualification', 'gender', 'address', 'workplace', 'function', 'location',
+                        'zone_id', 'branch_id', 'qualification', 'gender', 'address', 'workplace', 'function', 'location', 'academic_level_id',
                     ]
                 ),
                 'created_by' => auth()->id(),
             ],
         );
 
-//        if ($request->roles) {
-//            $user->syncRoles($request->roles);
-//        }
+        //        if ($request->roles) {
+        //            $user->syncRoles($request->roles);
+        //        }
 
         $this->syncCompetences($request->competences, $user);
 
         $user->searchable();
 
-//        $user->roles()->searchable();
+        //        $user->roles()->searchable();
 
         dispatch(new MemberCreatedJob($user, auth()->user()));
 
@@ -48,7 +48,7 @@ class MemberStoreController extends Controller implements HasMiddleware
 
     private function syncCompetences(array $competenceNames, User $user)
     {
-        $allCompetenceIds = collect($competenceNames)->map(fn($competenceName) => competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();
+        $allCompetenceIds = collect($competenceNames)->map(fn ($competenceName) => competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();
 
         ray($allCompetenceIds);
 
