@@ -173,7 +173,12 @@ function isEqual(x: any, y: any): any {
 
 const allowOnlyNumbersOnKeyDown = (event: KeyboardEvent) => {
     // eslint-disable-next-line array-element-newline
-    if (!['Backspace', 'Tab', 'Enter'].includes(event.key) && !/[0-9]/.test(event.key)) {
+    if (
+        !['Backspace', 'Tab', 'Enter', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(
+            event.key
+        ) &&
+        !/[0-9]/.test(event.key)
+    ) {
         event.preventDefault()
     }
 }

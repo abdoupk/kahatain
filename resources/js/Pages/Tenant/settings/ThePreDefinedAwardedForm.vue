@@ -12,7 +12,6 @@ import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue
 import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 
-import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -64,9 +63,8 @@ const submit = () => {
                                 :placeholder="$t('validation.attributes.the_amount')"
                                 max="50000"
                                 maxlength="5"
-                                type="number"
+                                type="text"
                                 @change="form?.validate('unemployment_benefit')"
-                                @keydown="allowOnlyNumbersOnKeyDown"
                             ></base-form-input>
 
                             <base-input-group-text>
@@ -99,7 +97,7 @@ const submit = () => {
                                 :placeholder="$t('settings.university_scholarship_hint')"
                                 max="50000"
                                 maxlength="5"
-                                type="number"
+                                type="text"
                                 @change="form?.validate('university_scholarship')"
                             ></base-form-input>
 

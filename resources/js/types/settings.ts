@@ -48,7 +48,8 @@ interface Orphans {
         at_home_with_income: number
         single_female_employee: number
         married: number
-        divorced: number
+        divorced_with_family: number
+        divorced_outside_family: number
     }
 }
 
@@ -75,7 +76,8 @@ interface PercentageOfContributionOrphans {
         at_home_with_income: number
         single_female_employee: number
         married: number
-        divorced: number
+        divorced_with_family: number
+        divorced_outside_family: number
     }
 }
 

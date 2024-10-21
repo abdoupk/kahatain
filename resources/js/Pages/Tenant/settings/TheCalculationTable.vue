@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { $t } from '../../../utils/i18n'
+
 import type { CalculationTableType } from '@/types/settings'
 
 import { useForm } from 'laravel-precognition-vue'
@@ -373,7 +375,7 @@ const submit = () =>
                         <base-td-table>
                             <base-form-input v-model="form.weights.orphans.female_gt_18.college_girl"></base-form-input>
                         </base-td-table>
-                        <base-td-table rowspan="7"></base-td-table>
+                        <base-td-table rowspan="8"></base-td-table>
                         <base-td-table>
                             <base-input-group>
                                 <base-form-input
@@ -454,7 +456,7 @@ const submit = () =>
                                 <base-input-group-text> %</base-input-group-text>
                             </base-input-group>
                         </base-td-table>
-                        <base-td-table colspan="2" rowspan="4"></base-td-table>
+                        <base-td-table colspan="2" rowspan="5"></base-td-table>
                     </base-tr-table>
                     <base-tr-table>
                         <base-td-table>{{ $t('family_statuses.single_female_employee') }}</base-td-table>
@@ -492,15 +494,18 @@ const submit = () =>
                             </base-input-group>
                         </base-td-table>
                     </base-tr-table>
+
                     <base-tr-table>
-                        <base-td-table>{{ $t('family_statuses.divorced') }}</base-td-table>
+                        <base-td-table>{{ $t('family_statuses.divorced_with_family') }}</base-td-table>
                         <base-td-table>
-                            <base-form-input v-model="form.weights.orphans.female_gt_18.divorced"></base-form-input>
+                            <base-form-input
+                                v-model="form.weights.orphans.female_gt_18.divorced_with_family"
+                            ></base-form-input>
                         </base-td-table>
                         <base-td-table>
                             <base-input-group>
                                 <base-form-input
-                                    v-model="form.percentage_of_contribution.orphans.female_gt_18.divorced"
+                                    v-model="form.percentage_of_contribution.orphans.female_gt_18.divorced_with_family"
                                     type="number"
                                 ></base-form-input>
 
@@ -508,6 +513,28 @@ const submit = () =>
                             </base-input-group>
                         </base-td-table>
                     </base-tr-table>
+
+                    <base-tr-table>
+                        <base-td-table>{{ $t('family_statuses.divorced_outside_family') }}</base-td-table>
+                        <base-td-table>
+                            <base-form-input
+                                v-model="form.weights.orphans.female_gt_18.divorced_outside_family"
+                            ></base-form-input>
+                        </base-td-table>
+                        <base-td-table>
+                            <base-input-group>
+                                <base-form-input
+                                    v-model="
+                                        form.percentage_of_contribution.orphans.female_gt_18.divorced_outside_family
+                                    "
+                                    type="number"
+                                ></base-form-input>
+
+                                <base-input-group-text> %</base-input-group-text>
+                            </base-input-group>
+                        </base-td-table>
+                    </base-tr-table>
+
                     <base-tr-table class="text-center">
                         <base-td-table>{{ $t('settings.males_over_18_years_old') }}</base-td-table>
                         <base-td-table>{{ $t('settings.weight') }}</base-td-table>
