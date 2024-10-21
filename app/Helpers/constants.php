@@ -116,4 +116,6 @@ const CALCULATION = [
         'income' => 10000.00,
         'contribution' => 10000.00,
     ],
+    'university_scholarship' => 4200.00,
+    'unemployment_benefit' => 15000.00,
 ];

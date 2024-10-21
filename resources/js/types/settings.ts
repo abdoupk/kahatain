@@ -117,4 +117,6 @@ export type CalculationTableType = {
         income: number
         contribution: number
     }
+    university_scholarship: number
+    unemployment_benefit: number
 }

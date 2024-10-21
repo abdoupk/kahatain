@@ -28,4 +28,7 @@ return [
     'high_school' => 'الطور الثانوي',
     'dismissed' => 'مفصول',
     'baby' => 'رضيع',
+    'university_scholarship' => 'المنحة الجامعية',
+    'university_scholarship_hint' => 'المنحة الجامعية (كل 3 اشهر)',
+    'unemployment_benefit' => 'منحة البطالة',
 ];
