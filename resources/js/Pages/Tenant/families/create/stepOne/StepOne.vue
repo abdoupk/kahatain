@@ -133,6 +133,7 @@ const fileNumber = defineModel('fileNumber')
                 <the-address-field
                     v-model:address="address"
                     v-model:location="location"
+                    :select_location_label="$t('hints.select_family_location')"
                     @input="form?.validate('address')"
                 ></the-address-field>
 

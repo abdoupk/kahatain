@@ -59,6 +59,7 @@ const academicLevelsStore = useAcademicLevelsStore()
 onMounted(async () => {
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
 })
+
 // Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
     setTimeout(() => {
@@ -410,6 +411,7 @@ const modalType = computed(() => {
                         id="address"
                         v-model:address="form.address"
                         v-model:location="form.location"
+                        :select_location_label="$t('hints.select_member_location')"
                         @update:address="form.validate('address')"
                     ></the-address-field>
 

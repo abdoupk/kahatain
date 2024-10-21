@@ -432,5 +432,9 @@
     "neighborhoods": "الاحياء التابعة للمنطقة",
     "select_location": "حدد الموقع",
     "search_or_add_a_competence": "ابحث عن مهارة او أضفها",
-    "add_this_competence": "اضف هذه المهارة"
+    "add_this_competence": "اضف هذه المهارة",
+    "leaflet.touch": "استخدم إصبعين لتحريك الخريطة",
+    "leaflet.scroll": "استخدم Ctrl + التمرير لتكبير الخريطة",
+    "leaflet.scrollMac": "استخدم ⌘ + التمرير لتكبير الخريطة",
+    "address_selected": "تم تحديد العنوان"
 }

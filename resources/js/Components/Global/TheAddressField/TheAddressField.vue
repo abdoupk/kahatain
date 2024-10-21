@@ -8,6 +8,10 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 
+defineProps<{
+    select_location_label: string
+}>()
+
 const address = defineModel('address')
 
 const location = defineModel('location')
@@ -28,7 +32,7 @@ const showMapModal = () => {
             type="text"
         ></base-form-input>
 
-        <base-tippy :content="$t('hints.select_location')" class="ms-2">
+        <base-tippy :content="$t(select_location_label)" class="ms-2">
             <button type="button" @click.prevent="showMapModal">
                 <svg-loader class="h-6 w-6" name="icon-location"></svg-loader>
             </button>

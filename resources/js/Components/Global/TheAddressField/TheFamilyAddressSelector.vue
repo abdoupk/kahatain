@@ -21,15 +21,19 @@ const emit = defineEmits(['close', 'set-location'])
 const showSuccessNotification = ref(false)
 
 const setLocation = (location) => {
+    console.log(location)
+
     if (isEqual(location, props.location)) return
 
     emit('set-location', location)
 
-    showSuccessNotification.value = true
+    if (location.lat !== null && location.lng !== null) {
+        showSuccessNotification.value = true
 
-    setTimeout(() => {
-        showSuccessNotification.value = false
-    }, 2000)
+        setTimeout(() => {
+            showSuccessNotification.value = false
+        }, 2000)
+    }
 }
 </script>
 

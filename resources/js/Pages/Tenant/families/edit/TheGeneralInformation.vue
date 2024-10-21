@@ -15,6 +15,7 @@ import TheBranchSelector from '@/Components/Global/TheBranchSelector.vue'
 import TheZoneSelector from '@/Components/Global/TheZoneSelector.vue'
 
 import { formatDate, omit } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ family: FamilyEditType }>()
 
@@ -146,10 +147,11 @@ const submit = () => {
                     <base-form-label for="address">
                         {{ $t('validation.attributes.address') }}
                     </base-form-label>
-                    
+
                     <the-address-field
                         v-model:address="form.address"
                         v-model:location="form.location"
+                        :select_location_label="$t('hints.select_family_location')"
                         @input="form?.validate('address')"
                     ></the-address-field>
 

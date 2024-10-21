@@ -180,7 +180,8 @@
     "hints.eid_al_adha": "تم فلتره النتائج لعرض فقط الأسر المستفيدة من الأضحية، يجب تحديث الأسر المراد عرضها هنا. ",
     "hints.babies_milk_and_diapers": "تم فلتره النتائج لعرض فقط الأسر المستفيدة من الحفاضات وحليب الأطفال، يجب تحديث الأسر المراد عرضها هنا. ",
     "hints.school_entry": "تم فلتره النتائج لعرض فقط الأيتام المستفيدين من الحقائب المدرسية، يجب تحديث الأيتام المراد عرضهم هنا. ",
-    "hints.select_location": "حدد موقع الأسرة على الخريطة",
+    "hints.select_family_location": "حدد موقع الأسرة على الخريطة",
+    "hints.select_member_location": "حدد موقع العضو على الخريطة",
     "housing.label.independent": "خاص (مستقل)",
     "housing.label.with_family": "مع العائلة",
     "housing.label.inheritance": "ميراث",
@@ -1181,5 +1182,9 @@
     "neighborhoods": "الاحياء التابعة للمنطقة",
     "select_location": "حدد الموقع",
     "search_or_add_a_competence": "ابحث عن مهارة او أضفها",
-    "add_this_competence": "اضف هذه المهارة"
+    "add_this_competence": "اضف هذه المهارة",
+    "leaflet.touch": "استخدم إصبعين لتحريك الخريطة",
+    "leaflet.scroll": "استخدم Ctrl + التمرير لتكبير الخريطة",
+    "leaflet.scrollMac": "استخدم ⌘ + التمرير لتكبير الخريطة",
+    "address_selected": "تم تحديد العنوان"
 }
