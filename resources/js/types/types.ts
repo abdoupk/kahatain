@@ -71,6 +71,7 @@ export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-trash-undo'
     | 'icon-donate'
+    | 'icon-treasure-chest'
     | 'icon-location'
     | 'icon-kahatain'
     | 'icon-diapers'
