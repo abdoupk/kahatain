@@ -121,4 +121,5 @@ export type CalculationTableType = {
     }
     university_scholarship: number
     unemployment_benefit: number
+    threshold: number
 }

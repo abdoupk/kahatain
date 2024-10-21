@@ -4,13 +4,17 @@ namespace App\Http\Controllers\V1\SiteSettings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SiteSettings\UpdateSiteInfosRequest;
-use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SiteSettingUpdateInfosController extends Controller implements HasMiddleware
 {
-    public function __invoke(UpdateSiteInfosRequest $request): void
+    public static function middleware()
+    {
+        return ['can:update_settings'];
+    }
+
+    public function __invoke(UpdateSiteInfosRequest $request): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|\Illuminate\Foundation\Application
     {
         $data = $request->except('super_admin');
 
@@ -27,13 +31,10 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
             'password' => $superAdmin->password,
         ];
 
-        Tenant::whereId(tenant('id'))->update([
+        auth()->user()->tenant->update([
             'data->infos' => $data,
         ]);
-    }
 
-    public static function middleware()
-    {
-        return ['can:update_settings'];
+        return response('', 204);
     }
 }

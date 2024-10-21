@@ -12,6 +12,7 @@ class UpdateSiteAwardedInfosRequest extends FormRequest
         return [
             'university_scholarship' => __('settings.university_scholarship'),
             'unemployment_benefit' => __('settings.unemployment_benefit'),
+            'threshold' => __('settings.threshold'),
         ];
     }
 
@@ -20,6 +21,7 @@ class UpdateSiteAwardedInfosRequest extends FormRequest
         return [
             'university_scholarship' => 'required|numeric|min:0|max:50000',
             'unemployment_benefit' => 'required|numeric|min:0|max:50000',
+            'threshold' => 'required|numeric|min:0|max:50000',
         ];
     }
 

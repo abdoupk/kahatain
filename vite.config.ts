@@ -6,7 +6,6 @@ import { defineConfig } from 'vite'
 import istanbul from 'vite-plugin-istanbul'
 import svgLoader from 'vite-svg-loader'
 
-
 export default defineConfig({
     plugins: [
         laravel({
@@ -52,7 +51,7 @@ export default defineConfig({
             }
         },
         ssrManifest: true,
-        sourcemap: true,
+        sourcemap: false,
         minify: 'esbuild'
     },
     resolve: {

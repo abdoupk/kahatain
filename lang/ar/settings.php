@@ -31,4 +31,5 @@ return [
     'university_scholarship' => 'المنحة الجامعية',
     'university_scholarship_hint' => 'المنحة الجامعية (كل 3 اشهر)',
     'unemployment_benefit' => 'منحة البطالة',
+    'threshold' => 'العتبة',
 ];

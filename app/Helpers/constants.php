@@ -120,4 +120,5 @@ const CALCULATION = [
     ],
     'university_scholarship' => 4200.00,
     'unemployment_benefit' => 15000.00,
+    'threshold' => 8000.00,
 ];

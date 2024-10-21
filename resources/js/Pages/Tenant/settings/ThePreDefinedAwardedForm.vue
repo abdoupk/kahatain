@@ -2,7 +2,7 @@
 import type { CalculationTableType } from '@/types/settings'
 
 import { useForm } from 'laravel-precognition-vue'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -11,6 +11,7 @@ import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
 import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
+import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 
 import { $t } from '@/utils/i18n'
 
@@ -22,7 +23,8 @@ const showSuccessNotification = ref(false)
 
 const form = useForm('patch', route('tenant.site-settings.update-awarded-infos'), {
     university_scholarship: props.calculation.university_scholarship,
-    unemployment_benefit: props.calculation.unemployment_benefit
+    unemployment_benefit: props.calculation.unemployment_benefit,
+    threshold: props.calculation.threshold
 })
 
 const submit = () => {
@@ -30,9 +32,11 @@ const submit = () => {
         onSuccess: () => {
             showSuccessNotification.value = true
 
-            setTimeout(() => {
+            form.errors = {}
+
+            nextTick(() => {
                 showSuccessNotification.value = false
-            }, 1000)
+            })
         }
     })
 }
@@ -115,6 +119,40 @@ const submit = () => {
                 </div>
                 <!-- End: University Scholarship -->
 
+                <!-- BEGIN: Threshold -->
+                <div class="col-span-12 grid grid-cols-12">
+                    <div class="col-span-12 lg:col-span-4">
+                        <base-form-label class="mt-0 text-lg lg:mt-0" for="threshold">
+                            {{ $t('settings.threshold') }}
+                        </base-form-label>
+                    </div>
+
+                    <div class="col-span-6 lg:col-span-5">
+                        <base-input-group>
+                            <base-form-input
+                                id="threshold"
+                                v-model="form.threshold"
+                                :placeholder="$t('settings.threshold_hint')"
+                                max="50000"
+                                maxlength="5"
+                                type="text"
+                                @change="form?.validate('threshold')"
+                            ></base-form-input>
+
+                            <base-input-group-text>
+                                {{ $t('DA') }}
+                            </base-input-group-text>
+                        </base-input-group>
+                    </div>
+
+                    <base-form-input-error class="col-span-12 lg:col-start-5">
+                        <div v-if="form?.invalid('threshold')" class="mt-2 text-danger">
+                            {{ form.errors.threshold }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: Threshold -->
+
                 <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
                     {{ $t('save') }}
 
@@ -123,4 +161,13 @@ const submit = () => {
             </div>
         </form>
     </div>
+
+    <success-notification
+        :open="showSuccessNotification"
+        :title="
+            $t('successfully_updated', {
+                attribute: $t('tenant_settings')
+            })
+        "
+    ></success-notification>
 </template>

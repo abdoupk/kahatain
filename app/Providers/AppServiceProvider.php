@@ -8,6 +8,7 @@ use Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Vite::usePrefetchStrategy('waterfall', ['concurrently' => 3]);
+
         JsonResource::withoutWrapping();
 
         Carbon::setLocale(config('app.locale') . '_DZ');

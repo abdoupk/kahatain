@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../utils/i18n'
-
 import type { CalculationTableType } from '@/types/settings'
 
 import { useForm } from 'laravel-precognition-vue'
@@ -17,6 +15,8 @@ import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
     calculation: CalculationTableType
