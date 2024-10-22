@@ -8,7 +8,7 @@ import { $t, $tc, getLocale } from '@/utils/i18n'
 
 const client = new MeiliSearch({
     host: 'http://127.0.0.1:7700',
-    apiKey: 'masterKey'
+    apiKey: import.meta.env.VITE_MEILISEARCH_KEY
 })
 
 export const search = async (q: string) => {
@@ -186,7 +186,7 @@ export const search = async (q: string) => {
             hit.title = constructTitle(hit, result.indexUid)
         })
     })
-    console.log(a.results)
+    
     return a.results
 }
 

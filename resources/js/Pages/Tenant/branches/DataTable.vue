@@ -143,7 +143,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
         </div>
 
         <div class="col-span-12 my-8 grid grid-cols-12 gap-4 @4xl:hidden">
-            <div v-for="branch in branches.data" :key="branch.id" class="intro-y col-span-12 @xl:col-span-6">
+            <div v-for="branch in branches.data" :key="branch.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
                 <div class="box p-5">
                     <div class="flex">
                         <div class="me-3 truncate text-lg font-medium">

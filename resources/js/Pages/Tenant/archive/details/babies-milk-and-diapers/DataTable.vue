@@ -18,7 +18,7 @@ defineProps<{ orphans: PaginationData<BabiesMilkAndDiapersResource>; params: Ind
 
 <template>
     <div class="@container">
-        <div class="intro-y col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible !z-30">
+        <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
@@ -113,7 +113,7 @@ defineProps<{ orphans: PaginationData<BabiesMilkAndDiapersResource>; params: Ind
         </div>
 
         <div class="col-span-12 my-8 grid grid-cols-12 gap-4 @3xl:hidden">
-            <div v-for="orphan in orphans.data" :key="orphan.id" class="intro-y col-span-12 @xl:col-span-6">
+            <div v-for="orphan in orphans.data" :key="orphan.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
                 <div class="box p-5">
                     <div class="flex">
                         <div class="me-3 truncate text-lg font-medium">

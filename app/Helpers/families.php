@@ -9,14 +9,14 @@ use Illuminate\Support\Collection;
 function getFamilies(): LengthAwarePaginator
 {
     return search(Family::getModel())
-        ->query(fn ($query) => $query->with('zone'))
+        ->query(fn($query) => $query->with('zone'))
         ->paginate(perPage: request()?->integer('perPage', 10));
 }
 
 function getFamiliesForExport(): Collection
 {
     return search(Family::getModel(), limit: 10000)
-        ->query(fn ($query) => $query
+        ->query(fn($query) => $query
             ->with(['zone:id,name',
                 'branch:id,name',
                 'sponsor.incomes',
@@ -34,8 +34,8 @@ function searchFamilies(): \Illuminate\Database\Eloquent\Collection
 
 function calculateTotalIncomes(Family $family): float
 {
-    return (float) $family->sponsor?->incomes->total_income
-        + (float) $family->orphans?->sum('income')
+    return (float)$family->sponsor?->incomes->total_income
+        + (float)$family->orphans?->sum('income')
         + $family->secondSponsor?->income;
 }
 
@@ -53,8 +53,8 @@ function calculateIncomeRate(Family $family): float
 function calculateIncomes(Family $family)
 {
     return $family->orphans->sum(function (Orphan $orphan) {
-        return calculateOrphanIncomes($orphan);
-    }) + calculateContributionsForSponsor($family->sponsor);
+            return calculateOrphanIncomes($orphan);
+        }) + calculateContributionsForSponsor($family->sponsor);
 }
 
 /**
@@ -88,13 +88,13 @@ function calculateWeights(Family $family): float
     )['weights']['orphans'];
 
     return $family->orphans->sum(
-        function (Orphan $orphan) use ($calculationWeights) {
-            return calculateOrphanWeights(
-                $orphan,
-                $calculationWeights
-            );
-        }
-    ) + calculateSponsorWeights($family);
+            function (Orphan $orphan) use ($calculationWeights) {
+                return calculateOrphanWeights(
+                    $orphan,
+                    $calculationWeights
+                );
+            }
+        ) + calculateSponsorWeights($family);
 }
 
 /**
@@ -119,12 +119,12 @@ function calculateSponsorWeights(Family $family): float
  */
 function calculateOrphanWeights(Orphan $orphan, array $orphanWeights): float
 {
-    if ($orphan->is_handicapped) {
-        return json_decode($orphan->tenant['calculation'], true, 512, JSON_THROW_ON_ERROR)['weights']['handicapped'];
+    if ($orphan->birth_date->age <= 18) {
+        return calculateWeightForOrphanBelow18($orphan, $orphanWeights);
     }
 
-    if ($orphan->birth_date->age < 18) {
-        return calculateWeightForOrphanBelow18($orphan, $orphanWeights);
+    if ($orphan->is_handicapped) {
+        return json_decode($orphan->tenant['calculation'], true, 512, JSON_THROW_ON_ERROR)['weights']['handicapped'];
     }
 
     if ($orphan->gender === 'male') {
@@ -145,13 +145,14 @@ function calculateWeightForOrphanFemaleOlderThan18(Orphan $orphan, array $weight
         'at_home_with_income' => $weights['at_home_with_income'],
         'single_female_employee' => $weights['single_female_employee'],
         'married' => $weights['married'],
-        'divorced' => $weights['divorced'],
+        'divorced_with_family' => $weights['divorced_with_family'],
+        'divorced_outside_family' => $weights['divorced_outside_family']
     };
 }
 
 function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights): float
 {
-    $weights = $weights['female_gt_18'];
+    $weights = $weights['male_gt_18'];
 
     return match ($orphan->family_status) {
         'college_boy' => $weights['college_boy'],
@@ -229,16 +230,16 @@ function calculateContributionsForSponsor(Sponsor $sponsor): float
     if ($sponsor->is_unemployed) {
         return match ($sponsor->sponsor_type) {
             'other' => $sponsorPercentages['other'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
             'widower' => $sponsorPercentages['widower'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
             'widow' => $sponsorPercentages['widow'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
             'widows_husband' => $sponsorPercentages['widows_husband'] *
-                $sponsor->incomes->total_income,
-            'widowers_wife' => $sponsorPercentages['widowers_wife'] * $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
+            'widowers_wife' => $sponsorPercentages['widowers_wife'] * $sponsor->incomes?->total_income ?? 0,
             'mother_of_a_supported_childhood' => $sponsorPercentages['mother_of_a_supported_childhood'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
         };
     }
 
@@ -292,7 +293,7 @@ function calculateContributionsForMaleOrphan(Orphan $orphan, array $calculations
 
 function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculations): float
 {
-    if (! $orphan->is_unemployed) {
+    if (!$orphan->is_unemployed) {
         $calculations = $calculations['percentage_of_contribution']['orphans']['female_gt_18'];
 
         return match ($orphan->family_status) {
@@ -301,7 +302,8 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
             'at_home_with_income' => $calculations['at_home_with_income'],
             'single_female_employee' => $calculations['single_female_employee'],
             'married' => $calculations['married'],
-            'divorced' => $calculations['divorced'],
+            'divorced_with_family' => $calculations['divorced_with_family'],
+            'divorced_outside_family' => $calculations['divorced_outside_family'],
             default => 0
         };
     }
