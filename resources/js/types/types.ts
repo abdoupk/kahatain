@@ -757,6 +757,21 @@ export interface ZonesIndexResource extends Zone {
     families_count?: number
 }
 
+export type RecipientType = {
+    recipientable_type: 'orphan' | 'family'
+    recipientable_id: string
+}
+
+export interface BenefactorsIndexResource extends RecipientType {
+    id: string
+    first_name: string
+    last_name: string
+    phone: string
+    created_at: string
+    amount: number
+    note: string
+}
+
 export interface ListBoxFilter {
     field: string
     label: string

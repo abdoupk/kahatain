@@ -21,8 +21,6 @@ const emit = defineEmits(['close', 'set-location'])
 const showSuccessNotification = ref(false)
 
 const setLocation = (location) => {
-    console.log(location)
-
     if (isEqual(location, props.location)) return
 
     emit('set-location', location)

@@ -23,7 +23,7 @@ class FamilySeeder extends Seeder
     public function run(): void
     {
         Tenant::select('id')->get()->each(function (Tenant $tenant) {
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 70; $i++) {
                 $family = Family::factory()->create([
                     'tenant_id' => $tenant->id,
                     'branch_id' => Branch::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,

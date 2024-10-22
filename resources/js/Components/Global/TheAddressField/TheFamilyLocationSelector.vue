@@ -2,6 +2,8 @@
 import { PositionType } from '@/types/types'
 
 import { useSettingsStore } from '@/stores/settings'
+import 'leaflet.locatecontrol'
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
 import { computed, ref, watch } from 'vue'
 
@@ -33,6 +35,17 @@ const init: Init = async (initializeMap) => {
         const { map, leaflet } = mapInstance
 
         leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+
+        leaflet.control
+            .locate({
+                flyTo: true,
+                locateOptions: {
+                    enableHighAccuracy: true
+                },
+                keepCurrentZoomLevel: true,
+                showPopup: false
+            })
+            .addTo(map)
 
         const color = darkMode.value && colorScheme.value ? extractColor('darkmode-100') : extractColor('primary')
 
@@ -74,7 +87,7 @@ const init: Init = async (initializeMap) => {
 
         const markerAdded = ref(false)
 
-        if (props.location.lat != null && props.location.lng != null) {
+        if (props.location?.lat != null && props.location?.lng != null) {
             addMarker(props.location)
         }
 

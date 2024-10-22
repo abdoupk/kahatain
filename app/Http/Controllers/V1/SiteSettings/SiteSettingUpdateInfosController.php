@@ -5,6 +5,9 @@ namespace App\Http\Controllers\V1\SiteSettings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SiteSettings\UpdateSiteInfosRequest;
 use App\Models\User;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SiteSettingUpdateInfosController extends Controller implements HasMiddleware
@@ -14,7 +17,7 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
         return ['can:update_settings'];
     }
 
-    public function __invoke(UpdateSiteInfosRequest $request): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|\Illuminate\Foundation\Application
+    public function __invoke(UpdateSiteInfosRequest $request): ResponseFactory|Response|Application
     {
         $data = $request->except('super_admin');
 
@@ -31,7 +34,7 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
             'password' => $superAdmin->password,
         ];
 
-        auth()->user()->tenant->update([
+        auth()->user()->tenant()->update([
             'data->infos' => $data,
         ]);
 
