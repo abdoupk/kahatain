@@ -24,17 +24,27 @@ class FamilySeeder extends Seeder
     public function run(): void
     {
         Tenant::select('id')->get()->each(
-        /**
-         * @throws JsonException
-         */
+            /**
+             * @throws JsonException
+             */
             function (Tenant $tenant) {
                 for ($i = 0; $i < 10; $i++) {
-                    $family = Family::factory()->create([
-                        'tenant_id' => $tenant->id,
-                        'branch_id' => Branch::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
-                        'zone_id' => Zone::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
-                        'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
-                    ]);
+                    $family = Family::factory()
+                        ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Family $family) use ($tenant) {
+                            return [
+                                'tenant_id' => $family->tenant_id,
+                                'benefactor_id' => $family->tenant->benefactors->random()->id,
+                                'recipientable_id' => $family->id,
+                                'created_by' => $tenant->members->random()->id,
+                                'recipientable_type' => 'family',
+                            ];
+                        })
+                        ->create([
+                            'tenant_id' => $tenant->id,
+                            'branch_id' => Branch::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
+                            'zone_id' => Zone::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
+                            'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
+                        ]);
 
                     Spouse::factory()->create([
                         'tenant_id' => $tenant->id,
@@ -60,13 +70,27 @@ class FamilySeeder extends Seeder
 
                     for ($j = 0; $j < fake()->numberBetween(2, 6); $j++) {
 
-                        $orphan = Orphan::factory()
-                            ->hasAcademicAchievements(3, function (array $attributes, Orphan $orphan) {
-                                return [
-                                    'tenant_id' => $orphan->tenant_id,
-                                    'orphan_id' => $orphan->id,
-                                ];
-                            })
+                        $orphan = Orphan::factory();
+
+                        if ($i == 0) {
+                            $orphan = $orphan
+                                ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Orphan $orphan) use ($tenant) {
+                                    return [
+                                        'tenant_id' => $orphan->tenant_id,
+                                        'benefactor_id' => $orphan->tenant->benefactors->random()->id,
+                                        'created_by' => $tenant->members->random()->id,
+
+                                        'recipientable_id' => $orphan->id,
+                                        'recipientable_type' => 'orphan',
+                                    ];
+                                });
+                        }
+                        $orphan = $orphan->hasAcademicAchievements(3, function (array $attributes, Orphan $orphan) {
+                            return [
+                                'tenant_id' => $orphan->tenant_id,
+                                'orphan_id' => $orphan->id,
+                            ];
+                        })
                             ->hasVocationalTrainingAchievements(2, function (array $attributes, Orphan $orphan) {
                                 return [
                                     'tenant_id' => $orphan->tenant_id,
@@ -87,7 +111,6 @@ class FamilySeeder extends Seeder
                                 'created_by' => User::whereTenantId($tenant->id)->first()?->id,
                                 'sponsor_id' => $sponsor->id,
                             ]);
-
                         Baby::factory()->create([
                             'tenant_id' => $tenant->id,
                             'orphan_id' => $orphan->id,

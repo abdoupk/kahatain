@@ -76,4 +76,9 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->hasMany(PrivateSchool::class);
     }
+
+    public function benefactors(): HasMany
+    {
+        return $this->hasMany(Benefactor::class);
+    }
 }

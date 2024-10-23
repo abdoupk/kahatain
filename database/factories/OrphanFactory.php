@@ -48,14 +48,14 @@ class OrphanFactory extends Factory
 
         $family_status = null;
 
-        if ($birth_date->age > 18 && !$handicapped) {
+        if ($birth_date->age > 18 && ! $handicapped) {
             $family_status = $gender === 'male' ? fake()->randomElement($this->family_statuses['male']) : fake()->randomElement($this->family_statuses['female']);
         }
 
         if ($family_status === 'unemployed') {
             $unemployed = true;
         }
-        ray($family_status, $gender, $birth_date->age, $handicapped, $unemployed);
+
         return [
             'first_name' => fake('ar_SA')->firstName,
             'last_name' => fake('ar_SA')->lastName,

@@ -45,5 +45,4 @@ onMounted(() => {
 .dark .leaflet-container {
     background: #282828;
 }
-
 </style>

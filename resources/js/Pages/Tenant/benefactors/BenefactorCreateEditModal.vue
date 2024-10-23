@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { useZonesStore } from '@/stores/zones'
+import { useBenefactorsStore } from '@/stores/benefactors'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, ref } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 
 import { $t, $tc } from '@/utils/i18n'
 
@@ -17,8 +17,8 @@ defineProps<{
     open: boolean
 }>()
 
-// Get the zones store
-const zonesStore = useZonesStore()
+// Get the benefactors store
+const benefactorsStore = useBenefactorsStore()
 
 // Initialize a ref for loading state
 const loading = ref(false)
@@ -26,15 +26,19 @@ const loading = ref(false)
 const showSuccessNotification = ref(false)
 
 const notificationTitle = computed(() => {
-    return zonesStore.zone.id ? $t('successfully_updated') : $t('successfully_created', { attribute: $t('the_zone') })
+    return benefactorsStore.benefactor.id
+        ? $t('successfully_updated')
+        : $t('successfully_created', { attribute: $t('the_benefactor') })
 })
 
 const form = computed(() => {
-    if (zonesStore.zone.id) {
-        return useForm('put', route('tenant.zones.update', zonesStore.zone.id), { ...zonesStore.zone })
+    if (benefactorsStore.benefactor.id) {
+        return useForm('put', route('tenant.benefactors.update', benefactorsStore.benefactor.id), {
+            ...benefactorsStore.benefactor
+        })
     }
 
-    return useForm('post', route('tenant.zones.store'), { ...zonesStore.zone })
+    return useForm('post', route('tenant.benefactors.store'), { ...benefactorsStore.benefactor })
 })
 
 // Define custom event emitter for 'close' event
@@ -44,10 +48,10 @@ const emit = defineEmits(['close'])
 const handleSuccess = () => {
     setTimeout(() => {
         router.get(
-            route('tenant.zones.index'),
+            route('tenant.benefactors.index'),
             {},
             {
-                only: ['zones'],
+                only: ['benefactors'],
                 preserveState: true
             }
         )
@@ -76,21 +80,21 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the zone id
+// Compute the slideover title based on the benefactor id
 const modalTitle = computed(() => {
-    return zonesStore.zone.id
+    return benefactorsStore.benefactor.id
         ? $t('modal_update_title', {
-              attribute: $t('the_zone')
+              attribute: $t('the_benefactor')
           })
-        : $tc('add new', 0, { attribute: $t('zone') })
+        : $tc('add new', 1, { attribute: $t('benefactor') })
 })
 
 // Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the zone id
+// Compute the slideover type based on the benefactor id
 const modalType = computed(() => {
-    return zonesStore.zone.id ? 'update' : 'create'
+    return benefactorsStore.benefactor.id ? 'update' : 'create'
 })
 </script>
 
@@ -101,50 +105,91 @@ const modalType = computed(() => {
         :modal-type="modalType"
         :open
         :title="modalTitle"
+        size="lg"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <!-- Begin: Name-->
-            <div class="col-span-12">
-                <base-form-label htmlFor="name">
-                    {{ $t('validation.attributes.name') }}
+            <!-- Begin: First Name-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label htmlFor="first_name">
+                    {{ $t('validation.attributes.first_name') }}
                 </base-form-label>
 
                 <base-form-input
-                    id="name"
+                    id="first_name"
                     ref="firstInputRef"
-                    v-model="form.name"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.name') })"
+                    v-model="form.first_name"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.first_name') })"
                     type="text"
-                    @change="form.validate('name')"
+                    @change="form.validate('first_name')"
                 />
 
-                <div v-if="form.errors?.name" class="mt-2">
-                    <base-input-error :message="form.errors.name"></base-input-error>
+                <div v-if="form.errors?.first_name" class="mt-2">
+                    <base-input-error :message="form.errors.first_name"></base-input-error>
                 </div>
             </div>
-            <!-- End: Name-->
+            <!-- End: First Name-->
 
-            <!-- Begin: Name-->
-            <div class="col-span-12">
-                <base-form-label htmlFor="description">
-                    {{ $t('neighborhoods') }}
+            <!-- Begin: Last Name-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label htmlFor="last_name">
+                    {{ $t('validation.attributes.last_name') }}
                 </base-form-label>
 
-                <base-form-text-area
-                    id="description"
-                    v-model="form.description"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.description') })"
-                    rows="5"
-                    @change="form.validate('description')"
+                <base-form-input
+                    id="last_name"
+                    v-model="form.last_name"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.last_name') })"
+                    type="text"
+                    @change="form.validate('last_name')"
                 />
 
-                <div v-if="form.errors?.description" class="mt-2">
-                    <base-input-error :message="form.errors.description"></base-input-error>
+                <div v-if="form.errors?.last_name" class="mt-2">
+                    <base-input-error :message="form.errors.last_name"></base-input-error>
                 </div>
             </div>
-            <!-- End: Name-->
+            <!-- End: Last Name-->
+
+            <!-- Begin: Phone-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label htmlFor="phone">
+                    {{ $t('validation.attributes.phone_number') }}
+                </base-form-label>
+
+                <base-form-input
+                    id="phone"
+                    v-model="form.phone"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.phone_number') })"
+                    type="text"
+                    @change="form.validate('phone')"
+                />
+
+                <div v-if="form.errors?.phone" class="mt-2">
+                    <base-input-error :message="form.errors.phone"></base-input-error>
+                </div>
+            </div>
+            <!-- End: Phone-->
+
+            <!-- Begin: address-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label htmlFor="address">
+                    {{ $t('validation.attributes.address') }}
+                </base-form-label>
+
+                <the-address-field
+                    id="address"
+                    v-model:address="form.address"
+                    v-model:location="form.location"
+                    :select_location_label="$t('hints.select_member_location')"
+                    @update:address="form.validate('address')"
+                ></the-address-field>
+
+                <div v-if="form.errors?.address" class="mt-2">
+                    <base-input-error :message="form.errors.address"></base-input-error>
+                </div>
+            </div>
+            <!-- End: address-->
         </template>
     </create-edit-modal>
 

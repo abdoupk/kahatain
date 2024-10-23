@@ -51,7 +51,7 @@ export default defineConfig({
             }
         },
         ssrManifest: true,
-        sourcemap: false,
+        sourcemap: true,
         minify: 'esbuild'
     },
     resolve: {

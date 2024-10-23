@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -173,6 +174,14 @@ class Family extends Model
     public function sponsorships(): HasOne
     {
         return $this->hasOne(FamilySponsorship::class);
+    }
+
+    public function aid(): MorphMany
+    {
+        return $this->morphMany(
+            Sponsorship::class,
+            'recipientable',
+        );
     }
 
     public function sponsorSponsorships(): HasOneThrough

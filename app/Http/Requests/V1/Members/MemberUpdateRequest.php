@@ -19,9 +19,16 @@ class MemberUpdateRequest extends FormRequest
             ],
             'zone_id' => 'required|exists:zones,id',
             'branch_id' => 'required|exists:branches,id',
-            'qualification' => 'required|string',
-            'roles' => 'array|min:1',
-            'roles.*' => 'required|exists:roles,uuid',
+            'qualification' => 'nullable|string',
+            'address' => 'required|string',
+            'competences' => 'nullable|array',
+            'workplace' => 'nullable|string',
+            'function' => 'nullable|string',
+            'location' => 'sometimes|array',
+            'location.lat' => 'nullable|numeric',
+            'location.lng' => 'nullable|numeric',
+            'roles' => 'nullable|array',
+            'roles.*' => 'nullable|exists:roles,uuid',
         ];
     }
 

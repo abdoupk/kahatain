@@ -186,7 +186,7 @@ export const search = async (q: string) => {
             hit.title = constructTitle(hit, result.indexUid)
         })
     })
-    
+
     return a.results
 }
 

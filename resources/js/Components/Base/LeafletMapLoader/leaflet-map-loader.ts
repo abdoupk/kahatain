@@ -1,6 +1,6 @@
 import L, { Map, MapOptions } from 'leaflet'
-import 'leaflet.markercluster'
 import { GestureHandling } from 'leaflet-gesture-handling'
+import 'leaflet.markercluster'
 
 export interface MapConfig {
     config: MapOptions
@@ -17,7 +17,7 @@ const initializeMap = async (mapRef: LeafletElement, mapConfig: MapConfig) => {
 
     const map = L.map(mapRef, mapConfig.config)
 
-    L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
+    L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling)
 
     mapRef.map = map
 

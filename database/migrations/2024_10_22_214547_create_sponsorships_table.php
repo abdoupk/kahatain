@@ -8,13 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('benefactors', function (Blueprint $table) {
+        Schema::create('sponsorships', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone')->nullable();
-            $table->string('address')->nullable();
-            $table->json('location')->nullable();
+            $table->float('amount');
+            $table->uuid('benefactor_id');
+            $table->text('recipientable_type');
+            $table->uuid('recipientable_id');
+            $table->string('sponsorship_type');
             $table->uuid('created_by');
             $table->uuid('deleted_by')->nullable();
             $table->uuid('tenant_id');

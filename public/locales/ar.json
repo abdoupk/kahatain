@@ -64,6 +64,7 @@
     "breadcrumb.trash": "المحذوفات",
     "breadcrumb.monthly-basket": "القفة الشهرية",
     "breadcrumb.babies-milk-and-diapers": "الاستفادة من الحليب والحفاضات",
+    "breadcrumb.benefactors": "المحسنين",
     "entries.families": "[11,*]عائلة|[3,10]عائلات|{2}عائلتين",
     "entries.roles": "[11,*]دور|[3,10]أدوار|{2}دورين",
     "entries.branches": "[11,*]فرع|[3,10]فروع|{2}فرعين",
@@ -75,6 +76,7 @@
     "entries.schools": "[11,*]مدرسة خاصة|[3,10]مدارس خاصة|{2}مدرستين",
     "entries.finances": "[11,*]إيراد|[3,10]إيرادات|{2}إيرادين",
     "entries.items": "[11,*]عنصر|[3,10]عناصر|{2}عنصرين",
+    "entries.benefactors": "[11,*]محسن|[3,10]محسنين|{2}محسنين",
     "errors.descriptions.503": "عذرًا، نحن نقوم ببعض أعمال الصيانة. يرجى التحقق مرة أخرى قريبا.",
     "errors.descriptions.500": "عفوًا، حدث خطأ ما في خوادمنا.",
     "errors.descriptions.404": "عذرا، الصفحة التي تبحث عنها لا يمكن العثور عليها.",
@@ -1189,5 +1191,11 @@
     "leaflet.scroll": "استخدم Ctrl + التمرير لتكبير الخريطة",
     "leaflet.scrollMac": "استخدم ⌘ + التمرير لتكبير الخريطة",
     "address_selected": "تم تحديد العنوان",
-    "benefactors": "المحسنين"
+    "benefactors": "المحسنين",
+    "benefactor": "محسن",
+    "the_benefactor": "المحسن",
+    "the_benefactors": "المحسنين",
+    "sponsorships_count": "عدد الكفالات",
+    "the_sponsorships": "الكفالات",
+    "the_recipient": "المستفيد"
 }

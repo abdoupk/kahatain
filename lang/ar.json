@@ -438,5 +438,11 @@
     "leaflet.scroll": "استخدم Ctrl + التمرير لتكبير الخريطة",
     "leaflet.scrollMac": "استخدم ⌘ + التمرير لتكبير الخريطة",
     "address_selected": "تم تحديد العنوان",
-    "benefactors": "المحسنين"
+    "benefactors": "المحسنين",
+    "benefactor": "محسن",
+    "the_benefactor": "المحسن",
+    "the_benefactors": "المحسنين",
+    "sponsorships_count": "عدد الكفالات",
+    "the_sponsorships": "الكفالات",
+    "the_recipient": "المستفيد"
 }
