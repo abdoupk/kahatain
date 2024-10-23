@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\Benefactors;
 
 use App\Models\Benefactor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,13 +14,10 @@ class BenefactorsIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'phone' => $this->phone,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-
-            'tenant_id' => $this->tenant_id,
+            'name' => $this->getName(),
+            'phone' => formatPhoneNumber($this->phone),
+            'sponsorships_count' => $this->sponsorships_count,
+            'created_at' => Carbon::createFromTimeString($this->created_at)->diffForHumans(),
         ];
     }
 }

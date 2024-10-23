@@ -256,6 +256,35 @@ export interface Zone {
     description?: string
 }
 
+export interface Benefactor {
+    id: string
+    first_name: string
+    last_name: string
+    name?: string
+    phone: string
+    address: string
+    location: PositionType
+    creator: {
+        id: string
+        name: string
+    }
+    sponsorships?: {
+        id: string
+        amount: string
+        sponsorship_type: string
+        recipientable: {
+            id: string
+            name: string
+            recipientable_type: string
+        }
+        readable_created_at: string
+        creator: {
+            id: string
+            name: string
+        }
+    }[]
+}
+
 export interface Branch {
     id: string
     name: string
@@ -764,12 +793,11 @@ export type RecipientType = {
 
 export interface BenefactorsIndexResource extends RecipientType {
     id: string
-    first_name: string
-    last_name: string
+    name: string
     phone: string
     created_at: string
     amount: number
-    note: string
+    sponsorships_count: number
 }
 
 export interface ListBoxFilter {

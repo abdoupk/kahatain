@@ -1,8 +1,16 @@
 <script lang="ts" setup>
-import { useZonesStore } from '@/stores/zones'
+import { useBenefactorsStore } from '@/stores/benefactors'
 import { Link } from '@inertiajs/vue3'
 
+import BaseTable from '@/Components/Base/table/BaseTable.vue'
+import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
+import BaseTdTable from '@/Components/Base/table/BaseTdTable.vue'
+import BaseThTable from '@/Components/Base/table/BaseThTable.vue'
+import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
+import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import ShowModal from '@/Components/Global/ShowModal.vue'
+
+import { $t } from '@/utils/i18n'
 
 defineProps<{
     open: boolean
@@ -12,18 +20,18 @@ defineProps<{
 // Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
-const zonesStore = useZonesStore()
+const benefactorsStore = useBenefactorsStore()
 </script>
 
 <template>
-    <show-modal :open :title size="lg" @close="emit('close')">
+    <show-modal :open :title size="xl" @close="emit('close')">
         <template #description>
             <!-- Begin: Name-->
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.name') }}</h2>
 
                 <h3 class="mt-1 rtl:font-medium">
-                    {{ zonesStore.zone.name }}
+                    {{ benefactorsStore.benefactor.name }}
                 </h3>
             </div>
             <!-- End: Name-->
@@ -33,7 +41,7 @@ const zonesStore = useZonesStore()
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.created_at') }}</h2>
 
                 <h3 class="mt-1 rtl:font-medium">
-                    {{ zonesStore.zone.readable_created_at }}
+                    {{ benefactorsStore.benefactor.readable_created_at }}
                 </h3>
             </div>
             <!-- End: Created At-->
@@ -43,39 +51,90 @@ const zonesStore = useZonesStore()
                 <h2 class="rtl:font-semibold">{{ $t('created_by') }}</h2>
 
                 <Link
-                    :href="route('tenant.members.index') + `?show=${zonesStore.zone.creator?.id}`"
+                    :href="route('tenant.members.index') + `?show=${benefactorsStore.benefactor.creator?.id}`"
                     class="mt-1 rtl:font-medium"
                 >
-                    {{ zonesStore.zone.creator?.name }}
+                    {{ benefactorsStore.benefactor.creator?.name }}
                 </Link>
             </div>
             <!-- End: Creator-->
 
-            <!-- Begin: Families Count-->
-            <div class="col-span-6">
-                <h2 class="rtl:font-semibold">{{ $t('families_count') }}</h2>
-
-                <p class="mt-1 rtl:font-medium">{{ zonesStore.zone.families_count }}</p>
-            </div>
-            <!-- End: Families Count-->
-
-            <!-- Begin: Members Count-->
-            <div class="col-span-6">
-                <h2 class="rtl:font-semibold">{{ $t('members_count') }}</h2>
-
-                <p class="mt-1 rtl:font-medium">{{ zonesStore.zone.members_count }}</p>
-            </div>
-            <!-- End: Members Count-->
-
-            <!-- Begin: Description-->
-            <div class="col-span-12">
-                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.description') }}</h2>
+            <!-- Begin: Address-->
+            <div class="col-span-12 sm:col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.address') }}</h2>
 
                 <p class="mt-1 rtl:font-medium">
-                    {{ zonesStore.zone.description }}
+                    {{ benefactorsStore.benefactor.address }}
                 </p>
             </div>
-            <!-- End: Description-->
+            <!-- End: Address-->
+
+            <!-- Begin: Sponsorships-->
+            <div class="col-span-12">
+                <h2 class="rtl:font-semibold">{{ $t('the_sponsorships') }}</h2>
+
+                <div class="mt-1 overflow-x-auto">
+                    <base-table striped>
+                        <base-thead-table>
+                            <base-tr-table>
+                                <base-th-table class="whitespace-nowrap">#</base-th-table>
+
+                                <base-th-table class="whitespace-nowrap">
+                                    {{ $t('the_recipient') }}
+                                </base-th-table>
+
+                                <base-th-table class="whitespace-nowrap">
+                                    {{ $t('validation.attributes.last_name') }}
+                                </base-th-table>
+
+                                <base-th-table class="whitespace-nowrap">
+                                    {{ $t('sponsor_phone_number') }}
+                                </base-th-table>
+                            </base-tr-table>
+                        </base-thead-table>
+
+                        <base-tbody-table>
+                            <base-tr-table
+                                v-for="(sponsorship, index) in benefactorsStore.benefactor.sponsorships"
+                                :key="sponsorship.id"
+                                class="text-center"
+                            >
+                                <base-td-table> {{ index + 1 }}</base-td-table>
+
+                                <base-td-table>
+                                    {{ sponsorship.amount }}
+                                </base-td-table>
+
+                                <base-td-table>
+                                    {{ sponsorship.sponsorship_type }}
+                                </base-td-table>
+
+                                <base-td-table>
+                                    {{ sponsorship.recipientable.name }}
+                                </base-td-table>
+
+                                <base-td-table>
+                                    {{ sponsorship.recipientable.recipientable_type }}
+                                </base-td-table>
+
+                                <base-td-table>
+                                    {{ sponsorship.readable_created_at }}
+                                </base-td-table>
+
+                                <base-td-table>
+                                    <Link
+                                        :href="route('tenant.members.index') + '?show=' + sponsorship.creator?.id"
+                                        class="font-semibold text-slate-500"
+                                    >
+                                        {{ sponsorship.creator?.name }}
+                                    </Link>
+                                </base-td-table>
+                            </base-tr-table>
+                        </base-tbody-table>
+                    </base-table>
+                </div>
+            </div>
+            <!-- End: Sponsorships-->
         </template>
     </show-modal>
 </template>

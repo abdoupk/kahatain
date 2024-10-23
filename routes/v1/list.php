@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\AcademicLevel\AcademicLevelIndexController;
 use App\Http\Controllers\V1\Branches\ListBranchesController;
 use App\Http\Controllers\V1\Competences\CompetenceIndexController;
 use App\Http\Controllers\V1\List\ListBabyMilkController;
+use App\Http\Controllers\V1\List\ListBenefactorsController;
 use App\Http\Controllers\V1\List\ListClothesSizesController;
 use App\Http\Controllers\V1\List\ListDiapersController;
 use App\Http\Controllers\V1\List\ListMembersController;
@@ -82,4 +83,9 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'competences',
         CompetenceIndexController::class
     )->name('competences');
+
+    Route::get(
+        'benefactors',
+        ListBenefactorsController::class
+    )->name('benefactors');
 });

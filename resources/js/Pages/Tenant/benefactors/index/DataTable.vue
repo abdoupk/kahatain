@@ -38,16 +38,16 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </the-table-th>
 
                         <the-table-th class="text-center">
-                            {{ $t('neighborhoods') }}
+                            {{ $t('validation.attributes.phone_number') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions?.families_count"
+                            :direction="params.directions?.sponsorships_count"
                             class="text-center"
                             sortable
-                            @click.prevent="emit('sort', 'families_count')"
+                            @click.prevent="emit('sort', 'sponsorships_count')"
                         >
-                            {{ $t('families_count') }}
+                            {{ $t('sponsorships_count') }}
                         </the-table-th>
 
                         <the-table-th
@@ -80,12 +80,12 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                             </a>
                         </the-table-td>
 
-                        <the-table-td class="max-w-40 truncate text-start">
-                            {{ benefactor.description }}
+                        <the-table-td class="text-center">
+                            {{ benefactor.phone }}
                         </the-table-td>
 
                         <the-table-td class="text-center">
-                            {{ benefactor.families_count }}
+                            {{ benefactor.sponsorships_count }}
                         </the-table-td>
 
                         <the-table-td class="text-center">
@@ -134,8 +134,8 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         <div
                             class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                         >
-                            <base-tippy :content="$t('families_count')">
-                                {{ benefactor.families_count }}
+                            <base-tippy :content="$t('sponsorships_count')">
+                                {{ benefactor.sponsorships_count }}
                             </base-tippy>
                         </div>
                     </div>

@@ -538,6 +538,7 @@ return [
             ],
             'benefactors' => [
                 'filterableAttributes' => [
+                    '__soft_deleted',
                     'created_at',
                     'tenant_id',
                 ],
@@ -547,7 +548,9 @@ return [
                     'phone',
                 ],
                 'sortableAttributes' => [
+                    'sponsorships_count',
                     'created_at',
+                    'name',
                 ],
             ],
         ],

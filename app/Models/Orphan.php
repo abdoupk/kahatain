@@ -410,6 +410,14 @@ class Orphan extends Model
         return $this->hasOne(Baby::class);
     }
 
+    public function aid(): MorphMany
+    {
+        return $this->morphMany(
+            Sponsorship::class,
+            'recipientable',
+        );
+    }
+
     public function forceDeleteWithRelations(): void
     {
         $this->unsearchable();

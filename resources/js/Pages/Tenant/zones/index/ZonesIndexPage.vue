@@ -27,6 +27,10 @@ const DeleteModal = defineAsyncComponent(() => import('@/Components/Global/Delet
 
 const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
+const zoneShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/ZoneShowModal.vue'))
+
+const ZoneCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/ZoneCreateEditModal.vue'))
+
 defineOptions({
     layout: TheLayout
 })
@@ -44,10 +48,6 @@ const params = ref<IndexParams>({
     filters: props.params.filters,
     search: props.params.search
 })
-
-const zoneShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/ZoneShowModal.vue'))
-
-const ZoneCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/ZoneCreateEditModal.vue'))
 
 const zonesStore = useZonesStore()
 

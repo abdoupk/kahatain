@@ -33,4 +33,5 @@ return [
     'trash' => 'المحذوفات',
     'monthly-basket' => 'القفة الشهرية',
     'babies-milk-and-diapers' => 'الاستفادة من الحليب والحفاضات',
+    'benefactors' => 'المحسنين',
 ];

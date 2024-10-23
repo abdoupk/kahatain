@@ -8,7 +8,6 @@ use Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
@@ -20,8 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Vite::usePrefetchStrategy('waterfall', ['concurrently' => 3]);
-
         JsonResource::withoutWrapping();
 
         Carbon::setLocale(config('app.locale').'_DZ');
@@ -65,7 +62,7 @@ class AppServiceProvider extends ServiceProvider
                 '.'.config('tenancy.central_domains')[0];
         });
 
-        Gate::before(static function ($user, $ability) {
+        Gate::before(static function ($user) {
             return $user->hasRole('super_admin') ? true : null;
         });
 
@@ -77,8 +74,7 @@ class AppServiceProvider extends ServiceProvider
 
             $class = get_class($model);
 
-            ray()->notify("Attempted to lazy load [{$relation}] on model [{$class}].");
-
+            ray()->notify("Attempted to lazy load [$relation] on model [$class].");
         });
     }
 }

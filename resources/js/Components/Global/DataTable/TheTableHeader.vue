@@ -97,7 +97,7 @@ const handleExport = (params: IndexParams) => {
             <slot name="ExtraButtons"></slot>
 
             <export-menu v-if="exportable" :exportPdfUrl :exportXlsxUrl :params></export-menu>
-            
+
             <advanced-filter
                 v-if="filterable"
                 :filters

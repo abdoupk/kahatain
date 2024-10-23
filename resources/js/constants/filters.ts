@@ -656,3 +656,5 @@ export const branchedFilters: ListBoxFilter[] = [
         operators: filterObjectOperators
     }
 ]
+
+export const benefactorsFilters: ListBoxFilter[] = []
