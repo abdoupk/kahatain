@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\Benefactors\BenefactorIndexController;
 use App\Http\Controllers\V1\Benefactors\BenefactorShowController;
 use App\Http\Controllers\V1\Benefactors\BenefactorStoreController;
 use App\Http\Controllers\V1\Benefactors\BenefactorUpdateController;
+use App\Http\Controllers\V1\Benefactors\SearchBenefactorsController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::prefix('benefactors')->name('benefactors.')->group(function (): void {
@@ -47,4 +48,10 @@ Route::prefix('benefactors')->name('benefactors.')->group(function (): void {
         BenefactorDestroyController::class
     )
         ->name('destroy');
+
+    Route::get(
+        'search',
+        SearchBenefactorsController::class
+    )
+        ->name('search');
 });

@@ -228,8 +228,8 @@ export const useMenuStore = defineStore('menu', {
                 icon: 'icon-money',
                 // Ignore: !hasPermission('list_permission'),
                 title: $t('direct_bail'),
-                routeName: 'tenant.occasions.school-entry.index',
-                url: '/dashboard/occasions/school-entry'
+                routeName: 'tenant.monthly-sponsorship.index',
+                url: '/dashboard/monthly-sponsorship'
             },
             // eslint-disable-next-line array-element-newline
             hasPermission(['list_archive', 'list_items', 'list_trash', 'view_settings']) ? 'divider' : '',

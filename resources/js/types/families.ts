@@ -257,3 +257,8 @@ export interface FamilyEditPreviewType {
     preview_date: string
     inspectors: string | string[]
 }
+
+export type FamilyType = {
+    id: string
+    name: string
+}

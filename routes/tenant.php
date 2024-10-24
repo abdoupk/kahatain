@@ -60,6 +60,8 @@ Route::middleware([
 
             require __DIR__.'/v1/members.php';
 
+            require __DIR__.'/v1/monthly-sponsorship.php';
+
             require __DIR__.'/v1/needs.php';
 
             require __DIR__.'/v1/notifications.php';

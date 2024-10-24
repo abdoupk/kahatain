@@ -122,6 +122,10 @@ class Family extends Model
         'start_date',
         'branch_id',
         'location',
+        'difference_before_monthly_sponsorship',
+        'difference_after_monthly_sponsorship',
+        'monthly_sponsorship_rate',
+        'difference',
     ];
 
     protected static function boot(): void

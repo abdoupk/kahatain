@@ -3,6 +3,7 @@
 /** @noinspection UnknownInspectionInspection */
 
 use App\Models\Baby;
+use App\Models\Family;
 use App\Models\FamilySponsorship;
 use App\Models\OrphanSponsorship;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -121,4 +122,19 @@ function FILTER_SCHOOL_ENTRY(): string
     $last_academic_year = date('Y') - 1;
 
     return "AND school_bag = true AND school_bag IS NOT NULL AND orphan.academic_achievement.academic_year IS NOT EMPTY AND orphan.academic_achievement.academic_year >= {$last_academic_year}";
+}
+
+function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginator
+{
+    return search(Family::getModel())
+        ->query(fn ($query) => $query
+            ->with(
+                [
+                    'sponsor:id,first_name,last_name,family_id,phone_number',
+                    'zone:id,name',
+                    'branch:id,name',
+                    'aid'
+                ]
+            )->withCount('orphans'))
+        ->paginate(perPage: request()?->integer('perPage', 10));
 }

@@ -24,9 +24,9 @@ class FamilySeeder extends Seeder
     public function run(): void
     {
         Tenant::select('id')->get()->each(
-            /**
-             * @throws JsonException
-             */
+        /**
+         * @throws JsonException
+         */
             function (Tenant $tenant) {
                 for ($i = 0; $i < 10; $i++) {
                     $family = Family::factory()
@@ -79,7 +79,7 @@ class FamilySeeder extends Seeder
                                         'tenant_id' => $orphan->tenant_id,
                                         'benefactor_id' => $orphan->tenant->benefactors->random()->id,
                                         'created_by' => $tenant->members->random()->id,
-
+                                        'sponsorship_type' => fake()->randomElement(['cash', 'ccp']),
                                         'recipientable_id' => $orphan->id,
                                         'recipientable_type' => 'orphan',
                                     ];

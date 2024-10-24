@@ -352,6 +352,16 @@ export interface CreateNeedForm {
     needable_type: 'orphan' | 'sponsor'
     needable_id: string
 }
+export interface CreateSponsorshipForm {
+    amount: number | null
+    sponsorship_type: string
+    recipientable_type: 'orphan' | 'family'
+    recipientable_id: string
+    benefactor: {
+        id: string
+        name: string
+    }
+}
 
 export interface CreateFinancialTransactionForm {
     amount: number | null
@@ -453,6 +463,31 @@ export interface RamadanBasketFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+}
+
+export interface MonthlySponsorshipFamiliesResource {
+    id: string
+    address: string
+    zone: {
+        id: string
+        name: string
+    }
+    branch: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    orphans_count: number
+    total_income: number
+    income_rate: number
+    difference_before_monthly_sponsorship: number
+    difference_after_monthly_sponsorship: number
+    monthly_sponsorship_rate: number
+    difference: number
 }
 
 export interface SchoolEntryOrphansResource {

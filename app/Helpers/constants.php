@@ -118,7 +118,29 @@ const CALCULATION = [
         'income' => 10000.00,
         'contribution' => 10000.00,
     ],
-    'university_scholarship' => 4200.00,
-    'unemployment_benefit' => 15000.00,
-    'threshold' => 8000.00,
+    'monthly_sponsorship' => [
+        'university_scholarship_bachelor' => 4200.00,
+        'university_scholarship_master' => 4200.00,
+        'university_scholarship_doctorate' => 4200.00,
+        'unemployment_benefit' => 15000.00,
+        'threshold' => 8000.00,
+        'association_basket_value' => 4000.00,
+        'categories' => [
+            [
+                'from' => 0,
+                'to' => 10000,
+                'category' => 'صنف 1',
+            ],
+            [
+                'from' => 0,
+                'to' => 10000,
+                'category' => 'صنف 1',
+            ],
+            [
+                'from' => 0,
+                'to' => 10000,
+                'category' => 'صنف 3',
+            ],
+        ],
+    ],
 ];

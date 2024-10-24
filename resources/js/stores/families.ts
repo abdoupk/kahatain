@@ -6,8 +6,8 @@ export const useFamiliesStore = defineStore('families', {
         families: []
     }),
     actions: {
-        async searchFamilies(query: string) {
-            const { data: families } = await axios.get(route('tenant.families.search', query))
+        async searchFamilies(search: string) {
+            const { data: families } = await axios.get(route('tenant.families.search', { search }))
 
             return families
         }

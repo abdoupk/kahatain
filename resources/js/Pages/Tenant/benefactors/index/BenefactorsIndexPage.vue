@@ -15,6 +15,7 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 import SponsorshipCreateEditModal from '@/Pages/Tenant/benefactors/SponsorshipCreateEditModal.vue'
+import { useSponsorshipsStore } from '@/stores/sponsorships'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/index/DataTable.vue'))
 
@@ -55,6 +56,8 @@ const params = ref<IndexParams>({
 })
 
 const benefactorsStore = useBenefactorsStore()
+
+const sponsorshipsStore = useSponsorshipsStore()
 
 const deleteModalStatus = ref<boolean>(false)
 
@@ -134,7 +137,7 @@ const showCreateModal = () => {
 }
 
 const showAddNewSponsorshipModal = () => {
-    // benefactorsStore.$reset()
+    sponsorshipsStore.$reset()
 
     createEditSponsorshipModalStatus.value = true
 }

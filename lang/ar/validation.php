@@ -293,5 +293,11 @@ return [
         'university' => 'الجامعة',
         'role_name' => 'اسم الدور',
         'qty_for_family' => 'الكمية لكل عائلة',
+        'university_scholarship_bachelor' => 'منحة الطلبة (ليسانس)',
+        'university_scholarship_master' => 'منحة الطلبة (ماستر)',
+        'university_scholarship_doctorate' => 'منحة الطلبة (دكتوراه)',
+        'association_basket_value' => 'قيمة القفة من الجمعية',
+        'minimum' => 'الحد الأدنى',
+        'maximum' => 'الحد الاقصى',
     ],
 ];

@@ -32,7 +32,7 @@ defineProps<{ sponsorships: SponsorSponsorshipType }>()
         </div>
     </div>
 
-    <div class="intro-y col-span-12 flex flex-col items-center justify-center">
+    <div v-else class="intro-y col-span-12 flex flex-col items-center justify-center">
         <no-results-found>
             {{ $t('sponsor_sponsorship_not_found') }}
         </no-results-found>

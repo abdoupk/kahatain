@@ -27,8 +27,8 @@ class FamilyFactory extends Factory
             'tenant_id' => fake()->uuid,
             'created_by' => User::inRandomOrder()->first()->id,
             'deleted_by' => User::inRandomOrder()->first()->id,
-            'created_at' => now()->subDays(fake()->numberBetween(0, 35)),
-            'updated_at' => now()->subDays(fake()->numberBetween(0, 35)),
+            'created_at' => now()->subDays(fake()->numberBetween(0, 350)),
+            'updated_at' => now()->subDays(fake()->numberBetween(0, 350)),
         ];
     }
 }

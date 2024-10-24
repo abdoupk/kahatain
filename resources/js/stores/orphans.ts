@@ -12,8 +12,8 @@ export const useOrphansStore = defineStore('orphan', {
             this.orphans = orphans
         },
 
-        async searchOrphans(query: string) {
-            const { data: orphans } = await axios.get(route('tenant.orphans.search', query))
+        async searchOrphans(search: string) {
+            const { data: orphans } = await axios.get(route('tenant.orphans.search', { search }))
 
             return orphans
         }
