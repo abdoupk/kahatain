@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IndexParams, PaginationData, CommitteesIndexResource } from '@/types/types'
+import type { CommitteesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { committeesFilters } from '@/constants/filters'
 import { useCommitteesStore } from '@/stores/committees'
@@ -29,7 +29,9 @@ const SuccessNotification = defineAsyncComponent(() => import('@/Components/Glob
 
 const committeeShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/committees/CommitteeShowModal.vue'))
 
-const CommitteeCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/committees/CommitteeCreateEditModal.vue'))
+const CommitteeCreateEditModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/committees/CommitteeCreateEditModal.vue')
+)
 
 defineOptions({
     layout: TheLayout

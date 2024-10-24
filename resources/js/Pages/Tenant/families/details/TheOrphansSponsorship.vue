@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '@/utils/i18n'
-
 import type { OrphanSponsorshipType } from '@/types/families'
 
 import { Link } from '@inertiajs/vue3'
@@ -8,6 +6,7 @@ import { Link } from '@inertiajs/vue3'
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
 
 import { groupByKey } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ sponsorShips: OrphanSponsorshipType[] }>()
 

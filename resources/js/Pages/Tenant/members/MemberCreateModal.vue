@@ -12,11 +12,11 @@ import CreateEditSlideOver from '@/Components/Global/CreateEditSlideOver.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
+import TheCommitteeSelector from '@/Components/Global/TheCommitteeSelector.vue'
 import TheCompetenceSelector from '@/Components/Global/TheCompetenceSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
-import TheCommitteeSelector from '@/Components/Global/TheCommitteeSelector.vue'
 
 const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
 

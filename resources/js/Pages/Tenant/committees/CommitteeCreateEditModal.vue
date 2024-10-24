@@ -26,12 +26,16 @@ const loading = ref(false)
 const showSuccessNotification = ref(false)
 
 const notificationTitle = computed(() => {
-    return committeesStore.committee.id ? $t('successfully_updated') : $t('successfully_created', { attribute: $t('the_committee') })
+    return committeesStore.committee.id
+        ? $t('successfully_updated')
+        : $t('successfully_created', { attribute: $t('the_committee') })
 })
 
 const form = computed(() => {
     if (committeesStore.committee.id) {
-        return useForm('put', route('tenant.committees.update', committeesStore.committee.id), { ...committeesStore.committee })
+        return useForm('put', route('tenant.committees.update', committeesStore.committee.id), {
+            ...committeesStore.committee
+        })
     }
 
     return useForm('post', route('tenant.committees.store'), { ...committeesStore.committee })

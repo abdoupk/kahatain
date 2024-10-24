@@ -99,7 +99,7 @@ const emit = defineEmits(['sort'])
                             class="text-start"
                             sortable
                             @click="emit('sort', 'family.zone')"
-                        >{{ $t('validation.attributes.address') }}
+                            >{{ $t('validation.attributes.address') }}
                         </the-table-th>
 
                         <the-table-th
@@ -107,7 +107,7 @@ const emit = defineEmits(['sort'])
                             class="text-start"
                             sortable
                             @click="emit('sort', 'family.branch')"
-                        >{{ $t('the_branch') }}
+                            >{{ $t('the_branch') }}
                         </the-table-th>
                     </base-tr-table>
                 </base-thead-table>
@@ -158,7 +158,7 @@ const emit = defineEmits(['sort'])
                             <div class="whitespace-nowrap">{{ family.monthly_sponsorship_rate * 100 }} %</div>
                         </the-table-td>
 
-                        <the-table-td class="text-center text-nowrap">
+                        <the-table-td class="text-nowrap text-center">
                             {{ family.sponsor.phone_number }}
                         </the-table-td>
 

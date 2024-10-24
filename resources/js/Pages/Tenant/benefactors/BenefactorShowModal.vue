@@ -142,7 +142,7 @@ const benefactorsStore = useBenefactorsStore()
                     </base-table>
                 </div>
 
-                <p v-else class="mt-1 rtl:font-semibold text-center text-base">
+                <p v-else class="mt-1 text-center text-base rtl:font-semibold">
                     {{ $t('no_sponsorships') }}
                 </p>
             </div>

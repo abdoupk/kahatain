@@ -33,10 +33,10 @@ onMounted(() => {
     toggleTooltip()
 
     initTooltipEvent()
-})
 
-router.on('finish', () => {
-    toggleTooltip()
+    router.on('finish', () => {
+        toggleTooltip()
+    })
 })
 </script>
 

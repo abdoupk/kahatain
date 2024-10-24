@@ -59,6 +59,7 @@
     "autoload": {
         "files": [
             "app/Helpers/families.php",
+            "app/Helpers/sponsorships.php",
             "app/Helpers/benefactors.php",
             "app/Helpers/committees.php",
             "app/Helpers/archive.php",

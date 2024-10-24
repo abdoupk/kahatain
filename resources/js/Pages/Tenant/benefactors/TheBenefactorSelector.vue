@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { BenefactorType } from '@/types'
-
 import { useBenefactorsStore } from '@/stores/benefactors'
+import type { BenefactorType } from '@/types'
 import { onMounted, ref } from 'vue'
 
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -24,9 +24,7 @@ const benefactors = ref<BenefactorType[]>([])
 const asyncFind = (search: string) => {
     loadingSearchBenefactor.value = true
 
-    benefactorsStore
-        .searchBenefactors(search)
-        .finally(() => (loadingSearchBenefactor.value = false))
+    benefactorsStore.searchBenefactors(search).finally(() => (loadingSearchBenefactor.value = false))
 }
 
 onMounted(() => {

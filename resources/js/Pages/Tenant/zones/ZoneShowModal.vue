@@ -3,6 +3,7 @@ import { useZonesStore } from '@/stores/zones'
 import { Link } from '@inertiajs/vue3'
 
 import ShowModal from '@/Components/Global/ShowModal.vue'
+
 import { $t } from '@/utils/i18n'
 
 defineProps<{

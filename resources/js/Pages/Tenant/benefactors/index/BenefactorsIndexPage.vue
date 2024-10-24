@@ -3,10 +3,13 @@ import type { FamiliesIndexResource, IndexParams, PaginationData } from '@/types
 
 import { benefactorsFilters } from '@/constants/filters'
 import { useBenefactorsStore } from '@/stores/benefactors'
+import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
+
+import SponsorshipCreateEditModal from '@/Pages/Tenant/benefactors/SponsorshipCreateEditModal.vue'
 
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
@@ -14,8 +17,6 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
-import SponsorshipCreateEditModal from '@/Pages/Tenant/benefactors/SponsorshipCreateEditModal.vue'
-import { useSponsorshipsStore } from '@/stores/sponsorships'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/index/DataTable.vue'))
 

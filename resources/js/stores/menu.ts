@@ -38,6 +38,13 @@ export const useMenuStore = defineStore('menu', {
                 url: '/dashboard/branches'
             },
             {
+                icon: 'icon-users',
+                ignore: !hasPermission('list_committees'),
+                title: $t('the_committees'),
+                routeName: 'tenant.committees.index',
+                url: '/dashboard/committees'
+            },
+            {
                 icon: 'icon-map-location-dot',
                 ignore: !hasPermission('list_zones'),
                 title: $t('the_zones'),

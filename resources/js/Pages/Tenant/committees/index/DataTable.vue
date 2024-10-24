@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IndexParams, PaginationData, CommitteesIndexResource } from '@/types/types'
+import type { CommitteesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
@@ -59,7 +59,10 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                             {{ $t('added_at') }}
                         </the-table-th>
 
-                        <the-table-th v-if="hasPermission(['update_committees', 'delete_committees'])" class="text-center">
+                        <the-table-th
+                            v-if="hasPermission(['update_committees', 'delete_committees'])"
+                            class="text-center"
+                        >
                             {{ $t('actions') }}
                         </the-table-th>
                     </base-tr-table>
@@ -117,7 +120,11 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
         </div>
 
         <div class="col-span-12 my-8 grid grid-cols-12 gap-4 @3xl:hidden">
-            <div v-for="committee in committees.data" :key="committee.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
+            <div
+                v-for="committee in committees.data"
+                :key="committee.id"
+                class="intro-y !z-10 col-span-12 @xl:col-span-6"
+            >
                 <div class="box p-5">
                     <div class="flex">
                         <div class="me-3 truncate text-lg font-medium">
