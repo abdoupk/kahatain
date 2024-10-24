@@ -2,7 +2,7 @@
 import type { SubjectType } from '@/types/types'
 
 import { useSubjectsStore } from '@/stores/subjects'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
@@ -32,6 +32,12 @@ watch(
         } else subjects.value = subjectsStore.subjects
     }
 )
+
+onMounted(() => {
+    if (subject.value) {
+        selectedSubject.value = subjectsStore.findSubjectById(subject.value)
+    }
+})
 </script>
 
 <template>
