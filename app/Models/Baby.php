@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property int|null $baby_milk_quantity
  * @property string|null $baby_milk_type
@@ -36,6 +34,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Inventory|null $diapers
  * @property-read Orphan $orphan
  * @property-read Tenant $tenant
+ *
  * @method static BabyFactory factory($count = null, $state = [])
  * @method static Builder|Baby newModelQuery()
  * @method static Builder|Baby newQuery()
@@ -54,6 +53,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Baby whereUpdatedAt($value)
  * @method static Builder|Baby withTrashed()
  * @method static Builder|Baby withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Baby extends Model

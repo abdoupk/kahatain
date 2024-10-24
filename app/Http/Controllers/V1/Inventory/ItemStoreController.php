@@ -19,6 +19,7 @@ class ItemStoreController extends Controller implements HasMiddleware
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:delete_from_inventory'];

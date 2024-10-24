@@ -7,7 +7,7 @@ cd ..
 set "parent_path=%cd%"
 
 for %%f in (%parent_path%) do set "dirname=%%~nxf"
-if "%dirname%" == "kafil.elyatim" (
+if "%dirname%" == "kahatain" (
     php artisan generate:locales
     goto :end
 )

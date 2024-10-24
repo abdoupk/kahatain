@@ -4,6 +4,7 @@ import type {
     DatabaseNotification,
     LayoutsType,
     PaginationData,
+    PositionType,
     ThemesType
 } from '@/types/types'
 
@@ -43,5 +44,11 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
         notifications: PaginationData<DatabaseNotification>
     }
     association: string
+    association_coordinates: PositionType
     ziggy: Config & { location: string }
+}
+
+export type BenefactorType = {
+    id: string
+    name: string
 }

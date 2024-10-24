@@ -17,10 +17,15 @@ return new class extends Migration
             $table->uuid('zone_id')->index('idx_families_zone_id');
             $table->uuid('branch_id')->nullable();
             $table->text('address');
+            $table->json('location')->nullable();
             $table->text('file_number');
             $table->date('start_date');
             $table->float('income_rate')->nullable();
             $table->float('total_income')->nullable();
+            $table->float('difference_before_monthly_sponsorship')->nullable();
+            $table->float('difference_after_monthly_sponsorship')->nullable();
+            $table->float('monthly_sponsorship_rate')->nullable();
+            $table->float('difference')->nullable();
             $table->uuid('tenant_id')->index('idx_families_tenant_id');
             $table->uuid('created_by')->nullable();
             $table->uuid('deleted_by')->nullable();

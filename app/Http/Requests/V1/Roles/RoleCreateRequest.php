@@ -12,7 +12,7 @@ class RoleCreateRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:roles,name',
             'permissions' => 'required|array|min:1',
-            'permissions.*' => ['required', 'boolean', new PermissionNameExistsRule()],
+            'permissions.*' => ['required', 'boolean', new PermissionNameExistsRule],
         ];
     }
 

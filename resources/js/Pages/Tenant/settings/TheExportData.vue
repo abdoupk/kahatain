@@ -28,7 +28,7 @@ const requestData = () => {
 </script>
 
 <template>
-    <div class="intro-y box col-span-12 h-fit @container lg:col-span-5 2xl:col-span-6">
+    <div class="intro-y box h-fit @container">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ $t('export_data') }}</h2>
         </div>

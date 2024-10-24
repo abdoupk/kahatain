@@ -21,8 +21,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $first_name
  * @property string $last_name
@@ -71,6 +69,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read VocationalTraining|null $vocationalTraining
  * @property-read Collection<int, VocationalTrainingAchievement> $vocationalTrainingAchievements
  * @property-read int|null $vocational_training_achievements_count
+ *
  * @method static OrphanFactory factory($count = null, $state = [])
  * @method static Builder|Orphan newModelQuery()
  * @method static Builder|Orphan newQuery()
@@ -102,6 +101,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Orphan whereVocationalTrainingId($value)
  * @method static Builder|Orphan withTrashed()
  * @method static Builder|Orphan withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Orphan extends Model
@@ -184,14 +184,14 @@ class Orphan extends Model
             'readable_birth_date' => $this->birth_date,
             'health_status' => $this->health_status,
             'family_status' => [
-                'ar' => __('family_statuses.' . $this->family_status, locale: 'ar'),
-                'fr' => __('family_statuses.' . $this->family_status, locale: 'fr'),
-                'en' => __('family_statuses.' . $this->family_status, locale: 'en'),
+                'ar' => __('family_statuses.'.$this->family_status, locale: 'ar'),
+                'fr' => __('family_statuses.'.$this->family_status, locale: 'fr'),
+                'en' => __('family_statuses.'.$this->family_status, locale: 'en'),
             ],
             'shoes_size' => $this->shoesSize?->label,
             'shirt_size' => $this->shirtSize?->label,
             'pants_size' => $this->pantsSize?->label,
-            'income' => (float)$this->income,
+            'income' => (float) $this->income,
             'gender' => $this->gender,
             'is_handicapped' => $this->is_handicapped,
             'is_unemployed' => $this->is_unemployed,
@@ -207,10 +207,10 @@ class Orphan extends Model
                         'id' => $academicAchievement->id,
                         'academic_level' => $academicAchievement->academicLevel?->level,
                         'academic_year' => $academicAchievement->academic_year,
-                        'first_trimester' => (float)number_format($academicAchievement->first_trimester, 2),
-                        'second_trimester' => (float)number_format($academicAchievement->second_trimester, 2),
-                        'third_trimester' => (float)number_format($academicAchievement->third_trimester, 2),
-                        'average' => (float)number_format($academicAchievement->average, 2),
+                        'first_trimester' => (float) number_format($academicAchievement->first_trimester, 2),
+                        'second_trimester' => (float) number_format($academicAchievement->second_trimester, 2),
+                        'third_trimester' => (float) number_format($academicAchievement->third_trimester, 2),
+                        'average' => (float) number_format($academicAchievement->average, 2),
                     ];
                 })->toArray(),
             'college_achievements' => $this->collegeAchievements
@@ -219,15 +219,15 @@ class Orphan extends Model
                         'id' => $collegeAchievement->id,
                         'academic_level' => $collegeAchievement->academicLevel?->level,
                         'academic_year' => $collegeAchievement->year,
-                        'first_semester' => (float)number_format(
+                        'first_semester' => (float) number_format(
                             $collegeAchievement->first_semester,
                             2
                         ),
-                        'second_semester' => (float)number_format(
+                        'second_semester' => (float) number_format(
                             $collegeAchievement->second_semester,
                             2
                         ),
-                        'average' => (float)number_format(
+                        'average' => (float) number_format(
                             $collegeAchievement->average,
                             2
                         ),
@@ -265,7 +265,7 @@ class Orphan extends Model
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function searchableAs(): string
@@ -355,9 +355,9 @@ class Orphan extends Model
         return $this->
             lastAcademicYearAchievement?->academicLevel
                 ->level
-            . ' (' .
+            .' ('.
             $this->lastAcademicYearAchievement?->academic_year
-            . ')';
+            .')';
     }
 
     public function archives(): MorphToMany
@@ -408,6 +408,14 @@ class Orphan extends Model
     public function babyNeeds(): HasOne
     {
         return $this->hasOne(Baby::class);
+    }
+
+    public function aid(): MorphMany
+    {
+        return $this->morphMany(
+            Sponsorship::class,
+            'recipientable',
+        );
     }
 
     public function forceDeleteWithRelations(): void

@@ -68,7 +68,7 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="intro-y box col-span-12 @container lg:col-span-7 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container lg:col-span-8 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ $t('general_information_of_association') }}</h2>
         </div>

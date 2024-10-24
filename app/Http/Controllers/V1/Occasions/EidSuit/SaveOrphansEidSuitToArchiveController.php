@@ -29,6 +29,7 @@ class SaveOrphansEidSuitToArchiveController extends Controller implements HasMid
 
         dispatch(new EidSuitOrphansListSavedJob($archive, auth()->user()));
     }
+
     public static function middleware()
     {
         return ['can:save_occasions'];

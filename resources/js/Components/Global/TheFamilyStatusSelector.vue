@@ -31,8 +31,12 @@ const familyStatuses = [
         value: 'married'
     },
     {
-        label: $t('family_statuses.divorced'),
-        value: 'divorced'
+        label: $t('family_statuses.divorced_outside_family'),
+        value: 'divorced_outside_family'
+    },
+    {
+        label: $t('family_statuses.divorced_with_family'),
+        value: 'divorced_with_family'
     },
     {
         label: $t('family_statuses.college_boy'),

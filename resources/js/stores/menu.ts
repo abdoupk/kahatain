@@ -169,12 +169,20 @@ export const useMenuStore = defineStore('menu', {
                     }
                 ]
             },
+            {
+                icon: 'icon-hands-holding-dollar',
+                // eslint-disable-next-line capitalized-comments
+                // ignore: !hasPermission('list_schools'),
+                routeName: 'tenant.benefactors.index',
+                title: $t('benefactors'),
+                url: '/dashboard/benefactors'
+            },
             // eslint-disable-next-line array-element-newline
             hasPermission(['list_financial_transactions', 'list_lessons', 'create_lessons', 'list_needs'])
                 ? 'divider'
                 : '',
             {
-                icon: 'icon-hands-holding-dollar',
+                icon: 'icon-treasure-chest',
                 title: $t('financial'),
                 routeName: '',
                 ignore: !hasPermission(['list_financial_transactions', 'view_financial_transactions']),
@@ -215,6 +223,13 @@ export const useMenuStore = defineStore('menu', {
                 routeName: 'tenant.schools.index',
                 title: $t('private_schools'),
                 url: '/dashboard/schools'
+            },
+            {
+                icon: 'icon-money',
+                // Ignore: !hasPermission('list_permission'),
+                title: $t('direct_bail'),
+                routeName: 'tenant.monthly-sponsorship.index',
+                url: '/dashboard/monthly-sponsorship'
             },
             // eslint-disable-next-line array-element-newline
             hasPermission(['list_archive', 'list_items', 'list_trash', 'view_settings']) ? 'divider' : '',

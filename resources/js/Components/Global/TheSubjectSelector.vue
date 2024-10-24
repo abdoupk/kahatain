@@ -32,17 +32,6 @@ watch(
         } else subjects.value = subjectsStore.subjects
     }
 )
-
-watch(
-    () => subject.value,
-    (value) => {
-        if (value) {
-            selectedSubject.value = subjectsStore.findSubjectById(value)
-        } else {
-            selectedSubject.value = ''
-        }
-    }
-)
 </script>
 
 <template>

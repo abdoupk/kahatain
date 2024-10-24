@@ -17,7 +17,7 @@ class ExportSponsorsXlsxController extends Controller implements HasMiddleware
      */
     public function __invoke(): BinaryFileResponse
     {
-        return Excel::download(new SponsorsIndexExport(), __('exports.sponsors').'.xlsx');
+        return Excel::download(new SponsorsIndexExport, __('exports.sponsors').'.xlsx');
     }
 
     public static function middleware()

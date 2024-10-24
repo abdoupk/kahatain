@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\AcademicLevel;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,7 +30,14 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail,
             'zone_id' => Zone::inRandomOrder()->first()?->id,
             'gender' => fake()->randomElement(['male', 'female']),
-            'address' => fake()->address,
+            'address' => fake('ar_SA')->address,
+            'workplace' => fake('ar_SA')->realText(50),
+            'location' => [
+                'lat' => fake()->latitude(33.67, 33.69),
+                'lng' => fake()->longitude(1.011577, 1.016476),
+            ],
+            'function' => fake('ar_SA')->realText(50),
+            'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

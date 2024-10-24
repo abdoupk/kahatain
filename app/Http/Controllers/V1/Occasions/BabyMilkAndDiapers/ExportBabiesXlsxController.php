@@ -17,7 +17,7 @@ class ExportBabiesXlsxController extends Controller implements HasMiddleware
      */
     public function __invoke(): BinaryFileResponse
     {
-        return Excel::download(new BabiesIndexExport(), __('exports.babies_milk_and_diapers', [
+        return Excel::download(new BabiesIndexExport, __('exports.babies_milk_and_diapers', [
             'date' => now()->translatedFormat('F Y'),
         ]).'.xlsx');
     }

@@ -1,12 +1,31 @@
 <script lang="ts" setup>
-import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseSlideover from '@/Components/Base/headless/Slideover/BaseSlideover.vue'
-import BaseSlideoverDescription from '@/Components/Base/headless/Slideover/BaseSlideoverDescription.vue'
-import BaseSlideoverFooter from '@/Components/Base/headless/Slideover/BaseSlideoverFooter.vue'
-import BaseSlideoverPanel from '@/Components/Base/headless/Slideover/BaseSlideoverPanel.vue'
-import BaseSlideoverTitle from '@/Components/Base/headless/Slideover/BaseSlideoverTitle.vue'
-import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import { defineAsyncComponent } from 'vue'
+
+import { $t } from '@/utils/i18n'
+
+const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/BaseButton.vue'))
+
+const BaseSlideover = defineAsyncComponent(() => import('@/Components/Base/headless/Slideover/BaseSlideover.vue'))
+
+const BaseSlideoverDescription = defineAsyncComponent(
+    () => import('@/Components/Base/headless/Slideover/BaseSlideoverDescription.vue')
+)
+
+const BaseSlideoverFooter = defineAsyncComponent(
+    () => import('@/Components/Base/headless/Slideover/BaseSlideoverFooter.vue')
+)
+
+const BaseSlideoverPanel = defineAsyncComponent(
+    () => import('@/Components/Base/headless/Slideover/BaseSlideoverPanel.vue')
+)
+
+const BaseSlideoverTitle = defineAsyncComponent(
+    () => import('@/Components/Base/headless/Slideover/BaseSlideoverTitle.vue')
+)
+
+const SpinnerButtonLoader = defineAsyncComponent(() => import('@/Components/Global/SpinnerButtonLoader.vue'))
+
+const TheModalLoader = defineAsyncComponent(() => import('@/Components/Global/TheModalLoader.vue'))
 
 defineProps<{
     open: boolean
@@ -22,33 +41,42 @@ const emit = defineEmits(['close', 'handleSubmit'])
 <template>
     <base-slideover :initialFocus="focusableInput" :open @close="emit('close')">
         <base-slideover-panel class="overflow-y-auto">
-            <a class="absolute end-auto start-0 top-0 -ms-12 mt-4" href="#" @click="emit('close')">
-                <svg-loader class="h-8 w-8 fill-slate-400" name="icon-x-mark"></svg-loader>
-            </a>
+            <suspense suspensible>
+                <template #default>
+                    <form @submit.prevent="emit('handleSubmit')">
+                        <base-slideover-title>
+                            <h2 class="me-auto text-base font-medium rtl:font-semibold">
+                                {{ title }}
+                            </h2>
+                        </base-slideover-title>
 
-            <form @submit.prevent="emit('handleSubmit')">
-                <base-slideover-title>
-                    <h2 class="me-auto text-base font-medium rtl:font-semibold">
-                        {{ title }}
-                    </h2>
-                </base-slideover-title>
+                        <base-slideover-description>
+                            <slot name="description"></slot>
+                        </base-slideover-description>
 
-                <base-slideover-description>
-                    <slot name="description"></slot>
-                </base-slideover-description>
+                        <base-slideover-footer class="flex justify-end">
+                            <base-button
+                                class="me-1 w-20"
+                                type="button"
+                                variant="outline-secondary"
+                                @click="emit('close')"
+                            >
+                                {{ $t('cancel') }}
+                            </base-button>
 
-                <base-slideover-footer class="flex justify-end">
-                    <base-button class="me-1 w-20" type="button" variant="outline-secondary" @click="emit('close')">
-                        {{ $t('cancel') }}
-                    </base-button>
+                            <base-button :disabled="loading" class="w-20" type="submit" variant="primary">
+                                <spinner-button-loader :show="loading"></spinner-button-loader>
 
-                    <base-button :disabled="loading" class="w-20" type="submit" variant="primary">
-                        <spinner-button-loader :show="loading"></spinner-button-loader>
+                                {{ $t(slideoverType) }}
+                            </base-button>
+                        </base-slideover-footer>
+                    </form>
+                </template>
 
-                        {{ $t(slideoverType) }}
-                    </base-button>
-                </base-slideover-footer>
-            </form>
+                <template #fallback>
+                    <the-modal-loader></the-modal-loader>
+                </template>
+            </suspense>
         </base-slideover-panel>
     </base-slideover>
 </template>

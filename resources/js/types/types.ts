@@ -70,6 +70,9 @@ export interface ISettingState {
 export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-trash-undo'
+    | 'icon-donate'
+    | 'icon-treasure-chest'
+    | 'icon-location'
     | 'icon-kahatain'
     | 'icon-diapers'
     | 'icon-eye'
@@ -253,6 +256,35 @@ export interface Zone {
     description?: string
 }
 
+export interface Benefactor {
+    id: string
+    first_name: string
+    last_name: string
+    name?: string
+    phone: string
+    address: string
+    location: PositionType
+    creator: {
+        id: string
+        name: string
+    }
+    sponsorships?: {
+        id: string
+        amount: string
+        sponsorship_type: string
+        recipientable: {
+            id: string
+            name: string
+            recipientable_type: string
+        }
+        readable_created_at: string
+        creator: {
+            id: string
+            name: string
+        }
+    }[]
+}
+
 export interface Branch {
     id: string
     name: string
@@ -284,11 +316,17 @@ export interface CreateMemberForm {
     phone: string
     zone_id: string
     qualification: string
+    competences: { id: string; name: string }[]
     password: string
     password_confirmation: string
+    address: string
+    location: PositionType
+    function: string
+    workplace: string
     branch_id: string
     roles: string[]
     gender: 'male' | 'female'
+    academic_level_id: number | null
 }
 
 export type CreateLessonForm = {
@@ -313,6 +351,16 @@ export interface CreateNeedForm {
     note: string
     needable_type: 'orphan' | 'sponsor'
     needable_id: string
+}
+export interface CreateSponsorshipForm {
+    amount: number | null
+    sponsorship_type: string
+    recipientable_type: 'orphan' | 'family'
+    recipientable_id: string
+    benefactor: {
+        id: string
+        name: string
+    }
 }
 
 export interface CreateFinancialTransactionForm {
@@ -415,6 +463,31 @@ export interface RamadanBasketFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+}
+
+export interface MonthlySponsorshipFamiliesResource {
+    id: string
+    address: string
+    zone: {
+        id: string
+        name: string
+    }
+    branch: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    orphans_count: number
+    total_income: number
+    income_rate: number
+    difference_before_monthly_sponsorship: number
+    difference_after_monthly_sponsorship: number
+    monthly_sponsorship_rate: number
+    difference: number
 }
 
 export interface SchoolEntryOrphansResource {
@@ -639,6 +712,10 @@ export type FurnishingsType =
 
 export type CreateFamilyForm = {
     address: string
+    location: {
+        lat: number | null
+        lng: number | null
+    }
     zone_id: string
     start_date: string
     file_number: string
@@ -742,6 +819,20 @@ export interface ZonesIndexResource extends Zone {
     created_at: string
     description: string
     families_count?: number
+}
+
+export type RecipientType = {
+    recipientable_type: 'orphan' | 'family'
+    recipientable_id: string
+}
+
+export interface BenefactorsIndexResource extends RecipientType {
+    id: string
+    name: string
+    phone: string
+    created_at: string
+    amount: number
+    sponsorships_count: number
 }
 
 export interface ListBoxFilter {
@@ -878,3 +969,8 @@ export type SiteSettingsType = {
 }
 
 export type NeedStatusType = 'pending' | 'in_progress' | 'completed' | 'rejected'
+
+export type PositionType = {
+    lat: number
+    lng: number
+}

@@ -44,7 +44,7 @@ const deleteFamily = (id: string) => {
                 <h2 class="me-5 truncate text-lg font-medium rtl:font-semibold">{{ $t('Recent Added Families') }}</h2>
             </div>
             <div class="@container">
-                <div class="intro-y col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible !z-30">
+                <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
                     <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                         <base-thead-table>
                             <base-tr-table>
@@ -108,9 +108,9 @@ const deleteFamily = (id: string) => {
                                         </Link>
 
                                         <a
-                                            @click.prevent="deleteFamily(family.id)"
                                             v-if="hasPermission('delete_families')"
                                             class="flex items-center text-danger"
+                                            @click.prevent="deleteFamily(family.id)"
                                         >
                                             <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-trash-can" />
                                             {{ $t('delete') }}
@@ -123,7 +123,11 @@ const deleteFamily = (id: string) => {
                 </div>
 
                 <div class="col-span-12 my-8 grid grid-cols-12 gap-4 @3xl:hidden">
-                    <div v-for="family in recentFamilies" :key="family.id" class="intro-y col-span-12 @xl:col-span-6">
+                    <div
+                        v-for="family in recentFamilies"
+                        :key="family.id"
+                        class="intro-y !z-10 col-span-12 @xl:col-span-6"
+                    >
                         <div class="box p-5">
                             <div class="flex">
                                 <div class="me-3 truncate text-lg font-medium">
@@ -150,9 +154,10 @@ const deleteFamily = (id: string) => {
                                         class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                                         >{{ $t('edit') }}
                                     </Link>
-                                    <a @click.prevent="deleteFamily(family.id)"
+                                    <a
                                         v-if="hasPermission('delete_families')"
                                         class="font-semibold text-danger"
+                                        @click.prevent="deleteFamily(family.id)"
                                     >
                                         {{ $t('delete') }}
                                     </a>

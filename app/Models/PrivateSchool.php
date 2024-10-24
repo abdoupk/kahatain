@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $name
  * @property string $tenant_id
@@ -31,6 +29,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, Lesson> $lessons
  * @property-read int|null $lessons_count
  * @property-read Tenant $tenant
+ *
  * @method static PrivateSchoolFactory factory($count = null, $state = [])
  * @method static Builder|PrivateSchool newModelQuery()
  * @method static Builder|PrivateSchool newQuery()
@@ -46,6 +45,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|PrivateSchool whereUpdatedAt($value)
  * @method static Builder|PrivateSchool withTrashed()
  * @method static Builder|PrivateSchool withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class PrivateSchool extends Model

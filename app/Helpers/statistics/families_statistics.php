@@ -91,7 +91,7 @@ function getFamiliesHousingTypes(): array
 
     return [
         'labels' => $orphans->pluck('name')->map(function (string $familyStatus) {
-            return __('housing.label.' . $familyStatus);
+            return __('housing.label.'.$familyStatus);
         })->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];

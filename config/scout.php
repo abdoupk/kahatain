@@ -357,7 +357,7 @@ return [
                     'name',
                     'description',
                     'tenant_id',
-                    'created_at'
+                    'created_at',
                 ],
                 'searchableAttributes' => ['name', 'families_count', 'description', 'created_at'],
                 'sortableAttributes' => ['name', 'families_count', 'created_at'],
@@ -536,19 +536,36 @@ return [
                 'searchableAttributes' => ['report', 'inspectors', 'family.name'],
                 'sortableAttributes' => ['created_at', 'preview_date'],
             ],
+            'benefactors' => [
+                'filterableAttributes' => [
+                    '__soft_deleted',
+                    'created_at',
+                    'tenant_id',
+                ],
+                'searchableAttributes' => [
+                    'first_name',
+                    'last_name',
+                    'phone',
+                ],
+                'sortableAttributes' => [
+                    'sponsorships_count',
+                    'created_at',
+                    'name',
+                ],
+            ],
         ],
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Typesense Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure your Typesense settings. Typesense is an open
-    | source search engine using minimal configuration. Below, you will
-    | state the host, key, and schema configuration for the instance.
-    |
-    */
+        |--------------------------------------------------------------------------
+        | Typesense Configuration
+        |--------------------------------------------------------------------------
+        |
+        | Here you may configure your Typesense settings. Typesense is an open
+        | source search engine using minimal configuration. Below, you will
+        | state the host, key, and schema configuration for the instance.
+        |
+        */
 
     'typesense' => [
         'client-settings' => [

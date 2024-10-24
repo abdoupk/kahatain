@@ -14,15 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CitySeeder::class);
 
-//        $this->call(PermissionSeeder::class);
-
         $this->call(TenantSeeder::class);
 
         $this->call(RolePermissionSeeder::class);
 
-        $this->call(FamilySeeder::class);
+        $this->call(BenefactorSeeder::class);
 
-        $this->call(IncomeSeeder::class);
+        $this->call(FamilySeeder::class);
 
         $this->call(FurnishingSeeder::class);
 
@@ -38,6 +36,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PrivateSchoolSeeder::class);
 
-        //        $this->call(EventSeeder::class);
+        //        $this->call(SponsorShipSeeder::class);
     }
 }

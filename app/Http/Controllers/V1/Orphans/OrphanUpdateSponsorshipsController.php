@@ -19,6 +19,7 @@ class OrphanUpdateSponsorshipsController extends Controller implements HasMiddle
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:update_orphans'];

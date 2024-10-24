@@ -29,6 +29,7 @@ class SaveFamiliesEidAlAdhaToArchiveController extends Controller implements Has
 
         dispatch(new EidAlAdhaFamiliesListSavedJob($archive, auth()->user()));
     }
+
     public static function middleware()
     {
         return ['can:save_occasions'];

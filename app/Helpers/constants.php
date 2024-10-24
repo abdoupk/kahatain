@@ -60,7 +60,8 @@ const CALCULATION = [
                 'at_home_with_income' => 1,
                 'single_female_employee' => 1,
                 'married' => 0,
-                'divorced' => 0,
+                'divorced_with_family' => 0,
+                'divorced_outside_family' => 0,
             ],
         ],
         'handicapped' => 1,
@@ -88,7 +89,8 @@ const CALCULATION = [
                 'at_home_with_income' => 30,
                 'single_female_employee' => 40,
                 'married' => 30,
-                'divorced' => 100,
+                'divorced_with_family' => 100,
+                'divorced_outside_family' => 100,
             ],
         ],
     ],
@@ -115,5 +117,30 @@ const CALCULATION = [
     'handicapped_contribution' => [
         'income' => 10000.00,
         'contribution' => 10000.00,
+    ],
+    'monthly_sponsorship' => [
+        'university_scholarship_bachelor' => 4200.00,
+        'university_scholarship_master' => 4200.00,
+        'university_scholarship_doctorate' => 4200.00,
+        'unemployment_benefit' => 15000.00,
+        'threshold' => 8000.00,
+        'association_basket_value' => 4000.00,
+        'categories' => [
+            [
+                'from' => 0,
+                'to' => 10000,
+                'category' => 'صنف 1',
+            ],
+            [
+                'from' => 0,
+                'to' => 10000,
+                'category' => 'صنف 1',
+            ],
+            [
+                'from' => 0,
+                'to' => 10000,
+                'category' => 'صنف 3',
+            ],
+        ],
     ],
 ];

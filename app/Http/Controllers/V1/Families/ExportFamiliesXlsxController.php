@@ -17,7 +17,7 @@ class ExportFamiliesXlsxController extends Controller implements HasMiddleware
      */
     public function __invoke(): BinaryFileResponse
     {
-        return Excel::download(new FamiliesIndexExport(), __('exports.families').'.xlsx');
+        return Excel::download(new FamiliesIndexExport, __('exports.families').'.xlsx');
     }
 
     public static function middleware()

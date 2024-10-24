@@ -31,7 +31,7 @@ class RegisterTenantRequest extends FormRequest
             'email' => 'required|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Password::defaults()],
             'association' => 'required|string|max:255',
-            'domain' => [new RegistrationDomainRequiredRule(),  'string', 'max:255'],
+            'domain' => [new RegistrationDomainRequiredRule,  'string', 'max:255'],
         ];
     }
 

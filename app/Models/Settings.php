@@ -13,8 +13,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $user_id
  * @property string $locale
@@ -28,6 +26,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $updated_at
  * @property-read Tenant $tenant
  * @property-read User $user
+ *
  * @method static SettingsFactory factory($count = null, $state = [])
  * @method static Builder|Settings newModelQuery()
  * @method static Builder|Settings newQuery()
@@ -43,6 +42,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Settings whereTheme($value)
  * @method static Builder|Settings whereUpdatedAt($value)
  * @method static Builder|Settings whereUserId($value)
+ *
  * @mixin Eloquent
  */
 class Settings extends Model
@@ -57,6 +57,7 @@ class Settings extends Model
         'user_id',
         'notifications',
         'tenant_id',
+        'locale',
     ];
 
     public function user(): BelongsTo

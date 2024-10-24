@@ -1,3 +1,5 @@
+import { PositionType } from '@/types/types'
+
 export interface OrphanType {
     id: string
     name: string
@@ -201,6 +203,7 @@ export interface FamilyUpdateFormType {
     id: string
     name: string
     address: string
+    location: PositionType
     file_number: string
     start_date: Date
     branch_id: string
@@ -253,4 +256,9 @@ export interface FamilyEditPreviewType {
     report: string
     preview_date: string
     inspectors: string | string[]
+}
+
+export type FamilyType = {
+    id: string
+    name: string
 }

@@ -40,8 +40,8 @@ export const useCityStore = defineStore('city', {
             }
         },
 
-        async searchCities(query: string) {
-            const { data: cities } = await axios.get(route('tenant.cities.search', query))
+        async searchCities(search: string) {
+            const { data: cities } = await axios.get(route('tenant.cities.search', { search }))
 
             return cities
         },

@@ -16,7 +16,7 @@ class ExportFinancialTransactionsXlsxController extends Controller implements Ha
      */
     public function __invoke()
     {
-        return Excel::download(new FinancesIndexExport(), __('exports.transactions').'.xlsx');
+        return Excel::download(new FinancesIndexExport, __('exports.transactions').'.xlsx');
     }
 
     public static function middleware()

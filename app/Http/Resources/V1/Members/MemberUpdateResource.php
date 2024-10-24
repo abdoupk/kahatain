@@ -20,6 +20,7 @@ class MemberUpdateResource extends JsonResource
             'email' => $this->email,
             'gender' => $this->gender,
             'qualification' => $this->qualification,
+            'competences' => $this->competences,
 
             'zone' => $this->whenLoaded('zone', fn () => [
                 'id' => $this->zone->id,

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Branch;
+use App\Models\competence;
 use App\Models\Domain;
 use App\Models\Finance;
 use App\Models\Inventory;
@@ -53,16 +54,24 @@ class TenantSeeder extends Seeder
 
             $zones = Zone::factory()->count(10)->create(['tenant_id' => $tenant->id]);
 
+            competence::factory()->count(10)->create(['tenant_id' => $tenant->id]);
+
             $branches = Branch::factory(fake()->numberBetween(1, 12))->create([
                 'tenant_id' => $tenant?->id,
                 'president_id' => $tenant->members->random()->first()->id,
             ]);
 
-            User::factory(10)->create([
-                'tenant_id' => $tenant?->id,
-                'branch_id' => $branches->random()?->id,
-                'zone_id' => $zones->random()?->id,
-            ]);
+            User::factory()
+                ->hasAttached(
+                    Competence::factory()->count(fake()->numberBetween(1, 3)),
+                    ['tenant_id' => $tenant?->id]
+                )
+                ->count(10)
+                ->create([
+                    'tenant_id' => $tenant?->id,
+                    'branch_id' => $branches->random()?->id,
+                    'zone_id' => $zones->random()?->id,
+                ]);
 
             Inventory::factory()->count(fake()->numberBetween(10, 25))->create([
                 'tenant_id' => $tenant?->id,

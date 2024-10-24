@@ -20,6 +20,7 @@ class FinancialDetailsController extends Controller implements HasMiddleware
             )),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_financial_transactions'];

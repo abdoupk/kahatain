@@ -18,7 +18,7 @@ class ExportArchiveOrphansSchoolEntryXlsxController extends Controller implement
     public function __invoke(Archive $archive)
     {
         return Excel::download(
-            new OrphansSchoolEntryIndexExport(),
+            new OrphansSchoolEntryIndexExport,
             __('exports.archive.school_entry', ['date' => $archive->created_at->year]).'.xlsx'
         );
     }

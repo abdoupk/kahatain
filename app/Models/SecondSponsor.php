@@ -13,8 +13,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string|null $first_name
  * @property string|null $last_name
@@ -28,6 +26,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Tenant $tenant
+ *
  * @method static SecondSponsorFactory factory($count = null, $state = [])
  * @method static Builder|SecondSponsor newModelQuery()
  * @method static Builder|SecondSponsor newQuery()
@@ -47,6 +46,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|SecondSponsor whereUpdatedAt($value)
  * @method static Builder|SecondSponsor withTrashed()
  * @method static Builder|SecondSponsor withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class SecondSponsor extends Model
@@ -65,6 +65,6 @@ class SecondSponsor extends Model
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 }

@@ -29,6 +29,7 @@ class SaveBabiesToArchiveController extends Controller implements HasMiddleware
             $this->dispatchJob($archive);
         });
     }
+
     public static function middleware()
     {
         return ['can:save_occasions'];

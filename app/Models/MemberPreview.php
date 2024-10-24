@@ -11,13 +11,12 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $user_id
  * @property string $tenant_id
  * @property string $preview_id
  * @property-read Tenant $tenant
+ *
  * @method static MemberPreviewFactory factory($count = null, $state = [])
  * @method static Builder|MemberPreview newModelQuery()
  * @method static Builder|MemberPreview newQuery()
@@ -26,11 +25,12 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|MemberPreview wherePreviewId($value)
  * @method static Builder|MemberPreview whereTenantId($value)
  * @method static Builder|MemberPreview whereUserId($value)
+ *
  * @mixin Eloquent
  */
 class MemberPreview extends Pivot
 {
-    use HasFactory, BelongsToTenant, HasUuids;
+    use BelongsToTenant, HasFactory, HasUuids;
 
     public $timestamps = false;
 

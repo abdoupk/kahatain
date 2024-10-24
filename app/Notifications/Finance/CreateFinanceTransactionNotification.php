@@ -13,9 +13,7 @@ class CreateFinanceTransactionNotification extends Notification implements Shoul
 {
     use Queueable;
 
-    public function __construct(public Finance $finance, public User $user)
-    {
-    }
+    public function __construct(public Finance $finance, public User $user) {}
 
     public function via(): array
     {
@@ -39,7 +37,7 @@ class CreateFinanceTransactionNotification extends Notification implements Shoul
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.financial.index'
-                ) . '?show=' . $this->finance->id,
+                ).'?show='.$this->finance->id,
             ],
         ];
     }

@@ -11,15 +11,21 @@ class IncomeFactory extends Factory
 
     public function definition(): array
     {
+        $incomes = [
+            'cnr' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'cnas' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'casnos' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'pension' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'account' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'other_income' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+        ];
+
         return [
-            'cnr' => fake()->numberBetween(10000, 20000),
-            'cnas' => fake()->numberBetween(10000, 20000),
-            'casnos' => fake()->numberBetween(10000, 20000),
-            'pension' => fake()->numberBetween(10000, 20000),
-            'account' => fake()->numberBetween(10000, 20000),
-            'other_income' => fake()->numberBetween(10000, 20000),
-            'total_income' => fake()->numberBetween(10000, 20000),
-            'sponsor_id' => fake()->numberBetween(10000, 20000),
+            ...$incomes,
+            'total_income' => array_reduce($incomes, function ($carry, $item) {
+                return $carry + $item;
+            }, 0),
+            'sponsor_id' => fake()->uuid,
             'tenant_id' => fake()->uuid,
         ];
     }

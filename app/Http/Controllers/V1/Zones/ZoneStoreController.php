@@ -19,6 +19,7 @@ class ZoneStoreController extends Controller implements HasMiddleware
 
         return response('', 201);
     }
+
     public static function middleware()
     {
         return ['can:create_zones'];

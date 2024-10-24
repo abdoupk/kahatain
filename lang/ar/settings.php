@@ -28,4 +28,9 @@ return [
     'high_school' => 'الطور الثانوي',
     'dismissed' => 'مفصول',
     'baby' => 'رضيع',
+    'university_scholarship' => 'المنحة الجامعية',
+    'university_scholarship_hint' => 'المنحة الجامعية (كل 3 اشهر)',
+    'unemployment_benefit' => 'منحة البطالة',
+    'threshold' => 'العتبة',
+    'categories_for_calculation_of_sponsorship_rate' => 'التصنيفات لحساب نسبة الكفالة',
 ];

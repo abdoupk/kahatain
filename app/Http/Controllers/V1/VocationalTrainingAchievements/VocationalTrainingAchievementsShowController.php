@@ -17,6 +17,7 @@ class VocationalTrainingAchievementsShowController extends Controller implements
             ),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:update_orphans'];

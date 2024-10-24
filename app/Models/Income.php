@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $cnr
  * @property string $cnas
@@ -26,6 +24,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property string $tenant_id
  * @property-read Sponsor $sponsor
  * @property-read Tenant $tenant
+ *
  * @method static IncomeFactory factory($count = null, $state = [])
  * @method static Builder|Income newModelQuery()
  * @method static Builder|Income newQuery()
@@ -40,6 +39,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Income whereSponsorId($value)
  * @method static Builder|Income whereTenantId($value)
  * @method static Builder|Income whereTotalIncome($value)
+ *
  * @mixin Eloquent
  */
 class Income extends Model

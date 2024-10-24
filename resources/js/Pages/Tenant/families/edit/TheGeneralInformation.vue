@@ -10,10 +10,12 @@ import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 import TheBranchSelector from '@/Components/Global/TheBranchSelector.vue'
 import TheZoneSelector from '@/Components/Global/TheZoneSelector.vue'
 
 import { formatDate, omit } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ family: FamilyEditType }>()
 
@@ -146,18 +148,12 @@ const submit = () => {
                         {{ $t('validation.attributes.address') }}
                     </base-form-label>
 
-                    <base-form-input
-                        id="address"
-                        v-model="form.address"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.address')
-                            })
-                        "
-                        data-test="orphan_address"
-                        type="text"
-                        @change="form?.validate('address')"
-                    ></base-form-input>
+                    <the-address-field
+                        v-model:address="form.address"
+                        v-model:location="form.location"
+                        :select_location_label="$t('hints.select_family_location')"
+                        @input="form?.validate('address')"
+                    ></the-address-field>
 
                     <base-form-input-error>
                         <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">

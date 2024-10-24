@@ -10,6 +10,10 @@ class ListRolesController extends Controller
 {
     public function __invoke()
     {
-        return response()->json(JsonResource::collection(Role::select(['uuid', 'name'])->get()));
+        return response()->json(JsonResource::collection(
+            Role::select(['uuid', 'name'])
+                ->where('name', '!=', 'super_admin')
+                ->get())
+        );
     }
 }

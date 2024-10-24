@@ -20,6 +20,7 @@ class NeedDetailsController extends Controller implements HasMiddleware
             ),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_needs'];

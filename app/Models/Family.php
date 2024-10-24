@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -22,14 +23,13 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string $report
  * @property string $tenant_id
  * @property string|null $created_at
  * @property string|null $updated_at
+ *
  * @method static Builder|Family newModelQuery()
  * @method static Builder|Family newQuery()
  * @method static Builder|Family query()
@@ -39,6 +39,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Family whereReport($value)
  * @method static Builder|Family whereTenantId($value)
  * @method static Builder|Family whereUpdatedAt($value)
+ *
  * @property-read Collection<int, Furnishing> $furnishings
  * @property-read int|null $furnishings_count
  * @property-read Collection<int, Orphan> $orphans
@@ -49,23 +50,31 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $sponsorships_count
  * @property-read Spouse|null $spouse
  * @property-read Tenant $tenant
+ *
  * @method static FamilyFactory factory($count = null, $state = [])
+ *
  * @property string $zone_id
  * @property string $address
  * @property int $file_number
  * @property string $start_date
  * @property-read Zone|null $zone
+ *
  * @method static Builder|Family whereAddress($value)
  * @method static Builder|Family whereFileNumber($value)
  * @method static Builder|Family whereStartDate($value)
  * @method static Builder|Family whereZoneId($value)
+ *
  * @property Carbon|null $deleted_at
+ *
  * @method static Builder|Family onlyTrashed()
  * @method static Builder|Family whereDeletedAt($value)
  * @method static Builder|Family withTrashed()
  * @method static Builder|Family withoutTrashed()
+ *
  * @property string|null $branch_id
+ *
  * @method static Builder|Family whereBranchId($value)
+ *
  * @property-read Spouse|null $deceased
  * @property-read Housing|null $housing
  * @property-read Preview|null $preview
@@ -78,7 +87,9 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Branch|null $branch
  * @property string|null $created_by
  * @property-read User|null $creator
+ *
  * @method static Builder|Family whereCreatedBy($value)
+ *
  * @property float|null $income_rate
  * @property float|null $total_income
  * @property string|null $deleted_by
@@ -88,9 +99,11 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $orphans_needs_count
  * @property-read Collection<int, Need> $sponsorsNeeds
  * @property-read int|null $sponsors_needs_count
+ *
  * @method static Builder|Family whereDeletedBy($value)
  * @method static Builder|Family whereIncomeRate($value)
  * @method static Builder|Family whereTotalIncome($value)
+ *
  * @mixin Eloquent
  */
 class Family extends Model
@@ -108,6 +121,11 @@ class Family extends Model
         'total_income',
         'start_date',
         'branch_id',
+        'location',
+        'difference_before_monthly_sponsorship',
+        'difference_after_monthly_sponsorship',
+        'monthly_sponsorship_rate',
+        'difference',
     ];
 
     protected static function boot(): void
@@ -160,6 +178,14 @@ class Family extends Model
     public function sponsorships(): HasOne
     {
         return $this->hasOne(FamilySponsorship::class);
+    }
+
+    public function aid(): MorphMany
+    {
+        return $this->morphMany(
+            Sponsorship::class,
+            'recipientable',
+        );
     }
 
     public function sponsorSponsorships(): HasOneThrough
@@ -218,7 +244,7 @@ class Family extends Model
             'id' => $this->id,
             'name' => $this->name,
             'tenant_id' => $this->tenant_id,
-            'start_date' => (int)strtotime($this->start_date),
+            'start_date' => (int) strtotime($this->start_date),
             'file_number' => $this->file_number,
             'address' => [
                 'address' => $this->address,
@@ -253,6 +279,10 @@ class Family extends Model
             ],
             'income_rate' => $this->income_rate,
             'created_at' => strtotime($this->created_at),
+            '_geo' => [
+                'lat' => $this->location['lat'],
+                'lng' => $this->location['lng'],
+            ],
         ];
     }
 
@@ -364,6 +394,7 @@ class Family extends Model
         return [
             'start_date' => 'date',
             'preview_date' => 'date',
+            'location' => 'array',
         ];
     }
 }

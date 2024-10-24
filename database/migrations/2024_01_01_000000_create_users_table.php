@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -16,20 +17,25 @@ return new class extends Migration {
             $table->text('last_name')->nullable(false);
             $table->text('phone')->nullable();
             $table->text('address')->nullable();
-            $table->text('zone_id')->nullable();
-            $table->text('branch_id')->nullable();
+            $table->json('location')->nullable();
+            $table->text('workplace')->nullable();
+            $table->text('function')->nullable();
+            $table->uuid('zone_id')->nullable();
+            $table->uuid('branch_id')->nullable();
             $table->text('email')->nullable(false);
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('qualification')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->text('password')->nullable(false);
             $table->text('remember_token')->nullable();
-            $table->uuid('tenant_id')->nullable(false);
+            $table->uuid('tenant_id');
+            $table->integer('academic_level_id')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->softDeletes();
             $table->uuid('deleted_by')->nullable();
+            $table->uuid('created_by')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', static function (Blueprint $table) {

@@ -20,6 +20,7 @@ class ExportOrphansPDFController extends Controller implements HasMiddleware
             return getOrphansForExport();
         });
     }
+
     public static function middleware()
     {
         return ['can:export_orphans'];

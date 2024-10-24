@@ -17,7 +17,7 @@ class ExportOrphansXlsxController extends Controller implements HasMiddleware
      */
     public function __invoke(): BinaryFileResponse
     {
-        return Excel::download(new OrphansIndexExport(), __('exports.orphans').'.xlsx');
+        return Excel::download(new OrphansIndexExport, __('exports.orphans').'.xlsx');
     }
 
     public static function middleware()

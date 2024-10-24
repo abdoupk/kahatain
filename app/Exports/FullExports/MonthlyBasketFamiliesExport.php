@@ -8,9 +8,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class MonthlyBasketFamiliesExport implements WithEvents, WithMultipleSheets
 {
-    public function __construct(public int $year)
-    {
-    }
+    public function __construct(public int $year) {}
 
     public function registerEvents(): array
     {

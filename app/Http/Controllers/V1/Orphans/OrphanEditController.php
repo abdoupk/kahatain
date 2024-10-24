@@ -31,6 +31,7 @@ class OrphanEditController extends Controller implements HasMiddleware
             ]
         );
     }
+
     public static function middleware()
     {
         return ['can:update_orphans'];

@@ -14,6 +14,7 @@ class VocationalTrainingAchievementsDeleteController extends Controller implemen
 
         return redirect()->back();
     }
+
     public static function middleware()
     {
         return ['can:update_orphans'];

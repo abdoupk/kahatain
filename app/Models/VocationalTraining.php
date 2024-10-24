@@ -9,17 +9,17 @@ use Laravel\Scout\Searchable;
 use Sushi\Sushi;
 
 /**
- *
- *
  * @property int $id
  * @property string|null $speciality
  * @property string|null $division
+ *
  * @method static Builder|VocationalTraining newModelQuery()
  * @method static Builder|VocationalTraining newQuery()
  * @method static Builder|VocationalTraining query()
  * @method static Builder|VocationalTraining whereDivision($value)
  * @method static Builder|VocationalTraining whereId($value)
  * @method static Builder|VocationalTraining whereSpeciality($value)
+ *
  * @mixin Eloquent
  */
 class VocationalTraining extends Model

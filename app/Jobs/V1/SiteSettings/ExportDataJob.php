@@ -38,13 +38,11 @@ class ExportDataJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public string $path, public string $tenant)
-    {
-    }
+    public function __construct(public string $path, public string $tenant) {}
 
     public function handle(): void
     {
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
 
         $zip->open($this->path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
@@ -83,18 +81,18 @@ class ExportDataJob implements ShouldQueue
     private function exportToExcel(ZipArchive $zip): void
     {
         $files = [
-            __('the_members') . '.xlsx' => new UsersExport(),
-            __('the_zones') . '.xlsx' => new ZonesExport(),
-            __('the_branches') . '.xlsx' => new BranchesExport(),
-            __('the_orphans') . '.xlsx' => new OrphansExport(),
-            __('the_sponsors') . '.xlsx' => new SponsorsExport(),
-            __('the_families') . '.xlsx' => new FamiliesExport(),
-            __('the_schools') . '.xlsx' => new SchoolsExport(),
-            __('the_lessons') . '.xlsx' => new LessonsExport(),
-            __('the_needs') . '.xlsx' => new NeedsExport(),
-            __('search.babies') . '.xlsx' => new BabiesExport(),
-            __('the_inventory') . '.xlsx' => new InventoryExport(),
-            __('exports.transactions') . '.xlsx' => new FinanceTransactionsExport(),
+            __('the_members').'.xlsx' => new UsersExport,
+            __('the_zones').'.xlsx' => new ZonesExport,
+            __('the_branches').'.xlsx' => new BranchesExport,
+            __('the_orphans').'.xlsx' => new OrphansExport,
+            __('the_sponsors').'.xlsx' => new SponsorsExport,
+            __('the_families').'.xlsx' => new FamiliesExport,
+            __('the_schools').'.xlsx' => new SchoolsExport,
+            __('the_lessons').'.xlsx' => new LessonsExport,
+            __('the_needs').'.xlsx' => new NeedsExport,
+            __('search.babies').'.xlsx' => new BabiesExport,
+            __('the_inventory').'.xlsx' => new InventoryExport,
+            __('exports.transactions').'.xlsx' => new FinanceTransactionsExport,
         ];
 
         foreach ($files as $fileName => $export) {
@@ -123,7 +121,7 @@ class ExportDataJob implements ShouldQueue
             ->get()->pluck('year')->toArray();
 
         foreach ($years as $year) {
-            $fileName = "{$year}/" . __('exports.babies_milk_and_diapers') . '.xlsx';
+            $fileName = "{$year}/".__('exports.babies_milk_and_diapers').'.xlsx';
 
             Excel::store(new BabiesMilkAndDiapersListExport($year), $fileName);
 
@@ -138,7 +136,7 @@ class ExportDataJob implements ShouldQueue
             ->get()->pluck('year')->toArray();
 
         foreach ($years as $year) {
-            $fileName = "{$year}/" . __('the_families_monthly_basket') . '.xlsx';
+            $fileName = "{$year}/".__('the_families_monthly_basket').'.xlsx';
 
             Excel::store(new MonthlyBasketFamiliesExport($year), $fileName);
 
@@ -152,7 +150,7 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_orphans_school_entry') . '.xlsx';
+        $fileName = __('the_orphans_school_entry').'.xlsx';
 
         Excel::store(new SchoolEntryOrphansListExport($years), $fileName);
 
@@ -165,7 +163,7 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_orphans_eid_suit') . '.xlsx';
+        $fileName = __('the_orphans_eid_suit').'.xlsx';
 
         Excel::store(new EidSuitOrphansListExport($years), $fileName);
 
@@ -178,7 +176,7 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_families_eid_al_adha') . '.xlsx';
+        $fileName = __('the_families_eid_al_adha').'.xlsx';
 
         Excel::store(new EidAlAdhaFamiliesListExport($years), $fileName);
 
@@ -191,7 +189,7 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_families_ramadan_basket') . '.xlsx';
+        $fileName = __('the_families_ramadan_basket').'.xlsx';
 
         Excel::store(new RamadanBasketFamiliesListExport($years), $fileName);
 

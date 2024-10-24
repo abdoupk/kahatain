@@ -13,9 +13,7 @@ class CreateSchoolNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public PrivateSchool $school, public User $user)
-    {
-    }
+    public function __construct(public PrivateSchool $school, public User $user) {}
 
     public function via(): array
     {
@@ -37,7 +35,7 @@ class CreateSchoolNotification extends Notification implements ShouldQueue
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.schools.index'
-                ) . '?show=' . $this->school->id,
+                ).'?show='.$this->school->id,
             ],
         ];
     }

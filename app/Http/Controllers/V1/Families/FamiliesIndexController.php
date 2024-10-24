@@ -17,6 +17,7 @@ class FamiliesIndexController extends Controller implements HasMiddleware
             'params' => getParams(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:list_families'];

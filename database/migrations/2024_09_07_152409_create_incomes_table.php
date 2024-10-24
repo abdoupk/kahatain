@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('cnr');
-            $table->text('cnas');
-            $table->text('casnos');
-            $table->text('pension');
-            $table->text('account');
-            $table->text('other_income');
+            $table->text('cnr')->nullable();
+            $table->text('cnas')->nullable();
+            $table->text('casnos')->nullable();
+            $table->text('pension')->nullable();
+            $table->text('account')->nullable();
+            $table->text('other_income')->nullable();
             $table->float('total_income')->nullable();
             $table->uuid('sponsor_id');
             $table->uuid('tenant_id');

@@ -299,6 +299,7 @@ const submit = () => {
                         v-model:address="form.address"
                         v-model:branch="form.branch_id"
                         v-model:file-number="form.file_number"
+                        v-model:location="form.location"
                         v-model:start-date="form.start_date"
                         v-model:zone="form.zone_id"
                         :currentStep

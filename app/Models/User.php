@@ -24,8 +24,6 @@ use Spatie\Permission\Traits\HasRoles;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $first_name
  * @property string $last_name
@@ -60,6 +58,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read Zone|null $zone
+ *
  * @method static UserFactory factory($count = null, $state = [])
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
@@ -89,6 +88,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|User withoutPermission($permissions)
  * @method static Builder|User withoutRole($roles, $guard = null)
  * @method static Builder|User withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -114,6 +114,12 @@ class User extends Authenticatable
         'address',
         'qualification',
         'created_by',
+        'deleted_by',
+        'tenant_id',
+        'location',
+        'workplace',
+        'academic_level_id',
+        'function',
     ];
 
     /**
@@ -191,7 +197,7 @@ class User extends Authenticatable
 
     public function shouldBeSearchable(): bool
     {
-        return !$this->roles->pluck('name')->contains('super_admin');
+        return ! $this->roles->pluck('name')->contains('super_admin');
     }
 
     public function toSearchableArray(): array
@@ -209,7 +215,7 @@ class User extends Authenticatable
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function previews(): BelongsToMany
@@ -227,6 +233,19 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function competences(): BelongsToMany
+    {
+        return $this->belongsToMany(Competence::class)->using(CompetenceUser::class);
+    }
+
+    public function academicLevel(): BelongsTo
+    {
+        return $this->belongsTo(
+            AcademicLevel::class,
+            'academic_level_id'
+        );
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -237,6 +256,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'location' => 'array',
         ];
     }
 }

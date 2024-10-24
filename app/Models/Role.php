@@ -12,8 +12,6 @@ use Spatie\Permission\Models\Role as SpatieRole;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $uuid
  * @property string $name
  * @property string $guard_name
@@ -25,6 +23,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Tenant $tenant
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
+ *
  * @method static Builder|Role newModelQuery()
  * @method static Builder|Role newQuery()
  * @method static Builder|Role permission($permissions, $without = false)
@@ -36,6 +35,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Role whereUpdatedAt($value)
  * @method static Builder|Role whereUuid($value)
  * @method static Builder|Role withoutPermission($permissions)
+ *
  * @mixin Eloquent
  */
 class Role extends SpatieRole
@@ -59,8 +59,8 @@ class Role extends SpatieRole
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
-            'permissions_count' => (int)$this->permissions_count,
-            'users_count' => (int)$this->users_count,
+            'permissions_count' => (int) $this->permissions_count,
+            'users_count' => (int) $this->users_count,
             'tenant_id' => $this->tenant_id,
             'created_at' => strtotime($this->created_at),
         ];

@@ -13,9 +13,7 @@ class DeleteFinanceTransactionNotification extends Notification implements Shoul
 {
     use Queueable;
 
-    public function __construct(public Finance $finance, public User $user)
-    {
-    }
+    public function __construct(public Finance $finance, public User $user) {}
 
     public function via(): array
     {

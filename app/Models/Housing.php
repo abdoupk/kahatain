@@ -13,8 +13,6 @@ use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $name
  * @property string $value
@@ -27,6 +25,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $updated_at
  * @property-read Family $family
  * @property-read Tenant $tenant
+ *
  * @method static HousingFactory factory($count = null, $state = [])
  * @method static Builder|Housing newModelQuery()
  * @method static Builder|Housing newQuery()
@@ -41,6 +40,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Housing whereTenantId($value)
  * @method static Builder|Housing whereUpdatedAt($value)
  * @method static Builder|Housing whereValue($value)
+ *
  * @mixin Eloquent
  */
 class Housing extends Model

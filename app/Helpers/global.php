@@ -28,11 +28,11 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
 
     $pdfName = Str::replace('-', '_', explode('/', "{$directory}/{$variableName}")[1]);
 
-    $pdfName = __('exports.' . $pdfName, [
+    $pdfName = __('exports.'.$pdfName, [
         'date' => $date,
     ]);
 
-    $pdfFile = "{$directory}/{$pdfName}" . '.pdf';
+    $pdfFile = "{$directory}/{$pdfName}".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
@@ -67,7 +67,7 @@ function saveArchiveToPDF(
         $disk->makeDirectory($directory);
     }
 
-    $pdfName = __('exports.archive.' . Str::replace(
+    $pdfName = __('exports.archive.'.Str::replace(
         '-',
         '_',
         explode(
@@ -76,7 +76,7 @@ function saveArchiveToPDF(
         )[1]
     ), ['date' => $date]);
 
-    $pdfFile = "{$directory}/{$pdfName}" . '.pdf';
+    $pdfFile = "{$directory}/{$pdfName}".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
@@ -119,7 +119,7 @@ function generateFormatedConditions(): array
                 $condition['field'],
                 $condition['operator'],
                 str_contains($condition['value'], ' ')
-                    ? '"' . $condition['value'] . '"'
+                    ? '"'.$condition['value'].'"'
                     : $condition['value'],
             ];
         }, $filters);
@@ -133,12 +133,12 @@ function generateFilterConditions(?string $additional_filters = ''): string
     $filters = array_merge(generateFormatedConditions());
 
     if (! $filters) {
-        return 'tenant_id = ' . tenant('id') . ' ' . $additional_filters;
+        return 'tenant_id = '.tenant('id').' '.$additional_filters;
     }
 
     return implode(' AND ', array_map(static function ($condition) {
         return implode(' ', $condition);
-    }, $filters)) . ' ' . $additional_filters;
+    }, $filters)).' '.$additional_filters;
 }
 
 function generateFormattedSort(): array
@@ -172,7 +172,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
     $query = trim(request()->input('search', '')) ?? '';
 
     $meilisearchOptions = [
-        'filter' => generateFilterConditions($additional_filters) . ' AND tenant_id = ' . tenant('id'),
+        'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
         'sort' => generateFormattedSort(),
         'limit' => $limit,
     ];
@@ -212,7 +212,7 @@ function formatedVocationalTrainingSpecialities(): array
 
 function formatCurrency(float $amount): false|string
 {
-    $formatter = new NumberFormatter(app()->getLocale() . '_DZ', NumberFormatter::CURRENCY);
+    $formatter = new NumberFormatter(app()->getLocale().'_DZ', NumberFormatter::CURRENCY);
 
     return $formatter->formatCurrency($amount, 'DZD');
 }
@@ -239,9 +239,9 @@ function calculateAge($birthDate): string
 
 function formatPhoneNumber($phone): string
 {
-    return substr($phone, 0, 4) . '-' .
-        substr($phone, 4, 2) . '-' .
-        substr($phone, 6, 2) . '-' .
+    return substr($phone, 0, 4).'-'.
+        substr($phone, 4, 2).'-'.
+        substr($phone, 6, 2).'-'.
         substr($phone, 8, 2);
 }
 

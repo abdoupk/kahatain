@@ -62,7 +62,7 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
             $row->getName(),
             $row->birth_date->format('Y-m-d'),
             __($row->gender),
-            $row->family_status ? __('family_statuses.' . $row->family_status) : '',
+            $row->family_status ? __('family_statuses.'.$row->family_status) : '',
             $row->health_status,
             $row->shirtSize?->label,
             $row->shoesSize?->label,

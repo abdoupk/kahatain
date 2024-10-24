@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 function getBabiesForExport(): Collection
 {
-    return search(Baby::getModel(), 'AND orphan.birth_date >' . strtotime('now - 2 years'), limit: 10000)
+    return search(Baby::getModel(), 'AND orphan.birth_date >'.strtotime('now - 2 years'), limit: 10000)
         ->query(
             fn ($query) => $query
                 ->with([

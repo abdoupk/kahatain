@@ -20,6 +20,7 @@ class FamiliesMonthlyBasketIndexController extends Controller implements HasMidd
                 ->whereMonth('created_at', now()->month)->select(['id', 'saved_by', 'created_at'])->first(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_occasions'];

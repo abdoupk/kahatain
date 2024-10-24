@@ -71,6 +71,7 @@ function calculateOrphanIncomes(Orphan $orphan): float
     if ($orphan->gender === 'male') {
         return calculateContributionsForMaleOrphan($orphan, $calculation);
     }
+
     return calculateContributionsForFemaleOrphan($orphan, $calculation);
 }
 
@@ -118,16 +119,18 @@ function calculateSponsorWeights(Family $family): float
  */
 function calculateOrphanWeights(Orphan $orphan, array $orphanWeights): float
 {
+    if ($orphan->birth_date->age <= 18) {
+        return calculateWeightForOrphanBelow18($orphan, $orphanWeights);
+    }
+
     if ($orphan->is_handicapped) {
         return json_decode($orphan->tenant['calculation'], true, 512, JSON_THROW_ON_ERROR)['weights']['handicapped'];
     }
 
-    if ($orphan->birth_date->age < 18) {
-        return calculateWeightForOrphanBelow18($orphan, $orphanWeights);
-    }
     if ($orphan->gender === 'male') {
         return calculateWeightForOrphanMaleOlderThan18($orphan, $orphanWeights);
     }
+
     return calculateWeightForOrphanFemaleOlderThan18($orphan, $orphanWeights);
 }
 
@@ -142,13 +145,14 @@ function calculateWeightForOrphanFemaleOlderThan18(Orphan $orphan, array $weight
         'at_home_with_income' => $weights['at_home_with_income'],
         'single_female_employee' => $weights['single_female_employee'],
         'married' => $weights['married'],
-        'divorced' => $weights['divorced'],
+        'divorced_with_family' => $weights['divorced_with_family'],
+        'divorced_outside_family' => $weights['divorced_outside_family']
     };
 }
 
 function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights): float
 {
-    $weights = $weights['female_gt_18'];
+    $weights = $weights['male_gt_18'];
 
     return match ($orphan->family_status) {
         'college_boy' => $weights['college_boy'],
@@ -187,6 +191,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
             default => 1
         };
     }
+
     if ($orphan->birth_date->age < 2) {
         return $weights['lt_18']['during_academic_season']['baby'];
     }
@@ -225,18 +230,19 @@ function calculateContributionsForSponsor(Sponsor $sponsor): float
     if ($sponsor->is_unemployed) {
         return match ($sponsor->sponsor_type) {
             'other' => $sponsorPercentages['other'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
             'widower' => $sponsorPercentages['widower'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
             'widow' => $sponsorPercentages['widow'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
             'widows_husband' => $sponsorPercentages['widows_husband'] *
-                $sponsor->incomes->total_income,
-            'widowers_wife' => $sponsorPercentages['widowers_wife'] * $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
+            'widowers_wife' => $sponsorPercentages['widowers_wife'] * $sponsor->incomes?->total_income ?? 0,
             'mother_of_a_supported_childhood' => $sponsorPercentages['mother_of_a_supported_childhood'] *
-                $sponsor->incomes->total_income,
+            $sponsor->incomes?->total_income ?? 0,
         };
     }
+
     return match ($sponsor->sponsor_type) {
         'other' => $sponsorContributions['other'],
         'widower' => $sponsorContributions['widower'],
@@ -296,7 +302,8 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
             'at_home_with_income' => $calculations['at_home_with_income'],
             'single_female_employee' => $calculations['single_female_employee'],
             'married' => $calculations['married'],
-            'divorced' => $calculations['divorced'],
+            'divorced_with_family' => $calculations['divorced_with_family'],
+            'divorced_outside_family' => $calculations['divorced_outside_family'],
             default => 0
         };
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\City;
 use Arr;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -17,6 +18,10 @@ class HandleInertiaRequests extends Middleware
                 'settings' => auth()->user()?->settings,
             ],
             'association' => tenant('infos')['association'] ?? null,
+            'association_coordinates' => [
+                'lat' => $this->getCoordinates()?->latitude ?? null,
+                'lng' => $this->getCoordinates()?->longitude ?? null,
+            ] ?? null,
             'language' => auth()->user()?->settings?->locale ?? null,
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
@@ -51,5 +56,18 @@ class HandleInertiaRequests extends Middleware
         }
 
         return null;
+    }
+
+    private function getCoordinates(): ?City
+    {
+        $city_id = tenant()['infos']['city_id'] ?? null;
+
+        if (! $city_id) {
+            return null;
+        }
+
+        return City::whereId($city_id)
+            ->select(['latitude', 'longitude'])
+            ->first();
     }
 }

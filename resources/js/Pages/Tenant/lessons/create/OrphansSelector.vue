@@ -48,7 +48,7 @@ onMounted(() => {
     <base-vue-select
         id="orphans"
         v-model:value="selectedOrphans"
-        :allow-empty="false"
+        :allow-empty="true"
         :clear-on-select="false"
         :close-on-select="false"
         :hide-selected="true"

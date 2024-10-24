@@ -12,9 +12,7 @@ class UpdateMemberNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public User $member, public User $user)
-    {
-    }
+    public function __construct(public User $member, public User $user) {}
 
     public function via(): array
     {
@@ -36,7 +34,7 @@ class UpdateMemberNotification extends Notification implements ShouldQueue
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.members.index'
-                ) . '?show=' . $this->member->id,
+                ).'?show='.$this->member->id,
             ],
         ];
     }

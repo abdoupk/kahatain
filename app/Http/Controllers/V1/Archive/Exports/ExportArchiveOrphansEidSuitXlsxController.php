@@ -18,7 +18,7 @@ class ExportArchiveOrphansEidSuitXlsxController extends Controller implements Ha
     public function __invoke(Archive $archive)
     {
         return Excel::download(
-            new OrphansEidSuitIndexExport(),
+            new OrphansEidSuitIndexExport,
             __('exports.archive.eid_suit', ['date' => $archive->created_at->year]).'.xlsx'
         );
     }

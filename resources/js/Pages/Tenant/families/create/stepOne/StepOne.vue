@@ -5,10 +5,12 @@ import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 import TheBranchSelector from '@/Components/Global/TheBranchSelector.vue'
 import TheZoneSelector from '@/Components/Global/TheZoneSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<CreateFamilyStepProps>()
 
@@ -19,6 +21,8 @@ const branch = defineModel('branch', { default: '' })
 const startDate = defineModel('startDate', { default: '' })
 
 const address = defineModel('address')
+
+const location = defineModel('location')
 
 const fileNumber = defineModel('fileNumber')
 </script>
@@ -125,13 +129,14 @@ const fileNumber = defineModel('fileNumber')
                 <base-form-label for="address">
                     {{ $t('validation.attributes.address') }}
                 </base-form-label>
-                <base-form-input
-                    id="address"
-                    v-model="address"
-                    placeholder="حي الحياة تجزئة ب رقم '89' البيض"
-                    type="text"
+
+                <the-address-field
+                    v-model:address="address"
+                    v-model:location="location"
+                    :select_location_label="$t('hints.select_family_location')"
                     @input="form?.validate('address')"
-                ></base-form-input>
+                ></the-address-field>
+
                 <base-form-input-error>
                     <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
                         {{ form.errors.address }}

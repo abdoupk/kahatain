@@ -129,7 +129,7 @@ const modalType = computed(() => {
             <!-- Begin: Name-->
             <div class="col-span-12">
                 <base-form-label htmlFor="description">
-                    {{ $t('validation.attributes.description') }}
+                    {{ $t('neighborhoods') }}
                 </base-form-label>
 
                 <base-form-text-area

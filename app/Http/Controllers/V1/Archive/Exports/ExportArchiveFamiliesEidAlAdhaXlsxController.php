@@ -18,7 +18,7 @@ class ExportArchiveFamiliesEidAlAdhaXlsxController extends Controller implements
     public function __invoke(Archive $archive)
     {
         return Excel::download(
-            new FamiliesEidAlAdhaIndexExport(),
+            new FamiliesEidAlAdhaIndexExport,
             __('exports.archive.eid_al_adha_families', ['date' => $archive->created_at->year]).'.xlsx'
         );
     }

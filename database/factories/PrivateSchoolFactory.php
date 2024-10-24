@@ -16,7 +16,6 @@ class PrivateSchoolFactory extends Factory
             'name' => fake('ar_SA')->word,
             'tenant_id' => fake()->uuid,
             'created_by' => User::inRandomOrder()->first()->id,
-            'deleted_by' => User::inRandomOrder()->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];

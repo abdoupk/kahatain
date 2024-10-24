@@ -28,6 +28,7 @@ class SaveFamiliesRamadanBasketToArchiveController extends Controller
 
         dispatch(new RamadanBasketFamiliesListSavedJob($archive, auth()->user()));
     }
+
     public static function middleware()
     {
         return ['can:save_occasions'];

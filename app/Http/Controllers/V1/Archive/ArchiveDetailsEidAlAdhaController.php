@@ -28,6 +28,7 @@ class ArchiveDetailsEidAlAdhaController extends Controller implements HasMiddlew
             'params' => getParams(),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:view_archive'];

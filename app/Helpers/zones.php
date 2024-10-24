@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Models\Zone;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 

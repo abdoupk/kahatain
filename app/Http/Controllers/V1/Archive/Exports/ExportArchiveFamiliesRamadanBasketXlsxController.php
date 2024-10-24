@@ -17,7 +17,7 @@ class ExportArchiveFamiliesRamadanBasketXlsxController extends Controller
     public function __invoke(Archive $archive)
     {
         return Excel::download(
-            new FamiliesRamadanBasketIndexExport(),
+            new FamiliesRamadanBasketIndexExport,
             __('exports.archive.ramadan_basket_families', ['date' => $archive->created_at->year]).'.xlsx'
         );
     }

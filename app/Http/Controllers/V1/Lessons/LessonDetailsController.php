@@ -28,6 +28,7 @@ class LessonDetailsController extends Controller implements HasMiddleware
             ]
         );
     }
+
     public static function middleware()
     {
         return ['can:view_lessons'];

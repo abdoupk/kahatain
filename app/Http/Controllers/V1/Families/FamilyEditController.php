@@ -28,6 +28,7 @@ class FamilyEditController extends Controller implements HasMiddleware
             ),
         ]);
     }
+
     public static function middleware()
     {
         return ['can:update_families'];

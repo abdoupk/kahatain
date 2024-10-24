@@ -15,8 +15,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $name
  * @property int $qty
@@ -32,6 +30,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $deleted_at
  * @property-read User $creator
  * @property-read Tenant $tenant
+ *
  * @method static InventoryFactory factory($count = null, $state = [])
  * @method static Builder|Inventory newModelQuery()
  * @method static Builder|Inventory newQuery()
@@ -52,6 +51,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Inventory whereUpdatedAt($value)
  * @method static Builder|Inventory withTrashed()
  * @method static Builder|Inventory withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Inventory extends Model

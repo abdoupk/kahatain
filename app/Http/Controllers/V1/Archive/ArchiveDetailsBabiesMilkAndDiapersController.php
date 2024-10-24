@@ -30,6 +30,7 @@ class ArchiveDetailsBabiesMilkAndDiapersController extends Controller implements
             ]
         );
     }
+
     public static function middleware()
     {
         return ['can:view_archive'];

@@ -7,6 +7,8 @@ import { defineAsyncComponent } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import ThePreDefinedAwardedForm from '@/Pages/Tenant/settings/ThePreDefinedAwardedForm.vue'
+
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 const TheExportData = defineAsyncComponent(() => import('@/Pages/Tenant/settings/TheExportData.vue'))
@@ -37,7 +39,11 @@ defineProps<{
             <div class="intro-y mt-5 grid grid-cols-12 gap-6">
                 <the-tenant-infos-update-form :settings></the-tenant-infos-update-form>
 
-                <the-export-data></the-export-data>
+                <div class="col-span-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <the-pre-defined-awarded-form :calculation></the-pre-defined-awarded-form>
+
+                    <the-export-data></the-export-data>
+                </div>
 
                 <the-calculation-table :calculation></the-calculation-table>
             </div>

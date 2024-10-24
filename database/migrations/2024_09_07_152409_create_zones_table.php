@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->text('name');
             $table->text('description');
+            $table->geometry('geom')->nullable();
             $table->uuid('tenant_id');
             $table->timestamps();
             $table->softDeletes();

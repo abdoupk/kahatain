@@ -43,7 +43,17 @@ export const useMembersStore = defineStore('members', {
             roles: [''],
             branch_id: '',
             password: '',
-            password_confirmation: ''
+            password_confirmation: '',
+            address: '',
+            location: {
+                lat: null,
+                lng: null
+            },
+            function: '',
+            workplace: '',
+            competences: [],
+            readable_roles: '',
+            academic_level_id: null
         },
         members: []
     }),
@@ -78,8 +88,8 @@ export const useMembersStore = defineStore('members', {
             this.members = members
         },
 
-        async searchMembers(query: string) {
-            const { data: members } = await axios.get(route('tenant.members.search', query))
+        async searchMembers(search: string) {
+            const { data: members } = await axios.get(route('tenant.members.search' , { search }))
 
             return members
         },

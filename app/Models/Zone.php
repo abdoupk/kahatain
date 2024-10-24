@@ -17,8 +17,6 @@ use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
- *
- *
  * @property string $id
  * @property string $name
  * @property string $description
@@ -34,6 +32,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, User> $members
  * @property-read int|null $members_count
  * @property-read Tenant $tenant
+ *
  * @method static ZoneFactory factory($count = null, $state = [])
  * @method static Builder|Zone newModelQuery()
  * @method static Builder|Zone newQuery()
@@ -50,6 +49,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Zone whereUpdatedAt($value)
  * @method static Builder|Zone withTrashed()
  * @method static Builder|Zone withoutTrashed()
+ *
  * @mixin Eloquent
  */
 class Zone extends Model
@@ -104,7 +104,7 @@ class Zone extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'families_count' => (int)$this->families_count,
+            'families_count' => (int) $this->families_count,
             'tenant_id' => $this->tenant_id,
             'description' => $this->description,
             'created_at' => strtotime($this->created_at),
