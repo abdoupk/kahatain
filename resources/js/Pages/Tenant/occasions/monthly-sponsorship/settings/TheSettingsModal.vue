@@ -29,7 +29,7 @@ const loading = ref(false)
 
 const showSuccessNotification = ref(false)
 
-const notificationTitle =$t('successfully_updated')
+const notificationTitle = $t('successfully_updated')
 
 const form = computed(() => {
     return useForm('patch', route('tenant.monthly-sponsorship.update-settings'), {
@@ -134,21 +134,21 @@ const removeInterval = (index: number) => {
             </div>
             <!-- End: University scholarship bachelor-->
 
-            <!-- Begin: University scholarship Master-->
+            <!-- Begin: University scholarship Master 1-->
             <div class="col-span-12 sm:col-span-4">
-                <base-form-label htmlFor="university_scholarship_master">
-                    {{ $t('validation.attributes.university_scholarship_master') }}
+                <base-form-label htmlFor="university_scholarship_master_one">
+                    {{ $t('validation.attributes.university_scholarship_master_one') }}
                 </base-form-label>
 
                 <base-input-group>
                     <base-form-input
-                        id="university_scholarship_master"
-                        v-model="form.university_scholarship_master"
+                        id="university_scholarship_master_one"
+                        v-model="form.university_scholarship_master_one"
                         type="number"
-                        @change="form.validate('university_scholarship_master')"
+                        @change="form.validate('university_scholarship_master_one')"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
-                                attribute: $t('validation.attributes.university_scholarship_master')
+                                attribute: $t('validation.attributes.university_scholarship_master_one')
                             })
                         "
                     ></base-form-input>
@@ -158,11 +158,41 @@ const removeInterval = (index: number) => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <div v-if="form.errors?.university_scholarship_master" class="mt-2">
-                    <base-input-error :message="form.errors.university_scholarship_master"></base-input-error>
+                <div v-if="form.errors?.university_scholarship_master_one" class="mt-2">
+                    <base-input-error :message="form.errors.university_scholarship_master_one"></base-input-error>
                 </div>
             </div>
-            <!-- End: University scholarship Master-->
+            <!-- End: University scholarship Master 1-->
+
+            <!-- Begin: University scholarship Master 2-->
+            <div class="col-span-12 sm:col-span-4">
+                <base-form-label htmlFor="university_scholarship_master_two">
+                    {{ $t('validation.attributes.university_scholarship_master_two') }}
+                </base-form-label>
+
+                <base-input-group>
+                    <base-form-input
+                        id="university_scholarship_master_two"
+                        v-model="form.university_scholarship_master_two"
+                        type="number"
+                        @change="form.validate('university_scholarship_master_two')"
+                        :placeholder="
+                            $t('auth.placeholders.tomselect', {
+                                attribute: $t('validation.attributes.university_scholarship_master_two')
+                            })
+                        "
+                    ></base-form-input>
+
+                    <base-input-group-text>
+                        {{ $t('DA') }}
+                    </base-input-group-text>
+                </base-input-group>
+
+                <div v-if="form.errors?.university_scholarship_master_two" class="mt-2">
+                    <base-input-error :message="form.errors.university_scholarship_master_two"></base-input-error>
+                </div>
+            </div>
+            <!-- End: University scholarship Master 2-->
 
             <!-- Begin: University scholarship Doctorate-->
             <div class="col-span-12 sm:col-span-4">
