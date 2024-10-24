@@ -24,9 +24,9 @@ class FamilySeeder extends Seeder
     public function run(): void
     {
         Tenant::select('id')->get()->each(
-        /**
-         * @throws JsonException
-         */
+            /**
+             * @throws JsonException
+             */
             function (Tenant $tenant) {
                 for ($i = 0; $i < 10; $i++) {
                     $family = Family::factory()

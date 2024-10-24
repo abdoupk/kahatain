@@ -18,7 +18,7 @@ class MemberShowController extends Controller implements HasMiddleware
     public function __invoke(User $member): JsonResponse
     {
         return response()->json([
-            'member' => MemberUpdateResource::make($member->load(['zone', 'branch', 'roles.permissions', 'competences:id,name'])),
+            'member' => MemberUpdateResource::make($member->load(['zone', 'branch', 'roles.permissions', 'competences:id,name', 'committees:id,name'])),
         ]);
     }
 }

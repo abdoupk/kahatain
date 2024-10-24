@@ -60,6 +60,7 @@
         "files": [
             "app/Helpers/families.php",
             "app/Helpers/benefactors.php",
+            "app/Helpers/committees.php",
             "app/Helpers/archive.php",
             "app/Helpers/constants.php",
             "app/Helpers/occasions.php",

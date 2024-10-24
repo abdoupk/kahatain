@@ -456,5 +456,9 @@
     "sponsorship_type.ccp": "دفع حساب جاري",
     "the_percentage": "النسبة المئوية",
     "recipient_type": "نوع المستفيد",
-    "no_sponsorships": "لا يوجد كفالات"
+    "no_sponsorships": "لا يوجد كفالات",
+    "the_committees": "اللجان",
+    "the_committee": "اللجنة",
+    "committee": "لجنة",
+    "search_a_committee": "ابحث عن لجنة"
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\V1\MonthlySponsorships;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\MonthlySponsorship\UpdateMonthlySponsorshipSettingsRequest;
-use Illuminate\Http\Request;
 
 class UpdateMonthlySponsorshipSettingsController extends Controller
 {

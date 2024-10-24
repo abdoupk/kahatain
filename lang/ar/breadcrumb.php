@@ -35,4 +35,5 @@ return [
     'babies-milk-and-diapers' => 'الاستفادة من الحليب والحفاضات',
     'benefactors' => 'المحسنين',
     'monthly-sponsorship' => 'الكفالة الشهرية',
+    'committees' => 'اللجان',
 ];

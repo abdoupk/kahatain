@@ -16,6 +16,7 @@ import TheCompetenceSelector from '@/Components/Global/TheCompetenceSelector.vue
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+import TheCommitteeSelector from '@/Components/Global/TheCommitteeSelector.vue'
 
 const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
 
@@ -305,7 +306,7 @@ const modalType = computed(() => {
 
                 <!-- Begin: qualification-->
                 <div class="col-span-12 sm:col-span-6">
-                    <base-form-label htmlFor="qualification">
+                    <base-form-label htmlFor="competences">
                         {{ $t('validation.attributes.qualification') }}
                     </base-form-label>
 
@@ -462,6 +463,22 @@ const modalType = computed(() => {
                     </div>
                 </div>
                 <!-- End: Work place-->
+
+                <!-- Begin: Committee-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="committees">
+                        {{ $t('the_committees') }}
+                    </base-form-label>
+
+                    <div>
+                        <the-committee-selector v-model:committees="form.committees"></the-committee-selector>
+                    </div>
+
+                    <div v-if="form.errors?.committees" class="mt-2">
+                        <base-input-error :message="form.errors.committees"></base-input-error>
+                    </div>
+                </div>
+                <!-- End: Committee-->
             </base-slideover-description>
         </template>
     </create-edit-slide-over>

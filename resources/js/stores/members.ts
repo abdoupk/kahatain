@@ -52,6 +52,7 @@ export const useMembersStore = defineStore('members', {
             function: '',
             workplace: '',
             competences: [],
+            committees: [],
             readable_roles: '',
             academic_level_id: null
         },

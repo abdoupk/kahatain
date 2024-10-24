@@ -6,7 +6,6 @@ use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexC
 use App\Http\Controllers\V1\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
 use App\Http\Controllers\V1\MonthlySponsorships\MonthlySponsorshipStoreController;
 use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
-use App\Http\Controllers\V1\MonthlySponsorships\StoreMonthlySponsorshipController;
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 

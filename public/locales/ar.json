@@ -66,6 +66,7 @@
     "breadcrumb.babies-milk-and-diapers": "الاستفادة من الحليب والحفاضات",
     "breadcrumb.benefactors": "المحسنين",
     "breadcrumb.monthly-sponsorship": "الكفالة الشهرية",
+    "breadcrumb.committees": "اللجان",
     "entries.families": "[11,*]عائلة|[3,10]عائلات|{2}عائلتين",
     "entries.roles": "[11,*]دور|[3,10]أدوار|{2}دورين",
     "entries.branches": "[11,*]فرع|[3,10]فروع|{2}فرعين",
@@ -78,6 +79,7 @@
     "entries.finances": "[11,*]إيراد|[3,10]إيرادات|{2}إيرادين",
     "entries.items": "[11,*]عنصر|[3,10]عناصر|{2}عنصرين",
     "entries.benefactors": "[11,*]محسن|[3,10]محسنين|{2}محسنين",
+    "entries.committees": "[11,*]لجنة|[3,10]لجان|{2}لجنتين",
     "errors.descriptions.503": "عذرًا، نحن نقوم ببعض أعمال الصيانة. يرجى التحقق مرة أخرى قريبا.",
     "errors.descriptions.500": "عفوًا، حدث خطأ ما في خوادمنا.",
     "errors.descriptions.404": "عذرا، الصفحة التي تبحث عنها لا يمكن العثور عليها.",
@@ -1218,5 +1220,8 @@
     "sponsorship_type.ccp": "دفع حساب جاري",
     "the_percentage": "النسبة المئوية",
     "recipient_type": "نوع المستفيد",
-    "no_sponsorships": "لا يوجد كفالات"
+    "no_sponsorships": "لا يوجد كفالات",
+    "the_committees": "اللجان",
+    "the_committee": "اللجنة",
+    "committee": "لجنة"
 }

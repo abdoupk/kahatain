@@ -35,6 +35,7 @@ const addCompetence = (newTag: string) => {
 <template>
     <base-vue-select
         v-model="competences"
+        id="competences"
         :options="options"
         :placeholder="$t('search_or_add_a_competence')"
         :tag-placeholder="$t('add_this_competence')"

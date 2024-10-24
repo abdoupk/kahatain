@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Members;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Members\MemberCreateRequest;
 use App\Jobs\V1\Member\MemberCreatedJob;
+use App\Models\Committee;
 use App\Models\competence;
 use App\Models\User;
 use Illuminate\Http\Response;
@@ -37,6 +38,8 @@ class MemberStoreController extends Controller implements HasMiddleware
 
         $this->syncCompetences($request->competences, $user);
 
+        $this->syncCommittees($request->committees, $user);
+
         $user->searchable();
 
         //        $user->roles()->searchable();
@@ -50,8 +53,13 @@ class MemberStoreController extends Controller implements HasMiddleware
     {
         $allCompetenceIds = collect($competenceNames)->map(fn ($competenceName) => competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();
 
-        ray($allCompetenceIds);
-
         $user->competences()->sync($allCompetenceIds);
+    }
+
+    private function syncCommittees(mixed $committeeNames, User $user)
+    {
+        $allCommitteeIds = collect($committeeNames)->map(fn ($committeeName) => Committee::firstOrCreate(['name' => $committeeName['name']]))->pluck('id')->toArray();
+
+        $user->competences()->sync($allCommitteeIds);
     }
 }

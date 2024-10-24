@@ -17,7 +17,7 @@ class competence extends Model
         'tenant_id',
     ];
 
-    public function searchable(): array
+    public function toSearchableArray(): array
     {
         return [
             'name' => $this->name,

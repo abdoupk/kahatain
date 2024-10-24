@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\Competences\CompetenceIndexController;
 use App\Http\Controllers\V1\List\ListBabyMilkController;
 use App\Http\Controllers\V1\List\ListBenefactorsController;
 use App\Http\Controllers\V1\List\ListClothesSizesController;
+use App\Http\Controllers\V1\List\ListCommitteesController;
 use App\Http\Controllers\V1\List\ListDiapersController;
 use App\Http\Controllers\V1\List\ListMembersController;
 use App\Http\Controllers\V1\List\ListRolesController;
@@ -83,6 +84,11 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'competences',
         CompetenceIndexController::class
     )->name('competences');
+
+    Route::get(
+        'committees',
+        ListCommitteesController::class
+    )->name('committees');
 
     Route::get(
         'benefactors',

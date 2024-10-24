@@ -246,6 +246,11 @@ class User extends Authenticatable
         );
     }
 
+    public function committees(): BelongsToMany
+    {
+        return $this->belongsToMany(Committee::class)->using(CommitteeUser::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

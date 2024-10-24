@@ -553,6 +553,22 @@ return [
                     'name',
                 ],
             ],
+            'committees' => [
+                'filterableAttributes' => [
+                    '__soft_deleted',
+                    'created_at',
+                    'tenant_id',
+                ],
+                'searchableAttributes' => [
+                    'name',
+                    'description',
+                ],
+                'sortableAttributes' => [
+                    'members_count',
+                    'created_at',
+                    'name',
+                ],
+            ],
         ],
     ],
 
