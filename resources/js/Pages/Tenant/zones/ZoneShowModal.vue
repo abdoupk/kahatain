@@ -3,6 +3,7 @@ import { useZonesStore } from '@/stores/zones'
 import { Link } from '@inertiajs/vue3'
 
 import ShowModal from '@/Components/Global/ShowModal.vue'
+import { $t } from '@/utils/i18n'
 
 defineProps<{
     open: boolean
@@ -69,7 +70,7 @@ const zonesStore = useZonesStore()
 
             <!-- Begin: Description-->
             <div class="col-span-12">
-                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.description') }}</h2>
+                <h2 class="rtl:font-semibold">{{ $t('neighborhoods') }}</h2>
 
                 <p class="mt-1 rtl:font-medium">
                     {{ zonesStore.zone.description }}
