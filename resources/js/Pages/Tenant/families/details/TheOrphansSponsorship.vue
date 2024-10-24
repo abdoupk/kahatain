@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
+import { $t } from '@/utils/i18n'
 
 import type { OrphanSponsorshipType } from '@/types/families'
 
@@ -36,7 +36,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in schoolBagBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>
@@ -55,7 +55,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in privateLessonsBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>
@@ -74,7 +74,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in medicalSponsorshipBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>
@@ -93,7 +93,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in eidSuitBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>
@@ -112,7 +112,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in associationTripsBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>
@@ -131,7 +131,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in summerCampBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>
@@ -152,7 +152,7 @@ const universityScholarshipBeneficiaries = groupByKey(props.sponsorShips, 'unive
         <Link
             v-for="beneficiary in universityScholarshipBeneficiaries"
             :key="beneficiary.id"
-            :href="route('tenant.orphans.show', beneficiary.id)"
+            :href="route('tenant.orphans.show', beneficiary.orphan.id)"
             class="mt-2 flex items-center rounded-md px-5 first:mt-0 last:mb-3"
         >
             <div class="me-3 h-2 w-2 rounded-full bg-current"></div>

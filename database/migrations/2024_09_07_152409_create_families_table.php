@@ -22,9 +22,9 @@ return new class extends Migration
             $table->date('start_date');
             $table->float('income_rate')->nullable();
             $table->float('total_income')->nullable();
-            $table->float('difference_before_monthly_allowance')->nullable();
-            $table->float('difference_after_monthly_allowance')->nullable();
-            $table->float('monthly_allowance_rate')->nullable();
+            $table->float('difference_before_monthly_sponsorship')->nullable();
+            $table->float('difference_after_monthly_sponsorship')->nullable();
+            $table->float('monthly_sponsorship_rate')->nullable();
             $table->float('difference')->nullable();
             $table->uuid('tenant_id')->index('idx_families_tenant_id');
             $table->uuid('created_by')->nullable();

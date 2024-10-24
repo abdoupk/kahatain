@@ -47,3 +47,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     association_coordinates: PositionType
     ziggy: Config & { location: string }
 }
+
+export type BenefactorType = {
+    id: string
+    name: string
+}

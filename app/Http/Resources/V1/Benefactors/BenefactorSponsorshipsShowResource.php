@@ -14,7 +14,7 @@ class BenefactorSponsorshipsShowResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'amount' => formatCurrency($this->amount),
+            'amount' => $this->amount,
             'creator' => MemberResource::make($this->creator),
             'readable_created_at' => $this->created_at->translatedFormat('j F Y'),
             'recipientable' => [

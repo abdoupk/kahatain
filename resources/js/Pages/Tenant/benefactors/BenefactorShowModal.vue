@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { formatCurrency } from '../../../utils/helper'
+
 import { useBenefactorsStore } from '@/stores/benefactors'
 import { Link } from '@inertiajs/vue3'
 
@@ -73,8 +75,8 @@ const benefactorsStore = useBenefactorsStore()
             <div class="col-span-12">
                 <h2 class="rtl:font-semibold">{{ $t('the_sponsorships') }}</h2>
 
-                <div class="mt-1 overflow-x-auto">
-                    <base-table striped>
+                <div class="mt-1 overflow-x-auto" v-if="benefactorsStore.benefactor.sponsorships.length">
+                    <base-table striped sm>
                         <base-thead-table>
                             <base-tr-table>
                                 <base-th-table class="whitespace-nowrap">#</base-th-table>
@@ -84,12 +86,18 @@ const benefactorsStore = useBenefactorsStore()
                                 </base-th-table>
 
                                 <base-th-table class="whitespace-nowrap">
-                                    {{ $t('validation.attributes.last_name') }}
+                                    {{ $t('the_value') }}
                                 </base-th-table>
 
                                 <base-th-table class="whitespace-nowrap">
-                                    {{ $t('sponsor_phone_number') }}
+                                    {{ $t('sponsorship_type') }}
                                 </base-th-table>
+
+                                <base-th-table class="whitespace-nowrap">
+                                    {{ $t('added_at') }}
+                                </base-th-table>
+
+                                <base-th-table class="whitespace-nowrap">{{ $t('created_by') }}</base-th-table>
                             </base-tr-table>
                         </base-thead-table>
 
@@ -102,19 +110,19 @@ const benefactorsStore = useBenefactorsStore()
                                 <base-td-table> {{ index + 1 }}</base-td-table>
 
                                 <base-td-table>
-                                    {{ sponsorship.amount }}
-                                </base-td-table>
-
-                                <base-td-table>
-                                    {{ sponsorship.sponsorship_type }}
-                                </base-td-table>
-
-                                <base-td-table>
                                     {{ sponsorship.recipientable.name }}
+
+                                    <p class="mt-0.5 text-xs font-semibold">
+                                        {{ $t(`the_${sponsorship.recipientable.recipientable_type}`) }}
+                                    </p>
+                                </base-td-table>
+
+                                <base-td-table dir="rtl">
+                                    {{ formatCurrency(sponsorship.amount) }}
                                 </base-td-table>
 
                                 <base-td-table>
-                                    {{ sponsorship.recipientable.recipientable_type }}
+                                    {{ $t(`sponsorship_type.${sponsorship.sponsorship_type}`) }}
                                 </base-td-table>
 
                                 <base-td-table>
@@ -133,6 +141,10 @@ const benefactorsStore = useBenefactorsStore()
                         </base-tbody-table>
                     </base-table>
                 </div>
+
+                <p v-else class="mt-1 rtl:font-semibold text-center text-base">
+                    {{ $t('no_sponsorships') }}
+                </p>
             </div>
             <!-- End: Sponsorships-->
         </template>

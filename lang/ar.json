@@ -444,5 +444,17 @@
     "the_benefactors": "المحسنين",
     "sponsorships_count": "عدد الكفالات",
     "the_sponsorships": "الكفالات",
-    "the_recipient": "المستفيد"
+    "the_sponsorship": "الكفالة",
+    "sponsorship": "كفالة",
+    "the_recipient": "المستفيد",
+    "monthly_sponsorship.monthly_sponsorship_rate": "نسبة الكفالة الشهرية",
+    "monthly_sponsorship.difference_before_monthly_sponsorship": "الفارق قبل الكفالة الشهرية",
+    "monthly_sponsorship.difference_after_monthly_sponsorship": "الفارق بعد الكفالة الشهرية",
+    "monthly_sponsorship.difference": "الفارق",
+    "sponsorship_type.monthly_basket": "قفة شهرية",
+    "sponsorship_type.cash": "عينية (نقدية)",
+    "sponsorship_type.ccp": "دفع حساب جاري",
+    "the_percentage": "النسبة المئوية",
+    "recipient_type": "نوع المستفيد",
+    "no_sponsorships": "لا يوجد كفالات"
 }

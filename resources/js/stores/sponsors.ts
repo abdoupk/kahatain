@@ -6,8 +6,8 @@ export const useSponsorsStore = defineStore('sponsors', {
         sponsors: []
     }),
     actions: {
-        async searchSponsors(query: string) {
-            const { data: sponsors } = await axios.get(route('tenant.sponsors.search', query))
+        async searchSponsors(search: string) {
+            const { data: sponsors } = await axios.get(route('tenant.sponsors.search', { search }))
 
             return sponsors
         }

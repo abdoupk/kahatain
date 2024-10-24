@@ -59,6 +59,12 @@ export const useBenefactorsStore = defineStore('benefactors', {
 
         findBenefactorById(id: string) {
             return this.benefactors.find((benefactor) => benefactor.id === id)
+        },
+
+        async searchBenefactors(search: string) {
+            const { data: benefactors } = await axios.get(route('tenant.benefactors.search', { search }))
+
+            this.benefactors = benefactors
         }
     }
 })
