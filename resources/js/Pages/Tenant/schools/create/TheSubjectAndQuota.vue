@@ -14,6 +14,7 @@ import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheSubjectSelector from '@/Components/Global/TheSubjectSelector.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
+
 import { $t } from '@/utils/i18n'
 
 defineProps<{

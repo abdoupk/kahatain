@@ -133,7 +133,7 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginat
                     'sponsor:id,first_name,last_name,family_id,phone_number',
                     'zone:id,name',
                     'branch:id,name',
-                    'aid'
+                    'aid',
                 ]
             )->withCount('orphans'))
         ->paginate(perPage: request()?->integer('perPage', 10));

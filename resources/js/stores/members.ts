@@ -52,6 +52,7 @@ export const useMembersStore = defineStore('members', {
             function: '',
             workplace: '',
             competences: [],
+            committees: [],
             readable_roles: '',
             academic_level_id: null
         },
@@ -89,7 +90,7 @@ export const useMembersStore = defineStore('members', {
         },
 
         async searchMembers(search: string) {
-            const { data: members } = await axios.get(route('tenant.members.search' , { search }))
+            const { data: members } = await axios.get(route('tenant.members.search', { search }))
 
             return members
         },

@@ -7,6 +7,13 @@ use Illuminate\Validation\Rules\Password;
 
 class MemberCreateRequest extends FormRequest
 {
+    public function attributes(): array
+    {
+        return [
+            'committees' => __('the_committees'),
+        ];
+    }
+
     public function rules(): array
     {
         return [
@@ -22,6 +29,9 @@ class MemberCreateRequest extends FormRequest
             'qualification' => 'nullable|string',
             'address' => 'required|string',
             'competences' => 'nullable|array',
+            'competences.*.id' => 'nullable|exists:competences,id',
+            'committees' => 'nullable|array',
+            'committees.*.id' => 'nullable|exists:committees,id',
             'workplace' => 'nullable|string',
             'function' => 'nullable|string',
             'location' => 'sometimes|array',

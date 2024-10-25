@@ -59,7 +59,12 @@
     "autoload": {
         "files": [
             "app/Helpers/families.php",
+            "app/Helpers/sponsorships/sponsorships.php",
+            "app/Helpers/sponsorships/calculate-contributions.php",
+            "app/Helpers/sponsorships/calculate-weights.php",
+            "app/Helpers/sponsorships/calculate-incomes.php",
             "app/Helpers/benefactors.php",
+            "app/Helpers/committees.php",
             "app/Helpers/archive.php",
             "app/Helpers/constants.php",
             "app/Helpers/occasions.php",

@@ -14,8 +14,8 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import { formatCurrency } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ families: PaginationData<MonthlySponsorshipFamiliesResource>; params: IndexParams }>()
-
+const props = defineProps<{ families: PaginationData<MonthlySponsorshipFamiliesResource>; params: IndexParams }>()
+console.log(props.families)
 const emit = defineEmits(['sort'])
 </script>
 
@@ -78,6 +78,42 @@ const emit = defineEmits(['sort'])
                             sortable
                             @click="emit('sort', 'total_income')"
                         >
+                            {{ $t('monthly_sponsorship.basket_from_association') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.total_income"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'total_income')"
+                        >
+                            {{ $t('monthly_sponsorship.amount_from_association') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.total_income"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'total_income')"
+                        >
+                            {{ $t('monthly_sponsorship.basket_from_benefactor') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.total_income"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'total_income')"
+                        >
+                            {{ $t('monthly_sponsorship.amount_from_benefactor') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.total_income"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'total_income')"
+                        >
                             {{ $t('monthly_sponsorship.difference_after_monthly_sponsorship') }}
                         </the-table-th>
 
@@ -99,7 +135,7 @@ const emit = defineEmits(['sort'])
                             class="text-start"
                             sortable
                             @click="emit('sort', 'family.zone')"
-                        >{{ $t('validation.attributes.address') }}
+                            >{{ $t('validation.attributes.address') }}
                         </the-table-th>
 
                         <the-table-th
@@ -107,7 +143,7 @@ const emit = defineEmits(['sort'])
                             class="text-start"
                             sortable
                             @click="emit('sort', 'family.branch')"
-                        >{{ $t('the_branch') }}
+                            >{{ $t('the_branch') }}
                         </the-table-th>
                     </base-tr-table>
                 </base-thead-table>
@@ -149,16 +185,40 @@ const emit = defineEmits(['sort'])
                         </the-table-td>
 
                         <the-table-td class="text-center">
+                            <div class="whitespace-nowrap rtl:font-semibold">
+                                {{ family.sponsorships.basket_from_association ? $t('benefit') : $t('dont_benefit') }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.sponsorships.amount_from_association) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.sponsorships.basket_from_benefactor) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.sponsorships.amount_from_benefactor) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
                             <div class="whitespace-nowrap">
                                 {{ formatCurrency(family.difference_after_monthly_sponsorship) }}
                             </div>
                         </the-table-td>
 
                         <the-table-td class="text-center">
-                            <div class="whitespace-nowrap">{{ family.monthly_sponsorship_rate * 100 }} %</div>
+                            <div class="whitespace-nowrap">{{ family.monthly_sponsorship_rate }} %</div>
                         </the-table-td>
 
-                        <the-table-td class="text-center text-nowrap">
+                        <the-table-td class="text-nowrap text-center">
                             {{ family.sponsor.phone_number }}
                         </the-table-td>
 

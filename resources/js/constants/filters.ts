@@ -658,3 +658,5 @@ export const branchedFilters: ListBoxFilter[] = [
 ]
 
 export const benefactorsFilters: ListBoxFilter[] = []
+
+export const committeesFilters: ListBoxFilter[] = []

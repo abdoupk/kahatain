@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Branch;
+use App\Models\Committee;
 use App\Models\competence;
 use App\Models\Domain;
 use App\Models\Finance;
@@ -63,10 +64,20 @@ class TenantSeeder extends Seeder
 
             User::factory()
                 ->hasAttached(
-                    Competence::factory()->count(fake()->numberBetween(1, 3)),
+                    Competence::factory()->count(
+                        fake()->numberBetween(1, 3)
+                    ),
+                    ['tenant_id' => $tenant?->id]
+                )
+                ->hasAttached(Committee::factory(
+                    fake()->numberBetween(0, 3)
+                )->create([
+                    'tenant_id' => $tenant?->id,
+                ]),
                     ['tenant_id' => $tenant?->id]
                 )
                 ->count(10)
+
                 ->create([
                     'tenant_id' => $tenant?->id,
                     'branch_id' => $branches->random()?->id,

@@ -100,14 +100,12 @@ const value = defineModel('value')
                         @change="form.validate(`categories.${index}.value`)"
                     ></base-form-input>
 
-                    <base-input-group-text>
-                        {{ $t('DA') }}
-                    </base-input-group-text>
+                    <base-input-group-text> % </base-input-group-text>
                 </base-input-group>
 
                 <svg-loader
                     :class="{ '!cursor-not-allowed': index === 0 }"
-                    class="h-5 w-5 mt-2 ms-2 me-1 cursor-pointer fill-danger"
+                    class="me-1 ms-2 mt-2 h-5 w-5 cursor-pointer fill-danger"
                     name="icon-trash-can"
                     @click.prevent="emit('removeInterval', index)"
                 ></svg-loader>

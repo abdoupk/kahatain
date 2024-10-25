@@ -65,6 +65,10 @@ const CALCULATION = [
             ],
         ],
         'handicapped' => 1,
+        'second_sponsor' => [
+            'with_family' => 1,
+            'outside_family' => 0,
+        ],
     ],
     'percentage_of_contribution' => [
         'sponsor' => [
@@ -93,6 +97,10 @@ const CALCULATION = [
                 'divorced_outside_family' => 100,
             ],
         ],
+        'second_sponsor' => [
+            'with_family' => 100,
+            'outside_family' => 100,
+        ],
     ],
     'unemployed_contribution' => [
         'sponsor' => [
@@ -119,27 +127,28 @@ const CALCULATION = [
         'contribution' => 10000.00,
     ],
     'monthly_sponsorship' => [
-        'university_scholarship_bachelor' => 4200.00,
-        'university_scholarship_master' => 4200.00,
-        'university_scholarship_doctorate' => 4200.00,
+        'university_scholarship_bachelor' => 4050.00,
+        'university_scholarship_master_one' => 5850.00,
+        'university_scholarship_master_two' => 7200.00,
+        'university_scholarship_doctorate' => 36000.00,
         'unemployment_benefit' => 15000.00,
         'threshold' => 8000.00,
         'association_basket_value' => 4000.00,
         'categories' => [
             [
-                'from' => 0,
-                'to' => 10000,
-                'category' => 'صنف 1',
+                'minimum' => 0,
+                'maximum' => 8000,
+                'value' => 40,
             ],
             [
-                'from' => 0,
-                'to' => 10000,
-                'category' => 'صنف 1',
+                'minimum' => 8000,
+                'maximum' => 16000,
+                'value' => 45,
             ],
             [
-                'from' => 0,
-                'to' => 10000,
-                'category' => 'صنف 3',
+                'minimum' => 16000,
+                'maximum' => 24000,
+                'value' => 50,
             ],
         ],
     ],

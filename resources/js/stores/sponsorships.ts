@@ -14,7 +14,8 @@ interface State {
     sponsorships: CreateSponsorshipForm[]
     monthly_sponsorship: {
         university_scholarship_bachelor: number | null
-        university_scholarship_master: number | null
+        university_scholarship_master_one: number | null
+        university_scholarship_master_two: number | null
         university_scholarship_doctorate: number | null
         unemployment_benefit: number | null
         threshold: number | null
@@ -52,7 +53,8 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             threshold: null,
             unemployment_benefit: null,
             university_scholarship_bachelor: null,
-            university_scholarship_master: null,
+            university_scholarship_master_one: null,
+            university_scholarship_master_two: null,
             university_scholarship_doctorate: null
         }
     }),

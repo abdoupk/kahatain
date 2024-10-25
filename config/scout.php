@@ -341,6 +341,14 @@ return [
                     'family_sponsorships.eid_el_adha',
                     'orphans_count',
                     'total_income',
+                    'income_rate',
+                    'difference_before_monthly_sponsorship',
+                    'difference_after_monthly_sponsorship',
+                    'monthly_sponsorship_rate',
+                    'amount_from_association',
+                    'basket_from_association',
+                    'amount_from_benefactor',
+                    'basket_from_benefactor',
                 ],
                 'sortableAttributes' => [
                     'name',
@@ -549,6 +557,22 @@ return [
                 ],
                 'sortableAttributes' => [
                     'sponsorships_count',
+                    'created_at',
+                    'name',
+                ],
+            ],
+            'committees' => [
+                'filterableAttributes' => [
+                    '__soft_deleted',
+                    'created_at',
+                    'tenant_id',
+                ],
+                'searchableAttributes' => [
+                    'name',
+                    'description',
+                ],
+                'sortableAttributes' => [
+                    'members_count',
                     'created_at',
                     'name',
                 ],

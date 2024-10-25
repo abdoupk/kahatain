@@ -125,6 +125,7 @@ class Family extends Model
         'difference_before_monthly_sponsorship',
         'difference_after_monthly_sponsorship',
         'monthly_sponsorship_rate',
+        'amount_from_association',
         'difference',
     ];
 
@@ -234,6 +235,7 @@ class Family extends Model
                 'sponsor.incomes',
                 'orphans',
                 'sponsorships',
+                'aid',
             ]
         );
     }
@@ -244,7 +246,7 @@ class Family extends Model
             'id' => $this->id,
             'name' => $this->name,
             'tenant_id' => $this->tenant_id,
-            'start_date' => (int) strtotime($this->start_date),
+            'start_date' => (int)strtotime($this->start_date),
             'file_number' => $this->file_number,
             'address' => [
                 'address' => $this->address,
@@ -278,6 +280,13 @@ class Family extends Model
                 'eid_el_adha' => boolval($this->sponsorships?->eid_al_adha),
             ],
             'income_rate' => $this->income_rate,
+            'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship,
+            'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,
+            'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate,
+            'amount_from_association' => $this->amount_from_association,
+            'basket_from_association' => $this->difference_after_monthly_sponsorship > 0,
+            'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
+            'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
             'created_at' => strtotime($this->created_at),
             '_geo' => [
                 'lat' => $this->location['lat'],

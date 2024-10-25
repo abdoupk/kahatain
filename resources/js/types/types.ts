@@ -317,6 +317,7 @@ export interface CreateMemberForm {
     zone_id: string
     qualification: string
     competences: { id: string; name: string }[]
+    committees: { id: string; name: string }[]
     password: string
     password_confirmation: string
     address: string
@@ -352,6 +353,7 @@ export interface CreateNeedForm {
     needable_type: 'orphan' | 'sponsor'
     needable_id: string
 }
+
 export interface CreateSponsorshipForm {
     amount: number | null
     sponsorship_type: string
@@ -487,7 +489,12 @@ export interface MonthlySponsorshipFamiliesResource {
     difference_before_monthly_sponsorship: number
     difference_after_monthly_sponsorship: number
     monthly_sponsorship_rate: number
-    difference: number
+    sponsorships: {
+        amount_from_association: number
+        amount_from_benefactor: number
+        basket_from_association: boolean
+        basket_from_benefactor: number
+    }
 }
 
 export interface SchoolEntryOrphansResource {
@@ -973,4 +980,15 @@ export type NeedStatusType = 'pending' | 'in_progress' | 'completed' | 'rejected
 export type PositionType = {
     lat: number
     lng: number
+}
+
+export type Committee = {
+    id: string
+    name: string
+    description: string
+}
+
+export interface CommitteesIndexResource extends Zone {
+    created_at: string
+    members_count?: number
 }

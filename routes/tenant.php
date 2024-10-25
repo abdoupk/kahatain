@@ -46,6 +46,8 @@ Route::middleware([
 
             require __DIR__.'/v1/college-achievements.php';
 
+            require __DIR__.'/v1/committees.php';
+
             require __DIR__.'/v1/dashboard.php';
 
             require __DIR__.'/v1/families.php';
