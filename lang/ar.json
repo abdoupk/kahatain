@@ -322,6 +322,8 @@
     "sponsor_types.widows_husband": "زوج الأرملة",
     "sponsor_types.mother_of_a_supported_childhood": "أم طفولة مسعفة",
     "sponsor_types.widowers_wife": "زوجة الأرمل",
+    "family_statuses.second_sponsor_outside_family": "المتكفل الثاني خارج العائلة",
+    "family_statuses.second_sponsor_with_family": "المتكفل الثاني مقيم مع العائلة",
     "family_statuses.college_girl": "جامعية",
     "family_statuses.professional_girl": "ممتهنة",
     "family_statuses.at_home_with_no_income": "ماكثة في البيت بلا دخل",
@@ -448,6 +450,10 @@
     "sponsorship": "كفالة",
     "the_recipient": "المستفيد",
     "monthly_sponsorship.monthly_sponsorship_rate": "نسبة الكفالة الشهرية",
+    "monthly_sponsorship.basket_from_benefactor": "قفة مباشرة من محسن (القيمة)",
+    "monthly_sponsorship.basket_from_association": "قفة من الجمعية",
+    "monthly_sponsorship.amount_from_benefactor": "مبلغ مالي مباشرة من محسن",
+    "monthly_sponsorship.amount_from_association": "مبلغ مالي من الجمعية",
     "monthly_sponsorship.difference_before_monthly_sponsorship": "الفارق قبل الكفالة الشهرية",
     "monthly_sponsorship.difference_after_monthly_sponsorship": "الفارق بعد الكفالة الشهرية",
     "monthly_sponsorship.difference": "الفارق",
@@ -460,5 +466,7 @@
     "the_committees": "اللجان",
     "the_committee": "اللجنة",
     "committee": "لجنة",
-    "search_a_committee": "ابحث عن لجنة"
+    "search_a_committee": "ابحث عن لجنة",
+    "benefit": "يستفيد",
+    "dont_benefit": "لا يستفيد"
 }

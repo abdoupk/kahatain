@@ -100,9 +100,7 @@ const value = defineModel('value')
                         @change="form.validate(`categories.${index}.value`)"
                     ></base-form-input>
 
-                    <base-input-group-text>
-                        {{ $t('DA') }}
-                    </base-input-group-text>
+                    <base-input-group-text> % </base-input-group-text>
                 </base-input-group>
 
                 <svg-loader

@@ -65,6 +65,10 @@ const CALCULATION = [
             ],
         ],
         'handicapped' => 1,
+        'second_sponsor' => [
+            'with_family' => 1,
+            'outside_family' => 0,
+        ],
     ],
     'percentage_of_contribution' => [
         'sponsor' => [
@@ -92,6 +96,10 @@ const CALCULATION = [
                 'divorced_with_family' => 100,
                 'divorced_outside_family' => 100,
             ],
+        ],
+        'second_sponsor' => [
+            'with_family' => 100,
+            'outside_family' => 100,
         ],
     ],
     'unemployed_contribution' => [
@@ -129,8 +137,18 @@ const CALCULATION = [
         'categories' => [
             [
                 'minimum' => 0,
-                'maximum' => 10000,
-                'value' => 20,
+                'maximum' => 8000,
+                'value' => 40,
+            ],
+            [
+                'minimum' => 8000,
+                'maximum' => 16000,
+                'value' => 45,
+            ],
+            [
+                'minimum' => 16000,
+                'maximum' => 24000,
+                'value' => 50,
             ],
         ],
     ],

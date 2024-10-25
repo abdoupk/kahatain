@@ -62,6 +62,11 @@ interface PercentageOfContributionSponsor {
     widows_husband: number
 }
 
+interface PercentageOfContributionSecondSponsor {
+    with_family: number
+    outside_family: number
+}
+
 interface PercentageOfContributionOrphans {
     male_gt_18: {
         college_boy: number
@@ -106,10 +111,15 @@ export type CalculationTableType = {
         sponsor: Sponsor
         orphans: Orphans
         handicapped: number
+        second_sponsor: {
+            with_family: number
+            outside_family: number
+        }
     }
     percentage_of_contribution: {
         sponsor: PercentageOfContributionSponsor
         orphans: PercentageOfContributionOrphans
+        second_sponsor: PercentageOfContributionSecondSponsor
     }
     unemployed_contribution: {
         sponsor: UnemployedContributionSponsor
@@ -119,7 +129,18 @@ export type CalculationTableType = {
         income: number
         contribution: number
     }
-    university_scholarship: number
-    unemployment_benefit: number
-    threshold: number
+    monthly_sponsorship: {
+        university_scholarship_bachelor: number
+        university_scholarship_master_one: number
+        university_scholarship_master_two: number
+        university_scholarship_doctorate: number
+        unemployment_benefit: number
+        threshold: number
+        association_basket_value: number
+        categories: {
+            minimum: number
+            maximum: number
+            value: number
+        }[]
+    }
 }

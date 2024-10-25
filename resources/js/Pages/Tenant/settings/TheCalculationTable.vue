@@ -43,7 +43,7 @@ const submit = () =>
 </script>
 
 <template>
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ $t('calculate_the_income_rate') }}</h2>
         </div>
@@ -692,8 +692,55 @@ const submit = () =>
                         <base-td-table>{{ $t('settings.special_cases') }}</base-td-table>
                         <base-td-table>{{ $t('settings.weight') }}</base-td-table>
                         <base-td-table>{{ $t('settings.real_income') }}</base-td-table>
+                        <base-td-table>{{ $t('settings.percentage_of_contribution_to_income') }}</base-td-table>
+                        <base-td-table colspan="2"></base-td-table>
+                    </base-tr-table>
+
+                    <base-tr-table>
+                        <base-td-table>{{ $t('family_statuses.second_sponsor_with_family') }}</base-td-table>
+
+                        <base-td-table>
+                            <base-form-input v-model="form.weights.second_sponsor.with_family"></base-form-input>
+                        </base-td-table>
+
+                        <base-td-table></base-td-table>
+
+                        <base-td-table>
+                            <base-input-group>
+                                <base-form-input
+                                    v-model="form.percentage_of_contribution.second_sponsor.with_family"
+                                    type="number"
+                                ></base-form-input>
+
+                                <base-input-group-text> %</base-input-group-text>
+                            </base-input-group>
+                        </base-td-table>
                         <base-td-table colspan="3"></base-td-table>
                     </base-tr-table>
+
+                    <base-tr-table>
+                        <base-td-table>{{ $t('family_statuses.second_sponsor_outside_family') }}</base-td-table>
+                        <base-td-table>
+                            <base-form-input
+                                disabled
+                                v-model="form.weights.second_sponsor.outside_family"
+                            ></base-form-input>
+                        </base-td-table>
+                        <base-td-table></base-td-table>
+
+                        <base-td-table>
+                            <base-input-group>
+                                <base-form-input
+                                    v-model="form.percentage_of_contribution.second_sponsor.outside_family"
+                                    type="number"
+                                ></base-form-input>
+
+                                <base-input-group-text> %</base-input-group-text>
+                            </base-input-group>
+                        </base-td-table>
+                        <base-td-table colspan="3"></base-td-table>
+                    </base-tr-table>
+
                     <base-tr-table>
                         <base-td-table>{{ $t('settings.handicapped') }}</base-td-table>
                         <base-td-table>

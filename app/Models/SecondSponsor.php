@@ -60,6 +60,7 @@ class SecondSponsor extends Model
         'phone_number',
         'address',
         'income',
+        'with_family',
         'family_id',
     ];
 

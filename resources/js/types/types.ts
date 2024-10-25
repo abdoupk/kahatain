@@ -489,7 +489,12 @@ export interface MonthlySponsorshipFamiliesResource {
     difference_before_monthly_sponsorship: number
     difference_after_monthly_sponsorship: number
     monthly_sponsorship_rate: number
-    difference: number
+    sponsorships: {
+        amount_from_association: number
+        amount_from_benefactor: number
+        basket_from_association: boolean
+        basket_from_benefactor: number
+    }
 }
 
 export interface SchoolEntryOrphansResource {

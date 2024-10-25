@@ -32,13 +32,9 @@ class MemberStoreController extends Controller implements HasMiddleware
             ],
         );
 
-        //        if ($request->roles) {
-        //            $user->syncRoles($request->roles);
-        //        }
+        syncCompetences($request->competences, $user);
 
-        $this->syncCompetences($request->competences, $user);
-
-        $this->syncCommittees($request->committees, $user);
+        syncCommittees($request->committees, $user);
 
         $user->searchable();
 
@@ -47,19 +43,5 @@ class MemberStoreController extends Controller implements HasMiddleware
         dispatch(new MemberCreatedJob($user, auth()->user()));
 
         return response('', 201);
-    }
-
-    private function syncCompetences(array $competenceNames, User $user)
-    {
-        $allCompetenceIds = collect($competenceNames)->map(fn ($competenceName) => competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();
-
-        $user->competences()->sync($allCompetenceIds);
-    }
-
-    private function syncCommittees(mixed $committeeNames, User $user)
-    {
-        $allCommitteeIds = collect($committeeNames)->map(fn ($committeeName) => Committee::firstOrCreate(['name' => $committeeName['name']]))->pluck('id')->toArray();
-
-        $user->competences()->sync($allCommitteeIds);
     }
 }

@@ -30,6 +30,9 @@ class FamilySeeder extends Seeder
             function (Tenant $tenant) {
                 for ($i = 0; $i < 10; $i++) {
                     $family = Family::factory()
+                        ->hasHousing(1, [
+                            'tenant_id' => $tenant->id,
+                        ])
                         ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Family $family) use ($tenant) {
                             return [
                                 'tenant_id' => $family->tenant_id,
@@ -132,10 +135,7 @@ class FamilySeeder extends Seeder
                         ]);
                     }
 
-                    $family->update([
-                        'income_rate' => calculateIncomeRate($family->load(['orphans', 'sponsor', 'secondSponsor'])),
-                        'total_income' => calculateTotalIncomes($family->load(['orphans', 'sponsor', 'secondSponsor'])),
-                    ]);
+                    monthlySponsorship($family);
                 }
             });
     }
