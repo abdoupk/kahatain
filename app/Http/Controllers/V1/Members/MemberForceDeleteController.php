@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class MemberForceDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:destroy_trash'];
+    }
+
     public function __invoke(User $member): Response
     {
         $member->forceDelete();
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:destroy_trash'];
     }
 }

@@ -120,12 +120,14 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        foreach ($years as $year) {
-            $fileName = "{$year}/".__('exports.babies_milk_and_diapers').'.xlsx';
+        if (! empty($years)) {
+            foreach ($years as $year) {
+                $fileName = "{$year}/".__('exports.babies_milk_and_diapers').'.xlsx';
 
-            Excel::store(new BabiesMilkAndDiapersListExport($year), $fileName);
+                Excel::store(new BabiesMilkAndDiapersListExport($year), $fileName);
 
-            $zip->addFile(Storage::path($fileName), $fileName);
+                $zip->addFile(Storage::path($fileName), $fileName);
+            }
         }
     }
 
@@ -135,12 +137,14 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        foreach ($years as $year) {
-            $fileName = "{$year}/".__('the_families_monthly_basket').'.xlsx';
+        if (! empty($years)) {
+            foreach ($years as $year) {
+                $fileName = "{$year}/".__('the_families_monthly_basket').'.xlsx';
 
-            Excel::store(new MonthlyBasketFamiliesExport($year), $fileName);
+                Excel::store(new MonthlyBasketFamiliesExport($year), $fileName);
 
-            $zip->addFile(Storage::path($fileName), $fileName);
+                $zip->addFile(Storage::path($fileName), $fileName);
+            }
         }
     }
 
@@ -150,11 +154,13 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_orphans_school_entry').'.xlsx';
+        if (! empty($years)) {
+            $fileName = __('the_orphans_school_entry').'.xlsx';
 
-        Excel::store(new SchoolEntryOrphansListExport($years), $fileName);
+            Excel::store(new SchoolEntryOrphansListExport($years), $fileName);
 
-        $zip->addFile(Storage::path($fileName), $fileName);
+            $zip->addFile(Storage::path($fileName), $fileName);
+        }
     }
 
     private function exportEidSuitOrphansList(ZipArchive $zip): void
@@ -163,11 +169,13 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_orphans_eid_suit').'.xlsx';
+        if (! empty($years)) {
+            $fileName = __('the_orphans_eid_suit').'.xlsx';
 
-        Excel::store(new EidSuitOrphansListExport($years), $fileName);
+            Excel::store(new EidSuitOrphansListExport($years), $fileName);
 
-        $zip->addFile(Storage::path($fileName), $fileName);
+            $zip->addFile(Storage::path($fileName), $fileName);
+        }
     }
 
     private function exportEidAlAdhaFamiliesList(ZipArchive $zip): void
@@ -176,11 +184,13 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_families_eid_al_adha').'.xlsx';
+        if (! empty($years)) {
+            $fileName = __('the_families_eid_al_adha').'.xlsx';
 
-        Excel::store(new EidAlAdhaFamiliesListExport($years), $fileName);
+            Excel::store(new EidAlAdhaFamiliesListExport($years), $fileName);
 
-        $zip->addFile(Storage::path($fileName), $fileName);
+            $zip->addFile(Storage::path($fileName), $fileName);
+        }
     }
 
     private function exportRamadanBasketFamiliesList(ZipArchive $zip): void
@@ -189,11 +199,13 @@ class ExportDataJob implements ShouldQueue
             ->selectRaw('EXTRACT(YEAR FROM created_at) as year')
             ->get()->pluck('year')->toArray();
 
-        $fileName = __('the_families_ramadan_basket').'.xlsx';
+        if (! empty($years)) {
+            $fileName = __('the_families_ramadan_basket').'.xlsx';
 
-        Excel::store(new RamadanBasketFamiliesListExport($years), $fileName);
+            Excel::store(new RamadanBasketFamiliesListExport($years), $fileName);
 
-        $zip->addFile(Storage::path($fileName), $fileName);
+            $zip->addFile(Storage::path($fileName), $fileName);
+        }
     }
 
     private function cleanup(): void

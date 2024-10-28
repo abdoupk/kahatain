@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Zones\ZoneCreateRequest;
 use App\Jobs\V1\Zone\ZoneCreatedJob;
 use App\Models\Zone;
-use DB;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 

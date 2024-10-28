@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class OrphanEditController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_orphans'];
+    }
+
     public function __invoke(Orphan $orphan): Response
     {
         return Inertia::render(
@@ -30,10 +35,5 @@ class OrphanEditController extends Controller implements HasMiddleware
                 )),
             ]
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_orphans'];
     }
 }

@@ -10,18 +10,18 @@ use Inertia\Response;
 
 class RolesIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            'can:list_roles',
+        ];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/roles/index/RolesIndexPage', [
             'roles' => RolesIndexResource::collection(getRoles()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware(): array
-    {
-        return [
-            'can:list_roles',
-        ];
     }
 }

@@ -9,16 +9,16 @@ use Inertia\Inertia;
 
 class ArchiveIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_archive'];
+    }
+
     public function __invoke()
     {
         return Inertia::render('Tenant/archive/index/ArchiveIndexPage', [
             'items' => ArchiveIndexResource::collection(getArchives()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_archive'];
     }
 }

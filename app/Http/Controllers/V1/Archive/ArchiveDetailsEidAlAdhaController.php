@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class ArchiveDetailsEidAlAdhaController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_archive'];
+    }
+
     public function __invoke(Archive $archive): Response
     {
         return Inertia::render('Tenant/archive/details/eid-al-adha/EidAlAdhaIndexArchiveDetailsPage', [
@@ -27,10 +32,5 @@ class ArchiveDetailsEidAlAdhaController extends Controller implements HasMiddlew
             ),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_archive'];
     }
 }

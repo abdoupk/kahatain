@@ -9,13 +9,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class LessonUpdateDatesController extends Controller implements HasMiddleware
 {
-    public function __invoke(LessonUpdateDatesRequest $request, EventOccurrence $lesson): void
-    {
-        $lesson->update($request->validated());
-    }
-
     public static function middleware()
     {
         return ['can:update_lessons'];
+    }
+
+    public function __invoke(LessonUpdateDatesRequest $request, EventOccurrence $lesson): void
+    {
+        $lesson->update($request->validated());
     }
 }

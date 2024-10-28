@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class NeedStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:create_needs'];
+    }
+
     public function __invoke(NeedCreateRequest $request)
     {
         $need = Need::create($request->validated());
@@ -17,10 +22,5 @@ class NeedStoreController extends Controller implements HasMiddleware
         dispatch(new NeedCreatedJob($need, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:create_needs'];
     }
 }

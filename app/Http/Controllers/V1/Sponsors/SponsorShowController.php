@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class SponsorShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_sponsors'];
+    }
+
     public function __invoke(Sponsor $sponsor): Response
     {
         return Inertia::render(
@@ -28,10 +33,5 @@ class SponsorShowController extends Controller implements HasMiddleware
                 ),
             ]
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_sponsors'];
     }
 }

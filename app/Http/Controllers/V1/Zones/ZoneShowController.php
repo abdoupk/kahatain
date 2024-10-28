@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ZoneShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_zones'];
+    }
+
     public function __invoke(Zone $zone): JsonResponse
     {
         return response()->json([
             'zone' => $zone,
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_zones'];
     }
 }

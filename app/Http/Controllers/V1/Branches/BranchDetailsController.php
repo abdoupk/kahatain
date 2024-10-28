@@ -10,6 +10,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BranchDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            'can:view_branches',
+        ];
+    }
+
     public function __invoke(Branch $branch): JsonResponse
     {
         return response()->json([
@@ -22,12 +29,5 @@ class BranchDetailsController extends Controller implements HasMiddleware
                     ->loadCount('families')
             ),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return [
-            'can:view_branches',
-        ];
     }
 }

@@ -11,6 +11,11 @@ use PhpOffice\PhpSpreadsheet\Exception;
 
 class ExportArchiveFamiliesEidAlAdhaXlsxController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_archive'];
+    }
+
     /**
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -21,10 +26,5 @@ class ExportArchiveFamiliesEidAlAdhaXlsxController extends Controller implements
             new FamiliesEidAlAdhaIndexExport,
             __('exports.archive.eid_al_adha_families', ['date' => $archive->created_at->year]).'.xlsx'
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_archive'];
     }
 }

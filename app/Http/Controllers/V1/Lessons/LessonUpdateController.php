@@ -13,6 +13,11 @@ use Recurr\Exception\InvalidWeekday;
 
 class LessonUpdateController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_lessons'];
+    }
+
     /**
      * @throws InvalidWeekday
      * @throws InvalidArgument
@@ -41,10 +46,5 @@ class LessonUpdateController extends Controller implements HasMiddleware
 
             dispatch(new LessonUpdatedJob($eventOccurrence->event, auth()->user()));
         }
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_lessons'];
     }
 }

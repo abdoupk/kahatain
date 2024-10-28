@@ -8,15 +8,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class NeedRestoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:restore_trash'];
+    }
+
     public function __invoke(Need $need)
     {
         $need->restore();
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:restore_trash'];
     }
 }

@@ -12,6 +12,11 @@ use Inertia\Response;
 
 class TrashIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_trash'];
+    }
+
     public function __invoke(): Response
     {
         $perPage = request()->integer('perPage', 10);
@@ -216,10 +221,5 @@ UNION ALL
             'items' => $data,
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_trash'];
     }
 }

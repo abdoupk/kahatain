@@ -10,6 +10,11 @@ use PhpOffice\PhpSpreadsheet\Exception;
 
 class ExportArchiveFamiliesRamadanBasketXlsxController extends Controller
 {
+    public static function middleware()
+    {
+        return ['can:export_archive'];
+    }
+
     /**
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -20,10 +25,5 @@ class ExportArchiveFamiliesRamadanBasketXlsxController extends Controller
             new FamiliesRamadanBasketIndexExport,
             __('exports.archive.ramadan_basket_families', ['date' => $archive->created_at->year]).'.xlsx'
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_archive'];
     }
 }

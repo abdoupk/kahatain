@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class NeedDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_needs'];
+    }
+
     public function __invoke(Need $need)
     {
         return response()->json([
@@ -19,10 +24,5 @@ class NeedDetailsController extends Controller implements HasMiddleware
                 ])
             ),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_needs'];
     }
 }

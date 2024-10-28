@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ZoneDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:delete_zones'];
+    }
+
     public function __invoke(Zone $zone): RedirectResponse
     {
         $zone->delete();
@@ -17,10 +22,5 @@ class ZoneDeleteController extends Controller implements HasMiddleware
         dispatch(new ZoneTrashedJob($zone, auth()->user()));
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:delete_zones'];
     }
 }

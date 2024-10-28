@@ -6,11 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Family;
 use DB;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Throwable;
 
 class FamilyForceDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:destroy_trash'];
+    }
+
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function __invoke(Family $family)
     {
@@ -21,10 +27,5 @@ class FamilyForceDeleteController extends Controller implements HasMiddleware
         });
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:destroy_trash'];
     }
 }

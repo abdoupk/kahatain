@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class FamilyEditController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_families'];
+    }
+
     public function __invoke(Family $family): Response
     {
         return Inertia::render('Tenant/families/edit/FamilyEditPage', [
@@ -27,10 +32,5 @@ class FamilyEditController extends Controller implements HasMiddleware
                 ])
             ),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_families'];
     }
 }

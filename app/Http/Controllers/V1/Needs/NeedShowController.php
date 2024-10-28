@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class NeedShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_needs'];
+    }
+
     public function __invoke(Need $need)
     {
         return response()->json([
             'need' => NeedUpdateResource::make($need),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_needs'];
     }
 }

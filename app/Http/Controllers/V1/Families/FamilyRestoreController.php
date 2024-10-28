@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class FamilyRestoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:restore_trash'];
+    }
+
     public function __invoke(Family $family)
     {
         $family->restore();
@@ -20,11 +25,6 @@ class FamilyRestoreController extends Controller implements HasMiddleware
         $this->makeSearchable($family);
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:restore_trash'];
     }
 
     private function restore(Family $family): void

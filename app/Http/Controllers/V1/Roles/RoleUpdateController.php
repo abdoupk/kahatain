@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class RoleUpdateController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_roles'];
+    }
+
     public function __invoke(Role $role, RoleUpdateRequest $request)
     {
         $role->update($request->only('name'));
@@ -23,10 +28,5 @@ class RoleUpdateController extends Controller implements HasMiddleware
         dispatch(new RoleUpdatedJob($role, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_roles'];
     }
 }

@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class ExportFamiliesMonthlyBasketPDFController extends Controller implements HasMiddleware
 {
     /**
-     * @throws \Throwable
+     * @throws Throwable
      * @throws CouldNotTakeBrowsershot
      */
     public function __invoke(): StreamedResponse

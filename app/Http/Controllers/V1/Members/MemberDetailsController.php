@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class MemberDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_members'];
+    }
+
     public function __invoke(User $member)
     {
         return response()->json([
             'member' => MemberDetailsResource::make($member->load(['zone:id,name', 'creator:id,first_name,last_name'])),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_members'];
     }
 }

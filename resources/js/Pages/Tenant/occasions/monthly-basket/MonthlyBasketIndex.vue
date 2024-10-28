@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import type { ArchiveOccasionType, IndexParams, PaginationData, RamadanBasketFamiliesResource } from '@/types/types'
 
-import { monthlyBasketFilters } from '@/constants/filters'
+// TODO remove this
+// import { monthlyBasketFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -87,7 +88,7 @@ const handleSave = () => {
         <div>
             <the-table-header
                 :exportable
-                :filters="monthlyBasketFilters"
+                :filters="[]"
                 :pagination-data="families"
                 :params="params"
                 :title="$t('list', { attribute: $t('the_families_monthly_basket') })"

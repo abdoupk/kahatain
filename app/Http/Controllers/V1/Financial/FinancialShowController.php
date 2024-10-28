@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class FinancialShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_financial_transactions'];
+    }
+
     public function __invoke(Finance $finance)
     {
         return response()->json([
             'finance' => FinancialUpdateResource::make($finance),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_financial_transactions'];
     }
 }

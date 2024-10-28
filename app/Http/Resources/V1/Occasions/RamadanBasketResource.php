@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1\Occasions;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/* @mixin FamilySponsorship*/
+/* @mixin FamilySponsorship */
 class RamadanBasketResource extends JsonResource
 {
     public function toArray(Request $request): array
