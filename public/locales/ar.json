@@ -1251,5 +1251,8 @@
     "shop.address": "عنوان المتجر",
     "shop.phone": "رقم هاتف صاحب المتجر",
     "monthly_basket": "قفة شهرية",
-    "shop_information": "معلومات المتجر"
+    "shop_information": "معلومات المتجر",
+    "show_zones_in_map": "اظهار المناطق في الخريطة",
+    "draw_in_map": "رسم على الخريطة",
+    "edit_in_map": "تعديل على الخريطة"
 }

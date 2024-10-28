@@ -156,21 +156,23 @@ const modalType = computed(() => {
 
             <div class="col-span-12 flex justify-center">
                 <base-button
-                    @click.prevent="showZoneDrawerModal = true"
-                    variant="outline-primary"
                     class="flex content-center items-center justify-center whitespace-nowrap border-dashed"
+                    variant="outline-primary"
+                    @click.prevent="showZoneDrawerModal = true"
                 >
-                    {{ $t('draw_in_map') }}
+                    <span v-if="form.id"> {{ $t('edit_in_map') }}</span>
 
-                    <svg-loader name="icon-map" class="ms-2 h-4 w-4"></svg-loader>
+                    <span v-else> {{ $t('draw_in_map') }}</span>
+
+                    <svg-loader class="ms-2 h-4 w-4" name="icon-map"></svg-loader>
                 </base-button>
             </div>
 
             <the-zone-drawer-modal
-                title="hello"
                 :open="showZoneDrawerModal"
-                @close="showZoneDrawerModal = false"
                 :zone="form.geom"
+                title="hello"
+                @close="showZoneDrawerModal = false"
                 @set-zone="form.geom = $event"
             ></the-zone-drawer-modal>
         </template>

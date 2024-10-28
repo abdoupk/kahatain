@@ -13,9 +13,9 @@ import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { extractColor } from '@/utils/colors'
-import { getLeafletMapConfig, getMarkerIcon, getMarkerRegionIcon } from '@/utils/helper'
+import { getLeafletMapConfig } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
+import { getMarkers, setMapMarkers } from '@/utils/leaflet'
 
 const fullScreen = ref(false)
 
@@ -43,7 +43,15 @@ const init: Init = async (initializeMap) => {
     if (mapInstance) {
         const a = await zonesStore.getZonesWithFamiliesPositions()
 
-        positions.value.push(...a.flatMap((zone) => zone.families.map((family) => family.location)))
+        positions.value.push(
+            ...a.flatMap((zone) =>
+                zone.families.map((family) => {
+                    return {
+                        location: family.location
+                    }
+                })
+            )
+        )
 
         zones.value.push(
             ...a.flatMap((zone) => {
@@ -62,36 +70,11 @@ const init: Init = async (initializeMap) => {
 
         leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
 
-        const markers = leaflet.markerClusterGroup({
-            maxClusterRadius: 30,
-            iconCreateFunction: function (cluster) {
-                const color =
-                    darkMode.value && colorScheme.value
-                        ? extractColor('darkmode-100', 0.6)
-                        : extractColor('primary', 0.8)
-
-                const mapMarkerRegionSvg = getMarkerRegionIcon(color)
-
-                return leaflet.divIcon({
-                    html: `<div class="relative w-full h-full">
-                  <div class="absolute inset-0 flex items-center justify-center ms-1.5 mb-0.5 font-medium text-white">${cluster.getChildCount()}</div>
-
-                  <img class="w-full h-full" src="data:image/svg+xml;base64,${mapMarkerRegionSvg}" alt="">
-                </div>`,
-                    className: '',
-                    iconSize: leaflet.point(42, 42),
-                    iconAnchor: leaflet.point(20, 45)
-                })
-            },
-            spiderfyOnMaxZoom: false,
-            showCoverageOnHover: false
-        })
+        const markers = getMarkers(leaflet)
 
         map.addLayer(markers)
 
-        const color = darkMode.value && colorScheme.value ? extractColor('darkmode-100') : extractColor('primary')
-
-        const mapMarkerSvg = getMarkerIcon(color)
+        setMapMarkers(leaflet, markers, positions.value)
 
         L.geoJSON(zones.value, {
             onEachFeature: function (feature, layer) {
@@ -100,34 +83,6 @@ const init: Init = async (initializeMap) => {
                 }
             }
         }).addTo(map)
-
-        positions.value.map(function (markerElem) {
-            if (markerElem?.lat && markerElem?.lng) {
-                const marker = leaflet.marker(
-                    {
-                        lat: parseFloat(markerElem.lat),
-                        lng: parseFloat(markerElem.lng)
-                    },
-                    {
-                        title: markerElem.name,
-                        icon: leaflet.icon({
-                            iconUrl: `data:image/svg+xml;base64,${mapMarkerSvg}`,
-                            iconAnchor: leaflet.point(10, 35)
-                        })
-                    }
-                )
-
-                marker.bindPopup(`
-                        <div class="flex flex-row text-start">
-                          <div class="flex-1">
-                            <div class="text-lg font-medium text-primary dark:text-slate-300 xl:text-xl"> ${markerElem.name} </div>
-                            <div class="mt-0.5 text-slate-500 ltr:capitalize">${markerElem.address}</div>
-                          </div>
-                        </div>`)
-
-                markers.addLayer(marker)
-            }
-        })
 
         map.addControl(
             new L.Control.Fullscreen({
@@ -159,7 +114,7 @@ const init: Init = async (initializeMap) => {
 
     <base-tippy :content="$t('show_zones_in_map')">
         <base-button @click.prevent="fullScreen = !fullScreen">
-            <svg-loader name="icon-map" class="h-5 w-5"></svg-loader>
+            <svg-loader class="h-5 w-5" name="icon-map"></svg-loader>
         </base-button>
     </base-tippy>
 </template>
