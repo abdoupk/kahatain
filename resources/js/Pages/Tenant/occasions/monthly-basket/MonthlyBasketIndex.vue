@@ -2,7 +2,7 @@
 import type { ArchiveOccasionType, IndexParams, PaginationData, RamadanBasketFamiliesResource } from '@/types/types'
 
 // TODO remove this
-// import { monthlyBasketFilters } from '@/constants/filters'
+// Import { monthlyBasketFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'

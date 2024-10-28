@@ -62,8 +62,6 @@ export const useZonesStore = defineStore('zones', {
         async getZonesWithFamiliesPositions() {
             const { data } = await axios.get(route('tenant.zones.zones-with-families-positions'))
 
-            console.log(data.zones)
-
             return data.zones
         }
     }

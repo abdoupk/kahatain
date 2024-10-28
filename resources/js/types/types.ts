@@ -365,6 +365,11 @@ export interface CreateSponsorshipForm {
         id: string
         name: string
     }
+    shop: {
+        name: string
+        phone: string
+        address: string
+    }
 }
 
 export interface CreateFinancialTransactionForm {

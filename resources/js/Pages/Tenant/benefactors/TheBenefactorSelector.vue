@@ -31,6 +31,8 @@ onMounted(() => {
     if (benefactors.value) {
         selectedBenefactor.value = benefactor.value
     }
+
+    selectedBenefactor.value = ''
 })
 </script>
 

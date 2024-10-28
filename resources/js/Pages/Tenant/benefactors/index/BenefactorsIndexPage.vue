@@ -189,7 +189,7 @@ watchEffect(async () => {
                     </base-button>
 
                     <base-button class="me-2" @click.prevent="showAddNewSponsorshipModal">
-                        <base-tippy :content="$t('add_new_sponsorship')">
+                        <base-tippy :content="$tc('add new', 0, { attribute: $t('sponsorship') })">
                             <svg-loader name="icon-plus"></svg-loader>
                         </base-tippy>
                     </base-button>

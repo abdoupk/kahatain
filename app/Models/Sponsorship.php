@@ -20,6 +20,7 @@ class Sponsorship extends Model
         'recipientable_id',
         'recipientable_type',
         'sponsorship_type',
+        'shop',
         'created_by',
         'deleted_by',
         'tenant_id',
@@ -57,5 +58,12 @@ class Sponsorship extends Model
     public function recipientable(): BelongsTo
     {
         return $this->MorphTo();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'shop' => 'array',
+        ];
     }
 }

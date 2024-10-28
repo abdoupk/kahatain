@@ -6,7 +6,7 @@ import type {
     PaginationData
 } from '@/types/types'
 
-import {  monthlySponsorshipFilters } from '@/constants/filters'
+import { monthlySponsorshipFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'

@@ -82,7 +82,7 @@ class FamilySeeder extends Seeder
                                         'tenant_id' => $orphan->tenant_id,
                                         'benefactor_id' => $orphan->tenant->benefactors->random()->id,
                                         'created_by' => $tenant->members->random()->id,
-                                        'sponsorship_type' => fake()->randomElement(['cash', 'ccp']),
+                                        'sponsorship_type' => fake()->randomElement(['social_sponsorship', 'educational_sponsorship']),
                                         'recipientable_id' => $orphan->id,
                                         'recipientable_type' => 'orphan',
                                     ];

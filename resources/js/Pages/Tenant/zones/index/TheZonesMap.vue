@@ -2,9 +2,9 @@
 import { useSettingsStore } from '@/stores/settings'
 import { useZonesStore } from '@/stores/zones'
 import L from 'leaflet'
-import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
-import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
 import 'leaflet-fullscreen'
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 import 'leaflet/dist/leaflet.css'
 import { computed, ref, watch } from 'vue'
 
@@ -36,7 +36,7 @@ const init: Init = async (initializeMap) => {
             gestureHandling: false,
             zoomControl: false,
             attributionControl: false,
-            fullscreenControl: false,
+            fullscreenControl: false
         }
     })
 
@@ -129,12 +129,14 @@ const init: Init = async (initializeMap) => {
             }
         })
 
-        map.addControl(new L.Control.Fullscreen({
-            title: {
-                'false': $t('view_fullscreen'),
-                'true': $t('exit_fullscreen')
-            }
-        }));
+        map.addControl(
+            new L.Control.Fullscreen({
+                title: {
+                    false: $t('view_fullscreen'),
+                    true: $t('exit_fullscreen')
+                }
+            })
+        )
 
         const unwatch = watch([colorScheme, darkMode], () => {
             unwatch()

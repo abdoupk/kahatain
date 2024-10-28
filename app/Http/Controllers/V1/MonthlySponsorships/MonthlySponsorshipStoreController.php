@@ -12,11 +12,13 @@ class MonthlySponsorshipStoreController extends Controller
     public function __invoke(MonthlySponsorshipCreateRequest $request)
     {
         Sponsorship::create([
-            ...$request->except('benefactor'),
+            ...$request->except('benefactor', 'shop'),
             'benefactor_id' => $request->validated('benefactor.id'),
+            'shop' => $request->sponsorship_type === 'monthly_basket' ? $request->validated('shop') : null,
         ]);
 
-        Benefactor::whereId($request->validated('benefactor.id'))->searchable();
+        Benefactor::whereId($request->validated('benefactor.id'))
+            ->searchable();
 
         return response('', 204);
     }

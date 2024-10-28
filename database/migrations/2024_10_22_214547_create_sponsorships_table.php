@@ -15,6 +15,7 @@ return new class extends Migration
             $table->text('recipientable_type');
             $table->uuid('recipientable_id');
             $table->string('sponsorship_type');
+            $table->json('shop')->nullable();
             $table->uuid('created_by');
             $table->uuid('deleted_by')->nullable();
             $table->uuid('tenant_id');

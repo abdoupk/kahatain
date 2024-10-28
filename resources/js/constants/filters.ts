@@ -588,7 +588,7 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
         label: 'basket_from_benefactor',
         type: 'number',
         operators: filterNumberOperators
-    },
+    }
 ]
 
 // Add diapers icon

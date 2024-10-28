@@ -138,8 +138,8 @@ const modalType = computed(() => {
 
                 <div>
                     <the-benefactor-selector
-                        :benefactor="form.benefactor.id"
                         v-model:benefactor="form.benefactor"
+                        :benefactor="form.benefactor.id"
                         @update:selected-benefactor="(benefactor) => (form.benefactor = benefactor)"
                     ></the-benefactor-selector>
                 </div>
@@ -171,11 +171,22 @@ const modalType = computed(() => {
                     <option value="">
                         {{ $t('auth.placeholders.tomselect', { attribute: $t('sponsorship_type') }) }}
                     </option>
-                    <option value="ccp">{{ $t('sponsorship_type.ccp') }}</option>
 
-                    <option value="monthly_basket">{{ $t('sponsorship_type.monthly_basket') }}</option>
+                    <option v-if="form.recipientable_type === 'family'" value="grant">
+                        {{ $t('sponsorship_type.grant') }}
+                    </option>
 
-                    <option value="cash">{{ $t('sponsorship_type.cash') }}</option>
+                    <option v-if="form.recipientable_type === 'family'" value="monthly_basket">
+                        {{ $t('sponsorship_type.monthly_basket') }}
+                    </option>
+
+                    <option v-if="form.recipientable_type === 'orphan'" value="social_sponsorship">
+                        {{ $t('sponsorship_type.social_sponsorship') }}
+                    </option>
+
+                    <option v-if="form.recipientable_type === 'orphan'" value="educational_sponsorship">
+                        {{ $t('sponsorship_type.educational_sponsorship') }}
+                    </option>
                 </base-form-select>
 
                 <base-form-input-error>
@@ -220,6 +231,94 @@ const modalType = computed(() => {
                 </base-form-input-error>
             </div>
             <!--End: The amount-->
+
+            <!--Begin: The shop-->
+            <div v-if="form.sponsorship_type === 'monthly_basket'" class="col-span-12 grid grid-cols-12 gap-4 gap-y-3">
+                <h3 class="col-span-12 text-base rtl:font-semibold">
+                    {{ $t('shop_information') }}
+                </h3>
+
+                <!-- Begin: The shopKeeper name-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="shopKeeper_name">
+                        {{ $t('shop.name') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="shopKeeper_name"
+                        v-model="form.shop.name"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shop.name') })"
+                        type="text"
+                        @change="form?.validate('shop.name')"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="form?.invalid('shop.name')"
+                            class="mt-2 text-danger"
+                            data-test="error_start_date_message"
+                        >
+                            {{ form.errors['shop.name'] }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: The shopKeeper name-->
+
+                <!-- Begin: The shopKeeper phone number-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="shopKeeper_phone_number">
+                        {{ $t('shop.phone') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="shopKeeper_phone_number"
+                        v-model="form.shop.phone"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shop.phone') })"
+                        maxlength="10"
+                        type="text"
+                        @change="form?.validate('shop.phone')"
+                        @keydown="allowOnlyNumbersOnKeyDown"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="form?.invalid('shop.phone')"
+                            class="mt-2 text-danger"
+                            data-test="error_start_date_message"
+                        >
+                            {{ form.errors['shop.phone'] }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: The shopKeeper phone number-->
+
+                <!-- Begin: The shopKeeper address-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="shopKeeper_address">
+                        {{ $t('shop.address') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="shopKeeper_address"
+                        v-model="form.shop.address"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shop.address') })"
+                        type="text"
+                        @change="form?.validate('shop.address')"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="form?.invalid('shop.address')"
+                            class="mt-2 text-danger"
+                            data-test="error_start_date_message"
+                        >
+                            {{ form.errors['shop.address'] }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: The shopKeeper address-->
+            </div>
+            <!--End: The shop-->
         </template>
     </create-edit-modal>
 

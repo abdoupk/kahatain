@@ -42,8 +42,6 @@ const props = defineProps<{
     params: IndexParams
 }>()
 
-console.log(props)
-
 const params = ref<IndexParams>({
     perPage: props.params.perPage,
     page: props.params.page,
@@ -179,8 +177,8 @@ watchEffect(async () => {
 
             <template v-if="committees.data.length > 0">
                 <data-table
-                    :params
                     :committees
+                    :params
                     @showDeleteModal="showDeleteModal"
                     @sort="sort"
                     @show-details-modal="showDetailsModal"

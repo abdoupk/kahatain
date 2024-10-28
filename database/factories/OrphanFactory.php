@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\AcademicLevel;
 use App\Models\ClothesSize;
 use App\Models\Orphan;
 use App\Models\ShoeSize;
@@ -13,7 +14,7 @@ class OrphanFactory extends Factory
 {
     protected $model = Orphan::class;
 
-    private array $family_statuses = [
+    private array $familyStatuses = [
         'female' => [
             'college_girl',
             'professional_girl',
@@ -48,7 +49,7 @@ class OrphanFactory extends Factory
         $family_status = null;
 
         if ($birth_date->age > 18 && ! $handicapped) {
-            $family_status = $gender === 'male' ? fake()->randomElement($this->family_statuses['male']) : fake()->randomElement($this->family_statuses['female']);
+            $family_status = $gender === 'male' ? fake()->randomElement($this->familyStatuses['male']) : fake()->randomElement($this->familyStatuses['female']);
         }
 
         if ($family_status === 'unemployed') {
@@ -61,7 +62,7 @@ class OrphanFactory extends Factory
             'birth_date' => $birth_date->toDate(),
             'family_status' => $family_status,
             'health_status' => fake('ar_SA')->realText('10'),
-            'academic_level_id' => fake()->numberBetween(24, 33),
+            'academic_level_id' => AcademicLevel::inRandomOrder()->first()->id,
             'vocational_training_id' => VocationalTraining::inRandomOrder()->first()->id,
             'shoes_size' => ShoeSize::inRandomOrder()->first()->id,
             'pants_size' => ClothesSize::inRandomOrder()->first()->id,

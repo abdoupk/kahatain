@@ -1232,8 +1232,9 @@
     "monthly_sponsorship.difference_after_monthly_sponsorship": "الفارق بعد الكفالة الشهرية",
     "monthly_sponsorship.difference": "الفارق",
     "sponsorship_type.monthly_basket": "قفة شهرية",
-    "sponsorship_type.cash": "عينية (نقدية)",
-    "sponsorship_type.ccp": "دفع حساب جاري",
+    "sponsorship_type.grant": "منحة",
+    "sponsorship_type.social_sponsorship": "كفالة اجتماعية",
+    "sponsorship_type.educational_sponsorship": "كفالة تربوية",
     "the_percentage": "النسبة المئوية",
     "recipient_type": "نوع المستفيد",
     "no_sponsorships": "لا يوجد كفالات",
@@ -1245,5 +1246,10 @@
     "dont_benefit": "لا يستفيد",
     "families_distribution": "توزيع العائلات",
     "view_fullscreen": "عرض ملء الشاشة",
-    "exit_fullscreen": "الخروج من وضع ملء الشاشة"
+    "exit_fullscreen": "الخروج من وضع ملء الشاشة",
+    "shop.name": "اسم صاحب المتجر",
+    "shop.address": "عنوان المتجر",
+    "shop.phone": "رقم هاتف صاحب المتجر",
+    "monthly_basket": "قفة شهرية",
+    "shop_information": "معلومات المتجر"
 }

@@ -9,7 +9,7 @@ function getOrphansByFamilyStatus(): array
 
     return [
         'labels' => $orphans->pluck('family_status')->map(function (string $familyStatus) {
-            return __('family_statuses.' . $familyStatus);
+            return __('family_statuses.'.$familyStatus);
         })->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];
@@ -227,7 +227,7 @@ function getOrphansGroupHealthStatus(): array
 
     return [
         'labels' => $orphans->pluck('is_handicapped')
-            ->map(fn($is_handicapped) => $is_handicapped
+            ->map(fn ($is_handicapped) => $is_handicapped
                 ? __('statistics.handicapped')
                 : __('statistics.healthy'))->toArray(),
         'data' => $orphans->pluck('total')->toArray(),

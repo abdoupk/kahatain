@@ -8,7 +8,7 @@ import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
 import { $t } from '@/utils/i18n'
 
-const recipientType = defineModel('recipientType', { default: 'orphan' })
+const recipientType = defineModel('recipientType', { default: 'family' })
 
 const recipient = defineModel('recipient', { default: '' })
 
