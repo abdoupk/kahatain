@@ -68,7 +68,7 @@ class Benefactor extends Model
 
     public function getName(): string
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function searchableAs(): string

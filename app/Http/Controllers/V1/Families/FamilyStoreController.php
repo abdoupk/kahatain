@@ -67,8 +67,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
             return response('', 201);
         }
 
-
-
         return response('', 422);
     }
 

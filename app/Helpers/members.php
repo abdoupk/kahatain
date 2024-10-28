@@ -21,7 +21,6 @@ function searchMembers(): Collection
     return search(User::getModel(), limit: 100)->get();
 }
 
-
 function syncCompetences(array $competenceNames, User $user): void
 {
     $allCompetenceIds = collect($competenceNames)->map(fn ($competenceName) => competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();

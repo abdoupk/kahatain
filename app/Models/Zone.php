@@ -104,7 +104,7 @@ class Zone extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'families_count' => (int)$this->families_count,
+            'families_count' => (int) $this->families_count,
             'tenant_id' => $this->tenant_id,
             'description' => $this->description,
             'created_at' => strtotime($this->created_at),

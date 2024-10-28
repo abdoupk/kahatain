@@ -13,9 +13,7 @@ class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public User $user)
-    {
-    }
+    public function __construct(public User $user) {}
 
     public function handle(): void
     {

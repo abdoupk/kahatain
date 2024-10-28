@@ -5,8 +5,6 @@ namespace App\Http\Controllers\V1\Members;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Members\MemberCreateRequest;
 use App\Jobs\V1\Member\MemberCreatedJob;
-use App\Models\Committee;
-use App\Models\competence;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;

@@ -63,7 +63,7 @@ class Committee extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'members_count' => (int)$this->members_count,
+            'members_count' => (int) $this->members_count,
             'tenant_id' => $this->tenant_id,
             'description' => $this->description,
             'created_at' => strtotime($this->created_at),

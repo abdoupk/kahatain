@@ -571,13 +571,13 @@ return [
                     '__soft_deleted',
                     'created_at',
                     'tenant_id',
-                    'sponsorships_count'
+                    'sponsorships_count',
                 ],
                 'searchableAttributes' => [
                     'first_name',
                     'last_name',
                     'phone',
-                    'sponsorships_count'
+                    'sponsorships_count',
                 ],
                 'sortableAttributes' => [
                     'sponsorships_count',
@@ -590,12 +590,12 @@ return [
                     '__soft_deleted',
                     'created_at',
                     'tenant_id',
-                    'members_count'
+                    'members_count',
                 ],
                 'searchableAttributes' => [
                     'name',
                     'description',
-                    'members_count'
+                    'members_count',
                 ],
                 'sortableAttributes' => [
                     'members_count',

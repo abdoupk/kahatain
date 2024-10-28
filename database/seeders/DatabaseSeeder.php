@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FurnishingSeeder::class);
 
-//        $this->call(HousingSeeder::class);
+        //        $this->call(HousingSeeder::class);
 
         $this->call(OrphanSponsorshipSeeder::class);
 
