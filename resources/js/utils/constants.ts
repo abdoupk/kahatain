@@ -77,7 +77,8 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
         phone_number: '',
         income: '',
         address: '',
-        degree_of_kinship: ''
+        degree_of_kinship: '',
+        with_family: false
     },
     spouse: {
         first_name: '',

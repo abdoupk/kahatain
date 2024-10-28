@@ -530,7 +530,7 @@ const getLeafletMapConfig = () => {
     if (usePage().props.association_coordinates.lat && usePage().props.association_coordinates.lng) {
         config = {
             center: [usePage().props.association_coordinates.lat, usePage().props.association_coordinates.lng],
-            zoom: 13,
+            zoom: 14,
             minZoom: 6
         }
     }

@@ -8,6 +8,8 @@ import { defineAsyncComponent, ref, watchEffect } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import TheZonesMap from '@/Pages/Tenant/zones/index/TheZonesMap.vue'
+
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
@@ -170,6 +172,8 @@ watchEffect(async () => {
                     >
                         {{ $tc('add new', 0, { attribute: $t('zone') }) }}
                     </base-button>
+
+                    <the-zones-map></the-zones-map>
                 </template>
             </the-table-header>
 

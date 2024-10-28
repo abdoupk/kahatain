@@ -4,12 +4,16 @@ import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, ref } from 'vue'
 
+import TheZoneDrawerModal from '@/Pages/Tenant/zones/TheZoneDrawerModal.vue'
+
+import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t, $tc } from '@/utils/i18n'
 
@@ -19,6 +23,8 @@ defineProps<{
 
 // Get the zones store
 const zonesStore = useZonesStore()
+
+const showZoneDrawerModal = ref(false)
 
 // Initialize a ref for loading state
 const loading = ref(false)
@@ -38,7 +44,7 @@ const form = computed(() => {
 })
 
 // Define custom event emitter for 'close' event
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'update-zones'])
 
 // Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
@@ -52,6 +58,8 @@ const handleSuccess = () => {
             }
         )
     }, 200)
+
+    emit('update-zones')
 
     emit('close')
 }
@@ -145,6 +153,26 @@ const modalType = computed(() => {
                 </div>
             </div>
             <!-- End: Name-->
+
+            <div class="col-span-12 flex justify-center">
+                <base-button
+                    @click.prevent="showZoneDrawerModal = true"
+                    variant="outline-primary"
+                    class="flex content-center items-center justify-center whitespace-nowrap border-dashed"
+                >
+                    {{ $t('draw_in_map') }}
+
+                    <svg-loader name="icon-map" class="ms-2 h-4 w-4"></svg-loader>
+                </base-button>
+            </div>
+
+            <the-zone-drawer-modal
+                title="hello"
+                :open="showZoneDrawerModal"
+                @close="showZoneDrawerModal = false"
+                :zone="form.geom"
+                @set-zone="form.geom = $event"
+            ></the-zone-drawer-modal>
         </template>
     </create-edit-modal>
 

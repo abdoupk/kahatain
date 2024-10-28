@@ -24,6 +24,7 @@ class OrphanResource extends JsonResource
             'shirt_size' => $this->shirtSize?->label,
             'note' => $this->note,
             'gender' => $this->gender,
+            'income' => $this->income,
             'baby_needs' => new BabyResource($this->whenLoaded('babyNeeds')),
         ];
     }

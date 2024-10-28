@@ -27,6 +27,8 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
             ));
         }
 
+        monthlySponsorship($orphan->load('family')->family);
+
         dispatch(new OrphanUpdatedJob($orphan, auth()->user()));
 
         return response('', 201);

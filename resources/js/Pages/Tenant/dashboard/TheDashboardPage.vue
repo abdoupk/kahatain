@@ -15,7 +15,6 @@ import {
     RecentNeedsType,
     RecentTransactionsType
 } from '@/types/dashboard'
-import { PositionType } from '@/types/types'
 
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent } from 'vue'
@@ -69,7 +68,7 @@ defineOptions({
     layout: TheLayout
 })
 
-const props = defineProps<{
+defineProps<{
     reports: GeneralReportsType
     financialReports: FinancialReportsType
     recentActivities: RecentActivitiesType

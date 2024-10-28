@@ -59,11 +59,15 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
                 $this->storeSponsorships($family, $request, $sponsor);
 
+                monthlySponsorship($family);
+
                 dispatch(new FamilyCreatedJob($family, auth()->user()));
             });
 
             return response('', 201);
         }
+
+
 
         return response('', 422);
     }

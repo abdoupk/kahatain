@@ -8,8 +8,8 @@ function calculateWeights(Family $family): float
     $calculationWeights = json_decode($family->tenant['calculation'], true)['weights']['orphans'];
 
     return $family->orphans->sum(function (Orphan $orphan) use ($calculationWeights) {
-            return calculateOrphanWeights($orphan, $calculationWeights);
-        }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
+        return calculateOrphanWeights($orphan, $calculationWeights);
+    }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
 }
 
 function calculateSponsorWeights(Family $family): float
@@ -129,7 +129,7 @@ function calculateWeightForSecondSponsor(Family $family): float
 {
     $weights = json_decode($family->tenant['calculation'], true)['weights']['second_sponsor'];
 
-    if ($family->secondSponsor->with_family) {
+    if ($family->secondSponsor?->with_family) {
         return $weights['with_family'];
     }
 

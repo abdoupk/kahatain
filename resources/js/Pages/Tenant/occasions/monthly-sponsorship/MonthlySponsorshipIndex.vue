@@ -6,7 +6,7 @@ import type {
     PaginationData
 } from '@/types/types'
 
-import { monthlyBasketFilters } from '@/constants/filters'
+import {  monthlySponsorshipFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
@@ -114,7 +114,7 @@ const showSettingsModal = () => {
         <div>
             <the-table-header
                 :exportable
-                :filters="monthlyBasketFilters"
+                :filters="monthlySponsorshipFilters"
                 :pagination-data="families"
                 :params="params"
                 :title="$t('list', { attribute: $t('the_families_monthly_basket') })"
@@ -161,6 +161,7 @@ const showSettingsModal = () => {
                 <data-table :families :params @sort="sort"></data-table>
 
                 <the-table-footer
+                    class="mt-2"
                     :pagination-data="families"
                     :params
                     :url="route('tenant.monthly-sponsorship.index')"

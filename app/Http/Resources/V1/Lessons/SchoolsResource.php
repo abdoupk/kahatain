@@ -19,7 +19,7 @@ class SchoolsResource extends JsonResource
             'quota' => $this->lessons->sum('quota'),
             'subjects' => $this->whenLoaded('subjects')->map(fn (Lesson $lesson) => [
                 'id' => $lesson->subject->id ?? $this->id,
-                'name' => $lesson->subject->getName().' - '.$lesson->academicLevel?->level,
+                'name' => $lesson->subject->getName().' - '.$lesson->load('academicLevel')->academicLevel?->level,
                 'quota' => $lesson->quota,
                 'academic_level_id' => $lesson->academic_level_id,
             ]),

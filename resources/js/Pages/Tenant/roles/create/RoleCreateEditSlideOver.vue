@@ -110,7 +110,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
         :open
         :slideover-type="modalType"
         :title="modalTitle"
-        size="lg"
+        size="xl"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
@@ -166,7 +166,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
                                     type="checkbox"
                                 ></base-form-switch-input>
 
-                                <base-form-switch-label :for="`${permission}_${key}`">
+                                <base-form-switch-label  class="whitespace-nowrap" :for="`${permission}_${key}`">
                                     <template v-if="permission === 'list'">
                                         {{
                                             $t('permissions.list', {

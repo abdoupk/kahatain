@@ -21,7 +21,8 @@ export const useZonesStore = defineStore('zones', {
         zone: {
             name: '',
             id: '',
-            description: ''
+            description: '',
+            geom: null
         },
         zones: []
     }),
@@ -50,6 +51,20 @@ export const useZonesStore = defineStore('zones', {
 
         findZoneById(id: string) {
             return this.zones.find((zone) => zone.id === id)
+        },
+
+        async getFamiliesPositions() {
+            const { data } = await axios.get(route('tenant.families.positions'))
+
+            return data.positions
+        },
+
+        async getZonesWithFamiliesPositions() {
+            const { data } = await axios.get(route('tenant.zones.zones-with-families-positions'))
+
+            console.log(data.zones)
+
+            return data.zones
         }
     }
 })

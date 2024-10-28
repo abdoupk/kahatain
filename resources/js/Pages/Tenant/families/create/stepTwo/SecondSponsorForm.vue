@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../../utils/i18n'
-
 import type { CreateFamilyForm } from '@/types/types'
 
 import type { Form } from 'laravel-precognition-vue/dist/types'
@@ -8,8 +6,12 @@ import type { Form } from 'laravel-precognition-vue/dist/types'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
+import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
+import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
@@ -24,6 +26,8 @@ const degreeOfKinship = defineModel('degree_of_kinship')
 const income = defineModel('income')
 
 const address = defineModel('address')
+
+const withFamily = defineModel('withFamily')
 </script>
 
 <template>
@@ -281,6 +285,15 @@ const address = defineModel('address')
                     }}
                 </div>
             </base-form-input-error>
+        </div>
+
+        <div class="intro-y col-span-12 sm:col-span-6">
+            <base-form-switch>
+                <base-form-switch-input id="with_family" type="checkbox" v-model="withFamily"></base-form-switch-input>
+                <base-form-switch-label htmlFor="with_family">
+                    {{ $t('housing.label.with_family') }}
+                </base-form-switch-label>
+            </base-form-switch>
         </div>
     </div>
 </template>

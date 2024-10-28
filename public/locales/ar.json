@@ -168,6 +168,16 @@
     "filters.location": "الموقع",
     "filters.branch_president": " رئيس الفرع",
     "filters.active": "فلاتر (:count)",
+    "filters.sponsorships_count": "عدد الكفالات",
+    "filters.members_count": "عدد الاعضاء",
+    "filters.income_rate": "معدل الدخل",
+    "filters.monthly_sponsorship_rate": "نسبة الكفالة الشهرية",
+    "filters.basket_from_benefactor": "قفة مباشرة من محسن (القيمة)",
+    "filters.basket_from_association": "قفة من الجمعية",
+    "filters.amount_from_benefactor": "مبلغ مالي مباشرة من محسن",
+    "filters.amount_from_association": "مبلغ مالي من الجمعية",
+    "filters.difference_before_monthly_sponsorship": "الفارق قبل الكفالة الشهرية",
+    "filters.difference_after_monthly_sponsorship": "الفارق بعد الكفالة الشهرية",
     "furnishings.television": "تلفاز",
     "furnishings.refrigerator": "ثلاجة",
     "furnishings.fireplace": "مدفأة",
@@ -1232,5 +1242,8 @@
     "committee": "لجنة",
     "search_a_committee": "ابحث عن لجنة",
     "benefit": "يستفيد",
-    "dont_benefit": "لا يستفيد"
+    "dont_benefit": "لا يستفيد",
+    "families_distribution": "توزيع العائلات",
+    "view_fullscreen": "عرض ملء الشاشة",
+    "exit_fullscreen": "الخروج من وضع ملء الشاشة"
 }

@@ -497,7 +497,7 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
     }
 ]
 
-export const monthlyBasketFilters: ListBoxFilter[] = [
+export const monthlySponsorshipFilters: ListBoxFilter[] = [
     {
         icon: 'icon-family',
         field: 'family.id',
@@ -539,7 +539,56 @@ export const monthlyBasketFilters: ListBoxFilter[] = [
         label: 'total_income',
         type: 'number',
         operators: filterNumberOperators
-    }
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'difference_before_monthly_sponsorship',
+        label: 'difference_before_monthly_sponsorship',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'difference_after_monthly_sponsorship',
+        label: 'difference_after_monthly_sponsorship',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'monthly_sponsorship_rate',
+        label: 'monthly_sponsorship_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'amount_from_association',
+        label: 'amount_from_association',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'amount_from_benefactor',
+        label: 'amount_from_benefactor',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'basket_from_benefactor',
+        label: 'basket_from_benefactor',
+        type: 'number',
+        operators: filterNumberOperators
+    },
 ]
 
 // Add diapers icon
@@ -657,6 +706,36 @@ export const branchedFilters: ListBoxFilter[] = [
     }
 ]
 
-export const benefactorsFilters: ListBoxFilter[] = []
+export const benefactorsFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-hashtag',
+        field: 'sponsorships_count',
+        label: 'sponsorships_count',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'created_at',
+        label: 'created_at',
+        type: 'date',
+        operators: filterDateOperators
+    }
+]
 
-export const committeesFilters: ListBoxFilter[] = []
+export const committeesFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-hashtag',
+        field: 'members_count',
+        label: 'members_count',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'created_at',
+        label: 'created_at',
+        type: 'date',
+        operators: filterDateOperators
+    }
+]

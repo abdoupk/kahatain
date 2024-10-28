@@ -6,7 +6,7 @@ function calculateDifferenceAfterMonthlySponsorship(Family $family, float $diffe
 {
     $association_basket_value = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'];
 
-    return $differenceBeforeSponsorship - max($differenceBeforeSponsorship, $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
+    return $differenceBeforeSponsorship - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
 }
 
 function monthlySponsorship(Family $family): void
@@ -17,7 +17,7 @@ function monthlySponsorship(Family $family): void
 
     $differenceBeforeSponsorship = calculateDifferenceBeforeMonthlySponsorship($family, $weights);
 
-    $sponsorshipRate = getPercentageForIncomeRate($family, $differenceBeforeSponsorship);
+    $sponsorshipRate = getPercentageForIncomeRate($family, $differenceBeforeSponsorship) / 100;
 
     $differenceAfterSponsorship = calculateDifferenceAfterMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
 
@@ -34,22 +34,24 @@ function monthlySponsorship(Family $family): void
         'monthly_sponsorship_rate' => $sponsorshipRate,
         'amount_from_association' => $sponsorshipFromAssociation,
     ]);
+
+    $family->searchable();
 }
 
 function calculateDifferenceBeforeMonthlySponsorship(Family $family, float $totalWeights): float
 {
     $threshold = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['threshold'];
 
-    return ($threshold - $family->total_income) * $totalWeights;
+    return ($threshold - $family->income_rate) * $totalWeights;
 }
 
 function calculateAssociationMonthlySponsorship(Family $family, float $differenceBeforeSponsorship, float $sponsorshipRate): float
 {
     $associationBasketValue = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'] ?? 0;
 
-    return $differenceBeforeSponsorship * $sponsorshipRate
-        - max(0, $differenceBeforeSponsorship) * $associationBasketValue
-        + $family->aid->sum('amount');
+    return ($differenceBeforeSponsorship * $sponsorshipRate)
+        - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $associationBasketValue)
+        + $family->aid()->sum('amount');
 }
 
 function getPercentageForIncomeRate(Family $family, float $differenceBeforeSponsorship): float
@@ -57,7 +59,7 @@ function getPercentageForIncomeRate(Family $family, float $differenceBeforeSpons
     $categories = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['categories'];
 
     foreach ($categories as $category) {
-        if ($differenceBeforeSponsorship > $category['minimum'] && $differenceBeforeSponsorship < $category['maximum']) {
+        if ($differenceBeforeSponsorship >= $category['minimum'] && $differenceBeforeSponsorship < $category['maximum']) {
             return $category['value'];
         }
     }

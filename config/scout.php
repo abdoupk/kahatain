@@ -321,6 +321,18 @@ return [
                     'spouse.name',
                     'spouse.function',
                     'branch.name',
+                    'orphans_count',
+                    'total_income',
+                    'income_rate',
+                    'sponsor.name',
+                    'sponsor.phone_number',
+                    'difference_before_monthly_sponsorship',
+                    'difference_after_monthly_sponsorship',
+                    'monthly_sponsorship_rate',
+                    'amount_from_association',
+                    'basket_from_association',
+                    'amount_from_benefactor',
+                    'basket_from_benefactor',
                 ],
                 'filterableAttributes' => [
                     '__soft_deleted',
@@ -355,6 +367,16 @@ return [
                     'file_number',
                     'created_at',
                     'start_date',
+                    'orphans_count',
+                    'total_income',
+                    'income_rate',
+                    'difference_before_monthly_sponsorship',
+                    'difference_after_monthly_sponsorship',
+                    'monthly_sponsorship_rate',
+                    'amount_from_association',
+                    'basket_from_association',
+                    'amount_from_benefactor',
+                    'basket_from_benefactor',
                 ],
             ],
             'zones' => [
@@ -549,11 +571,13 @@ return [
                     '__soft_deleted',
                     'created_at',
                     'tenant_id',
+                    'sponsorships_count'
                 ],
                 'searchableAttributes' => [
                     'first_name',
                     'last_name',
                     'phone',
+                    'sponsorships_count'
                 ],
                 'sortableAttributes' => [
                     'sponsorships_count',
@@ -566,10 +590,12 @@ return [
                     '__soft_deleted',
                     'created_at',
                     'tenant_id',
+                    'members_count'
                 ],
                 'searchableAttributes' => [
                     'name',
                     'description',
+                    'members_count'
                 ],
                 'sortableAttributes' => [
                     'members_count',

@@ -9,6 +9,7 @@ use App\Http\Controllers\V1\Zones\ZoneRestoreController;
 use App\Http\Controllers\V1\Zones\ZoneShowController;
 use App\Http\Controllers\V1\Zones\ZonesIndexController;
 use App\Http\Controllers\V1\Zones\ZoneStoreController;
+use App\Http\Controllers\V1\Zones\ZonesWithFamiliesPositionsController;
 use App\Http\Controllers\V1\Zones\ZoneUpdateController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
@@ -20,6 +21,12 @@ Route::prefix('zones')
             ZonesIndexController::class
         )
             ->name('index');
+
+        Route::get(
+            'zones-with-families-positions',
+            ZonesWithFamiliesPositionsController::class
+        )
+            ->name('zones-with-families-positions');
 
         Route::get(
             'show/{zone}',

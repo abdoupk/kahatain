@@ -14,6 +14,10 @@ class SponsorUpdateInfosController extends Controller implements HasMiddleware
     {
         $sponsor->update($request->validated());
 
+        if ($request->sponsor_type !== $sponsor->sponsor_type) {
+            monthlySponsorship($sponsor->load('family')->family);
+        }
+
         $sponsor->orphans->searchable();
 
         dispatch(new SponsorUpdatedJob($sponsor, auth()->user()));

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { OrphanShowType } from '@/types/orphans'
 
-import { formatDate, isOlderThan } from '@/utils/helper'
+import { formatCurrency, formatDate, isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{ orphan: OrphanShowType }>()
@@ -114,6 +114,14 @@ defineProps<{ orphan: OrphanShowType }>()
                     </h3>
                 </div>
             </template>
+
+            <div v-if="orphan.note" class="col-span-12 sm:col-span-6">
+                <h2 class="text-lg font-semibold">{{ $t('the_income') }}</h2>
+
+                <h3 class="text-base font-medium">
+                    {{ formatCurrency(orphan.income) }}
+                </h3>
+            </div>
 
             <div v-if="orphan.note" class="col-span-12">
                 <h2 class="text-lg font-semibold">{{ $t('notes') }}</h2>

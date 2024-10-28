@@ -108,7 +108,7 @@ const handleFieldChange = (index: number) => {
             </base-popover-button>
 
             <base-popover-panel :placement>
-                <div class="w-[400px] px-2 pt-2 md:w-[505px] lg:w-[580px]">
+                <div class="w-[280px] px-2 pt-2 sm:w-[350-px] md:w-[505px] lg:w-[580px]">
                     <div class="grid grid-cols-12 gap-4">
                         <filter-rule
                             v-for="(rule, index) in filterRules"

@@ -1,45 +1,63 @@
 <script lang="ts" setup>
-import { FamiliesForMapType } from '@/types/dashboard'
-
 import { useSettingsStore } from '@/stores/settings'
+import { useZonesStore } from '@/stores/zones'
+import L from 'leaflet'
 import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
+import 'leaflet-fullscreen'
 import 'leaflet/dist/leaflet.css'
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import LeafletMapLoader, { Init } from '@/Components/Base/LeafletMapLoader/LeafletMapLoader.vue'
+import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { extractColor } from '@/utils/colors'
 import { getLeafletMapConfig, getMarkerIcon, getMarkerRegionIcon } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-const props = defineProps<{
-    familiesForMap: FamiliesForMapType[]
-}>()
+const fullScreen = ref(false)
 
 const darkMode = computed(() => useSettingsStore().appearance === 'dark')
 
 const colorScheme = computed(() => useSettingsStore().colorScheme)
 
+const zonesStore = useZonesStore()
+
+const positions = ref([])
+
+const zones = ref([])
+
 const init: Init = async (initializeMap) => {
     const mapInstance = await initializeMap({
         config: {
             ...getLeafletMapConfig(),
-            gestureHandling: true,
+            gestureHandling: false,
             zoomControl: false,
             attributionControl: false,
-            gestureHandlingOptions: {
-                duration: 5000,
-                touchDuration: 5000,
-                text: {
-                    touch: $t('leaflet.touch'),
-                    scroll: $t('leaflet.scroll'),
-                    scrollMac: $t('leaflet.scrollMac')
-                }
-            }
+            fullscreenControl: false,
         }
     })
 
     if (mapInstance) {
+        const a = await zonesStore.getZonesWithFamiliesPositions()
+
+        positions.value.push(...a.flatMap((zone) => zone.families.map((family) => family.location)))
+
+        zones.value.push(
+            ...a.flatMap((zone) => {
+                if (zone.geom !== null) {
+                    return {
+                        ...zone.geom,
+                        properties: { name: zone.name }
+                    }
+                }
+
+                return []
+            })
+        )
+
         const { map, leaflet } = mapInstance
 
         leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
@@ -75,22 +93,31 @@ const init: Init = async (initializeMap) => {
 
         const mapMarkerSvg = getMarkerIcon(color)
 
-        props.familiesForMap.map(function (markerElem) {
-            const marker = leaflet.marker(
-                {
-                    lat: parseFloat(markerElem.location.lat),
-                    lng: parseFloat(markerElem.location.lng)
-                },
-                {
-                    title: markerElem.name,
-                    icon: leaflet.icon({
-                        iconUrl: `data:image/svg+xml;base64,${mapMarkerSvg}`,
-                        iconAnchor: leaflet.point(10, 35)
-                    })
+        L.geoJSON(zones.value, {
+            onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.name) {
+                    layer.bindPopup(feature.properties.name)
                 }
-            )
+            }
+        }).addTo(map)
 
-            marker.bindPopup(`
+        positions.value.map(function (markerElem) {
+            if (markerElem?.lat && markerElem?.lng) {
+                const marker = leaflet.marker(
+                    {
+                        lat: parseFloat(markerElem.lat),
+                        lng: parseFloat(markerElem.lng)
+                    },
+                    {
+                        title: markerElem.name,
+                        icon: leaflet.icon({
+                            iconUrl: `data:image/svg+xml;base64,${mapMarkerSvg}`,
+                            iconAnchor: leaflet.point(10, 35)
+                        })
+                    }
+                )
+
+                marker.bindPopup(`
                         <div class="flex flex-row text-start">
                           <div class="flex-1">
                             <div class="text-lg font-medium text-primary dark:text-slate-300 xl:text-xl"> ${markerElem.name} </div>
@@ -98,18 +125,39 @@ const init: Init = async (initializeMap) => {
                           </div>
                         </div>`)
 
-            markers.addLayer(marker)
+                markers.addLayer(marker)
+            }
         })
+
+        map.addControl(new L.Control.Fullscreen({
+            title: {
+                'false': $t('view_fullscreen'),
+                'true': $t('exit_fullscreen')
+            }
+        }));
 
         const unwatch = watch([colorScheme, darkMode], () => {
             unwatch()
 
             init(initializeMap)
         })
+
+        watch(
+            () => fullScreen.value,
+            () => {
+                map.toggleFullscreen()
+            }
+        )
     }
 }
 </script>
 
 <template>
     <leaflet-map-loader :darkMode :init></leaflet-map-loader>
+
+    <base-tippy :content="$t('show_zones_in_map')">
+        <base-button @click.prevent="fullScreen = !fullScreen">
+            <svg-loader name="icon-map" class="h-5 w-5"></svg-loader>
+        </base-button>
+    </base-tippy>
 </template>
