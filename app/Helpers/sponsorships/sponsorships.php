@@ -11,7 +11,7 @@ function calculateDifferenceAfterMonthlySponsorship(Family $family, float $diffe
 
 function monthlySponsorship(Family $family): void
 {
-    $family->load(['orphans', 'aid', 'secondSponsor', 'sponsor.incomes', 'housing']);
+    $family->load(['orphans.tenant', 'orphans.academicLevel', 'aid', 'secondSponsor', 'sponsor.incomes', 'housing']);
 
     $weights = calculateWeights($family);
 
