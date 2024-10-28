@@ -47,6 +47,8 @@ const init: Init = async (initializeMap) => {
             ...a.flatMap((zone) =>
                 zone.families.map((family) => {
                     return {
+                        name: family.name,
+                        address: family.address,
                         location: family.location
                     }
                 })

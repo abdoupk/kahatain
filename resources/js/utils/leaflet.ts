@@ -22,7 +22,7 @@ export const drawLocal = {
                 },
                 buttons: {
                     polyline: 'رسم خط متعدد النقاط',
-                    polygon: 'رسم متعدد الأضلاع',
+                    polygon: 'تحديد المنطقة',
                     rectangle: 'رسم مستطيل',
                     circle: 'رسم دائرة',
                     marker: 'إضافة علامة',

@@ -11,7 +11,7 @@ class ZonesWithFamiliesPositionsController extends Controller
     {
         return response()->json([
             'zones' => Zone::with(['families' => function ($q) {
-                $q->select(['zone_id', 'location']);
+                $q->select(['zone_id', 'location', 'name', 'address']);
             }])->select(['id', 'name', 'geom'])->get(),
         ]);
     }
