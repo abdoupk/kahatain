@@ -18,6 +18,7 @@ class BenefactorUpdateRequest extends FormRequest
             'location' => 'sometimes|array',
             'location.lat' => 'nullable|numeric',
             'location.lng' => 'nullable|numeric',
+            'sponsorships.*.id' => 'exists:sponsorships,id',
         ];
     }
 

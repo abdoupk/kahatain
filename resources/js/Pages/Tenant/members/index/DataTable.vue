@@ -94,6 +94,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                                     <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                     {{ $t('edit') }}
                                 </a>
+
                                 <a
                                     v-if="hasPermission('delete_members')"
                                     class="flex items-center text-danger"

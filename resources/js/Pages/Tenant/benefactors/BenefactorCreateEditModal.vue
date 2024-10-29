@@ -4,6 +4,8 @@ import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, ref } from 'vue'
 
+import TheSponsorshipsTable from '@/Pages/Tenant/benefactors/TheSponsorshipsTable.vue'
+
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
@@ -105,7 +107,7 @@ const modalType = computed(() => {
         :modal-type="modalType"
         :open
         :title="modalTitle"
-        size="lg"
+        size="xl"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
@@ -190,6 +192,14 @@ const modalType = computed(() => {
                 </div>
             </div>
             <!-- End: address-->
+
+            <!-- Begin: Sponsorships-->
+            <the-sponsorships-table
+                :sponsorships="form.sponsorships"
+                editable
+                @delete-sponsorship="form.sponsorships.splice($event, 1)"
+            />
+            <!-- End: Sponsorships-->
         </template>
     </create-edit-modal>
 
