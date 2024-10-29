@@ -4,6 +4,7 @@ return [
     'eid_al_adha_families' => 'قائمة المستفيدين من الأضحية لسنة :date',
     'eid_suit' => 'قائمة المستفيدين من بدلة العيد لسنة :date',
     'monthly_basket_families' => 'قائمة المستفيدين من القفة الشهرية لشهر :date',
+    'monthly_sponsorship_families' => 'قائمة المستفيدين من الكفالة الشهرية لشهر :date',
     'ramadan_basket_families' => 'قائمة المستفيدين من قفة رمضان لسنة :date',
     'babies_milk_and_diapers' => 'قائمة المستفيدين من الحفاضات وحليب الأطفال لشهر :date',
     'school_entry' => 'قائمة المستفيدين من الحقائب المدرسية لسنة :date',

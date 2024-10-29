@@ -500,7 +500,7 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
 export const monthlySponsorshipFilters: ListBoxFilter[] = [
     {
         icon: 'icon-family',
-        field: 'family.id',
+        field: 'id',
         label: 'family',
         type: 'object',
         operators: filterObjectOperators
@@ -514,28 +514,28 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-branches',
-        field: 'family.branch.id',
+        field: 'branch.id',
         label: 'branch',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-map-location-dot',
-        field: 'family.zone.id',
+        field: 'zone.id',
         label: 'zone',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-children',
-        field: 'family.orphans_count',
+        field: 'orphans_count',
         label: 'orphans_count',
         type: 'number',
         operators: filterNumberOperators
     },
     {
         icon: 'icon-dollar-sign',
-        field: 'family.total_income',
+        field: 'total_income',
         label: 'total_income',
         type: 'number',
         operators: filterNumberOperators

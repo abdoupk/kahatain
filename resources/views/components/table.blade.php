@@ -96,6 +96,12 @@
             margin-top: 1rem
         }
 
+        .-mt-2 {
+            margin-top: -0.5rem
+                /* -8px */
+            ;
+        }
+
         .text-lg {
             font-size: 1.125rem
                 /* 18px */
@@ -108,7 +114,11 @@
 </head>
 
 <body>
-    <h2 class="mt-4 text-lg font-medium rtl:font-semibold text-center"> {{ $title }}
+    <h2 class="font-medium rtl:font-semibold text-center">
+        {{ auth()->user()->tenant['infos']['association'] }}
+    </h2>
+
+    <h2 class="text-lg font-medium rtl:font-semibold text-center -mt-2"> {{ $title }}
     </h2>
 
     <table class="w-full table border-black text-black">
