@@ -95,6 +95,26 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
             )
         },
 
+        async getAcademicLevelsForMembersForSelectFilterValue() {
+            await this.getAcademicLevels()
+
+            return this.academicLevels
+                .filter(
+                    (academicLevel) =>
+                        !['الطور الابتدائي',
+'الطور المتوسط',
+'الطور الثانوي'].includes(academicLevel.phase)
+                )
+                .flatMap(({ levels, phase }) =>
+                    levels
+                        .filter((level) => level.name !== 'امي' && level.name !== 'مفصول')
+                        .map(({ id, name }) => ({
+                            id,
+                            name: phase === 'التكوين المهني' || phase === 'الشبه طبي' ? `${name} (${phase})` : name
+                        }))
+                )
+        },
+
         getPhaseFromId(id: number) {
             for (const item of this.academicLevels) {
                 const level = item.levels.find((level) => level.id === id)

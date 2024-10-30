@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -192,7 +191,7 @@ class User extends Authenticatable
 
     public function makeSearchableUsing(Collection $models): Collection
     {
-        return $models->load('roles');
+        return $models->load(['roles', 'zone', 'branch', 'academicLevel', 'committees', 'competences']);
     }
 
     public function shouldBeSearchable(): bool
@@ -208,6 +207,22 @@ class User extends Authenticatable
             'email' => $this->email,
             'phone' => $this->phone,
             'gender' => $this->gender,
+            'zone' => [
+                'id' => $this->zone_id,
+                'name' => $this->zone?->name,
+            ],
+            'branch' => [
+                'id' => $this->branch_id,
+                'name' => $this->branch?->name,
+            ],
+            'academic_level' => [
+                'id' => $this->academic_level_id,
+                'level' => $this->academicLevel?->level,
+                'phase' => $this->academicLevel?->phase,
+            ],
+            'committees' => $this->committees->pluck('name')->toArray(),
+            'competences' => $this->competences->pluck('name')->toArray(),
+            'roles' => $this->roles->pluck('name')->toArray(),
             'tenant_id' => $this->tenant_id,
             'created_at' => $this->created_at,
         ];

@@ -76,6 +76,17 @@ const filterStringOperators: Array<ListBoxOperator> = [
     }
 ]
 
+const filterCategoryOperators: Array<ListBoxOperator> = [
+    {
+        label: 'filters.is',
+        value: 'IN'
+    },
+    {
+        label: 'filters.is_not',
+        value: 'NOT IN'
+    }
+]
+
 // TODO:add dzd icon add death date spouse
 export const familiesFilters: ListBoxFilter[] = [
     {
@@ -737,5 +748,57 @@ export const committeesFilters: ListBoxFilter[] = [
         label: 'created_at',
         type: 'date',
         operators: filterDateOperators
+    }
+]
+
+export const membersFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-users',
+        field: 'committees',
+        label: 'committee',
+        type: 'string',
+        operators: filterCategoryOperators
+    },
+    {
+        icon: 'icon-user-lock',
+        field: 'roles',
+        label: 'role',
+        type: 'string',
+        operators: filterCategoryOperators
+    },
+    {
+        icon: 'icon-user-lock',
+        field: 'competences',
+        label: 'competence',
+        type: 'string',
+        operators: filterCategoryOperators
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'academic_level.id',
+        label: 'member_academic_level',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-gender',
+        field: 'gender',
+        label: 'gender',
+        type: 'object',
+        operators: filterObjectOperators
     }
 ]

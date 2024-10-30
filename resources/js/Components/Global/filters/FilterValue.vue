@@ -9,6 +9,7 @@ import ClothesSizeFilterDropDown from '@/Components/Global/filters/ClothesSizeFi
 import FamiliesFilterDropDown from '@/Components/Global/filters/FamiliesFilterDropDown.vue'
 import FamilySponsorShipFilterDropDown from '@/Components/Global/filters/FamilySponsorShipFilterDropDown.vue'
 import GenderTypeFilterDropDown from '@/Components/Global/filters/GenderTypeFilterDropDown.vue'
+import MemberAcademicLevelFilterDropDown from '@/Components/Global/filters/MemberAcademicLevelFilterDropDown.vue'
 import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
 import OrphanAcademicLevelFilterDropDown from '@/Components/Global/filters/OrphanAcademicLevelFilterDropDown.vue'
 import OrphanSponsorShipFilterDropDown from '@/Components/Global/filters/OrphanSponsorShipFilterDropDown.vue'
@@ -93,6 +94,12 @@ const value = defineModel<FilterValueType>('value')
                 v-model:value="value"
                 class="text-sm"
             ></orphan-academic-level-filter-drop-down>
+
+            <member-academic-level-filter-drop-down
+                v-else-if="field?.label === 'member_academic_level' || field?.label === 'member.academic_level'"
+                v-model:value="value"
+                class="text-sm"
+            ></member-academic-level-filter-drop-down>
 
             <family-sponsor-ship-filter-drop-down
                 v-if="field?.label === 'family_sponsorships'"

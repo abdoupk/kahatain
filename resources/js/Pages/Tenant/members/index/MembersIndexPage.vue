@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, MembersIndexResource, PaginationData } from '@/types/types'
 
+import { membersFilters } from '@/constants/filters'
 import { useMembersStore } from '@/stores/members'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -10,7 +11,7 @@ import TheLayout from '@/Layouts/TheLayout.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
-import { $tc } from '@/utils/i18n'
+import { $t, $tc } from '@/utils/i18n'
 
 const MemberCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/MemberCreateModal.vue'))
 
@@ -148,7 +149,7 @@ watchEffect(async () => {
     <suspense>
         <div>
             <the-table-header
-                :filters="[]"
+                :filters="membersFilters"
                 :pagination-data="members"
                 :params="params"
                 :title="$t('list', { attribute: $t('the_members') })"
@@ -156,6 +157,7 @@ watchEffect(async () => {
                 entries="members"
                 export-pdf-url=""
                 export-xlsx-url=""
+                filterable
                 searchable
                 @change-filters="params.filters = $event"
             >

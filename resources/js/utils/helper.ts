@@ -361,6 +361,8 @@ function handleFilterValue(filter: ListBoxFilter, value): string {
         else return value.value
     } else if (filter.type === 'number') {
         if (typeof value === 'object') return ''
+    } else if (filter.field === 'roles' || filter.field === 'committees' || filter.field === 'competences') {
+        if (value) return `[${value}]`
     }
     return value
 }
