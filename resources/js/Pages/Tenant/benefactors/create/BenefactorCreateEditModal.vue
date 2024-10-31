@@ -200,6 +200,7 @@ const modalType = computed(() => {
 
             <!-- Begin: Sponsorships-->
             <the-sponsorships-table
+                v-if="form.id"
                 :sponsorships="form.sponsorships"
                 editable
                 @delete-sponsorship="form.sponsorships.splice($event, 1)"

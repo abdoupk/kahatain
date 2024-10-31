@@ -132,7 +132,7 @@ const showSettingsModal = () => {
             >
                 <template #Hints>
                     <the-occasion-hint
-                        v-if="useSettingsStore().hints.monthly_basket"
+                        v-if="false"
                         :on-hidden="
                             () => {
                                 useSettingsStore().setHintToHidden('monthly_basket')

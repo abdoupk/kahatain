@@ -101,7 +101,7 @@ const handleSave = () => {
             >
                 <template #Hints>
                     <the-occasion-hint
-                        v-if="useSettingsStore().hints.ramadan_basket"
+                        v-if="false"
                         :on-hidden="
                             () => {
                                 useSettingsStore().setHintToHidden('ramadan_basket')
