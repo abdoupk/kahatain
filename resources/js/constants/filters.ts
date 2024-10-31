@@ -767,7 +767,7 @@ export const membersFilters: ListBoxFilter[] = [
         operators: filterCategoryOperators
     },
     {
-        icon: 'icon-user-lock',
+        icon: 'icon-head-side-gear',
         field: 'competences',
         label: 'competence',
         type: 'string',

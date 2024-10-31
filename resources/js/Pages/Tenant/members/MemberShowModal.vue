@@ -4,6 +4,8 @@ import { Link } from '@inertiajs/vue3'
 
 import ShowModal from '@/Components/Global/ShowModal.vue'
 
+import { $t } from '@/utils/i18n'
+
 defineProps<{
     open: boolean
     title: string
@@ -63,11 +65,14 @@ const membersStore = useMembersStore()
                 <h2 class="rtl:font-semibold">{{ $t('created_by') }}</h2>
 
                 <Link
+                    v-if="membersStore.member.creator?.id"
                     :href="route('tenant.members.index') + `?show=${membersStore.member.creator?.id}`"
                     class="mt-1 rtl:font-medium"
                 >
                     {{ membersStore.member.creator?.name }}
                 </Link>
+
+                <span v-else class="mt-1 rtl:font-medium"> - </span>
             </div>
             <!-- End: Creator-->
 
@@ -79,6 +84,14 @@ const membersStore = useMembersStore()
             </div>
             <!-- End: Gender-->
 
+            <!-- Begin: Gender-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('academic_level') }}</h2>
+
+                <p class="mt-1 rtl:font-medium">{{ $t(membersStore.member.academic_level) }}</p>
+            </div>
+            <!-- End: Gender-->
+
             <!-- Begin: Roles-->
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('the_roles') }}</h2>
@@ -87,13 +100,69 @@ const membersStore = useMembersStore()
             </div>
             <!-- End: Roles-->
 
-            <!-- Begin: Qualification-->
+            <!-- Begin: Committees-->
             <div class="col-span-6">
-                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.qualification') }}</h2>
+                <h2 class="rtl:font-semibold">{{ $t('the_committees') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ membersStore.member.qualification }}</p>
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_committees }}</p>
             </div>
-            <!-- End: Qualification-->
+            <!-- End: Committees-->
+
+            <!-- Begin: Competences-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('competences') }}</h2>
+
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_competences }}</p>
+            </div>
+            <!-- End: Competences-->
+
+            <!-- Begin: Workplace-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.workplace') }}</h2>
+
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.workplace }}</p>
+            </div>
+            <!-- End: Workplace-->
+
+            <!-- Begin: Function-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.sponsor.function') }}</h2>
+
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.function }}</p>
+            </div>
+            <!-- End: Function-->
+
+            <!-- Begin: Branch-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.branch_id') }}</h2>
+
+                <Link
+                    :href="route('tenant.branches.index') + `?show=${membersStore.member.branch?.id}`"
+                    class="mt-1 rtl:font-medium"
+                    >{{ membersStore.member.branch?.name }}
+                </Link>
+            </div>
+            <!-- End: Branch-->
+
+            <!-- Begin: Zone-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.zone_id') }}</h2>
+
+                <Link
+                    :href="route('tenant.zones.index') + `?show=${membersStore.member.zone.id}`"
+                    class="mt-1 rtl:font-medium"
+                    >{{ membersStore.member.zone.name }}
+                </Link>
+            </div>
+            <!-- End: Zone-->
+
+            <!-- Begin: Address-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.address') }}</h2>
+
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.address }}</p>
+            </div>
+            <!-- End: Address-->
         </template>
     </show-modal>
 </template>
