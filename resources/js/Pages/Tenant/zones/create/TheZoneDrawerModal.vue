@@ -4,7 +4,7 @@ import { PositionType } from '@/types/types'
 import { useZonesStore } from '@/stores/zones'
 import { onMounted, ref } from 'vue'
 
-import TheZonesDrawer from '@/Pages/Tenant/zones/TheZonesDrawer.vue'
+import TheZonesDrawer from '@/Pages/Tenant/zones/create/TheZonesDrawer.vue'
 
 import ShowModal from '@/Components/Global/ShowModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'

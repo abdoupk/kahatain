@@ -9,14 +9,18 @@ import { defineAsyncComponent, ref, watchEffect } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import SponsorshipCreateEditModal from '@/Pages/Tenant/benefactors/SponsorshipCreateEditModal.vue'
-
-import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import TheContentLoader from '@/Components/Global/theContentLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
-
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+const SponsorshipCreateEditModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/benefactors/create/SponsorshipCreateEditModal.vue')
+)
+
+const BaseTippy = defineAsyncComponent(() => import('@/Components/Base/tippy/BaseTippy.vue'))
+
+const TheContentLoader = defineAsyncComponent(() => import('@/Components/Global/theContentLoader.vue'))
+
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/index/DataTable.vue'))
 
@@ -35,7 +39,7 @@ const SuccessNotification = defineAsyncComponent(() => import('@/Components/Glob
 const benefactorShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/BenefactorShowModal.vue'))
 
 const BenefactorCreateEditModal = defineAsyncComponent(
-    () => import('@/Pages/Tenant/benefactors/BenefactorCreateEditModal.vue')
+    () => import('@/Pages/Tenant/benefactors/create/BenefactorCreateEditModal.vue')
 )
 
 defineOptions({

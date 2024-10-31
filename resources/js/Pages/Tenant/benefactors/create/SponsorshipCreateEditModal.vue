@@ -2,22 +2,34 @@
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, ref } from 'vue'
-
-import TheBenefactorSelector from '@/Pages/Tenant/benefactors/TheBenefactorSelector.vue'
-import TheRecipientable from '@/Pages/Tenant/benefactors/TheRecipientable.vue'
-
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
-import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
-import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
-import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
-import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
-import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+const TheBenefactorSelector = defineAsyncComponent(
+    () => import('@/Pages/Tenant/benefactors/create/TheBenefactorSelector.vue')
+)
+
+const TheRecipientable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/create/TheRecipientable.vue'))
+
+const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
+
+const BaseFormInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInputError.vue'))
+
+const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
+
+const BaseFormSelect = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormSelect.vue'))
+
+const BaseInputGroup = defineAsyncComponent(() => import('@/Components/Base/form/InputGroup/BaseInputGroup.vue'))
+
+const BaseInputGroupText = defineAsyncComponent(
+    () => import('@/Components/Base/form/InputGroup/BaseInputGroupText.vue')
+)
+
+const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
+
+const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
 defineProps<{
     open: boolean

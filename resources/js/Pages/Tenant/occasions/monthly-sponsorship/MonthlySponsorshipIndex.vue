@@ -14,14 +14,18 @@ import { defineAsyncComponent, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import TheSettingsModal from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSettingsModal.vue'
-
-import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import TheContentLoader from '@/Components/Global/theContentLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
-
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
+
+const TheSettingsModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSettingsModal.vue')
+)
+
+const BaseTippy = defineAsyncComponent(() => import('@/Components/Base/tippy/BaseTippy.vue'))
+
+const TheContentLoader = defineAsyncComponent(() => import('@/Components/Global/theContentLoader.vue'))
+
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/occasions/monthly-sponsorship/DataTable.vue'))
 
@@ -45,7 +49,7 @@ const props = defineProps<{
     families: PaginationData<MonthlySponsorshipFamiliesResource>
     params: IndexParams
     archive: ArchiveOccasionType
-    settings: any
+    settings: object
 }>()
 
 const params = ref<IndexParams>({
@@ -161,10 +165,10 @@ const showSettingsModal = () => {
                 <data-table :families :params @sort="sort"></data-table>
 
                 <the-table-footer
-                    class="mt-2"
                     :pagination-data="families"
                     :params
                     :url="route('tenant.monthly-sponsorship.index')"
+                    class="mt-2"
                 ></the-table-footer>
             </template>
 

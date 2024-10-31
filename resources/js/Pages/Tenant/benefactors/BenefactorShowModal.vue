@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { useBenefactorsStore } from '@/stores/benefactors'
 import { Link } from '@inertiajs/vue3'
-
-import TheSponsorshipsTable from '@/Pages/Tenant/benefactors/TheSponsorshipsTable.vue'
+import { defineAsyncComponent } from 'vue'
 
 import ShowModal from '@/Components/Global/ShowModal.vue'
 
 import { $t } from '@/utils/i18n'
+
+const TheSponsorshipsTable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/TheSponsorshipsTable.vue'))
 
 defineProps<{
     open: boolean

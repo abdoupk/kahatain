@@ -2,18 +2,23 @@
 import { useBenefactorsStore } from '@/stores/benefactors'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, ref } from 'vue'
-
-import TheSponsorshipsTable from '@/Pages/Tenant/benefactors/TheSponsorshipsTable.vue'
-
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
-import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
-import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 
 import { $t, $tc } from '@/utils/i18n'
+
+const TheSponsorshipsTable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/TheSponsorshipsTable.vue'))
+
+const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
+
+const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
+
+const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
+
+const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
+
+const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
+
+const TheAddressField = defineAsyncComponent(() => import('@/Components/Global/TheAddressField/TheAddressField.vue'))
 
 defineProps<{
     open: boolean

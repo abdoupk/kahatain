@@ -1,19 +1,26 @@
 <script lang="ts" setup>
-import { formatCurrency, hasPermission } from '../../../utils/helper'
-import { $t } from '../../../utils/i18n'
-
 import { Link } from '@inertiajs/vue3'
+import { defineAsyncComponent } from 'vue'
 
-import BaseTable from '@/Components/Base/table/BaseTable.vue'
-import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
-import BaseTdTable from '@/Components/Base/table/BaseTdTable.vue'
-import BaseThTable from '@/Components/Base/table/BaseThTable.vue'
-import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
-import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import { formatCurrency, hasPermission } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
+
+const BaseTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTable.vue'))
+
+const BaseTbodyTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTbodyTable.vue'))
+
+const BaseTdTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTdTable.vue'))
+
+const BaseThTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseThTable.vue'))
+
+const BaseTheadTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTheadTable.vue'))
+
+const BaseTrTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTrTable.vue'))
+
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 defineProps<{
-    sponsorships: any
+    sponsorships: object[]
     editable?: boolean
 }>()
 

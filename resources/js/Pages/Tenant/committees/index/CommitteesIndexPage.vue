@@ -30,7 +30,7 @@ const SuccessNotification = defineAsyncComponent(() => import('@/Components/Glob
 const committeeShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/committees/CommitteeShowModal.vue'))
 
 const CommitteeCreateEditModal = defineAsyncComponent(
-    () => import('@/Pages/Tenant/committees/CommitteeCreateEditModal.vue')
+    () => import('@/Pages/Tenant/committees/create/CommitteeCreateEditModal.vue')
 )
 
 defineOptions({

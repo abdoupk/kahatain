@@ -1,12 +1,17 @@
 <script lang="ts" setup>
-import FamilySelector from '@/Pages/Tenant/benefactors/FamilySelector.vue'
-import OrphanSelector from '@/Pages/Tenant/needs/create/OrphanSelector.vue'
-
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
-import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import { defineAsyncComponent } from 'vue'
 
 import { $t } from '@/utils/i18n'
+
+const FamilySelector = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/create/TheFamilySelector.vue'))
+
+const OrphanSelector = defineAsyncComponent(() => import('@/Pages/Tenant/needs/create/OrphanSelector.vue'))
+
+const BaseFormInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInputError.vue'))
+
+const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
+
+const BaseVueSelect = defineAsyncComponent(() => import('@/Components/Base/vue-select/BaseVueSelect.vue'))
 
 const recipientType = defineModel('recipientType', { default: 'family' })
 
