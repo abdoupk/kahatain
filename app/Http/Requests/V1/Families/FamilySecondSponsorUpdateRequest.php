@@ -15,6 +15,7 @@ class FamilySecondSponsorUpdateRequest extends FormRequest
             'income' => 'required|numeric',
             'last_name' => 'required|string',
             'phone_number' => ['required', 'regex:/^(06|07|05)\d{8}$/'],
+            'with_family' => 'required|boolean',
         ];
     }
 

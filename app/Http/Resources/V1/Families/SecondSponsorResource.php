@@ -20,6 +20,7 @@ class SecondSponsorResource extends JsonResource
             'phone_number' => $this->phone_number,
             'address' => $this->address,
             'income' => $this->income,
+            'with_family' => $this->with_family,
         ];
     }
 }

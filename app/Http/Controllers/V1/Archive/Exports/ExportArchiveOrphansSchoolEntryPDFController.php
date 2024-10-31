@@ -11,6 +11,11 @@ use Throwable;
 
 class ExportArchiveOrphansSchoolEntryPDFController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_archive'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
@@ -20,10 +25,5 @@ class ExportArchiveOrphansSchoolEntryPDFController extends Controller implements
         return saveArchiveToPDF('school-entry', function () {
             return listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport();
         }, $archive->created_at->year);
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_archive'];
     }
 }

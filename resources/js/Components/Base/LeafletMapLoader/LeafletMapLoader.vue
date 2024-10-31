@@ -31,7 +31,7 @@ onMounted(() => {
                 props.darkMode
         }"
     >
-        <div ref="mapRef" class="h-full w-full rounded-md"></div>
+        <div id="map" ref="mapRef" class="h-full w-full rounded-md"></div>
     </div>
 </template>
 
@@ -44,5 +44,11 @@ onMounted(() => {
 
 .dark .leaflet-container {
     background: #282828;
+}
+
+:dir(rtl) {
+    .leaflet-draw-tooltip {
+        direction: rtl;
+    }
 }
 </style>

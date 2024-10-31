@@ -2,9 +2,9 @@
 import type { FamilyType } from '@/types/families'
 
 import { useFamiliesStore } from '@/stores/families'
-import { onMounted, ref } from 'vue'
+import { defineAsyncComponent, onMounted, ref } from 'vue'
 
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+const BaseVueSelect = defineAsyncComponent(() => import('@/Components/Base/vue-select/BaseVueSelect.vue'))
 
 const props = defineProps<{
     family: string

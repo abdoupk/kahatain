@@ -2,22 +2,34 @@
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, ref } from 'vue'
-
-import TheBenefactorSelector from '@/Pages/Tenant/benefactors/TheBenefactorSelector.vue'
-import TheRecipientable from '@/Pages/Tenant/benefactors/TheRecipientable.vue'
-
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
-import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
-import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
-import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
-import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
-import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+const TheBenefactorSelector = defineAsyncComponent(
+    () => import('@/Pages/Tenant/benefactors/create/TheBenefactorSelector.vue')
+)
+
+const TheRecipientable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/create/TheRecipientable.vue'))
+
+const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
+
+const BaseFormInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInputError.vue'))
+
+const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
+
+const BaseFormSelect = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormSelect.vue'))
+
+const BaseInputGroup = defineAsyncComponent(() => import('@/Components/Base/form/InputGroup/BaseInputGroup.vue'))
+
+const BaseInputGroupText = defineAsyncComponent(
+    () => import('@/Components/Base/form/InputGroup/BaseInputGroupText.vue')
+)
+
+const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
+
+const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
 defineProps<{
     open: boolean
@@ -117,6 +129,7 @@ const modalType = computed(() => {
     >
         <template #description>
             <!--Begin: Recipient Type-->
+            {{ form.recipientable_type }}
             <div class="col-span-12">
                 <the-recipientable
                     v-model:recipient-type="form.recipientable_type"
@@ -138,8 +151,8 @@ const modalType = computed(() => {
 
                 <div>
                     <the-benefactor-selector
-                        :benefactor="form.benefactor.id"
                         v-model:benefactor="form.benefactor"
+                        :benefactor="form.benefactor.id"
                         @update:selected-benefactor="(benefactor) => (form.benefactor = benefactor)"
                     ></the-benefactor-selector>
                 </div>
@@ -171,11 +184,22 @@ const modalType = computed(() => {
                     <option value="">
                         {{ $t('auth.placeholders.tomselect', { attribute: $t('sponsorship_type') }) }}
                     </option>
-                    <option value="ccp">{{ $t('sponsorship_type.ccp') }}</option>
 
-                    <option value="monthly_basket">{{ $t('sponsorship_type.monthly_basket') }}</option>
+                    <option v-if="form.recipientable_type === 'family'" value="grant">
+                        {{ $t('sponsorship_type.grant') }}
+                    </option>
 
-                    <option value="cash">{{ $t('sponsorship_type.cash') }}</option>
+                    <option v-if="form.recipientable_type === 'family'" value="monthly_basket">
+                        {{ $t('sponsorship_type.monthly_basket') }}
+                    </option>
+
+                    <option v-if="form.recipientable_type === 'orphan'" value="social_sponsorship">
+                        {{ $t('sponsorship_type.social_sponsorship') }}
+                    </option>
+
+                    <option v-if="form.recipientable_type === 'orphan'" value="educational_sponsorship">
+                        {{ $t('sponsorship_type.educational_sponsorship') }}
+                    </option>
                 </base-form-select>
 
                 <base-form-input-error>
@@ -220,6 +244,94 @@ const modalType = computed(() => {
                 </base-form-input-error>
             </div>
             <!--End: The amount-->
+
+            <!--Begin: The shop-->
+            <div v-if="form.sponsorship_type === 'monthly_basket'" class="col-span-12 grid grid-cols-12 gap-4 gap-y-3">
+                <h3 class="col-span-12 text-base rtl:font-semibold">
+                    {{ $t('shop_information') }}
+                </h3>
+
+                <!-- Begin: The shopKeeper name-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="shopKeeper_name">
+                        {{ $t('shop.name') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="shopKeeper_name"
+                        v-model="form.shop.name"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shop.name') })"
+                        type="text"
+                        @change="form?.validate('shop.name')"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="form?.invalid('shop.name')"
+                            class="mt-2 text-danger"
+                            data-test="error_start_date_message"
+                        >
+                            {{ form.errors['shop.name'] }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: The shopKeeper name-->
+
+                <!-- Begin: The shopKeeper phone number-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="shopKeeper_phone_number">
+                        {{ $t('shop.phone') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="shopKeeper_phone_number"
+                        v-model="form.shop.phone"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shop.phone') })"
+                        maxlength="10"
+                        type="text"
+                        @change="form?.validate('shop.phone')"
+                        @keydown="allowOnlyNumbersOnKeyDown"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="form?.invalid('shop.phone')"
+                            class="mt-2 text-danger"
+                            data-test="error_start_date_message"
+                        >
+                            {{ form.errors['shop.phone'] }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: The shopKeeper phone number-->
+
+                <!-- Begin: The shopKeeper address-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="shopKeeper_address">
+                        {{ $t('shop.address') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="shopKeeper_address"
+                        v-model="form.shop.address"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shop.address') })"
+                        type="text"
+                        @change="form?.validate('shop.address')"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="form?.invalid('shop.address')"
+                            class="mt-2 text-danger"
+                            data-test="error_start_date_message"
+                        >
+                            {{ form.errors['shop.address'] }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: The shopKeeper address-->
+            </div>
+            <!--End: The shop-->
         </template>
     </create-edit-modal>
 

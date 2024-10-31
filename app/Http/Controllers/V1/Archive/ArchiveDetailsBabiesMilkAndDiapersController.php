@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class ArchiveDetailsBabiesMilkAndDiapersController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_archive'];
+    }
+
     public function __invoke(Archive $archive): Response
     {
         return Inertia::render(
@@ -29,10 +34,5 @@ class ArchiveDetailsBabiesMilkAndDiapersController extends Controller implements
                 'params' => getParams(),
             ]
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_archive'];
     }
 }

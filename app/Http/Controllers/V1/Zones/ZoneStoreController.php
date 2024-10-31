@@ -11,17 +11,23 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ZoneStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:create_zones'];
+    }
+
     public function __invoke(ZoneCreateRequest $request): Response
     {
-        $zone = Zone::create($request->validated());
+        $geometry = $request->geom['geometry'];
+
+        //        $geom = DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('".json_encode($geometry)."'), 4326)");
+
+        $zone = Zone::create([
+            ...$request->validated(),
+        ]);
 
         dispatch(new ZoneCreatedJob($zone, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:create_zones'];
     }
 }

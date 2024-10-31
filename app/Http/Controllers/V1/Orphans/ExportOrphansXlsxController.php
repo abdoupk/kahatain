@@ -11,6 +11,11 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportOrphansXlsxController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_orphans'];
+    }
+
     /**
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -18,10 +23,5 @@ class ExportOrphansXlsxController extends Controller implements HasMiddleware
     public function __invoke(): BinaryFileResponse
     {
         return Excel::download(new OrphansIndexExport, __('exports.orphans').'.xlsx');
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_orphans'];
     }
 }

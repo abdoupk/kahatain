@@ -361,6 +361,8 @@ function handleFilterValue(filter: ListBoxFilter, value): string {
         else return value.value
     } else if (filter.type === 'number') {
         if (typeof value === 'object') return ''
+    } else if (filter.field === 'roles' || filter.field === 'committees' || filter.field === 'competences') {
+        if (value) return `[${value}]`
     }
     return value
 }
@@ -530,7 +532,7 @@ const getLeafletMapConfig = () => {
     if (usePage().props.association_coordinates.lat && usePage().props.association_coordinates.lng) {
         config = {
             center: [usePage().props.association_coordinates.lat, usePage().props.association_coordinates.lng],
-            zoom: 13,
+            zoom: 14,
             minZoom: 6
         }
     }

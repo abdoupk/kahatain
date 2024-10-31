@@ -14,7 +14,7 @@ class OrphanFactory extends Factory
 {
     protected $model = Orphan::class;
 
-    private array $family_statuses = [
+    private array $familyStatuses = [
         'female' => [
             'college_girl',
             'professional_girl',
@@ -49,7 +49,7 @@ class OrphanFactory extends Factory
         $family_status = null;
 
         if ($birth_date->age > 18 && ! $handicapped) {
-            $family_status = $gender === 'male' ? fake()->randomElement($this->family_statuses['male']) : fake()->randomElement($this->family_statuses['female']);
+            $family_status = $gender === 'male' ? fake()->randomElement($this->familyStatuses['male']) : fake()->randomElement($this->familyStatuses['female']);
         }
 
         if ($family_status === 'unemployed') {

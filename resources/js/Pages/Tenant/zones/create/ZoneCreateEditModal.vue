@@ -1,15 +1,19 @@
 <script lang="ts" setup>
-import { useCommitteesStore } from '@/stores/committees'
+import { useZonesStore } from '@/stores/zones'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, ref } from 'vue'
 
+import TheZoneDrawerModal from '@/Pages/Tenant/zones/create/TheZoneDrawerModal.vue'
+
+import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t, $tc } from '@/utils/i18n'
 
@@ -17,8 +21,10 @@ defineProps<{
     open: boolean
 }>()
 
-// Get the committees store
-const committeesStore = useCommitteesStore()
+// Get the zones store
+const zonesStore = useZonesStore()
+
+const showZoneDrawerModal = ref(false)
 
 // Initialize a ref for loading state
 const loading = ref(false)
@@ -26,36 +32,34 @@ const loading = ref(false)
 const showSuccessNotification = ref(false)
 
 const notificationTitle = computed(() => {
-    return committeesStore.committee.id
-        ? $t('successfully_updated')
-        : $t('successfully_created', { attribute: $t('the_committee') })
+    return zonesStore.zone.id ? $t('successfully_updated') : $t('successfully_created', { attribute: $t('the_zone') })
 })
 
 const form = computed(() => {
-    if (committeesStore.committee.id) {
-        return useForm('put', route('tenant.committees.update', committeesStore.committee.id), {
-            ...committeesStore.committee
-        })
+    if (zonesStore.zone.id) {
+        return useForm('put', route('tenant.zones.update', zonesStore.zone.id), { ...zonesStore.zone })
     }
 
-    return useForm('post', route('tenant.committees.store'), { ...committeesStore.committee })
+    return useForm('post', route('tenant.zones.store'), { ...zonesStore.zone })
 })
 
 // Define custom event emitter for 'close' event
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'update-zones'])
 
 // Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
     setTimeout(() => {
         router.get(
-            route('tenant.committees.index'),
+            route('tenant.zones.index'),
             {},
             {
-                only: ['committees'],
+                only: ['zones'],
                 preserveState: true
             }
         )
     }, 200)
+
+    emit('update-zones')
 
     emit('close')
 }
@@ -80,21 +84,21 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the committee id
+// Compute the slideover title based on the zone id
 const modalTitle = computed(() => {
-    return committeesStore.committee.id
+    return zonesStore.zone.id
         ? $t('modal_update_title', {
-              attribute: $t('the_committee')
+              attribute: $t('the_zone')
           })
-        : $tc('add new', 0, { attribute: $t('committee') })
+        : $tc('add new', 0, { attribute: $t('zone') })
 })
 
 // Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the committee id
+// Compute the slideover type based on the zone id
 const modalType = computed(() => {
-    return committeesStore.committee.id ? 'update' : 'create'
+    return zonesStore.zone.id ? 'update' : 'create'
 })
 </script>
 
@@ -133,7 +137,7 @@ const modalType = computed(() => {
             <!-- Begin: Name-->
             <div class="col-span-12">
                 <base-form-label htmlFor="description">
-                    {{ $t('validation.attributes.description') }}
+                    {{ $t('neighborhoods') }}
                 </base-form-label>
 
                 <base-form-text-area
@@ -149,6 +153,28 @@ const modalType = computed(() => {
                 </div>
             </div>
             <!-- End: Name-->
+
+            <div class="col-span-12 flex justify-center">
+                <base-button
+                    class="flex content-center items-center justify-center whitespace-nowrap border-dashed"
+                    variant="outline-primary"
+                    @click.prevent="showZoneDrawerModal = true"
+                >
+                    <span v-if="form.id"> {{ $t('edit_in_map') }}</span>
+
+                    <span v-else> {{ $t('draw_in_map') }}</span>
+
+                    <svg-loader class="ms-2 h-4 w-4" name="icon-map"></svg-loader>
+                </base-button>
+            </div>
+
+            <the-zone-drawer-modal
+                :open="showZoneDrawerModal"
+                :zone="form.geom"
+                title="hello"
+                @close="showZoneDrawerModal = false"
+                @set-zone="form.geom = $event"
+            ></the-zone-drawer-modal>
         </template>
     </create-edit-modal>
 

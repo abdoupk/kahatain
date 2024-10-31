@@ -30,7 +30,7 @@ const SuccessNotification = defineAsyncComponent(() => import('@/Components/Glob
 const committeeShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/committees/CommitteeShowModal.vue'))
 
 const CommitteeCreateEditModal = defineAsyncComponent(
-    () => import('@/Pages/Tenant/committees/CommitteeCreateEditModal.vue')
+    () => import('@/Pages/Tenant/committees/create/CommitteeCreateEditModal.vue')
 )
 
 defineOptions({
@@ -41,8 +41,6 @@ const props = defineProps<{
     committees: PaginationData<CommitteesIndexResource>
     params: IndexParams
 }>()
-
-console.log(props)
 
 const params = ref<IndexParams>({
     perPage: props.params.perPage,
@@ -179,8 +177,8 @@ watchEffect(async () => {
 
             <template v-if="committees.data.length > 0">
                 <data-table
-                    :params
                     :committees
+                    :params
                     @showDeleteModal="showDeleteModal"
                     @sort="sort"
                     @show-details-modal="showDetailsModal"

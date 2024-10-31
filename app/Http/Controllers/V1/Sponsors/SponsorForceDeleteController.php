@@ -8,15 +8,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SponsorForceDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:destroy_trash'];
+    }
+
     public function __invoke(Sponsor $sponsor)
     {
         $sponsor->forceDeleteWithRelations();
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:destroy_trash'];
     }
 }

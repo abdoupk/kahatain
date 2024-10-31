@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Baby;
+use App\Models\Family;
 use App\Models\FamilySponsorship;
 use App\Models\OrphanSponsorship;
 use Illuminate\Database\Eloquent\Collection;
@@ -104,6 +105,21 @@ function listOfFamiliesBenefitingFromTheMonthlyBasketForExport(): Collection
                     'family.sponsor:id,first_name,last_name,family_id,phone_number',
                     'family.zone:id,name',
                     'family.branch:id,name',
+                ]
+            )
+            ->withCount('orphans'))
+        ->get();
+}
+
+function listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(): Collection
+{
+    return search(Family::getModel())
+        ->query(fn ($query) => $query
+            ->with(
+                [
+                    'sponsor:id,first_name,last_name,family_id,phone_number',
+                    'zone:id,name',
+                    'branch:id,name',
                 ]
             )
             ->withCount('orphans'))

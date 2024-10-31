@@ -13,6 +13,7 @@ class HousingFactory extends Factory
     {
         $name = fake()->randomElement(['independent', 'with_family', 'tenant', 'inheritance', 'other']);
         $value = $name === 'tenant' ? fake()->numberBetween(3000, 15000) : fake()->sentence();
+
         return [
             'name' => $name,
             'value' => $value,

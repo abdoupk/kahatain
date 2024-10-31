@@ -52,6 +52,10 @@ class ArchiveIndexResource extends JsonResource
                 'archive.babies_milk_and_diapers',
                 ['date' => $this->created_at->translatedFormat('F Y')]
             ),
+            $this->occasion === 'monthly_sponsorship' => __(
+                'archive.monthly_sponsorship',
+                ['date' => $this->created_at->translatedFormat('F Y')]
+            ),
         };
     }
 
@@ -80,6 +84,10 @@ class ArchiveIndexResource extends JsonResource
             ),
             $this->occasion === 'babies_milk_and_diapers' => route(
                 'tenant.archive.details.babies-milk-and-diapers',
+                $this->id
+            ),
+            $this->occasion === 'monthly_sponsorship' => route(
+                'tenant.archive.details.monthly-sponsorship',
                 $this->id
             )
         };

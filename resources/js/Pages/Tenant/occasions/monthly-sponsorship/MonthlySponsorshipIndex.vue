@@ -6,7 +6,7 @@ import type {
     PaginationData
 } from '@/types/types'
 
-import { monthlyBasketFilters } from '@/constants/filters'
+import { monthlySponsorshipFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
@@ -14,14 +14,18 @@ import { defineAsyncComponent, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import TheSettingsModal from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSettingsModal.vue'
-
-import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import TheContentLoader from '@/Components/Global/theContentLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
-
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
+
+const TheSettingsModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSettingsModal.vue')
+)
+
+const BaseTippy = defineAsyncComponent(() => import('@/Components/Base/tippy/BaseTippy.vue'))
+
+const TheContentLoader = defineAsyncComponent(() => import('@/Components/Global/theContentLoader.vue'))
+
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/occasions/monthly-sponsorship/DataTable.vue'))
 
@@ -45,7 +49,7 @@ const props = defineProps<{
     families: PaginationData<MonthlySponsorshipFamiliesResource>
     params: IndexParams
     archive: ArchiveOccasionType
-    settings: any
+    settings: object
 }>()
 
 const params = ref<IndexParams>({
@@ -114,7 +118,7 @@ const showSettingsModal = () => {
         <div>
             <the-table-header
                 :exportable
-                :filters="monthlyBasketFilters"
+                :filters="monthlySponsorshipFilters"
                 :pagination-data="families"
                 :params="params"
                 :title="$t('list', { attribute: $t('the_families_monthly_basket') })"
@@ -164,6 +168,7 @@ const showSettingsModal = () => {
                     :pagination-data="families"
                     :params
                     :url="route('tenant.monthly-sponsorship.index')"
+                    class="mt-2"
                 ></the-table-footer>
             </template>
 

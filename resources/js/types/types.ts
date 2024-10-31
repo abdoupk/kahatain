@@ -69,6 +69,8 @@ export interface ISettingState {
 
 export type SVGType =
     | 'icon-hands-holding-child'
+    | 'icon-map'
+    | 'icon-head-side-gear'
     | 'icon-trash-undo'
     | 'icon-donate'
     | 'icon-treasure-chest'
@@ -254,6 +256,7 @@ export interface Zone {
     id: string
     name: string
     description?: string
+    geom?: object
 }
 
 export interface Benefactor {
@@ -363,6 +366,11 @@ export interface CreateSponsorshipForm {
         id: string
         name: string
     }
+    shop: {
+        name: string
+        phone: string
+        address: string
+    }
 }
 
 export interface CreateFinancialTransactionForm {
@@ -398,6 +406,10 @@ export interface FamiliesIndexResource {
     file_number: number
     zone: Zone
     address: string
+    sponsor: {
+        id: string
+        name: string
+    }
 }
 
 export interface TrashIndexResource {
@@ -649,6 +661,7 @@ type SecondSponsorType = {
     income: number
     address: string
     degree_of_kinship: string
+    with_family: boolean
 }
 
 type SpouseType = {

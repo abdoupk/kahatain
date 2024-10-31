@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class FinancialUpdateController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_financial_transactions'];
+    }
+
     public function __invoke(FinancialUpdateRequest $request, Finance $finance)
     {
         $finance->update([
@@ -19,10 +24,5 @@ class FinancialUpdateController extends Controller implements HasMiddleware
         //        dispatch(new FinanceUpdatedJob($finance, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_financial_transactions'];
     }
 }

@@ -60,7 +60,8 @@ class Benefactor extends Model
             'phone' => $this->phone,
             'tenant_id' => $this->tenant_id,
             'sponsorships_count' => $this->sponsorships_count,
-            'created_at' => $this->created_at,
+            'created_at' => strtotime($this->created_at),
+            'readable_created_at' => $this->created_at,
             'name' => $this->getName(),
         ];
     }

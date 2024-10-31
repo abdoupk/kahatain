@@ -71,8 +71,8 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
 
                         <the-table-td class="!min-w-40 !max-w-40 truncate">
                             <Link
-                                v-if="hasPermission('view_families')"
-                                :href="route('tenant.families.show', family.id)"
+                                v-if="hasPermission('view_sponsors')"
+                                :href="route('tenant.sponsors.show', family.sponsor.id)"
                                 class="font-medium"
                             >
                                 {{ family.name }}
@@ -103,6 +103,15 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
 
                         <the-table-td-actions v-if="hasPermission(['update_families', 'delete_families'])">
                             <div class="flex items-center justify-center">
+                                <Link
+                                    v-if="hasPermission('view_families')"
+                                    class="me-3 flex items-center"
+                                    :href="route('tenant.families.show', family.id)"
+                                >
+                                    <svg-loader class="me-1 h-5 w-5 fill-current" name="icon-eye" />
+                                    {{ $t('show') }}
+                                </Link>
+
                                 <Link
                                     v-if="hasPermission('update_families')"
                                     :href="route('tenant.families.edit', family.id)"

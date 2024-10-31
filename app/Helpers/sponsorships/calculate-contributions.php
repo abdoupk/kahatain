@@ -27,7 +27,7 @@ function calculateContributionsForSponsor(Sponsor $sponsor): float
 
     $sponsorContributions = $calculation['unemployed_contribution']['sponsor'];
 
-    if ($sponsor->is_unemployed) {
+    if (! $sponsor->is_unemployed) {
         return match ($sponsor->sponsor_type) {
             'other' => $sponsorPercentages['other'] *
             $sponsor->incomes?->total_income ?? 0,
@@ -110,8 +110,13 @@ function calculateContributionsForSecondSponsor(Family $family): float
 {
     $percentage_of_contribution = json_decode($family->tenant['calculation'], true)['percentage_of_contribution'];
 
-    return match ($family->secondSponsor->with_family) {
-        true => $percentage_of_contribution['second_sponsor']['with_family'] * $family->secondSponsor->income,
-        false => $percentage_of_contribution['second_sponsor']['outside_family'] * $family->secondSponsor->income,
-    } / 100;
+    if (isset($family->secondSponsor)) {
+        return match ($family->secondSponsor?->with_family) {
+            true => $percentage_of_contribution['second_sponsor']['with_family'] * $family->secondSponsor->income,
+            false => $percentage_of_contribution['second_sponsor']['outside_family'] * $family->secondSponsor->income,
+            default => 0
+        } / 100;
+    }
+
+    return 0;
 }

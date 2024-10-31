@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../../utils/i18n'
-
 import type { AcademicLevelType } from '@/types/lessons'
 import type { CreateFamilyForm } from '@/types/types'
 
@@ -25,6 +23,7 @@ import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
 import TheVocationalTrainingSelector from '@/Components/Global/TheVocationalTrainingSelector.vue'
 
 import { isOlderThan } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
     form: Form<CreateFamilyForm>

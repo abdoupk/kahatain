@@ -48,15 +48,6 @@ class Committee extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'tenant_id' => 'string',
-            'created_by' => 'string',
-            'deleted_by' => 'string',
-        ];
-    }
-
     public function searchableAs(): string
     {
         return 'committees';
@@ -76,11 +67,21 @@ class Committee extends Model
             'tenant_id' => $this->tenant_id,
             'description' => $this->description,
             'created_at' => strtotime($this->created_at),
+            'readable_created_at' => $this->created_at,
         ];
     }
 
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->using(CommitteeUser::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'tenant_id' => 'string',
+            'created_by' => 'string',
+            'deleted_by' => 'string',
+        ];
     }
 }

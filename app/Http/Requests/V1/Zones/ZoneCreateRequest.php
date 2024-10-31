@@ -11,6 +11,7 @@ class ZoneCreateRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'required|string',
+            'geom' => 'nullable',
         ];
     }
 

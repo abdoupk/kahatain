@@ -8,15 +8,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class UpdateSettingsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_settings'];
+    }
+
     public function __invoke(UpdateSettingsRequest $request)
     {
         auth()->user()->settings->update($request->validated());
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_settings'];
     }
 }

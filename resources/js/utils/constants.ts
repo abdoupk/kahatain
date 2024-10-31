@@ -77,7 +77,8 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
         phone_number: '',
         income: '',
         address: '',
-        degree_of_kinship: ''
+        degree_of_kinship: '',
+        with_family: false
     },
     spouse: {
         first_name: '',
@@ -284,7 +285,11 @@ export const permissions = {
     schools: ['create', 'delete', 'list', 'update', 'view'],
     lessons: ['create', 'delete', 'list', 'update', 'view'],
     archive: ['export', 'list', 'view'],
-    trash: ['destroy', 'list', 'restore']
+    trash: ['destroy', 'list', 'restore'],
+    committees: ['create', 'delete', 'list', 'update', 'view'],
+    benefactors: ['create', 'delete', 'list', 'update', 'view'],
+    sponsorships: ['create'],
+    monthly_sponsorships: ['update']
 }
 
 const monthAbbreviationsFrench = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']

@@ -439,6 +439,44 @@ onMounted(async () => {
                     <!-- END: Baby Milk Quantity -->
                 </template>
 
+                <!-- Begin: Income-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="income">
+                        {{ $t('validation.attributes.income') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        v-model="form.income"
+                        :placeholder="
+                            $t('auth.placeholders.fill', {
+                                attribute: $t('validation.attributes.income')
+                            })
+                        "
+                        data-test="orphan_income"
+                        type="text"
+                        @change="form?.validate('income')"
+                    ></base-form-input>
+
+                    <base-form-input-error>
+                        <div
+                            v-if="
+                                form?.invalid(
+                                    //@ts-ignore
+                                    `orphans.${index}.income`
+                                )
+                            "
+                            class="mt-2 text-danger"
+                            data-test="error_income_message"
+                        >
+                            {{
+                                //@ts-ignore
+                                form.errors[`orphans.${index}.income`]
+                            }}
+                        </div>
+                    </base-form-input-error>
+                </div>
+                <!-- End: Income-->
+
                 <!-- BEGIN: Notes -->
                 <div class="col-span-12">
                     <base-form-label for="note">

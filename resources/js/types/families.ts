@@ -236,6 +236,7 @@ export interface FamilyUpdateSecondSponsorFormType {
     phone_number: string
     address: string
     income: string
+    with_family?: boolean
 }
 
 export interface FamilyUpdateReportFormType extends FamilyEditPreviewType {}

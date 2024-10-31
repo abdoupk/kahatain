@@ -1,21 +1,33 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, ref } from 'vue'
-
-import TheSponsorshipRateCategories from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSponsorshipRateCategories.vue'
-
-import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
-import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
-import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
-import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
-import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 
 import { $t } from '@/utils/i18n'
+
+const TheSponsorshipRateCategories = defineAsyncComponent(
+    () => import('@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSponsorshipRateCategories.vue')
+)
+
+const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/BaseButton.vue'))
+
+const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
+
+const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
+
+const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
+
+const BaseInputGroup = defineAsyncComponent(() => import('@/Components/Base/form/InputGroup/BaseInputGroup.vue'))
+
+const BaseInputGroupText = defineAsyncComponent(
+    () => import('@/Components/Base/form/InputGroup/BaseInputGroupText.vue')
+)
+
+const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
+
+const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
+
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 defineProps<{
     open: boolean
@@ -97,8 +109,8 @@ const removeInterval = (index: number) => {
         :loading
         :modal-type="modalType"
         :open
-        size="xl"
         :title="modalTitle"
+        size="xl"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
@@ -112,14 +124,14 @@ const removeInterval = (index: number) => {
                 <base-input-group>
                     <base-form-input
                         id="university_scholarship_bachelor"
-                        v-model="form.university_scholarship_bachelor"
-                        type="number"
                         ref="firstInputRef"
+                        v-model="form.university_scholarship_bachelor"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('validation.attributes.university_scholarship_bachelor')
                             })
                         "
+                        type="number"
                         @change="form.validate('university_scholarship_bachelor')"
                     ></base-form-input>
 
@@ -144,13 +156,13 @@ const removeInterval = (index: number) => {
                     <base-form-input
                         id="university_scholarship_master_one"
                         v-model="form.university_scholarship_master_one"
-                        type="number"
-                        @change="form.validate('university_scholarship_master_one')"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('validation.attributes.university_scholarship_master_one')
                             })
                         "
+                        type="number"
+                        @change="form.validate('university_scholarship_master_one')"
                     ></base-form-input>
 
                     <base-input-group-text>
@@ -174,13 +186,13 @@ const removeInterval = (index: number) => {
                     <base-form-input
                         id="university_scholarship_master_two"
                         v-model="form.university_scholarship_master_two"
-                        type="number"
-                        @change="form.validate('university_scholarship_master_two')"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('validation.attributes.university_scholarship_master_two')
                             })
                         "
+                        type="number"
+                        @change="form.validate('university_scholarship_master_two')"
                     ></base-form-input>
 
                     <base-input-group-text>
@@ -204,13 +216,13 @@ const removeInterval = (index: number) => {
                     <base-form-input
                         id="university_scholarship_doctorate"
                         v-model="form.university_scholarship_doctorate"
-                        type="number"
-                        @change="form.validate('university_scholarship_doctorate')"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('validation.attributes.university_scholarship_doctorate')
                             })
                         "
+                        type="number"
+                        @change="form.validate('university_scholarship_doctorate')"
                     ></base-form-input>
 
                     <base-input-group-text>
@@ -234,12 +246,12 @@ const removeInterval = (index: number) => {
                     <base-form-input
                         id="unemployment_benefit"
                         v-model="form.unemployment_benefit"
-                        type="number"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('settings.unemployment_benefit')
                             })
                         "
+                        type="number"
                         @change="form.validate('unemployment_benefit')"
                     ></base-form-input>
 
@@ -264,13 +276,13 @@ const removeInterval = (index: number) => {
                     <base-form-input
                         id="threshold"
                         v-model="form.threshold"
-                        type="number"
-                        @change="form.validate('threshold')"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('settings.threshold')
                             })
                         "
+                        type="number"
+                        @change="form.validate('threshold')"
                     ></base-form-input>
 
                     <base-input-group-text>
@@ -294,12 +306,12 @@ const removeInterval = (index: number) => {
                     <base-form-input
                         id="association_basket_value"
                         v-model="form.association_basket_value"
-                        type="number"
                         :placeholder="
                             $t('auth.placeholders.tomselect', {
                                 attribute: $t('validation.attributes.association_basket_value')
                             })
                         "
+                        type="number"
                         @change="form.validate('association_basket_value')"
                     ></base-form-input>
 
@@ -321,8 +333,8 @@ const removeInterval = (index: number) => {
                 <the-sponsorship-rate-categories
                     v-for="(category, index) in form.categories"
                     :key="index"
-                    v-model:minimum="category.minimum"
                     v-model:maximum="category.maximum"
+                    v-model:minimum="category.minimum"
                     v-model:value="category.value"
                     :form
                     :index

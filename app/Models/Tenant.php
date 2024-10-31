@@ -62,6 +62,16 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         });
     }
 
+    public function branches(): HasMany
+    {
+        return $this->hasMany(Branch::class);
+    }
+
+    public function zones(): HasMany
+    {
+        return $this->hasMany(Zone::class);
+    }
+
     public function families(): HasMany
     {
         return $this->hasMany(Family::class);

@@ -5,7 +5,7 @@ use App\Models\OrphanSponsorship;
 
 function getOrphansByFamilyStatus(): array
 {
-    $orphans = Orphan::select('family_status', DB::raw('count(*) as total'))->groupBy('family_status')->get();
+    $orphans = Orphan::select('family_status', DB::raw('count(*) as total'))->where('family_status', '!=', null)->groupBy('family_status')->get();
 
     return [
         'labels' => $orphans->pluck('family_status')->map(function (string $familyStatus) {

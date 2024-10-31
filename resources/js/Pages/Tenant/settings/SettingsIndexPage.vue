@@ -7,9 +7,9 @@ import { defineAsyncComponent } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import ThePreDefinedAwardedForm from '@/Pages/Tenant/settings/ThePreDefinedAwardedForm.vue'
-
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
+
+import { $t } from '@/utils/i18n'
 
 const TheExportData = defineAsyncComponent(() => import('@/Pages/Tenant/settings/TheExportData.vue'))
 

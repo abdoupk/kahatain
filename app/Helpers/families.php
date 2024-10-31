@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 function getFamilies(): LengthAwarePaginator
 {
     return search(Family::getModel())
-        ->query(fn ($query) => $query->with('zone'))
+        ->query(fn ($query) => $query->with(['zone:id,name', 'sponsor:id,first_name,last_name,family_id']))
         ->paginate(perPage: request()?->integer('perPage', 10));
 }
 
@@ -28,4 +28,10 @@ function getFamiliesForExport(): Collection
 function searchFamilies(): \Illuminate\Database\Eloquent\Collection
 {
     return search(Family::getModel(), limit: LIMIT)->get();
+}
+
+function getFamiliesPosition(): array
+{
+    return Family::select(['location', 'address', 'name'])
+        ->get()->toArray();
 }

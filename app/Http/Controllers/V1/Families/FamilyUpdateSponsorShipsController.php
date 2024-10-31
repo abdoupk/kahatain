@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class FamilyUpdateSponsorShipsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_families'];
+    }
+
     public function __invoke(FamilySponsorShipsUpdateRequest $request, Family $family)
     {
         $family->sponsorships()->update($request->validated());
@@ -17,10 +22,5 @@ class FamilyUpdateSponsorShipsController extends Controller implements HasMiddle
         dispatch(new FamilyUpdatedJob($family, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_families'];
     }
 }

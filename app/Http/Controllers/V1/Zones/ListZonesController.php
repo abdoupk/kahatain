@@ -9,13 +9,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ListZonesController extends Controller implements HasMiddleware
 {
-    public function __invoke()
-    {
-        return response()->json(ZoneResource::collection(Zone::select(['id', 'name'])->get()));
-    }
-
     public static function middleware()
     {
         return ['can:list_zones'];
+    }
+
+    public function __invoke()
+    {
+        return response()->json(ZoneResource::collection(Zone::select(['id', 'name'])->get()));
     }
 }

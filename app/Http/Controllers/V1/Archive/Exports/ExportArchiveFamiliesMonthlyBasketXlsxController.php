@@ -11,6 +11,11 @@ use PhpOffice\PhpSpreadsheet\Exception;
 
 class ExportArchiveFamiliesMonthlyBasketXlsxController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_archive'];
+    }
+
     /**
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -26,10 +31,5 @@ class ExportArchiveFamiliesMonthlyBasketXlsxController extends Controller implem
                 ]
             ).'.xlsx'
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_archive'];
     }
 }

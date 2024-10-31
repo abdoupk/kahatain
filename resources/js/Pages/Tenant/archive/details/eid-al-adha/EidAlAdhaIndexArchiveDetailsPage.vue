@@ -51,7 +51,7 @@ const params = ref<IndexParams>({
                 :pagination-data="families"
                 :params="params"
                 :title="$t('exports.archive.eid_al_adha_families', { date: String(archive.date) })"
-                :url="route('tenant.occasions.eid-al-adha.index')"
+                :url="$page.url"
                 entries="families"
                 export-pdf-url="tenant.archive.export.eid-al-adha.pdf"
                 export-xlsx-url="tenant.archive.export.eid-al-adha.xlsx"
@@ -61,11 +61,7 @@ const params = ref<IndexParams>({
             <template v-if="families.data.length > 0">
                 <data-table :families :params></data-table>
 
-                <the-table-footer
-                    :pagination-data="families"
-                    :params
-                    :url="route('tenant.occasions.eid-al-adha.index')"
-                ></the-table-footer>
+                <the-table-footer :pagination-data="families" :params :url="$page.url"></the-table-footer>
             </template>
 
             <the-no-results-table v-else></the-no-results-table>

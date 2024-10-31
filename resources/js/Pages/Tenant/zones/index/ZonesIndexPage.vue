@@ -8,10 +8,12 @@ import { defineAsyncComponent, ref, watchEffect } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import TheContentLoader from '@/Components/Global/theContentLoader.vue'
-
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+const TheZonesMap = defineAsyncComponent(() => import('@/Pages/Tenant/zones/index/TheZonesMap.vue'))
+
+const TheContentLoader = defineAsyncComponent(() => import('@/Components/Global/theContentLoader.vue'))
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/zones/index/DataTable.vue'))
 
@@ -29,7 +31,7 @@ const SuccessNotification = defineAsyncComponent(() => import('@/Components/Glob
 
 const zoneShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/ZoneShowModal.vue'))
 
-const ZoneCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/ZoneCreateEditModal.vue'))
+const ZoneCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/zones/create/ZoneCreateEditModal.vue'))
 
 defineOptions({
     layout: TheLayout
@@ -170,6 +172,8 @@ watchEffect(async () => {
                     >
                         {{ $tc('add new', 0, { attribute: $t('zone') }) }}
                     </base-button>
+
+                    <the-zones-map></the-zones-map>
                 </template>
             </the-table-header>
 

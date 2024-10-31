@@ -65,11 +65,7 @@ const sort = (field: string) => handleSort(field, params.value)
             <template v-if="orphans.data.length > 0">
                 <data-table :orphans :params @sort="sort"></data-table>
 
-                <the-table-footer
-                    :pagination-data="orphans"
-                    :params
-                    :url="route('tenant.occasions.babies-milk-and-diapers.index')"
-                ></the-table-footer>
+                <the-table-footer :pagination-data="orphans" :params :url="$page.url"></the-table-footer>
             </template>
 
             <the-no-results-table v-else></the-no-results-table>

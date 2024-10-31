@@ -354,6 +354,7 @@ const submit = () => {
                                         v-model:income="form.second_sponsor.income"
                                         v-model:last_name="form.second_sponsor.last_name"
                                         v-model:phone="form.second_sponsor.phone_number"
+                                        v-model:with-family="form.second_sponsor.with_family"
                                         :form
                                     ></second-sponsor-form>
                                 </template>

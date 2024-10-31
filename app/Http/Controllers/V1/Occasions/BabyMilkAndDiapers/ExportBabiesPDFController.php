@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class ExportBabiesPDFController extends Controller implements HasMiddleware
 {
     /**
      * @throws CouldNotTakeBrowsershot
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function __invoke(): StreamedResponse
     {

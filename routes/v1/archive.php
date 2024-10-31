@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\Archive\ArchiveDetailsBabiesMilkAndDiapersController
 use App\Http\Controllers\V1\Archive\ArchiveDetailsEidAlAdhaController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsEidSuitController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlyBasketController;
+use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlySponsorshipController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsRamadanBasketController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsSchoolEntryController;
 use App\Http\Controllers\V1\Archive\ArchiveIndexController;
@@ -15,6 +16,8 @@ use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesEidAlAdhaPDFCon
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesEidAlAdhaXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlyBasketPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlyBasketXlsxController;
+use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipPDFController;
+use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansEidSuitPDFController;
@@ -40,6 +43,11 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
                 'monthly-basket/{archive}',
                 ArchiveDetailsMonthlyBasketController::class
             )->name('monthly-basket');
+
+            Route::get(
+                'monthly-sponsorship/{archive}',
+                ArchiveDetailsMonthlySponsorshipController::class
+            )->name('monthly-sponsorship');
 
             Route::get(
                 'ramadan-basket/{archive}',
@@ -122,5 +130,15 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
             'babies-milk-and-diapers/export-xlsx/{archive}',
             ExportArchiveBabiesMilkAndDiapersXlsxController::class
         )->name('babies-milk-and-diapers.xlsx');
+
+        Route::get(
+            'monthly-sponsorship/export-pdf/{archive}',
+            ExportArchiveFamiliesMonthlySponsorshipPDFController::class
+        )->name('monthly-sponsorship.pdf');
+
+        Route::get(
+            'monthly-sponsorship/export-xlsx/{archive}',
+            ExportArchiveFamiliesMonthlySponsorshipXlsxController::class
+        )->name('monthly-sponsorship.xlsx');
     });
 });

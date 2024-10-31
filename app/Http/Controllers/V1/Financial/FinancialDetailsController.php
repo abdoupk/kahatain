@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class FinancialDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_financial_transactions'];
+    }
+
     public function __invoke(Finance $finance)
     {
         return response()->json([
@@ -19,10 +24,5 @@ class FinancialDetailsController extends Controller implements HasMiddleware
                 ]
             )),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_financial_transactions'];
     }
 }

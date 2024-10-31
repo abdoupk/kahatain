@@ -14,6 +14,11 @@ use Recurr\Exception\InvalidWeekday;
 
 class LessonStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:create_lessons'];
+    }
+
     /**
      * @throws InvalidWeekday
      * @throws InvalidArgument
@@ -35,10 +40,5 @@ class LessonStoreController extends Controller implements HasMiddleware
         dispatch(new LessonCreatedJob($event, auth()->user()));
 
         generateOccurrences($event, $lesson->id, $request->orphans);
-    }
-
-    public static function middleware()
-    {
-        return ['can:create_lessons'];
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\Families\ExportFamiliesPDFController;
 use App\Http\Controllers\V1\Families\ExportFamiliesXlsxController;
 use App\Http\Controllers\V1\Families\FamiliesIndexController;
+use App\Http\Controllers\V1\Families\FamiliesPositionsController;
 use App\Http\Controllers\V1\Families\FamiliesStatisticsController;
 use App\Http\Controllers\V1\Families\FamilyCreateController;
 use App\Http\Controllers\V1\Families\FamilyDeleteController;
@@ -147,4 +148,10 @@ Route::prefix('families')->name('families.')->group(function (): void {
         FamiliesStatisticsController::class
     )
         ->name('statistics');
+
+    Route::get(
+        'positions',
+        FamiliesPositionsController::class
+    )
+        ->name('positions');
 });

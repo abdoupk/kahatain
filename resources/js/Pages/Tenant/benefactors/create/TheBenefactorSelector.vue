@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { useBenefactorsStore } from '@/stores/benefactors'
 import type { BenefactorType } from '@/types'
-import { onMounted, ref } from 'vue'
-
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import { defineAsyncComponent, onMounted, ref } from 'vue'
 
 import { $t } from '@/utils/i18n'
+
+const BaseVueSelect = defineAsyncComponent(() => import('@/Components/Base/vue-select/BaseVueSelect.vue'))
 
 const props = defineProps<{
     benefactor: string
@@ -31,6 +31,8 @@ onMounted(() => {
     if (benefactors.value) {
         selectedBenefactor.value = benefactor.value
     }
+
+    selectedBenefactor.value = ''
 })
 </script>
 

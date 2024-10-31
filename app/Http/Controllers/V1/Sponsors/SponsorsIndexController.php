@@ -10,16 +10,16 @@ use Inertia\Response;
 
 class SponsorsIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_sponsors'];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/sponsors/index/SponsorsIndexPage', [
             'sponsors' => SponsorsIndexResource::collection(getSponsors()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_sponsors'];
     }
 }

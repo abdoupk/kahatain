@@ -136,9 +136,15 @@ class Orphan extends Model
     {
         parent::boot();
 
-        static::creating(function ($model): void {
+        static::creating(function (self $model): void {
             if (auth()->id()) {
                 $model->created_by = auth()->id();
+            }
+
+            if ($model->is_unemployed) {
+                $model->income = setUnemployedOrphanIncome($model);
+            } elseif ($model->birth_date->age > 18) {
+                $model->income = calculateOrphanExactIncome($model);
             }
         });
 

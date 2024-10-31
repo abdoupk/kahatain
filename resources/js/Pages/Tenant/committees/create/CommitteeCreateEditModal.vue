@@ -1,24 +1,29 @@
 <script lang="ts" setup>
-import { useZonesStore } from '@/stores/zones'
+import { useCommitteesStore } from '@/stores/committees'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, ref } from 'vue'
-
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
-import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
-import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
-import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 
 import { $t, $tc } from '@/utils/i18n'
+
+const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
+
+const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
+
+const BaseFormTextArea = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormTextArea.vue'))
+
+const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
+
+const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
+
+const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
 defineProps<{
     open: boolean
 }>()
 
-// Get the zones store
-const zonesStore = useZonesStore()
+// Get the committees store
+const committeesStore = useCommitteesStore()
 
 // Initialize a ref for loading state
 const loading = ref(false)
@@ -26,15 +31,19 @@ const loading = ref(false)
 const showSuccessNotification = ref(false)
 
 const notificationTitle = computed(() => {
-    return zonesStore.zone.id ? $t('successfully_updated') : $t('successfully_created', { attribute: $t('the_zone') })
+    return committeesStore.committee.id
+        ? $t('successfully_updated')
+        : $t('successfully_created', { attribute: $t('the_committee') })
 })
 
 const form = computed(() => {
-    if (zonesStore.zone.id) {
-        return useForm('put', route('tenant.zones.update', zonesStore.zone.id), { ...zonesStore.zone })
+    if (committeesStore.committee.id) {
+        return useForm('put', route('tenant.committees.update', committeesStore.committee.id), {
+            ...committeesStore.committee
+        })
     }
 
-    return useForm('post', route('tenant.zones.store'), { ...zonesStore.zone })
+    return useForm('post', route('tenant.committees.store'), { ...committeesStore.committee })
 })
 
 // Define custom event emitter for 'close' event
@@ -44,10 +53,10 @@ const emit = defineEmits(['close'])
 const handleSuccess = () => {
     setTimeout(() => {
         router.get(
-            route('tenant.zones.index'),
+            route('tenant.committees.index'),
             {},
             {
-                only: ['zones'],
+                only: ['committees'],
                 preserveState: true
             }
         )
@@ -76,21 +85,21 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the zone id
+// Compute the slideover title based on the committee id
 const modalTitle = computed(() => {
-    return zonesStore.zone.id
+    return committeesStore.committee.id
         ? $t('modal_update_title', {
-              attribute: $t('the_zone')
+              attribute: $t('the_committee')
           })
-        : $tc('add new', 0, { attribute: $t('zone') })
+        : $tc('add new', 0, { attribute: $t('committee') })
 })
 
 // Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the zone id
+// Compute the slideover type based on the committee id
 const modalType = computed(() => {
-    return zonesStore.zone.id ? 'update' : 'create'
+    return committeesStore.committee.id ? 'update' : 'create'
 })
 </script>
 
@@ -129,7 +138,7 @@ const modalType = computed(() => {
             <!-- Begin: Name-->
             <div class="col-span-12">
                 <base-form-label htmlFor="description">
-                    {{ $t('neighborhoods') }}
+                    {{ $t('validation.attributes.description') }}
                 </base-form-label>
 
                 <base-form-text-area

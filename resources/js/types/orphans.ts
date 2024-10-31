@@ -12,6 +12,7 @@ export interface OrphanShowType {
     shirt_size: string
     note: string
     gender: string
+    income: number | null
     creator: {
         id: string
         name: string
@@ -98,4 +99,5 @@ export interface OrphanUpdateFormType {
     last_academic_year_achievement?: string
     college_achievements: CollegeAchievementsType[]
     vocational_training_achievements: VocationalTrainingAchievementsType[]
+    income: number | null
 }

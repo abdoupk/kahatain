@@ -108,6 +108,7 @@ class CreateFamilyRequest extends FormRequest
             'second_sponsor.degree_of_kinship' => 'nullable|string',
             'second_sponsor.address' => 'nullable|string',
             'second_sponsor.income' => 'nullable|numeric',
+            'second_sponsor.with_family' => 'nullable|boolean',
             'spouse.first_name' => 'required|string',
             'spouse.last_name' => 'required|string',
             'spouse.function' => 'required|string',

@@ -18,6 +18,7 @@ class BenefactorUpdateResource extends JsonResource
             'phone' => $this->phone,
             'address' => $this->address,
             'location' => $this->location,
+            'sponsorships' => BenefactorSponsorshipsShowResource::collection($this->whenLoaded('sponsorships')),
         ];
     }
 }

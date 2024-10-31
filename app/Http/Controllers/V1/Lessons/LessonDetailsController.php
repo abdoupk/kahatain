@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class LessonDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_lessons'];
+    }
+
     public function __invoke(EventOccurrence $eventOccurrence): Response
     {
         return Inertia::render(
@@ -27,10 +32,5 @@ class LessonDetailsController extends Controller implements HasMiddleware
                 ),
             ]
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_lessons'];
     }
 }

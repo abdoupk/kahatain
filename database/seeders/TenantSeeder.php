@@ -66,7 +66,9 @@ class TenantSeeder extends Seeder
                 ->hasAttached(
                     Competence::factory()->count(
                         fake()->numberBetween(1, 3)
-                    ),
+                    )->create([
+                        'tenant_id' => $tenant?->id,
+                    ]),
                     ['tenant_id' => $tenant?->id]
                 )
                 ->hasAttached(Committee::factory(
@@ -77,7 +79,6 @@ class TenantSeeder extends Seeder
                     ['tenant_id' => $tenant?->id]
                 )
                 ->count(10)
-
                 ->create([
                     'tenant_id' => $tenant?->id,
                     'branch_id' => $branches->random()?->id,

@@ -10,6 +10,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BranchDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            'can:delete_branches',
+        ];
+    }
+
     public function __invoke(Branch $branch): RedirectResponse
     {
         $branch->delete();
@@ -17,12 +24,5 @@ class BranchDeleteController extends Controller implements HasMiddleware
         dispatch(new BranchTrashedJob($branch, auth()->user()));
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return [
-            'can:delete_branches',
-        ];
     }
 }

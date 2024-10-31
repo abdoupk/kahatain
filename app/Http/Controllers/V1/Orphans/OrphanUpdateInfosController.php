@@ -13,6 +13,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class OrphanUpdateInfosController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_orphans'];
+    }
+
     public function __invoke(OrphanInfosUpdateRequest $request, Orphan $orphan): ResponseFactory|Application|Response
     {
         $orphan->update($request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type']));
@@ -27,13 +32,10 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
             ));
         }
 
+        monthlySponsorship($orphan->load('family')->family);
+
         dispatch(new OrphanUpdatedJob($orphan, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_orphans'];
     }
 }

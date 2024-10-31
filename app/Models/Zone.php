@@ -58,7 +58,7 @@ class Zone extends Model
 
     protected $table = 'zones';
 
-    protected $fillable = ['name', 'description', 'created_by', 'deleted_by'];
+    protected $fillable = ['name', 'description', 'geom', 'created_by', 'deleted_by'];
 
     protected static function boot(): void
     {
@@ -114,5 +114,12 @@ class Zone extends Model
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'geom' => 'json',
+        ];
     }
 }

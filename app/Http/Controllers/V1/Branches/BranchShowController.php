@@ -10,17 +10,17 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BranchShowController extends Controller implements HasMiddleware
 {
-    public function __invoke(Branch $branch): JsonResponse
-    {
-        return response()->json([
-            'branch' => BranchUpdateResource::make($branch->load(['city', 'president'])),
-        ]);
-    }
-
     public static function middleware()
     {
         return [
             'can:update_branches',
         ];
+    }
+
+    public function __invoke(Branch $branch): JsonResponse
+    {
+        return response()->json([
+            'branch' => BranchUpdateResource::make($branch->load(['city', 'president'])),
+        ]);
     }
 }

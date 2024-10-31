@@ -11,8 +11,6 @@ export const useCompetencesStore = defineStore('competences', {
                 const response = await axios.get(route('tenant.list.competences'))
 
                 this.competences = response.data
-
-                console.log(this.competences)
             }
         }
     }

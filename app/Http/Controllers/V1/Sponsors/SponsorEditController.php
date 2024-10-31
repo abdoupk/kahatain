@@ -10,15 +10,15 @@ use Inertia\Inertia;
 
 class SponsorEditController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_sponsors'];
+    }
+
     public function __invoke(Sponsor $sponsor)
     {
         return Inertia::render('Tenant/sponsors/edit/SponsorEditPage', [
             'sponsor' => new SponsorEditResource($sponsor->load('creator', 'sponsorships', 'incomes', 'academicLevel')),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_sponsors'];
     }
 }

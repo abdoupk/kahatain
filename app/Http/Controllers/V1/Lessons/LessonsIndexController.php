@@ -9,16 +9,16 @@ use Inertia\Inertia;
 
 class LessonsIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_lessons'];
+    }
+
     public function __invoke()
     {
         return Inertia::render('Tenant/lessons/index/LessonsIndexPage', [
             'schools' => SchoolsResource::collection(getSchoolsForAddLesson()),
             'events' => getLessons(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_lessons'];
     }
 }

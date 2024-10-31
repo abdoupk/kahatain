@@ -34,19 +34,17 @@ onMounted(() => {
 
     initTooltipEvent()
 
-    router.on('finish', () => {
-        toggleTooltip()
-    })
+    router.on('finish', () => toggleTooltip())
 })
 </script>
 
 <template>
     <base-tippy
-        content=""
         :options="{
             placement: 'left'
         }"
         :tag="tag"
+        content=""
         ref-key="sideMenuTooltipRef"
     >
         <slot></slot>

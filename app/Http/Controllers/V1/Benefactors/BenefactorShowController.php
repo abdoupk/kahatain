@@ -20,7 +20,7 @@ class BenefactorShowController extends Controller implements HasMiddleware
     public function __invoke(Benefactor $benefactor): JsonResponse
     {
         return response()->json([
-            'benefactor' => BenefactorUpdateResource::make($benefactor),
+            'benefactor' => BenefactorUpdateResource::make($benefactor->load(['sponsorships.creator', 'sponsorships.recipientable'])),
         ]);
     }
 }

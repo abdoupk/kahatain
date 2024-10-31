@@ -10,16 +10,16 @@ use Inertia\Response;
 
 class NeedsIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_needs'];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/needs/index/NeedsIndexPage', [
             'needs' => NeedsIndexResource::collection(getNeeds()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_needs'];
     }
 }

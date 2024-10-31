@@ -10,16 +10,16 @@ use Inertia\Response;
 
 class OrphansIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_orphans'];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/orphans/index/OrphansIndexPage', [
             'orphans' => OrphansIndexResource::collection(getOrphans()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_orphans'];
     }
 }

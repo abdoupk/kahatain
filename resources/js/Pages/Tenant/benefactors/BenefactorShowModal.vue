@@ -1,18 +1,13 @@
 <script lang="ts" setup>
-import { formatCurrency } from '../../../utils/helper'
-
 import { useBenefactorsStore } from '@/stores/benefactors'
 import { Link } from '@inertiajs/vue3'
+import { defineAsyncComponent } from 'vue'
 
-import BaseTable from '@/Components/Base/table/BaseTable.vue'
-import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
-import BaseTdTable from '@/Components/Base/table/BaseTdTable.vue'
-import BaseThTable from '@/Components/Base/table/BaseThTable.vue'
-import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
-import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import ShowModal from '@/Components/Global/ShowModal.vue'
 
 import { $t } from '@/utils/i18n'
+
+const TheSponsorshipsTable = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/TheSponsorshipsTable.vue'))
 
 defineProps<{
     open: boolean
@@ -72,80 +67,7 @@ const benefactorsStore = useBenefactorsStore()
             <!-- End: Address-->
 
             <!-- Begin: Sponsorships-->
-            <div class="col-span-12">
-                <h2 class="rtl:font-semibold">{{ $t('the_sponsorships') }}</h2>
-
-                <div class="mt-1 overflow-x-auto" v-if="benefactorsStore.benefactor.sponsorships.length">
-                    <base-table striped sm>
-                        <base-thead-table>
-                            <base-tr-table>
-                                <base-th-table class="whitespace-nowrap">#</base-th-table>
-
-                                <base-th-table class="whitespace-nowrap">
-                                    {{ $t('the_recipient') }}
-                                </base-th-table>
-
-                                <base-th-table class="whitespace-nowrap">
-                                    {{ $t('the_value') }}
-                                </base-th-table>
-
-                                <base-th-table class="whitespace-nowrap">
-                                    {{ $t('sponsorship_type') }}
-                                </base-th-table>
-
-                                <base-th-table class="whitespace-nowrap">
-                                    {{ $t('added_at') }}
-                                </base-th-table>
-
-                                <base-th-table class="whitespace-nowrap">{{ $t('created_by') }}</base-th-table>
-                            </base-tr-table>
-                        </base-thead-table>
-
-                        <base-tbody-table>
-                            <base-tr-table
-                                v-for="(sponsorship, index) in benefactorsStore.benefactor.sponsorships"
-                                :key="sponsorship.id"
-                                class="text-center"
-                            >
-                                <base-td-table> {{ index + 1 }}</base-td-table>
-
-                                <base-td-table>
-                                    {{ sponsorship.recipientable.name }}
-
-                                    <p class="mt-0.5 text-xs font-semibold">
-                                        {{ $t(`the_${sponsorship.recipientable.recipientable_type}`) }}
-                                    </p>
-                                </base-td-table>
-
-                                <base-td-table dir="rtl">
-                                    {{ formatCurrency(sponsorship.amount) }}
-                                </base-td-table>
-
-                                <base-td-table>
-                                    {{ $t(`sponsorship_type.${sponsorship.sponsorship_type}`) }}
-                                </base-td-table>
-
-                                <base-td-table>
-                                    {{ sponsorship.readable_created_at }}
-                                </base-td-table>
-
-                                <base-td-table>
-                                    <Link
-                                        :href="route('tenant.members.index') + '?show=' + sponsorship.creator?.id"
-                                        class="font-semibold text-slate-500"
-                                    >
-                                        {{ sponsorship.creator?.name }}
-                                    </Link>
-                                </base-td-table>
-                            </base-tr-table>
-                        </base-tbody-table>
-                    </base-table>
-                </div>
-
-                <p v-else class="mt-1 text-center text-base rtl:font-semibold">
-                    {{ $t('no_sponsorships') }}
-                </p>
-            </div>
+            <the-sponsorships-table :sponsorships="benefactorsStore.benefactor.sponsorships" />
             <!-- End: Sponsorships-->
         </template>
     </show-modal>

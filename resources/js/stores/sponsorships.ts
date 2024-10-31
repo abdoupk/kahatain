@@ -34,11 +34,16 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
         sponsorship: {
             amount: null,
             sponsorship_type: '',
-            recipientable_type: 'orphan',
+            recipientable_type: 'family',
             recipientable_id: '',
             benefactor: {
                 id: '',
                 name: ''
+            },
+            shop: {
+                name: '',
+                phone: '',
+                address: ''
             }
         },
         monthly_sponsorship: {

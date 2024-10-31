@@ -10,6 +10,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ZoneDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            'can:view_zones',
+        ];
+    }
+
     public function __invoke(Zone $zone): JsonResponse
     {
         return response()->json([
@@ -17,12 +24,5 @@ class ZoneDetailsController extends Controller implements HasMiddleware
                 ['creator:id,first_name,last_name']
             )->loadCount(['families', 'members'])),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return [
-            'can:view_zones',
-        ];
     }
 }
