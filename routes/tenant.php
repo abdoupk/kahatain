@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\V1\CitySearchController;
 use App\Http\Controllers\V1\Trash\TrashIndexController;
+use App\Http\Controllers\V1\UploadLogoController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -96,6 +97,12 @@ Route::middleware([
                 'logout',
                 [AuthenticatedSessionController::class, 'destroy']
             )->name('logout');
+
+            Route::post('upload-logo', UploadLogoController::class)->name('upload.logo');
+
+            Route::delete('delete-logo', function () {
+                ray('upload');
+            })->name('delete.logo');
         });
     });
 });

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
@@ -42,9 +44,9 @@ use Stancl\Tenancy\Database\TenantCollection;
  *
  * @mixin Eloquent
  */
-class Tenant extends BaseTenant implements TenantWithDatabase
+class Tenant extends BaseTenant implements HasMedia, TenantWithDatabase
 {
-    use HasDatabase, HasDomains, HasFactory;
+    use HasDatabase, HasDomains, HasFactory, InteractsWithMedia;
 
     public static function booted(): void
     {

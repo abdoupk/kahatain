@@ -4,6 +4,7 @@ import type { SiteSettingsType } from '@/types/types'
 import { useForm } from 'laravel-precognition-vue'
 import { ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
@@ -51,7 +52,8 @@ const form = useForm<SiteSettingsType>('patch', route('tenant.site-settings.upda
     // @ts-ignore
     super_admin: props.settings.super_admin.id,
     city: props.settings.city,
-    city_id: props.settings.city_id
+    city_id: props.settings.city_id,
+    logo: props.settings.logo
 })
 
 const submit = () => {
@@ -210,6 +212,14 @@ const submit = () => {
                     ></the-city-selector>
                 </div>
                 <!-- END: City -->
+
+                <div class="col-span-12">
+                    <base-form-label for="logo">
+                        {{ $t('validation.attributes.logo') }}
+                    </base-form-label>
+
+                    <base-file-pond id="logo" :files="form.logo"></base-file-pond>
+                </div>
 
                 <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
                     {{ $t('save') }}

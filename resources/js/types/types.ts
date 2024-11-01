@@ -986,6 +986,7 @@ export type SiteSettingsType = {
     }
     city: CityType
     city_id: string
+    logo?: string
 }
 
 export type NeedStatusType = 'pending' | 'in_progress' | 'completed' | 'rejected'
