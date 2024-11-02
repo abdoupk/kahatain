@@ -44,6 +44,8 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
         ->ignoreHttpsErrors()
         ->noSandbox()
         ->format('A4')
+        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
+        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
         ->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
@@ -88,6 +90,8 @@ function saveArchiveToPDF(
         ->ignoreHttpsErrors()
         ->noSandbox()
         ->format('A4')
+        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
+        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
         ->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
