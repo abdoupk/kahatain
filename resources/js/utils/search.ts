@@ -173,6 +173,24 @@ export const search = async (q: string) => {
                 filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
                 attributesToRetrieve: ['id', 'name', 'quota'],
                 attributesToSearchOn: ['name']
+            },
+            {
+                indexUid: 'benefactors',
+                q,
+                limit: 5,
+                sort: ['created_at:desc'],
+                filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+                attributesToRetrieve: ['id', 'name', 'readable_created_at'],
+                attributesToSearchOn: ['name']
+            },
+            {
+                indexUid: 'committees',
+                q,
+                limit: 5,
+                sort: ['created_at:desc'],
+                filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+                attributesToRetrieve: ['id', 'name', 'readable_created_at'],
+                attributesToSearchOn: ['description', 'name']
             }
         ]
     })
@@ -216,6 +234,10 @@ function constructLink(hit: Hit, indexUid: string) {
             return route('tenant.orphans.show', hit.orphan.id)
         case 'previews':
             return route('tenant.families.show', hit.family.id)
+        case 'benefactors':
+            return route('tenant.benefactors.index') + `?show=${hit.id}`
+        case 'committees':
+            return route('tenant.committees.index') + `?show=${hit.id}`
         default:
             return ''
     }
@@ -283,6 +305,16 @@ const constructIcon = (indexUid: string): { icon: SVGType; color: string } => {
                 icon: 'icon-dollar-sign',
                 color: 'bg-[#009688]/20 text-[#009688]'
             }
+        case 'benefactors':
+            return {
+                icon: 'icon-hands-holding-dollar',
+                color: 'bg-[#03A9F4]/20 text-[#03A9F4]'
+            }
+        case 'committees':
+            return {
+                icon: 'icon-users',
+                color: 'bg-[#03A9F4]/20 text-[#03A9F4]'
+            }
         default:
             return {
                 icon: 'icon-sort',
@@ -317,6 +349,10 @@ const constructHint = (hit: Hit, indexUid: string) => {
             return formatCurrency(hit.amount)
         case 'babies':
             return formatDate(hit.orphan.readable_birth_date, 'long')
+        case 'benefactors':
+            return formatDate(hit.readable_created_at, 'long')
+        case 'committees':
+            return formatDate(hit.readable_created_at, 'long')
         default:
             return null
     }
@@ -348,6 +384,10 @@ const constructTitle = (hit: Hit, indexUid: string) => {
             return hit.orphan.name
         case 'finances':
             return hit.specification[getLocale()]
+        case 'benefactors':
+            return hit.name
+        case 'committees':
+            return hit.name
         default:
             return ''
     }

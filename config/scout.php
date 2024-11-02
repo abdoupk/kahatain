@@ -586,6 +586,7 @@ return [
                     'first_name',
                     'last_name',
                     'phone',
+                    'name',
                     'sponsorships_count',
                 ],
                 'sortableAttributes' => [
