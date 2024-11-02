@@ -26,6 +26,7 @@ class SchoolEntryResource extends JsonResource
                     'name' => $this->orphan->family->zone?->name,
                 ],
                 'address' => $this->orphan->family->address,
+                'income_rate' => $this->orphan->family->income_rate,
             ],
             'orphan' => [
                 'id' => $this->orphan->id,

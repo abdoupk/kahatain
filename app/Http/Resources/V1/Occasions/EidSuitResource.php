@@ -25,7 +25,8 @@ class EidSuitResource extends JsonResource
                     'id' => $this->orphan->family->zone?->id,
                     'name' => $this->orphan->family->zone?->name,
                 ],
-                'address' => $this->orphan->family->address,
+                'address' => $this->orphan->family?->address,
+                'income_rate' => $this->orphan->family?->income_rate,
             ],
             'orphan' => [
                 'id' => $this->orphan->id,

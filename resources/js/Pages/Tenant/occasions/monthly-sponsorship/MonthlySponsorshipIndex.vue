@@ -105,7 +105,7 @@ sponsorshipsStore.monthly_sponsorship = props.settings
 const showSettingsModal = () => {
     sponsorshipsStore.$reset()
 
-    sponsorshipsStore.getSettings()
+    sponsorshipsStore.getMonthlySponsorshipSettings()
 
     showSettingsModalStatus.value = true
 }

@@ -433,6 +433,7 @@
     "settings.unemployment_benefit": "منحة البطالة",
     "settings.threshold": "العتبة",
     "settings.categories_for_calculation_of_sponsorship_rate": "التصنيفات لحساب نسبة الكفالة",
+    "settings.categories_for_categorise_ramadan_baskets": "الفئات لتصنيف القفة الرمضانية",
     "sponsorships.monthly_allowance": "الاستفادة من المصروف الشهري",
     "sponsorships.ramadan_basket": "الاستفادة من قفة رمضان",
     "sponsorships.zakat": "الاستفادة من الزكاة",
@@ -1261,5 +1262,6 @@
     "shop_information": "معلومات المتجر",
     "show_zones_in_map": "اظهار المناطق في الخريطة",
     "draw_in_map": "رسم على الخريطة",
-    "edit_in_map": "تعديل على الخريطة"
+    "edit_in_map": "تعديل على الخريطة",
+    "the_category": "التصنيف"
 }

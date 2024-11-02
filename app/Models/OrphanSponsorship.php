@@ -110,6 +110,7 @@ class OrphanSponsorship extends Model
             'school_bag' => $this->school_bag,
             'family' => [
                 'address' => $this->orphan->family?->address,
+                'income_rate' => (float) $this->orphan->family?->income_rate,
                 'zone' => $this->orphan->family?->zone->name,
             ],
             'orphan' => [

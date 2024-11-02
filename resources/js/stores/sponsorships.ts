@@ -26,6 +26,14 @@ interface State {
             value: number | null
         }[]
     }
+    ramadan_sponsorship: {
+        threshold: number | null
+        categories: {
+            minimum: number | null
+            maximum: number | null
+            category: string | null
+        }
+    }
 }
 
 export const useSponsorshipsStore = defineStore('sponsorships', {
@@ -61,13 +69,29 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             university_scholarship_master_one: null,
             university_scholarship_master_two: null,
             university_scholarship_doctorate: null
+        },
+        ramadan_sponsorship: {
+            threshold: null,
+            categories: [
+                {
+                    minimum: null,
+                    maximum: null,
+                    category: null
+                }
+            ]
         }
     }),
     actions: {
-        async getSettings() {
-            const { data: monthly_sponsorship } = await axios.get(route('tenant.monthly-sponsorship.get-settings'))
+        async getMonthlySponsorshipSettings() {
+            const { data: monthly_sponsorship } = await axios.get(route('tenant.occasions.ramadan-basket.get-settings'))
 
             this.monthly_sponsorship = monthly_sponsorship
+        },
+
+        async getRamadanSponsorshipSettings() {
+            const { data: ramadan_sponsorship } = await axios.get(route('tenant.occasions.ramadan-basket.get-settings'))
+
+            this.ramadan_sponsorship = ramadan_sponsorship
         }
     }
 })

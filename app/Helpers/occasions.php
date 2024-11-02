@@ -53,6 +53,7 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePagi
                         'orphan.sponsor:id,first_name,last_name,phone_number',
                         'orphan.lastAcademicYearAchievement.academicLevel',
                         'orphan.family.zone:id,name',
+                        'orphan.family:income_rate,zone_id,address,id',
                     ]
                 )
         )

@@ -10,6 +10,8 @@ import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
+import { formatCurrency } from '@/utils/helper'
+
 defineProps<{ orphans: PaginationData<SchoolEntryOrphansResource>; params: IndexParams }>()
 
 const emit = defineEmits(['sort'])
@@ -64,6 +66,15 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th class="text-start">{{ $t('validation.attributes.address') }}</the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions && params.directions['family.income_rate']"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'family.income_rate')"
+                        >
+                            {{ $t('income_rate') }}
+                        </the-table-th>
                     </base-tr-table>
                 </base-thead-table>
 
@@ -117,6 +128,12 @@ const emit = defineEmits(['sort'])
                             >
                                 {{ orphan.family.zone?.name }}
                             </Link>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(orphan.family.income_rate) }}
+                            </div>
                         </the-table-td>
                     </base-tr-table>
                 </base-tbody-table>

@@ -139,7 +139,7 @@ const emit = defineEmits(['sort'])
 
                         <the-table-td class="text-center">
                             <div class="whitespace-nowrap">
-                                {{ family.income_rate }}
+                                {{ formatCurrency(family.income_rate) }}
                             </div>
                         </the-table-td>
                     </base-tr-table>

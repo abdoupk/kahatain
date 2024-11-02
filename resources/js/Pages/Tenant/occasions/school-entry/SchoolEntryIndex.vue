@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
-
 import type { ArchiveOccasionType, IndexParams, PaginationData, SchoolEntryOrphansResource } from '@/types/types'
 
 import { schoolEntryFilters } from '@/constants/filters'
@@ -13,6 +11,7 @@ import TheLayout from '@/Layouts/TheLayout.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/occasions/school-entry/DataTable.vue'))
 

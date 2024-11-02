@@ -522,6 +522,7 @@ export interface SchoolEntryOrphansResource {
             name: string
         }
         address: string
+        income_rate: number
     }
     orphan: {
         id: string
@@ -563,6 +564,7 @@ export interface EidSuitOrphansResource {
             name: string
         }
         address: string
+        income_rate: number
     }
     orphan: {
         id: string
