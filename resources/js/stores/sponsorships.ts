@@ -83,7 +83,7 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
     }),
     actions: {
         async getMonthlySponsorshipSettings() {
-            const { data: monthly_sponsorship } = await axios.get(route('tenant.occasions.ramadan-basket.get-settings'))
+            const { data: monthly_sponsorship } = await axios.get(route('tenant.monthly-sponsorship.get-settings'))
 
             this.monthly_sponsorship = monthly_sponsorship
         },
