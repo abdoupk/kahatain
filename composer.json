@@ -29,6 +29,7 @@
         "predis/predis": "^2.2",
         "simshaun/recurr": "^5.0",
         "spatie/browsershot": "^4.1",
+        "spatie/laravel-medialibrary": "^11.9",
         "spatie/laravel-permission": "^6.7",
         "spiral/roadrunner-cli": "^2.6.0",
         "spiral/roadrunner-http": "^3.3.0",

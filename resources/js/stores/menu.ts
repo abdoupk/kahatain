@@ -160,13 +160,13 @@ export const useMenuStore = defineStore('menu', {
                         routeName: 'tenant.occasions.ramadan-basket.index',
                         url: '/dashboard/occasions/ramadan-basket'
                     },
-                    {
-                        icon: 'icon-basket-shopping',
-                        // Ignore: !hasPermission('list_permission'),
-                        title: $t('monthly basket'),
-                        routeName: 'tenant.occasions.monthly-basket.index',
-                        url: '/dashboard/occasions/monthly-basket'
-                    },
+                    // {
+                    //     Icon: 'icon-basket-shopping',
+                    //     // Ignore: !hasPermission('list_permission'),
+                    //     Title: $t('monthly basket'),
+                    //     RouteName: 'tenant.occasions.monthly-basket.index',
+                    //     Url: '/dashboard/occasions/monthly-basket'
+                    // },
                     {
                         icon: 'icon-baby-carriage',
                         // Ignore: !hasPermission('list_permission'),

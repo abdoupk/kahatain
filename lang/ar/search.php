@@ -13,4 +13,6 @@ return [
     'needs' => 'الاحتياجات',
     'previews' => 'التقارير',
     'schools' => 'المدارس الخاصة',
+    'committees' => 'اللجان',
+    'benefactors' => 'المحسنين',
 ];

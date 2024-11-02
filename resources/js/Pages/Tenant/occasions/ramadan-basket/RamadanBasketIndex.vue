@@ -3,12 +3,17 @@ import type { ArchiveOccasionType, IndexParams, PaginationData, RamadanBasketFam
 
 import { ramadanBasketFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
+import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import TheSettingsModal from '@/Pages/Tenant/occasions/ramadan-basket/settings/TheSettingsModal.vue'
+
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -52,6 +57,10 @@ const loading = ref(false)
 
 const showWarningModalStatus = ref(false)
 
+const showSettingsModalStatus = ref(false)
+
+const sponsorshipsStore = useSponsorshipsStore()
+
 const sort = (field: string) => handleSort(field, params.value)
 
 const save = () => {
@@ -78,6 +87,14 @@ const handleSave = () => {
     if (props.archive?.created_at) showWarningModalStatus.value = true
     else save()
 }
+
+const showSettingsModal = () => {
+    sponsorshipsStore.$reset()
+
+    sponsorshipsStore.getRamadanSponsorshipSettings()
+
+    showSettingsModalStatus.value = true
+}
 </script>
 
 <template>
@@ -101,7 +118,7 @@ const handleSave = () => {
             >
                 <template #Hints>
                     <the-occasion-hint
-                        v-if="useSettingsStore().hints.ramadan_basket"
+                        v-if="false"
                         :on-hidden="
                             () => {
                                 useSettingsStore().setHintToHidden('ramadan_basket')
@@ -120,6 +137,12 @@ const handleSave = () => {
                         @click.prevent="handleSave"
                     >
                         {{ $t('save') }}
+                    </base-button>
+
+                    <base-button class="me-2" @click.prevent="showSettingsModal">
+                        <base-tippy :content="$t('settings')">
+                            <svg-loader name="icon-gear"></svg-loader>
+                        </base-tippy>
                     </base-button>
                 </template>
             </the-table-header>
@@ -146,6 +169,11 @@ const handleSave = () => {
             >
                 {{ $t('exports.archive.warnings.ramadan_basket') }}
             </the-warning-modal>
+
+            <the-settings-modal
+                :open="showSettingsModalStatus"
+                @close="showSettingsModalStatus = false"
+            ></the-settings-modal>
         </div>
 
         <template #fallback>

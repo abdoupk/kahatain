@@ -105,7 +105,7 @@ sponsorshipsStore.monthly_sponsorship = props.settings
 const showSettingsModal = () => {
     sponsorshipsStore.$reset()
 
-    sponsorshipsStore.getSettings()
+    sponsorshipsStore.getMonthlySponsorshipSettings()
 
     showSettingsModalStatus.value = true
 }
@@ -132,7 +132,7 @@ const showSettingsModal = () => {
             >
                 <template #Hints>
                     <the-occasion-hint
-                        v-if="useSettingsStore().hints.monthly_basket"
+                        v-if="false"
                         :on-hidden="
                             () => {
                                 useSettingsStore().setHintToHidden('monthly_basket')

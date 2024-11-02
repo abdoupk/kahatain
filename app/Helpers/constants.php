@@ -152,4 +152,24 @@ const CALCULATION = [
             ],
         ],
     ],
+    'ramadan_sponsorship' => [
+        'threshold' => 8000.00,
+        'categories' => [
+            [
+                'minimum' => 0,
+                'maximum' => 25000,
+                'category' => 'الصف الأول',
+            ],
+            [
+                'minimum' => 25000,
+                'maximum' => 50000,
+                'category' => 'الصف الثاني',
+            ],
+            [
+                'minimum' => 50000,
+                'maximum' => PHP_FLOAT_MAX,
+                'category' => 'الصف الثالث',
+            ],
+        ],
+    ],
 ];

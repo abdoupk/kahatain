@@ -101,7 +101,7 @@ const handleSave = () => {
             >
                 <template #Hints>
                     <the-occasion-hint
-                        v-if="useSettingsStore().hints.eid_al_adha"
+                        v-if="false"
                         :on-hidden="
                             () => {
                                 useSettingsStore().setHintToHidden('eid_al_adha')

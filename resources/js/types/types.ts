@@ -522,6 +522,7 @@ export interface SchoolEntryOrphansResource {
             name: string
         }
         address: string
+        income_rate: number
     }
     orphan: {
         id: string
@@ -563,6 +564,7 @@ export interface EidSuitOrphansResource {
             name: string
         }
         address: string
+        income_rate: number
     }
     orphan: {
         id: string
@@ -986,6 +988,7 @@ export type SiteSettingsType = {
     }
     city: CityType
     city_id: string
+    logo?: string
 }
 
 export type NeedStatusType = 'pending' | 'in_progress' | 'completed' | 'rejected'

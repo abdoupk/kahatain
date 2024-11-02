@@ -129,7 +129,6 @@ const modalType = computed(() => {
     >
         <template #description>
             <!--Begin: Recipient Type-->
-            {{ form.recipientable_type }}
             <div class="col-span-12">
                 <the-recipientable
                     v-model:recipient-type="form.recipientable_type"

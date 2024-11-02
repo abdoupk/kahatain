@@ -143,4 +143,12 @@ export type CalculationTableType = {
             value: number
         }[]
     }
+    ramadan_sponsorship: {
+        threshold: number
+        categories: {
+            minimum: number
+            maximum: number
+            category: string
+        }[]
+    }
 }

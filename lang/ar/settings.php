@@ -33,4 +33,5 @@ return [
     'unemployment_benefit' => 'منحة البطالة',
     'threshold' => 'العتبة',
     'categories_for_calculation_of_sponsorship_rate' => 'التصنيفات لحساب نسبة الكفالة',
+    'categories_for_categorise_ramadan_baskets' => 'الفئات لتصنيف القفة الرمضانية',
 ];
