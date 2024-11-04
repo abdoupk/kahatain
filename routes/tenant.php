@@ -98,6 +98,12 @@ Route::middleware([
                 [AuthenticatedSessionController::class, 'destroy']
             )->name('logout');
 
+            Route::get('/test', function () {
+                return view('pdf.families', [
+                    'families' => [],
+                ]);
+            });
+
             Route::post('upload-logo', UploadLogoController::class)->name('upload.logo');
 
             Route::delete('delete-logo', function () {

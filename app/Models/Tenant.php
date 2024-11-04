@@ -93,4 +93,11 @@ class Tenant extends BaseTenant implements HasMedia, TenantWithDatabase
     {
         return $this->hasMany(Benefactor::class);
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('logos')
+            ->useFallbackPath(public_path('/images/logo.svg'));
+    }
 }

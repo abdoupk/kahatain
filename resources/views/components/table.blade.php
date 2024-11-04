@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
@@ -98,40 +98,90 @@
 
         .-mt-2 {
             margin-top: -0.5rem
-                /* -8px */
-            ;
+            /* -8px */;
         }
 
         .text-lg {
             font-size: 1.125rem
-                /* 18px */
-            ;
+            /* 18px */;
             line-height: 1.75rem
-                /* 28px */
-            ;
+            /* 28px */;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-start {
+            justify-content: flex-start;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .max-w-24 {
+            max-width: 6rem /* 112px */;
+        }
+
+        .max-h-20 {
+            max-height: 5rem /* 112px */;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem /* 8px */;
+        }
+
+        .rounded-md {
+            border-radius: 0.375rem /* 6px */;
+        }
+
+        .-mt-4 {
+            margin-top: -1rem /* -8px */;
+        }
+
+        .ms-68 {
+            margin-inline-start: 17rem /* 64px */;
         }
     </style>
 </head>
 
 <body>
-    <h2 class="font-medium rtl:font-semibold text-center">
-        {{ auth()->user()->tenant['infos']['association'] }}
-    </h2>
+<div class="flex flex-col items-center justify-start mb-2">
+    @if($title != '')
+        <div class="justify-start">
+            @if(auth()->user()->tenant->getFirstMediaUrl('logos'))
+                <img src="{{auth()->user()->tenant->getFirstMediaUrl('logos')}}"
+                     alt="" class="max-w-24 mx-auto rounded-md">
+            @else
+                <img src="{{public_path('images/logo-black.svg')}}"
+                     alt="" class="max-w-24 max-h-20 mx-auto rounded-md">
+            @endif
+        </div>
+    @endif
 
-    <h2 class="text-lg font-medium rtl:font-semibold text-center -mt-2"> {{ $title }}
-    </h2>
+    <div class="ms-68">
+        <h2 class="font-medium rtl:font-semibold text-center">
+            {{ auth()->user()->tenant['infos']['association'] }}
+        </h2>
 
-    <table class="w-full table border-black text-black">
-        <thead>
-            <tr>
-                {{ $thead }}
-            </tr>
-        </thead>
+        <h2 class="text-lg font-medium rtl:font-semibold text-center -mt-4"> {{ $title }}
+        </h2>
+    </div>
+</div>
 
-        <tbody>
-            {{ $tbody }}
-        </tbody>
-    </table>
+<table class="w-full table border-black text-black">
+    <thead>
+    <tr>
+        {{ $thead }}
+    </tr>
+    </thead>
+
+    <tbody>
+    {{ $tbody }}
+    </tbody>
+</table>
 </body>
 
 </html>
