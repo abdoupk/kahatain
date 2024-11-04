@@ -57,6 +57,7 @@ class Settings extends Model
         'user_id',
         'notifications',
         'tenant_id',
+        'font_size',
         'locale',
     ];
 

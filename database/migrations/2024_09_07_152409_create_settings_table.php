@@ -21,6 +21,8 @@ return new class extends Migration
                 'theme_2', 'theme_3', 'theme_4']);
             $table->enum('layout', ['top_menu', 'simple_menu', 'side_menu']);
             $table->enum('appearance', ['light', 'dark']);
+            $table->enum('font_size', ['font_size_xs', 'font_size_sm',
+                'font_size_base', 'font_size_lg', 'font_size_xl']);
             $table->jsonb('notifications')->nullable();
             $table->uuid('tenant_id');
             $table->timestamps();

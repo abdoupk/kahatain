@@ -14,8 +14,6 @@ class DashboardController extends Controller
 {
     public function __invoke(): Response
     {
-        ray(auth()->user()->tenant->getMedia('logos')->first()->getUrl());
-
         return Inertia::render('Tenant/dashboard/TheDashboardPage', [
             'reports' => fn () => generateGlobalDashBoardReportStatistics(),
             'financialReports' => fn () => generateFinancialReport(),

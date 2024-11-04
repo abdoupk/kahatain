@@ -6,7 +6,7 @@ import { defineAsyncComponent, onMounted } from 'vue'
 
 import TheLayoutLoader from '@/Components/Global/TheLayoutLoader.vue'
 
-import { setColorSchemeClass, setDarkModeClass } from '@/utils/helper'
+import { setColorSchemeClass, setDarkModeClass, setFontSizeClass } from '@/utils/helper'
 
 const EnigmaTheme = defineAsyncComponent(() => import('@/Layouts/enigma/EnigmaTheme.vue'))
 
@@ -27,9 +27,13 @@ onMounted(() => {
 
     settingsStore.appearance = usePage<PageProps>().props.auth.settings.appearance
 
+    settingsStore.fontSize = usePage<PageProps>().props.auth.settings.font_size
+
     setDarkModeClass(settingsStore.appearance)
 
     setColorSchemeClass(settingsStore.colorScheme, settingsStore.appearance)
+
+    setFontSizeClass(settingsStore.fontSize)
 })
 </script>
 

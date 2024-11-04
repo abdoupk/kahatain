@@ -6,6 +6,7 @@ namespace App\Http\Requests\V1\Settings;
 
 use App\Enums\Appearance;
 use App\Enums\ColorScheme;
+use App\Enums\FontSize;
 use App\Enums\Layout;
 use App\Enums\Theme;
 use Illuminate\Foundation\Http\FormRequest;
@@ -20,6 +21,7 @@ class UpdateSettingsRequest extends FormRequest
             'appearance' => 'sometimes|in:'.implode(',', array_map(fn ($case) => $case->value, Appearance::cases())),
             'layout' => 'sometimes|in:'.implode(',', array_map(fn ($case) => $case->value, Layout::cases())),
             'color_scheme' => 'sometimes|in:'.implode(',', array_map(fn ($case) => $case->value, ColorScheme::cases())),
+            'font_size' => 'sometimes|in:'.implode(',', array_map(fn ($case) => $case->value, FontSize::cases())),
         ];
     }
 

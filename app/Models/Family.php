@@ -126,7 +126,7 @@ class Family extends Model
         'difference_after_monthly_sponsorship',
         'monthly_sponsorship_rate',
         'amount_from_association',
-        'difference',
+        'difference_before_ramadan_sponsorship',
     ];
 
     protected static function boot(): void
@@ -280,7 +280,7 @@ class Family extends Model
                 'eid_el_adha' => boolval($this->sponsorships?->eid_al_adha),
             ],
             'income_rate' => $this->income_rate,
-            'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship,
+            'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship, 'difference_before_ramadan_sponsorship' => $this->difference_before_ramadan_sponsorship,
             'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,
             'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate,
             'amount_from_association' => $this->amount_from_association,

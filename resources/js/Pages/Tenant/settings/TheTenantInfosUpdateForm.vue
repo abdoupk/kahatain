@@ -67,6 +67,8 @@ const submit = () => {
         }
     })
 }
+
+const logo = ref(props.settings.logo)
 </script>
 
 <template>
@@ -217,8 +219,12 @@ const submit = () => {
                     <base-form-label for="logo">
                         {{ $t('validation.attributes.logo') }}
                     </base-form-label>
-
-                    <base-file-pond id="logo" :files="form.logo"></base-file-pond>
+                    {{ form.logo }}
+                    <base-file-pond
+                        id="logo"
+                        :files="form.logo"
+                        @update:model-value="form.logo = $event"
+                    ></base-file-pond>
                 </div>
 
                 <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">

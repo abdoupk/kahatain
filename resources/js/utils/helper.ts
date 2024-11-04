@@ -1,4 +1,4 @@
-import type { AppearanceType, ColorSchemesType, IndexParams, ListBoxFilter } from '@/types/types'
+import type { AppearanceType, ColorSchemesType, FontSizeType, IndexParams, ListBoxFilter } from '@/types/types'
 
 import { router, usePage } from '@inertiajs/vue3'
 import dayjs from 'dayjs'
@@ -132,6 +132,12 @@ const setColorSchemeClass = (colorScheme: ColorSchemesType, appearance: Appearan
     el.setAttribute('class', colorScheme)
 
     appearance === 'dark' && el.classList.add('dark')
+}
+
+const setFontSizeClass = (fontSize: FontSizeType) => {
+    const el = document.querySelectorAll('html')[0]
+
+    el.setAttribute('class', fontSize.replaceAll('_', '-'))
 }
 
 const isEmpty = (value) => {
@@ -595,5 +601,6 @@ export {
     getMarkerIcon,
     formatParams,
     formatDateAndTimeShort,
+    setFontSizeClass,
     downloadFile
 }

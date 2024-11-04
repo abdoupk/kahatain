@@ -57,11 +57,14 @@ export type ThemesType = 'icewall' | 'rubick' | 'enigma' | 'tinker'
 
 export type LayoutsType = 'side_menu' | 'simple_menu' | 'top_menu'
 
+export type FontSizeType = 'font_size_xs' | 'font_size_sm' | 'font_size_base' | 'font_size_lg' | 'font_size_xl'
+
 export interface ISettingState {
     appearance: AppearanceType
     colorScheme: ColorSchemesType
     theme: ThemesType
     layout: LayoutsType
+    fontSize: FontSizeType
     hints: {
         [key: string]: boolean
     }

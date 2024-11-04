@@ -142,6 +142,7 @@ class User extends Authenticatable
                 'layout' => 'side_menu',
                 'appearance' => 'light',
                 'locale' => 'ar',
+                'font_size' => 'font_size_base',
                 'tenant_id' => $user->tenant_id,
                 'notifications' => [
                     'families_changes' => true,

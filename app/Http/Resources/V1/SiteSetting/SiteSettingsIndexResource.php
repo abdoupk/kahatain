@@ -24,7 +24,7 @@ class SiteSettingsIndexResource extends JsonResource
                 'id' => $this->infos['super_admin']['id'],
             ],
             'address' => $this->infos['address'] ?? null,
-            'logo' => $this->getFirstMedia('logos')->getUrl() ?? null,
+            'logo' => $this->getFirstMedia('logos')?->getUrl() ?? null,
         ];
     }
 }
