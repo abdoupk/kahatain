@@ -783,6 +783,7 @@
     "validation.attributes.association_basket_value": "قيمة القفة من الجمعية",
     "validation.attributes.minimum": "الحد الأدنى",
     "validation.attributes.maximum": "الحد الاقصى",
+    "validation.attributes.logo": "الشعار",
     "(and :count more error)": "(و :count خطأ إضافي)",
     "(and :count more errors)": "(و :count أخطاء إضافية)",
     "A new verification link has been sent to the email address you provided during registration.": "تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قمت بالتسجيل به.",

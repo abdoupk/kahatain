@@ -300,5 +300,6 @@ return [
         'association_basket_value' => 'قيمة القفة من الجمعية',
         'minimum' => 'الحد الأدنى',
         'maximum' => 'الحد الاقصى',
+        'logo' => 'الشعار',
     ],
 ];
