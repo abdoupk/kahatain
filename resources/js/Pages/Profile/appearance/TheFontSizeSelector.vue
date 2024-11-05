@@ -19,7 +19,7 @@ theFontSize.value = settingsStore.fontSize
         <div class="mt-0.5 text-slate-500">{{ $t('theme.font_size_hint') }}</div>
 
         <div class="mt-5 grid grid-cols-2 gap-3.5">
-            <base-form-select v-model="theFontSize">
+            <base-form-select v-model="theFontSize" @update:model-value="settingsStore.changeFontSize($event)">
                 <option value="font_size_xs">
                     {{ $t('theme.font_size_xs') }}
                 </option>

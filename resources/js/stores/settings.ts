@@ -60,7 +60,7 @@ export const useSettingsStore = defineStore('settings', {
             }
         },
 
-        async changeLayout(fontSize: FontSizeType) {
+        async changeFontSize(fontSize: FontSizeType) {
             if (this.fontSize !== fontSize) {
                 this.fontSize = fontSize
 
