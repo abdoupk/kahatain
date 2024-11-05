@@ -1,75 +1,82 @@
 <script lang="ts" setup>
-import axios from 'axios'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import 'filepond/dist/filepond.min.css'
-import vueFilePond from 'vue-filepond'
+import ar_AR from 'filepond/locale/ar-ar.js'
+import { ref } from 'vue'
+import vueFilePond, { setOptions } from 'vue-filepond'
 
-defineProps<{
+const props = defineProps<{
     files?: string[]
 }>()
 
-const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview)
-
 const server = {
     process: (fieldName, file, metadata, load, error, progress) => {
-        const formData = new FormData()
+        if (!hasFiles.value) {
+            const formData = new FormData()
 
-        formData.append(fieldName, file, file.name)
+            formData.append(fieldName, file, file.name)
 
-        axios
-            .post(route('tenant.upload.logo'), formData, {
-                onUploadProgress: (e) => {
-                    progress(e.lengthComputable, e.loaded, e.total)
-                }
-            })
-            .then((response) => {
-                load(response.data.filepath)
-            })
-            .catch(() => {
-                error('Upload failed')
-            })
+            axios
+                .post(route('tenant.upload.file'), formData, {
+                    onUploadProgress: (e) => {
+                        progress(e.lengthComputable ? (e.loaded / e.total) * 100 : 0)
+                    }
+                })
+                .then((response) => {
+                    load(response.data)
 
-        return {
-            abort: () => {
-                // Handle aborting the request
-            }
+                    emit('update:files', [response.data])
+                })
+                .catch((error) => {
+                    error(error.message)
+                })
+        } else {
+            progress(1)
+
+            load(props.files)
         }
     },
+
     revert: (filename, load) => {
-        axios
-            .delete(route('tenant.delete.logo'))
-            .then(() => {
-                load(filename)
-            })
-            .catch(() => {
-                load(filename)
-            })
-    },
-    load: (source, load, error, progress, abort) => {
-        axios.get(source).then((response) => {
-            load(response.data)
-        })
+        console.log('545454')
+
+        load()
     }
 }
 
-const handleFilePondInit = () => {
-    console.log('FilePond has initialized')
+const emit = defineEmits(['update:files'])
+
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview)
+
+setOptions(ar_AR)
+
+function handleRemoveFile(error, file) {
+    hasFiles.value = false
+
+    emit('update:files', [])
+}
+
+const hasFiles = ref(false)
+
+function handleInit() {
+    if (props.files) {
+        hasFiles.value = true
+    }
 }
 </script>
 
 <template>
     <no-ssr>
         <file-pond
-            ref="pond"
             :credits="false"
             :files
             :server
             accepted-file-types="image/jpeg, image/png"
-            allow-multiple="false"
-            allow-replace="true"
-            @init="handleFilePondInit"
+            v-bind="$attrs"
+            @init="handleInit"
+            @removefile="handleRemoveFile"
         />
     </no-ssr>
 </template>

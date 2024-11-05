@@ -219,11 +219,12 @@ const logo = ref(props.settings.logo)
                     <base-form-label for="logo">
                         {{ $t('validation.attributes.logo') }}
                     </base-form-label>
-                    {{ form.logo }}
+
                     <base-file-pond
                         id="logo"
-                        :files="form.logo"
-                        @update:model-value="form.logo = $event"
+                        :allow-multiple="false"
+                        :files="settings.logo"
+                        @update:files="form.logo = $event[0]"
                     ></base-file-pond>
                 </div>
 

@@ -14,6 +14,7 @@ class SiteSettingsIndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         $city = City::whereId($this->infos['city_id'] ?? null)->first();
+        ray($this->getFirstMedia('logos')?->getUrl() ?? null);
 
         return [
             'association' => $this->infos['association'],
