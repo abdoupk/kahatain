@@ -1,4 +1,8 @@
 .font-size-xs {
+    body {
+        font-size: 0.625rem !important;
+    }
+
     .text-xs {
         font-size: 0.5rem !important;
     }
@@ -29,6 +33,10 @@
 }
 
 .font-size-sm {
+    body {
+        font-size: 0.75rem !important;
+    }
+
     .text-xs {
         font-size: 0.625rem !important;
     }
@@ -59,6 +67,10 @@
 }
 
 .font-size-base {
+    body {
+        font-size: 0.875rem !important;
+    }
+
     .text-xs {
         font-size: 0.75rem !important;
     }
@@ -89,6 +101,10 @@
 }
 
 .font-size-lg {
+    body {
+        font-size: 1rem !important;
+    }
+
     .text-xs {
         font-size: 0.875rem !important;
     }
@@ -119,6 +135,10 @@
 }
 
 .font-size-xl {
+    body {
+        font-size: 1.25rem !important;
+    }
+
     .text-xs {
         font-size: 1rem !important;
     }

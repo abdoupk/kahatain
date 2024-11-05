@@ -5,7 +5,6 @@ import colors from 'tailwindcss/colors'
 import { parseColor } from 'tailwindcss/lib/util/color'
 import plugin from 'tailwindcss/plugin'
 
-
 const toRGB = (value) => {
     return parseColor(value).color.join(' ')
 }
@@ -65,6 +64,8 @@ export default {
             fontFamily: {
                 roboto: ['"Roboto"'],
                 'public-sans': ['"Public Sans"'],
+                'google-sans': ['"Product Sans"'],
+                athelas: ['"Athelas Arabic"'],
                 noto: ['"Noto Sans Arabic"']
             },
             container: {
