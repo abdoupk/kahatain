@@ -18,10 +18,6 @@ class ZoneStoreController extends Controller implements HasMiddleware
 
     public function __invoke(ZoneCreateRequest $request): Response
     {
-        $geometry = $request->geom['geometry'];
-
-        //        $geom = DB::raw("ST_SetSRID(ST_GeomFromGeoJSON('".json_encode($geometry)."'), 4326)");
-
         $zone = Zone::create([
             ...$request->validated(),
         ]);

@@ -27,8 +27,7 @@ const toRaw = (obj: object) => {
 }
 
 // noinspection JSUnusedLocalSymbols
-const slideUp = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {
-}) => {
+const slideUp = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {}) => {
     el.style.transitionProperty = 'height, margin, padding'
 
     el.style.transitionDuration = duration + 'ms'
@@ -77,8 +76,7 @@ const setSlideProperties = (el: HTMLElement) => {
 }
 
 // noinspection JSUnusedLocalSymbols
-const slideDown = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {
-}) => {
+const slideDown = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {}) => {
     el.style.removeProperty('display')
 
     let display = window.getComputedStyle(el).display
@@ -286,7 +284,7 @@ const handleSponsorship = (sponsorshipValue: string) => {
     if (!isNaN(parsedValue)) {
         return formatCurrency(parsedValue)
     } else {
-        return sponsorshipValue
+        return sponsorshipValue || '————'
     }
 }
 
@@ -299,7 +297,7 @@ const handleFurnishings = (sponsorshipValue) => {
         return $t('yes')
     }
 
-    return sponsorshipValue
+    return sponsorshipValue || '————'
 }
 
 const groupByKey = (arr, key) => {
@@ -507,7 +505,6 @@ function getMarkerRegionIcon(color) {
                 </g>
               </svg>
             `)
-
 }
 
 function sumObjectValues(obj): number {
@@ -565,14 +562,12 @@ export {
     getRandomItemWithoutRepeat,
     isOlderThan,
     addOpacityToHexColor,
-    addOpacityToHexColors,
     sumObjectValues,
     formatFilters,
     getDataForIndexPages,
     handleFilterValue,
     formatDate,
     formatUrl,
-    combineDateAndTime,
     getAcademicLevelFromId,
     getVocationalTrainingSpecialityFromId,
     setDateToCurrentTime,
@@ -585,13 +580,11 @@ export {
     handleSort,
     omit,
     toRaw,
-    toRGB,
     slideUp,
     debounce,
     slideDown,
     setDarkModeClass,
     isEmpty,
-    getResultsSize,
     setColorSchemeClass,
     allowOnlyNumbersOnKeyDown,
     formatDateAndTime,

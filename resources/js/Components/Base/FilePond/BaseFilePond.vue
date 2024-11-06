@@ -40,8 +40,6 @@ const server = {
     },
 
     revert: (filename, load) => {
-        console.log('545454')
-
         load()
     }
 }
@@ -52,7 +50,7 @@ const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImage
 
 setOptions(ar_AR)
 
-function handleRemoveFile(error, file) {
+function handleRemoveFile() {
     hasFiles.value = false
 
     emit('update:files', [])

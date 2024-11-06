@@ -71,19 +71,23 @@ class CreateFamilyRequest extends FormRequest
 
     public function rules(): array
     {
+        $baby_milk_and_diapers_required = 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
+,orphans.*.shirt_size,orphans.*.pants_size';
+        $pants_and_shoes_and_shirt_required = 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type';
+
         return [
             'submitted' => 'boolean',
             'address' => 'required|string',
             'location.lat' => 'nullable|numeric',
             'location.lng' => 'nullable|numeric',
             'zone_id' => 'required|string|exists:App\Models\Zone,id',
-            'file_number' => 'required|numeric',
-            'start_date' => 'required|date',
+            'file_number' => 'nullable|numeric',
+            'start_date' => 'nullable|date',
             'orphans.*.first_name' => 'required|string',
             'orphans.*.last_name' => 'required|string',
             'orphans.*.birth_date' => 'required|date',
             'orphans.*.family_status' => 'nullable|string',
-            'orphans.*.health_status' => 'required|string',
+            'orphans.*.health_status' => 'nullable|string',
             'orphans.*.academic_level_id' => 'nullable|integer',
             'orphans.*.vocational_training_id' => [new VocationalTrainingRule],
             'orphans.*.gender' => 'required|in:male,female',
@@ -97,11 +101,11 @@ class CreateFamilyRequest extends FormRequest
             'sponsor.father_name' => 'nullable|string',
             'sponsor.mother_name' => 'nullable|string',
             'sponsor.birth_certificate_number' => 'nullable|string',
-            'sponsor.academic_level_id' => 'required|integer',
+            'sponsor.academic_level_id' => 'nullable|integer',
             'sponsor.function' => 'nullable|string',
-            'sponsor.health_status' => 'required|string',
+            'sponsor.health_status' => 'nullable|string',
             'sponsor.diploma' => 'nullable|string',
-            'sponsor.ccp' => 'required|string|unique:App\Models\Sponsor,ccp',
+            'sponsor.ccp' => 'nullable|string|unique:App\Models\Sponsor,ccp',
             'second_sponsor.first_name' => 'nullable|string',
             'second_sponsor.last_name' => 'nullable|string',
             'second_sponsor.phone_number' => 'nullable|string',
@@ -111,7 +115,7 @@ class CreateFamilyRequest extends FormRequest
             'second_sponsor.with_family' => 'nullable|boolean',
             'spouse.first_name' => 'required|string',
             'spouse.last_name' => 'required|string',
-            'spouse.function' => 'required|string',
+            'spouse.function' => 'nullable|string',
             'spouse.birth_date' => 'required|string',
             'spouse.death_date' => 'required|string',
             'spouse.income' => 'sometimes|nullable|numeric',
@@ -128,17 +132,13 @@ class CreateFamilyRequest extends FormRequest
             'report' => 'required|string',
             'branch_id' => 'required|exists:App\Models\Branch,id',
             'orphans.*.income' => 'nullable|numeric',
-            'orphans.*.shoes_size' => 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type',
-            'orphans.*.shirt_size' => 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type',
-            'orphans.*.pants_size' => 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type',
-            'orphans.*.baby_milk_quantity' => 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
-,orphans.*.shirt_size,orphans.*.pants_size',
-            'orphans.*.baby_milk_type' => 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
-,orphans.*.shirt_size,orphans.*.pants_size',
-            'orphans.*.diapers_quantity' => 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
-,orphans.*.shirt_size,orphans.*.pants_size',
-            'orphans.*.diapers_type' => 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
-,orphans.*.shirt_size,orphans.*.pants_size',
+            'orphans.*.shoes_size' => 'nullable|integer',
+            'orphans.*.shirt_size' => 'nullable|integer',
+            'orphans.*.pants_size' => 'nullable|integer',
+            'orphans.*.baby_milk_quantity' => 'nullable|numeric',
+            'orphans.*.baby_milk_type' => 'nullable|uuid',
+            'orphans.*.diapers_quantity' => 'nullable|numeric',
+            'orphans.*.diapers_type' => 'nullable|uuid',
             'orphans.*.is_unemployed' => 'required|boolean',
             'orphans.*.is_handicapped' => 'required|boolean',
             'orphans_sponsorship.*.*' => 'present|nullable',

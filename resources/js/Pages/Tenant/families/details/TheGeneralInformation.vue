@@ -22,7 +22,7 @@ defineProps<{ family: FamilyShowType }>()
         <div class="grid grid-cols-12 gap-4 p-5">
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.file_number') }}</h2>
-                <h3 class="text-base font-medium">{{ family.file_number }}</h3>
+                <h3 class="text-base font-medium">{{ family.file_number || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">

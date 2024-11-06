@@ -17,7 +17,7 @@ function getSponsorsBySponsorType(): array
 
 function getSponsorsByAcademicLevel(): array
 {
-    $sponsors = Sponsor::select('academic_level_id', DB::raw('count(*) as total'))->with('academicLevel:id,phase')
+    $sponsors = Sponsor::whereNotNull('academic_level_id')->select('academic_level_id', DB::raw('count(*) as total'))->with('academicLevel:id,phase')
         ->groupBy('academic_level_id')
         ->get();
 

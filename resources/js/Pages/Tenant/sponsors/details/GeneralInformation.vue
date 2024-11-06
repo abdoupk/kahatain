@@ -34,32 +34,32 @@ defineProps<{ sponsor: SponsorShowType }>()
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.father_name') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.father_name }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.father_name || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.mother_name') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.mother_name }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.mother_name || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.function') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.function }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.function || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.academic_level') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.academic_level }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.academic_level || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.diploma') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.diploma }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.diploma || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.health_status') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.health_status }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.health_status || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
@@ -71,18 +71,18 @@ defineProps<{ sponsor: SponsorShowType }>()
                 <h2 class="text-lg font-semibold">
                     {{ $t('validation.attributes.sponsor.birth_certificate_number') }}
                 </h2>
-                <h3 class="text-base font-medium">{{ sponsor.birth_certificate_number }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.birth_certificate_number || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('ccp') }}</h2>
-                <h3 class="text-base font-medium">{{ sponsor.ccp }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.ccp || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('orphans_count') }}</h2>
 
-                <h3 class="text-base font-medium">{{ sponsor.orphans_count }}</h3>
+                <h3 class="text-base font-medium">{{ sponsor.orphans_count || '————' }}</h3>
             </div>
         </div>
     </div>

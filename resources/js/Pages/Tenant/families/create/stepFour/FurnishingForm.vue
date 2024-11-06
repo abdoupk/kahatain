@@ -30,9 +30,9 @@ const refrigerator = defineModel('refrigerator')
 
 const fireplace = defineModel('fireplace')
 
-const washingMachine = defineModel('washingMachine')
+const washing_machine = defineModel('washing_machine')
 
-const waterHeater = defineModel('waterHeater')
+const water_heater = defineModel('water_heater')
 
 const oven = defineModel('oven')
 
@@ -48,22 +48,23 @@ const valueMap: Record<FurnishingsType, ModelRef<unknown>> = {
     television: television,
     refrigerator: refrigerator,
     fireplace: fireplace,
-    washing_machine: washingMachine,
-    water_heater: waterHeater,
+    washing_machine: washing_machine,
+    water_heater: water_heater,
     oven: oven,
     wardrobe: wardrobe,
     cupboard: cupboard,
     covers: covers,
-    mattresses: mattresses,
-    other_furnishings: mattresses
+    mattresses: mattresses
 }
 
 const toggle = (key: FurnishingsType) => {
     items.value[key] = !items.value[key]
 
+    if (items.value[key]) valueMap[key].value = true
+
     if (!items.value[key]) valueMap[key].value = null
 
-    emit('update:furnishings', items.value)
+    emit('update:furnishings', Object.fromEntries(Object.entries(valueMap).map(([key, ref]) => [key, ref.value])))
 }
 
 onMounted(() => {
@@ -71,9 +72,7 @@ onMounted(() => {
         'television',
         'refrigerator',
         'fireplace',
-        'washingMachine',
         'washing_machine',
-        'waterHeater',
         'water_heater',
         'oven',
         'wardrobe',
@@ -89,6 +88,25 @@ onMounted(() => {
         }
     }
 })
+
+const getValue = (key: FurnishingsType) => {
+    return valueMap[key].value === '1' ||
+        valueMap[key].value === true ||
+        valueMap[key].value === 1 ||
+        valueMap[key].value === 'true' ||
+        valueMap[key].value === '0' ||
+        valueMap[key].value === false ||
+        valueMap[key].value === 0 ||
+        valueMap[key].value === 'false'
+        ? null
+        : valueMap[key].value
+}
+
+const setValue = (key: FurnishingsType, value: unknown) => {
+    valueMap[key].value = value
+
+    emit('update:furnishings', Object.fromEntries(Object.entries(valueMap).map(([key, ref]) => [key, ref.value])))
+}
 </script>
 
 <template>
@@ -112,11 +130,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="television"
                         :disabled="!items.television"
                         :placeholder="$t('notes')"
+                        :value="getValue('television')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('television', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -142,11 +161,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="refrigerator"
                         :disabled="!items.refrigerator"
                         :placeholder="$t('notes')"
+                        :value="getValue('refrigerator')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('refrigerator', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -172,11 +192,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="fireplace"
                         :disabled="!items.fireplace"
                         :placeholder="$t('notes')"
+                        :value="getValue('fireplace')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('fireplace', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -202,11 +223,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="washingMachine"
                         :disabled="!items.washing_machine"
                         :placeholder="$t('notes')"
+                        :value="getValue('washing_machine')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('washing_machine', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -232,11 +254,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="waterHeater"
                         :disabled="!items.water_heater"
                         :placeholder="$t('notes')"
+                        :value="getValue('water_heater')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('water_heater', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -262,11 +285,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="oven"
                         :disabled="!items.oven"
                         :placeholder="$t('notes')"
+                        :value="getValue('oven')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('oven', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -292,11 +316,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="wardrobe"
                         :disabled="!items.wardrobe"
                         :placeholder="$t('notes')"
+                        :value="getValue('wardrobe')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('wardrobe', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -322,11 +347,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="cupboard"
                         :disabled="!items.cupboard"
                         :placeholder="$t('notes')"
+                        :value="getValue('cupboard')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('cupboard', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -352,11 +378,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="covers"
                         :disabled="!items.covers"
                         :placeholder="$t('notes')"
+                        :value="getValue('covers')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('covers', $event)"
                     ></base-form-text-area>
                 </div>
             </div>
@@ -382,11 +409,12 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="mattresses"
                         :disabled="!items.mattresses"
                         :placeholder="$t('notes')"
+                        :value="getValue('mattresses')"
                         class="w-full md:w-3/4"
                         rows="4"
+                        @update:model-value="setValue('mattresses', $event)"
                     ></base-form-text-area>
                 </div>
             </div>

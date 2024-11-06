@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('furnishings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('television');
-            $table->text('refrigerator');
-            $table->text('fireplace');
-            $table->text('washing_machine');
-            $table->text('water_heater');
-            $table->text('oven');
-            $table->text('wardrobe');
-            $table->text('cupboard');
-            $table->text('covers');
-            $table->text('mattresses');
-            $table->text('other_furnishings');
+            $table->text('television')->nullable();
+            $table->text('refrigerator')->nullable();
+            $table->text('fireplace')->nullable();
+            $table->text('washing_machine')->nullable();
+            $table->text('water_heater')->nullable();
+            $table->text('oven')->nullable();
+            $table->text('wardrobe')->nullable();
+            $table->text('cupboard')->nullable();
+            $table->text('covers')->nullable();
+            $table->text('mattresses')->nullable();
+            $table->text('other_furnishings')->nullable();
             $table->uuid('family_id');
             $table->uuid('tenant_id');
             $table->timestamps();

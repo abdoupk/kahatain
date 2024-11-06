@@ -44,7 +44,7 @@ function calculateOrphanExactIncome(Orphan $orphan): float|int|null
     ];
 
     foreach ($scholarshipMap as $pattern => $scholarship) {
-        if (Str::contains($orphan->academicLevel->level, $pattern)) {
+        if (Str::contains($orphan->academicLevel?->level, $pattern)) {
             return $orphan->income + ($scholarship / 3);
         }
     }

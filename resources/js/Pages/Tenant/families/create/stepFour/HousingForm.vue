@@ -98,7 +98,7 @@ onMounted(() => {
                 <!-- @vue-ignore -->
                 <base-form-switch-input
                     id="independent"
-                    :checked="housingType?.name === 'independent' && housingType?.value === true"
+                    :checked="items.independent"
                     type="checkbox"
                     @change="(event) => toggle('independent', event.target.checked)"
                 ></base-form-switch-input>
@@ -135,7 +135,7 @@ onMounted(() => {
                 <!-- @vue-ignore -->
                 <base-form-switch-input
                     id="with_family"
-                    :checked="housingType?.name === 'with_family' && housingType?.value === true"
+                    :checked="housingType.with_family"
                     type="checkbox"
                     @change="(event) => toggle('with_family', event.target.checked)"
                 ></base-form-switch-input>
@@ -171,7 +171,7 @@ onMounted(() => {
             <base-form-switch class="w-full text-lg md:w-1/2">
                 <base-form-switch-input
                     id="inheritance"
-                    :checked="housingType?.name === 'inheritance'"
+                    :checked="items.inheritance"
                     type="checkbox"
                     @change="toggle('inheritance')"
                 ></base-form-switch-input>
@@ -218,7 +218,7 @@ onMounted(() => {
             <base-form-switch class="w-full text-lg md:w-1/2">
                 <base-form-switch-input
                     id="tenant"
-                    :checked="housingType?.name === 'tenant'"
+                    :checked="items.tenant"
                     type="checkbox"
                     @change="toggle('tenant')"
                 ></base-form-switch-input>
@@ -273,7 +273,7 @@ onMounted(() => {
             <base-form-switch class="w-full text-lg md:w-1/2">
                 <base-form-switch-input
                     id="other"
-                    :checked="housingType?.name === 'other'"
+                    :checked="items.other"
                     type="checkbox"
                     @change="toggle('other')"
                 ></base-form-switch-input>

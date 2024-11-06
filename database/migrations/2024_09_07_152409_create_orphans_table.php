@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('last_name');
             $table->date('birth_date')->index('idx_orphans_birth_date');
             $table->text('family_status')->nullable()->index('idx_orphans_family_status');
-            $table->text('health_status')->index('idx_orphans_health_status');
+            $table->text('health_status')->nullable()->index('idx_orphans_health_status');
             $table->integer('academic_level_id')->nullable()->index('idx_orphans_academic_level');
             $table->integer('vocational_training_id')->nullable();
             $table->text('shoes_size')->nullable()->index('idx_orphans_shoes_size');

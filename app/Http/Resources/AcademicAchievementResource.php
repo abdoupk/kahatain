@@ -14,7 +14,7 @@ class AcademicAchievementResource extends JsonResource
         return [
             'id' => $this->id,
             'academic_year' => $this->academic_year,
-            'academic_level' => $this->whenLoaded('academicLevel', fn () => $this->academicLevel->level),
+            'academic_level' => $this->whenLoaded('academicLevel', fn () => $this->academicLevel?->level),
             'first_trimester' => number_format($this->first_trimester, 2),
             'second_trimester' => number_format($this->second_trimester, 2),
             'third_trimester' => number_format($this->third_trimester, 2),

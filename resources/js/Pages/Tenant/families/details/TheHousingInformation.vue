@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { FurnishingType, HousingType } from '@/types/families'
 
+import { computed } from 'vue'
+
 import { formatCurrency, handleFurnishings, omit } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
@@ -16,6 +18,11 @@ const HousingValue = () => {
 
     return props.housing.value
 }
+
+const showHousingInformations = computed(() => {
+    // eslint-disable-next-line
+    return !['0', '1', true, false, 1, 0].includes(props.housing.value)
+})
 </script>
 
 <template>
@@ -34,23 +41,23 @@ const HousingValue = () => {
                 </p>
             </div>
 
-            <div class="col-span-12 @xl:col-span-6">
+            <div v-if="showHousingInformations" class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('housing.label.info') }}</h2>
+
                 <p class="text-base font-medium">
                     {{ HousingValue() }}
                 </p>
             </div>
 
-            <div
-                v-for="(value, key) in omit(housing, ['id', 'name', 'value'])"
-                :key
-                :class="
-                    // @ts-ignore
-                    key !== 'other_properties' ? '@xl:col-span-6' : ''
-                "
-                class="col-span-12"
-            >
-                <template v-if="value">
+            <template v-for="(value, key) in omit(housing, ['id', 'name', 'value'])" :key>
+                <div
+                    v-if="value"
+                    :class="
+                        // @ts-ignore
+                        key !== 'other_properties' ? '@xl:col-span-6' : ''
+                    "
+                    class="col-span-12"
+                >
                     <h2 class="text-lg font-semibold">
                         {{ $t(`housing.label.${key}`) }}
                     </h2>
@@ -58,8 +65,8 @@ const HousingValue = () => {
                     <p class="text-base font-medium">
                         {{ value }}
                     </p>
-                </template>
-            </div>
+                </div>
+            </template>
         </div>
     </div>
     <!-- END: Housing Information -->

@@ -27,7 +27,7 @@ defineProps<{ orphans: OrphanType[] }>()
                 <h2 class="text-lg font-semibold">{{ $t('health_status') }}</h2>
 
                 <h3 class="text-base font-medium">
-                    {{ orphan.health_status }}
+                    {{ orphan.health_status || '————' }}
                 </h3>
             </div>
 
@@ -35,7 +35,7 @@ defineProps<{ orphans: OrphanType[] }>()
                 <h2 class="text-lg font-semibold">{{ $t('family_status') }}</h2>
 
                 <h3 class="text-base font-medium">
-                    {{ $t(`family_statuses.${orphan.family_status}`) }}
+                    {{ orphan.family_status ? $t(`family_statuses.${orphan.family_status}`) : '————' }}
                 </h3>
             </div>
 
@@ -43,7 +43,7 @@ defineProps<{ orphans: OrphanType[] }>()
                 <h2 class="text-lg font-semibold">{{ $t('academic_level') }}</h2>
 
                 <h3 class="text-base font-medium">
-                    {{ orphan.academic_level }}
+                    {{ orphan.academic_level || '————' }}
                 </h3>
             </div>
 
@@ -60,7 +60,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('pants_size') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.pants_size }}
+                        {{ orphan.pants_size || '————' }}
                     </h3>
                 </div>
 
@@ -68,7 +68,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('shirt_size') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.shirt_size }}
+                        {{ orphan.shirt_size || '————' }}
                     </h3>
                 </div>
 
@@ -76,7 +76,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('shoes_size') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.shoes_size }}
+                        {{ orphan.shoes_size || '————' }}
                     </h3>
                 </div>
             </template>
@@ -86,7 +86,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('diapers_type') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.diapers_type }}
+                        {{ orphan.baby_needs?.diapers_type || '————' }}
                     </h3>
                 </div>
 
@@ -94,7 +94,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('diapers_quantity') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.diapers_quantity }}
+                        {{ orphan.baby_needs?.diapers_quantity || '————' }}
                     </h3>
                 </div>
 
@@ -102,7 +102,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('baby_milk_type') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.baby_milk_type }}
+                        {{ orphan.baby_needs?.baby_milk_type || '————' }}
                     </h3>
                 </div>
 
@@ -110,7 +110,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('baby_milk_quantity') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.baby_milk_quantity }}
+                        {{ orphan.baby_needs?.baby_milk_quantity || '————' }}
                     </h3>
                 </div>
             </template>

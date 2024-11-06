@@ -18,8 +18,8 @@ return new class extends Migration
             $table->uuid('branch_id')->nullable();
             $table->text('address');
             $table->json('location')->nullable();
-            $table->text('file_number');
-            $table->date('start_date');
+            $table->text('file_number')->nullable();
+            $table->date('start_date')->nullable();
             $table->float('income_rate')->nullable();
             $table->float('total_income')->nullable();
             $table->float('difference_before_monthly_sponsorship')->nullable();

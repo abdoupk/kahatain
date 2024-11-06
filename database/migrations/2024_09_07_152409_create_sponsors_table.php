@@ -18,12 +18,12 @@ return new class extends Migration
             $table->text('phone_number');
             $table->text('sponsor_type');
             $table->date('birth_date');
-            $table->text('father_name');
-            $table->text('mother_name');
+            $table->text('father_name')->nullable();
+            $table->text('mother_name')->nullable();
             $table->text('birth_certificate_number')->nullable();
-            $table->integer('academic_level_id');
+            $table->integer('academic_level_id')->nullable();
             $table->text('function')->nullable();
-            $table->text('health_status');
+            $table->text('health_status')->nullable();
             $table->text('diploma')->nullable();
             $table->boolean('is_unemployed');
             $table->text('ccp')->nullable();

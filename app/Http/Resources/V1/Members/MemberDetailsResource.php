@@ -37,7 +37,7 @@ class MemberDetailsResource extends JsonResource
             'workplace' => $this->workplace,
             'function' => $this->function,
             'address' => $this->address,
-            'academic_level' => $this->academicLevel->level.' ('.$this->academicLevel->phase.')',
+            'academic_level' => $this->academicLevel?->level.' ('.$this->academicLevel->phase.')',
         ];
     }
 }

@@ -113,8 +113,8 @@ const FurnishingsSubmit = () => {
                     v-model:refrigerator="furnishings_form.refrigerator"
                     v-model:television="furnishings_form.television"
                     v-model:wardrobe="furnishings_form.wardrobe"
-                    v-model:washing-machine="furnishings_form.washing_machine"
-                    v-model:water-heater="furnishings_form.water_heater"
+                    v-model:washing_machine="furnishings_form.washing_machine"
+                    v-model:water_heater="furnishings_form.water_heater"
                     :form="furnishings_form"
                 ></furnishing-form>
 

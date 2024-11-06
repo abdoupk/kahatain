@@ -9,16 +9,16 @@ class FamilyFurnishingsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'television' => 'required',
-            'refrigerator' => 'required',
-            'fireplace' => 'required',
-            'washing_machine' => 'required',
-            'water_heater' => 'required',
-            'oven' => 'required',
-            'wardrobe' => 'required',
-            'cupboard' => 'required',
-            'covers' => 'required',
-            'mattresses' => 'required',
+            'television' => 'nullable',
+            'refrigerator' => 'nullable',
+            'fireplace' => 'nullable',
+            'washing_machine' => 'nullable',
+            'water_heater' => 'nullable',
+            'oven' => 'nullable',
+            'wardrobe' => 'nullable',
+            'cupboard' => 'nullable',
+            'covers' => 'nullable',
+            'mattresses' => 'nullable',
         ];
     }
 

@@ -77,7 +77,7 @@ class Lesson extends Model
 
     public function getName(): string
     {
-        return $this->subject->getName().' - '.$this->academicLevel->level;
+        return $this->subject->getName().' - '.$this->academicLevel?->level;
     }
 
     protected function casts(): array

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Storage;
 
 class SiteSettingUpdateInfosController extends Controller implements HasMiddleware
 {
@@ -41,9 +42,11 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
         if ($request->logo === null) {
             auth()->user()->tenant->clearMediaCollection('logos');
         } elseif ($request->logo && $request->logo !== auth()->user()->tenant->getFirstMediaUrl('logos')) {
-            auth()->user()->tenant->clearMediaCollection('logos');
+            if (Storage::exists($request->logo)) {
+                auth()->user()->tenant->clearMediaCollection('logos');
 
-            auth()->user()->tenant->addMediaFromDisk($request->logo)->toMediaCollection('logos');
+                auth()->user()->tenant->addMediaFromDisk($request->logo)->toMediaCollection('logos');
+            }
         }
 
         return response('', 204);

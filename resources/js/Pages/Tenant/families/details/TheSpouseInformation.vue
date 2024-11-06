@@ -26,7 +26,7 @@ defineProps<{ spouse: SpouseType }>()
 
             <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.spouse.function') }}</h2>
-                <h3 class="text-base font-medium">{{ spouse.function }}</h3>
+                <h3 class="text-base font-medium">{{ spouse.function || '————' }}</h3>
             </div>
 
             <div class="col-span-12 @xl:col-span-6">

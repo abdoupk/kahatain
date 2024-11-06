@@ -67,8 +67,6 @@ const submit = () => {
         }
     })
 }
-
-const logo = ref(props.settings.logo)
 </script>
 
 <template>
