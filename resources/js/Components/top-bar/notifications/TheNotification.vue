@@ -97,7 +97,7 @@ window.Echo?.private('App.Models.User.' + usePage().props.auth.user.id).notifica
         <base-popover-panel
             v-slot="{ close }"
             :placement="width < 640 ? 'bottom-start' : 'bottom-end'"
-            class="scrollbar-hidden mt-2 max-h-[250px] w-[380px] overflow-y-auto scroll-smooth p-5"
+            class="scrollbar-hidden mt-2 max-h-[250px] w-[300px] overflow-y-auto scroll-smooth p-5 md:w-[380px]"
         >
             <suspense>
                 <the-notification-menu :close="close"></the-notification-menu>

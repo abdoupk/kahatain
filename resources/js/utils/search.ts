@@ -330,7 +330,7 @@ const constructHint = (hit: Hit, indexUid: string) => {
         case 'families':
             return hit.address.zone?.name
         case 'previews':
-            return hit.preview_date
+            return formatDate(hit.preview_date, 'long')
         case 'orphans':
             return formatDate(hit.readable_birth_date, 'long')
         case 'sponsors':
