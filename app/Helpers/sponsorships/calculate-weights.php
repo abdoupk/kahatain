@@ -8,8 +8,8 @@ function calculateWeights(Family $family): float
     $calculationWeights = json_decode($family->tenant['calculation'], true)['weights']['orphans'];
 
     return $family->orphans->sum(function (Orphan $orphan) use ($calculationWeights) {
-        return calculateOrphanWeights($orphan, $calculationWeights);
-    }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
+            return calculateOrphanWeights($orphan, $calculationWeights);
+        }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
 }
 
 function calculateSponsorWeights(Family $family): float
@@ -55,7 +55,8 @@ function calculateWeightForOrphanFemaleOlderThan18(Orphan $orphan, array $weight
         'single_female_employee' => $weights['single_female_employee'],
         'married' => $weights['married'],
         'divorced_with_family' => $weights['divorced_with_family'],
-        'divorced_outside_family' => $weights['divorced_outside_family']
+        'divorced_outside_family' => $weights['divorced_outside_family'],
+        null => 1,
     };
 }
 
@@ -71,6 +72,7 @@ function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights)
         'worker_outside_family' => $weights['worker_outside_family'],
         'married_with_family' => $weights['married_with_family'],
         'married_outside_family' => $weights['married_outside_family'],
+        null => 1,
     };
 }
 
@@ -93,7 +95,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
             return $weights['lt_18']['outside_academic_season']['professionals'];
         }
 
-        return match ($orphan->academicLevel->phase) {
+        return match ($orphan->academicLevel?->phase) {
             'الطور الابتدائي' => $weights['lt_18']['outside_academic_season']['elementary_school'],
             'الطور المتوسط' => $weights['lt_18']['outside_academic_season']['middle_school'],
             'الطور الثانوي' => $weights['lt_18']['outside_academic_season']['high_school'],
@@ -117,7 +119,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
         return $weights['lt_18']['during_academic_season']['professionals'];
     }
 
-    return match ($orphan->academicLevel->phase) {
+    return match ($orphan->academicLevel?->phase) {
         'الطور الابتدائي' => $weights['lt_18']['during_academic_season']['elementary_school'],
         'الطور المتوسط' => $weights['lt_18']['during_academic_season']['middle_school'],
         'الطور الثانوي' => $weights['lt_18']['during_academic_season']['high_school'],
