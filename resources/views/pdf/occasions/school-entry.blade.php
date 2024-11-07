@@ -61,7 +61,7 @@
                 </x-td>
 
                 <x-td class="text-center ">
-                    {{ $sponsorship->orphan->lastAcademicYearAchievement?->academicLevel->level }}
+                    {{ $sponsorship->orphan->lastAcademicYearAchievement?->academicLevel?->level }}
                 </x-td>
 
                 <x-td class="text-center ">

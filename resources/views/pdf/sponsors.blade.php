@@ -81,7 +81,7 @@
                 </x-td>
 
                 <x-td class=" text-center">
-                    {{ $sponsor->academicLevel->level }}
+                    {{ $sponsor->academicLevel?->level }}
                 </x-td>
 
                 <x-td class=" text-center">

@@ -24,7 +24,7 @@ class SponsorEditResource extends JsonResource
             'father_name' => $this->father_name,
             'mother_name' => $this->mother_name,
             'birth_certificate_number' => $this->birth_certificate_number,
-            'academic_level_id' => $this->academicLevel->id,
+            'academic_level_id' => $this->academicLevel?->id,
             'function' => $this->function,
             'health_status' => $this->health_status,
             'diploma' => $this->diploma,

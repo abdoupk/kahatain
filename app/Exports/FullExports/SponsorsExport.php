@@ -56,7 +56,7 @@ class SponsorsExport implements FromCollection, WithEvents, WithHeadings, WithMa
         return [
             $row->getName(),
             $row->formattedPhoneNumber(),
-            $row->academicLevel->level,
+            $row->academicLevel?->level,
             formatCurrency($row->incomes->total_income),
             $row->birth_date,
             $row->father_name,

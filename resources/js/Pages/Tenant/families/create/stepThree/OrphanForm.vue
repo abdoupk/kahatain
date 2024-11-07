@@ -17,6 +17,7 @@ import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwit
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheBabyMilkSelector from '@/Components/Global/TheBabyMilkSelector.vue'
+import TheClothesSizeSelector from '@/Components/Global/TheClothesSizeSelector.vue'
 import TheDiapersSelector from '@/Components/Global/TheDiapersSelector.vue'
 import TheFamilyStatusSelector from '@/Components/Global/TheFamilyStatusSelector.vue'
 import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
@@ -641,16 +642,17 @@ const handleUpdateVocationalTraining = () => {
 
                 <div>
                     <!-- @vue-ignore -->
-                    <the-shoes-size-selector
+                    <the-clothes-size-selector
                         :id="`shirt_size_${index}`"
                         v-model:size="shirtSize"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('shirt_size') })"
                         @update:size="
                             form?.validate(
                                 //@ts-ignore
                                 `orphans.${index}.shirt_size`
                             )
                         "
-                    ></the-shoes-size-selector>
+                    ></the-clothes-size-selector>
                 </div>
 
                 <base-form-input-error>
@@ -680,7 +682,7 @@ const handleUpdateVocationalTraining = () => {
                 </base-form-label>
                 <div>
                     <!-- @vue-ignore -->
-                    <the-shoes-size-selector
+                    <the-clothes-size-selector
                         :id="`pants_size_${index}`"
                         v-model:size="pantsSize"
                         @update:size="
@@ -689,7 +691,7 @@ const handleUpdateVocationalTraining = () => {
                                 `orphans.${index}.pants_size`
                             )
                         "
-                    ></the-shoes-size-selector>
+                    ></the-clothes-size-selector>
                 </div>
 
                 <base-form-input-error>

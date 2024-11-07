@@ -6,6 +6,8 @@ import { onMounted, ref, watch } from 'vue'
 
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
+import { $t } from '@/utils/i18n'
+
 const size = defineModel<string>('size', { default: '' })
 
 const selectedSize = ref<ClothesSizesType | string | undefined>('')
@@ -35,6 +37,7 @@ watch(
     <base-vue-select
         v-model:value="selectedSize"
         :options="sizesStore.clothesSizes"
+        :placeholder="$t('auth.placeholders.fill', { attribute: $t('pants_size') })"
         label="name"
         track-by="id"
         @update:value="handleUpdate"

@@ -27,11 +27,11 @@ function getOrphansByAcademicLevel(): array
         ->get();
 
     $result = $orphans->groupBy(function ($orphan) {
-        return $orphan->academicLevel->phase;
+        return $orphan->academicLevel?->phase;
     })->map(function ($group) {
         return [
             'total' => $group->first()->total,
-            'phase' => $group->first()->academicLevel->phase,
+            'phase' => $group->first()->academicLevel?->phase,
         ];
     })->values()->toArray();
 

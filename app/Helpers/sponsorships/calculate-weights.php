@@ -8,8 +8,8 @@ function calculateWeights(Family $family): float
     $calculationWeights = json_decode($family->tenant['calculation'], true)['weights']['orphans'];
 
     return $family->orphans->sum(function (Orphan $orphan) use ($calculationWeights) {
-            return calculateOrphanWeights($orphan, $calculationWeights);
-        }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
+        return calculateOrphanWeights($orphan, $calculationWeights);
+    }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
 }
 
 function calculateSponsorWeights(Family $family): float
@@ -87,7 +87,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
             return $weights['lt_18']['outside_academic_season']['below_school_age'];
         }
 
-        if ($orphan->academicLevel->level === 'مفصول') {
+        if ($orphan->academicLevel?->level === 'مفصول') {
             return $weights['lt_18']['outside_academic_season']['dismissed'];
         }
 
@@ -111,7 +111,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
         return $weights['lt_18']['during_academic_season']['below_school_age'];
     }
 
-    if ($orphan->academicLevel->level === 'مفصول') {
+    if ($orphan->academicLevel?->level === 'مفصول') {
         return $weights['lt_18']['during_academic_season']['dismissed'];
     }
 

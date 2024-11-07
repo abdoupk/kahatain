@@ -135,7 +135,7 @@ const setColorSchemeClass = (colorScheme: ColorSchemesType, appearance: Appearan
 const setFontSizeClass = (fontSize: FontSizeType) => {
     const el = document.querySelectorAll('html')[0]
 
-    el.setAttribute('class', fontSize.replaceAll('_', '-'))
+    el.classList.add(fontSize.replaceAll('_', '-'))
 }
 
 const isEmpty = (value) => {

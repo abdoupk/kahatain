@@ -23,8 +23,8 @@ class EventDetailsResource extends JsonResource
             'school' => new SchoolResource($this->whenLoaded('lesson', fn () => $this->lesson->school)),
             'subject' => new SubjectResource($this->whenLoaded('lesson', fn () => $this->lesson->subject)),
             'academic_level' => $this->whenLoaded('lesson', fn () => [
-                'id' => $this->lesson->academicLevel->id,
-                'name' => $this->lesson->academicLevel->level,
+                'id' => $this->lesson->academicLevel?->id,
+                'name' => $this->lesson->academicLevel?->level,
             ]),
             'orphans' => OrphansResource::collection($this->whenLoaded('orphans')),
             'formated_date' => formatDateFromTo($this->start_date, $this->end_date),

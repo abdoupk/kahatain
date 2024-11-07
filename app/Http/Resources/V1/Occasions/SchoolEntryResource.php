@@ -31,8 +31,8 @@ class SchoolEntryResource extends JsonResource
             'orphan' => [
                 'id' => $this->orphan->id,
                 'name' => $this->orphan->getName(),
-                'academic_phase' => $this->orphan->lastAcademicYearAchievement?->academicLevel->phase,
-                'academic_level' => $this->orphan->lastAcademicYearAchievement?->academicLevel->level,
+                'academic_phase' => $this->orphan->lastAcademicYearAchievement?->academicLevel?->phase,
+                'academic_level' => $this->orphan->lastAcademicYearAchievement?->academicLevel?->level,
                 'last_year_average' => $this->orphan->lastAcademicYearAchievement?->average,
             ],
         ];

@@ -69,7 +69,7 @@
                 </x-td>
 
                 <x-td class="    text-center">
-                    {{ $orphan->academicLevel->level }}
+                    {{ $orphan->academicLevel?->level }}
                 </x-td>
 
                 <x-td class="   text-center ">
