@@ -18,7 +18,7 @@ return [
     'show' => 'تفاصيل',
     'users' => 'الأعضاء',
     'inventory' => 'المخزن',
-    'occasions' => 'المناسبات',
+    'projects' => 'المشاريع',
     'eid-al-adha' => 'عيد الأضحى',
     'ramadan-basket' => 'القفة الرمضانية',
     'eid-suit' => 'بدلة العيد',

@@ -129,50 +129,57 @@ export const useMenuStore = defineStore('menu', {
             {
                 icon: 'icon-calendar-star',
                 routeName: '',
-                title: $t('occasions'),
+                title: $t('breadcrumb.projects'),
                 ignore: !hasPermission('view_occasions'),
                 subMenu: [
+                    {
+                        icon: 'icon-money',
+                        // Ignore: !hasPermission('list_permission'),
+                        title: $t('direct_bail'),
+                        routeName: 'tenant.monthly-sponsorship.index',
+                        url: '/dashboard/projects/monthly-sponsorship'
+                    },
                     {
                         icon: 'icon-ram',
                         // Ignore: !hasPermission('list_permission'),
                         title: $t('eid_el_adha'),
                         routeName: 'tenant.occasions.eid-al-adha.index',
-                        url: '/dashboard/occasions/eid-al-adha'
+                        url: '/dashboard/projects/eid-al-adha'
                     },
                     {
                         icon: 'icon-backpack',
                         // Ignore: !hasPermission('list_permission'),
                         title: $t('school_entry'),
                         routeName: 'tenant.occasions.school-entry.index',
-                        url: '/dashboard/occasions/school-entry'
+                        url: '/dashboard/projects/school-entry'
                     },
                     {
                         icon: 'icon-moon-stars',
                         // Ignore: !hasPermission('list_permission'),
                         title: $t('eid_el_fitr'),
                         routeName: 'tenant.occasions.eid-suit.index',
-                        url: '/dashboard/occasions/eid-suit'
+                        url: '/dashboard/projects/eid-suit'
                     },
                     {
                         icon: 'icon-moon',
                         // Ignore: !hasPermission('list_permission'),
                         title: $t('ramadan basket'),
                         routeName: 'tenant.occasions.ramadan-basket.index',
-                        url: '/dashboard/occasions/ramadan-basket'
+                        url: '/dashboard/projects/ramadan-basket'
                     },
                     // {
                     //     Icon: 'icon-basket-shopping',
                     //     // Ignore: !hasPermission('list_permission'),
                     //     Title: $t('monthly basket'),
                     //     RouteName: 'tenant.occasions.monthly-basket.index',
-                    //     Url: '/dashboard/occasions/monthly-basket'
+                    //     Url: '/dashboard/projects/monthly-basket'
                     // },
                     {
                         icon: 'icon-baby-carriage',
                         // Ignore: !hasPermission('list_permission'),
                         title: $t('milk and diapers'),
                         routeName: 'tenant.occasions.babies-milk-and-diapers.index',
-                        url: '/dashboard/occasions/babies-milk-and-diapers'
+                        url: '/dashboard/projects/babies-milk-and-diapers'
                     }
                 ]
             },
@@ -230,13 +237,6 @@ export const useMenuStore = defineStore('menu', {
                 routeName: 'tenant.schools.index',
                 title: $t('private_schools'),
                 url: '/dashboard/schools'
-            },
-            {
-                icon: 'icon-money',
-                // Ignore: !hasPermission('list_permission'),
-                title: $t('direct_bail'),
-                routeName: 'tenant.monthly-sponsorship.index',
-                url: '/dashboard/monthly-sponsorship'
             },
             // eslint-disable-next-line array-element-newline
             hasPermission(['list_archive', 'list_items', 'list_trash', 'view_settings']) ? 'divider' : '',

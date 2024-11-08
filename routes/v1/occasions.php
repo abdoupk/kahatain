@@ -29,7 +29,7 @@ use App\Http\Controllers\V1\Occasions\SchoolEntry\ExportOrphansSchoolEntryXlsxCo
 use App\Http\Controllers\V1\Occasions\SchoolEntry\SaveOrphansSchoolEntryToArchiveController;
 use App\Http\Controllers\V1\Occasions\SchoolEntry\SchoolEntryIndexController;
 
-Route::prefix('occasions')->name('occasions.')->group(function (): void {
+Route::prefix('projects')->name('occasions.')->group(function (): void {
     Route::prefix('eid-al-adha')->name('eid-al-adha.')->group(function (): void {
         Route::get(
             '',
