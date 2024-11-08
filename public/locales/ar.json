@@ -367,6 +367,7 @@
     "permissions.list_items": "عرض العناصر",
     "permissions.update_inventory": "تعديل  عناصر المخزن",
     "permissions.view_item": "عرض التفاصيل",
+    "permissions.update_settings": "تعديل الإعدادات",
     "placeholders.fill_interval": " عدد الوحدات الزمنية (على سبيل المثال، الأيام والأسابيع والشهور) بين كل تكرار",
     "profile.profile_information": "معلومات الملف الشخصي",
     "profile.profile_information_hint": "تحرير المعلومات الشخصية للمستخدم",
@@ -1274,5 +1275,6 @@
     "show_zones_in_map": "اظهار المناطق في الخريطة",
     "draw_in_map": "رسم على الخريطة",
     "edit_in_map": "تعديل على الخريطة",
-    "the_category": "التصنيف"
+    "the_category": "التصنيف",
+    "the_monthly_sponsorships": "الكفالات الشهرية"
 }

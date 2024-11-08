@@ -23,7 +23,7 @@ class UpdateRamadanSponsorshipSettingsRequest extends FormRequest
             'threshold' => 'required|numeric|min:0|max:50000',
             'categories' => 'required|array',
             'categories.*.minimum' => 'required|numeric|min:0|max:50000',
-            'categories.*.maximum' => 'required|numeric|min:0|max:50000',
+            'categories.*.maximum' => 'required|numeric|min:0|max:100000',
             'categories.*.category' => 'required|string',
         ];
     }

@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
             'committees' => ['create', 'delete', 'list', 'update', 'view'],
             'benefactors' => ['create', 'delete', 'list', 'update', 'view'],
             'sponsorships' => ['create'],
-            'monthly_sponsorships' => ['update'],
+            'monthly_sponsorships' => ['update_settings'],
             'archive' => ['export', 'list', 'view'],
             'trash' => ['destroy', 'list', 'restore'],
             'occasions' => ['save', 'view', 'export'],

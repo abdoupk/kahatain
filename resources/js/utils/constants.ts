@@ -289,7 +289,7 @@ export const permissions = {
     committees: ['create', 'delete', 'list', 'update', 'view'],
     benefactors: ['create', 'delete', 'list', 'update', 'view'],
     sponsorships: ['create'],
-    monthly_sponsorships: ['update']
+    monthly_sponsorships: ['update_settings']
 }
 
 const monthAbbreviationsFrench = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']

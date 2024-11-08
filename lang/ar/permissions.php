@@ -17,4 +17,5 @@ return [
     'list_items' => 'عرض العناصر',
     'update_inventory' => 'تعديل  عناصر المخزن',
     'view_item' => 'عرض التفاصيل',
+    'update_settings' => 'تعديل الإعدادات',
 ];
