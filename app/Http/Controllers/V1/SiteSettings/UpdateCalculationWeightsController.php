@@ -25,7 +25,6 @@ class UpdateCalculationWeightsController extends Controller implements HasMiddle
 
         $data['handicapped_contribution'] = array_replace($data['handicapped_contribution'], $request->handicapped_contribution);
 
-
         auth()->user()->tenant->update([
             'calculation' => json_encode($data),
         ]);
