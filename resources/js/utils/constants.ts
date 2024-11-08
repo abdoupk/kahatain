@@ -138,10 +138,10 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
     branch_id: '',
     family_sponsorship: {
         monthly_allowance: null,
-        ramadan_basket: null,
+        ramadan_basket: true,
         zakat: null,
         housing_assistance: null,
-        eid_al_adha: null
+        eid_al_adha: true
     },
     sponsor_sponsorship: {
         medical_sponsorship: null,
@@ -151,13 +151,13 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
     },
     orphans_sponsorship: [
         {
-            medical_sponsorship: false,
-            university_scholarship: false,
-            association_trips: false,
-            summer_camp: false,
-            eid_suit: false,
-            private_lessons: false,
-            school_bag: false
+            medical_sponsorship: true,
+            university_scholarship: true,
+            association_trips: true,
+            summer_camp: true,
+            eid_suit: true,
+            private_lessons: true,
+            school_bag: true
         }
     ],
     submitted: false

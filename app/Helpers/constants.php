@@ -132,7 +132,7 @@ const CALCULATION = [
         'university_scholarship_master_two' => 7200.00,
         'university_scholarship_doctorate' => 36000.00,
         'unemployment_benefit' => 15000.00,
-        'threshold' => 8000.00,
+        'threshold' => 6000.00,
         'association_basket_value' => 4000.00,
         'categories' => [
             [
@@ -167,7 +167,7 @@ const CALCULATION = [
             ],
             [
                 'minimum' => 50000,
-                'maximum' => PHP_FLOAT_MAX,
+                'maximum' => 80000,
                 'category' => 'الصف الثالث',
             ],
         ],

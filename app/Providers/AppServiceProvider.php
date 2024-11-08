@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         JsonResource::withoutWrapping();
 
-        Carbon::setLocale(config('app.locale').'_DZ');
+        Carbon::setLocale(config('app.locale') . '_DZ');
 
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
 
@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
 
         Str::macro('domain', function (?string $domain): string {
             if (is_null($domain)) {
-                return '.'.config('tenancy.central_domains')[0];
+                return '.' . config('tenancy.central_domains')[0];
             }
             $domain = preg_replace(
                 '/[^a-zA-Z\d\s-]|^\d+|([a-zA-Z-])\d+(?=[a-zA-Z-\s])/',
@@ -47,32 +47,40 @@ class AppServiceProvider extends ServiceProvider
             );
 
             // Replace multiple spaces with a single hyphen
-            $domain = preg_replace('/\s+/', '-', (string) $domain);
+            $domain = preg_replace('/\s+/', '-', (string)$domain);
 
             // Replace multiple hyphens with a single hyphen
-            $domain = preg_replace('/--+|^-+/', '-', (string) $domain);
+            $domain = preg_replace('/--+|^-+/', '-', (string)$domain);
 
             // Remove trailing digits after a hyphen
-            $domain = preg_replace('/(-\d+)+$/', '$1', (string) $domain);
+            $domain = preg_replace('/(-\d+)+$/', '$1', (string)$domain);
 
             // Remove hyphens before digits
-            $domain = preg_replace('/-(?=\d+)/', '', (string) $domain);
+            $domain = preg_replace('/-(?=\d+)/', '', (string)$domain);
 
-            return trim((string) $domain, '-').
-                '.'.config('tenancy.central_domains')[0];
+            return trim((string)$domain, '-') .
+                '.' . config('tenancy.central_domains')[0];
         });
 
         Gate::before(static function ($user) {
             return $user->hasRole('super_admin') ? true : null;
         });
 
-        Model::preventLazyLoading(! $this->app->isProduction());
+        Model::preventLazyLoading(!$this->app->isProduction());
 
-        Model::shouldBeStrict(! $this->app->isProduction());
+        Model::shouldBeStrict(!$this->app->isProduction());
 
         Model::handleLazyLoadingViolationUsing(function ($model, $relation): void {
 
+            $full_trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 6);
+            $trace = array_pop($full_trace);
+
+            $file_parts = explode('/', $trace['file']);
+            $file = array_pop($file_parts);
+
             $class = get_class($model);
+
+            ray()->notify("Attempted to lazy load [{$relation}] on [line:{$trace['line']}] in [{$file}] for model [{$class}].");
 
             ray()->notify("Attempted to lazy load [$relation] on model [$class].");
         });
