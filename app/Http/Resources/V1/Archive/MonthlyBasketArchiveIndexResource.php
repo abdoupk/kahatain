@@ -22,9 +22,9 @@ class MonthlyBasketArchiveIndexResource extends JsonResource
                 'name' => $this->branch->name,
             ],
             'sponsor' => [
-                'id' => $this->sponsor->id,
-                'name' => $this->sponsor->getName(),
-                'phone_number' => $this->sponsor->formattedPhoneNumber(),
+                'id' => $this->sponsor?->id,
+                'name' => $this->sponsor?->getName(),
+                'phone_number' => $this->sponsor?->formattedPhoneNumber(),
             ],
             'orphans_count' => $this->orphans_count,
             'total_income' => $this->total_income,

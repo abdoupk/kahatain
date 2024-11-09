@@ -8,8 +8,8 @@ function calculateWeights(Family $family): float
     $calculationWeights = json_decode($family->tenant['calculation'], true)['weights']['orphans'];
 
     return $family->orphans->sum(function (Orphan $orphan) use ($calculationWeights) {
-        return calculateOrphanWeights($orphan, $calculationWeights);
-    }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
+            return calculateOrphanWeights($orphan, $calculationWeights);
+        }) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
 }
 
 function calculateSponsorWeights(Family $family): float
@@ -78,6 +78,8 @@ function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights)
 
 function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
 {
+    $orphan = $orphan->load('academicLevel');
+
     if (date('m') <= 9 && date('m') >= 6) {
         if ($orphan->birth_date->age < 2) {
             return $weights['lt_18']['outside_academic_season']['baby'];

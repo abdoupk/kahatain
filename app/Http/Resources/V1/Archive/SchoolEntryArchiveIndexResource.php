@@ -13,9 +13,9 @@ class SchoolEntryArchiveIndexResource extends JsonResource
         return [
             'id' => $this->id,
             'sponsor' => [
-                'id' => $this->sponsor->id,
-                'name' => $this->sponsor->getName(),
-                'phone_number' => $this->sponsor->formattedPhoneNumber(),
+                'id' => $this->sponsor?->id,
+                'name' => $this->sponsor?->getName(),
+                'phone_number' => $this->sponsor?->formattedPhoneNumber(),
             ],
             'family' => [
                 'zone' => [
