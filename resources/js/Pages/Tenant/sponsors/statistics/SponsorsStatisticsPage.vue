@@ -24,10 +24,6 @@ const SponsorsBySponsorType = defineAsyncComponent(
     () => import('@/Pages/Tenant/sponsors/statistics/SponsorsBySponsorType.vue')
 )
 
-const SponsorsBySponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/sponsors/statistics/SponsorsBySponsorship.vue')
-)
-
 defineOptions({
     layout: TheLayout
 })
@@ -74,20 +70,6 @@ defineProps<{
                 </the-statistic-box>
             </div>
             <!-- End: sponsorsByAcademicLevel -->
-
-            <!-- Begin: sponsorsBySponsorship -->
-            <div class="col-span-12 lg:col-span-6">
-                <the-statistic-box>
-                    <template #title> {{ $t('statistics.sponsors.titles.sponsors_by_sponsorship') }}</template>
-
-                    <template #chart>
-                        <suspense suspensible>
-                            <sponsors-by-sponsorship :sponsorsBySponsorship></sponsors-by-sponsorship>
-                        </suspense>
-                    </template>
-                </the-statistic-box>
-            </div>
-            <!-- End: sponsorsBySponsorship -->
 
             <!-- Begin: sponsorsByDiploma -->
             <div class="col-span-12 lg:col-span-6">

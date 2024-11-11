@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class LessonShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_lesson'];
+    }
+
     public function __invoke(EventOccurrence $eventOccurrence)
     {
         return response()->json([
@@ -23,10 +28,5 @@ class LessonShowController extends Controller implements HasMiddleware
                 )
             ),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_lesson'];
     }
 }

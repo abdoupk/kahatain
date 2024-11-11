@@ -10,6 +10,11 @@ use Inertia\Inertia;
 
 class BabyMilkAndDiapersIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_occasions'];
+    }
+
     public function __invoke()
     {
         return Inertia::render('Tenant/occasions/babies/BabyMilkAndDiapersIndex', [
@@ -23,10 +28,5 @@ class BabyMilkAndDiapersIndexController extends Controller implements HasMiddlew
                 ->select(['id', 'saved_by', 'created_at'])
                 ->first(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_occasions'];
     }
 }

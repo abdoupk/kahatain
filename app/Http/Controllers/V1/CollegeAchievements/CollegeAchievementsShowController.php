@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CollegeAchievementsShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_orphans'];
+    }
+
     public function __invoke(CollegeAchievement $collegeAchievement)
     {
         return response()->json([
             'college_achievement' => new CollegeAchievementResource($collegeAchievement->load('academicLevel')),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_orphans'];
     }
 }

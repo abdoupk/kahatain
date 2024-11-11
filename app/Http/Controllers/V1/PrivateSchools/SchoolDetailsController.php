@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SchoolDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_schools'];
+    }
+
     public function __invoke(PrivateSchool $school)
     {
         return response()->json([
@@ -18,10 +23,5 @@ class SchoolDetailsController extends Controller implements HasMiddleware
                 )->loadCount('lessons')
             ),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_schools'];
     }
 }

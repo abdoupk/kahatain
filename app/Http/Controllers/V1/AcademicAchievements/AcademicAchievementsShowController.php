@@ -9,17 +9,17 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class AcademicAchievementsShowController extends Controller implements HasMiddleware
 {
-    public function __invoke(AcademicAchievement $academicAchievement)
-    {
-        return response()->json([
-            'academic_achievement' => new AcademicAchievementResource($academicAchievement),
-        ]);
-    }
-
     public static function middleware()
     {
         return [
             'can:view_orphans',
         ];
+    }
+
+    public function __invoke(AcademicAchievement $academicAchievement)
+    {
+        return response()->json([
+            'academic_achievement' => new AcademicAchievementResource($academicAchievement),
+        ]);
     }
 }

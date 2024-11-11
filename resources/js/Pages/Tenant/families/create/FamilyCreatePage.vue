@@ -17,7 +17,6 @@ import {
     createFamilyStepFiveErrorProps,
     createFamilyStepFourErrorProps,
     createFamilyStepOneErrorProps,
-    createFamilyStepSixErrorProps,
     createFamilyStepsTitles,
     createFamilyStepThreeErrorProps,
     createFamilyStepTwoErrorProps
@@ -53,12 +52,6 @@ const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/B
 
 const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
-const FamilySponsorShipForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepFive/FamilySponsorShipForm.vue'))
-
-const SponsorSponsorShipForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepFive/SponsorSponsorShipForm.vue'))
-
-const OrphansSponsorShipForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepFive/OrphansSponsorShipForm.vue'))
-
 const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
 defineOptions({
@@ -81,17 +74,14 @@ const StepFour = defineAsyncComponent({
     loader: () => import('@/Pages/Tenant/families/create/stepFour/StepFour.vue')
 })
 
+
 const StepFive = defineAsyncComponent({
     loader: () => import('@/Pages/Tenant/families/create/stepFive/StepFive.vue')
 })
 
-const StepSix = defineAsyncComponent({
-    loader: () => import('@/Pages/Tenant/families/create/stepSix/StepSix.vue')
-})
+const currentStep = ref(1)
 
-const currentStep = ref(3)
-
-const totalSteps = 6
+const totalSteps = 5
 
 const creatingCompleted = ref(false)
 
@@ -128,16 +118,6 @@ const addOrphan = () => {
         is_unemployed: false,
         is_handicapped: false,
         first_name: ''
-    })
-
-    form.orphans_sponsorship.push({
-        medical_sponsorship: false,
-        private_lessons: false,
-        school_bag: false,
-        summer_camp: false,
-        university_scholarship: false,
-        association_trips: false,
-        eid_suit: false
     })
 }
 
@@ -240,21 +220,11 @@ const goTo = async (index: number) => {
                 }
             })
         }
-
-        if (index === 6) {
-            await validateStep(createFamilyStepFiveErrorProps, stepFiveCompleted).finally(() => {
-                if (stepOneCompleted.value && stepTwoCompleted.value && stepThreeCompleted.value && stepFourCompleted.value && stepFiveCompleted.value) {
-                    forgetErrors(createFamilyStepSixErrorProps)
-
-                    currentStep.value = 6
-                }
-            })
-        }
     }
 }
 
 watch(() => currentStep.value, () => {
-    form.submitted = currentStep.value === 6
+    form.submitted = currentStep.value === 5
 })
 
 const submit = () => {
@@ -468,55 +438,15 @@ const submit = () => {
 
                     <Suspense v-if="currentStep === 5">
                         <template #default>
-                            <step-five :currentStep :form :totalSteps>
-                                <template #FamilySponsorShipForm>
-                                    <family-sponsor-ship-form
-                                        v-model:eid-al-adha="form.family_sponsorship.eid_al_adha"
-                                        v-model:housing-assistance="form.family_sponsorship.housing_assistance"
-                                        v-model:monthly-allowance="form.family_sponsorship.monthly_allowance"
-                                        v-model:ramadan-basket="form.family_sponsorship.ramadan_basket"
-                                        v-model:zakat="form.family_sponsorship.zakat"
-                                    ></family-sponsor-ship-form>
-                                </template>
-
-                                <template #SponsorSponsorShipForm>
-                                    <sponsor-sponsor-ship-form
-                                        v-model:direct-sponsorship="form.sponsor_sponsorship.direct_sponsorship"
-                                        v-model:literacy-lessons="form.sponsor_sponsorship.literacy_lessons"
-                                        v-model:medical-sponsorship="form.sponsor_sponsorship.medical_sponsorship"
-                                        v-model:project-support="form.sponsor_sponsorship.project_support"
-                                    ></sponsor-sponsor-ship-form>
-                                </template>
-
-                                <template #OrphansSponsorShipForm>
-                                    <template v-for="(orphanSponsorship,index) in form.orphans_sponsorship"
-                                              :key="`orphan-${index}`">
-                                        <orphans-sponsor-ship-form
-                                            :form :index
-                                            @update:orphans-sponsorship="form.orphans_sponsorship[index] = {...$event}"></orphans-sponsor-ship-form>
-                                    </template>
-                                </template>
-
-                                <the-actions :currentStep :nextStep :prevStep :totalSteps :validating></the-actions>
-                            </step-five>
-                        </template>
-
-                        <template #fallback>
-                            <step-loader></step-loader>
-                        </template>
-                    </Suspense>
-
-                    <Suspense v-if="currentStep === 6">
-                        <template #default>
-                            <step-six v-model:inspectors-members="form.inspectors_members"
-                                      v-model:preview-date="form.preview_date"
-                                      v-model:report="form.report" :currentStep
-                                      :form
-                                      :members
-                                      :totalSteps>
+                            <step-five v-model:inspectors-members="form.inspectors_members"
+                                       v-model:preview-date="form.preview_date"
+                                       v-model:report="form.report" :currentStep
+                                       :form
+                                       :members
+                                       :totalSteps>
                                 <the-actions :currentStep :nextStep="submit" :prevStep :totalSteps
                                              :validating></the-actions>
-                            </step-six>
+                            </step-five>
                         </template>
 
                         <template #fallback>

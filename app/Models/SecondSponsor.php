@@ -47,6 +47,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|SecondSponsor withTrashed()
  * @method static Builder|SecondSponsor withoutTrashed()
  *
+ * @property bool $with_family
+ *
+ * @method static Builder<static>|SecondSponsor whereWithFamily($value)
+ *
  * @mixin Eloquent
  */
 class SecondSponsor extends Model

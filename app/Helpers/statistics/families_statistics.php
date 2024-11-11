@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Family;
-use App\Models\FamilySponsorship;
 use App\Models\Housing;
 
 function getFamiliesGroupedByZone(): array
@@ -52,24 +51,6 @@ function getFamiliesGroupedByOrphansCount(): array
     return [
         'total_families' => $families->pluck('total_families')->toArray(),
         'orphans_count' => $families->pluck('orphans_count')->toArray(),
-    ];
-}
-
-function getFamiliesSponsorShips(): array
-{
-    $sponsorships = FamilySponsorship::selectRaw('
-    SUM(CASE WHEN ramadan_basket != \'0\'  THEN 1 ELSE 0 END) AS ramadan_basket_count,
-    SUM(CASE WHEN zakat != \'0\' THEN 1 ELSE 0 END) AS zakat_count,
-    SUM(CASE WHEN housing_assistance != \'0\' THEN 1 ELSE 0 END) AS housing_assistance_count,
-     SUM(CASE WHEN eid_al_adha != \'0\' THEN 1 ELSE 0 END) AS eid_al_adha_count
-')
-        ->first();
-
-    return [
-        'ramadan_basket_count' => $sponsorships->ramadan_basket_count,
-        'zakat_count' => $sponsorships->zakat_count,
-        'housing_assistance_count' => $sponsorships->housing_assistance_count,
-        'eid_al_adha_count' => $sponsorships->eid_al_adha_count,
     ];
 }
 

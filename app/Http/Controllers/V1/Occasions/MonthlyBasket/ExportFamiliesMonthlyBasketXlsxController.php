@@ -9,6 +9,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExportFamiliesMonthlyBasketXlsxController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     public function __invoke()
     {
         return Excel::download(
@@ -18,10 +23,5 @@ class ExportFamiliesMonthlyBasketXlsxController extends Controller implements Ha
                 ['date' => now()->translatedFormat('F Y')]
             ).'.xlsx'
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
     }
 }

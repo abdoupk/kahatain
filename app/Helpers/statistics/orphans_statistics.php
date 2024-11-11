@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Orphan;
-use App\Models\OrphanSponsorship;
 
 function getOrphansByFamilyStatus(): array
 {
@@ -38,30 +37,6 @@ function getOrphansByAcademicLevel(): array
     return [
         'labels' => array_column($result, 'phase'),
         'data' => array_column($result, 'total'),
-    ];
-}
-
-function getOrphansBySponsorship(): array
-{
-    $sponsorships = OrphanSponsorship::selectRaw('
-    SUM(CASE WHEN medical_sponsorship THEN 1 ELSE 0 END) AS medical_sponsorship_count,
-    SUM(CASE WHEN university_scholarship THEN 1 ELSE 0 END) AS university_scholarship_count,
-    SUM(CASE WHEN association_trips THEN 1 ELSE 0 END) AS association_trips_count,
-    SUM(CASE WHEN eid_suit THEN 1 ELSE 0 END) AS eid_suit_count,
-    SUM(CASE WHEN private_lessons THEN 1 ELSE 0 END) AS private_lessons_count,
-     SUM(CASE WHEN school_bag THEN 1 ELSE 0 END) AS school_bag_count,
-     SUM(CASE WHEN summer_camp THEN 1 ELSE 0 END) AS summer_camp_count
-')
-        ->first();
-
-    return [
-        'medical_sponsorship' => $sponsorships->medical_sponsorship_count,
-        'university_scholarship' => $sponsorships->university_scholarship_count,
-        'association_trips' => $sponsorships->association_trips_count,
-        'eid_suit' => $sponsorships->eid_suit_count,
-        'private_lessons' => $sponsorships->private_lessons_count,
-        'school_bag' => $sponsorships->school_bag_count,
-        'summer_camp' => $sponsorships->summer_camp_count,
     ];
 }
 

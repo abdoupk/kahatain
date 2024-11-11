@@ -8,15 +8,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class VocationalTrainingAchievementsDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_orphans'];
+    }
+
     public function __invoke(VocationalTrainingAchievement $vocationalTrainingAchievement)
     {
         $vocationalTrainingAchievement->delete();
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_orphans'];
     }
 }

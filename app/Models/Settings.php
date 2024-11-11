@@ -43,6 +43,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Settings whereUpdatedAt($value)
  * @method static Builder|Settings whereUserId($value)
  *
+ * @property string $font_size
+ *
+ * @method static Builder<static>|Settings whereFontSize($value)
+ *
  * @mixin Eloquent
  */
 class Settings extends Model

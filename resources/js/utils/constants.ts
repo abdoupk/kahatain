@@ -50,7 +50,7 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
         is_unemployed: false,
         last_name: '',
         phone_number: '',
-        birth_date: new Date(),
+        birth_date: null,
         father_name: '',
         mother_name: '',
         birth_certificate_number: '',
@@ -190,8 +190,7 @@ export const createFamilyStepsTitles = [
     'families.create_family.stepTwo',
     'families.create_family.stepThree',
     'families.create_family.stepFour',
-    'families.create_family.stepFive',
-    'families.create_family.stepSix'
+    'families.create_family.stepFive'
 ]
 
 export const createFamilyStepOneErrorProps: CreateFamilyStepOneProps[] = [
@@ -207,9 +206,7 @@ export const createFamilyStepThreeErrorProps = ['orphans']
 
 export const createFamilyStepFourErrorProps = ['housing', 'furnishings']
 
-export const createFamilyStepSixErrorProps = ['report', 'preview_date', 'inspectors_members']
-
-export const createFamilyStepFiveErrorProps = ['sponsorship']
+export const createFamilyStepFiveErrorProps = ['report', 'preview_date', 'inspectors_members']
 
 export const needStatuses = [
     {

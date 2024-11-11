@@ -14,7 +14,6 @@ class FamiliesStatisticsController extends Controller
             'familiesByZone' => fn () => getFamiliesGroupedByZone(),
             'familiesByBranch' => fn () => getFamiliesGroupedByBranch(),
             'familiesByOrphansCount' => fn () => getFamiliesGroupedByOrphansCount(),
-            'familiesSponsorShips' => fn () => getFamiliesSponsorShips(),
             'familiesHousing' => fn () => getFamiliesHousingTypes(),
             'familiesGroupByDate' => fn () => getFamiliesGroupByDate(),
         ]);

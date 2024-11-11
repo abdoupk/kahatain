@@ -2,9 +2,27 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * @property string $id
+ * @property string $user_id
+ * @property string $committee_id
+ * @property string $tenant_id
+ *
+ * @method static Builder<static>|CommitteeUser newModelQuery()
+ * @method static Builder<static>|CommitteeUser newQuery()
+ * @method static Builder<static>|CommitteeUser query()
+ * @method static Builder<static>|CommitteeUser whereCommitteeId($value)
+ * @method static Builder<static>|CommitteeUser whereId($value)
+ * @method static Builder<static>|CommitteeUser whereTenantId($value)
+ * @method static Builder<static>|CommitteeUser whereUserId($value)
+ *
+ * @mixin Eloquent
+ */
 class CommitteeUser extends Pivot
 {
     use HasUuids;

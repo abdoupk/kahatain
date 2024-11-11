@@ -10,6 +10,11 @@ use Inertia\Inertia;
 
 class EidSuitIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_occasions'];
+    }
+
     public function __invoke()
     {
         return Inertia::render('Tenant/occasions/eid-suit/EidSuitIndex', [
@@ -18,10 +23,5 @@ class EidSuitIndexController extends Controller implements HasMiddleware
             'archive' => fn () => Archive::with('savedBy:id,first_name,last_name')->whereOccasion('eid_suit')
                 ->whereYear('created_at', now()->year)->select(['id', 'saved_by', 'created_at'])->first(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_occasions'];
     }
 }

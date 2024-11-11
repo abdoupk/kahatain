@@ -9,16 +9,16 @@ use Inertia\Inertia;
 
 class InventoryIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_items'];
+    }
+
     public function __invoke()
     {
         return Inertia::render('Tenant/inventory/index/InventoryIndexPage', [
             'items' => ItemsIndexResource::collection(getInventoryItems()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_items'];
     }
 }

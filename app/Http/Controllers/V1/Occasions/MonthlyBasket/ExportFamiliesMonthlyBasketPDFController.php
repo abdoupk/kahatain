@@ -10,6 +10,11 @@ use Throwable;
 
 class ExportFamiliesMonthlyBasketPDFController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
@@ -19,10 +24,5 @@ class ExportFamiliesMonthlyBasketPDFController extends Controller implements Has
         return saveToPDF('occasions/monthly-basket-families', 'sponsorships', function () {
             return listOfFamiliesBenefitingFromTheMonthlyBasketForExport();
         }, now()->translatedFormat('F Y'));
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
     }
 }

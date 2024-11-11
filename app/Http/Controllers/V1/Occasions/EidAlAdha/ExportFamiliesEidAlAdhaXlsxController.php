@@ -11,6 +11,11 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportFamiliesEidAlAdhaXlsxController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     /**
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -24,10 +29,5 @@ class ExportFamiliesEidAlAdhaXlsxController extends Controller implements HasMid
                 ['date' => now()->year]
             ).'.xlsx'
         );
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
     }
 }

@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ItemShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:add_to_inventory'];
+    }
+
     public function __invoke(Inventory $item)
     {
         return response()->json([
             'item' => ItemResource::make($item),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:add_to_inventory'];
     }
 }

@@ -709,19 +709,6 @@ export type IncomeType = {
     account: number
 }
 
-export type FamilySponsorship = 'monthly_allowance' | 'ramadan_basket' | 'zakat' | 'housing_assistance' | 'eid_al_adha'
-
-export type SponsorSponsorship = 'medical_sponsorship' | 'literacy_lessons' | 'direct_sponsorship' | 'project_support'
-
-export type OrphanSponsorship =
-    | 'medical_sponsorship'
-    | 'university_scholarship'
-    | 'association_trips'
-    | 'summer_camp'
-    | 'eid_suit'
-    | 'private_lessons'
-    | 'school_bag'
-
 export type FurnishingsType =
     | 'television'
     | 'refrigerator'
@@ -742,8 +729,8 @@ export type CreateFamilyForm = {
         lng: number | null
     }
     zone_id: string
-    start_date: string
-    file_number: string
+    start_date: string | Date | null
+    file_number: number
     sponsor: SponsorType
     incomes: IncomeType
     second_sponsor: SecondSponsorType
@@ -764,9 +751,6 @@ export type CreateFamilyForm = {
     preview_date: string
     inspectors_members: string | string[]
     branch_id: string
-    family_sponsorship: Record<FamilySponsorship, string | number | null>
-    sponsor_sponsorship: Record<SponsorSponsorship, string | number | null>
-    orphans_sponsorship: Array<Record<OrphanSponsorship, any>>
 }
 
 export type InspectorsMembersType = Array<{ id: string; name: string }>

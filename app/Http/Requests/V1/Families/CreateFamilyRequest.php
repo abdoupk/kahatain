@@ -32,7 +32,7 @@ class CreateFamilyRequest extends FormRequest
     {
         $baby_milk_and_diapers_required = 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
 ,orphans.*.shirt_size,orphans.*.pants_size';
-        $pants_and_shoes_and_shirt_required = 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type|integer';
+        $pants_and_shoes_and_shirt_required = 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type';
 
         return [
             'submitted' => 'boolean',
@@ -90,7 +90,7 @@ class CreateFamilyRequest extends FormRequest
             'inspectors_members.*' => 'required|exists:App\Models\User,id',
             'report' => 'required|string',
             'branch_id' => 'required|exists:App\Models\Branch,id',
-            'orphans.*.income' => 'required|numeric',
+            'orphans.*.income' => 'nullable|numeric',
             'orphans.*.shoes_size' => $pants_and_shoes_and_shirt_required,
             'orphans.*.shirt_size' => $pants_and_shoes_and_shirt_required,
             'orphans.*.pants_size' => $pants_and_shoes_and_shirt_required,

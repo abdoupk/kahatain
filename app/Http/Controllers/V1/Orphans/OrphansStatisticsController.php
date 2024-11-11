@@ -13,7 +13,6 @@ class OrphansStatisticsController extends Controller
         return Inertia::render('Tenant/orphans/statistics/OrphansStatisticsPage', [
             'orphansByFamilyStatus' => getOrphansByFamilyStatus(),
             'orphansByAcademicLevel' => getOrphansByAcademicLevel(),
-            'orphansBySponsorship' => getOrphansBySponsorship(),
             'orphansByGender' => getOrphansByGender(),
             'orphansByAge' => getOrphansByAge(),
             'orphansByZone' => getOrphansByZone(),

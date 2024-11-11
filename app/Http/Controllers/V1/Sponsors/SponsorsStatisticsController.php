@@ -13,7 +13,6 @@ class SponsorsStatisticsController extends Controller
         return Inertia::render('Tenant/sponsors/statistics/SponsorsStatisticsPage', [
             'sponsorsBySponsorType' => getSponsorsBySponsorType(),
             'sponsorsByAcademicLevel' => getSponsorsByAcademicLevel(),
-            'sponsorsBySponsorship' => getSponsorsBySponsorship(),
             'sponsorsByDiploma' => getSponsorsByDiploma(),
         ]);
     }

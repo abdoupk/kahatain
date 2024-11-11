@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\FamilyFactory;
 use DB;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,12 +17,96 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-class Family extends Model
+/**
+ * @property string $id
+ * @property string $name
+ * @property string $zone_id
+ * @property string|null $branch_id
+ * @property string $address
+ * @property array|null $location
+ * @property string|null $file_number
+ * @property Carbon|null $start_date
+ * @property float|null $income_rate
+ * @property float|null $total_income
+ * @property float|null $difference_before_monthly_sponsorship
+ * @property float|null $difference_after_monthly_sponsorship
+ * @property float|null $monthly_sponsorship_rate
+ * @property float|null $amount_from_association
+ * @property float|null $difference_before_ramadan_sponsorship
+ * @property string $tenant_id
+ * @property string|null $created_by
+ * @property string|null $deleted_by
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection<int, Sponsorship> $aid
+ * @property-read int|null $aid_count
+ * @property-read Collection<int, Archive> $archives
+ * @property-read int|null $archives_count
+ * @property-read Collection<int, Baby> $babies
+ * @property-read int|null $babies_count
+ * @property-read Branch|null $branch
+ * @property-read User|null $creator
+ * @property-read Spouse|null $deceased
+ * @property-read Furnishing|null $furnishings
+ * @property-read Housing|null $housing
+ * @property-read MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
+ * @property-read Collection<int, Orphan> $orphans
+ * @property-read int|null $orphans_count
+ * @property-read Collection<int, Need> $orphansNeeds
+ * @property-read int|null $orphans_needs_count
+ * @property-read Preview|null $preview
+ * @property-read SecondSponsor|null $secondSponsor
+ * @property-read Sponsor|null $sponsor
+ * @property-read Collection<int, Need> $sponsorsNeeds
+ * @property-read int|null $sponsors_needs_count
+ * @property-read Spouse|null $spouse
+ * @property-read Tenant $tenant
+ * @property-read Zone|null $zone
+ *
+ * @method static FamilyFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Family newModelQuery()
+ * @method static Builder<static>|Family newQuery()
+ * @method static Builder<static>|Family onlyTrashed()
+ * @method static Builder<static>|Family query()
+ * @method static Builder<static>|Family whereAddress($value)
+ * @method static Builder<static>|Family whereAmountFromAssociation($value)
+ * @method static Builder<static>|Family whereBranchId($value)
+ * @method static Builder<static>|Family whereCreatedAt($value)
+ * @method static Builder<static>|Family whereCreatedBy($value)
+ * @method static Builder<static>|Family whereDeletedAt($value)
+ * @method static Builder<static>|Family whereDeletedBy($value)
+ * @method static Builder<static>|Family whereDifferenceAfterMonthlySponsorship($value)
+ * @method static Builder<static>|Family whereDifferenceBeforeMonthlySponsorship($value)
+ * @method static Builder<static>|Family whereDifferenceBeforeRamadanSponsorship($value)
+ * @method static Builder<static>|Family whereFileNumber($value)
+ * @method static Builder<static>|Family whereId($value)
+ * @method static Builder<static>|Family whereIncomeRate($value)
+ * @method static Builder<static>|Family whereLocation($value)
+ * @method static Builder<static>|Family whereMonthlySponsorshipRate($value)
+ * @method static Builder<static>|Family whereName($value)
+ * @method static Builder<static>|Family whereStartDate($value)
+ * @method static Builder<static>|Family whereTenantId($value)
+ * @method static Builder<static>|Family whereTotalIncome($value)
+ * @method static Builder<static>|Family whereUpdatedAt($value)
+ * @method static Builder<static>|Family whereZoneId($value)
+ * @method static Builder<static>|Family withTrashed()
+ * @method static Builder<static>|Family withoutTrashed()
+ *
+ * @mixin Eloquent
+ */
+class Family extends Model implements HasMedia
 {
-    use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
+    use BelongsToTenant, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',

@@ -10,6 +10,13 @@ use Inertia\Response;
 
 class CommitteesIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            'can:list_zones',
+        ];
+    }
+
     public function __invoke(): Response
     {
         ray(CommitteesIndexResource::collection(getCommittees()));
@@ -18,12 +25,5 @@ class CommitteesIndexController extends Controller implements HasMiddleware
             'committees' => CommitteesIndexResource::collection(getCommittees()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware(): array
-    {
-        return [
-            'can:list_zones',
-        ];
     }
 }

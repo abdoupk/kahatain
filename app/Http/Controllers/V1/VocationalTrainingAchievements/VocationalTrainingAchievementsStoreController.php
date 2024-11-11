@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class VocationalTrainingAchievementsStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_orphans'];
+    }
+
     public function __invoke(VocationalTrainingAchievementsCreateRequest $request)
     {
         VocationalTrainingAchievement::create($request->validated());
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_orphans'];
     }
 }

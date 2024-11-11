@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
@@ -41,6 +43,15 @@ use Stancl\Tenancy\Database\TenantCollection;
  * @method static Builder|Tenant whereData($value)
  * @method static Builder|Tenant whereId($value)
  * @method static Builder|Tenant whereUpdatedAt($value)
+ *
+ * @property-read Collection<int, Benefactor> $benefactors
+ * @property-read int|null $benefactors_count
+ * @property-read Collection<int, Branch> $branches
+ * @property-read int|null $branches_count
+ * @property-read MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
+ * @property-read Collection<int, Zone> $zones
+ * @property-read int|null $zones_count
  *
  * @mixin Eloquent
  */

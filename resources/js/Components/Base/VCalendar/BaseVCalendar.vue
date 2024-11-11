@@ -11,7 +11,7 @@ import { getLocale } from '@/utils/i18n'
 
 const settingsStore = useSettingsStore()
 
-const date = defineModel('date')
+const date = defineModel('date', { default: null })
 
 const masks = ref({
     input: 'DD/MM/YYYY'

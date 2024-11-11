@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Sponsor;
-use App\Models\SponsorSponsorship;
 
 function getSponsorsBySponsorType(): array
 {
@@ -33,24 +32,6 @@ function getSponsorsByAcademicLevel(): array
     return [
         'labels' => array_column($result, 'phase'),
         'data' => array_column($result, 'total'),
-    ];
-}
-
-function getSponsorsBySponsorship(): array
-{
-    $sponsorships = SponsorSponsorship::selectRaw('
-    SUM(CASE WHEN literacy_lessons != \'0\' THEN 1 ELSE 0 END) AS literacy_lessons_count,
-    SUM(CASE WHEN direct_sponsorship != \'0\' THEN 1 ELSE 0 END) AS direct_sponsorship_count,
-    SUM(CASE WHEN project_support != \'0\' THEN 1 ELSE 0 END) AS project_support_count,
-     SUM(CASE WHEN medical_sponsorship != \'0\' THEN 1 ELSE 0 END) AS medical_sponsorship_count
-')
-        ->first();
-
-    return [
-        'literacy_lessons' => $sponsorships->literacy_lessons_count,
-        'direct_sponsorship' => $sponsorships->direct_sponsorship_count,
-        'project_support' => $sponsorships->project_support_count,
-        'medical_sponsorship' => $sponsorships->medical_sponsorship_count,
     ];
 }
 

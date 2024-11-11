@@ -9,6 +9,11 @@ use Throwable;
 
 class ExportFinancialTransactionsPDFController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_financial_transactions'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
@@ -16,10 +21,5 @@ class ExportFinancialTransactionsPDFController extends Controller implements Has
     public function __invoke()
     {
         return saveToPDF('financial-transactions', 'transactions', fn () => getFinancesForExport());
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_financial_transactions'];
     }
 }

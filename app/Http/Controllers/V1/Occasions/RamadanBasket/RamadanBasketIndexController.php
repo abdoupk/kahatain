@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class RamadanBasketIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_occasions'];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/occasions/ramadan-basket/RamadanBasketIndex', [
@@ -19,10 +24,5 @@ class RamadanBasketIndexController extends Controller implements HasMiddleware
             'archive' => fn () => Archive::with('savedBy:id,first_name,last_name')->whereOccasion('ramadan_basket')
                 ->whereYear('created_at', now()->year)->select(['id', 'saved_by', 'created_at'])->first(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_occasions'];
     }
 }

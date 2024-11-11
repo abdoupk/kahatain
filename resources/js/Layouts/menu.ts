@@ -62,9 +62,13 @@ const linkTo = async (menu: IFormattedMenu, event: Event) => {
     } else {
         event.preventDefault()
 
-        setTimeout(() => {
-            router.get(menu.routeName !== '' ? route(menu.routeName) : '#')
-        }, 300)
+        if (menu.url === usePage().url) {
+            return
+        }
+
+        console.log(menu.url)
+
+        router.get(menu.routeName !== '' ? route(menu.routeName) : '#')
     }
 }
 

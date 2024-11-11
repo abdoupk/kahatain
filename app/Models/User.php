@@ -88,6 +88,23 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|User withoutRole($roles, $guard = null)
  * @method static Builder|User withoutTrashed()
  *
+ * @property array|null $location
+ * @property string|null $workplace
+ * @property string|null $function
+ * @property int|null $academic_level_id
+ * @property string|null $created_by
+ * @property-read AcademicLevel|null $academicLevel
+ * @property-read Collection<int, Committee> $committees
+ * @property-read int|null $committees_count
+ * @property-read Collection<int, competence> $competences
+ * @property-read int|null $competences_count
+ *
+ * @method static Builder<static>|User whereAcademicLevelId($value)
+ * @method static Builder<static>|User whereCreatedBy($value)
+ * @method static Builder<static>|User whereFunction($value)
+ * @method static Builder<static>|User whereLocation($value)
+ * @method static Builder<static>|User whereWorkplace($value)
+ *
  * @mixin Eloquent
  */
 class User extends Authenticatable

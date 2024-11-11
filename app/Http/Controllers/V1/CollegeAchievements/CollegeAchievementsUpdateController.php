@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CollegeAchievementsUpdateController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_orphans'];
+    }
+
     public function __invoke(CollegeAchievementsUpdateRequest $request, CollegeAchievement $collegeAchievement)
     {
         $collegeAchievement->update($request->validated());
@@ -19,10 +24,5 @@ class CollegeAchievementsUpdateController extends Controller implements HasMiddl
         dispatch(new OrphanUpdatedJob($collegeAchievement->orphan, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_orphans'];
     }
 }

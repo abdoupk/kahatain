@@ -18,7 +18,7 @@ const zone = defineModel('zone', { default: '' })
 
 const branch = defineModel('branch', { default: '' })
 
-const startDate = defineModel('startDate', { default: '' })
+const startDate = defineModel('startDate', { default: null })
 
 const address = defineModel('address')
 
@@ -72,7 +72,7 @@ const fileNumber = defineModel('fileNumber')
                     {{ $t('validation.attributes.starting_sponsorship_date') }}
                 </base-form-label>
 
-                <base-v-calendar v-model:date="startDate"></base-v-calendar>
+                <base-v-calendar v-model:date="startDate" @update:date="form?.validate('start_date')"></base-v-calendar>
 
                 <base-form-input-error>
                     <div
@@ -134,7 +134,7 @@ const fileNumber = defineModel('fileNumber')
                     v-model:address="address"
                     v-model:location="location"
                     :select_location_label="$t('hints.select_family_location')"
-                    @input="form?.validate('address')"
+                    @update:address="form?.validate('address')"
                 ></the-address-field>
 
                 <base-form-input-error>

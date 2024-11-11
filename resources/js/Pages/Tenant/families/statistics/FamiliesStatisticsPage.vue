@@ -4,8 +4,7 @@ import type {
     FamiliesByOrphansCountType,
     FamiliesByZoneType,
     FamiliesGroupByDateType,
-    FamiliesHousingType,
-    FamiliesSponsorShipsType
+    FamiliesHousingType
 } from '@/types/statistics'
 
 import { Head } from '@inertiajs/vue3'
@@ -24,10 +23,6 @@ const FamiliesByOrphansCount = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/statistics/FamiliesByOrphansCount.vue')
 )
 
-const FamiliesBySponsorShip = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/statistics/FamiliesBySponsorShip.vue')
-)
-
 const FamiliesByStartDateYear = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/statistics/FamiliesByStartDateYear.vue')
 )
@@ -42,7 +37,6 @@ defineProps<{
     familiesByZone: FamiliesByZoneType
     familiesByBranch: FamiliesByBranchType
     familiesByOrphansCount: FamiliesByOrphansCountType
-    familiesSponsorShips: FamiliesSponsorShipsType
     familiesGroupByDate: FamiliesGroupByDateType
     familiesHousing: FamiliesHousingType
 }>()
@@ -110,20 +104,6 @@ defineProps<{
                 </the-statistic-box>
             </div>
             <!-- End: Start Date -->
-
-            <!-- Begin: Sponsorships -->
-            <div class="col-span-12 lg:col-span-6">
-                <the-statistic-box>
-                    <template #title> {{ $t('statistics.families.titles.families_by_sponsorships') }}</template>
-
-                    <template #chart>
-                        <suspense suspensible>
-                            <families-by-sponsor-ship :familiesSponsorShips></families-by-sponsor-ship>
-                        </suspense>
-                    </template>
-                </the-statistic-box>
-            </div>
-            <!-- End: Sponsorships -->
 
             <!-- Begin: Housing Type -->
             <div class="col-span-12 lg:col-span-6">

@@ -149,7 +149,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
                         ></base-form-check-input>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-3">
+                    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
                         <div v-for="permission in permissionMaps" :key="permission">
                             <base-form-switch>
                                 <base-form-switch-input
@@ -166,7 +166,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
                                     type="checkbox"
                                 ></base-form-switch-input>
 
-                                <base-form-switch-label class="whitespace-nowrap" :for="`${permission}_${key}`">
+                                <base-form-switch-label :for="`${permission}_${key}`" class="whitespace-nowrap">
                                     <template v-if="permission === 'list'">
                                         {{
                                             $t('permissions.list', {

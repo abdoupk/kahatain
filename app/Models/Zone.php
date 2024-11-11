@@ -50,6 +50,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Zone withTrashed()
  * @method static Builder|Zone withoutTrashed()
  *
+ * @property array|null $geom
+ *
+ * @method static Builder<static>|Zone whereGeom($value)
+ *
  * @mixin Eloquent
  */
 class Zone extends Model
