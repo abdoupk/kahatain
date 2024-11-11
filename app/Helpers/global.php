@@ -26,17 +26,17 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
         $disk->makeDirectory($directory);
     }
 
-    $pdfName = Str::replace('-', '_', explode('/', "{$directory}/{$variableName}")[1]);
+    $pdfName = Str::replace('-', '_', explode('/', "$directory/$variableName")[1]);
 
     $pdfName = __('exports.'.$pdfName, [
         'date' => $date,
     ]);
 
-    $pdfFile = "{$directory}/{$pdfName}".'.pdf';
+    $pdfFile = "$directory/$pdfName".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
-    Browsershot::html(view("pdf.{$directory}", [
+    Browsershot::html(view("pdf.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
     ])
@@ -44,8 +44,8 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
         ->ignoreHttpsErrors()
         ->noSandbox()
         ->format('A4')
-        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
+//        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
+//        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
         ->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
@@ -61,11 +61,11 @@ function saveArchiveToPDF(
     string $directory,
     callable $function,
     string $date,
-    ?string $variableName = 'sponsorships'
+    ?string $variableName = 'families'
 ): StreamedResponse {
     $disk = Storage::disk('public');
 
-    if (! $disk->directoryExists("archives/{$directory}")) {
+    if (! $disk->directoryExists("archives/$directory")) {
         $disk->makeDirectory($directory);
     }
 
@@ -74,15 +74,15 @@ function saveArchiveToPDF(
         '_',
         explode(
             '/',
-            "archives/{$directory}/sponsorships"
+            "archives/$directory/sponsorships"
         )[1]
     ), ['date' => $date]);
 
-    $pdfFile = "{$directory}/{$pdfName}".'.pdf';
+    $pdfFile = "$directory/$pdfName".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
-    Browsershot::html(view("pdf.occasions.{$directory}", [
+    Browsershot::html(view("pdf.occasions.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
     ])
@@ -90,8 +90,8 @@ function saveArchiveToPDF(
         ->ignoreHttpsErrors()
         ->noSandbox()
         ->format('A4')
-        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
+//        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
+//        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
         ->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
@@ -153,10 +153,10 @@ function generateFormattedSort(): array
         /** @phpstan-ignore-next-line */
         return array_map(static function (string $value, string $key) {
             if ($key === 'orphan.birth_date') {
-                return $value === 'desc' ? "{$key}:asc" : "{$key}:desc";
+                return $value === 'desc' ? "$key:asc" : "$key:desc";
             }
 
-            return "{$key}:{$value}";
+            return "$key:$value";
         }, array_values($directions), array_keys($directions));
     }
 
@@ -260,7 +260,7 @@ function getUsersShouldBeNotified(
         ->whereHas(
             'settings',
             function ($query) use ($notificationType) {
-                return $query->where("notifications->{$notificationType}", true);
+                return $query->where("notifications->$notificationType", true);
             }
         )
         ->where(function ($query) use ($permissions): void {

@@ -796,7 +796,7 @@ const handleUpdateVocationalTraining = () => {
 
         <!-- Begin: Note -->
         <div class="col-span-8">
-            <base-form-label for="note">
+            <base-form-label :for="`note_${index}`">
                 {{ $t('notes') }}
             </base-form-label>
 

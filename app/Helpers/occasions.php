@@ -4,20 +4,17 @@
 
 use App\Models\Baby;
 use App\Models\Family;
-use App\Models\FamilySponsorship;
-use App\Models\OrphanSponsorship;
+use App\Models\Orphan;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 function listOfFamiliesBenefitingFromTheEidAlAdhaSponsorship(): LengthAwarePaginator
 {
-    return search(FamilySponsorship::getModel(), additional_filters: FILTER_EID_AL_ADHA)
+    return search(Family::getModel(), additional_filters: FILTER_EID_AL_ADHA)
         ->query(fn ($query) => $query
-            ->whereHas('family')
             ->with([
-                'family:id,address,zone_id,branch_id,income_rate,total_income',
-                'family.sponsor:id,first_name,last_name,family_id,phone_number',
-                'family.zone:id,name',
-                'family.branch:id,name',
+                'sponsor:id,first_name,last_name,family_id,phone_number',
+                'zone:id,name',
+                'branch:id,name',
             ])
             ->withCount('orphans'))
         ->paginate(perPage: request()?->integer('perPage', 10));
@@ -25,15 +22,13 @@ function listOfFamiliesBenefitingFromTheEidAlAdhaSponsorship(): LengthAwarePagin
 
 function listOfFamiliesBenefitingFromTheMonthlyBasket(): LengthAwarePaginator
 {
-    return search(FamilySponsorship::getModel())
+    return search(Family::getModel())
         ->query(fn ($query) => $query
-            ->whereHas('family')
             ->with(
                 [
-                    'family:id,address,income_rate,zone_id,branch_id,total_income',
-                    'family.sponsor:id,first_name,last_name,family_id,phone_number',
-                    'family.zone:id,name',
-                    'family.branch:id,name',
+                    'sponsor:id,first_name,last_name,family_id,phone_number',
+                    'zone:id,name',
+                    'branch:id,name',
                 ]
             )->withCount('orphans'))
         ->paginate(perPage: request()?->integer('perPage', 10));
@@ -42,18 +37,17 @@ function listOfFamiliesBenefitingFromTheMonthlyBasket(): LengthAwarePaginator
 function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePaginator
 {
     return search(
-        OrphanSponsorship::getModel(),
+        Orphan::getModel(),
         additional_filters: FILTER_SCHOOL_ENTRY()
     )
         ->query(
             fn ($query) => $query
-                ->whereHas('orphan.family')
                 ->with(
                     [
-                        'orphan.sponsor:id,first_name,last_name,phone_number',
-                        'orphan.lastAcademicYearAchievement.academicLevel',
-                        'orphan.family.zone:id,name',
-                        'orphan.family:income_rate,zone_id,address,id',
+                        'sponsor:id,first_name,last_name,phone_number',
+                        'lastAcademicYearAchievement.academicLevel',
+                        'family.zone:id,name',
+                        'family:income_rate,zone_id,address,id',
                     ]
                 )
         )
@@ -63,16 +57,14 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePagi
 function listOfFamiliesBenefitingFromTheRamadanBasketSponsorship(): LengthAwarePaginator
 {
     return search(
-        FamilySponsorship::getModel(),
+        Family::getModel(),
         additional_filters: FILTER_RAMADAN_BASKET
     )
         ->query(fn ($query) => $query
-            ->whereHas('family')
             ->with([
-                'family:id,address,zone_id,branch_id,total_income,income_rate',
-                'family.sponsor:id,first_name,last_name,family_id,phone_number',
-                'family.zone:id,name',
-                'family.branch:id,name',
+                'sponsor:id,first_name,last_name,family_id,phone_number',
+                'zone:id,name',
+                'branch:id,name',
             ])
             ->withCount('orphans'))
         ->paginate(perPage: request()?->integer('perPage', 10));
@@ -81,19 +73,17 @@ function listOfFamiliesBenefitingFromTheRamadanBasketSponsorship(): LengthAwareP
 function listOfOrphansBenefitingFromTheEidSuitSponsorship(): LengthAwarePaginator
 {
     return search(
-        OrphanSponsorship::getModel(),
+        Orphan::getModel(),
         FILTER_EID_SUIT
     )
         ->query(
             fn ($query) => $query
-                ->whereHas('orphan.family')
                 ->with([
-                    'orphan:id,first_name,last_name,family_id,sponsor_id,shoes_size,pants_size,shirt_size,birth_date',
-                    'orphan.sponsor:id,first_name,last_name,phone_number',
-                    'orphan.family.zone:id,name',
-                    'orphan.shoesSize',
-                    'orphan.pantsSize',
-                    'orphan.shirtSize',
+                    'sponsor:id,first_name,last_name,phone_number',
+                    'family.zone:id,name',
+                    'shoesSize',
+                    'pantsSize',
+                    'shirtSize',
                 ])
         )
         ->paginate(perPage: request()?->integer('perPage', 10));
@@ -120,9 +110,11 @@ function listOfBabies(): LengthAwarePaginator
 
 function FILTER_SCHOOL_ENTRY(): string
 {
-    $last_academic_year = date('Y') - 1;
+    //    $last_academic_year = date('Y') - 1;
 
-    return "AND school_bag = true AND school_bag IS NOT NULL AND orphan.academic_achievement.academic_year IS NOT EMPTY AND orphan.academic_achievement.academic_year >= {$last_academic_year}";
+    return '';
+
+    //    return "AND academic_achievement.academic_year IS NOT EMPTY AND academic_achievement.academic_year >= $last_academic_year";
 }
 
 function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginator

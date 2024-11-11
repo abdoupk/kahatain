@@ -42,42 +42,42 @@
     </x-slot>
 
     <x-slot name="tbody">
-        @foreach ($sponsorships as $sponsorship)
+        @foreach ($families as $family)
             <tr>
                 <x-td class="text-center">
                     {{ $loop->iteration }}
                 </x-td>
 
                 <x-td>
-                    {{ $sponsorship->family->sponsor->getName() }}
+                    {{ $family->sponsor->getName() }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->sponsor->formattedPhoneNumber() }}
+                    {{ $family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
                 <x-td>
-                    {{ $sponsorship->family->address }}
+                    {{ $family->address }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->orphans_count }}
+                    {{ $family->orphans_count }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ formatCurrency($sponsorship->family->total_income) }}
+                    {{ formatCurrency($family->total_income) }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->income_rate }}
+                    {{ $family->income_rate }}
                 </x-td>
 
                 <x-td class="max-w-28 truncate text-center">
-                    {{ $sponsorship->family->branch->name }}
+                    {{ $family->branch->name }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->zone->name }}
+                    {{ $family->zone->name }}
                 </x-td>
             </tr>
         @endforeach

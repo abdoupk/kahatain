@@ -23,12 +23,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FurnishingSeeder::class);
 
-        $this->call(OrphanSponsorshipSeeder::class);
-
-        $this->call(FamilySponsorshipSeeder::class);
-
-        $this->call(SponsorSponsorshipSeeder::class);
-
         $this->call(PreviewSeeder::class);
 
         $this->call(PrivateSchoolSeeder::class);

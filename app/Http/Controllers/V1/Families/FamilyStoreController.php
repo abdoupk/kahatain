@@ -57,8 +57,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
                 $this->storeHousingInformations($family, $request);
 
-                $this->storeSponsorships($family, $request, $sponsor);
-
                 monthlySponsorship($family);
 
                 dispatch(new FamilyCreatedJob($family, auth()->user()));
@@ -129,10 +127,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
                 ];
             }
 
-            $orphans[$key]->sponsorships()->create([
-                ...$request->validated('orphans_sponsorship')[$key],
-            ]);
-
             if (isset($orphan['vocational_training_id'])) {
                 $orphans[$key]->vocationalTrainingAchievements()->create([
                     'year' => now()->year,
@@ -157,12 +151,5 @@ class FamilyStoreController extends Controller implements HasMiddleware
         ]);
 
         $family->furnishings()->create($request->validated('furnishings'));
-    }
-
-    public function storeSponsorships(Model|Family $family, CreateFamilyRequest $request, Sponsor $sponsor): void
-    {
-        $family->sponsorships()->create($request->validated('family_sponsorship'));
-
-        $sponsor->sponsorships()->create($request->validated('sponsor_sponsorship'));
     }
 }

@@ -4,8 +4,10 @@ import type { CreateFamilyForm, IncomeType } from '@/types/types'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { computed, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
+import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
 import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
@@ -335,4 +337,15 @@ const toggle = (key: keyof IncomeType) => {
         <p class="col-span-8 text-base font-bold">{{ totalIncome }}</p>
     </div>
     <!-- End: TOTAL INCOME -->
+
+    <!-- Begin: Upload files  -->
+    <div class="mt-4">
+        <h1 class="mb-6 text-lg">files</h1>
+        <div class="w-3/5">
+            <base-form-label>cnas</base-form-label>
+            
+            <base-file-pond></base-file-pond>
+        </div>
+    </div>
+    <!-- End: Upload Files   -->
 </template>

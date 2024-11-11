@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../../utils/i18n'
-
 import type { AcademicLevelType } from '@/types/lessons'
 import type { CreateFamilyForm } from '@/types/types'
 
@@ -19,6 +17,7 @@ import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelect
 import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{
     form?: Form<CreateFamilyForm>
@@ -552,7 +551,7 @@ const isUnemployed = defineModel('isUnemployed')
         <!-- End: Health Status -->
 
         <!-- Begin: Diploma -->
-        <div class="col-span-9 sm:col-span-6">
+        <div class="col-span-7 sm:col-span-6">
             <base-form-label for="diploma">
                 {{ $t('validation.attributes.sponsor.diploma') }}
             </base-form-label>
@@ -595,7 +594,7 @@ const isUnemployed = defineModel('isUnemployed')
         <!-- End: Diploma -->
 
         <!--Begin: Unemployed-->
-        <div class="col-span-3 mt-6 flex items-center sm:col-span-3">
+        <div class="col-span-5 mt-6 flex items-center sm:col-span-6">
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     id="is_unemployed"
@@ -603,7 +602,7 @@ const isUnemployed = defineModel('isUnemployed')
                     type="checkbox"
                 ></base-form-switch-input>
 
-                <base-form-switch-label htmlFor="is_unemployed">
+                <base-form-switch-label class="whitespace-nowrap" htmlFor="is_unemployed">
                     {{ $t('unemployed') }}
                 </base-form-switch-label>
             </base-form-switch>

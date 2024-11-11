@@ -21,7 +21,7 @@ class FamiliesMonthlyBasketIndexExport implements FromView, WithEvents
     public function view(): View
     {
         return view('pdf.occasions.monthly-basket-families', [
-            'sponsorships' => listOfFamiliesBenefitingFromTheMonthlyBasketForExport(),
+            'families' => listOfFamiliesBenefitingFromTheMonthlyBasketForExport(),
         ]);
     }
 }

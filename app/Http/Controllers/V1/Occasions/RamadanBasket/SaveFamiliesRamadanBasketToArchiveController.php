@@ -5,10 +5,15 @@ namespace App\Http\Controllers\V1\Occasions\RamadanBasket;
 use App\Http\Controllers\Controller;
 use App\Jobs\V1\Occasion\RamadanBasketFamiliesListSavedJob;
 use App\Models\Archive;
-use App\Models\FamilySponsorship;
+use App\Models\Family;
 
 class SaveFamiliesRamadanBasketToArchiveController extends Controller
 {
+    public static function middleware()
+    {
+        return ['can:save_occasions'];
+    }
+
     public function __invoke(): void
     {
         $archive = Archive::where('occasion', '=', 'ramadan_basket')
@@ -20,17 +25,12 @@ class SaveFamiliesRamadanBasketToArchiveController extends Controller
         $archive->families()
             ->syncWithPivotValues(
                 listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport()
-                    ->map(function (FamilySponsorship $sponsorship) {
-                        return $sponsorship->family->id;
+                    ->map(function (Family $family) {
+                        return $family->id;
                     }),
                 ['tenant_id' => tenant('id')]
             );
 
         dispatch(new RamadanBasketFamiliesListSavedJob($archive, auth()->user()));
-    }
-
-    public static function middleware()
-    {
-        return ['can:save_occasions'];
     }
 }

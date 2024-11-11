@@ -111,34 +111,6 @@ export interface FamilyEditHousingType {
     other_properties: string
 }
 
-export interface FamilySponsorshipType {
-    family_id: string
-    monthly_allowance: string
-    ramadan_basket: string
-    zakat: string
-    housing_assistance: string
-    eid_al_adha: string
-}
-
-export interface OrphanSponsorshipType {
-    id: string
-    medical_sponsorship: boolean
-    university_scholarship: boolean
-    association_trips: boolean
-    summer_camp: boolean
-    eid_suit: boolean
-    private_lessons: boolean
-    school_bag: boolean
-}
-
-export interface SponsorSponsorshipType {
-    id: string
-    medical_sponsorship: string | boolean
-    literacy_lessons: string | boolean
-    direct_sponsorship: string | boolean
-    project_support: string | boolean
-}
-
 export interface PreviewType {
     family_id: string
     report: string
@@ -163,9 +135,6 @@ export interface FamilyShowType {
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType
     housing: HousingType
-    family_sponsorships: FamilySponsorshipType
-    orphans_sponsorships: OrphanSponsorshipType[]
-    sponsor_sponsorships: SponsorSponsorshipType
     preview: PreviewType
 }
 

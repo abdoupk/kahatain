@@ -29,10 +29,6 @@ class FamilyShowResource extends JsonResource
             'furnishings' => new FurnishingResource($this->whenLoaded('furnishings')),
             'housing' => new HousingResource($this->whenLoaded('housing')),
 
-            'family_sponsorships' => new FamilySponsorshipResource($this->whenLoaded('sponsorships')),
-            'orphans_sponsorships' => OrphanSponsorshipResource::collection($this->whenLoaded('orphansSponsorships')),
-            'sponsor_sponsorships' => new SponsorSponsorshipResource($this->whenLoaded('sponsorSponsorships')),
-
             'preview' => new PreviewResource($this->whenLoaded('preview')),
         ];
     }

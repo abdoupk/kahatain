@@ -24,6 +24,7 @@ function monthlySponsorship(Family $family): void
     $sponsorshipFromAssociation = calculateAssociationMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
 
     $income_rate = calculateIncomeRate($family);
+
     $total_income = calculateTotalIncomes($family);
 
     $family->update([

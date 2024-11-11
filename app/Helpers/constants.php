@@ -10,6 +10,7 @@ const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
 const FILTER_RAMADAN_BASKET = '';
 //'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
 
+// TODO: get Only older than > 2 years
 const FILTER_EID_SUIT = '';
 //'AND eid_suit = true AND eid_suit IS NOT NULL';
 

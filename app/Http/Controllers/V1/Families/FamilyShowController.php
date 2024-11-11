@@ -36,10 +36,7 @@ class FamilyShowController extends Controller implements HasMiddleware
                         'sponsor.creator',
                         'secondSponsor',
                         'furnishings',
-                        'sponsorships',
                         'branch',
-                        'orphansSponsorships.orphan',
-                        'sponsorSponsorships',
                         'preview.inspectors',
                         'deceased',
                     ]

@@ -24,6 +24,6 @@ class ExportArchiveOrphansSchoolEntryPDFController extends Controller implements
     {
         return saveArchiveToPDF('school-entry', function () {
             return listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport();
-        }, $archive->created_at->year);
+        }, $archive->created_at->year, 'orphans');
     }
 }

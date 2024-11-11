@@ -23,7 +23,7 @@ class FamilySeeder extends Seeder
 {
     public function run(): void
     {
-        Tenant::select('id')->get()->each(
+        Tenant::with('members')->get()->each(
             /**
              * @throws JsonException
              */

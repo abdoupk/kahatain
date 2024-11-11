@@ -23,7 +23,6 @@ class SponsorShowController extends Controller implements HasMiddleware
             [
                 'sponsor' => new SponsorShowResource(
                     $sponsor->load(
-                        'sponsorships',
                         'academicLevel',
                         'family.zone',
                         'family.branch',

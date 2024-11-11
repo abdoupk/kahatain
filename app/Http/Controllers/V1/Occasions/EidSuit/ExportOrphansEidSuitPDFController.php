@@ -10,19 +10,19 @@ use Throwable;
 
 class ExportOrphansEidSuitPDFController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/eid-suit', 'sponsorships', function () {
+        return saveToPDF('occasions/eid-suit', 'orphans', function () {
             return listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport();
         }, now()->year);
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
     }
 }

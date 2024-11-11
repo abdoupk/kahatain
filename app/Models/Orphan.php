@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\OrphanFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,94 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property string $first_name
- * @property string $last_name
- * @property Carbon $birth_date
- * @property string|null $family_status
- * @property string $health_status
- * @property int|null $academic_level_id
- * @property int|null $vocational_training_id
- * @property string|null $shoes_size
- * @property string|null $pants_size
- * @property string|null $shirt_size
- * @property string $gender
- * @property float|null $income
- * @property bool $is_handicapped
- * @property bool $is_unemployed
- * @property string|null $note
- * @property string $tenant_id
- * @property string $family_id
- * @property string $sponsor_id
- * @property string $created_by
- * @property string|null $deleted_by
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read Collection<int, AcademicAchievement> $academicAchievements
- * @property-read int|null $academic_achievements_count
- * @property-read AcademicLevel|null $academicLevel
- * @property-read Collection<int, Archive> $archives
- * @property-read int|null $archives_count
- * @property-read Baby|null $babyNeeds
- * @property-read Collection<int, CollegeAchievement> $collegeAchievements
- * @property-read int|null $college_achievements_count
- * @property-read User $creator
- * @property-read Collection<int, EventOccurrence> $events
- * @property-read int|null $events_count
- * @property-read Family $family
- * @property-read AcademicAchievement|null $lastAcademicYearAchievement
- * @property-read Collection<int, Need> $needs
- * @property-read int|null $needs_count
- * @property-read ClothesSize|null $pantsSize
- * @property-read ClothesSize|null $shirtSize
- * @property-read ShoeSize|null $shoesSize
- * @property-read Sponsor $sponsor
- * @property-read OrphanSponsorship|null $sponsorships
- * @property-read Tenant $tenant
- * @property-read VocationalTraining|null $vocationalTraining
- * @property-read Collection<int, VocationalTrainingAchievement> $vocationalTrainingAchievements
- * @property-read int|null $vocational_training_achievements_count
- *
- * @method static OrphanFactory factory($count = null, $state = [])
- * @method static Builder|Orphan newModelQuery()
- * @method static Builder|Orphan newQuery()
- * @method static Builder|Orphan onlyTrashed()
- * @method static Builder|Orphan query()
- * @method static Builder|Orphan whereAcademicLevelId($value)
- * @method static Builder|Orphan whereBirthDate($value)
- * @method static Builder|Orphan whereCreatedAt($value)
- * @method static Builder|Orphan whereCreatedBy($value)
- * @method static Builder|Orphan whereDeletedAt($value)
- * @method static Builder|Orphan whereDeletedBy($value)
- * @method static Builder|Orphan whereFamilyId($value)
- * @method static Builder|Orphan whereFamilyStatus($value)
- * @method static Builder|Orphan whereFirstName($value)
- * @method static Builder|Orphan whereGender($value)
- * @method static Builder|Orphan whereHealthStatus($value)
- * @method static Builder|Orphan whereId($value)
- * @method static Builder|Orphan whereIncome($value)
- * @method static Builder|Orphan whereIsHandicapped($value)
- * @method static Builder|Orphan whereIsUnemployed($value)
- * @method static Builder|Orphan whereLastName($value)
- * @method static Builder|Orphan whereNote($value)
- * @method static Builder|Orphan wherePantsSize($value)
- * @method static Builder|Orphan whereShirtSize($value)
- * @method static Builder|Orphan whereShoesSize($value)
- * @method static Builder|Orphan whereSponsorId($value)
- * @method static Builder|Orphan whereTenantId($value)
- * @method static Builder|Orphan whereUpdatedAt($value)
- * @method static Builder|Orphan whereVocationalTrainingId($value)
- * @method static Builder|Orphan withTrashed()
- * @method static Builder|Orphan withoutTrashed()
- *
- * @mixin Eloquent
- */
 class Orphan extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
@@ -254,15 +166,6 @@ class Orphan extends Model
                         'institute' => $vocationalTrainingAchievement->institute,
                     ];
                 })->toArray(),
-            'sponsorships' => [
-                'medical_sponsorship' => boolval($this->sponsorships?->medical_sponsorship),
-                'university_scholarship' => boolval($this->sponsorships?->university_scholarship),
-                'association_trips' => boolval($this->sponsorships?->association_trips),
-                'summer_camp' => boolval($this->sponsorships?->summer_camp),
-                'eid_suit' => boolval($this->sponsorships?->eid_suit),
-                'private_lessons' => boolval($this->sponsorships?->private_lessons),
-                'school_bag' => boolval($this->sponsorships?->school_bag),
-            ],
             'tenant_id' => $this->tenant_id,
             'family_id' => $this->family_id,
             'created_at' => strtotime($this->created_at),
@@ -284,7 +187,6 @@ class Orphan extends Model
         return $models->load([
             'academicLevel',
             'academicAchievements.academicLevel',
-            'sponsorships',
             'collegeAchievements.academicLevel',
             'vocationalTrainingAchievements.vocationalTraining',
             'shoesSize',
@@ -380,15 +282,9 @@ class Orphan extends Model
 
         $needs = $this->needs();
 
-        $sponsorships = $this->sponsorships();
-
         $this->babyNeeds()->unsearchable();
 
         $needs->unsearchable();
-
-        $sponsorships->unsearchable();
-
-        $sponsorships->delete();
 
         $needs->update([
             'deleted_by' => auth()->id(),
@@ -404,11 +300,6 @@ class Orphan extends Model
             Need::class,
             'needable'
         );
-    }
-
-    public function sponsorships(): HasOne
-    {
-        return $this->hasOne(OrphanSponsorship::class);
     }
 
     public function babyNeeds(): HasOne
@@ -430,15 +321,9 @@ class Orphan extends Model
 
         $needs = $this->needs();
 
-        $sponsorships = $this->sponsorships();
-
         $this->babyNeeds()->unsearchable();
 
         $needs->unsearchable();
-
-        $sponsorships->unsearchable();
-
-        $sponsorships->forceDelete();
 
         $needs->forceDelete();
 
@@ -455,19 +340,13 @@ class Orphan extends Model
 
         $needs = $this->needs()->withTrashed();
 
-        $sponsorships = $this->sponsorships()->withTrashed();
-
         $baby->searchable();
 
         $needs->searchable();
 
-        $sponsorships->searchable();
-
         $needs->restore();
 
         $baby->restore();
-
-        $sponsorships->restore();
     }
 
     protected function casts(): array

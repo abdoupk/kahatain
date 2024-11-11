@@ -21,7 +21,7 @@ class FamiliesEidAlAdhaIndexExport implements FromView, WithEvents
     public function view(): View
     {
         return view('pdf.occasions.eid-al-adha-families', [
-            'sponsorships' => listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport(),
+            'families' => listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport(),
         ]);
     }
 }

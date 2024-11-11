@@ -26,7 +26,6 @@ class FamilyEditController extends Controller implements HasMiddleware
                     'creator:id,last_name,first_name',
                     'sponsor',
                     'secondSponsor',
-                    'sponsorships',
                     'preview.inspectors',
                     'deceased',
                 ])

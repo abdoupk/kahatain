@@ -4,7 +4,6 @@ namespace App\Http\Resources\V1\Sponsors;
 
 use App\Http\Resources\V1\Branches\BranchesResource;
 use App\Http\Resources\V1\Families\IncomeResource;
-use App\Http\Resources\V1\Families\SponsorSponsorshipResource;
 use App\Http\Resources\V1\Members\MemberResource;
 use App\Http\Resources\V1\Zones\ZoneResource;
 use App\Models\Sponsor;
@@ -39,7 +38,6 @@ class SponsorShowResource extends JsonResource
             'incomes' => new IncomeResource($this->whenLoaded('incomes')),
             'zone' => new ZoneResource($this->family->zone),
             'branch' => new BranchesResource($this->family->branch),
-            'sponsorships' => new SponsorSponsorshipResource($this->whenLoaded('sponsorships')),
             'creator' => new MemberResource($this->whenLoaded('creator')),
         ];
     }

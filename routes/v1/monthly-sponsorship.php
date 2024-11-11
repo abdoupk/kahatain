@@ -9,7 +9,7 @@ use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipTo
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
-Route::prefix('monthly-sponsorship')
+Route::prefix('projects/monthly-sponsorship')
     ->name('monthly-sponsorship.')
     ->group(function (): void {
         Route::get(

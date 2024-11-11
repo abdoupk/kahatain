@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { ProvideList } from './BaseTabList.vue'
 import type { ProvideTab } from './BaseTabProvider.vue'
 
@@ -25,7 +25,7 @@ const list = inject<ProvideList>('list')
 
 const computedClass = computed(() =>
     twMerge([
-        'cursor-pointer block appearance-none px-5 py-2.5 border border-transparent text-slate-700 dark:text-slate-400',
+        'cursor-pointer block appearance-none px-5 py-2.5 border border-transparent text-slate-700 dark:text-slate-400 rtl:font-semibold',
         tab?.selected.value && 'text-slate-800 dark:text-white',
 
         // Default

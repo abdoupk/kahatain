@@ -47,13 +47,15 @@ const showNeedCreateModal = () => {
                 <menu-link icon="icon-hands-holding-heart" view-name="second_sponsor_information"></menu-link>
 
                 <menu-link icon="icon-house" view-name="housing_information"></menu-link>
+
+                <menu-link icon="icon-file-lines" view-name="the_report"></menu-link>
             </div>
 
-            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">
-                <menu-link class="!mt-0" icon="icon-file-lines" view-name="the_report"></menu-link>
+            <!--            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">-->
+            <!--                <menu-link class="!mt-0" icon="icon-file-lines" view-name="the_report"></menu-link>-->
 
-                <menu-link icon="icon-handshake-angle" view-name="family_sponsorship"></menu-link>
-            </div>
+            <!--                <menu-link icon="icon-handshake-angle" view-name="family_sponsorship"></menu-link>-->
+            <!--            </div>-->
 
             <div class="flex border-t border-slate-200/60 p-5 dark:border-darkmode-400">
                 <base-button class="px-2 py-1" type="button" variant="primary" @click.prevent="showNeedCreateModal">

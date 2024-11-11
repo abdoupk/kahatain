@@ -9,19 +9,19 @@ use Throwable;
 
 class ExportFamiliesRamadanBasketPDFController extends Controller
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/ramadan-basket-families', 'sponsorships', function () {
+        return saveToPDF('occasions/ramadan-basket-families', 'families', function () {
             return listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport();
         }, now()->year);
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
     }
 }

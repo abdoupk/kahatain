@@ -53,7 +53,7 @@ const showNeedCreateModal = () => {
 
                 <menu-link icon="icon-couple" view-name="incomes_information"></menu-link>
 
-                <menu-link icon="icon-couple" view-name="sponsorships_information"></menu-link>
+                <!--                <menu-link icon="icon-couple" view-name="sponsorships_information"></menu-link>-->
             </div>
 
             <div class="flex border-t border-slate-200/60 p-5 dark:border-darkmode-400">

@@ -24,7 +24,6 @@ class OrphanEditController extends Controller implements HasMiddleware
                 'orphan' => new OrphanEditResource($orphan->load(
                     'babyNeeds',
                     'academicAchievements.academicLevel',
-                    'sponsorships',
                     'creator',
                     'shoesSize',
                     'pantsSize',

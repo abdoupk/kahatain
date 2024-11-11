@@ -47,16 +47,22 @@ const showNeedCreateModal = () => {
             <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">
                 <menu-link class="!mt-0" icon="icon-memo-circle-info" view-name="general_information"></menu-link>
 
-                <menu-link icon="icon-hands-holding-child" view-name="sponsorships_information"></menu-link>
-            </div>
-
-            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">
-                <menu-link class="!mt-0" icon="icon-books" view-name="academic_achievement"></menu-link>
+                <menu-link icon="icon-books" view-name="academic_achievement"></menu-link>
 
                 <menu-link icon="icon-diploma" view-name="college_achievement"></menu-link>
 
                 <menu-link icon="icon-file-certificate" view-name="vocational_training_achievement"></menu-link>
+
+                <!--                <menu-link icon="icon-hands-holding-child" view-name="sponsorships_information"></menu-link>-->
             </div>
+
+            <!--            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">-->
+            <!--                <menu-link class="!mt-0" icon="icon-books" view-name="academic_achievement"></menu-link>-->
+
+            <!--                <menu-link icon="icon-diploma" view-name="college_achievement"></menu-link>-->
+
+            <!--                <menu-link icon="icon-file-certificate" view-name="vocational_training_achievement"></menu-link>-->
+            <!--            </div>-->
 
             <div class="flex border-t border-slate-200/60 p-5 dark:border-darkmode-400">
                 <base-button class="px-2 py-1" type="button" variant="primary" @click.prevent="showNeedCreateModal">

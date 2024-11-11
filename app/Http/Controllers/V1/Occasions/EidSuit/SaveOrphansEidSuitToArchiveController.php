@@ -5,11 +5,16 @@ namespace App\Http\Controllers\V1\Occasions\EidSuit;
 use App\Http\Controllers\Controller;
 use App\Jobs\V1\Occasion\EidSuitOrphansListSavedJob;
 use App\Models\Archive;
-use App\Models\OrphanSponsorship;
+use App\Models\Orphan;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SaveOrphansEidSuitToArchiveController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:save_occasions'];
+    }
+
     public function __invoke(): void
     {
         $archive = Archive::where('occasion', '=', 'eid_suit')
@@ -21,17 +26,12 @@ class SaveOrphansEidSuitToArchiveController extends Controller implements HasMid
         $archive->orphans()
             ->syncWithPivotValues(
                 listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport()
-                    ->map(function (OrphanSponsorship $sponsorship) {
-                        return $sponsorship->orphan->id;
+                    ->map(function (Orphan $orphan) {
+                        return $orphan->id;
                     }),
                 ['tenant_id' => tenant('id')]
             );
 
         dispatch(new EidSuitOrphansListSavedJob($archive, auth()->user()));
-    }
-
-    public static function middleware()
-    {
-        return ['can:save_occasions'];
     }
 }

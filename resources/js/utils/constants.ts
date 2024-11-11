@@ -44,7 +44,7 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
         lat: null,
         lng: null
     },
-    start_date: new Date(),
+    start_date: null,
     sponsor: {
         first_name: '',
         is_unemployed: false,

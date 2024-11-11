@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Database\Factories\FamilyFactory;
 use DB;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,98 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property int $id
- * @property string $name
- * @property string $report
- * @property string $tenant_id
- * @property string|null $created_at
- * @property string|null $updated_at
- *
- * @method static Builder|Family newModelQuery()
- * @method static Builder|Family newQuery()
- * @method static Builder|Family query()
- * @method static Builder|Family whereCreatedAt($value)
- * @method static Builder|Family whereId($value)
- * @method static Builder|Family whereName($value)
- * @method static Builder|Family whereReport($value)
- * @method static Builder|Family whereTenantId($value)
- * @method static Builder|Family whereUpdatedAt($value)
- *
- * @property-read Collection<int, Furnishing> $furnishings
- * @property-read int|null $furnishings_count
- * @property-read Collection<int, Orphan> $orphans
- * @property-read int|null $orphans_count
- * @property-read SecondSponsor|null $secondSponsor
- * @property-read Sponsor|null $sponsor
- * @property-read Collection<int, FamilySponsorship> $sponsorships
- * @property-read int|null $sponsorships_count
- * @property-read Spouse|null $spouse
- * @property-read Tenant $tenant
- *
- * @method static FamilyFactory factory($count = null, $state = [])
- *
- * @property string $zone_id
- * @property string $address
- * @property int $file_number
- * @property string $start_date
- * @property-read Zone|null $zone
- *
- * @method static Builder|Family whereAddress($value)
- * @method static Builder|Family whereFileNumber($value)
- * @method static Builder|Family whereStartDate($value)
- * @method static Builder|Family whereZoneId($value)
- *
- * @property Carbon|null $deleted_at
- *
- * @method static Builder|Family onlyTrashed()
- * @method static Builder|Family whereDeletedAt($value)
- * @method static Builder|Family withTrashed()
- * @method static Builder|Family withoutTrashed()
- *
- * @property string|null $branch_id
- *
- * @method static Builder|Family whereBranchId($value)
- *
- * @property-read Spouse|null $deceased
- * @property-read Housing|null $housing
- * @property-read Preview|null $preview
- * @property-read Collection<int, Baby> $babies
- * @property-read int|null $babies_count
- * @property-read Collection<int, OrphanSponsorship> $orphansSponsorships
- * @property-read int|null $orphans_sponsorships_count
- * @property-read Collection<int, SponsorSponsorship> $sponsorSponsorships
- * @property-read int|null $sponsor_sponsorships_count
- * @property-read Branch|null $branch
- * @property string|null $created_by
- * @property-read User|null $creator
- *
- * @method static Builder|Family whereCreatedBy($value)
- *
- * @property float|null $income_rate
- * @property float|null $total_income
- * @property string|null $deleted_by
- * @property-read Collection<int, Archive> $archives
- * @property-read int|null $archives_count
- * @property-read Collection<int, Need> $orphansNeeds
- * @property-read int|null $orphans_needs_count
- * @property-read Collection<int, Need> $sponsorsNeeds
- * @property-read int|null $sponsors_needs_count
- *
- * @method static Builder|Family whereDeletedBy($value)
- * @method static Builder|Family whereIncomeRate($value)
- * @method static Builder|Family whereTotalIncome($value)
- *
- * @mixin Eloquent
- */
 class Family extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
@@ -152,10 +63,6 @@ class Family extends Model
     {
         $this->unsearchable();
 
-        $this->orphansSponsorships->unsearchable();
-
-        $this->sponsorSponsorships->unsearchable();
-
         $this->orphans->unsearchable();
 
         $this->babies->unsearchable();
@@ -166,19 +73,12 @@ class Family extends Model
 
         $this->sponsor()->unsearchable();
 
-        $this->sponsorships->unsearchable();
-
         $this->preview->unsearchable();
     }
 
     public function sponsor(): HasOne
     {
         return $this->hasOne(Sponsor::class);
-    }
-
-    public function sponsorships(): HasOne
-    {
-        return $this->hasOne(FamilySponsorship::class);
     }
 
     public function aid(): MorphMany
@@ -189,19 +89,9 @@ class Family extends Model
         );
     }
 
-    public function sponsorSponsorships(): HasOneThrough
-    {
-        return $this->hasOneThrough(SponsorSponsorship::class, Sponsor::class);
-    }
-
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
-    }
-
-    public function orphansSponsorships(): HasManyThrough
-    {
-        return $this->hasManyThrough(OrphanSponsorship::class, Orphan::class);
     }
 
     public function orphansNeeds(): HasManyThrough
@@ -234,7 +124,6 @@ class Family extends Model
                 'branch',
                 'sponsor.incomes',
                 'orphans',
-                'sponsorships',
                 'aid',
             ]
         );
@@ -272,13 +161,6 @@ class Family extends Model
             'branch' => $this->branch?->only(['id', 'name']),
             'total_income' => $this->total_income,
             'orphans_count' => $this->orphans->count(),
-            'family_sponsorships' => [
-                'monthly_allowance' => boolval($this->sponsorships?->monthly_allowance),
-                'ramadan_basket' => boolval($this->sponsorships?->ramadan_basket),
-                'zakat' => boolval($this->sponsorships?->zakat),
-                'housing_assistance' => boolval($this->sponsorships?->housing_assistance),
-                'eid_el_adha' => boolval($this->sponsorships?->eid_al_adha),
-            ],
             'income_rate' => $this->income_rate,
             'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship, 'difference_before_ramadan_sponsorship' => $this->difference_before_ramadan_sponsorship,
             'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,

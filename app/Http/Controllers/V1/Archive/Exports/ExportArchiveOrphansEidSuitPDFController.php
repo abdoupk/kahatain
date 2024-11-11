@@ -10,6 +10,11 @@ use Throwable;
 
 class ExportArchiveOrphansEidSuitPDFController extends Controller
 {
+    public static function middleware()
+    {
+        return ['can:export_archive'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
@@ -18,11 +23,6 @@ class ExportArchiveOrphansEidSuitPDFController extends Controller
     {
         return saveArchiveToPDF('eid-suit', function () {
             return listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport();
-        }, $archive->created_at->year);
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_archive'];
+        }, $archive->created_at->year, 'orphans');
     }
 }

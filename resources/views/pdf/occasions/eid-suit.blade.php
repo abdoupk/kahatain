@@ -50,50 +50,50 @@
     </x-slot>
 
     <x-slot name="tbody">
-        @foreach ($sponsorships as $sponsorship)
+        @foreach ($orphans as $orphan)
             <tr>
                 <x-td class="py-0.5 text-center">
                     {{ $loop->iteration }}
                 </x-td>
 
                 <x-td class="py-0.5">
-                    {{ $sponsorship->orphan->sponsor->getName() }}
+                    {{ $orphan->sponsor->getName() }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $sponsorship->orphan->sponsor->formattedPhoneNumber() }}
+                    {{ $orphan->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $sponsorship->orphan->getName() }}
+                    {{ $orphan->getName() }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ __($sponsorship->orphan->gender) }}
+                    {{ __($orphan->gender) }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ trans_choice('age_years', $sponsorship->orphan->birth_date->age) }}
+                    {{ trans_choice('age_years', $orphan->birth_date->age) }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $sponsorship->orphan->shoesSize->label }}
+                    {{ $orphan->shoesSize->label }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $sponsorship->orphan->pantsSize->label }}
+                    {{ $orphan->pantsSize->label }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $sponsorship->orphan->shirtSize->label }}
+                    {{ $orphan->shirtSize->label }}
                 </x-td>
 
                 <x-td class="py-0.5  truncate max-w-28 text-center">
-                    {{ $sponsorship->orphan->family->branch->name }}
+                    {{ $orphan->family->branch->name }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $sponsorship->orphan->family->zone->name }}
+                    {{ $orphan->family->zone->name }}
                 </x-td>
             </tr>
         @endforeach

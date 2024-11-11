@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1\Occasions\MonthlyBasket;
 use App\Http\Controllers\Controller;
 use App\Jobs\V1\Occasion\MonthlyBasketFamiliesListSavedJob;
 use App\Models\Archive;
-use App\Models\FamilySponsorship;
+use App\Models\Family;
 use App\Models\Inventory;
 use DB;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -13,6 +13,11 @@ use Throwable;
 
 class SaveFamiliesMonthlyBasketToArchiveController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:save_occasions'];
+    }
+
     /**
      * @throws Throwable
      */
@@ -29,11 +34,6 @@ class SaveFamiliesMonthlyBasketToArchiveController extends Controller implements
 
             $this->dispatchJob($archive);
         });
-    }
-
-    public static function middleware()
-    {
-        return ['can:save_occasions'];
     }
 
     private function getOrCreateArchive()
@@ -63,8 +63,8 @@ class SaveFamiliesMonthlyBasketToArchiveController extends Controller implements
         $archive->families()
             ->syncWithPivotValues(
                 listOfFamiliesBenefitingFromTheMonthlyBasketForExport()
-                    ->map(function (FamilySponsorship $sponsorship) {
-                        return $sponsorship->family->id;
+                    ->map(function (Family $family) {
+                        return $family->id;
                     }),
                 ['tenant_id' => tenant('id')]
             );

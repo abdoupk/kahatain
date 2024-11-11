@@ -33,10 +33,6 @@ class OrphanShowResource extends JsonResource
                 $this->whenLoaded('academicAchievements')
             ),
 
-            'sponsorships' => new OrphanSponsorshipResource(
-                $this->whenLoaded('sponsorships')
-            ),
-
             'vocational_training_achievements' => VocationalTrainingAchievementResource::collection(
                 $this->whenLoaded('vocationalTrainingAchievements')
             ),

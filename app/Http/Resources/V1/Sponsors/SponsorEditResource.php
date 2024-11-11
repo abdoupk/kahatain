@@ -3,7 +3,6 @@
 namespace App\Http\Resources\V1\Sponsors;
 
 use App\Http\Resources\V1\Families\IncomeResource;
-use App\Http\Resources\V1\Families\SponsorSponsorshipResource;
 use App\Http\Resources\V1\Members\MemberResource;
 use App\Models\Sponsor;
 use Illuminate\Http\Request;
@@ -32,7 +31,6 @@ class SponsorEditResource extends JsonResource
             'gender' => $this->gender,
 
             'incomes' => new IncomeResource($this->whenLoaded('incomes')),
-            'sponsorships' => new SponsorSponsorshipResource($this->whenLoaded('sponsorships')),
             'creator' => new MemberResource($this->whenLoaded('creator')),
         ];
     }

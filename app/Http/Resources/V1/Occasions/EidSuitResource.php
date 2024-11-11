@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\V1\Occasions;
 
-use App\Models\OrphanSponsorship;
+use App\Models\Orphan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin OrphanSponsorship
+ * @mixin Orphan
  */
 class EidSuitResource extends JsonResource
 {
@@ -16,25 +16,25 @@ class EidSuitResource extends JsonResource
         return [
             'id' => $this->id,
             'sponsor' => [
-                'id' => $this->orphan->sponsor?->id,
-                'name' => $this->orphan->sponsor?->getName(),
-                'phone_number' => $this->orphan->sponsor?->formattedPhoneNumber(),
+                'id' => $this->sponsor?->id,
+                'name' => $this->sponsor?->getName(),
+                'phone_number' => $this->sponsor?->formattedPhoneNumber(),
             ],
             'family' => [
                 'zone' => [
-                    'id' => $this->orphan->family->zone?->id,
-                    'name' => $this->orphan->family->zone?->name,
+                    'id' => $this->family->zone?->id,
+                    'name' => $this->family->zone?->name,
                 ],
-                'address' => $this->orphan->family?->address,
-                'income_rate' => $this->orphan->family?->income_rate,
+                'address' => $this->family?->address,
+                'income_rate' => $this->family?->income_rate,
             ],
             'orphan' => [
-                'id' => $this->orphan->id,
-                'name' => $this->orphan->getName(),
-                'shirt_size' => $this->orphan->shirtSize->label,
-                'pants_size' => $this->orphan->pantsSize->label,
-                'shoes_size' => $this->orphan->shoesSize->label,
-                'age' => $this->orphan->birth_date->age ?? null,
+                'id' => $this->id,
+                'name' => $this->getName(),
+                'shirt_size' => $this->shirtSize->label,
+                'pants_size' => $this->pantsSize->label,
+                'shoes_size' => $this->shoesSize->label,
+                'age' => $this->birth_date->age ?? null,
             ],
         ];
     }
