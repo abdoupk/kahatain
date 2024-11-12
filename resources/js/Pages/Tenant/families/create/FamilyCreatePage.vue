@@ -13,7 +13,6 @@ import { defineAsyncComponent, type Ref, ref, watch } from 'vue'
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import {
-    createFamilyFormAttributes,
     createFamilyStepFiveErrorProps,
     createFamilyStepFourErrorProps,
     createFamilyStepOneErrorProps,
@@ -23,6 +22,8 @@ import {
 } from '@/utils/constants'
 import StepLoader from '@/Pages/Tenant/families/create/StepLoader.vue'
 import { $t, $tc } from '@/utils/i18n'
+import { useCreateFamilyStore } from '@/stores/create-family'
+import { checkErrors } from '@/utils/helper'
 
 const StepOne = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepOne/StepOne.vue'))
 
@@ -62,6 +63,7 @@ defineProps<{
     members: InspectorsMembersType
 }>()
 
+
 const StepTwo = defineAsyncComponent({
     loader: () => import('@/Pages/Tenant/families/create/stepTwo/StepTwo.vue')
 })
@@ -74,28 +76,34 @@ const StepFour = defineAsyncComponent({
     loader: () => import('@/Pages/Tenant/families/create/stepFour/StepFour.vue')
 })
 
-
 const StepFive = defineAsyncComponent({
     loader: () => import('@/Pages/Tenant/families/create/stepFive/StepFive.vue')
 })
 
-const currentStep = ref(1)
+const createFamilyStore = useCreateFamilyStore()
 
-const totalSteps = 5
+const currentStep = ref(createFamilyStore.current_step)
 
-const creatingCompleted = ref(false)
+const totalSteps = ref(createFamilyStore.total_steps)
 
-const form = useForm('post', route('tenant.families.store'), createFamilyFormAttributes)
+const creatingCompleted = ref(createFamilyStore.creatingCompleted)
 
-const stepOneCompleted = ref<boolean>(false)
+const form = useForm('post', route('tenant.families.store'), createFamilyStore.family as CreateFamilyForm)
 
-const stepTwoCompleted = ref<boolean>(false)
+const validating = ref<boolean>(false)
 
-const stepThreeCompleted = ref<boolean>(false)
+const stepOneCompleted = ref<boolean>(createFamilyStore.step_one_completed)
 
-const stepFourCompleted = ref<boolean>(false)
+const stepTwoCompleted = ref<boolean>(createFamilyStore.step_two_completed)
 
-const stepFiveCompleted = ref<boolean>(false)
+const stepThreeCompleted = ref<boolean>(createFamilyStore.step_three_completed)
+
+const stepFourCompleted = ref<boolean>(createFamilyStore.step_four_completed)
+
+const selectedTabStepTwo = ref(createFamilyStore.current_step === 2 ? createFamilyStore.tab_index : 0)
+
+const selectedTabStepFour = ref(createFamilyStore.current_step === 4 ? createFamilyStore.tab_index : 0)
+
 
 const addOrphan = () => {
     form.orphans.push({
@@ -127,8 +135,6 @@ const removeOrphan = (index: number) => {
     }
 }
 
-const validating = ref<boolean>(false)
-
 const validateStep = async (errorProps: CreateFamilyStepOneProps[] | CreateFamilyStepTwoProps[], step: Ref) => {
     validating.value = true
 
@@ -155,15 +161,29 @@ const validateStep = async (errorProps: CreateFamilyStepOneProps[] | CreateFamil
 }
 
 const nextStep = async () => {
-    if (currentStep.value < totalSteps) {
-        await goTo(currentStep.value + 1)
+    document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+    })
+
+    if (currentStep.value < totalSteps.value) {
+        await goTo(currentStep.value + 1).finally(() => {
+            updateState(form.data())
+        })
     }
 }
 
 const prevStep = () => {
-    if (currentStep.value > 1) {
-        currentStep.value--
+    if (currentStep.value === 1) {
+        return
     }
+
+    document.body.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+    })
+
+    updateState(form.data())
 }
 
 const forgetErrors = (errors: string[]) => {
@@ -184,6 +204,8 @@ const goTo = async (index: number) => {
         currentStep.value = index
     } else {
         if (index === 2) {
+            stepOneCompleted.value = false
+
             await validateStep(createFamilyStepOneErrorProps, stepOneCompleted).finally(() => {
                 forgetErrors(createFamilyStepTwoErrorProps)
 
@@ -192,10 +214,23 @@ const goTo = async (index: number) => {
         }
 
         if (index === 3) {
+            stepTwoCompleted.value = false
+
+            currentStep.value = 2
+
             await validateStep(createFamilyStepTwoErrorProps, stepTwoCompleted).finally(() => {
-                if (stepOneCompleted.value && stepTwoCompleted.value) {
+
+                if (stepOneCompleted.value && stepTwoCompleted.value && selectedTabStepTwo.value === 3) {
                     forgetErrors(createFamilyStepThreeErrorProps)
 
+                    currentStep.value = 3
+                } else if (selectedTabStepTwo.value === 0 && !checkErrors('^sponsor.+', form.errors)) {
+                    selectedTabStepTwo.value = 1
+                } else if (selectedTabStepTwo.value === 1 && !checkErrors('^income', form.errors)) {
+                    selectedTabStepTwo.value = 2
+                } else if (selectedTabStepTwo.value === 2 && !checkErrors('^second_sponsor', form.errors)) {
+                    selectedTabStepTwo.value = 3
+                } else if (selectedTabStepTwo.value === 3 && !checkErrors('^spouse', form.errors) && !checkErrors('^second_sponsor', form.errors) && !checkErrors('^sponsor.+', form.errors) && !checkErrors('^income', form.errors)) {
                     currentStep.value = 3
                 }
             })
@@ -223,26 +258,77 @@ const goTo = async (index: number) => {
     }
 }
 
-watch(() => currentStep.value, () => {
-    form.submitted = currentStep.value === 5
-})
+const updateState = (data: object) => {
+    createFamilyStore.$patch((state) => {
+        state.family = data
+
+        state.current_step = currentStep.value
+
+        if (currentStep.value === 2) {
+            state.tab_index = selectedTabStepTwo.value
+        } else if (currentStep.value === 4) {
+            state.tab_index = selectedTabStepFour.value
+        } else {
+            state.tab_index = 0
+        }
+
+        state.step_one_completed = stepOneCompleted.value
+
+        state.step_two_completed = stepTwoCompleted.value
+
+        state.step_three_completed = stepThreeCompleted.value
+
+        state.step_four_completed = stepFourCompleted.value
+
+        state.creating_completed = creatingCompleted.value
+    })
+}
 
 const submit = () => {
     validating.value = true
 
     form.submit({
+
         onSuccess() {
             creatingCompleted.value = true
 
-            setTimeout(() => {
-                router.visit(route('tenant.families.index'))
-            }, 2000)
+            createFamilyStore.$reset()
+
+            createFamilyStore.creating_completed = true
+
+            router.visit(route('tenant.families.index'))
         },
         onFinish() {
             validating.value = false
         }
     })
 }
+
+const handleTabChange = (index, step) => {
+    if (step === 2) {
+        selectedTabStepTwo.value = index
+
+        createFamilyStore.$patch((state) => {
+            state.tab_index = index
+        })
+    }
+
+    if (step === 4) {
+        selectedTabStepFour.value = index
+
+        createFamilyStore.$patch((state) => {
+            state.tab_index = index
+        })
+    }
+}
+
+watch(() => currentStep.value, () => {
+    form.submitted = createFamilyStore.family.submitted = currentStep.value === 5
+})
+
+watch(() => form, (value) => {
+    updateState(value.data())
+}, { deep: true })
 </script>
 
 <template>
@@ -282,7 +368,8 @@ const submit = () => {
 
                     <Suspense v-if="currentStep === 2">
                         <template #default>
-                            <step-two :currentStep :form :totalSteps>
+                            <step-two :currentStep :form :selectedIndex="selectedTabStepTwo"
+                                      :totalSteps @changeTab="handleTabChange($event, 2)">
                                 <template #sponsorForm>
                                     <sponsor-form
                                         v-model:academic_level="form.sponsor.academic_level_id"
@@ -340,7 +427,8 @@ const submit = () => {
                                         :form
                                     ></spouse-form>
                                 </template>
-                                <the-actions :currentStep :nextStep :prevStep :totalSteps :validating></the-actions>
+                                <the-actions :currentStep :nextStep :prevStep :totalSteps
+                                             :validating></the-actions>
                             </step-two>
                         </template>
 
@@ -407,7 +495,9 @@ const submit = () => {
 
                     <Suspense v-if="currentStep === 4">
                         <template #default>
-                            <step-four :currentStep :form :totalSteps>
+                            <step-four :currentStep
+                                       :form :selectedIndex="selectedTabStepFour" :totalSteps
+                                       @changeTab="handleTabChange($event, 4)">
                                 <template #housingForm>
                                     <housing-form
                                         v-model:housing-receipt-number="form.housing.housing_receipt_number"

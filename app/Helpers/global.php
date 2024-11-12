@@ -35,7 +35,11 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
     $pdfFile = "$directory/$pdfName".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
-
+    ray(Browsershot::html(view("pdf.$directory", [
+        $variableName => $function(),
+        'title' => $pdfName,
+    ])
+        ->render()));
     Browsershot::html(view("pdf.$directory", [
         $variableName => $function(),
         'title' => $pdfName,

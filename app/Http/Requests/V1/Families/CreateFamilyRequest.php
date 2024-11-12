@@ -25,6 +25,7 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.diapers_type' => __('diapers_type'),
             'orphans.*.diapers_quantity' => __('diapers_quantity'),
             'sponsor.ccp' => __('ccp'),
+            'housing.housing_type.value' => __('validation.attributes.housing_type.value'),
         ];
     }
 
@@ -94,10 +95,10 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.shoes_size' => $pants_and_shoes_and_shirt_required,
             'orphans.*.shirt_size' => $pants_and_shoes_and_shirt_required,
             'orphans.*.pants_size' => $pants_and_shoes_and_shirt_required,
-            'orphans.*.baby_milk_quantity' => $baby_milk_and_diapers_required.'|numeric',
-            'orphans.*.baby_milk_type' => $baby_milk_and_diapers_required.'|uuid',
-            'orphans.*.diapers_quantity' => $baby_milk_and_diapers_required.'|numeric',
-            'orphans.*.diapers_type' => $baby_milk_and_diapers_required.'|uuid',
+            'orphans.*.baby_milk_quantity' => $baby_milk_and_diapers_required,
+            'orphans.*.baby_milk_type' => $baby_milk_and_diapers_required,
+            'orphans.*.diapers_quantity' => $baby_milk_and_diapers_required,
+            'orphans.*.diapers_type' => $baby_milk_and_diapers_required,
             'orphans.*.is_unemployed' => 'required|boolean',
             'orphans.*.is_handicapped' => 'required|boolean',
         ];

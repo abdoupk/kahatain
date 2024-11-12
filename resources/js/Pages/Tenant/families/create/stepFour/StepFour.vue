@@ -11,7 +11,9 @@ import { computed } from 'vue'
 import { checkErrors } from '@/utils/helper'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-const props = defineProps<CreateFamilyStepProps>()
+const props = defineProps<CreateFamilyStepProps & { selectedIndex: number }>()
+
+const emit = defineEmits(['changeTab'])
 
 const housingErrors = computed(() => {
     return checkErrors('^housing', props?.form?.errors)
@@ -24,6 +26,10 @@ const otherPropertiesErrors = computed(() => {
 const furnishingsErrors = computed(() => {
     return checkErrors('^furnishings', props?.form?.errors)
 })
+
+const handleTabChange = (index) => {
+    emit('changeTab', index)
+}
 </script>
 
 <template>
@@ -35,7 +41,7 @@ const furnishingsErrors = computed(() => {
             {{ $t('families.create_family.stepFour') }}
         </div>
 
-        <base-tab-group class="mt-5">
+        <base-tab-group :selectedIndex class="mt-5" @change="handleTabChange">
             <base-tab-list class="md:flex" variant="link-tabs">
                 <base-tab>
                     <base-tab-button as="button" class="w-full py-2" type="button">

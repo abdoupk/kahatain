@@ -3,9 +3,9 @@ import { type PiniaPluginContext } from 'pinia'
 export const usePersistStore = (context: PiniaPluginContext) => {
     const { store } = context
 
-    if (store.$id !== 'settings') {
-        return
-    }
+    // if (store.$id !== 'settings') {
+    //     return
+    // }
 
     const persistedState = localStorage.getItem(`pinia-state-${store.$id}`)
 

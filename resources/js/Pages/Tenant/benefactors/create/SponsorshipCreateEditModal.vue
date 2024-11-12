@@ -245,7 +245,10 @@ const modalType = computed(() => {
             <!--End: The amount-->
 
             <!--Begin: The shop-->
-            <div v-if="form.sponsorship_type === 'monthly_basket'" class="col-span-12 grid grid-cols-12 gap-4 gap-y-3">
+            <div
+                v-if="form.sponsorship_type === 'monthly_basket'"
+                class="col-span-12 mt-8 grid grid-cols-12 gap-4 gap-y-3"
+            >
                 <h3 class="col-span-12 text-base rtl:font-semibold">
                     {{ $t('shop_information') }}
                 </h3>

@@ -343,7 +343,7 @@ const toggle = (key: keyof IncomeType) => {
         <h1 class="mb-6 text-lg">files</h1>
         <div class="w-3/5">
             <base-form-label>cnas</base-form-label>
-            
+
             <base-file-pond></base-file-pond>
         </div>
     </div>

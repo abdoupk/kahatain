@@ -102,7 +102,7 @@ const emit = defineEmits(['delete-sponsorship'])
                         <base-td-table v-if="editable">
                             <a
                                 v-if="hasPermission('delete_sponsorships')"
-                                class="flex items-center text-danger"
+                                class="flex items-center justify-center text-danger"
                                 href="javascript:void(0)"
                                 @click="emit('delete-sponsorship', index)"
                             >

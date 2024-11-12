@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
-import { ref } from 'vue'
+import { useMembersStore } from '@/stores/members'
+import { onMounted, ref } from 'vue'
 
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseClassicEditor from '@/Components/Base/editor/BaseClassicEditor.vue'
@@ -20,6 +21,12 @@ const previewDate = defineModel('previewDate', { default: '' })
 const inspectorsMembers = defineModel('inspectorsMembers', { default: [] })
 
 const vueSelectInspectorsMembers = ref([])
+
+onMounted(async () => {
+    await useMembersStore().getMembers()
+
+    vueSelectInspectorsMembers.value = useMembersStore().findMembersByIds(inspectorsMembers.value)
+})
 </script>
 
 <template>
