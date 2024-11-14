@@ -351,7 +351,7 @@ const removeInterval = (index: number) => {
                 >
                     <svg-loader class="inline fill-primary dark:fill-slate-500" name="icon-plus"></svg-loader>
 
-                    {{ $t('add interval') }}
+                    {{ $t('add_category') }}
                 </base-button>
             </div>
             <!-- End: Categories for calculation of sponsorship rate-->

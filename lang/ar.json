@@ -482,7 +482,11 @@
     "draw_in_map": "رسم على الخريطة",
     "edit_in_map": "تعديل على الخريطة",
     "the_category": "التصنيف",
+    "ramadan_basket_category": "صنف قفة رمضان",
+    "add_category": "اضافة تصنيف",
     "the_monthly_sponsorships": "الكفالات الشهرية",
     "the_file": "الملف",
-    "unsaved_changes_warning": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد المغادرة؟"
+    "no_category_for_ramadan_basket": "لا يوجد تصنيف.",
+    "unsaved_changes_warning": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد المغادرة؟",
+    "the_receiving": "الاستلام"
 }

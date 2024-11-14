@@ -77,15 +77,15 @@
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $orphan->shoesSize->label }}
+                    {{ $orphan->shoesSize?->label }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $orphan->pantsSize->label }}
+                    {{ $orphan->pantsSize?->label }}
                 </x-td>
 
                 <x-td class="py-0.5  text-center">
-                    {{ $orphan->shirtSize->label }}
+                    {{ $orphan->shirtSize?->label }}
                 </x-td>
 
                 <x-td class="py-0.5  truncate max-w-28 text-center">

@@ -27,6 +27,8 @@ function monthlySponsorship(Family $family): void
 
     $total_income = calculateTotalIncomes($family);
 
+    $differenceForRamadanSponsorship = calculateDifferenceForRamadanSponsorship($family, $weights);
+
     $family->update([
         'income_rate' => $income_rate,
         'total_income' => $total_income,
@@ -34,6 +36,8 @@ function monthlySponsorship(Family $family): void
         'difference_after_monthly_sponsorship' => $differenceAfterSponsorship,
         'monthly_sponsorship_rate' => $sponsorshipRate,
         'amount_from_association' => $sponsorshipFromAssociation,
+        'ramadan_sponsorship_difference' => $differenceForRamadanSponsorship,
+        'ramadan_basket_category' => getCategoryForRamadanBasket($family, $differenceForRamadanSponsorship),
     ]);
 
     $family->searchable();
@@ -42,6 +46,13 @@ function monthlySponsorship(Family $family): void
 function calculateDifferenceBeforeMonthlySponsorship(Family $family, float $totalWeights): float
 {
     $threshold = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['threshold'];
+
+    return ($threshold - $family->income_rate) * $totalWeights;
+}
+
+function calculateDifferenceForRamadanSponsorship(Family $family, float $totalWeights): float
+{
+    $threshold = json_decode($family->tenant['calculation'], true)['ramadan_sponsorship']['threshold'];
 
     return ($threshold - $family->income_rate) * $totalWeights;
 }
@@ -66,4 +77,18 @@ function getPercentageForIncomeRate(Family $family, float $differenceBeforeSpons
     }
 
     return 0.0;
+}
+
+
+function getCategoryForRamadanBasket(Family $family, float $differenceForRamadanBasketSponsorship): string
+{
+    $categories = json_decode($family->tenant['calculation'], true)['ramadan_sponsorship']['categories'];
+
+    foreach ($categories as $category) {
+        if ($differenceForRamadanBasketSponsorship >= $category['minimum'] && $differenceForRamadanBasketSponsorship < $category['maximum']) {
+            return $category['category'];
+        }
+    }
+
+    return __('no_category_for_ramadan_basket');
 }

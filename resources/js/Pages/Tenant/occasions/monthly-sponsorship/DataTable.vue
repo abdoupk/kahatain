@@ -131,10 +131,10 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.zone']"
+                            :direction="params.directions && params.directions['address.zone.name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'family.zone')"
+                            @click="emit('sort', 'address.zone.name')"
                             >{{ $t('validation.attributes.address') }}
                         </the-table-th>
 

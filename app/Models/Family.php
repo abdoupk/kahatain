@@ -125,6 +125,8 @@ class Family extends Model implements HasMedia
         'monthly_sponsorship_rate',
         'amount_from_association',
         'difference_before_ramadan_sponsorship',
+        'ramadan_basket_category',
+        'ramadan_sponsorship_difference',
     ];
 
     protected static function boot(): void
@@ -222,7 +224,7 @@ class Family extends Model implements HasMedia
             'id' => $this->id,
             'name' => $this->name,
             'tenant_id' => $this->tenant_id,
-            'start_date' => (int) strtotime($this->start_date),
+            'start_date' => (int)strtotime($this->start_date),
             'file_number' => $this->file_number,
             'address' => [
                 'address' => $this->address,
@@ -256,6 +258,8 @@ class Family extends Model implements HasMedia
             'basket_from_association' => $this->difference_after_monthly_sponsorship > 0,
             'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
             'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
+            'ramadan_basket_category' => $this->ramadan_basket_category,
+            'ramadan_sponsorship_difference' => $this->ramadan_sponsorship_difference,
             'created_at' => strtotime($this->created_at),
             '_geo' => [
                 'lat' => $this->location['lat'],

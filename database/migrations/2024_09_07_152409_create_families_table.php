@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -27,6 +26,8 @@ return new class extends Migration
             $table->float('monthly_sponsorship_rate')->nullable();
             $table->float('amount_from_association')->nullable();
             $table->float('difference_before_ramadan_sponsorship')->nullable();
+            $table->float('ramadan_sponsorship_difference')->nullable();
+            $table->string('ramadan_basket_category')->nullable();
             $table->uuid('tenant_id')->index('idx_families_tenant_id');
             $table->uuid('created_by')->nullable();
             $table->uuid('deleted_by')->nullable();

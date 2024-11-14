@@ -480,6 +480,10 @@ export interface RamadanBasketFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+    basket_from_benefactor: number
+    amount_from_benefactor: number
+    ramadan_sponsorship_difference: number
+    ramadan_basket_category: string
 }
 
 export interface MonthlySponsorshipFamiliesResource {

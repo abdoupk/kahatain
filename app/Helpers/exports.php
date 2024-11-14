@@ -107,7 +107,7 @@ function listOfFamiliesBenefitingFromTheMonthlyBasketForExport(): Collection
 
 function listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(): Collection
 {
-    return search(Family::getModel())
+    return search(Family::getModel(), limit: LIMIT)
         ->query(fn ($query) => $query
             ->with(
                 [

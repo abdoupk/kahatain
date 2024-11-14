@@ -73,7 +73,7 @@
                 </x-td>
 
                 <x-td class="   text-center ">
-                    {{ $orphan->shoesSize->label }}
+                    {{ $orphan->shoesSize?->label }}
                 </x-td>
 
                 <x-td class="   text-center ">
@@ -81,7 +81,7 @@
                 </x-td>
 
                 <x-td class="   text-center ">
-                    {{ $orphan->shirtSize->label }}
+                    {{ $orphan->shirtSize?->label }}
                 </x-td>
 
                 <x-td class="   text-center ">

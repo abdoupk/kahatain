@@ -8,7 +8,7 @@ function getOrphansByFamilyStatus(): array
 
     return [
         'labels' => $orphans->pluck('family_status')->map(function (string $familyStatus) {
-            return __('family_statuses.'.$familyStatus);
+            return __('family_statuses.' . $familyStatus);
         })->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];
@@ -95,7 +95,7 @@ function getOrphansByBranch(): array
 
 function getByPantsAndShirtSize(): array
 {
-    $shirt_sizes = Orphan::whereNotNull('shirt_size')->selectRaw('shirt_size, COUNT(*) as total')
+    $shirt_sizes = Orphan::whereNotNull('shirt_size')->whereNotNull('pants_size')->selectRaw('shirt_size, COUNT(*) as total')
         ->with('shirtSize:id,label')
         ->groupBy('shirt_size')
         ->get()
@@ -202,7 +202,7 @@ function getOrphansGroupHealthStatus(): array
 
     return [
         'labels' => $orphans->pluck('is_handicapped')
-            ->map(fn ($is_handicapped) => $is_handicapped
+            ->map(fn($is_handicapped) => $is_handicapped
                 ? __('statistics.handicapped')
                 : __('statistics.healthy'))->toArray(),
         'data' => $orphans->pluck('total')->toArray(),

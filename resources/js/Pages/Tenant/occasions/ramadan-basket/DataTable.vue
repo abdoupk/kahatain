@@ -21,7 +21,7 @@ const emit = defineEmits(['sort'])
 
 <template>
     <div class="@container">
-        <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+        <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-auto">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
@@ -36,15 +36,78 @@ const emit = defineEmits(['sort'])
                             {{ $t('the_sponsor') }}
                         </the-table-th>
 
+                        <the-table-th
+                            :direction="params.directions && params.directions['orphans_count']"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'orphans_count')"
+                        >
+                            {{ $t('children_count') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.total_income"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'total_income')"
+                        >
+                            {{ $t('incomes.label.total_income') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions && params.directions['income_rate']"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'income_rate')"
+                        >
+                            {{ $t('income_rate') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.basket_from_benefactor"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'basket_from_benefactor')"
+                        >
+                            {{ $t('monthly_sponsorship.basket_from_benefactor') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.amount_from_benefactor"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'amount_from_benefactor')"
+                        >
+                            {{ $t('monthly_sponsorship.amount_from_benefactor') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.difference"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'difference')"
+                        >
+                            {{ $t('monthly_sponsorship.difference') }}
+                        </the-table-th>
+
+                        <the-table-th
+                            :direction="params.directions?.category"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'category')"
+                        >
+                            {{ $t('ramadan_basket_category') }}
+                        </the-table-th>
+
                         <the-table-th class="text-center">
                             {{ $t('validation.attributes.sponsor.phone_number') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.zone']"
+                            :direction="params.directions && params.directions['address.zone.name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'family.zone')"
+                            @click="emit('sort', 'address.zone.name')"
                             >{{ $t('validation.attributes.address') }}
                         </the-table-th>
 
@@ -55,33 +118,6 @@ const emit = defineEmits(['sort'])
                             @click="emit('sort', 'family.branch')"
                             >{{ $t('the_branch') }}
                         </the-table-th>
-
-                        <the-table-th
-                            :direction="params.directions && params.directions['family.orphans_count']"
-                            class="!w-32 text-center"
-                            sortable
-                            @click="emit('sort', 'family.orphans_count')"
-                        >
-                            {{ $t('children_count') }}
-                        </the-table-th>
-
-                        <the-table-th
-                            :direction="params.directions && params.directions['family.income_rate']"
-                            class="!w-32 text-center"
-                            sortable
-                            @click="emit('sort', 'family.income_rate')"
-                        >
-                            {{ $t('income_rate') }}
-                        </the-table-th>
-
-                        <the-table-th
-                            :direction="params.directions && params.directions['family.total_income']"
-                            class="!w-32 text-center"
-                            sortable
-                            @click="emit('sort', 'family.total_income')"
-                        >
-                            {{ $t('incomes.label.total_income') }}
-                        </the-table-th>
                     </base-tr-table>
                 </base-thead-table>
 
@@ -91,13 +127,53 @@ const emit = defineEmits(['sort'])
                             {{ (families.meta.from ?? 0) + index }}
                         </the-table-td>
 
-                        <the-table-td class="!min-w-24 !max-w-24 truncate">
+                        <the-table-td class="!min-w-40 !max-w-40 truncate">
                             <Link :href="route('tenant.sponsors.show', family.sponsor.id)" class="font-medium">
                                 {{ family.sponsor.name }}
                             </Link>
                         </the-table-td>
 
                         <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ family.orphans_count }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.total_income) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.income_rate) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.basket_from_benefactor) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            {{ formatCurrency(family.basket_from_benefactor) }}
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(family.ramadan_sponsorship_difference) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap rtl:font-semibold">
+                                {{ family.ramadan_basket_category }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td class="text-nowrap text-center">
                             {{ family.sponsor.phone_number }}
                         </the-table-td>
 
@@ -119,24 +195,6 @@ const emit = defineEmits(['sort'])
                             >
                                 {{ family.branch?.name }}
                             </Link>
-                        </the-table-td>
-
-                        <the-table-td class="text-center">
-                            <div class="whitespace-nowrap">
-                                {{ family.orphans_count }}
-                            </div>
-                        </the-table-td>
-
-                        <the-table-td class="text-center">
-                            <div class="whitespace-nowrap">
-                                {{ formatCurrency(family.income_rate) }}
-                            </div>
-                        </the-table-td>
-
-                        <the-table-td class="text-center">
-                            <div class="whitespace-nowrap">
-                                {{ formatCurrency(family.total_income) }}
-                            </div>
                         </the-table-td>
                     </base-tr-table>
                 </base-tbody-table>

@@ -30,6 +30,12 @@ class RamadanBasketResource extends JsonResource
             'orphans_count' => $this->orphans_count,
             'total_income' => $this->total_income,
             'income_rate' => $this->income_rate,
+            ...$this->whenLoaded('aid', fn () => [
+                'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
+                'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
+            ]),
+            'ramadan_sponsorship_difference' => $this->ramadan_sponsorship_difference,
+            'ramadan_basket_category' => $this->ramadan_basket_category,
         ];
     }
 }

@@ -39,6 +39,10 @@
         <x-th>
             {{ __('the_zone') }}
         </x-th>
+
+        <x-th>
+            {{ __('the_receiving') }}
+        </x-th>
     </x-slot>
 
     <x-slot name="tbody">
@@ -79,6 +83,8 @@
                 <x-td class="text-center">
                     {{ $family->zone->name }}
                 </x-td>
+
+                <x-td class="w-12"></x-td>
             </tr>
         @endforeach
     </x-slot>
