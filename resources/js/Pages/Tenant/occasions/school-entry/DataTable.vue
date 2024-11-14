@@ -26,28 +26,34 @@ const emit = defineEmits(['sort'])
                         <the-table-th class="text-start"> #</the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.name']"
+                            :direction="params.directions && params.directions['name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'orphan.name')"
+                            @click="emit('sort', 'name')"
                         >
                             {{ $t('the_child') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.academic_level']"
+                            :direction="
+                                params.directions &&
+                                params.directions['last_academic_year_achievement.academic_level.id']
+                            "
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'orphan.academic_level')"
+                            @click="emit('sort', 'last_academic_year_achievement.academic_level.id')"
                         >
                             {{ $t('academic_level') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.year_average']"
+                            :direction="
+                                params.directions &&
+                                params.directions['last_academic_year_achievement.academic_level.average']
+                            "
                             class="text-center"
                             sortable
-                            @click="emit('sort', 'orphan.year_average')"
+                            @click="emit('sort', 'last_academic_year_achievement.academic_level.average')"
                         >
                             {{ $t('year_average') }}
                         </the-table-th>

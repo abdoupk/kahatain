@@ -331,29 +331,36 @@ export const eidAlAdhaFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-branches',
-        field: 'family.branch.id',
+        field: 'branch.id',
         label: 'branch',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-map-location-dot',
-        field: 'family.zone.id',
+        field: 'address.zone.id',
         label: 'zone',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-children',
-        field: 'family.orphans_count',
+        field: 'orphans_count',
         label: 'orphans_count',
         type: 'number',
         operators: filterNumberOperators
     },
     {
         icon: 'icon-dollar-sign',
-        field: 'family.total_income',
+        field: 'total_income',
         label: 'total_income',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'income_rate',
+        label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
     }
@@ -362,38 +369,31 @@ export const eidAlAdhaFilters: ListBoxFilter[] = [
 export const schoolEntryFilters: ListBoxFilter[] = [
     {
         icon: 'icon-hands-holding-child',
-        field: 'orphan.id',
+        field: 'id',
         label: 'orphan',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-graduation-cap',
-        field: 'orphan.academic_achievement.academic_level.id',
+        field: 'last_academic_year_achievement.academic_level.id',
         label: 'orphan.academic_level',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-calendar',
-        field: 'orphan.birth_date',
+        field: 'birth_date',
         label: 'birth_date',
         type: 'date',
         operators: filterDateOperators
     },
     {
         icon: 'icon-hashtag',
-        field: 'orphan.academic_achievement.last_year_average',
+        field: 'last_academic_year_achievement.average',
         label: 'general_average',
         type: 'number',
         operators: filterNumberOperators
-    },
-    {
-        icon: 'icon-hands-holding-heart',
-        field: 'sponsorship',
-        label: 'orphan_sponsorships',
-        type: 'object',
-        operators: filterObjectOperators
     },
     {
         icon: 'icon-stethoscope',
@@ -414,49 +414,42 @@ export const schoolEntryFilters: ListBoxFilter[] = [
 export const eidSuitsFilters: ListBoxFilter[] = [
     {
         icon: 'icon-hands-holding-child',
-        field: 'orphan.id',
+        field: 'id',
         label: 'orphan',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-calendar',
-        field: 'orphan.birth_date',
+        field: 'birth_date',
         label: 'birth_date',
         type: 'date',
         operators: filterDateOperators
     },
     {
-        icon: 'icon-hands-holding-heart',
-        field: 'sponsorship',
-        label: 'orphan_sponsorships',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-gender',
-        field: 'orphan.gender',
+        field: 'gender',
         label: 'gender',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-shoes',
-        field: 'orphan.shoes_size',
+        field: 'shoes_size',
         label: 'shoes_size',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-pants',
-        field: 'orphan.pants_size',
+        field: 'pants_size',
         label: 'pants_size',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-shirt-long-sleeve',
-        field: 'orphan.shirt_size',
+        field: 'shirt_size',
         label: 'shirt_size',
         type: 'object',
         operators: filterObjectOperators
@@ -466,7 +459,7 @@ export const eidSuitsFilters: ListBoxFilter[] = [
 export const ramadanBasketFilters: ListBoxFilter[] = [
     {
         icon: 'icon-family',
-        field: 'family.id',
+        field: 'id',
         label: 'family',
         type: 'object',
         operators: filterObjectOperators
@@ -480,28 +473,28 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-branches',
-        field: 'family.branch.id',
+        field: 'branch.id',
         label: 'branch',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-map-location-dot',
-        field: 'family.zone.id',
+        field: 'address.zone.id',
         label: 'zone',
         type: 'object',
         operators: filterObjectOperators
     },
     {
         icon: 'icon-children',
-        field: 'family.orphans_count',
+        field: 'orphans_count',
         label: 'orphans_count',
         type: 'number',
         operators: filterNumberOperators
     },
     {
         icon: 'icon-dollar-sign',
-        field: 'family.total_income',
+        field: 'total_income',
         label: 'total_income',
         type: 'number',
         operators: filterNumberOperators
@@ -532,7 +525,7 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-map-location-dot',
-        field: 'zone.id',
+        field: 'address.zone.id',
         label: 'zone',
         type: 'object',
         operators: filterObjectOperators

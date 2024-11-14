@@ -39,44 +39,44 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.zone']"
+                            :direction="params.directions && params.directions['address.zone.name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'family.zone')"
+                            @click="emit('sort', 'address.zone.name')"
                             >{{ $t('validation.attributes.address') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.branch']"
+                            :direction="params.directions && params.directions['branch.name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'family.branch')"
+                            @click="emit('sort', 'branch.name')"
                             >{{ $t('the_branch') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.orphans_count']"
+                            :direction="params.directions && params.directions['orphans_count']"
                             class="!w-32 text-center"
                             sortable
-                            @click="emit('sort', 'family.orphans_count')"
+                            @click="emit('sort', 'orphans_count')"
                         >
                             {{ $t('children_count') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.total_income']"
+                            :direction="params.directions && params.directions['total_income']"
                             class="!w-32 text-center"
                             sortable
-                            @click="emit('sort', 'family.total_income')"
+                            @click="emit('sort', 'total_income')"
                         >
                             {{ $t('incomes.label.total_income') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.income_rate']"
+                            :direction="params.directions && params.directions['income_rate']"
                             class="!w-32 text-center"
                             sortable
-                            @click="emit('sort', 'family.income_rate')"
+                            @click="emit('sort', 'income_rate')"
                         >
                             {{ $t('income_rate') }}
                         </the-table-th>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Artisan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Artisan::call('scout:delete-all-indexes');
+
         $this->call(CitySeeder::class);
 
         $this->call(TenantSeeder::class);
@@ -26,5 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PreviewSeeder::class);
 
         $this->call(PrivateSchoolSeeder::class);
+
+        Artisan::call('scout:sync-index-settings');
     }
 }

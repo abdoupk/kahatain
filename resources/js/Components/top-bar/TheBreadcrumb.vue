@@ -29,7 +29,7 @@ const breadcrumbs = computedEager(() => {
             continue
         } else if (prevText !== 'edit' && prevText !== 'create' && prevText !== 'show') {
             breadCrumbs.push({
-                href: path === 'occasions' || (path === 'details' && prevText === 'archive') ? '#' : resolvedHref,
+                href: path === 'projects' || (path === 'details' && prevText === 'archive') ? '#' : resolvedHref,
                 active: path !== pathArray[pathArray.length - 1],
                 text: $t('breadcrumb.' + path.split(/[?#]/)[0])
             })

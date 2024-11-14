@@ -139,10 +139,10 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.branch']"
+                            :direction="params.directions && params.directions['branch.name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'family.branch')"
+                            @click="emit('sort', 'branch.name')"
                             >{{ $t('the_branch') }}
                         </the-table-th>
                     </base-tr-table>

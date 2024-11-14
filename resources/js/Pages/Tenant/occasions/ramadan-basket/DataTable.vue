@@ -82,19 +82,19 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions?.difference"
+                            :direction="params.directions?.ramadan_sponsorship_difference"
                             class="!w-32 text-center"
                             sortable
-                            @click="emit('sort', 'difference')"
+                            @click="emit('sort', 'ramadan_sponsorship_difference')"
                         >
                             {{ $t('monthly_sponsorship.difference') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions?.category"
+                            :direction="params.directions?.ramadan_basket_category"
                             class="!w-32 text-center"
                             sortable
-                            @click="emit('sort', 'category')"
+                            @click="emit('sort', 'ramadan_basket_category')"
                         >
                             {{ $t('ramadan_basket_category') }}
                         </the-table-th>
@@ -112,10 +112,10 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['family.branch']"
+                            :direction="params.directions && params.directions['branch.name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'family.branch')"
+                            @click="emit('sort', 'branch.name')"
                             >{{ $t('the_branch') }}
                         </the-table-th>
                     </base-tr-table>

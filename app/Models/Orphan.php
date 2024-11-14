@@ -226,6 +226,15 @@ class Orphan extends Model implements HasMedia
                         'average' => (float) number_format($academicAchievement->average, 2),
                     ];
                 })->toArray(),
+            'last_academic_year_achievement' => [
+                'id' => $this->lastAcademicYearAchievement?->id,
+                'academic_level' => [
+                    'id' => $this->lastAcademicYearAchievement?->academicLevel?->id,
+                    'level' => $this->lastAcademicYearAchievement?->academicLevel?->level,
+                    'phase' => $this->lastAcademicYearAchievement?->academicLevel?->phase,
+                ],
+                'average' => (float) number_format($this->lastAcademicYearAchievement?->average, 2),
+            ],
             'college_achievements' => $this->collegeAchievements
                 ->map(function (CollegeAchievement $collegeAchievement) {
                     return [
@@ -263,6 +272,15 @@ class Orphan extends Model implements HasMedia
                 })->toArray(),
             'tenant_id' => $this->tenant_id,
             'family_id' => $this->family_id,
+            'family' => [
+                'id' => $this->family_id,
+                'name' => $this->family->name,
+                'income_rate' => $this->family->income_rate,
+                'zone' => [
+                    'id' => $this->family->zone_id,
+                    'name' => $this->family->zone->name,
+                ],
+            ],
             'created_at' => strtotime($this->created_at),
         ];
     }
@@ -284,6 +302,7 @@ class Orphan extends Model implements HasMedia
             'academicAchievements.academicLevel',
             'collegeAchievements.academicLevel',
             'vocationalTrainingAchievements.vocationalTraining',
+            'lastAcademicYearAchievement.academicLevel',
             'shoesSize',
             'shirtSize',
             'pantsSize',

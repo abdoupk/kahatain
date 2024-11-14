@@ -27,10 +27,10 @@ const emit = defineEmits(['sort'])
                         <the-table-th class="text-start"> #</the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.name']"
+                            :direction="params.directions && params.directions['name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'orphan.name')"
+                            @click="emit('sort', 'name')"
                         >
                             {{ $t('the_child') }}
                         </the-table-th>

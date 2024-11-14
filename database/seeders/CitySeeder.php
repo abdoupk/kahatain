@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Artisan;
 use DB;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Seeder;
@@ -34,5 +35,7 @@ class CitySeeder extends Seeder
                 'wilaya_name_ascii' => $city['wilaya_name_ascii'],
             ];
         }, $cities));
+
+        Artisan::call('scout:import', ['model' => 'App\\Models\\City']);
     }
 }

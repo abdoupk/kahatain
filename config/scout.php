@@ -190,6 +190,8 @@ return [
                     'age',
                     'income',
                     'birth_date',
+                    'last_academic_year_achievement.academic_level.id',
+                    'last_academic_year_achievement.average',
                 ],
                 'searchableAttributes' => [
                     'name',
@@ -216,7 +218,24 @@ return [
                     'vocational_training_achievements.vocational_training_division',
                     'vocational_training_achievements.institute',
                 ],
-                'sortableAttributes' => ['name', 'family_status.ar', 'family_status.fr', 'family_status.en', 'academic_level.id', 'birth_date', 'age', 'created_at'],
+                'sortableAttributes' => [
+                    'name',
+                    'family_status.ar',
+                    'family_status.fr',
+                    'family_status.en',
+                    'academic_level.id',
+                    'birth_date',
+                    'age',
+                    'pants_size',
+                    'shoes_size',
+                    'shirt_size',
+                    'sponsor.name',
+                    'family.income_rate',
+                    'family.zone.name',
+                    'last_academic_year_achievement.academic_level.id',
+                    'last_academic_year_achievement.average',
+                    'created_at',
+                ],
             ],
             'babies' => [
                 'filterableAttributes' => [
@@ -250,6 +269,8 @@ return [
                     'baby_milk_quantity',
                     'diapers_quantity',
                     'orphan.birth_date',
+                    'orphan.name',
+                    'sponsor.name',
                 ],
             ],
             'inventory' => [
@@ -379,6 +400,9 @@ return [
                     'basket_from_benefactor',
                     'sponsor.name',
                     'address.zone.name',
+                    'branch.name',
+                    'ramadan_basket_category',
+                    'ramadan_sponsorship_difference',
                 ],
             ],
             'zones' => [

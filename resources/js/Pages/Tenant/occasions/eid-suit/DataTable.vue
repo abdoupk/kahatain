@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { formatCurrency } from '../../../../utils/helper'
-
 import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
@@ -13,6 +11,7 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
+import { formatCurrency } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 defineProps<{ orphans: PaginationData<EidSuitOrphansResource>; params: IndexParams }>()
@@ -29,46 +28,46 @@ const emit = defineEmits(['sort'])
                         <the-table-th class="text-start"> #</the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.name']"
+                            :direction="params.directions && params.directions['name']"
                             class="text-start"
                             sortable
-                            @click="emit('sort', 'orphan.name')"
+                            @click="emit('sort', 'name')"
                         >
                             {{ $t('the_child') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.pants_size']"
+                            :direction="params.directions && params.directions['pants_size']"
                             class="text-center"
                             sortable
-                            @click="emit('sort', 'orphan.pants_size')"
+                            @click="emit('sort', 'pants_size')"
                         >
                             {{ $t('pants_size') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.shoes_size']"
+                            :direction="params.directions && params.directions['shoes_size']"
                             class="text-center"
                             sortable
-                            @click="emit('sort', 'orphan.shoes_size')"
+                            @click="emit('sort', 'shoes_size')"
                         >
                             {{ $t('shoes_size') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.shirt_size']"
+                            :direction="params.directions && params.directions['shirt_size']"
                             class="text-center"
                             sortable
-                            @click="emit('sort', 'orphan.shirt_size')"
+                            @click="emit('sort', 'shirt_size')"
                         >
                             {{ $t('shirt_size') }}
                         </the-table-th>
 
                         <the-table-th
-                            :direction="params.directions && params.directions['orphan.age']"
+                            :direction="params.directions && params.directions['age']"
                             class="text-center"
                             sortable
-                            @click="emit('sort', 'orphan.age')"
+                            @click="emit('sort', 'age')"
                         >
                             {{ $t('age') }}
                         </the-table-th>
@@ -137,7 +136,7 @@ const emit = defineEmits(['sort'])
                             </Link>
                         </the-table-td>
 
-                        <the-table-td class="text-center">
+                        <the-table-td class="whitespace-nowrap text-center">
                             {{ orphan.sponsor.phone_number }}
                         </the-table-td>
 
