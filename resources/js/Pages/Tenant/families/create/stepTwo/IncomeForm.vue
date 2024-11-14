@@ -19,8 +19,6 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ form: Form<CreateFamilyForm> }>()
 
-console.log(props.form)
-
 interface IncomesType extends IncomeType {
     ccp_account: boolean
     bank_account: boolean

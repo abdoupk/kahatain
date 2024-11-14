@@ -66,8 +66,6 @@ const linkTo = async (menu: IFormattedMenu, event: Event) => {
             return
         }
 
-        console.log(menu.url)
-
         router.get(menu.routeName !== '' ? route(menu.routeName) : '#')
     }
 }

@@ -10,6 +10,6 @@ class UploadFileController extends Controller
 {
     public function __invoke(UploadFileRequest $request)
     {
-        return tenant_asset($request->file('filepond')->store('tmp/' . now()->timestamp . '-' . Str::random(20), ['disk' => 'public']));
+        return tenant_asset($request->file('filepond')->store('tmp/'.now()->timestamp.'-'.Str::random(20), ['disk' => 'public']));
     }
 }

@@ -856,7 +856,7 @@ const handleUpdateVocationalTraining = () => {
             </base-form-input-error>
         </div>
         <!-- End: Note -->
-        
+
         <slot></slot>
     </div>
 </template>

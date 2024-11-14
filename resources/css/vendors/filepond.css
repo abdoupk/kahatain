@@ -1,7 +1,7 @@
 .dark {
     .filepond--drop-label {
         color: theme('colors.slate.300');
-        font-family: "Roboto", sans-serif !important;
+        font-family: 'Roboto', sans-serif !important;
     }
 
     .filepond--label-action {
@@ -13,5 +13,3 @@
         border: transparent !important;
     }
 }
-
-

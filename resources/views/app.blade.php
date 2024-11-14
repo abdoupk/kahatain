@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"
-      class="default {{ auth()->user()?->settings?->font_size ?? '' }}">
+    class="default {{ auth()->user()?->settings?->font_size ?? '' }}">
 
 <head>
     <meta charset="utf-8">
@@ -14,12 +14,12 @@
 
     <!-- Scripts -->
     @routes
-    @vite(['resources/css/app.css','resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
+    @vite(['resources/css/app.css', 'resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
 </head>
 
 <body class="!font-roboto overflow-x-hidden dark:bg-darkmode-700 scroll-smooth">
-@inertia
+    @inertia
 </body>
 
 </html>

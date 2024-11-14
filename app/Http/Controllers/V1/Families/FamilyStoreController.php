@@ -41,7 +41,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                             'location'
                         ),
                         'name' => $request->validated('sponsor.first_name')
-                            . '  ' .
+                            .'  '.
                             $request->validated('sponsor.last_name'),
                     ]
                 );
@@ -54,7 +54,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
                 $this->storeOrphans($request, $family, $sponsor);
 
-                if (!empty(array_filter($request->validated('second_sponsor')))) {
+                if (! empty(array_filter($request->validated('second_sponsor')))) {
                     $family->secondSponsor()->create($request->validated('second_sponsor'));
                 }
 
@@ -135,7 +135,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
             unset($orphan['photo']);
 
             return array_filter($orphan, function ($key) {
-                return !in_array($key, [
+                return ! in_array($key, [
                     'baby_milk_quantity',
                     'baby_milk_type',
                     'diapers_quantity',
@@ -152,11 +152,11 @@ class FamilyStoreController extends Controller implements HasMiddleware
                 addToMediaCollection($orphans[$key], $orphan['photo'], 'photos');
             }
 
-            if (!empty($orphan) && isset(
-                    $orphan['baby_milk_quantity'],
-                    $orphan['baby_milk_type'],
-                    $orphan['diapers_quantity'],
-                    $orphan['diapers_type'])
+            if (! empty($orphan) && isset(
+                $orphan['baby_milk_quantity'],
+                $orphan['baby_milk_type'],
+                $orphan['diapers_quantity'],
+                $orphan['diapers_type'])
             ) {
                 $babiesToCreate[] = [
                     'baby_milk_quantity' => $orphan['baby_milk_quantity'],
@@ -175,7 +175,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
             }
         }
 
-        if (!empty($babiesToCreate)) {
+        if (! empty($babiesToCreate)) {
             $family->babies()->createMany($babiesToCreate);
         }
     }
