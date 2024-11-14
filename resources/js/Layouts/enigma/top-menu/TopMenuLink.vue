@@ -20,6 +20,8 @@ defineProps<{
             twMerge([
                 'relative me-1 flex h-[55px] items-center rounded-full px-5 text-slate-600 xl:rounded-xl',
 
+                $page.url === menu.url && '!cursor-default',
+
                 level === 'first' && 'mt-[3px]',
                 level == 'first' && menu.active && 'bg-slate-100 text-primary dark:bg-darkmode-700',
 

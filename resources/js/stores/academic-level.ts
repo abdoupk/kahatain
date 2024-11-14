@@ -101,9 +101,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
             return this.academicLevels
                 .filter(
                     (academicLevel) =>
-                        !['الطور الابتدائي',
-'الطور المتوسط',
-'الطور الثانوي'].includes(academicLevel.phase)
+                        !['الطور الابتدائي', 'الطور المتوسط', 'الطور الثانوي'].includes(academicLevel.phase)
                 )
                 .flatMap(({ levels, phase }) =>
                     levels

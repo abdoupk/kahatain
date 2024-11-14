@@ -19,6 +19,9 @@ defineProps<{
         :class="
             twMerge([
                 'relative flex h-[55px] items-center rounded-full text-white xl:rounded-b-none xl:rounded-t-[1rem]',
+
+                $page.url === menu.url && '!cursor-default',
+
                 level == 'first' && 'me-1 px-5',
                 level != 'first' && 'me-0 px-0',
                 level == 'first' && menu.active && 'z-10 bg-slate-100 dark:bg-darkmode-700',
