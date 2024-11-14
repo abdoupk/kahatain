@@ -482,5 +482,7 @@
     "draw_in_map": "رسم على الخريطة",
     "edit_in_map": "تعديل على الخريطة",
     "the_category": "التصنيف",
-    "the_monthly_sponsorships": "الكفالات الشهرية"
+    "the_monthly_sponsorships": "الكفالات الشهرية",
+    "the_file": "الملف",
+    "unsaved_changes_warning": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد المغادرة؟"
 }

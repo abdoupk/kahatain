@@ -6,6 +6,7 @@ import { useAcademicLevelsStore } from '@/stores/academic-level'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { computed, onMounted, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
@@ -73,6 +74,8 @@ const diapersQuantity = defineModel('diapersQuantity')
 
 const birthDate = defineModel('birth_date', { default: '' })
 
+const photo = defineModel('photo', { default: '' })
+
 const isStillBaby = computed(() => {
     return birthDate.value && !isOlderThan(birthDate.value, 2)
 })
@@ -95,6 +98,8 @@ const shouldBeInSchool = computed(() => {
 
 const academicLevels = ref<AcademicLevelType[]>([])
 
+const pic = ref(props.form?.orphans[props.index]?.photo)
+
 onMounted(async () => {
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
 })
@@ -114,6 +119,21 @@ const handleUpdateVocationalTraining = () => {
 
 <template>
     <div class="grid grid-cols-12 gap-4 gap-y-5 border-2 border-dashed px-2 pb-2.5 pt-2">
+        <!-- Begin: Photo-->
+        <div class="col-span-12">
+            <div class="me-2 ms-auto mt-2 h-36 w-36">
+                <base-file-pond
+                    :id="`photo_${index}`"
+                    :key="`photo_${index}`"
+                    :allow-multiple="false"
+                    :files="pic"
+                    is-picture
+                    @update:files="photo = $event[0]"
+                ></base-file-pond>
+            </div>
+        </div>
+        <!-- End: Photo-->
+
         <!-- Begin: First Name-->
         <div class="col-span-12 sm:col-span-6">
             <base-form-label for="first_name">
@@ -836,6 +856,7 @@ const handleUpdateVocationalTraining = () => {
             </base-form-input-error>
         </div>
         <!-- End: Note -->
+        
         <slot></slot>
     </div>
 </template>

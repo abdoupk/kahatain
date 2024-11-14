@@ -2,15 +2,18 @@
 import type { CreateFamilyForm } from '@/types/types'
 
 import type { Form } from 'laravel-precognition-vue/dist/types'
+import { ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
-defineProps<{ form: Form<CreateFamilyForm> }>()
+const props = defineProps<{ form: Form<CreateFamilyForm> }>()
 
 const firstName = defineModel('first_name')
 
@@ -23,6 +26,10 @@ const deathDate = defineModel('deathDate', { default: '' })
 const income = defineModel('income')
 
 const job = defineModel('job')
+
+const deathCertificateFile = defineModel('deathCertificateFile', { default: '' })
+
+const _deathCertificateFile = ref(props.form?.spouse?.death_certificate_file)
 </script>
 
 <template>
@@ -251,6 +258,21 @@ const job = defineModel('job')
                     }}
                 </div>
             </base-form-input-error>
+        </div>
+
+        <div class="col-span-12 lg:col-span-6">
+            <base-form-label class="mb-2" for="death_certificate_file">
+                {{ $t('upload-files.labels.death_certificate') }}
+            </base-form-label>
+
+            <base-file-pond
+                id="death_certificate_file"
+                :allow-multiple="false"
+                :files="_deathCertificateFile"
+                :is-picture="false"
+                accepted-file-types="image/jpeg, image/png, application/pdf"
+                @update:files="deathCertificateFile = $event[0]"
+            ></base-file-pond>
         </div>
     </div>
 </template>

@@ -1,0 +1,17 @@
+.dark {
+    .filepond--drop-label {
+        color: theme('colors.slate.300');
+        font-family: "Roboto", sans-serif !important;
+    }
+
+    .filepond--label-action {
+        text-decoration-color: #f8f8f8;
+    }
+
+    .filepond--panel-root {
+        background-color: theme('colors.darkmode.800');
+        border: transparent !important;
+    }
+}
+
+

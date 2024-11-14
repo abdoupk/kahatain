@@ -26,6 +26,9 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.diapers_quantity' => __('diapers_quantity'),
             'sponsor.ccp' => __('ccp'),
             'housing.housing_type.value' => __('validation.attributes.housing_type.value'),
+            'incomes.account.*.balance' => __('incomes.label.balance'),
+            'incomes.account.*.performance_grant' => __('incomes.label.performance_grant'),
+            'incomes.account.*.monthly_income' => __('incomes.label.monthly_income'),
         ];
     }
 
@@ -38,6 +41,7 @@ class CreateFamilyRequest extends FormRequest
         return [
             'submitted' => 'boolean',
             'address' => 'required|string',
+            'residence_file' => 'nullable|string',
             'location.lat' => 'nullable|numeric',
             'location.lng' => 'nullable|numeric',
             'zone_id' => 'required|string|exists:App\Models\Zone,id',
@@ -65,7 +69,10 @@ class CreateFamilyRequest extends FormRequest
             'sponsor.function' => 'required|string',
             'sponsor.health_status' => 'required|string',
             'sponsor.diploma' => 'required|string',
-            'sponsor.ccp' => 'required|string|unique:App\Models\Sponsor,ccp',
+            'sponsor.diploma_file' => 'nullable|string',
+            'sponsor.photo' => 'nullable|string',
+            'sponsor.birth_certificate_file' => 'nullable|string',
+            'sponsor.ccp' => 'required|string',
             'second_sponsor.first_name' => 'nullable|string',
             'second_sponsor.last_name' => 'nullable|string',
             'second_sponsor.phone_number' => 'nullable|string',
@@ -78,8 +85,19 @@ class CreateFamilyRequest extends FormRequest
             'spouse.function' => 'required|string',
             'spouse.birth_date' => 'required|string',
             'spouse.death_date' => 'required|string',
+            'spouse.death_certificate_file' => 'nullable|string',
             'spouse.income' => 'sometimes|nullable|numeric',
-            'incomes.*' => 'sometimes|numeric',
+            'incomes.cnr' => 'nullable|numeric',
+            'incomes.cnas' => 'nullable|numeric',
+            'incomes.casnos' => 'nullable|numeric',
+            'incomes.pension' => 'nullable|numeric',
+            'incomes.other_income' => 'nullable|numeric',
+            'incomes.bank_file' => 'nullable|string',
+            'incomes.ccp_file' => 'nullable|string',
+            'incomes.cnr_file' => 'nullable|string',
+            'incomes.cnas_file' => 'nullable|string',
+            'incomes.casnos_file' => 'nullable|string',
+            'incomes.account.*.*' => 'nullable|numeric',
             'housing.housing_type.value' => 'required',
             'housing.housing_type.name' => 'required',
             'housing.number_of_rooms' => 'required|numeric',
@@ -101,6 +119,7 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.diapers_type' => $baby_milk_and_diapers_required,
             'orphans.*.is_unemployed' => 'required|boolean',
             'orphans.*.is_handicapped' => 'required|boolean',
+            'orphans.*.photo' => 'nullable|string',
         ];
     }
 

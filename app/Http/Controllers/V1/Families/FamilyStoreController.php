@@ -7,10 +7,13 @@ use App\Http\Requests\V1\Families\CreateFamilyRequest;
 use App\Jobs\V1\Family\FamilyCreatedJob;
 use App\Models\Family;
 use App\Models\Sponsor;
+use Arr;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Throwable;
 
 class FamilyStoreController extends Controller implements HasMiddleware
@@ -38,10 +41,12 @@ class FamilyStoreController extends Controller implements HasMiddleware
                             'location'
                         ),
                         'name' => $request->validated('sponsor.first_name')
-                            .'  '.
+                            . '  ' .
                             $request->validated('sponsor.last_name'),
                     ]
                 );
+
+                addToMediaCollection($family, $request->validated('residence_file'), 'residence_files');
 
                 $sponsor = $this->storeSponsor($request, $family);
 
@@ -49,11 +54,13 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
                 $this->storeOrphans($request, $family, $sponsor);
 
-                if (! empty(array_filter($request->validated('second_sponsor')))) {
+                if (!empty(array_filter($request->validated('second_sponsor')))) {
                     $family->secondSponsor()->create($request->validated('second_sponsor'));
                 }
 
-                $family->deceased()->create($request->validated('spouse'));
+                $family->deceased()->create(Arr::except($request->validated('spouse'), ['death_certificate_file']));
+
+                addToMediaCollection($family->deceased, $request->validated('spouse.death_certificate_file'), 'death_certificate_files');
 
                 $this->storeHousingInformations($family, $request);
 
@@ -68,14 +75,37 @@ class FamilyStoreController extends Controller implements HasMiddleware
         return response('', 422);
     }
 
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
     private function storeSponsor(CreateFamilyRequest $request, Model|Family $family): Sponsor
     {
-        $sponsor = $family->sponsor()->create([...$request->validated('sponsor')]);
+        $sponsor = $family->sponsor()->create(Arr::except($request->validated('sponsor'), ['photo', 'diploma_file', 'birth_certificate_file']));
 
-        $sponsor->incomes()->create([
-            ...$request->validated('incomes'),
-            'total_income' => array_sum($request->validated('incomes')),
+        $income = $sponsor->incomes()->create([
+            ...$request->only(
+                ['incomes.casnos', 'incomes.ccp', 'incomes.account', 'incomes.cnr',
+                    'incomes.cnas', 'incomes.other_income', 'incomes.pension']
+            )['incomes'],
+            'total_income' => setTotalIncomeAttribute($request->validated('incomes')),
         ]);
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.diploma_file'), 'diploma_files');
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.birth_certificate_file'), 'birth_certificate_files');
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.photo'), 'photos');
+
+        addToMediaCollection($income, $request->validated('incomes.bank_file'), 'bank_files');
+
+        addToMediaCollection($income, $request->validated('incomes.ccp_file'), 'ccp_files');
+
+        addToMediaCollection($income, $request->validated('incomes.casnos_file'), 'casnos_files');
+
+        addToMediaCollection($income, $request->validated('incomes.cnas_file'), 'cnas_files');
+
+        addToMediaCollection($income, $request->validated('incomes.cnr_file'), 'cnr_files');
 
         return $sponsor;
     }
@@ -90,6 +120,10 @@ class FamilyStoreController extends Controller implements HasMiddleware
         $preview->inspectors()->sync($request->validated('inspectors_members'));
     }
 
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
     public function storeOrphans(CreateFamilyRequest $request, Model|Family $family, Sponsor $sponsor): void
     {
         $validatedOrphans = $request->orphans;
@@ -98,8 +132,10 @@ class FamilyStoreController extends Controller implements HasMiddleware
         $orphans = $family->orphans()->createMany(array_map(static function ($orphan) use ($sponsor) {
             $orphan['sponsor_id'] = $sponsor->id;
 
+            unset($orphan['photo']);
+
             return array_filter($orphan, function ($key) {
-                return ! in_array($key, [
+                return !in_array($key, [
                     'baby_milk_quantity',
                     'baby_milk_type',
                     'diapers_quantity',
@@ -112,11 +148,15 @@ class FamilyStoreController extends Controller implements HasMiddleware
         foreach ($validatedOrphans as $key => $orphan) {
             $orphan = array_filter($orphan);
 
-            if (! empty($orphan) && isset(
-                $orphan['baby_milk_quantity'],
-                $orphan['baby_milk_type'],
-                $orphan['diapers_quantity'],
-                $orphan['diapers_type'])
+            if (isset($orphan['photo'])) {
+                addToMediaCollection($orphans[$key], $orphan['photo'], 'photos');
+            }
+
+            if (!empty($orphan) && isset(
+                    $orphan['baby_milk_quantity'],
+                    $orphan['baby_milk_type'],
+                    $orphan['diapers_quantity'],
+                    $orphan['diapers_type'])
             ) {
                 $babiesToCreate[] = [
                     'baby_milk_quantity' => $orphan['baby_milk_quantity'],
@@ -135,7 +175,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
             }
         }
 
-        if (! empty($babiesToCreate)) {
+        if (!empty($babiesToCreate)) {
             $family->babies()->createMany($babiesToCreate);
         }
     }
@@ -151,5 +191,16 @@ class FamilyStoreController extends Controller implements HasMiddleware
         ]);
 
         $family->furnishings()->create($request->validated('furnishings'));
+    }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    private function addFamilyAttachments(Family $family, CreateFamilyRequest $request)
+    {
+        if ($request->residence_file !== null) {
+            $family->addMediaFromDisk(getFileNameFromTemporaryPath($request->residence_file), 'public')->toMediaCollection('residence_files');
+        }
     }
 }

@@ -1,4 +1,3 @@
-import '../css/app.css'
 import './bootstrap'
 import './echo'
 import i18n, { $t } from './utils/i18n'

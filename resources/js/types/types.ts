@@ -657,6 +657,9 @@ type SponsorType = {
     is_unemployed: boolean
     gender: 'male' | 'female'
     ccp: string
+    photo: string
+    birth_certificate_file: string
+    diploma_file: string
 }
 
 type SecondSponsorType = {
@@ -676,6 +679,7 @@ type SpouseType = {
     death_date: string
     function: string
     income: number
+    death_certificate_file: string
 }
 
 export type OrphanType = {
@@ -689,6 +693,7 @@ export type OrphanType = {
     shoes_size: string
     pants_size: string
     shirt_size: string
+    photo: string
     income: number | null
     note: string
     gender: 'male' | 'female'
@@ -707,6 +712,11 @@ export type IncomeType = {
     pension: number
     other_income: number
     account: number
+    cnas_file: string
+    cnr_file: string
+    casnos_file: string
+    bank_file: string
+    ccp_file: string
 }
 
 export type FurnishingsType =
@@ -731,6 +741,7 @@ export type CreateFamilyForm = {
     zone_id: string
     start_date: string | Date | null
     file_number: number
+    residence_certificate_file: string
     sponsor: SponsorType
     incomes: IncomeType
     second_sponsor: SecondSponsorType

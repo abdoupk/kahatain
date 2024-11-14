@@ -6,6 +6,7 @@ import { useAcademicLevelsStore } from '@/stores/academic-level'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { onMounted, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
@@ -19,13 +20,19 @@ import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.v
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{
+const props = defineProps<{
     form?: Form<CreateFamilyForm>
 }>()
 
 const academicLevelsStore = useAcademicLevelsStore()
 
 const academicLevels = ref<AcademicLevelType[]>([])
+
+const pic = ref(props.form?.sponsor?.photo)
+
+const _diplomaFile = ref(props.form?.sponsor?.diploma_file)
+
+const _birthCertificateFile = ref(props.form?.sponsor?.birth_certificate_file)
 
 onMounted(async () => {
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForSponsors()
@@ -51,6 +58,12 @@ const healthStatus = defineModel('health_status')
 
 const diploma = defineModel('diploma')
 
+const photo = defineModel('photo', { default: '' })
+
+const birthCertificateFile = defineModel('birthCertificateFile', { default: '' })
+
+const diplomaFile = defineModel('diplomaFile', { default: '' })
+
 // Const cardNumber = defineModel('card_number')
 
 const ccp = defineModel('ccp')
@@ -64,6 +77,21 @@ const isUnemployed = defineModel('isUnemployed')
 
 <template>
     <div class="mt-6 grid grid-cols-12 gap-4 gap-y-5">
+        <!-- Begin: Photo-->
+
+        <div class="col-span-12">
+            <div class="me-2 ms-auto h-36 w-36">
+                <base-file-pond
+                    id="photo"
+                    :allow-multiple="false"
+                    :files="pic"
+                    is-picture
+                    @update:files="photo = $event[0]"
+                ></base-file-pond>
+            </div>
+        </div>
+        <!-- End: Photo-->
+
         <!-- Begin: First Name -->
         <div class="col-span-12 sm:col-span-6">
             <base-form-label for="first_name">
@@ -608,6 +636,44 @@ const isUnemployed = defineModel('isUnemployed')
             </base-form-switch>
         </div>
         <!--END: Unemployed-->
+
+        <!-- Begin: Upload files  -->
+        <div class="col-span-12 mt-6">
+            <h1 class="mb-6 text-lg rtl:!font-semibold">{{ $t('upload-files.files') }}</h1>
+
+            <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-12 lg:col-span-6">
+                    <base-form-label class="mb-2" for="birth_certificate_file">
+                        {{ $t('upload-files.labels.birth_certificate') }}
+                    </base-form-label>
+
+                    <base-file-pond
+                        id="birth_certificate_file"
+                        :allow-multiple="false"
+                        :files="_birthCertificateFile"
+                        :is-picture="false"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        @update:files="birthCertificateFile = $event[0]"
+                    ></base-file-pond>
+                </div>
+
+                <div class="col-span-12 lg:col-span-6">
+                    <base-form-label class="mb-2" for="diploma_file">
+                        {{ $t('diploma') }}
+                    </base-form-label>
+
+                    <base-file-pond
+                        id="diploma_file"
+                        :allow-multiple="false"
+                        :files="_diplomaFile"
+                        :is-picture="false"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        @update:files="diplomaFile = $event[0]"
+                    ></base-file-pond>
+                </div>
+            </div>
+        </div>
+        <!-- End: Upload Files   -->
 
         <slot></slot>
     </div>

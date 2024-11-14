@@ -11,7 +11,7 @@ import { getLocale } from '@/utils/i18n'
 
 const settingsStore = useSettingsStore()
 
-const date = defineModel('date', { default: null })
+const date = defineModel('date')
 
 const masks = ref({
     input: 'DD/MM/YYYY'
@@ -24,7 +24,7 @@ const popover = ref({
 </script>
 
 <template>
-    <DatePicker
+    <date-picker
         v-model="date"
         :is-dark="settingsStore.appearance === 'dark'"
         :locale="getLocale()"
@@ -65,7 +65,7 @@ const popover = ref({
                 ></base-form-input>
             </div>
         </template>
-    </DatePicker>
+    </date-picker>
 </template>
 
 <style lang="postcss">

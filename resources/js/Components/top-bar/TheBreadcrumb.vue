@@ -12,7 +12,6 @@ const BaseBreadCrumbLink = defineAsyncComponent(() => import('@/Components/Base/
 const { light = false } = defineProps<{ light?: boolean }>()
 
 const breadcrumbs = computedEager(() => {
-    // TODO getOnly link without https
     const pathArray = usePage().url.split('/').filter(Boolean)
 
     const breadCrumbs = []

@@ -35,3 +35,20 @@ function getFamiliesPosition(): array
     return Family::select(['location', 'address', 'name'])
         ->get()->toArray();
 }
+
+function setTotalIncomeAttribute(array $incomes): float
+{
+    return array_reduce($incomes, function ($carry, $item) {
+        if (is_array($item)) {
+            if (isset($item['ccp'])) {
+                return $carry + $item['ccp']['monthly_income'] + $item['ccp']['balance'] + $item['ccp']['performance_grant'] / 3;
+            }
+
+            if (isset($item['bank'])) {
+                return $carry + $item['bank']['monthly_income'] + $item['bank']['balance'] + $item['bank']['performance_grant'] / 3;
+            }
+        }
+
+        return (float) $carry + (float) $item;
+    }, 0);
+}

@@ -8,7 +8,7 @@ import type {
 } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
-import { defineAsyncComponent, type Ref, ref, watch } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, type Ref, ref, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -91,6 +91,8 @@ const creatingCompleted = ref(createFamilyStore.creatingCompleted)
 const form = useForm('post', route('tenant.families.store'), createFamilyStore.family as CreateFamilyForm)
 
 const validating = ref<boolean>(false)
+
+const isDirty = ref<boolean>(false)
 
 const stepOneCompleted = ref<boolean>(createFamilyStore.step_one_completed)
 
@@ -183,6 +185,34 @@ const prevStep = () => {
         behavior: 'smooth'
     })
 
+    if (currentStep.value === 2) {
+        if (selectedTabStepTwo.value === 0) {
+            currentStep.value = 1
+        } else {
+            selectedTabStepTwo.value--
+        }
+    }
+
+    if (currentStep.value === 3) {
+        currentStep.value = 2
+
+        selectedTabStepTwo.value = 3
+    }
+
+    if (currentStep.value === 4) {
+        if (selectedTabStepFour.value === 0) {
+            currentStep.value = 3
+        } else {
+            selectedTabStepFour.value--
+        }
+    }
+
+    if (currentStep.value === 5) {
+        currentStep.value = 4
+
+        selectedTabStepFour.value = 2
+    }
+
     updateState(form.data())
 }
 
@@ -216,7 +246,9 @@ const goTo = async (index: number) => {
         if (index === 3) {
             stepTwoCompleted.value = false
 
-            currentStep.value = 2
+            if (stepOneCompleted.value) {
+                currentStep.value = 2
+            }
 
             await validateStep(createFamilyStepTwoErrorProps, stepTwoCompleted).finally(() => {
 
@@ -242,15 +274,23 @@ const goTo = async (index: number) => {
                     forgetErrors(createFamilyStepFourErrorProps)
 
                     currentStep.value = 4
+
+                    selectedTabStepFour.value = 0
                 }
             })
         }
 
         if (index === 5) {
             await validateStep(createFamilyStepFourErrorProps, stepFourCompleted).finally(() => {
-                if (stepOneCompleted.value && stepTwoCompleted.value && stepThreeCompleted.value && stepFourCompleted.value) {
+                if (stepOneCompleted.value && stepTwoCompleted.value && stepThreeCompleted.value && stepFourCompleted.value && selectedTabStepFour.value === 2) {
                     forgetErrors(createFamilyStepFiveErrorProps)
 
+                    currentStep.value = 5
+                } else if (selectedTabStepFour.value === 0 && !checkErrors('^housing', form.errors)) {
+                    selectedTabStepFour.value = 1
+                } else if (selectedTabStepFour.value === 1 && !checkErrors('^furnishings', form.errors)) {
+                    selectedTabStepFour.value = 2
+                } else if (selectedTabStepFour.value === 3 && !checkErrors('^housing', form.errors) && !checkErrors('^furnishings', form.errors) && !checkErrors('other_properties$', form.errors)) {
                     currentStep.value = 5
                 }
             })
@@ -282,6 +322,8 @@ const updateState = (data: object) => {
 
         state.creating_completed = creatingCompleted.value
     })
+
+    isDirty.value = true
 }
 
 const submit = () => {
@@ -292,11 +334,13 @@ const submit = () => {
         onSuccess() {
             creatingCompleted.value = true
 
-            createFamilyStore.$reset()
-
             createFamilyStore.creating_completed = true
 
-            router.visit(route('tenant.families.index'))
+            nextTick(() => {
+                setTimeout(() => {
+                    router.visit(route('tenant.families.index'))
+                }, 500)
+            })
         },
         onFinish() {
             validating.value = false
@@ -322,6 +366,32 @@ const handleTabChange = (index, step) => {
     }
 }
 
+const handleNavigation = (event: Event) => {
+    if (event.detail.visit.url.pathname === '/dashboard/families/create') {
+        return true
+    }
+
+    if (creatingCompleted.value) {
+        createFamilyStore.$reset()
+
+        isDirty.value = false
+
+        return true
+    } else if (isDirty.value) {
+        if (!confirm($t('unsaved_changes_warning'))) {
+            event.preventDefault()
+
+            return false
+        } else {
+            createFamilyStore.$reset()
+
+            isDirty.value = false
+
+            return true
+        }
+    }
+}
+
 watch(() => currentStep.value, () => {
     form.submitted = createFamilyStore.family.submitted = currentStep.value === 5
 })
@@ -329,6 +399,10 @@ watch(() => currentStep.value, () => {
 watch(() => form, (value) => {
     updateState(value.data())
 }, { deep: true })
+
+onMounted(() => {
+    router.on('before', handleNavigation)
+})
 </script>
 
 <template>
@@ -346,7 +420,10 @@ watch(() => form, (value) => {
                         :current-step="currentStep"
                         :index="index + 1"
                         :title="title"
-                        @go-to="goTo"
+                        @go-to="($event)=>{
+                            // goToClicked=true
+                            goTo($event)
+                        }"
                     ></step-title>
                 </div>
 
@@ -356,6 +433,7 @@ watch(() => form, (value) => {
                         v-model:branch="form.branch_id"
                         v-model:file-number="form.file_number"
                         v-model:location="form.location"
+                        v-model:residence-certificate-file="form.residence_certificate_file"
                         v-model:start-date="form.start_date"
                         v-model:zone="form.zone_id"
                         :currentStep
@@ -373,11 +451,13 @@ watch(() => form, (value) => {
                                 <template #sponsorForm>
                                     <sponsor-form
                                         v-model:academic_level="form.sponsor.academic_level_id"
+                                        v-model:birth-certificate-file="form.sponsor.birth_certificate_file"
                                         v-model:birth_certificate_number="form.sponsor.birth_certificate_number"
                                         v-model:birth_date="form.sponsor.birth_date"
                                         v-model:card_number="form.sponsor.card_number"
                                         v-model:ccp="form.sponsor.ccp"
                                         v-model:diploma="form.sponsor.diploma"
+                                        v-model:diploma-file="form.sponsor.diploma_file"
                                         v-model:father_name="form.sponsor.father_name"
                                         v-model:first_name="form.sponsor.first_name"
                                         v-model:function="form.sponsor.function"
@@ -386,6 +466,7 @@ watch(() => form, (value) => {
                                         v-model:last_name="form.sponsor.last_name"
                                         v-model:mother_name="form.sponsor.mother_name"
                                         v-model:phone="form.sponsor.phone_number"
+                                        v-model:photo="form.sponsor.photo"
                                         v-model:sponsor-type="form.sponsor.sponsor_type"
                                         :form
                                     ></sponsor-form>
@@ -394,9 +475,14 @@ watch(() => form, (value) => {
                                 <template #incomeForm>
                                     <income-form
                                         v-model:account="form.incomes.account"
+                                        v-model:bank-file="form.incomes.bank_file"
                                         v-model:casnos="form.incomes.casnos"
+                                        v-model:casnos-file="form.incomes.casnos_file"
+                                        v-model:ccp-file="form.incomes.ccp_file"
                                         v-model:cnas="form.incomes.cnas"
+                                        v-model:cnas-file="form.incomes.cnas_file"
                                         v-model:cnr="form.incomes.cnr"
+                                        v-model:cnr-file="form.incomes.cnr_file"
                                         v-model:other_income="form.incomes.other_income"
                                         v-model:pension="form.incomes.pension"
                                         :form
@@ -419,6 +505,7 @@ watch(() => form, (value) => {
                                 <template #spouseForm>
                                     <spouse-form
                                         v-model:birth-date="form.spouse.birth_date"
+                                        v-model:death-certificate-file="form.spouse.death_certificate_file"
                                         v-model:death-date="form.spouse.death_date"
                                         v-model:first_name="form.spouse.first_name"
                                         v-model:income="form.spouse.income"
@@ -427,6 +514,7 @@ watch(() => form, (value) => {
                                         :form
                                     ></spouse-form>
                                 </template>
+
                                 <the-actions :currentStep :nextStep :prevStep :totalSteps
                                              :validating></the-actions>
                             </step-two>
@@ -460,6 +548,7 @@ watch(() => form, (value) => {
                                                 v-model:last_name="orphan.last_name"
                                                 v-model:note="orphan.note"
                                                 v-model:pants-size="orphan.pants_size"
+                                                v-model:photo="orphan.photo"
                                                 v-model:shirt-size="orphan.shirt_size"
                                                 v-model:shoes-size="orphan.shoes_size"
                                                 v-model:vocational_training="orphan.vocational_training_id"
@@ -549,7 +638,7 @@ watch(() => form, (value) => {
 
         <success-notification
             :open="creatingCompleted"
-            :options="{ duration: 1500}"
+            :options="{ duration: 2500}"
             :title="$t('successfully_created',{attribute: $t('the_family') })"
         ></success-notification>
     </div>

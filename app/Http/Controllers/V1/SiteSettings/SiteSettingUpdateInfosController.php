@@ -42,10 +42,14 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
         if ($request->logo === null) {
             auth()->user()->tenant->clearMediaCollection('logos');
         } elseif ($request->logo && $request->logo !== auth()->user()->tenant->getFirstMediaUrl('logos')) {
-            if (Storage::exists($request->logo)) {
+            $path = parse_url($request->logo, PHP_URL_PATH);
+
+            $desiredPart = substr($path, strpos($path, 'tmp/'));
+
+            if (Storage::disk('public')->exists($desiredPart)) {
                 auth()->user()->tenant->clearMediaCollection('logos');
 
-                auth()->user()->tenant->addMediaFromDisk($request->logo)->toMediaCollection('logos');
+                auth()->user()->tenant->addMediaFromDisk($desiredPart, 'public')->toMediaCollection('logos');
             }
         }
 

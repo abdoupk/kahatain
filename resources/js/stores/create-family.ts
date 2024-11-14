@@ -33,7 +33,8 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 lat: null,
                 lng: null
             },
-            start_date: null,
+            start_date: '',
+            residence_certificate_file: '',
             sponsor: {
                 first_name: '',
                 is_unemployed: false,
@@ -50,14 +51,33 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 card_number: '',
                 sponsor_type: '',
                 gender: 'male',
-                ccp: ''
+                ccp: '',
+                photo: '',
+                diploma_file: '',
+                birth_certificate_file: ''
             },
             incomes: {
                 cnr: 0,
                 cnas: 0,
                 casnos: 0,
                 pension: 0,
-                account: 0,
+                bank_file: '',
+                ccp_file: '',
+                cnr_file: '',
+                casnos_file: '',
+                cnas_file: '',
+                account: {
+                    ccp: {
+                        monthly_income: null,
+                        balance: null,
+                        performance_grant: null
+                    },
+                    bank: {
+                        monthly_income: null,
+                        balance: null,
+                        performance_grant: null
+                    }
+                },
                 other_income: 0
             },
             second_sponsor: {
@@ -75,13 +95,15 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 income: 0,
                 birth_date: '',
                 death_date: '',
-                function: ''
+                function: '',
+                death_certificate_file: ''
             },
             orphans: [
                 {
                     first_name: '',
                     last_name: '',
                     birth_date: '',
+                    photo: '',
                     family_status: '',
                     health_status: '',
                     academic_level_id: null,

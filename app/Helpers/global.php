@@ -4,6 +4,12 @@
 
 /** @noinspection NullPointerExceptionInspection */
 
+use App\Models\Family;
+use App\Models\Income;
+use App\Models\Orphan;
+use App\Models\Sponsor;
+use App\Models\Spouse;
+use App\Models\Tenant;
 use App\Models\User;
 use App\Models\VocationalTraining;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,6 +18,8 @@ use Laravel\Scout\Builder;
 use LaravelIdea\Helper\App\Models\_IH_User_C;
 use Spatie\Browsershot\Browsershot;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -22,17 +30,17 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
 {
     $disk = Storage::disk('public');
 
-    if (! $disk->directoryExists($directory)) {
+    if (!$disk->directoryExists($directory)) {
         $disk->makeDirectory($directory);
     }
 
     $pdfName = Str::replace('-', '_', explode('/', "$directory/$variableName")[1]);
 
-    $pdfName = __('exports.'.$pdfName, [
+    $pdfName = __('exports.' . $pdfName, [
         'date' => $date,
     ]);
 
-    $pdfFile = "$directory/$pdfName".'.pdf';
+    $pdfFile = "$directory/$pdfName" . '.pdf';
 
     $pdfPath = $disk->path($pdfFile);
     ray(Browsershot::html(view("pdf.$directory", [
@@ -62,27 +70,28 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
  * @throws CouldNotTakeBrowsershot
  */
 function saveArchiveToPDF(
-    string $directory,
+    string   $directory,
     callable $function,
-    string $date,
-    ?string $variableName = 'families'
-): StreamedResponse {
+    string   $date,
+    ?string  $variableName = 'families'
+): StreamedResponse
+{
     $disk = Storage::disk('public');
 
-    if (! $disk->directoryExists("archives/$directory")) {
+    if (!$disk->directoryExists("archives/$directory")) {
         $disk->makeDirectory($directory);
     }
 
-    $pdfName = __('exports.archive.'.Str::replace(
-        '-',
-        '_',
-        explode(
-            '/',
-            "archives/$directory/sponsorships"
-        )[1]
-    ), ['date' => $date]);
+    $pdfName = __('exports.archive.' . Str::replace(
+            '-',
+            '_',
+            explode(
+                '/',
+                "archives/$directory/sponsorships"
+            )[1]
+        ), ['date' => $date]);
 
-    $pdfFile = "$directory/$pdfName".'.pdf';
+    $pdfFile = "$directory/$pdfName" . '.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
@@ -107,7 +116,7 @@ function getParams(): array
 {
     return [
         /* @phpstan-ignore-next-line */
-        'page' => (int) request()->input('page', 1),
+        'page' => (int)request()->input('page', 1),
         'search' => request()->input('search', ''),
         'perPage' => request()->integer('perPage', 10),
         'fields' => request()->input('fields'),
@@ -118,7 +127,7 @@ function getParams(): array
 
 function generateFormatedConditions(): array
 {
-    $filters = (array) request()->input('filters', []);
+    $filters = (array)request()->input('filters', []);
 
     if ($filters) {
         /** @phpstan-ignore-next-line */
@@ -127,7 +136,7 @@ function generateFormatedConditions(): array
                 $condition['field'],
                 $condition['operator'],
                 str_contains($condition['value'], ' ')
-                    ? '"'.$condition['value'].'"'
+                    ? '"' . $condition['value'] . '"'
                     : $condition['value'],
             ];
         }, $filters);
@@ -140,18 +149,18 @@ function generateFilterConditions(?string $additional_filters = ''): string
 {
     $filters = array_merge(generateFormatedConditions());
 
-    if (! $filters) {
-        return 'tenant_id = '.tenant('id').' '.$additional_filters;
+    if (!$filters) {
+        return 'tenant_id = ' . tenant('id') . ' ' . $additional_filters;
     }
 
     return implode(' AND ', array_map(static function ($condition) {
-        return implode(' ', $condition);
-    }, $filters)).' '.$additional_filters;
+            return implode(' ', $condition);
+        }, $filters)) . ' ' . $additional_filters;
 }
 
 function generateFormattedSort(): array
 {
-    $directions = (array) request()->input('directions', []);
+    $directions = (array)request()->input('directions', []);
 
     if ($directions) {
         /** @phpstan-ignore-next-line */
@@ -169,7 +178,7 @@ function generateFormattedSort(): array
 
 function search(Model $model, ?string $additional_filters = '', ?int $limit = null): Builder
 {
-    if (! $limit) {
+    if (!$limit) {
         $limit = request()->integer('perPage', 10);
     }
 
@@ -180,7 +189,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
     $query = trim(request()->input('search', '')) ?? '';
 
     $meilisearchOptions = [
-        'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
+        'filter' => generateFilterConditions($additional_filters) . ' AND tenant_id = ' . tenant('id'),
         'sort' => generateFormattedSort(),
         'limit' => $limit,
     ];
@@ -220,7 +229,7 @@ function formatedVocationalTrainingSpecialities(): array
 
 function formatCurrency(float $amount): false|string
 {
-    $formatter = new NumberFormatter(app()->getLocale().'_DZ', NumberFormatter::CURRENCY);
+    $formatter = new NumberFormatter(app()->getLocale() . '_DZ', NumberFormatter::CURRENCY);
 
     return $formatter->formatCurrency($amount, 'DZD');
 }
@@ -247,17 +256,18 @@ function calculateAge($birthDate): string
 
 function formatPhoneNumber($phone): string
 {
-    return substr($phone, 0, 4).'-'.
-        substr($phone, 4, 2).'-'.
-        substr($phone, 6, 2).'-'.
+    return substr($phone, 0, 4) . '-' .
+        substr($phone, 4, 2) . '-' .
+        substr($phone, 6, 2) . '-' .
         substr($phone, 8, 2);
 }
 
 function getUsersShouldBeNotified(
-    array $permissions,
-    User $userToExclude,
+    array  $permissions,
+    User   $userToExclude,
     string $notificationType
-): Collection|array|_IH_User_C {
+): Collection|array|_IH_User_C
+{
     setPermissionsTeamId($userToExclude->tenant_id);
 
     return User::with(['roles.permissions'])
@@ -282,4 +292,36 @@ function getUsersShouldBeNotified(
         })
         ->where('users.id', '!=', $userToExclude->id)
         ->get();
+}
+
+function getFileNameFromTemporaryPath($url): string
+{
+    if ($url === '' || $url === null) {
+        return '';
+    }
+    $path = parse_url($url, PHP_URL_PATH);
+
+    return substr($path, strpos($path, 'tmp/'));
+}
+
+/**
+ * @throws FileIsTooBig
+ * @throws FileDoesNotExist
+ */
+function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model, string|array|null $files, string $collectionName): void
+{
+    if ($files === null || $files === '') {
+        return;
+    }
+
+    if (!is_array($files)) {
+        $files = [$files];
+    }
+
+    foreach ($files as $file) {
+        if (Storage::disk('public')->exists(getFileNameFromTemporaryPath($file))) {
+            // TODO add clear collection if exists
+            $model->addMediaFromDisk(getFileNameFromTemporaryPath($file), 'public')->toMediaCollection($collectionName);
+        }
+    }
 }

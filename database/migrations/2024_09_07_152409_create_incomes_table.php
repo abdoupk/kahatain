@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('cnas')->nullable();
             $table->text('casnos')->nullable();
             $table->text('pension')->nullable();
-            $table->text('account')->nullable();
+            $table->json('account');
             $table->text('other_income')->nullable();
             $table->float('total_income')->nullable();
             $table->uuid('sponsor_id');

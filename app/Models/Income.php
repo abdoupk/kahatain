@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
@@ -42,9 +44,9 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @mixin Eloquent
  */
-class Income extends Model
+class Income extends Model implements HasMedia
 {
-    use BelongsToTenant, HasFactory, HasUuids;
+    use BelongsToTenant, HasFactory, HasUuids, InteractsWithMedia;
 
     public $timestamps = false;
 
@@ -62,5 +64,12 @@ class Income extends Model
     public function sponsor(): BelongsTo
     {
         return $this->belongsTo(Sponsor::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'account' => 'array',
+        ];
     }
 }
