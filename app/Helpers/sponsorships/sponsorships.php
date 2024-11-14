@@ -79,7 +79,6 @@ function getPercentageForIncomeRate(Family $family, float $differenceBeforeSpons
     return 0.0;
 }
 
-
 function getCategoryForRamadanBasket(Family $family, float $differenceForRamadanBasketSponsorship): string
 {
     $categories = json_decode($family->tenant['calculation'], true)['ramadan_sponsorship']['categories'];

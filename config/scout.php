@@ -377,8 +377,8 @@ return [
                     'basket_from_association',
                     'amount_from_benefactor',
                     'basket_from_benefactor',
-                    "sponsor.name",
-                    "address.zone.name",
+                    'sponsor.name',
+                    'address.zone.name',
                 ],
             ],
             'zones' => [
