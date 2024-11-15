@@ -58,7 +58,7 @@ defineProps<{
             :class="
                 twMerge([
                     'ms-3 flex items-center whitespace-nowrap dark:text-slate-400',
-                    level == 'first' && menu.active && 'font-medium text-black dark:text-white',
+                    level == 'first' && menu.active && 'font-medium text-black dark:text-white rtl:font-semibold',
                     level != 'first' && 'w-full'
                 ])
             "

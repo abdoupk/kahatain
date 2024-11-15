@@ -24,8 +24,7 @@ class LessonUpdateController extends Controller implements HasMiddleware
      */
     public function __invoke(LessonUpdateRequest $request, EventOccurrence $eventOccurrence): void
     {
-        ray($request->all());
-        if (!$request->update_this_and_all_coming) {
+        if (! $request->update_this_and_all_coming) {
             $eventOccurrence->update([
                 'start_date' => Carbon::parse($request->start_date),
                 'end_date' => Carbon::parse($request->end_date),

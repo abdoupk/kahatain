@@ -67,7 +67,9 @@ defineProps<{
                 twMerge([
                     'z-10 ms-3 flex items-center whitespace-nowrap dark:text-slate-400',
                     level == 'first' && '-mt-[3px]',
-                    level == 'first' && menu.active && 'font-medium text-slate-800 dark:text-white xl:text-primary',
+                    level == 'first' &&
+                        menu.active &&
+                        'font-medium text-slate-800 dark:text-white xl:text-primary rtl:font-semibold',
                     level != 'first' && 'w-full'
                 ])
             "

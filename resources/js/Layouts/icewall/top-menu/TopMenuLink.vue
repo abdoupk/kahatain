@@ -60,7 +60,9 @@ defineProps<{
             :class="
                 twMerge([
                     'z-10 ms-3 flex w-full items-center whitespace-nowrap dark:text-slate-400',
-                    level == 'first' && menu.active && 'font-medium text-slate-800 dark:text-white xl:text-white',
+                    level == 'first' &&
+                        menu.active &&
+                        'font-medium text-slate-800 dark:text-white xl:text-white rtl:font-semibold',
                     level == 'first' && '-mt-[3px]'
                 ])
             "

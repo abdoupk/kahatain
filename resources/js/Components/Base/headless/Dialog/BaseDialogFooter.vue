@@ -18,8 +18,7 @@ const attrs = useComputedAttrs()
 
 const computedClass = computed(() =>
     twMerge([
-        'px-5 py-3 text-end border-t border-slate-200/60 dark:border-darkmode-400',
-        typeof attrs.class === 'string' && attrs.class
+        'px-5 py-3 text-end border-t border-slate-200/60 dark:border-darkmode-400', typeof attrs.class === 'string' && attrs.class
     ])
 )
 </script>
