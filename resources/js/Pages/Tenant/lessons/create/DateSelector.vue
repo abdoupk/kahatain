@@ -37,7 +37,7 @@ const setTimes = (value: string | Date) => {
 
     startDate.value = formattedDate.toDate()
 
-    endDate.value = formattedDate.add(1, 'hour').toDate()
+    endDate.value = formattedDate.toDate()
 
     return formattedDate
 }

@@ -5,6 +5,7 @@ import type { CreateLessonForm } from '@/types/types'
 import { useLessonsStore } from '@/stores/lessons'
 import { useSchoolsStore } from '@/stores/schools'
 import { router } from '@inertiajs/vue3'
+import dayjs from 'dayjs'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 
@@ -93,6 +94,10 @@ const handleSubmit = async () => {
     loading.value = true
 
     try {
+        form.value.end_date = dayjs(form.value.end_date).add(1, 'hour')
+
+        form.value.start_date = dayjs(form.value.start_date).add(1, 'hour')
+
         await form.value.submit().then(handleSuccess)
     } finally {
         loading.value = false
