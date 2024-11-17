@@ -30,7 +30,6 @@ const popover = ref({
         :locale="getLocale()"
         :masks="masks"
         :popover
-        :update-on-input="false"
         borderless
         color="primary"
         mode="date"
