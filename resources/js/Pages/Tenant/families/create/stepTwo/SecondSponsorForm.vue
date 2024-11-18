@@ -49,23 +49,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.first_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_first_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.first_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.first_name"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -91,23 +75,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.last_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_last_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.last_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.last_name"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -133,23 +101,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.degree_of_kinship'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_degree_of_kinship_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.degree_of_kinship']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.degree_of_kinship"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -177,23 +129,7 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.phone_number'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_phone_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.phone_number']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.phone_number"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -219,23 +155,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.address'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_address_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.address']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.address"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -262,23 +182,7 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.income'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_income_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.income']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.income"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">

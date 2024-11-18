@@ -165,11 +165,7 @@ const submit = () => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('domain')" class="mt-2 text-danger">
-                        {{ form.errors.domain }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="domain"> </base-form-input-error>
                 <!-- END: Domain Field -->
             </div>
 

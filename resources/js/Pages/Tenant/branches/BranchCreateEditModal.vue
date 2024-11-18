@@ -149,15 +149,7 @@ const modalType = computed(() => {
 
                 <base-v-calendar v-model:date="form.created_at"></base-v-calendar>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('created_at')"
-                        class="mt-2 text-danger"
-                        data-test="error_start_date_message"
-                    >
-                        {{ form.errors.created_at }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="created_at"> </base-form-input-error>
             </div>
 
             <div class="col-span-12 lg:col-span-6">
@@ -173,15 +165,7 @@ const modalType = computed(() => {
                     ></the-member-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('president_id')"
-                        class="mt-2 text-danger"
-                        data-test="error_president_message"
-                    >
-                        {{ form.errors.president_id }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="president_id"> </base-form-input-error>
             </div>
 
             <div class="col-span-12">

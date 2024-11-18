@@ -2,8 +2,8 @@
 import OrphanSelector from '@/Pages/Tenant/needs/create/OrphanSelector.vue'
 import SponsorSelector from '@/Pages/Tenant/needs/create/SponsorSelector.vue'
 
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
 import { $t } from '@/utils/i18n'
@@ -76,11 +76,11 @@ const needableTypesLabels = ({ label }: { label: string }) => {
                 ></sponsor-selector>
             </div>
 
-            <base-form-input-error>
-                <div v-if="errorMessage" class="mt-2 text-red-600">
+            <base-input-error v-if="errorMessage">
+                <div class="mt-2 text-danger">
                     {{ $t('validation.required', { attribute: $t('the_requester') }) }}
                 </div>
-            </base-form-input-error>
+            </base-input-error>
         </div>
     </div>
 </template>

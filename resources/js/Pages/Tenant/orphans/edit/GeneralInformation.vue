@@ -103,15 +103,7 @@ onMounted(async () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -134,15 +126,7 @@ onMounted(async () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -153,15 +137,8 @@ onMounted(async () => {
                     </base-form-label>
 
                     <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_date_message"
-                        >
-                            {{ form.errors.birth_date }}
-                        </div>
-                    </base-form-input-error>
+
+                    <base-form-input-error :form field_name="birth_date"> </base-form-input-error>
                 </div>
                 <!-- END: BirthDate -->
 
@@ -178,15 +155,7 @@ onMounted(async () => {
                     >
                     </the-family-status-selector>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('family_status')"
-                            class="mt-2 text-danger"
-                            data-test="error_family_status_message"
-                        >
-                            {{ form.errors.family_status }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="family_status"> </base-form-input-error>
                 </div>
                 <!-- END: Family Status -->
 
@@ -204,15 +173,7 @@ onMounted(async () => {
                         ></the-academic-level-selector>
                     </div>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('academic_level_id')"
-                            class="mt-2 text-danger"
-                            data-test="error_academic_level_message"
-                        >
-                            {{ form.errors.academic_level_id }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="academic_level_id"> </base-form-input-error>
                 </div>
                 <!-- END: Academic Level -->
 
@@ -237,11 +198,7 @@ onMounted(async () => {
                         <option value="female">{{ $t('female') }}</option>
                     </base-form-select>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('gender')" class="mt-2 text-danger" data-test="error_gender_message">
-                            {{ form.errors.gender }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="gender"> </base-form-input-error>
                 </div>
                 <!-- END: Gender -->
 
@@ -261,15 +218,7 @@ onMounted(async () => {
                             ></the-clothes-size-selector>
                         </div>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('pants_size')"
-                                class="mt-2 text-danger"
-                                data-test="error_pants_size_message"
-                            >
-                                {{ form.errors.pants_size }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="pants_size"> </base-form-input-error>
                     </div>
                     <!-- END: Pants Size -->
 
@@ -288,15 +237,7 @@ onMounted(async () => {
                             ></the-clothes-size-selector>
                         </div>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('shirt_size')"
-                                class="mt-2 text-danger"
-                                data-test="error_shirt_size_message"
-                            >
-                                {{ form.errors.shirt_size }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="shirt_size"> </base-form-input-error>
                     </div>
                     <!-- END: Shirt Size -->
 
@@ -314,15 +255,7 @@ onMounted(async () => {
                             ></the-shoes-size-selector>
                         </div>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('shoes_size')"
-                                class="mt-2 text-danger"
-                                data-test="error_shoes_size_message"
-                            >
-                                {{ form.errors.shoes_size }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="shoes_size"> </base-form-input-error>
                     </div>
                     <!-- END: Shoes Size -->
                 </template>
@@ -340,15 +273,7 @@ onMounted(async () => {
                             @update:diaper="form?.validate('diapers_type')"
                         ></the-diapers-selector>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('diapers_type')"
-                                class="mt-2 text-danger"
-                                data-test="error_diapers_type_message"
-                            >
-                                {{ form.errors.diapers_type }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="diapers_type"> </base-form-input-error>
                     </div>
                     <!-- END: Diapers Type -->
 
@@ -371,15 +296,7 @@ onMounted(async () => {
                             @change="form?.validate('diapers_quantity')"
                         ></base-form-input>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('diapers_quantity')"
-                                class="mt-2 text-danger"
-                                data-test="error_diapers_quantity_message"
-                            >
-                                {{ form.errors.diapers_quantity }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="diapers_quantity"> </base-form-input-error>
                     </div>
                     <!-- END: Diapers Quantity -->
 
@@ -395,15 +312,7 @@ onMounted(async () => {
                             @update:baby-milk="form?.validate('baby_milk_type')"
                         ></the-baby-milk-selector>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('baby_milk_type')"
-                                class="mt-2 text-danger"
-                                data-test="error_baby_milk_type_message"
-                            >
-                                {{ form.errors.baby_milk_type }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="baby_milk_type"> </base-form-input-error>
                     </div>
                     <!-- END: Baby Milk Type -->
 
@@ -426,15 +335,7 @@ onMounted(async () => {
                             @change="form?.validate('baby_milk_quantity')"
                         ></base-form-input>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('baby_milk_quantity')"
-                                class="mt-2 text-danger"
-                                data-test="error_baby_milk_quantity_message"
-                            >
-                                {{ form.errors.baby_milk_quantity }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="baby_milk_quantity"> </base-form-input-error>
                     </div>
                     <!-- END: Baby Milk Quantity -->
                 </template>
@@ -457,23 +358,7 @@ onMounted(async () => {
                         @change="form?.validate('income')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="
-                                form?.invalid(
-                                    //@ts-ignore
-                                    `orphans.${index}.income`
-                                )
-                            "
-                            class="mt-2 text-danger"
-                            data-test="error_income_message"
-                        >
-                            {{
-                                //@ts-ignore
-                                form.errors[`orphans.${index}.income`]
-                            }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="income"> </base-form-input-error>
                 </div>
                 <!-- End: Income-->
 
@@ -496,11 +381,7 @@ onMounted(async () => {
                         @change="form?.validate('note')"
                     ></base-form-text-area>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('note')" class="mt-2 text-danger" data-test="error_note_message">
-                            {{ form.errors.note }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form="form" field_name="note"> </base-form-input-error>
                 </div>
                 <!-- END: Notes -->
 

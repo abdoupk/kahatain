@@ -65,11 +65,7 @@ const submit = () => {
                         @blur="form?.validate('report')"
                     ></base-classic-editor>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('report')" class="mt-2 text-danger" data-test="error_report_message">
-                            {{ form.errors.report }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="report"> </base-form-input-error>
                 </div>
 
                 <div class="col-span-12 sm:col-span-8">
@@ -86,15 +82,7 @@ const submit = () => {
                         ></the-member-selector>
                     </div>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('inspectors')"
-                            class="mt-2 text-danger"
-                            data-test="error_inspectors_members_message"
-                        >
-                            {{ form.errors.inspectors }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="inspectors"> </base-form-input-error>
                 </div>
 
                 <div class="col-span-12 sm:col-span-4">
@@ -104,15 +92,7 @@ const submit = () => {
 
                     <base-v-calendar id="preview_date" v-model:date="form.preview_date"></base-v-calendar>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('preview_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_preview_date_message"
-                        >
-                            {{ form.errors.preview_date }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="preview_date"> </base-form-input-error>
                 </div>
 
                 <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">

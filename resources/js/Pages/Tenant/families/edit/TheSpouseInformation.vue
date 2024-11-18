@@ -70,15 +70,7 @@ const submit = () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -101,15 +93,7 @@ const submit = () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -121,15 +105,7 @@ const submit = () => {
 
                     <base-v-calendar id="birth_date" v-model:date="form.birth_date"></base-v-calendar>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_date_message"
-                        >
-                            {{ form.errors.birth_date }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_date"> </base-form-input-error>
                 </div>
                 <!-- END: Birth Date -->
 
@@ -141,15 +117,7 @@ const submit = () => {
 
                     <base-v-calendar id="death_date" v-model:date="form.death_date"></base-v-calendar>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('death_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_death_date_message"
-                        >
-                            {{ form.errors.death_date }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="death_date"> </base-form-input-error>
                 </div>
                 <!-- END: Death Date -->
 
@@ -172,15 +140,7 @@ const submit = () => {
                         @change="form?.validate('function')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('function')"
-                            class="mt-2 text-danger"
-                            data-test="error_function_message"
-                        >
-                            {{ form.errors.function }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="function"> </base-form-input-error>
                 </div>
                 <!-- END: Function (Job) -->
 
@@ -211,11 +171,7 @@ const submit = () => {
                         </base-input-group-text>
                     </base-input-group>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('income')" class="mt-2 text-danger" data-test="error_income_message">
-                            {{ form.errors.income }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="income"> </base-form-input-error>
                 </div>
                 <!-- END: Income -->
 

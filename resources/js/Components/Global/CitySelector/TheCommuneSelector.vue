@@ -4,8 +4,8 @@ import type { CityType, Commune } from '@/types/types'
 import { useCityStore } from '@/stores/city'
 import { onMounted, ref, watch } from 'vue'
 
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
 const props = defineProps<{
@@ -61,10 +61,10 @@ watch(
             ></base-vue-select>
         </div>
 
-        <base-form-input-error>
-            <div v-if="errorMessage" class="mt-2 text-danger">
+        <base-input-error v-if="errorMessage">
+            <div class="mt-2 text-danger">
                 {{ Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }}
             </div>
-        </base-form-input-error>
+        </base-input-error>
     </div>
 </template>

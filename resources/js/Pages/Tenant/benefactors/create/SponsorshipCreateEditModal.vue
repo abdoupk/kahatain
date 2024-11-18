@@ -156,15 +156,7 @@ const modalType = computed(() => {
                     ></the-benefactor-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('benefactor.id')"
-                        class="mt-2 text-danger"
-                        data-test="error_start_date_message"
-                    >
-                        {{ form.errors['benefactor.id'] }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="benefactor.id"> </base-form-input-error>
             </div>
             <!--Begin: The Benefactor-->
 
@@ -201,15 +193,7 @@ const modalType = computed(() => {
                     </option>
                 </base-form-select>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('sponsorship_type')"
-                        class="mt-2 text-danger"
-                        data-test="error_start_date_message"
-                    >
-                        {{ form.errors.sponsorship_type }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="sponsorship_type"> </base-form-input-error>
             </div>
             <!--End: Sponsorship Type-->
 
@@ -236,11 +220,7 @@ const modalType = computed(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('amount')" class="mt-2 text-danger" data-test="error_start_date_message">
-                        {{ form.errors.amount }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="amount"> </base-form-input-error>
             </div>
             <!--End: The amount-->
 
@@ -267,7 +247,7 @@ const modalType = computed(() => {
                         @change="form?.validate('shop.name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
+                    <base-form-input-error :form field_name="shop.name">
                         <div
                             v-if="form?.invalid('shop.name')"
                             class="mt-2 text-danger"
@@ -295,15 +275,7 @@ const modalType = computed(() => {
                         @keydown="allowOnlyNumbersOnKeyDown"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('shop.phone')"
-                            class="mt-2 text-danger"
-                            data-test="error_start_date_message"
-                        >
-                            {{ form.errors['shop.phone'] }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="shop.phone"> </base-form-input-error>
                 </div>
                 <!-- End: The shopKeeper phone number-->
 
@@ -321,15 +293,7 @@ const modalType = computed(() => {
                         @change="form?.validate('shop.address')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('shop.address')"
-                            class="mt-2 text-danger"
-                            data-test="error_start_date_message"
-                        >
-                            {{ form.errors['shop.address'] }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="shop.address"> </base-form-input-error>
                 </div>
                 <!-- End: The shopKeeper address-->
             </div>

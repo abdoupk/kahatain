@@ -80,11 +80,7 @@ onMounted(() => {
                 mode="time"
             ></base-v-calendar>
 
-            <base-form-input-error>
-                <div v-if="form?.invalid('start_date')" class="mt-2 text-danger" data-test="error_start_date_message">
-                    {{ form.errors.start_date }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="start_date"> </base-form-input-error>
         </div>
 
         <div class="col-span-12 sm:col-span-4">
@@ -100,11 +96,7 @@ onMounted(() => {
                 mode="time"
             ></base-v-calendar>
 
-            <base-form-input-error>
-                <div v-if="form?.invalid('end_date')" class="mt-2 text-danger" data-test="error_end_date_message">
-                    {{ form.errors.end_date }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="end_date"> </base-form-input-error>
         </div>
     </div>
     <!-- End: Date Range-->

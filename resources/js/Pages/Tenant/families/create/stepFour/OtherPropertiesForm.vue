@@ -38,23 +38,7 @@ onMounted(() => {
                 "
             ></base-form-text-area>
 
-            <base-form-input-error>
-                <div
-                    data-test="error_other_properties_message"
-                    class="mt-2 text-danger"
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'other_properties'
-                        )
-                    "
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['other_properties']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="other_properties"> </base-form-input-error>
         </div>
     </div>
 </template>

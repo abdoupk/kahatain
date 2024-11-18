@@ -168,14 +168,7 @@ onMounted(() => {
             </base-input-group>
         </div>
 
-        <base-form-input-error class="col-span-12 lg:col-start-5">
-            <!-- @vue-ignore -->
-            <div v-if="form?.invalid('incomes.cnr')" class="mt-2 text-danger">
-                {{
-                    // @ts-ignore
-                    form.errors['incomes.cnr']
-                }}
-            </div>
+        <base-form-input-error class="col-span-12 lg:col-start-5" field_name="incomes.cnr" :form>
         </base-form-input-error>
     </div>
     <!-- End: CNR -->
@@ -216,14 +209,7 @@ onMounted(() => {
             </base-input-group>
         </div>
 
-        <base-form-input-error class="col-span-12 lg:col-start-5">
-            <!-- @vue-ignore -->
-            <div v-if="form?.invalid('incomes.cnas')" class="mt-2 text-danger">
-                {{
-                    // @ts-ignore
-                    form.errors['incomes.cnas']
-                }}
-            </div>
+        <base-form-input-error :form field_name="incomes.cnas" class="col-span-12 lg:col-start-5">
         </base-form-input-error>
     </div>
     <!-- End: CNAS -->
@@ -264,14 +250,7 @@ onMounted(() => {
             </base-input-group>
         </div>
 
-        <base-form-input-error class="col-span-12 lg:col-start-5">
-            <!-- @vue-ignore -->
-            <div v-if="form?.invalid('incomes.casnos')" class="mt-2 text-danger">
-                {{
-                    // @ts-ignore
-                    form.errors['incomes.casnos']
-                }}
-            </div>
+        <base-form-input-error :form field_name="incomes.casnos" class="col-span-12 lg:col-start-5">
         </base-form-input-error>
     </div>
     <!-- End: CASNOS -->
@@ -312,14 +291,7 @@ onMounted(() => {
             </base-input-group>
         </div>
 
-        <base-form-input-error class="col-span-12 lg:col-start-5">
-            <!-- @vue-ignore -->
-            <div v-if="form?.invalid('incomes.pension')" class="mt-2 text-danger">
-                {{
-                    // @ts-ignore
-                    form.errors['incomes.pension']
-                }}
-            </div>
+        <base-form-input-error :form field_name="incomes.pension" class="col-span-12 lg:col-start-5">
         </base-form-input-error>
     </div>
     <!-- End: PENSION -->
@@ -360,14 +332,7 @@ onMounted(() => {
             </base-input-group>
         </div>
 
-        <base-form-input-error class="col-span-12 lg:col-start-5">
-            <!-- @vue-ignore -->
-            <div v-if="form?.invalid('incomes.other_income')" class="mt-2 text-danger">
-                {{
-                    // @ts-ignore
-                    form.errors['incomes.other_income']
-                }}
-            </div>
+        <base-form-input-error :form field_name="incomes.other_income" class="col-span-12 lg:col-start-5">
         </base-form-input-error>
     </div>
     <!-- End: OTHER -->
@@ -412,15 +377,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <!-- @vue-ignore -->
-                    <div v-if="form?.invalid('incomes.account.ccp.monthly_income')" class="mt-2 text-danger">
-                        {{
-                            // @ts-ignore
-                            form.errors['incomes.account.ccp.monthly_income']
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.ccp.monthly_income"> </base-form-input-error>
             </div>
             <!-- End: MONTHLY INCOME -->
 
@@ -446,15 +403,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <!-- @vue-ignore -->
-                    <div v-if="form?.invalid('incomes.account.ccp.balance')" class="mt-2 text-danger">
-                        {{
-                            // @ts-ignore
-                            form.errors['incomes.account.ccp.balance']
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.ccp.balance"> </base-form-input-error>
             </div>
             <!-- End: BALANCE -->
 
@@ -482,14 +431,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <!-- @vue-ignore -->
-                    <div v-if="form?.invalid('incomes.account.ccp.performance_grant')" class="mt-2 text-danger">
-                        {{
-                            // @ts-ignore
-                            form.errors['incomes.account.ccp.performance_grant']
-                        }}
-                    </div>
+                <base-form-input-error :form field_name="incomes.account.ccp.performance_grant">
                 </base-form-input-error>
             </div>
             <!-- End: Performance Grant -->
@@ -537,15 +479,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <!-- @vue-ignore -->
-                    <div v-if="form?.invalid('incomes.account.bank.monthly_income')" class="mt-2 text-danger">
-                        {{
-                            // @ts-ignore
-                            form.errors['incomes.account.bank.monthly_income']
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.bank.monthly_income"> </base-form-input-error>
             </div>
             <!-- End: MONTHLY INCOME -->
 
@@ -571,15 +505,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <!-- @vue-ignore -->
-                    <div v-if="form?.invalid('incomes.account.bank.balance')" class="mt-2 text-danger">
-                        {{
-                            // @ts-ignore
-                            form.errors['incomes.account.bank.balance']
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.bank.balance"> </base-form-input-error>
             </div>
             <!-- End: BALANCE -->
 
@@ -607,14 +533,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <!-- @vue-ignore -->
-                    <div v-if="form?.invalid('incomes.account.bank.performance_grant')" class="mt-2 text-danger">
-                        {{
-                            // @ts-ignore
-                            form.errors['incomes.account.bank.performance_grant']
-                        }}
-                    </div>
+                <base-form-input-error :form field_name="incomes.account.bank.performance_grant">
                 </base-form-input-error>
             </div>
             <!-- End: Performance Grant -->

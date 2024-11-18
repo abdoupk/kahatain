@@ -86,15 +86,7 @@ const submit = () => {
                         @change="form?.validate('file_number')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('file_number')"
-                            class="mt-2 text-danger"
-                            data-test="error_file_number_message"
-                        >
-                            {{ form.errors.file_number }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="file_number"> </base-form-input-error>
                 </div>
                 <!-- END: File Number -->
 
@@ -110,11 +102,7 @@ const submit = () => {
                         @update:zone="form?.validate('zone_id')"
                     ></the-zone-selector>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('zone_id')" class="mt-2 text-danger" data-test="error_zone_id_message">
-                            {{ form.errors.zone_id }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="zone_id"> </base-form-input-error>
                 </div>
                 <!-- END: Branch -->
 
@@ -130,7 +118,7 @@ const submit = () => {
                         @update:branch="form?.validate('branch_id')"
                     ></the-branch-selector>
 
-                    <base-form-input-error>
+                    <base-form-input-error :form field_name="branch_id">
                         <div
                             v-if="form?.invalid('branch_id')"
                             class="mt-2 text-danger"
@@ -155,11 +143,7 @@ const submit = () => {
                         @input="form?.validate('address')"
                     ></the-address-field>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
-                            {{ form.errors.address }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="address"> </base-form-input-error>
                 </div>
                 <!-- END: Address -->
 

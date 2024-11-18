@@ -3,11 +3,11 @@ import { defineAsyncComponent } from 'vue'
 
 import { $t } from '@/utils/i18n'
 
+const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
+
 const FamilySelector = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/create/TheFamilySelector.vue'))
 
 const OrphanSelector = defineAsyncComponent(() => import('@/Pages/Tenant/needs/create/OrphanSelector.vue'))
-
-const BaseFormInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInputError.vue'))
 
 const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
 
@@ -81,11 +81,11 @@ const recipientTypesLabels = ({ label }: { label: string }) => {
                 ></family-selector>
             </div>
 
-            <base-form-input-error>
-                <div v-if="errorMessage" class="mt-2 text-red-600">
+            <base-input-error v-if="errorMessage">
+                <div class="mt-2 text-danger">
                     {{ $t('validation.required', { attribute: $t('the_recipient') }) }}
                 </div>
-            </base-form-input-error>
+            </base-input-error>
         </div>
     </div>
 </template>

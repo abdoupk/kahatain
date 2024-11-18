@@ -283,11 +283,7 @@ onMounted(async () => {
                     @change="form?.validate('note')"
                 ></base-form-text-area>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('note')" class="mt-2 text-danger" data-test="error_note_message">
-                        {{ form.errors.note }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="note"> </base-form-input-error>
             </div>
             <!-- End: Note-->
         </template>

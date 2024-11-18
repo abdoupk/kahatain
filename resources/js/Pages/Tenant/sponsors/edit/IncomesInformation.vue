@@ -110,11 +110,7 @@ const submit = () => {
                         </base-input-group>
                     </div>
 
-                    <base-form-input-error class="col-span-12 lg:col-start-5">
-                        <!-- @vue-ignore -->
-                        <div v-if="form?.invalid('incomes.cnr')" class="mt-2 text-danger">
-                            {{ form.errors.cnr }}
-                        </div>
+                    <base-form-input-error :form field_name="incomes.cnr" class="col-span-12 lg:col-start-5">
                     </base-form-input-error>
                 </div>
                 <!-- End: CNR -->
@@ -155,11 +151,7 @@ const submit = () => {
                         </base-input-group>
                     </div>
 
-                    <base-form-input-error class="col-span-12 lg:col-start-5">
-                        <!-- @vue-ignore -->
-                        <div v-if="form?.invalid('incomes.cnas')" class="mt-2 text-danger">
-                            {{ form.errors.cnas }}
-                        </div>
+                    <base-form-input-error :form field_name="incomes.cnas" class="col-span-12 lg:col-start-5">
                     </base-form-input-error>
                 </div>
                 <!-- End: CNAS -->
@@ -200,11 +192,7 @@ const submit = () => {
                         </base-input-group>
                     </div>
 
-                    <base-form-input-error class="col-span-12 lg:col-start-5">
-                        <!-- @vue-ignore -->
-                        <div v-if="form?.invalid('incomes.casnos')" class="mt-2 text-danger">
-                            {{ form.errors.casnos }}
-                        </div>
+                    <base-form-input-error :form field_name="incomes.casnos" class="col-span-12 lg:col-start-5">
                     </base-form-input-error>
                 </div>
                 <!-- End: CASNOS -->
@@ -245,11 +233,7 @@ const submit = () => {
                         </base-input-group>
                     </div>
 
-                    <base-form-input-error class="col-span-12 lg:col-start-5">
-                        <!-- @vue-ignore -->
-                        <div v-if="form?.invalid('incomes.pension')" class="mt-2 text-danger">
-                            {{ form.errors.pension }}
-                        </div>
+                    <base-form-input-error :form field_name="incomes.pension" class="col-span-12 lg:col-start-5">
                     </base-form-input-error>
                 </div>
                 <!-- End: PENSION -->
@@ -290,11 +274,7 @@ const submit = () => {
                         </base-input-group>
                     </div>
 
-                    <base-form-input-error class="col-span-12 lg:col-start-5">
-                        <!-- @vue-ignore -->
-                        <div v-if="form?.invalid('incomes.other_income')" class="mt-2 text-danger">
-                            {{ form.errors.other_income }}
-                        </div>
+                    <base-form-input-error :form field_name="incomes.other_income" class="col-span-12 lg:col-start-5">
                     </base-form-input-error>
                 </div>
                 <!-- End: OTHER -->
@@ -335,11 +315,7 @@ const submit = () => {
                         </base-input-group>
                     </div>
 
-                    <base-form-input-error class="col-span-12 lg:col-start-5">
-                        <!-- @vue-ignore -->
-                        <div v-if="form?.invalid('incomes.account')" class="mt-2 text-danger">
-                            {{ form.errors.account }}
-                        </div>
+                    <base-form-input-error :form field_name="incomes.account" class="col-span-12 lg:col-start-5">
                     </base-form-input-error>
                 </div>
                 <!-- End: ACCOUNT -->

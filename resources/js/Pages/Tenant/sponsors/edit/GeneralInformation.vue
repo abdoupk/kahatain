@@ -88,15 +88,7 @@ onMounted(async () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -119,15 +111,7 @@ onMounted(async () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -138,15 +122,8 @@ onMounted(async () => {
                     </base-form-label>
 
                     <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_date_message"
-                        >
-                            {{ form.errors.birth_date }}
-                        </div>
-                    </base-form-input-error>
+
+                    <base-form-input-error :form field_name="birth_date"> </base-form-input-error>
                 </div>
                 <!-- END: BirthDate -->
 
@@ -169,15 +146,7 @@ onMounted(async () => {
                         @change="form?.validate('father_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('father_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_father_name_message"
-                        >
-                            {{ form.errors.father_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="father_name"> </base-form-input-error>
                 </div>
                 <!-- END: Father Name -->
 
@@ -200,15 +169,7 @@ onMounted(async () => {
                         @change="form?.validate('mother_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('mother_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_mother_name_message"
-                        >
-                            {{ form.errors.mother_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="mother_name"> </base-form-input-error>
                 </div>
                 <!-- END: Mother Name -->
 
@@ -231,15 +192,7 @@ onMounted(async () => {
                         @change="form?.validate('birth_certificate_number')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_certificate_number')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_certificate_number_message"
-                        >
-                            {{ form.errors.birth_certificate_number }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_certificate_number"> </base-form-input-error>
                 </div>
                 <!-- END: Birth Certificate number -->
 
@@ -262,11 +215,7 @@ onMounted(async () => {
                         @change="form?.validate('ccp')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('ccp')" class="mt-2 text-danger" data-test="error_ccp_message">
-                            {{ form.errors.ccp }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="ccp"> </base-form-input-error>
                 </div>
                 <!-- END: CCP -->
 
@@ -289,15 +238,7 @@ onMounted(async () => {
                         @change="form?.validate('function')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('function')"
-                            class="mt-2 text-danger"
-                            data-test="error_function_message"
-                        >
-                            {{ form.errors.function }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="function"> </base-form-input-error>
                 </div>
                 <!-- END: Function (job) -->
 
@@ -315,15 +256,7 @@ onMounted(async () => {
                         ></the-academic-level-selector>
                     </div>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('academic_level_id')"
-                            class="mt-2 text-danger"
-                            data-test="error_academic_level_message"
-                        >
-                            {{ form.errors.academic_level_id }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="academic_level_id"> </base-form-input-error>
                 </div>
                 <!-- END: Academic Level -->
 
@@ -346,11 +279,7 @@ onMounted(async () => {
                         @change="form?.validate('diploma')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('diploma')" class="mt-2 text-danger" data-test="error_diploma_message">
-                            {{ form.errors.diploma }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="diploma"> </base-form-input-error>
                 </div>
                 <!-- END: Diploma -->
 
@@ -366,15 +295,7 @@ onMounted(async () => {
                         @update:type="form?.validate('sponsor_type')"
                     ></the-sponsor-type-selector>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('sponsor_type')"
-                            class="mt-2 text-danger"
-                            data-test="error_sponsor_type_message"
-                        >
-                            {{ form.errors.sponsor_type }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="sponsor_type"> </base-form-input-error>
                 </div>
                 <!-- END: Sponsor Type -->
 
