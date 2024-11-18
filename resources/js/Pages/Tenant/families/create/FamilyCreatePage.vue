@@ -6,7 +6,7 @@ import type {
 } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
-import { defineAsyncComponent, nextTick, onMounted, watch } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 import {
@@ -48,63 +48,25 @@ const HousingForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/c
 
 const OtherPropertiesForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepFour/OtherPropertiesForm.vue'))
 
-const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/BaseButton.vue'))
-
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
-
 const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
-const StepTwo = defineAsyncComponent({
-    loader: () => import('@/Pages/Tenant/families/create/stepTwo/StepTwo.vue')
-})
+const StepTwo = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepTwo/StepTwo.vue'))
 
-const StepThree = defineAsyncComponent({
-    loader: () => import('@/Pages/Tenant/families/create/stepThree/StepThree.vue')
-})
+const StepThree = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepThree/StepThree.vue'))
 
-const StepFour = defineAsyncComponent({
-    loader: () => import('@/Pages/Tenant/families/create/stepFour/StepFour.vue')
-})
+const StepFour = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepFour/StepFour.vue'))
 
-const StepFive = defineAsyncComponent({
-    loader: () => import('@/Pages/Tenant/families/create/stepFive/StepFive.vue')
-})
+const StepFive = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepFive/StepFive.vue'))
 
 const createFamilyStore = useCreateFamilyStore()
 
 const form = useForm('post', route('tenant.families.store'), createFamilyStore.family as CreateFamilyForm)
 
-const addOrphan = () => {
-    form.orphans.push({
-        baby_milk_quantity: 0,
-        baby_milk_type: '',
-        diapers_quantity: 0,
-        diapers_type: '',
-        gender: 'male',
-        income: null,
-        academic_level_id: null,
-        vocational_training_id: null,
-        birth_date: '',
-        family_status: '',
-        health_status: '',
-        last_name: '',
-        note: '',
-        pants_size: '',
-        shirt_size: '',
-        shoes_size: '',
-        is_unemployed: false,
-        is_handicapped: false,
-        first_name: ''
-    })
-}
-
-const removeOrphan = (index: number) => {
-    if (index > 0) {
-        form.orphans.splice(index, 1)
-    }
-}
+const mustValidateNavigation = ref(true)
 
 const nextStep = async () => {
+    createFamilyStore.is_dirty = true
+
     document.getElementById('create-family-form')?.scrollIntoView({
         behavior: 'smooth'
     })
@@ -115,6 +77,8 @@ const nextStep = async () => {
 }
 
 const prevStep = () => {
+    createFamilyStore.is_dirty = true
+
     if (createFamilyStore.current_step === 1) return
 
     document.getElementById('create-family-form')?.scrollIntoView({
@@ -140,6 +104,24 @@ const prevStep = () => {
         }
 
         createFamilyStore.current_step = stepChange.newStep
+    }
+}
+
+const navigate = async (index: number) => {
+    createFamilyStore.is_dirty = true
+
+    if (index < createFamilyStore.current_step) {
+        createFamilyStore.current_step = index
+    } else {
+        if (mustValidateNavigation.value) {
+            await goTo(index).finally(() => {
+                mustValidateNavigation.value = false
+
+                createFamilyStore.handleClickToNextStep(form, index)
+            })
+        } else {
+            createFamilyStore.handleClickToNextStep(form, index)
+        }
     }
 }
 
@@ -202,6 +184,8 @@ onMounted(() => {
         if (createFamilyStore.creating_completed) {
             createFamilyStore.$reset()
 
+            createFamilyStore.is_dirty = false
+
             return true
         } else if (createFamilyStore.is_dirty) {
             if (!confirm($t('unsaved_changes_warning'))) {
@@ -210,6 +194,8 @@ onMounted(() => {
                 return false
             } else {
                 createFamilyStore.$reset()
+
+                createFamilyStore.is_dirty = false
 
                 return true
             }
@@ -232,7 +218,7 @@ onMounted(() => {
                         :key="`step-${index}`"
                         :index="index + 1"
                         :title="title"
-                        @go-to="goTo($event)"
+                        @go-to="navigate($event)"
                     ></step-title>
                 </div>
 
@@ -278,23 +264,10 @@ onMounted(() => {
                             <step-three>
                                 <template #orphansForm>
                                     <template v-for="(orphan, index) in form.orphans" :key="`orphan-${index}`">
-                                        <the-orphans :index @remove-orphan="removeOrphan">
+                                        <the-orphans :index>
                                             <orphan-form :form :index></orphan-form>
                                         </the-orphans>
                                     </template>
-
-                                    <base-button
-                                        class="mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"
-                                        data-test="add_orphan"
-                                        type="button"
-                                        variant="outline-primary"
-                                        @click="addOrphan"
-                                    >
-                                        <svg-loader class="inline fill-primary dark:fill-slate-500"
-                                                    name="icon-plus"></svg-loader>
-
-                                        {{ $t('add_new_orphan') }}
-                                    </base-button>
                                 </template>
 
                                 <the-actions :nextStep :prevStep></the-actions>

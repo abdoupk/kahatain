@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { useCreateFamilyStore } from '@/stores/create-family'
+
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 defineProps<{ index: number }>()
 
-const emit = defineEmits(['removeOrphan'])
+const createFamilyStore = useCreateFamilyStore()
 
 const removeOrphan = (index: number) => {
-    emit('removeOrphan', index)
+    if (index > 0) {
+        createFamilyStore.family.orphans.splice(index, 1)
+    }
 }
 </script>
 

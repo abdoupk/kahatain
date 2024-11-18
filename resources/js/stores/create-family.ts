@@ -255,6 +255,63 @@ export const useCreateFamilyStore = defineStore('create-family', {
                     }
                 })
             })
+        },
+        checkErrors(
+            form: Form<CreateFamilyForm>,
+            errorProps: CreateFamilyStepOneProps[] | CreateFamilyStepTwoProps[],
+            step: string
+        ) {
+            const errors: string[] = []
+
+            errorProps.forEach((prop) => {
+                const regex = prop === 'address' ? new RegExp(`^${prop}$`) : new RegExp(prop)
+
+                Object.keys(form.errors).forEach((error) => {
+                    if (regex.test(error)) {
+                        errors.push(form.errors[error as keyof CreateFamilyForm])
+                    }
+                })
+            })
+
+            this[step] = errors.length === 0 && !form.validating
+        },
+        handleClickToNextStep(form: Form<CreateFamilyForm>, index: number) {
+            if (index === 2) {
+                this.checkErrors(form, createFamilyStepOneErrorProps, 'step_one_completed')
+
+                if (this.step_one_completed) this.current_step = 2
+            } else if (index === 3) {
+                this.checkErrors(form, createFamilyStepOneErrorProps, 'step_one_completed')
+
+                this.checkErrors(form, createFamilyStepTwoErrorProps, 'step_two_completed')
+
+                if (this.step_one_completed && this.step_two_completed) this.current_step = 3
+            } else if (index === 4) {
+                this.checkErrors(form, createFamilyStepOneErrorProps, 'step_one_completed')
+
+                this.checkErrors(form, createFamilyStepTwoErrorProps, 'step_two_completed')
+
+                this.checkErrors(form, createFamilyStepThreeErrorProps, 'step_three_completed')
+
+                if (this.step_one_completed && this.step_two_completed && this.step_three_completed)
+                    this.current_step = 4
+            } else if (index === 5) {
+                this.checkErrors(form, createFamilyStepOneErrorProps, 'step_one_completed')
+
+                this.checkErrors(form, createFamilyStepTwoErrorProps, 'step_two_completed')
+
+                this.checkErrors(form, createFamilyStepThreeErrorProps, 'step_three_completed')
+
+                this.checkErrors(form, createFamilyStepFourErrorProps, 'step_four_completed')
+
+                if (
+                    this.step_one_completed &&
+                    this.step_two_completed &&
+                    this.step_three_completed &&
+                    this.step_four_completed
+                )
+                    this.current_step = 5
+            }
         }
     },
     getters: {
@@ -269,19 +326,7 @@ export const useCreateFamilyStore = defineStore('create-family', {
 
                 await form.submit({
                     onFinish() {
-                        const errors = []
-
-                        errorProps.forEach((prop) => {
-                            const regex = prop === 'address' ? new RegExp(`^${prop}$`) : new RegExp(prop)
-
-                            Object.keys(form.errors).forEach((error) => {
-                                if (regex.test(error)) {
-                                    errors.push(form.errors[error as keyof CreateFamilyForm])
-                                }
-                            })
-                        })
-
-                        state[step] = errors.length === 0 && !form.validating
+                        state.checkErrors(form, errorProps, step)
 
                         state.validating = false
                     }

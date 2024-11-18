@@ -18,7 +18,7 @@ const createFamilyStore = useCreateFamilyStore()
     <div class="intro-y col-span-12 mt-5 flex items-center justify-center sm:justify-end">
         <base-button
             v-if="createFamilyStore.current_step > 1"
-            :disabled="createFamilyStore.validating"
+            :disabled="false"
             class="w-24"
             data-test="previous"
             type="button"
@@ -29,7 +29,7 @@ const createFamilyStore = useCreateFamilyStore()
         </base-button>
 
         <base-button
-            :disabled="createFamilyStore.validating"
+            :disabled="false"
             class="ms-2 w-24"
             data-test="next_or_register"
             type="submit"
