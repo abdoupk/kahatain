@@ -10,7 +10,9 @@ const createFamilyStore = useCreateFamilyStore()
 
 <template>
     <div
-        class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20">
+        class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
+        v-if="createFamilyStore.current_step === 3"
+    >
         <div class="mb-6 hidden text-lg font-medium lg:block">
             {{ $t('families.create_family.stepThree') }}
         </div>

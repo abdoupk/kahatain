@@ -41,6 +41,7 @@ const handleTabChange = (index) => {
 
 <template>
     <div
+        v-if="createFamilyStore.current_step === 2"
         class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
         <div class="mb-6 hidden text-lg lg:block rtl:font-bold">

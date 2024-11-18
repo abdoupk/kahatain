@@ -8,7 +8,7 @@ import type {
 } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
-import { defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -83,8 +83,6 @@ const createFamilyStore = useCreateFamilyStore()
 
 const form = useForm('post', route('tenant.families.store'), createFamilyStore.family as CreateFamilyForm)
 
-const isDirty = ref<boolean>(false)
-
 const addOrphan = () => {
     form.orphans.push({
         baby_milk_quantity: 0,
@@ -151,42 +149,33 @@ const nextStep = async () => {
 }
 
 const prevStep = () => {
-    if (createFamilyStore.current_step === 1) {
-        return
-    }
+    if (createFamilyStore.current_step === 1) return;
 
     document.getElementById('create-family-form')?.scrollIntoView({
-        behavior: 'smooth'
-    })
+        behavior: 'smooth',
+    });
 
-    if (createFamilyStore.current_step === 2) {
-        if (createFamilyStore.tab_index === 0) {
-            createFamilyStore.current_step = 1
+    const stepChanges = [
+        { step: 2, tabIndex: -1, newStep: 1 },
+        { step: 3, tabIndex: 3, newStep: 2 },
+        { step: 4, tabIndex: -1, newStep: 3 },
+        { step: 5, tabIndex: 2, newStep: 4 },
+    ];
+
+    const currentStep = createFamilyStore.current_step;
+
+    const stepChange = stepChanges.find((s) => s.step === currentStep);
+
+    if (stepChange) {
+        if (stepChange.tabIndex === -1) {
+            createFamilyStore.tab_index--;
         } else {
-            createFamilyStore.tab_index--
+            createFamilyStore.tab_index = stepChange.tabIndex;
         }
+
+        createFamilyStore.current_step = stepChange.newStep;
     }
-
-    if (createFamilyStore.current_step === 3) {
-        createFamilyStore.current_step = 2
-
-        createFamilyStore.tab_index = 3
-    }
-
-    if (createFamilyStore.current_step === 4) {
-        if (createFamilyStore.tab_index === 0) {
-            createFamilyStore.current_step = 3
-        } else {
-            createFamilyStore.tab_index--
-        }
-    }
-
-    if (createFamilyStore.current_step === 5) {
-        createFamilyStore.current_step = 4
-
-        createFamilyStore.tab_index = 2
-    }
-}
+};
 
 const forgetErrors = (errors: string[]) => {
     errors.forEach((prop: CreateFamilyStepTwoProps) => {
@@ -289,32 +278,6 @@ const submit = () => {
     })
 }
 
-const handleNavigation = (event: Event) => {
-    if (event.detail.visit.url.pathname === '/dashboard/families/create') {
-        return true
-    }
-
-    if (createFamilyStore.creating_completed) {
-        createFamilyStore.$reset()
-
-        isDirty.value = false
-
-        return true
-    } else if (isDirty.value) {
-        if (!confirm($t('unsaved_changes_warning'))) {
-            event.preventDefault()
-
-            return false
-        } else {
-            createFamilyStore.$reset()
-
-            isDirty.value = false
-
-            return true
-        }
-    }
-}
-
 watch(() => createFamilyStore.current_step, () => {
     form.submitted = createFamilyStore.family.submitted = createFamilyStore.current_step === 5
 })
@@ -324,7 +287,27 @@ watch(() => createFamilyStore.family, (value) => {
 }, { deep: true })
 
 onMounted(() => {
-    router.on('before', handleNavigation)
+    router.on('before', (event: Event) => {
+        if (event.detail.visit.url.pathname === '/dashboard/families/create') {
+            return true
+        }
+
+        if (createFamilyStore.creating_completed) {
+            createFamilyStore.$reset()
+
+            return true
+        } else if (createFamilyStore.is_dirty) {
+            if (!confirm($t('unsaved_changes_warning'))) {
+                event.preventDefault()
+
+                return false
+            } else {
+                createFamilyStore.$reset()
+
+                return true
+            }
+        }
+    })
 })
 </script>
 

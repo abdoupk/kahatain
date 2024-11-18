@@ -8,6 +8,7 @@ interface State {
     total_steps: number
     creating_completed: boolean
     tab_index: number
+    is_dirty: boolean
     step_one_completed: boolean
     step_two_completed: boolean
     step_three_completed: boolean
@@ -20,6 +21,7 @@ export const useCreateFamilyStore = defineStore('create-family', {
         current_step: 1,
         total_steps: 5,
         tab_index: 0,
+        is_dirty: false,
         step_one_completed: false,
         step_two_completed: false,
         step_three_completed: false,
