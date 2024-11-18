@@ -100,6 +100,7 @@
         "filepond-plugin-image-transform": "^3.8.7",
         "filepond-plugin-image-validate-size": "^1.2.7",
         "laravel-precognition-vue": "^0.5.4",
+        "laravel-vue-i18n": "^2.7.8",
         "leaflet": "^1.9.4",
         "leaflet-draw": "^1.0.4",
         "leaflet-fullscreen": "^1.0.2",
