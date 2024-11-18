@@ -12,6 +12,7 @@ interface State {
     step_two_completed: boolean
     step_three_completed: boolean
     step_four_completed: boolean
+    validating: boolean
 }
 
 export const useCreateFamilyStore = defineStore('create-family', {
@@ -24,6 +25,7 @@ export const useCreateFamilyStore = defineStore('create-family', {
         step_three_completed: false,
         step_four_completed: false,
         creating_completed: false,
+        validating: false,
         family: {
             file_number: '',
             zone_id: '',

@@ -3,6 +3,7 @@ import type { AcademicLevelType } from '@/types/lessons'
 import type { CreateFamilyForm } from '@/types/types'
 
 import { useAcademicLevelsStore } from '@/stores/academic-level'
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { computed, onMounted, ref } from 'vue'
 
@@ -32,73 +33,47 @@ const props = defineProps<{
     index: number
 }>()
 
+const createFamilyStore = useCreateFamilyStore()
+
 // TODO: fix this when add new orphan change focus
 
 const phase = ref()
 
-const firstName = defineModel('first_name', { default: '' })
-
-const lastName = defineModel('last_name')
-
-const academicLevel = defineModel<{ id: number; name: string }>('academicLevel')
-
-const income = defineModel('income')
-
-const vocationalTraining = defineModel('vocational_training')
-
-const healthStatus = defineModel('health_status')
-
-const familyStatus = defineModel('family_status')
-
-const shoesSize = defineModel('shoesSize')
-
-const pantsSize = defineModel('pantsSize')
-
-const shirtSize = defineModel('shirtSize')
-
-const note = defineModel('note')
-
-const isHandicapped = defineModel('isHandicapped')
-
-const isUnemployed = defineModel('isUnemployed')
-
-const babyMilkQuantity = defineModel('babyMilkQuantity')
-
-const gender = defineModel('gender')
-
-const babyMilkType = defineModel<string | undefined>('babyMilkType')
-
-const diapersType = defineModel<string | undefined>('diapersType')
-
-const diapersQuantity = defineModel('diapersQuantity')
-
-const birthDate = defineModel('birth_date', { default: '' })
-
-const photo = defineModel('photo', { default: '' })
-
 const isStillBaby = computed(() => {
-    return birthDate.value && !isOlderThan(birthDate.value, 2)
+    return (
+        createFamilyStore.family.orphans[props.index].birth_date &&
+        !isOlderThan(createFamilyStore.family.orphans[props.index].birth_date, 2)
+    )
 })
 
 const isOlderThan18 = computed(() => {
-    return birthDate.value && isOlderThan(birthDate.value, 18)
+    return (
+        createFamilyStore.family.orphans[props.index].birth_date &&
+        isOlderThan(createFamilyStore.family.orphans[props.index].birth_date, 18)
+    )
 })
 
 const isShouldHasIncome = computed(() => {
     if (!isOlderThan18.value) return false
 
-    return !isHandicapped.value && !isUnemployed.value
+    return (
+        !createFamilyStore.family.orphans[props.index].is_handicapped &&
+        !createFamilyStore.family.orphans[props.index].is_unemployed
+    )
 })
 
 const academicLevelsStore = useAcademicLevelsStore()
 
 const shouldBeInSchool = computed(() => {
-    return birthDate.value && isOlderThan(birthDate.value, 5)
+    return (
+        createFamilyStore.family.orphans[props.index].birth_date &&
+        isOlderThan(createFamilyStore.family.orphans[props.index].birth_date, 5)
+    )
 })
 
 const academicLevels = ref<AcademicLevelType[]>([])
 
-const pic = ref(props.form?.orphans[props.index]?.photo)
+const pic = props.form?.orphans[props.index]?.photo
 
 onMounted(async () => {
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
@@ -129,7 +104,7 @@ const handleUpdateVocationalTraining = () => {
                     :allow-multiple="false"
                     :files="pic"
                     is-picture
-                    @update:files="photo = $event[0]"
+                    @update:files="createFamilyStore.family.orphans[index].photo = $event[0]"
                 ></base-file-pond>
             </div>
         </div>
@@ -143,7 +118,7 @@ const handleUpdateVocationalTraining = () => {
 
             <base-form-input
                 :id="`first_name_${index}`"
-                v-model="firstName"
+                v-model="createFamilyStore.family.orphans[index].first_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.first_name')
@@ -151,31 +126,10 @@ const handleUpdateVocationalTraining = () => {
                 "
                 data-test="orphan_first_name"
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        `orphans.${index}.first_name`
-                    )
-                "
+                @change="form?.validate(`orphans.${index}.first_name`)"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.first_name`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_first_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.first_name`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.first_name`"> </base-form-input-error>
         </div>
         <!-- End: First Name-->
 
@@ -187,7 +141,7 @@ const handleUpdateVocationalTraining = () => {
 
             <base-form-input
                 :id="`last_name_${index}`"
-                v-model="lastName"
+                v-model="createFamilyStore.family.orphans[index].last_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.last_name')
@@ -195,31 +149,10 @@ const handleUpdateVocationalTraining = () => {
                 "
                 data-test="orphan_last_name"
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        `orphans.${index}.last_name`
-                    )
-                "
+                @change="form?.validate(`orphans.${index}.last_name`)"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.last_name`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_last_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.last_name`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.last_name`"> </base-form-input-error>
         </div>
         <!-- End: Last Name-->
 
@@ -229,25 +162,9 @@ const handleUpdateVocationalTraining = () => {
                 {{ $t('validation.attributes.date_of_birth') }}
             </base-form-label>
 
-            <base-v-calendar v-model:date="birthDate"></base-v-calendar>
+            <base-v-calendar v-model:date="createFamilyStore.family.orphans[index].birth_date"></base-v-calendar>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.birth_date`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_start_date_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.birth_date`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.birth_date`"> </base-form-input-error>
         </div>
         <!-- End: Birth Date-->
 
@@ -259,42 +176,21 @@ const handleUpdateVocationalTraining = () => {
 
             <base-form-select
                 :id="`gender_${index}`"
-                v-model="gender"
+                v-model="createFamilyStore.family.orphans[index].gender"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.gender')
                     })
                 "
                 data-test="orphan_gender"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        `orphans.${index}.gender`
-                    )
-                "
+                @change="form?.validate(`orphans.${index}.gender`)"
             >
                 <option value="male">{{ $t('male') }}</option>
 
                 <option value="female">{{ $t('female') }}</option>
             </base-form-select>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.gender`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_gender_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.gender`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.gender`"> </base-form-input-error>
         </div>
         <!-- End: Gender-->
 
@@ -306,43 +202,22 @@ const handleUpdateVocationalTraining = () => {
 
             <base-form-input
                 :id="`health_status_${index}`"
-                v-model="healthStatus"
+                v-model="createFamilyStore.family.orphans[index].health_status"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.health_status')
                     })
                 "
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        `orphans.${index}.health_status`
-                    )
-                "
+                @change="form?.validate(`orphans.${index}.health_status`)"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.health_status`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_health_status_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.health_status`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.health_status`"> </base-form-input-error>
         </div>
         <!-- End: Health Status-->
 
         <!-- Begin: Family Status-->
-        <div class="col-span-12 sm:col-span-6">
+        <div class="col-span-12 sm:col-span-6" v-if="isOlderThan18">
             <base-form-label for="family_status">
                 {{ $t('family_status') }}
             </base-form-label>
@@ -350,33 +225,12 @@ const handleUpdateVocationalTraining = () => {
             <div>
                 <the-family-status-selector
                     :id="`family_status_${index}`"
-                    v-model:family-status="familyStatus"
-                    @update:family-status="
-                        form?.validate(
-                            //@ts-ignore
-                            `orphans.${index}.family_status`
-                        )
-                    "
+                    v-model:family-status="createFamilyStore.family.orphans[index].family_status"
+                    @update:family-status="form?.validate(`orphans.${index}.family_status`)"
                 ></the-family-status-selector>
             </div>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.family_status`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_family_status_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.family_status`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.family_status`"> </base-form-input-error>
         </div>
         <!-- End: Family Status-->
 
@@ -389,29 +243,13 @@ const handleUpdateVocationalTraining = () => {
             <div>
                 <the-academic-level-selector
                     :id="`academic_level_${index}`"
-                    v-model:academic-level="academicLevel"
+                    v-model:academic-level="createFamilyStore.family.orphans[index].academic_level_id"
                     :academic-levels="academicLevels"
                     @update:academic-level="handleUpdateAcademicLevel"
                 ></the-academic-level-selector>
             </div>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.academic_level_id`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_academic_level_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.academic_level_id`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.academic_level_id`"> </base-form-input-error>
         </div>
         <!-- End: Academic Level-->
 
@@ -424,27 +262,12 @@ const handleUpdateVocationalTraining = () => {
             <div>
                 <the-vocational-training-selector
                     :id="`vocational_training_id_${index}`"
-                    v-model:vocational-training="vocationalTraining"
+                    v-model:vocational-training="createFamilyStore.family.orphans[index].vocational_training_id"
                     @update:vocational-training="handleUpdateVocationalTraining"
                 ></the-vocational-training-selector>
             </div>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.vocational_training_id`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_vocational_training_id_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.vocational_training_id`]
-                    }}
-                </div>
+            <base-form-input-error :form :field_name="`orphans.${index}.vocational_training_id`">
             </base-form-input-error>
         </div>
         <!-- End: Vocational Training-->
@@ -459,32 +282,11 @@ const handleUpdateVocationalTraining = () => {
 
                 <the-baby-milk-selector
                     :id="`baby_milk_type_${index}`"
-                    v-model:baby-milk="babyMilkType"
-                    @update:baby-milk="
-                        form?.validate(
-                            //@ts-ignore
-                            `orphans.${index}.baby_milk_type`
-                        )
-                    "
+                    v-model:baby-milk="createFamilyStore.family.orphans[index].baby_milk_type"
+                    @update:baby-milk="form?.validate(`orphans.${index}.baby_milk_type`)"
                 ></the-baby-milk-selector>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.baby_milk_type`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_baby_milk_type_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.baby_milk_type`]
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.baby_milk_type`"> </base-form-input-error>
             </div>
             <!-- End: Baby Milk Type-->
 
@@ -496,37 +298,17 @@ const handleUpdateVocationalTraining = () => {
 
                 <base-form-input
                     :id="`baby_milk_quantity_${index}`"
-                    v-model="babyMilkQuantity"
+                    v-model="createFamilyStore.family.orphans[index].baby_milk_quantity"
                     :placeholder="
                         $t('auth.placeholders.fill', {
                             attribute: $t('baby_milk_quantity')
                         })
                     "
                     type="text"
-                    @change="
-                        form?.validate(
-                            //@ts-ignore
-                            `orphans.${index}.baby_milk_quantity`
-                        )
-                    "
+                    @change="form?.validate(`orphans.${index}.baby_milk_quantity`)"
                 ></base-form-input>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.baby_milk_quantity`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_baby_milk_quantity_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.baby_milk_quantity`]
-                        }}
-                    </div>
+                <base-form-input-error :form :field_name="`orphans.${index}.baby_milk_quantity`">
                 </base-form-input-error>
             </div>
             <!-- End: Baby Milk Quantity-->
@@ -539,32 +321,11 @@ const handleUpdateVocationalTraining = () => {
 
                 <the-diapers-selector
                     :id="`diapers_type_${index}`"
-                    v-model:diaper="diapersType"
-                    @update:diaper="
-                        form?.validate(
-                            //@ts-ignore
-                            `orphans.${index}.diapers_type`
-                        )
-                    "
+                    v-model:diaper="createFamilyStore.family.orphans[index].diapers_type"
+                    @update:diaper="form?.validate(`orphans.${index}.diapers_type`)"
                 ></the-diapers-selector>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.diapers_type`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_diapers_type_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.diapers_type`]
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.diapers_type`"> </base-form-input-error>
             </div>
             <!-- End: Diapers Type-->
 
@@ -576,38 +337,17 @@ const handleUpdateVocationalTraining = () => {
 
                 <base-form-input
                     :id="`diapers_quantity_${index}`"
-                    v-model="diapersQuantity"
+                    v-model="createFamilyStore.family.orphans[index].diapers_quantity"
                     :placeholder="
                         $t('auth.placeholders.fill', {
                             attribute: $t('diapers_quantity')
                         })
                     "
                     type="text"
-                    @change="
-                        form?.validate(
-                            //@ts-ignore
-                            `orphans.${index}.diapers_quantity`
-                        )
-                    "
+                    @change="form?.validate(`orphans.${index}.diapers_quantity`)"
                 ></base-form-input>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.diapers_quantity`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_diapers_quantity_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.diapers_quantity`]
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.diapers_quantity`"> </base-form-input-error>
             </div>
             <!-- End: Diapers Quantity-->
         </div>
@@ -625,7 +365,7 @@ const handleUpdateVocationalTraining = () => {
                     <!-- @vue-ignore -->
                     <the-shoes-size-selector
                         :id="`shoes_size_${index}`"
-                        v-model:size="shoesSize"
+                        v-model:size="createFamilyStore.family.orphans[index].shoes_size"
                         @update:size="
                             form?.validate(
                                 //@ts-ignore
@@ -635,23 +375,7 @@ const handleUpdateVocationalTraining = () => {
                     ></the-shoes-size-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.shoes_size`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_shoes_size_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.shoes_size`]
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.shoes_size`"> </base-form-input-error>
             </div>
             <!-- End: Shoes Size-->
 
@@ -665,7 +389,7 @@ const handleUpdateVocationalTraining = () => {
                     <!-- @vue-ignore -->
                     <the-clothes-size-selector
                         :id="`shirt_size_${index}`"
-                        v-model:size="shirtSize"
+                        v-model:size="createFamilyStore.family.orphans[index].shirt_size"
                         :placeholder="$t('auth.placeholders.fill', { attribute: $t('shirt_size') })"
                         @update:size="
                             form?.validate(
@@ -676,23 +400,7 @@ const handleUpdateVocationalTraining = () => {
                     ></the-clothes-size-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.shirt_size`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_shirt_size_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.shirt_size`]
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.shirt_size`"> </base-form-input-error>
             </div>
             <!-- End: Shirt Size-->
 
@@ -705,7 +413,7 @@ const handleUpdateVocationalTraining = () => {
                     <!-- @vue-ignore -->
                     <the-clothes-size-selector
                         :id="`pants_size_${index}`"
-                        v-model:size="pantsSize"
+                        v-model:size="createFamilyStore.family.orphans[index].pants_size"
                         @update:size="
                             form?.validate(
                                 //@ts-ignore
@@ -715,23 +423,7 @@ const handleUpdateVocationalTraining = () => {
                     ></the-clothes-size-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div
-                        v-if="
-                            form?.invalid(
-                                //@ts-ignore
-                                `orphans.${index}.pants_size`
-                            )
-                        "
-                        class="mt-2 text-danger"
-                        data-test="error_pants_size_message"
-                    >
-                        {{
-                            //@ts-ignore
-                            form.errors[`orphans.${index}.pants_size`]
-                        }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.pants_size`"> </base-form-input-error>
             </div>
             <!-- End: Pants Size-->
         </template>
@@ -743,7 +435,7 @@ const handleUpdateVocationalTraining = () => {
                 <base-form-switch class="text-lg">
                     <base-form-switch-input
                         id="is_handicapped"
-                        v-model="isHandicapped"
+                        v-model="createFamilyStore.family.orphans[index].is_handicapped"
                         type="checkbox"
                     ></base-form-switch-input>
 
@@ -759,7 +451,7 @@ const handleUpdateVocationalTraining = () => {
                 <base-form-switch class="text-lg">
                     <base-form-switch-input
                         id="is_unemployed"
-                        v-model="isUnemployed"
+                        v-model="createFamilyStore.family.orphans[index].is_unemployed"
                         type="checkbox"
                     ></base-form-switch-input>
 
@@ -779,7 +471,7 @@ const handleUpdateVocationalTraining = () => {
 
             <base-form-input
                 :id="`income_${index}`"
-                v-model="income"
+                v-model="createFamilyStore.family.orphans[index].income"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.income')
@@ -787,31 +479,10 @@ const handleUpdateVocationalTraining = () => {
                 "
                 data-test="orphan_income"
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        `orphans.${index}.income`
-                    )
-                "
+                @change="form?.validate(`orphans.${index}.income`)"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.income`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_income_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.income`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.income`"> </base-form-input-error>
         </div>
         <!-- End: Income-->
 
@@ -823,38 +494,17 @@ const handleUpdateVocationalTraining = () => {
 
             <base-form-text-area
                 :id="`note_${index}`"
-                v-model="note"
+                v-model="createFamilyStore.family.orphans[index].note"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('notes')
                     })
                 "
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        `orphans.${index}.note`
-                    )
-                "
+                @change="form?.validate(`orphans.${index}.note`)"
             ></base-form-text-area>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            `orphans.${index}.note`
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_note_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors[`orphans.${index}.note`]
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.note`"> </base-form-input-error>
         </div>
         <!-- End: Note -->
 

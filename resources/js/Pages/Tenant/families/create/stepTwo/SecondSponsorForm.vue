@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { CreateFamilyForm } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
+import { onMounted } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
@@ -12,23 +14,10 @@ import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwit
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
-import { onMounted } from 'vue'
 
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
-const firstName = defineModel('first_name')
-
-const lastName = defineModel('last_name')
-
-const phone = defineModel('phone')
-
-const degreeOfKinship = defineModel('degree_of_kinship')
-
-const income = defineModel('income')
-
-const address = defineModel('address')
-
-const withFamily = defineModel('withFamily')
+const createFamilyStore = useCreateFamilyStore()
 
 onMounted(() => {
     document.getElementById('first_name')?.focus()
@@ -44,7 +33,7 @@ onMounted(() => {
 
             <base-form-input
                 id="first_name"
-                v-model="firstName"
+                v-model="createFamilyStore.family.second_sponsor.first_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.first_name')
@@ -86,7 +75,7 @@ onMounted(() => {
 
             <base-form-input
                 id="last_name"
-                v-model="lastName"
+                v-model="createFamilyStore.family.second_sponsor.last_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.last_name')
@@ -128,7 +117,7 @@ onMounted(() => {
 
             <base-form-input
                 id="degree_of_kinship"
-                v-model="degreeOfKinship"
+                v-model="createFamilyStore.family.second_sponsor.degree_of_kinship"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.degree_of_kinship')
@@ -170,7 +159,7 @@ onMounted(() => {
 
             <base-form-input
                 id="phone"
-                v-model="phone"
+                v-model="createFamilyStore.family.second_sponsor.phone_number"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.phone')
@@ -214,7 +203,7 @@ onMounted(() => {
 
             <base-form-input
                 id="address"
-                v-model="address"
+                v-model="createFamilyStore.family.second_sponsor.address"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.address')
@@ -256,7 +245,7 @@ onMounted(() => {
 
             <base-form-input
                 id="income"
-                v-model="income"
+                v-model="createFamilyStore.family.second_sponsor.income"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.income')
@@ -294,7 +283,11 @@ onMounted(() => {
 
         <div class="intro-y col-span-12 sm:col-span-6">
             <base-form-switch>
-                <base-form-switch-input id="with_family" type="checkbox" v-model="withFamily"></base-form-switch-input>
+                <base-form-switch-input
+                    id="with_family"
+                    type="checkbox"
+                    v-model="createFamilyStore.family.second_sponsor.with_family"
+                ></base-form-switch-input>
                 <base-form-switch-label htmlFor="with_family">
                     {{ $t('housing.label.with_family') }}
                 </base-form-switch-label>

@@ -3,6 +3,7 @@ import type { AcademicLevelType } from '@/types/lessons'
 import type { CreateFamilyForm } from '@/types/types'
 
 import { useAcademicLevelsStore } from '@/stores/academic-level'
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { onMounted, ref } from 'vue'
 
@@ -26,9 +27,9 @@ const props = defineProps<{
 
 const academicLevelsStore = useAcademicLevelsStore()
 
-const academicLevels = ref<AcademicLevelType[]>([])
+const createFamilyStore = useCreateFamilyStore()
 
-const pic = ref(props.form?.sponsor?.photo)
+const academicLevels = ref<AcademicLevelType[]>([])
 
 const _diplomaFile = ref(props.form?.sponsor?.diploma_file)
 
@@ -37,42 +38,6 @@ const _birthCertificateFile = ref(props.form?.sponsor?.birth_certificate_file)
 onMounted(async () => {
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForSponsors()
 })
-
-const firstName = defineModel('first_name')
-
-const lastName = defineModel('last_name')
-
-const phone = defineModel('phone')
-
-const fatherName = defineModel('father_name')
-
-const motherName = defineModel('mother_name')
-
-const birthCertificateNumber = defineModel('birth_certificate_number')
-
-const academicLevel = defineModel('academic_level')
-
-const job = defineModel('function')
-
-const healthStatus = defineModel('health_status')
-
-const diploma = defineModel('diploma')
-
-const photo = defineModel('photo', { default: '' })
-
-const birthCertificateFile = defineModel('birthCertificateFile', { default: '' })
-
-const diplomaFile = defineModel('diplomaFile', { default: '' })
-
-// Const cardNumber = defineModel('card_number')
-
-const ccp = defineModel('ccp')
-
-const sponsorType = defineModel('sponsorType')
-
-const birthDate = defineModel('birth_date', { default: '' })
-
-const isUnemployed = defineModel('isUnemployed')
 
 onMounted(() => {
     document.getElementById('first_name')?.focus()
@@ -105,7 +70,7 @@ onMounted(() => {
 
             <base-form-input
                 id="first_name"
-                v-model="firstName"
+                v-model="createFamilyStore.family.sponsor.first_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.first_name')
@@ -120,23 +85,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.first_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_first_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.first_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.first_name"> </base-form-input-error>
         </div>
         <!-- END: First Name -->
 
@@ -148,7 +97,7 @@ onMounted(() => {
 
             <base-form-input
                 id="last_name"
-                v-model="lastName"
+                v-model="createFamilyStore.family.sponsor.last_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.last_name')
@@ -163,23 +112,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.last_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_last_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.last_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.last_name"> </base-form-input-error>
         </div>
         <!-- End: Last Name -->
 
@@ -191,7 +124,7 @@ onMounted(() => {
 
             <base-form-input
                 id="ccp"
-                v-model="ccp"
+                v-model="createFamilyStore.family.sponsor.ccp"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('ccp')
@@ -207,23 +140,7 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.ccp'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_ccp_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.ccp']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.ccp"> </base-form-input-error>
         </div>
         <!-- End: CCP -->
 
@@ -236,24 +153,12 @@ onMounted(() => {
             <div>
                 <!-- @vue-ignore -->
                 <the-sponsor-type-selector
-                    v-model:type="sponsorType"
+                    v-model:type="createFamilyStore.family.sponsor.sponsor_type"
                     @update:type="form?.validate('sponsor.sponsor_type')"
                 ></the-sponsor-type-selector>
             </div>
 
-            <base-form-input-error>
-                <!-- @vue-ignore -->
-                <div
-                    v-if="form?.invalid('sponsor.sponsor_type')"
-                    class="mt-2 text-danger"
-                    data-test="error_sponsor_type_message"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['sponsor.sponsor_type']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.sponsor_type"> </base-form-input-error>
         </div>
         <!-- End: Branch -->
 
@@ -263,25 +168,9 @@ onMounted(() => {
                 {{ $t('validation.attributes.sponsor.birth_date') }}
             </base-form-label>
 
-            <base-v-calendar v-model:date="birthDate"></base-v-calendar>
+            <base-v-calendar v-model:date="createFamilyStore.family.sponsor.birth_date"></base-v-calendar>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.birth_date'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_start_date_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.birth_date']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.birth_date"> </base-form-input-error>
         </div>
         <!-- End: Birth Date -->
 
@@ -293,7 +182,7 @@ onMounted(() => {
 
             <base-form-input
                 id="phone_number"
-                v-model="phone"
+                v-model="createFamilyStore.family.sponsor.phone_number"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.phone')
@@ -310,23 +199,7 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.phone_number'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_phone_number_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.phone_number']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.phone_number"> </base-form-input-error>
         </div>
         <!-- End: Phone Number -->
 
@@ -338,7 +211,7 @@ onMounted(() => {
 
             <base-form-input
                 id="father_name"
-                v-model="fatherName"
+                v-model="createFamilyStore.family.sponsor.father_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.father_name')
@@ -353,23 +226,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.father_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_father_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.father_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.father_name"> </base-form-input-error>
         </div>
         <!-- End: Father Name -->
 
@@ -381,7 +238,7 @@ onMounted(() => {
 
             <base-form-input
                 id="mother_name"
-                v-model="motherName"
+                v-model="createFamilyStore.family.sponsor.mother_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.mother_name')
@@ -396,23 +253,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.mother_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_mother_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.mother_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.mother_name"> </base-form-input-error>
         </div>
         <!-- End: Mother Name -->
 
@@ -424,7 +265,7 @@ onMounted(() => {
 
             <base-form-input
                 id="birth_certificate_number"
-                v-model="birthCertificateNumber"
+                v-model="createFamilyStore.family.sponsor.birth_certificate_number"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.birth_certificate_number')
@@ -440,23 +281,7 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.birth_certificate_number'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_birth_certificate_number_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.birth_certificate_number']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.birth_certificate_number"> </base-form-input-error>
         </div>
         <!-- End: Birth Certificate Number -->
 
@@ -470,29 +295,13 @@ onMounted(() => {
                 <!-- @vue-ignore -->
                 <the-academic-level-selector
                     id="academic_level"
-                    v-model:academic-level="academicLevel"
+                    v-model:academic-level="createFamilyStore.family.sponsor.academic_level_id"
                     :academicLevels
                     @update:academic-level="form?.validate(`sponsor.academic_level_id`)"
                 ></the-academic-level-selector>
             </div>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.academic_level_id'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_academic_level_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.academic_level_id']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.academic_level_id"> </base-form-input-error>
         </div>
         <!-- End: Academic Level -->
 
@@ -504,7 +313,7 @@ onMounted(() => {
 
             <base-form-input
                 id="function"
-                v-model="job"
+                v-model="createFamilyStore.family.sponsor.function"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.function')
@@ -519,23 +328,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.function'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_function_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.function']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.function"> </base-form-input-error>
         </div>
         <!-- End: Function -->
 
@@ -547,7 +340,7 @@ onMounted(() => {
 
             <base-form-input
                 id="health_status"
-                v-model="healthStatus"
+                v-model="createFamilyStore.family.sponsor.health_status"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.health_status')
@@ -562,23 +355,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.health_status'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_health_status_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.health_status']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.health_status"> </base-form-input-error>
         </div>
         <!-- End: Health Status -->
 
@@ -590,7 +367,7 @@ onMounted(() => {
 
             <base-form-input
                 id="diploma"
-                v-model="diploma"
+                v-model="createFamilyStore.family.sponsor.diploma"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.diploma')
@@ -605,23 +382,7 @@ onMounted(() => {
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'sponsor.diploma'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_diploma_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['sponsor.diploma']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="sponsor.diploma"> </base-form-input-error>
         </div>
         <!-- End: Diploma -->
 
@@ -630,7 +391,7 @@ onMounted(() => {
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     id="is_unemployed"
-                    v-model="isUnemployed"
+                    v-model="createFamilyStore.family.sponsor.is_unemployed"
                     type="checkbox"
                 ></base-form-switch-input>
 
@@ -657,7 +418,7 @@ onMounted(() => {
                         :files="_birthCertificateFile"
                         :is-picture="false"
                         accepted-file-types="image/jpeg, image/png, application/pdf"
-                        @update:files="birthCertificateFile = $event[0]"
+                        @update:files="createFamilyStore.family.sponsor.birth_certificate_file = $event[0]"
                     ></base-file-pond>
                 </div>
 
@@ -672,7 +433,7 @@ onMounted(() => {
                         :files="_diplomaFile"
                         :is-picture="false"
                         accepted-file-types="image/jpeg, image/png, application/pdf"
-                        @update:files="diplomaFile = $event[0]"
+                        @update:files="createFamilyStore.family.sponsor.diploma_file = $event[0]"
                     ></base-file-pond>
                 </div>
             </div>

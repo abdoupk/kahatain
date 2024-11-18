@@ -10,10 +10,11 @@ import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
 import { computed } from 'vue'
 import { checkErrors } from '@/utils/helper'
 import SvgLoader from '@/Components/SvgLoader.vue'
+import { useCreateFamilyStore } from '@/stores/create-family'
 
 const props = defineProps<CreateFamilyStepProps & { selectedIndex: number }>()
 
-const emit = defineEmits(['changeTab'])
+const createFamilyStore = useCreateFamilyStore()
 
 const housingErrors = computed(() => {
     return checkErrors('^housing', props?.form?.errors)
@@ -28,20 +29,19 @@ const furnishingsErrors = computed(() => {
 })
 
 const handleTabChange = (index) => {
-    emit('changeTab', index)
+    createFamilyStore.tab_index = index
 }
 </script>
 
 <template>
     <div
-        v-if="currentStep === 4"
         class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
         <div class="text-lg font-medium hidden lg:block mb-6">
             {{ $t('families.create_family.stepFour') }}
         </div>
 
-        <base-tab-group :selectedIndex class="mt-5" @change="handleTabChange">
+        <base-tab-group :selectedIndex="createFamilyStore.tab_index" class="mt-5" @change="handleTabChange">
             <base-tab-list class="md:flex" variant="link-tabs">
                 <base-tab>
                     <base-tab-button as="button" class="w-full py-2" type="button">

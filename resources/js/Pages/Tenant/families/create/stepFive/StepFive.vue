@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import { useMembersStore } from '@/stores/members'
 import { onMounted, ref } from 'vue'
 
@@ -14,24 +15,19 @@ import { $t } from '@/utils/i18n'
 
 defineProps<CreateFamilyStepProps>()
 
-const report = defineModel('report', { default: '' })
-
-const previewDate = defineModel('previewDate', { default: '' })
-
-const inspectorsMembers = defineModel('inspectorsMembers', { default: [] })
+const createFamilyStore = useCreateFamilyStore()
 
 const vueSelectInspectorsMembers = ref([])
 
 onMounted(async () => {
     await useMembersStore().getMembers()
 
-    vueSelectInspectorsMembers.value = useMembersStore().findMembersByIds(inspectorsMembers.value)
+    vueSelectInspectorsMembers.value = useMembersStore().findMembersByIds(createFamilyStore.family.inspectors_members)
 })
 </script>
 
 <template>
     <div
-        v-if="currentStep === 5"
         class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
         <div class="mb-6 hidden text-lg font-medium lg:block rtl:font-bold">
@@ -46,15 +42,11 @@ onMounted(async () => {
 
                 <base-classic-editor
                     id="report"
-                    v-model="report"
+                    v-model="createFamilyStore.family.report"
                     @blur="form?.validate('report')"
                 ></base-classic-editor>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('report')" class="mt-2 text-danger" data-test="error_report_message">
-                        {{ form.errors.report }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="report"></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-8">
@@ -73,7 +65,7 @@ onMounted(async () => {
                         @update:value="
                             (value) => {
                                 // @ts-ignore
-                                inspectorsMembers = value.map((member) => member.id)
+                                createFamilyStore.family.inspectors_members = value.map((member) => member.id)
 
                                 form?.validate('inspectors_members')
                             }
@@ -81,15 +73,7 @@ onMounted(async () => {
                     ></base-vue-select>
                 </div>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('inspectors_members')"
-                        class="mt-2 text-danger"
-                        data-test="error_inspectors_members_message"
-                    >
-                        {{ form.errors.inspectors_members }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="inspectors_members"> </base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-4">
@@ -97,17 +81,12 @@ onMounted(async () => {
                     {{ $t('preview_date') }}
                 </base-form-label>
 
-                <base-v-calendar id="preview_date" v-model:date="previewDate"></base-v-calendar>
+                <base-v-calendar
+                    id="preview_date"
+                    v-model:date="createFamilyStore.family.preview_date"
+                ></base-v-calendar>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('preview_date')"
-                        class="mt-2 text-danger"
-                        data-test="error_preview_date_message"
-                    >
-                        {{ form.errors.preview_date }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="preview_date"> </base-form-input-error>
             </div>
         </div>
 

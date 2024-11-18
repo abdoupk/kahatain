@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { CreateFamilyForm } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
@@ -15,21 +16,9 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ form: Form<CreateFamilyForm> }>()
 
-const firstName = defineModel('first_name')
+const createFamilyStore = useCreateFamilyStore()
 
-const lastName = defineModel('last_name')
-
-const birthDate = defineModel('birthDate', { default: '' })
-
-const deathDate = defineModel('deathDate', { default: '' })
-
-const income = defineModel('income')
-
-const job = defineModel('job')
-
-const deathCertificateFile = defineModel('deathCertificateFile', { default: '' })
-
-const _deathCertificateFile = ref(props.form?.spouse?.death_certificate_file)
+const _deathCertificateFile = props.form?.spouse?.death_certificate_file
 
 onMounted(() => {
     document.getElementById('first_name')?.focus()
@@ -45,7 +34,7 @@ onMounted(() => {
 
             <base-form-input
                 id="first_name"
-                v-model="firstName"
+                v-model="createFamilyStore.family.spouse.first_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.first_name')
@@ -53,31 +42,10 @@ onMounted(() => {
                 "
                 autofocus
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        'spouse.first_name'
-                    )
-                "
+                @change="form?.validate('spouse.first_name')"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'spouse.first_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_first_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['spouse.first_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="spouse.first_name"></base-form-input-error>
         </div>
 
         <div class="col-span-12 sm:col-span-6">
@@ -87,39 +55,17 @@ onMounted(() => {
 
             <base-form-input
                 id="last_name"
-                v-model="lastName"
+                v-model="createFamilyStore.family.spouse.last_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.last_name')
                     })
                 "
-                autofocus
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        'spouse.last_name'
-                    )
-                "
+                @change="form?.validate('spouse.last_name')"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'spouse.last_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_last_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['spouse.last_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="spouse.last_name"></base-form-input-error>
         </div>
 
         <div class="col-span-12 sm:col-span-6">
@@ -127,25 +73,9 @@ onMounted(() => {
                 {{ $t('validation.attributes.sponsor.birth_date') }}
             </base-form-label>
 
-            <base-v-calendar v-model:date="birthDate"></base-v-calendar>
+            <base-v-calendar v-model:date="createFamilyStore.family.spouse.birth_date"></base-v-calendar>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'spouse.birth_date'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_birth_date_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['spouse.birth_date']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="spouse.birth_date"></base-form-input-error>
         </div>
 
         <div class="col-span-12 sm:col-span-6">
@@ -154,29 +84,13 @@ onMounted(() => {
             </base-form-label>
 
             <base-v-calendar
-                v-model:date="deathDate"
+                v-model:date="createFamilyStore.family.spouse.death_date"
                 :placeholder="
                     $t('auth.placeholders.fill', { attribute: $t('validation.attributes.spouse.death_date') })
                 "
             ></base-v-calendar>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'spouse.death_date'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_death_date_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['spouse.death_date']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="spouse.death_date"></base-form-input-error>
         </div>
 
         <div class="col-span-12 sm:col-span-6">
@@ -186,39 +100,17 @@ onMounted(() => {
 
             <base-form-input
                 id="function"
-                v-model="job"
+                v-model="createFamilyStore.family.spouse.function"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.sponsor.function')
                     })
                 "
-                autofocus
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        'spouse.function'
-                    )
-                "
+                @change="form?.validate('spouse.function')"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'spouse.function'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_function_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['spouse.function']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="spouse.function"></base-form-input-error>
         </div>
 
         <div class="col-span-12 sm:col-span-6">
@@ -228,40 +120,18 @@ onMounted(() => {
 
             <base-form-input
                 id="income"
-                v-model="income"
+                v-model="createFamilyStore.family.spouse.income"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.income')
                     })
                 "
-                autofocus
                 type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        'spouse.income'
-                    )
-                "
+                @change="form?.validate('spouse.income')"
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'spouse.income'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_income_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['spouse.income']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="spouse.income"></base-form-input-error>
         </div>
 
         <div class="col-span-12 lg:col-span-6">
@@ -276,7 +146,7 @@ onMounted(() => {
                 :files="_deathCertificateFile"
                 :is-picture="false"
                 accepted-file-types="image/jpeg, image/png, application/pdf"
-                @update:files="deathCertificateFile = $event[0]"
+                @update:files="createFamilyStore.family.spouse.death_certificate_file = $event[0]"
             ></base-file-pond>
         </div>
     </div>

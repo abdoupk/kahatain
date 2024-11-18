@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import { computed } from 'vue'
 
 import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
@@ -13,9 +14,9 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { checkErrors } from '@/utils/helper'
 
-const props = defineProps<CreateFamilyStepProps & { selectedIndex: number }>()
+const props = defineProps<CreateFamilyStepProps>()
 
-const emit = defineEmits(['changeTab'])
+const createFamilyStore = useCreateFamilyStore()
 
 const sponsorErrors = computed(() => {
     return checkErrors('^sponsor.+', props?.form?.errors)
@@ -34,13 +35,12 @@ const spouseErrors = computed(() => {
 })
 
 const handleTabChange = (index) => {
-    emit('changeTab', index)
+    createFamilyStore.tab_index = index
 }
 </script>
 
 <template>
     <div
-        v-if="currentStep === 2"
         class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
         <div class="mb-6 hidden text-lg lg:block rtl:font-bold">

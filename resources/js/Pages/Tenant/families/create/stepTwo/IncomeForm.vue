@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyForm, IncomeType } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { computed, onMounted, ref } from 'vue'
 
@@ -24,27 +25,7 @@ interface IncomesType extends IncomeType {
     bank_account: boolean
 }
 
-const cnr = defineModel('cnr')
-
-const cnas = defineModel('cnas')
-
-const casnos = defineModel('casnos')
-
-const pension = defineModel('pension')
-
-const account = defineModel('account')
-
-const other_income = defineModel('other_income')
-
-const cnasFile = defineModel('cnasFile', { default: '' })
-
-const casnosFile = defineModel('casnosFile', { default: '' })
-
-const cnrFile = defineModel('cnrFile', { default: '' })
-
-const bankFile = defineModel('bankFile', { default: '' })
-
-const ccpFile = defineModel('ccpFile', { default: '' })
+const createFamilyStore = useCreateFamilyStore()
 
 const _cnasFile = ref(props.form.incomes.cnas_file)
 
@@ -58,17 +39,17 @@ const _ccpFile = ref(props.form.incomes.ccp_file)
 
 const totalIncome = computed(() => {
     const incomeSources = [
-        cnr.value,
-        cnas.value,
-        casnos.value,
-        pension.value,
-        other_income.value,
-        account.value.ccp.balance,
-        account.value.bank.balance,
-        account.value.bank.performance_grant / 3,
-        account.value.ccp.performance_grant / 3,
-        account.value.ccp.monthly_income,
-        account.value.bank.monthly_income
+        createFamilyStore.family.incomes.cnr,
+        createFamilyStore.family.incomes.cnas,
+        createFamilyStore.family.incomes.casnos,
+        createFamilyStore.family.incomes.pension,
+        createFamilyStore.family.incomes.other_income,
+        createFamilyStore.family.incomes.account.ccp.balance,
+        createFamilyStore.family.incomes.account.bank.balance,
+        createFamilyStore.family.incomes.account.ccp.performance_grant / 3,
+        createFamilyStore.family.incomes.account.bank.performance_grant / 3,
+        createFamilyStore.family.incomes.account.ccp.monthly_income,
+        createFamilyStore.family.incomes.account.bank.monthly_income
     ]
 
     return formatCurrency(incomeSources.reduce((acc, curr) => acc + Number(curr), 0))
@@ -88,37 +69,45 @@ const toggle = (key: keyof IncomesType) => {
     if (items.value[key]) {
         switch (key) {
             case 'cnr':
-                cnr.value = null
+                createFamilyStore.family.incomes.cnr = null
 
                 break
 
             case 'cnas':
-                cnas.value = null
+                createFamilyStore.family.incomes.cnas = null
 
                 break
 
             case 'casnos':
-                casnos.value = null
+                createFamilyStore.family.incomes.casnos = null
 
                 break
 
             case 'pension':
-                pension.value = null
+                createFamilyStore.family.incomes.pension = null
 
                 break
 
             case 'other_income':
-                other_income.value = null
+                createFamilyStore.family.incomes.other_income = null
 
                 break
 
             case 'ccp_account':
-                account.value.ccp = { balance: null, performance_grant: null, monthly_income: null }
+                createFamilyStore.family.incomes.account.ccp = {
+                    balance: null,
+                    performance_grant: null,
+                    monthly_income: null
+                }
 
                 break
 
             case 'bank_account':
-                account.value.bank = { balance: null, performance_grant: null, monthly_income: null }
+                createFamilyStore.family.incomes.account.bank = {
+                    balance: null,
+                    performance_grant: null,
+                    monthly_income: null
+                }
         }
     }
 
@@ -126,24 +115,16 @@ const toggle = (key: keyof IncomesType) => {
 }
 
 onMounted(() => {
-    cnasFile.value = files.value.cnas
-
-    casnosFile.value = files.value.casnos
-
-    cnrFile.value = files.value.cnr
-
-    bankFile.value = files.value.bank
-
-    ccpFile.value = files.value.ccp
+    const { cnr, cnas, casnos, pension, other_income, account } = createFamilyStore.family.incomes
 
     items.value = {
-        cnr: !!cnr.value,
-        cnas: !!cnas.value,
-        casnos: !!casnos.value,
-        pension: !!pension.value,
-        other_income: !!other_income.value,
-        ccp_account: Object.values(account.value.ccp).some((value) => value !== null && value !== 0),
-        bank_account: Object.values(account.value.bank).some((value) => value !== null && value !== 0)
+        cnr: !!cnr,
+        cnas: !!cnas,
+        casnos: !!casnos,
+        pension: !!pension,
+        other_income: !!other_income,
+        ccp_account: Object.values(account.ccp).some((value) => value !== null && value !== 0),
+        bank_account: Object.values(account.bank).some((value) => value !== null && value !== 0)
     }
 
     document.getElementById('cnr')?.focus()
@@ -172,7 +153,7 @@ onMounted(() => {
             <base-input-group>
                 <!-- @vue-ignore -->
                 <base-form-input
-                    v-model="cnr"
+                    v-model="createFamilyStore.family.incomes.cnr"
                     :disabled="!items.cnr"
                     :placeholder="$t('validation.attributes.the_amount')"
                     maxlength="6"
@@ -220,7 +201,7 @@ onMounted(() => {
             <base-input-group>
                 <!-- @vue-ignore -->
                 <base-form-input
-                    v-model="cnas"
+                    v-model="createFamilyStore.family.incomes.cnas"
                     :disabled="!items.cnas"
                     :placeholder="$t('validation.attributes.the_amount')"
                     maxlength="6"
@@ -268,7 +249,7 @@ onMounted(() => {
             <base-input-group>
                 <!-- @vue-ignore -->
                 <base-form-input
-                    v-model="casnos"
+                    v-model="createFamilyStore.family.incomes.casnos"
                     :disabled="!items.casnos"
                     :placeholder="$t('validation.attributes.the_amount')"
                     maxlength="6"
@@ -316,7 +297,7 @@ onMounted(() => {
             <base-input-group>
                 <!-- @vue-ignore -->
                 <base-form-input
-                    v-model="pension"
+                    v-model="createFamilyStore.family.incomes.pension"
                     :disabled="!items.pension"
                     :placeholder="$t('validation.attributes.the_amount')"
                     maxlength="6"
@@ -364,7 +345,7 @@ onMounted(() => {
             <base-input-group>
                 <!-- @vue-ignore -->
                 <base-form-input
-                    v-model="other_income"
+                    v-model="createFamilyStore.family.incomes.other_income"
                     :disabled="!items.other_income"
                     :placeholder="$t('validation.attributes.the_amount')"
                     maxlength="6"
@@ -417,7 +398,7 @@ onMounted(() => {
                     <!-- @vue-ignore -->
                     <base-form-input
                         id="ccp_monthly_income"
-                        v-model="account.ccp.monthly_income"
+                        v-model="createFamilyStore.family.incomes.account.ccp.monthly_income"
                         :disabled="!items.ccp_account"
                         :placeholder="$t('validation.attributes.the_amount')"
                         maxlength="6"
@@ -451,7 +432,7 @@ onMounted(() => {
                     <!-- @vue-ignore -->
                     <base-form-input
                         id="ccp_balance"
-                        v-model="account.ccp.balance"
+                        v-model="createFamilyStore.family.incomes.account.ccp.balance"
                         :disabled="!items.ccp_account"
                         :placeholder="$t('validation.attributes.the_amount')"
                         maxlength="6"
@@ -487,7 +468,7 @@ onMounted(() => {
                     <!-- @vue-ignore -->
                     <base-form-input
                         id="ccp_performance_grant"
-                        v-model="account.ccp.performance_grant"
+                        v-model="createFamilyStore.family.incomes.account.ccp.performance_grant"
                         :disabled="!items.ccp_account"
                         :placeholder="$t('validation.attributes.the_amount')"
                         maxlength="6"
@@ -542,7 +523,7 @@ onMounted(() => {
                     <!-- @vue-ignore -->
                     <base-form-input
                         id="bank_monthly_income"
-                        v-model="account.bank.monthly_income"
+                        v-model="createFamilyStore.family.incomes.account.bank.monthly_income"
                         :disabled="!items.bank_account"
                         :placeholder="$t('validation.attributes.the_amount')"
                         maxlength="6"
@@ -576,7 +557,7 @@ onMounted(() => {
                     <!-- @vue-ignore -->
                     <base-form-input
                         id="bank_balance"
-                        v-model="account.bank.balance"
+                        v-model="createFamilyStore.family.incomes.account.bank.balance"
                         :disabled="!items.bank_account"
                         :placeholder="$t('validation.attributes.the_amount')"
                         maxlength="6"
@@ -612,7 +593,7 @@ onMounted(() => {
                     <!-- @vue-ignore -->
                     <base-form-input
                         id="bank_performance_grant"
-                        v-model="account.bank.performance_grant"
+                        v-model="createFamilyStore.family.incomes.account.bank.performance_grant"
                         :disabled="!items.bank_account"
                         :placeholder="$t('validation.attributes.the_amount')"
                         maxlength="6"
@@ -668,7 +649,7 @@ onMounted(() => {
                     :files="_cnasFile"
                     :is-picture="false"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
-                    @update:files="cnasFile = $event[0]"
+                    @update:files="createFamilyStore.family.incomes.cnas_file = $event[0]"
                     :labelIdle="$t('upload-files.labelIdle.sponsor_cnas')"
                 ></base-file-pond>
             </div>
@@ -685,7 +666,7 @@ onMounted(() => {
                     :is-picture="false"
                     :labelIdle="$t('upload-files.labelIdle.sponsor_casnos')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
-                    @update:files="casnosFile = $event[0]"
+                    @update:files="createFamilyStore.family.incomes.casnos_file = $event[0]"
                 ></base-file-pond>
             </div>
 
@@ -701,7 +682,7 @@ onMounted(() => {
                     :is-picture="false"
                     :labelIdle="$t('upload-files.labelIdle.sponsor_cnr')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
-                    @update:files="cnrFile = $event[0]"
+                    @update:files="createFamilyStore.family.incomes.cnr_file = $event[0]"
                 ></base-file-pond>
             </div>
 
@@ -716,7 +697,7 @@ onMounted(() => {
                     :files="_ccpFile"
                     :is-picture="false"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
-                    @update:files="ccpFile = $event[0]"
+                    @update:files="createFamilyStore.family.incomes.ccp_file = $event[0]"
                     :labelIdle="$t('upload-files.labelIdle.sponsor_ccp')"
                 ></base-file-pond>
             </div>
@@ -732,7 +713,7 @@ onMounted(() => {
                     :files="_bankFile"
                     :is-picture="false"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
-                    @update:files="bankFile = $event[0]"
+                    @update:files="createFamilyStore.family.incomes.bank_file = $event[0]"
                     :labelIdle="$t('upload-files.labelIdle.sponsor_bank')"
                 ></base-file-pond>
             </div>

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import { onMounted, ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
@@ -17,19 +18,7 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<CreateFamilyStepProps>()
 
-const zone = defineModel('zone', { default: '' })
-
-const branch = defineModel('branch', { default: '' })
-
-const startDate = defineModel('startDate')
-
-const address = defineModel('address')
-
-const location = defineModel('location')
-
-const fileNumber = defineModel('fileNumber')
-
-const residenceCertificateFile = defineModel('residenceCertificateFile')
+const createFamilyStore = useCreateFamilyStore()
 
 const _residenceCertificateFile = ref(props.form?.residence_certificate_file)
 
@@ -39,9 +28,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div
-        v-if="currentStep === 1"
-        class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
+    <div class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
         <div class="mb-6 hidden text-lg font-bold lg:block">
             {{ $t('families.create_family.stepOne') }}
@@ -55,7 +42,7 @@ onMounted(() => {
 
                 <base-form-input
                     id="file_number"
-                    v-model="fileNumber"
+                    v-model="createFamilyStore.family.file_number"
                     :placeholder="
                         $t('auth.placeholders.fill', {
                             attribute: $t('file_number')
@@ -66,15 +53,7 @@ onMounted(() => {
                     @keydown="allowOnlyNumbersOnKeyDown"
                 ></base-form-input>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('file_number')"
-                        class="mt-2 text-danger"
-                        data-test="error_file_number_message"
-                    >
-                        {{ form.errors.file_number }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="file_number"></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-6">
@@ -82,17 +61,9 @@ onMounted(() => {
                     {{ $t('validation.attributes.starting_sponsorship_date') }}
                 </base-form-label>
 
-                <base-v-calendar v-model:date="startDate"></base-v-calendar>
+                <base-v-calendar v-model:date="createFamilyStore.family.start_date"></base-v-calendar>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('start_date')"
-                        class="mt-2 text-danger"
-                        data-test="error_start_date_message"
-                    >
-                        {{ form.errors.start_date }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="start_date"></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-6">
@@ -103,16 +74,12 @@ onMounted(() => {
                 <div>
                     <the-branch-selector
                         id="branch"
-                        v-model:branch="branch"
+                        v-model:branch="createFamilyStore.family.branch_id"
                         @update:branch="form?.validate('branch_id')"
                     ></the-branch-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('branch_id')" class="mt-2 text-danger" data-test="error_branch_message">
-                        {{ form.errors.branch_id }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="branch_id"></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-6">
@@ -123,16 +90,12 @@ onMounted(() => {
                 <div>
                     <the-zone-selector
                         id="zone"
-                        v-model:zone="zone"
+                        v-model:zone="createFamilyStore.family.zone_id"
                         @update:zone="form?.validate('zone_id')"
                     ></the-zone-selector>
                 </div>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('zone_id')" class="mt-2 text-danger" data-test="error_zone_message">
-                        {{ form.errors.zone_id }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="zone_id"></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-6">
@@ -141,17 +104,13 @@ onMounted(() => {
                 </base-form-label>
 
                 <the-address-field
-                    v-model:address="address"
-                    v-model:location="location"
+                    v-model:address="createFamilyStore.family.address"
+                    v-model:location="createFamilyStore.family.location"
                     :select_location_label="$t('hints.select_family_location')"
                     @update:address="form?.validate('address')"
                 ></the-address-field>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
-                        {{ form.errors.address }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="address"></base-form-input-error>
             </div>
 
             <!-- Begin: Upload files  -->
@@ -170,7 +129,7 @@ onMounted(() => {
                             :files="_residenceCertificateFile"
                             :is-picture="false"
                             accepted-file-types="image/jpeg, image/png, application/pdf"
-                            @update:files="residenceCertificateFile = $event[0]"
+                            @update:files="createFamilyStore.family.residence_certificate_file = $event[0]"
                         ></base-file-pond>
                     </div>
                 </div>
