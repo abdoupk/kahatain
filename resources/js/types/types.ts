@@ -864,7 +864,7 @@ export interface BenefactorsIndexResource extends RecipientType {
 export interface ListBoxFilter {
     field: string
     label: string
-    type: 'object' | 'string' | 'date' | 'number'
+    type: 'object' | 'string' | 'date' | 'number' | 'select'
     icon: SVGType
     operators: Array<ListBoxOperator>
 }

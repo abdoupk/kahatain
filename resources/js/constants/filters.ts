@@ -87,6 +87,13 @@ const filterCategoryOperators: Array<ListBoxOperator> = [
     }
 ]
 
+const filterBooleanOperators: Array<ListBoxOperator> = [
+    {
+        label: 'filters.equal_to',
+        value: '='
+    },
+]
+
 // TODO:add dzd icon add death date spouse
 export const familiesFilters: ListBoxFilter[] = [
     {
@@ -592,6 +599,13 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
         label: 'basket_from_benefactor',
         type: 'number',
         operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-basket-shopping',
+        field: 'basket_from_benefactor',
+        label: 'basket_from_association',
+        type: 'select',
+        operators: filterBooleanOperators
     }
 ]
 

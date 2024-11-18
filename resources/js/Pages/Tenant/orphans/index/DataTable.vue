@@ -97,7 +97,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                         </the-table-td>
 
                         <the-table-td class="max-w-40 truncate text-center">
-                            {{ $t(`family_statuses.${orphan.family_status}`) }}
+                            {{orphan.family_status ? $t(`family_statuses.${orphan.family_status}`) : '————'}}
                         </the-table-td>
 
                         <the-table-td class="max-w-40 truncate text-center">

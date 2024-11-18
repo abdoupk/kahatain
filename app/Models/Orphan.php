@@ -201,9 +201,9 @@ class Orphan extends Model implements HasMedia
             'phone_number' => $this->phone_number,
             'ccp' => $this->ccp,
             'family_status' => [
-                'ar' => __('family_statuses.'.$this->family_status, locale: 'ar'),
-                'fr' => __('family_statuses.'.$this->family_status, locale: 'fr'),
-                'en' => __('family_statuses.'.$this->family_status, locale: 'en'),
+                'ar' => $this->family_status ? __('family_statuses.'.$this->family_status, locale: 'ar') : '',
+                'fr' => $this->family_status ? __('family_statuses.'.$this->family_status, locale: 'fr') : '',
+                'en' => $this->family_status ? __('family_statuses.'.$this->family_status, locale: 'en') : '',
             ],
             'shoes_size' => $this->shoesSize?->label,
             'shirt_size' => $this->shirtSize?->label,

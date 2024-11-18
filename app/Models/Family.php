@@ -255,6 +255,7 @@ class Family extends Model implements HasMedia
             'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,
             'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate,
             'amount_from_association' => $this->amount_from_association,
+            //TODO : check if this is correct before or after monthly sponsorship
             'basket_from_association' => $this->difference_after_monthly_sponsorship > 0,
             'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
             'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
