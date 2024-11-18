@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\Events;
 
 use App\Models\Lesson;
+use App\Models\PrivateSchool;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

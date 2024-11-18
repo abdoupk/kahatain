@@ -24,7 +24,7 @@ class LessonShowController extends Controller implements HasMiddleware
                     'lesson.academicLevel',
                     'orphans.sponsor:id,first_name,last_name,phone_number',
                     'event',
-                    'lesson.school.subjects'
+                    'lesson.school.subjects.academicLevel'
                 )
             ),
         ]);
