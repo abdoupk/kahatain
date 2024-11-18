@@ -16,6 +16,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     'domain' => env('DOMAIN', 'kafil.elyatim.dev'),
+    'server_ip' => env('SERVER_IP', '127.0.0.1'),
 
     /*
     |--------------------------------------------------------------------------
