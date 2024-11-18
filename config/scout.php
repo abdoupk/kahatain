@@ -217,6 +217,8 @@ return [
                     'vocational_training_achievements.vocational_training_speciality',
                     'vocational_training_achievements.vocational_training_division',
                     'vocational_training_achievements.institute',
+                    'ccp',
+                    'phone_number',
                 ],
                 'sortableAttributes' => [
                     'name',

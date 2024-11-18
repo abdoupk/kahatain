@@ -133,7 +133,9 @@ export const useCreateFamilyStore = defineStore('create-family', {
                     income: null,
                     is_handicapped: false,
                     is_unemployed: false,
-                    gender: 'male'
+                    gender: 'male',
+                    ccp: null,
+                    phone_number: null
                 }
             ],
             housing: {

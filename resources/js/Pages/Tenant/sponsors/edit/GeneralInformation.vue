@@ -18,7 +18,7 @@ import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.vue'
 
-import { omit } from '@/utils/helper'
+import { allowOnlyNumbersOnKeyDown, omit } from '@/utils/helper'
 
 const props = defineProps<{ sponsor: SponsorUpdateFormType }>()
 
@@ -88,7 +88,7 @@ onMounted(async () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"></base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -111,7 +111,7 @@ onMounted(async () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"></base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -123,7 +123,7 @@ onMounted(async () => {
 
                     <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
 
-                    <base-form-input-error :form field_name="birth_date"> </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_date"></base-form-input-error>
                 </div>
                 <!-- END: BirthDate -->
 
@@ -146,7 +146,7 @@ onMounted(async () => {
                         @change="form?.validate('father_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="father_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="father_name"></base-form-input-error>
                 </div>
                 <!-- END: Father Name -->
 
@@ -169,7 +169,7 @@ onMounted(async () => {
                         @change="form?.validate('mother_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="mother_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="mother_name"></base-form-input-error>
                 </div>
                 <!-- END: Mother Name -->
 
@@ -192,7 +192,7 @@ onMounted(async () => {
                         @change="form?.validate('birth_certificate_number')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="birth_certificate_number"> </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_certificate_number"></base-form-input-error>
                 </div>
                 <!-- END: Birth Certificate number -->
 
@@ -212,10 +212,12 @@ onMounted(async () => {
                         "
                         data-test="sponsor_ccp"
                         type="text"
+                        @keydown="allowOnlyNumbersOnKeyDown"
+                        maxlength="12"
                         @change="form?.validate('ccp')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="ccp"> </base-form-input-error>
+                    <base-form-input-error :form field_name="ccp"></base-form-input-error>
                 </div>
                 <!-- END: CCP -->
 
@@ -238,7 +240,7 @@ onMounted(async () => {
                         @change="form?.validate('function')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="function"> </base-form-input-error>
+                    <base-form-input-error :form field_name="function"></base-form-input-error>
                 </div>
                 <!-- END: Function (job) -->
 
@@ -256,7 +258,7 @@ onMounted(async () => {
                         ></the-academic-level-selector>
                     </div>
 
-                    <base-form-input-error :form field_name="academic_level_id"> </base-form-input-error>
+                    <base-form-input-error :form field_name="academic_level_id"></base-form-input-error>
                 </div>
                 <!-- END: Academic Level -->
 
@@ -279,7 +281,7 @@ onMounted(async () => {
                         @change="form?.validate('diploma')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="diploma"> </base-form-input-error>
+                    <base-form-input-error :form field_name="diploma"></base-form-input-error>
                 </div>
                 <!-- END: Diploma -->
 
@@ -295,7 +297,7 @@ onMounted(async () => {
                         @update:type="form?.validate('sponsor_type')"
                     ></the-sponsor-type-selector>
 
-                    <base-form-input-error :form field_name="sponsor_type"> </base-form-input-error>
+                    <base-form-input-error :form field_name="sponsor_type"></base-form-input-error>
                 </div>
                 <!-- END: Sponsor Type -->
 

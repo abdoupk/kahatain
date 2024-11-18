@@ -25,7 +25,7 @@ import TheFamilyStatusSelector from '@/Components/Global/TheFamilyStatusSelector
 import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
 import TheVocationalTrainingSelector from '@/Components/Global/TheVocationalTrainingSelector.vue'
 
-import { isOlderThan } from '@/utils/helper'
+import { allowOnlyNumbersOnKeyDown, isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -62,6 +62,10 @@ const isShouldHasIncome = computed(() => {
     )
 })
 
+const isAcademic = computed(() => {
+    return phase.value === 'الطور الجامعي'
+})
+
 const academicLevelsStore = useAcademicLevelsStore()
 
 const shouldBeInSchool = computed(() => {
@@ -86,11 +90,6 @@ const handleUpdateAcademicLevel = (value: number) => {
 
     // @ts-ignore
     props.form?.validate(`orphans.${props.index}.academic_level_id`)
-}
-
-const handleUpdateVocationalTraining = () => {
-    // @ts-ignore
-    props.form?.validate(`orphans.${props.index}.vocational_training_id`)
 }
 </script>
 
@@ -131,7 +130,7 @@ const handleUpdateVocationalTraining = () => {
                 @change="form?.validate(`orphans.${index}.first_name`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.first_name`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.first_name`"></base-form-input-error>
         </div>
         <!-- End: First Name-->
 
@@ -154,7 +153,7 @@ const handleUpdateVocationalTraining = () => {
                 @change="form?.validate(`orphans.${index}.last_name`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.last_name`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.last_name`"></base-form-input-error>
         </div>
         <!-- End: Last Name-->
 
@@ -166,7 +165,7 @@ const handleUpdateVocationalTraining = () => {
 
             <base-v-calendar v-model:date="createFamilyStore.family.orphans[index].birth_date"></base-v-calendar>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.birth_date`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.birth_date`"></base-form-input-error>
         </div>
         <!-- End: Birth Date-->
 
@@ -192,7 +191,7 @@ const handleUpdateVocationalTraining = () => {
                 <option value="female">{{ $t('female') }}</option>
             </base-form-select>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.gender`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.gender`"></base-form-input-error>
         </div>
         <!-- End: Gender-->
 
@@ -214,7 +213,7 @@ const handleUpdateVocationalTraining = () => {
                 @change="form?.validate(`orphans.${index}.health_status`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.health_status`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.health_status`"></base-form-input-error>
         </div>
         <!-- End: Health Status-->
 
@@ -232,7 +231,7 @@ const handleUpdateVocationalTraining = () => {
                 ></the-family-status-selector>
             </div>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.family_status`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.family_status`"></base-form-input-error>
         </div>
         <!-- End: Family Status-->
 
@@ -251,7 +250,7 @@ const handleUpdateVocationalTraining = () => {
                 ></the-academic-level-selector>
             </div>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.academic_level_id`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.academic_level_id`"></base-form-input-error>
         </div>
         <!-- End: Academic Level-->
 
@@ -265,7 +264,7 @@ const handleUpdateVocationalTraining = () => {
                 <the-vocational-training-selector
                     :id="`vocational_training_id_${index}`"
                     v-model:vocational-training="createFamilyStore.family.orphans[index].vocational_training_id"
-                    @update:vocational-training="handleUpdateVocationalTraining"
+                    @update:vocational-training="() => form?.validate(`orphans.${index}.vocational_training_id`)"
                 ></the-vocational-training-selector>
             </div>
 
@@ -273,6 +272,48 @@ const handleUpdateVocationalTraining = () => {
             </base-form-input-error>
         </div>
         <!-- End: Vocational Training-->
+
+        <!-- Begin: if orphan is academic -->
+        <template v-if="isAcademic">
+            <!-- Begin: CCp-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label for="ccp">
+                    {{ $t('ccp') }}
+                </base-form-label>
+
+                <base-form-input
+                    :id="`ccp_${index}`"
+                    v-model="createFamilyStore.family.orphans[index].ccp"
+                    @update:model-value="form?.validate(`orphans.${index}.ccp`)"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('ccp') })"
+                    @keydown="allowOnlyNumbersOnKeyDown"
+                    maxlength="12"
+                ></base-form-input>
+
+                <base-form-input-error :form :field_name="`orphans.${index}.ccp`"></base-form-input-error>
+            </div>
+            <!-- End: CCp-->
+
+            <!-- Begin: Phone Number-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label for="phone_number">
+                    {{ $t('validation.attributes.phone_number') }}
+                </base-form-label>
+
+                <base-form-input
+                    :id="`phone_number_${index}`"
+                    v-model="createFamilyStore.family.orphans[index].phone_number"
+                    @update:model-value="form?.validate(`orphans.${index}.phone_number`)"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.phone_number') })"
+                    @keydown="allowOnlyNumbersOnKeyDown"
+                    maxlength="10"
+                ></base-form-input>
+
+                <base-form-input-error :form :field_name="`orphans.${index}.phone_number`"></base-form-input-error>
+            </div>
+            <!-- End: Phone Number-->
+        </template>
+        <!-- End: if orphan is academic -->
 
         <!-- Begin: if orphan is still baby-->
         <div v-if="isStillBaby" class="col-span-12 grid grid-cols-12 gap-4 gap-y-5">
@@ -288,7 +329,7 @@ const handleUpdateVocationalTraining = () => {
                     @update:baby-milk="form?.validate(`orphans.${index}.baby_milk_type`)"
                 ></the-baby-milk-selector>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.baby_milk_type`"> </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.baby_milk_type`"></base-form-input-error>
             </div>
             <!-- End: Baby Milk Type-->
 
@@ -327,7 +368,7 @@ const handleUpdateVocationalTraining = () => {
                     @update:diaper="form?.validate(`orphans.${index}.diapers_type`)"
                 ></the-diapers-selector>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.diapers_type`"> </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.diapers_type`"></base-form-input-error>
             </div>
             <!-- End: Diapers Type-->
 
@@ -349,7 +390,7 @@ const handleUpdateVocationalTraining = () => {
                     @change="form?.validate(`orphans.${index}.diapers_quantity`)"
                 ></base-form-input>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.diapers_quantity`"> </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.diapers_quantity`"></base-form-input-error>
             </div>
             <!-- End: Diapers Quantity-->
         </div>
@@ -377,7 +418,7 @@ const handleUpdateVocationalTraining = () => {
                     ></the-shoes-size-selector>
                 </div>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.shoes_size`"> </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.shoes_size`"></base-form-input-error>
             </div>
             <!-- End: Shoes Size-->
 
@@ -402,7 +443,7 @@ const handleUpdateVocationalTraining = () => {
                     ></the-clothes-size-selector>
                 </div>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.shirt_size`"> </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.shirt_size`"></base-form-input-error>
             </div>
             <!-- End: Shirt Size-->
 
@@ -425,7 +466,7 @@ const handleUpdateVocationalTraining = () => {
                     ></the-clothes-size-selector>
                 </div>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.pants_size`"> </base-form-input-error>
+                <base-form-input-error :form :field_name="`orphans.${index}.pants_size`"></base-form-input-error>
             </div>
             <!-- End: Pants Size-->
         </template>
@@ -484,7 +525,7 @@ const handleUpdateVocationalTraining = () => {
                 @change="form?.validate(`orphans.${index}.income`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.income`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.income`"></base-form-input-error>
         </div>
         <!-- End: Income-->
 
@@ -506,7 +547,7 @@ const handleUpdateVocationalTraining = () => {
                 @change="form?.validate(`orphans.${index}.note`)"
             ></base-form-text-area>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.note`"> </base-form-input-error>
+            <base-form-input-error :form :field_name="`orphans.${index}.note`"></base-form-input-error>
         </div>
         <!-- End: Note -->
 

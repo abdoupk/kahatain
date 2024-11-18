@@ -704,6 +704,8 @@ export type OrphanType = {
     baby_milk_quantity: number
     baby_milk_type: string
     diapers_type: string
+    ccp?: string
+    phone_number?: string
     diapers_quantity: number
     is_handicapped: boolean
     is_unemployed: boolean
