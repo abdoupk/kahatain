@@ -62,12 +62,14 @@ const setValue = (event: Event) => {
 }
 
 onMounted(() => {
+    document.getElementById('independent')?.focus()
+
     if (housingType.value) items.value[housingType.value.name] = true
 })
 </script>
 
 <template>
-    <base-form-input-error>
+    <transition>
         <base-alert
             v-if="
                 form.invalid(
@@ -90,7 +92,7 @@ onMounted(() => {
                 form.errors['housing_type.value']
             }}
         </base-alert>
-    </base-form-input-error>
+    </transition>
 
     <div class="intro-x mt-6">
         <div class="flex gap-16">
@@ -107,25 +109,6 @@ onMounted(() => {
                     {{ $t('housing.label.independent') }}
                 </base-form-switch-label>
             </base-form-switch>
-        </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.independent'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.independent']
-                    }}
-                </div>
-            </base-form-input-error>
         </div>
     </div>
 
@@ -144,25 +127,6 @@ onMounted(() => {
                     {{ $t('housing.label.with_family') }}
                 </base-form-switch-label>
             </base-form-switch>
-        </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.with_family'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.with_family']
-                    }}
-                </div>
-            </base-form-input-error>
         </div>
     </div>
 
@@ -191,25 +155,6 @@ onMounted(() => {
                     @input="setValue"
                 ></base-form-input>
             </div>
-        </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.inheritance'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.inheritance']
-                    }}
-                </div>
-            </base-form-input-error>
         </div>
     </div>
 
@@ -247,25 +192,6 @@ onMounted(() => {
                 </base-input-group>
             </div>
         </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.tenant'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.tenant']
-                    }}
-                </div>
-            </base-form-input-error>
-        </div>
     </div>
 
     <div class="intro-x mt-6">
@@ -294,25 +220,6 @@ onMounted(() => {
                 ></base-form-input>
             </div>
         </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.other'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.other']
-                    }}
-                </div>
-            </base-form-input-error>
-        </div>
     </div>
 
     <div class="intro-x mt-6 flex flex-col md:flex-row md:gap-16">
@@ -335,21 +242,7 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.number_of_rooms'
-                        )
-                    "
-                    class="col-start-5 col-end-12 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.number_of_rooms']
-                    }}
-                </div>
+            <base-form-input-error class="col-span-12 lg:col-start-5" :form field_name="housing.number_of_rooms">
             </base-form-input-error>
         </div>
     </div>
@@ -369,22 +262,20 @@ onMounted(() => {
                 type="text"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.housing_receipt_number'
-                        )
-                    "
-                    class="col-start-5 col-end-12 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.housing_receipt_number']
-                    }}
-                </div>
+            <base-form-input-error class="col-span-12 lg:col-start-5" :form field_name="housing.housing_receipt_number">
             </base-form-input-error>
         </div>
     </div>
 </template>
+
+<style lang="css">
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>

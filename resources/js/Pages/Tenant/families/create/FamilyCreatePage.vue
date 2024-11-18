@@ -2,8 +2,6 @@
 import { Head, router } from '@inertiajs/vue3'
 import type {
     CreateFamilyForm,
-    CreateFamilyStepOneProps,
-    CreateFamilyStepTwoProps,
     InspectorsMembersType
 } from '@/types/types'
 
@@ -11,19 +9,12 @@ import { useForm } from 'laravel-precognition-vue'
 import { defineAsyncComponent, nextTick, onMounted, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
-
 import {
-    createFamilyStepFiveErrorProps,
-    createFamilyStepFourErrorProps,
-    createFamilyStepOneErrorProps,
-    createFamilyStepsTitles,
-    createFamilyStepThreeErrorProps,
-    createFamilyStepTwoErrorProps
+    createFamilyStepsTitles
 } from '@/utils/constants'
 import StepLoader from '@/Pages/Tenant/families/create/StepLoader.vue'
 import { $t, $tc } from '@/utils/i18n'
 import { useCreateFamilyStore } from '@/stores/create-family'
-import { checkErrors } from '@/utils/helper'
 
 defineOptions({
     layout: TheLayout
@@ -113,31 +104,6 @@ const removeOrphan = (index: number) => {
     }
 }
 
-const validateStep = async (errorProps: CreateFamilyStepOneProps[] | CreateFamilyStepTwoProps[], step: string) => {
-    createFamilyStore.validating = true
-
-    await form.submit({
-        onFinish() {
-            let errors = []
-
-            errorProps.forEach((prop) => {
-                const regex = prop === 'address' ? new RegExp(`^${prop}$`) : new RegExp(prop)
-
-                Object.keys(form.errors).forEach((error) => {
-                    if (regex.test(error)) {
-
-                        errors.push(form.errors[error as keyof CreateFamilyForm])
-                    }
-                })
-            })
-
-            createFamilyStore[step] = errors.length === 0 && !form.validating
-
-            createFamilyStore.validating = false
-        }
-    })
-}
-
 const nextStep = async () => {
     document.getElementById('create-family-form')?.scrollIntoView({
         behavior: 'smooth'
@@ -149,44 +115,32 @@ const nextStep = async () => {
 }
 
 const prevStep = () => {
-    if (createFamilyStore.current_step === 1) return;
+    if (createFamilyStore.current_step === 1) return
 
     document.getElementById('create-family-form')?.scrollIntoView({
-        behavior: 'smooth',
-    });
+        behavior: 'smooth'
+    })
 
     const stepChanges = [
         { step: 2, tabIndex: -1, newStep: 1 },
         { step: 3, tabIndex: 3, newStep: 2 },
         { step: 4, tabIndex: -1, newStep: 3 },
-        { step: 5, tabIndex: 2, newStep: 4 },
-    ];
+        { step: 5, tabIndex: 2, newStep: 4 }
+    ]
 
-    const currentStep = createFamilyStore.current_step;
+    const currentStep = createFamilyStore.current_step
 
-    const stepChange = stepChanges.find((s) => s.step === currentStep);
+    const stepChange = stepChanges.find((s) => s.step === currentStep)
 
     if (stepChange) {
         if (stepChange.tabIndex === -1) {
-            createFamilyStore.tab_index--;
+            createFamilyStore.tab_index--
         } else {
-            createFamilyStore.tab_index = stepChange.tabIndex;
+            createFamilyStore.tab_index = stepChange.tabIndex
         }
 
-        createFamilyStore.current_step = stepChange.newStep;
+        createFamilyStore.current_step = stepChange.newStep
     }
-};
-
-const forgetErrors = (errors: string[]) => {
-    errors.forEach((prop: CreateFamilyStepTwoProps) => {
-        const regex = prop === 'address' ? new RegExp(`^${prop}$`) : new RegExp(prop)
-
-        Object.keys(form.errors).forEach((error) => {
-            if (regex.test(error)) {
-                form.forgetError(error as keyof CreateFamilyForm)
-            }
-        })
-    })
 }
 
 const goTo = async (index: number) => {
@@ -194,66 +148,19 @@ const goTo = async (index: number) => {
         createFamilyStore.current_step = index
     } else {
         if (index === 2) {
-            createFamilyStore.step_one_completed = false
-
-            await validateStep(createFamilyStepOneErrorProps, 'step_one_completed').finally(() => {
-                forgetErrors(createFamilyStepTwoErrorProps)
-
-                if (createFamilyStore.step_one_completed) createFamilyStore.current_step = 2
-            })
+            await createFamilyStore.validateStepOne(form)
         }
 
         if (index === 3) {
-            createFamilyStore.step_two_completed = false
-
-            if (createFamilyStore.step_one_completed) {
-                createFamilyStore.current_step = 2
-            }
-
-            await validateStep(createFamilyStepTwoErrorProps, 'step_two_completed').finally(() => {
-
-                if (createFamilyStore.step_one_completed && createFamilyStore.step_two_completed && createFamilyStore.tab_index === 3) {
-                    forgetErrors(createFamilyStepThreeErrorProps)
-
-                    createFamilyStore.current_step = 3
-                } else if (createFamilyStore.tab_index === 0 && !checkErrors('^sponsor.+', form.errors)) {
-                    createFamilyStore.tab_index = 1
-                } else if (createFamilyStore.tab_index === 1 && !checkErrors('^income', form.errors)) {
-                    createFamilyStore.tab_index = 2
-                } else if (createFamilyStore.tab_index === 2 && !checkErrors('^second_sponsor', form.errors)) {
-                    createFamilyStore.tab_index = 3
-                } else if (createFamilyStore.tab_index === 3 && !checkErrors('^spouse', form.errors) && !checkErrors('^second_sponsor', form.errors) && !checkErrors('^sponsor.+', form.errors) && !checkErrors('^income', form.errors)) {
-                    createFamilyStore.current_step = 3
-                }
-            })
+            await createFamilyStore.validateStepTwo(form)
         }
 
         if (index === 4) {
-            await validateStep(createFamilyStepThreeErrorProps, 'step_three_completed').finally(() => {
-                if (createFamilyStore.step_one_completed && createFamilyStore.step_two_completed && createFamilyStore.step_three_completed) {
-                    forgetErrors(createFamilyStepFourErrorProps)
-
-                    createFamilyStore.current_step = 4
-
-                    createFamilyStore.tab_index = 0
-                }
-            })
+            await createFamilyStore.validateStepThree(form)
         }
 
         if (index === 5) {
-            await validateStep(createFamilyStepFourErrorProps, 'step_four_completed').finally(() => {
-                if (createFamilyStore.step_one_completed && createFamilyStore.step_two_completed && createFamilyStore.step_three_completed && createFamilyStore.step_four_completed && createFamilyStore.tab_index === 2) {
-                    forgetErrors(createFamilyStepFiveErrorProps)
-
-                    createFamilyStore.current_step = 5
-                } else if (createFamilyStore.tab_index === 0 && !checkErrors('^housing', form.errors)) {
-                    createFamilyStore.tab_index = 1
-                } else if (createFamilyStore.tab_index === 1 && !checkErrors('^furnishings', form.errors)) {
-                    createFamilyStore.tab_index = 2
-                } else if (createFamilyStore.tab_index === 3 && !checkErrors('^housing', form.errors) && !checkErrors('^furnishings', form.errors) && !checkErrors('other_properties$', form.errors)) {
-                    createFamilyStore.current_step = 5
-                }
-            })
+            await createFamilyStore.validateStepFour(form)
         }
     }
 }

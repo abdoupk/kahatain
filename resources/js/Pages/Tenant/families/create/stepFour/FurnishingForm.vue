@@ -107,6 +107,10 @@ const setValue = (key: FurnishingsType, value: unknown) => {
 
     emit('update:furnishings', Object.fromEntries(Object.entries(valueMap).map(([key, ref]) => [key, ref.value])))
 }
+
+onMounted(() => {
+    document.getElementById('television')?.focus()
+})
 </script>
 
 <template>

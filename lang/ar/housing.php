@@ -12,6 +12,7 @@ return [
         'number_of_rooms' => 'عدد الغرف',
         'housing_receipt_number' => 'رقم وصل السكن',
         'type' => 'نوع السكن',
+        'housing_type_value' => 'قيمة نوع السكن',
         'info' => 'معلومات عن السكن',
         'other_properties' => 'ممتلكات اخرى',
     ],

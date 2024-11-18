@@ -76,6 +76,8 @@ const academicLevels = ref<AcademicLevelType[]>([])
 const pic = props.form?.orphans[props.index]?.photo
 
 onMounted(async () => {
+    document.getElementById(`first_name_${props.index}`)?.focus()
+
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
 })
 

@@ -1,6 +1,16 @@
-import { CreateFamilyForm } from '@/types/types'
+import { CreateFamilyForm, CreateFamilyStepOneProps, CreateFamilyStepTwoProps } from '@/types/types'
 
+import { Form } from 'laravel-precognition-vue/dist/types'
 import { defineStore } from 'pinia'
+
+import {
+    createFamilyStepFiveErrorProps,
+    createFamilyStepFourErrorProps,
+    createFamilyStepOneErrorProps,
+    createFamilyStepThreeErrorProps,
+    createFamilyStepTwoErrorProps
+} from '@/utils/constants'
+import { checkErrors } from '@/utils/helper'
 
 interface State {
     family: CreateFamilyForm
@@ -153,5 +163,129 @@ export const useCreateFamilyStore = defineStore('create-family', {
             branch_id: '',
             submitted: false
         }
-    })
+    }),
+    actions: {
+        async validateStepOne(form: Form<CreateFamilyForm>) {
+            await this.validateStep(form, createFamilyStepOneErrorProps, 'step_one_completed').finally(() => {
+                if (this.step_one_completed) {
+                    this.forgetErrors(form, createFamilyStepTwoErrorProps)
+
+                    this.current_step = 2
+
+                    this.tab_index = 0
+                }
+            })
+        },
+        async validateStepTwo(form: Form<CreateFamilyForm>) {
+            await this.validateStep(form, createFamilyStepTwoErrorProps, 'step_two_completed').finally(() => {
+                if (this.tab_index === 0 && !checkErrors('^sponsor.+', form.errors)) {
+                    this.tab_index = 1
+                } else if (this.tab_index === 1 && !checkErrors('^income', form.errors)) {
+                    this.tab_index = 2
+                } else if (this.tab_index === 2 && !checkErrors('^second_sponsor', form.errors)) {
+                    this.tab_index = 3
+                } else if (this.isStepTwoCompleted(form.errors)) {
+                    this.step_two_completed = true
+
+                    this.current_step = 3
+
+                    this.forgetErrors(form, createFamilyStepThreeErrorProps)
+                }
+            })
+        },
+        async validateStepThree(form: Form<CreateFamilyForm>) {
+            await this.validateStep(form, createFamilyStepThreeErrorProps, 'step_three_completed').finally(() => {
+                if (this.step_two_completed && this.step_three_completed) {
+                    this.current_step = 4
+
+                    this.tab_index = 0
+
+                    this.forgetErrors(form, createFamilyStepFourErrorProps)
+                }
+            })
+        },
+        async validateStepFour(form: Form<CreateFamilyForm>) {
+            await this.validateStep(form, createFamilyStepFourErrorProps, 'step_four_completed').finally(() => {
+                if (
+                    this.step_one_completed &&
+                    this.step_two_completed &&
+                    this.step_three_completed &&
+                    this.step_four_completed &&
+                    this.tab_index === 2
+                ) {
+                    this.forgetErrors(form, createFamilyStepFiveErrorProps)
+
+                    this.current_step = 5
+
+                    this.step_four_completed = true
+                } else if (this.tab_index === 0 && !checkErrors('^housing', form.errors)) {
+                    this.tab_index = 1
+                } else if (this.tab_index === 1 && !checkErrors('^furnishings', form.errors)) {
+                    this.tab_index = 2
+                } else if (
+                    this.tab_index === 3 &&
+                    !checkErrors('^housing', form.errors) &&
+                    !checkErrors('^furnishings', form.errors) &&
+                    !checkErrors('other_properties$', form.errors)
+                ) {
+                    this.forgetErrors(form, createFamilyStepFiveErrorProps)
+
+                    this.current_step = 5
+
+                    this.step_four_completed = true
+                }
+            })
+        },
+        isStepTwoCompleted(errors: Record<string, string>) {
+            return (
+                this.tab_index === 3 &&
+                !checkErrors('^spouse', errors) &&
+                !checkErrors('^second_sponsor', errors) &&
+                !checkErrors('^sponsor.+', errors) &&
+                !checkErrors('^income', errors)
+            )
+        },
+        forgetErrors(form: Form<CreateFamilyForm>, errors: CreateFamilyStepTwoProps[] | null) {
+            errors.forEach((prop: CreateFamilyStepTwoProps) => {
+                const regex = prop === 'address' ? new RegExp(`^${prop}$`) : new RegExp(prop)
+
+                Object.keys(form.errors).forEach((error) => {
+                    if (regex.test(error)) {
+                        form.forgetError(error as keyof CreateFamilyForm)
+                    }
+                })
+            })
+        }
+    },
+    getters: {
+        validateStep:
+            (state) =>
+            async (
+                form: Form<CreateFamilyForm>,
+                errorProps: CreateFamilyStepOneProps[] | CreateFamilyStepTwoProps[],
+                step: string
+            ) => {
+                state.validating = true
+
+                await form.submit({
+                    onFinish() {
+                        const errors = []
+
+                        errorProps.forEach((prop) => {
+                            const regex = prop === 'address' ? new RegExp(`^${prop}$`) : new RegExp(prop)
+
+                            Object.keys(form.errors).forEach((error) => {
+                                if (regex.test(error)) {
+                                    errors.push(form.errors[error as keyof CreateFamilyForm])
+                                }
+                            })
+                        })
+
+                        state[step] = errors.length === 0 && !form.validating
+
+                        state.validating = false
+                    }
+                })
+            }
+    }
 })

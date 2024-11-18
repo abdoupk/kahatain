@@ -2,6 +2,7 @@
 import type { CreateFamilyForm } from '@/types/types'
 
 import type { Form } from 'laravel-precognition-vue/dist/types'
+import { onMounted } from 'vue'
 
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
@@ -10,6 +11,10 @@ import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
 const otherProperties = defineModel('otherProperties')
+
+onMounted(() => {
+    document.getElementById('other_properties')?.focus()
+})
 </script>
 
 <template>

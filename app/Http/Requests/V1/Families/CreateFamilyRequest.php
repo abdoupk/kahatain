@@ -25,7 +25,7 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.diapers_type' => __('diapers_type'),
             'orphans.*.diapers_quantity' => __('diapers_quantity'),
             'sponsor.ccp' => __('ccp'),
-            'housing.housing_type.value' => __('validation.attributes.housing_type.value'),
+            'housing.housing_type.value' => __('housing.label.housing_type_value'),
             'incomes.account.*.balance' => __('incomes.label.balance'),
             'incomes.account.*.performance_grant' => __('incomes.label.performance_grant'),
             'incomes.account.*.monthly_income' => __('incomes.label.monthly_income'),

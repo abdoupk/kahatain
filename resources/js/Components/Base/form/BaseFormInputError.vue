@@ -8,7 +8,12 @@ defineProps<{
 </script>
 <template>
     <transition>
-        <div v-if="form.invalid(field_name)" class="mt-2 text-danger" :data-test="`error_${field_name}_message`">
+        <div
+            v-bind="$attrs"
+            v-if="form.invalid(field_name)"
+            class="mt-2 text-danger"
+            :data-test="`error_${field_name}_message`"
+        >
             {{ form.errors[field_name] }}
         </div>
     </transition>
