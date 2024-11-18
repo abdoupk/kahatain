@@ -123,6 +123,7 @@ const handleUpdateVocationalTraining = () => {
         <div class="col-span-12">
             <div class="me-2 ms-auto mt-2 h-36 w-36">
                 <base-file-pond
+                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
                     :id="`photo_${index}`"
                     :key="`photo_${index}`"
                     :allow-multiple="false"

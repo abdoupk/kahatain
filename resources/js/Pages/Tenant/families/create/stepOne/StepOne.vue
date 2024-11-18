@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
@@ -32,6 +32,10 @@ const fileNumber = defineModel('fileNumber')
 const residenceCertificateFile = defineModel('residenceCertificateFile')
 
 const _residenceCertificateFile = ref(props.form?.residence_certificate_file)
+
+onMounted(() => {
+    document.getElementById('file_number')?.focus()
+})
 </script>
 
 <template>
@@ -57,7 +61,6 @@ const _residenceCertificateFile = ref(props.form?.residence_certificate_file)
                             attribute: $t('file_number')
                         })
                     "
-                    autofocus
                     type="text"
                     @input="form?.validate('file_number')"
                     @keydown="allowOnlyNumbersOnKeyDown"

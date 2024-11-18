@@ -145,6 +145,8 @@ onMounted(() => {
         ccp_account: Object.values(account.value.ccp).some((value) => value !== null && value !== 0),
         bank_account: Object.values(account.value.bank).some((value) => value !== null && value !== 0)
     }
+
+    document.getElementById('cnr')?.focus()
 })
 </script>
 
@@ -667,6 +669,7 @@ onMounted(() => {
                     :is-picture="false"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="cnasFile = $event[0]"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_cnas')"
                 ></base-file-pond>
             </div>
 
@@ -680,6 +683,7 @@ onMounted(() => {
                     :allow-multiple="false"
                     :files="_casnosFile"
                     :is-picture="false"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_casnos')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="casnosFile = $event[0]"
                 ></base-file-pond>
@@ -695,6 +699,7 @@ onMounted(() => {
                     :allow-multiple="false"
                     :files="_cnrFile"
                     :is-picture="false"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_cnr')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="cnrFile = $event[0]"
                 ></base-file-pond>
@@ -712,6 +717,7 @@ onMounted(() => {
                     :is-picture="false"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="ccpFile = $event[0]"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_ccp')"
                 ></base-file-pond>
             </div>
 
@@ -727,6 +733,7 @@ onMounted(() => {
                     :is-picture="false"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="bankFile = $event[0]"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_bank')"
                 ></base-file-pond>
             </div>
         </div>

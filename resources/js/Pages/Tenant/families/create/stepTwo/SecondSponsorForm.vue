@@ -12,6 +12,7 @@ import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwit
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
+import { onMounted } from 'vue'
 
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
@@ -28,6 +29,10 @@ const income = defineModel('income')
 const address = defineModel('address')
 
 const withFamily = defineModel('withFamily')
+
+onMounted(() => {
+    document.getElementById('first_name')?.focus()
+})
 </script>
 
 <template>

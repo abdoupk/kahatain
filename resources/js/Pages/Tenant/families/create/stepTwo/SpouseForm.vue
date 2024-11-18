@@ -2,7 +2,7 @@
 import type { CreateFamilyForm } from '@/types/types'
 
 import type { Form } from 'laravel-precognition-vue/dist/types'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
@@ -30,6 +30,10 @@ const job = defineModel('job')
 const deathCertificateFile = defineModel('deathCertificateFile', { default: '' })
 
 const _deathCertificateFile = ref(props.form?.spouse?.death_certificate_file)
+
+onMounted(() => {
+    document.getElementById('first_name')?.focus()
+})
 </script>
 
 <template>
@@ -268,6 +272,7 @@ const _deathCertificateFile = ref(props.form?.spouse?.death_certificate_file)
             <base-file-pond
                 id="death_certificate_file"
                 :allow-multiple="false"
+                :labelIdle="$t('upload-files.labelIdle.spouse_death_certificate')"
                 :files="_deathCertificateFile"
                 :is-picture="false"
                 accepted-file-types="image/jpeg, image/png, application/pdf"

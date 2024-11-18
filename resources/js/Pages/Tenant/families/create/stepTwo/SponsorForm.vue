@@ -73,6 +73,10 @@ const sponsorType = defineModel('sponsorType')
 const birthDate = defineModel('birth_date', { default: '' })
 
 const isUnemployed = defineModel('isUnemployed')
+
+onMounted(() => {
+    document.getElementById('first_name')?.focus()
+})
 </script>
 
 <template>
@@ -86,6 +90,7 @@ const isUnemployed = defineModel('isUnemployed')
                     :allow-multiple="false"
                     :files="pic"
                     is-picture
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_photo')"
                     @update:files="photo = $event[0]"
                 ></base-file-pond>
             </div>
@@ -106,7 +111,6 @@ const isUnemployed = defineModel('isUnemployed')
                         attribute: $t('validation.attributes.first_name')
                     })
                 "
-                autofocus
                 type="text"
                 @change="
                     form?.validate(

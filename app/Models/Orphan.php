@@ -137,6 +137,8 @@ class Orphan extends Model implements HasMedia
         'created_by',
         'deleted_by',
         'deleted_at',
+        'ccp',
+        'phone_number',
     ];
 
     protected static function boot(): void
@@ -196,6 +198,8 @@ class Orphan extends Model implements HasMedia
             'birth_date' => strtotime($this->birth_date),
             'readable_birth_date' => $this->birth_date,
             'health_status' => $this->health_status,
+            'phone_number' => $this->phone_number,
+            'ccp' => $this->ccp,
             'family_status' => [
                 'ar' => __('family_statuses.'.$this->family_status, locale: 'ar'),
                 'fr' => __('family_statuses.'.$this->family_status, locale: 'fr'),

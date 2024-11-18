@@ -19,6 +19,8 @@ class FamilyUpdateSecondSponsorController extends Controller implements HasMiddl
     {
         $family->secondSponsor()->update($request->validated());
 
+        monthlySponsorship($family);
+
         dispatch(new FamilyUpdatedJob($family, auth()->user()));
 
         return response('', 201);

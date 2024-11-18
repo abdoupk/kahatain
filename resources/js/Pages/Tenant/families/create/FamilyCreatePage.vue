@@ -163,9 +163,8 @@ const validateStep = async (errorProps: CreateFamilyStepOneProps[] | CreateFamil
 }
 
 const nextStep = async () => {
-    document.body.scrollIntoView({
-        block: 'start',
-        behavior: 'smooth'
+    document.getElementById('create-family-form')?.scrollIntoView({
+        behavior: 'smooth',
     })
 
     if (currentStep.value < totalSteps.value) {
@@ -180,9 +179,8 @@ const prevStep = () => {
         return
     }
 
-    document.body.scrollIntoView({
-        block: 'start',
-        behavior: 'smooth'
+    document.getElementById('create-family-form')?.scrollIntoView({
+        behavior: 'smooth',
     })
 
     if (currentStep.value === 2) {
@@ -410,8 +408,8 @@ onMounted(() => {
 
     <div>
         <div class="mx-auto flex-col content-center py-5">
-            <div class="intro-y box py-10">
-                <div
+            <div class="intro-y box py-10" >
+                <div id="create-family-form"
                     class="relative flex flex-col justify-center px-5 before:absolute before:bottom-0 before:top-0 before:mt-4 before:hidden before:h-[3px] before:w-[70%] before:bg-slate-100 before:dark:bg-darkmode-400 sm:px-20 lg:flex-row before:lg:block"
                 >
                     <step-title

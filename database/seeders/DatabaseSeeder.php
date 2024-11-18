@@ -31,5 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PrivateSchoolSeeder::class);
 
         Artisan::call('scout:sync-index-settings');
+
+        Artisan::call('generate:locales');
     }
 }
