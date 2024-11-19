@@ -8,14 +8,14 @@ import { onMounted } from 'vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
+import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
-import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
-import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
 
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
@@ -171,17 +171,17 @@ onMounted(() => {
                     id="income"
                     v-model="createFamilyStore.family.second_sponsor.income"
                     :placeholder="
-                    $t('auth.placeholders.fill', {
-                        attribute: $t('validation.attributes.income')
-                    })
-                "
+                        $t('auth.placeholders.fill', {
+                            attribute: $t('validation.attributes.income')
+                        })
+                    "
                     type="text"
                     @change="
-                    form?.validate(
-                        //@ts-ignore
-                        'second_sponsor.income'
-                    )
-                "
+                        form?.validate(
+                            //@ts-ignore
+                            'second_sponsor.income'
+                        )
+                    "
                     @keydown="allowOnlyNumbersOnKeyDown"
                     maxlength="10"
                 ></base-form-input>

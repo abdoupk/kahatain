@@ -91,7 +91,7 @@ const filterBooleanOperators: Array<ListBoxOperator> = [
     {
         label: 'filters.equal_to',
         value: '='
-    },
+    }
 ]
 
 // TODO:add dzd icon add death date spouse
@@ -325,7 +325,7 @@ export const orphansFilters: ListBoxFilter[] = [
         label: 'orphan.vocational_training_speciality',
         type: 'object',
         operators: filterObjectOperators
-    },
+    }
 ]
 
 export const eidAlAdhaFilters: ListBoxFilter[] = [

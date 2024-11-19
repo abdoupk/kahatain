@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @throws Throwable
  * @throws CouldNotTakeBrowsershot
  */
-function saveToPDF(string $directory, string $variableName, callable $function, string | null | Carbon $date = null): StreamedResponse
+function saveToPDF(string $directory, string $variableName, callable $function, string|null|Carbon $date = null): StreamedResponse
 {
     $disk = Storage::disk('public');
 

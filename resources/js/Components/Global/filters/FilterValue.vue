@@ -3,6 +3,7 @@ import type { FilterValueType, ListBoxFilter } from '@/types/types'
 
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BranchesFilterDropDown from '@/Components/Global/filters/BranchesFilterDropDown.vue'
 import CitiesFilterDropDown from '@/Components/Global/filters/CitiesFilterDropDown.vue'
 import ClothesSizeFilterDropDown from '@/Components/Global/filters/ClothesSizeFilterDropDown.vue'
@@ -19,9 +20,8 @@ import SponsorAcademicLevelFilterDropDown from '@/Components/Global/filters/Spon
 import SponsorSponsorShipFilterDropDown from '@/Components/Global/filters/SponsorSponsorShipFilterDropDown.vue'
 import SponsorTypeFilterDropDown from '@/Components/Global/filters/SponsorTypeFilterDropDown.vue'
 import SponsorsFilterDropDown from '@/Components/Global/filters/SponsorsFilterDropDown.vue'
-import ZonesFilterDropDown from '@/Components/Global/filters/ZonesFilterDropDown.vue'
-import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import VocationalTrainingFilterDropDown from '@/Components/Global/filters/VocationalTrainingFilterDropDown.vue'
+import ZonesFilterDropDown from '@/Components/Global/filters/ZonesFilterDropDown.vue'
 
 defineProps<{ field?: ListBoxFilter }>()
 

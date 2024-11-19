@@ -15,7 +15,7 @@ class VocationalTrainingRule implements ValidationRule
 
         if (AcademicLevel::whereId($academicLevelId)->first()?->phase === 'التكوين المهني') {
             if (isset($value)) {
-                if (!VocationalTraining::whereId($value)->exists()) {
+                if (! VocationalTraining::whereId($value)->exists()) {
                     $fail('validation.required')->translate(
                         ['attribute' => 'validation.attributes.vocational_training'],
                         app()->getLocale()
