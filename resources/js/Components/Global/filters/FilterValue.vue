@@ -20,6 +20,8 @@ import SponsorSponsorShipFilterDropDown from '@/Components/Global/filters/Sponso
 import SponsorTypeFilterDropDown from '@/Components/Global/filters/SponsorTypeFilterDropDown.vue'
 import SponsorsFilterDropDown from '@/Components/Global/filters/SponsorsFilterDropDown.vue'
 import ZonesFilterDropDown from '@/Components/Global/filters/ZonesFilterDropDown.vue'
+import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
+import VocationalTrainingFilterDropDown from '@/Components/Global/filters/VocationalTrainingFilterDropDown.vue'
 
 defineProps<{ field?: ListBoxFilter }>()
 
@@ -95,6 +97,12 @@ const value = defineModel<FilterValueType>('value')
                 class="text-sm"
             ></orphan-academic-level-filter-drop-down>
 
+            <vocational-training-filter-drop-down
+                v-else-if="field?.field === 'vocational_training.id'"
+                v-model:value="value"
+                class="text-sm"
+            ></vocational-training-filter-drop-down>
+
             <member-academic-level-filter-drop-down
                 v-else-if="field?.label === 'member_academic_level' || field?.label === 'member.academic_level'"
                 v-model:value="value"
@@ -161,5 +169,10 @@ const value = defineModel<FilterValueType>('value')
             class="mt-2 text-sm"
             type="number"
         ></base-form-input>
+
+        <base-form-select v-else-if="field?.type === 'boolean'" v-model="value" class="mt-2 text-sm">
+            <option :value="true" selected>{{ $t('yes') }}</option>
+            <option :value="false">{{ $t('no') }}</option>
+        </base-form-select>
     </div>
 </template>

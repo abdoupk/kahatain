@@ -218,6 +218,11 @@ class Orphan extends Model implements HasMedia
                 'level' => $this->academicLevel?->level,
                 'phase' => $this->academicLevel?->phase,
             ],
+            'vocational_training' => [
+                'id' => $this->vocational_training_id,
+                'speciality' => $this->vocationalTraining?->speciality,
+                'division' => $this->vocationalTraining?->division,
+            ],
             'academic_achievements' => $this->academicAchievements
                 ->map(function (AcademicAchievement $academicAchievement) {
                     return [

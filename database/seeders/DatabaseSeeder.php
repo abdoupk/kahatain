@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
 
         Artisan::call('scout:sync-index-settings');
 
+        Artisan::call('scout:import', ['model' => 'App\Models\VocationalTraining']);
+
         Artisan::call('generate:locales');
     }
 }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\V1\VocationalTraining\SearchVocationalTrainingSpecialitiesController;
 use App\Http\Controllers\V1\VocationalTrainingAchievements\VocationalTrainingAchievementsDeleteController;
 use App\Http\Controllers\V1\VocationalTrainingAchievements\VocationalTrainingAchievementsShowController;
 use App\Http\Controllers\V1\VocationalTrainingAchievements\VocationalTrainingAchievementsStoreController;
@@ -36,4 +37,10 @@ Route::prefix('vocational-training-achievements')
             VocationalTrainingAchievementsDeleteController::class
         )
             ->name('destroy');
+
+        Route::get(
+            'search',
+            SearchVocationalTrainingSpecialitiesController::class
+        )
+            ->name('search');
     });

@@ -24,7 +24,7 @@ onMounted(() => {
                 class="relative w-full cursor-default rounded-md border bg-white py-1.5 pe-10 ps-3 text-start text-gray-900 shadow-sm focus:ring-4 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:text-slate-300 dark:focus:ring-slate-700 dark:focus:ring-opacity-50 sm:text-sm sm:leading-6"
             >
                 <span class="flex items-center">
-                    <svg-loader v-if="selected?.icon" :name="selected?.icon" class="h-5 w-5 flex-shrink-0" />
+                    <svg-loader v-if="selected?.icon" :name="selected?.icon" class="h-5 w-5 flex-shrink-0"></svg-loader>
 
                     <span class="ms-3 block truncate">{{ $t(`filters.${selected?.label}`) }}</span>
                 </span>
@@ -52,7 +52,7 @@ onMounted(() => {
                         <li
                             :class="[
                                 active ? 'bg-primary text-white' : 'text-gray-900 dark:text-slate-300',
-                                'relative cursor-default select-none py-2 pe-9 ps-3'
+                                'relative cursor-default select-none py-2 pe-9 ps-3 text-sm'
                             ]"
                         >
                             <div class="flex items-center">

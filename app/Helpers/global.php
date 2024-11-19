@@ -12,6 +12,7 @@ use App\Models\Spouse;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\VocationalTraining;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Builder;
@@ -26,7 +27,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @throws Throwable
  * @throws CouldNotTakeBrowsershot
  */
-function saveToPDF(string $directory, string $variableName, callable $function, $date = null): StreamedResponse
+function saveToPDF(string $directory, string $variableName, callable $function, string | null | Carbon $date = null): StreamedResponse
 {
     $disk = Storage::disk('public');
 
@@ -144,11 +145,11 @@ function generateFormatedConditions(): array
     return [];
 }
 
-function generateFilterConditions(?string $additional_filters = ''): string
+function generateFilterConditions(?string $additional_filters, ?Model $model): string
 {
     $filters = array_merge(generateFormatedConditions());
 
-    if (! $filters) {
+    if (! $filters && Schema::hasColumn($model->getTable(), 'tenant_id')) {
         return 'tenant_id = '.tenant('id').' '.$additional_filters;
     }
 
@@ -157,7 +158,7 @@ function generateFilterConditions(?string $additional_filters = ''): string
     }, $filters)).' '.$additional_filters;
 }
 
-function generateFormattedSort(): array
+function generateFormattedSort(Model $model): array
 {
     $directions = (array) request()->input('directions', []);
 
@@ -170,6 +171,10 @@ function generateFormattedSort(): array
 
             return "$key:$value";
         }, array_values($directions), array_keys($directions));
+    }
+
+    if (! Schema::hasColumn($model->getTable(), 'created_at')) {
+        return ['id:desc'];
     }
 
     return ['created_at:desc'];
@@ -187,9 +192,15 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
 
     $query = trim(request()->input('search', '')) ?? '';
 
+    $tenantFilter = '';
+
+    if (Schema::hasColumn($model->getTable(), 'tenant_id')) {
+        $tenantFilter .= ' AND tenant_id = '.tenant('id');
+    }
+
     $meilisearchOptions = [
-        'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
-        'sort' => generateFormattedSort(),
+        'filter' => generateFilterConditions($additional_filters, $model),
+        'sort' => generateFormattedSort($model),
         'limit' => $limit,
     ];
 
@@ -224,6 +235,16 @@ function formatedVocationalTrainingSpecialities(): array
     }
 
     return array_values($formattedArray);
+}
+
+function searchVocationalTrainingSpecialities()
+{
+    return search(VocationalTraining::getModel(), limit: 25)->get()->map(function (VocationalTraining $vocationalTraining) {
+        return [
+            'id' => $vocationalTraining->id,
+            'name' => $vocationalTraining->speciality,
+        ];
+    });
 }
 
 function formatCurrency(float $amount): false|string
@@ -306,7 +327,7 @@ function getFileNameFromTemporaryPath($url): string
  * @throws FileIsTooBig
  * @throws FileDoesNotExist
  */
-function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model, string|array|null $files, string $collectionName): void
+function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model, string|array|null $files, string $collectionName, ?bool $clearCollection = true): void
 {
     if ($files === null || $files === '') {
         return;
@@ -318,7 +339,10 @@ function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model,
 
     foreach ($files as $file) {
         if (Storage::disk('public')->exists(getFileNameFromTemporaryPath($file))) {
-            // TODO add clear collection if exists
+            if ($clearCollection) {
+                $model->clearMediaCollection($collectionName);
+            }
+
             $model->addMediaFromDisk(getFileNameFromTemporaryPath($file), 'public')->toMediaCollection($collectionName);
         }
     }

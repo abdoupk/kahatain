@@ -318,7 +318,14 @@ export const orphansFilters: ListBoxFilter[] = [
         label: 'shirt_size',
         type: 'object',
         operators: filterObjectOperators
-    }
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'vocational_training.id',
+        label: 'orphan.vocational_training_speciality',
+        type: 'object',
+        operators: filterObjectOperators
+    },
 ]
 
 export const eidAlAdhaFilters: ListBoxFilter[] = [
@@ -602,9 +609,9 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-basket-shopping',
-        field: 'basket_from_benefactor',
+        field: 'basket_from_association',
         label: 'basket_from_association',
-        type: 'select',
+        type: 'boolean',
         operators: filterBooleanOperators
     }
 ]
