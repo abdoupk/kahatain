@@ -28,7 +28,7 @@ createFamilyStore.family.incomes = props.sponsor.incomes
 watch(
     () => createFamilyStore.family.incomes,
     (value) => {
-        form.setData(value)
+        form.setData({ incomes: value })
     },
     { deep: true }
 )

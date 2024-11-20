@@ -717,12 +717,24 @@ export type IncomeType = {
     cnas: number
     pension: number
     other_income: number
-    account: number
+    account: {
+        bank: {
+            performance_grant: number | null
+            monthly_income: number | null
+            balance: number | null
+        }
+        ccp: {
+            performance_grant: number | null
+            monthly_income: number | null
+            balance: number | null
+        }
+    }
     cnas_file: string
     cnr_file: string
     casnos_file: string
     bank_file: string
     ccp_file: string
+    total_income?: number
 }
 
 export type FurnishingsType =
