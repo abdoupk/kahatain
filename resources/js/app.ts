@@ -57,4 +57,4 @@ createInertiaApp({
     progress: {
         color: '#4B5563'
     }
-}).then()
+}).catch((error) => console.error(error))

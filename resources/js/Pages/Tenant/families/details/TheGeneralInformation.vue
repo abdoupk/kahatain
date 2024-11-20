@@ -4,6 +4,7 @@ import { $t } from '../../../../utils/i18n'
 import type { FamilyShowType } from '@/types/families'
 
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
+import ThePdfViewer from '@/Components/Global/ThePdfViewer.vue'
 
 import { formatDate } from '@/utils/helper'
 
@@ -57,7 +58,7 @@ defineProps<{ family: FamilyShowType }>()
             <div
                 class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-sm font-semibold text-slate-400 dark:bg-darkmode-400"
             >
-                {{ formatDate(family.start_date, 'long') }}
+                {{ formatDate(family.residence.created_at, 'long') }}
             </div>
         </div>
 
@@ -69,10 +70,13 @@ defineProps<{ family: FamilyShowType }>()
                     :src="family.residence.residence_certificate_file"
                     alt=""
                 />
+                <div class="" v-else>
+                    <the-pdf-viewer :pdf-url="family.residence.residence_certificate_file"></the-pdf-viewer>
+                </div>
             </template>
 
             <div v-else class="intro-x mt-12 flex flex-col items-center justify-center">
-                <no-results-found> dont have residence certificate </no-results-found>
+                <no-results-found> dont have residence certificate</no-results-found>
             </div>
         </div>
     </div>
