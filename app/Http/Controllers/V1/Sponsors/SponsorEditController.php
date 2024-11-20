@@ -18,7 +18,7 @@ class SponsorEditController extends Controller implements HasMiddleware
     public function __invoke(Sponsor $sponsor)
     {
         return Inertia::render('Tenant/sponsors/edit/SponsorEditPage', [
-            'sponsor' => new SponsorEditResource($sponsor->load('creator', 'incomes', 'academicLevel')),
+            'sponsor' => new SponsorEditResource($sponsor->load('creator', 'incomes', 'academicLevel', 'media')),
         ]);
     }
 }

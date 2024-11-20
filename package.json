@@ -108,6 +108,7 @@
         "leaflet.locatecontrol": "^0.81.1",
         "leaflet.markercluster": "^1.5.3",
         "meilisearch": "^0.35.1",
+        "pdfjs-dist": "^4.8.69",
         "pinia": "^2.1.7",
         "print-js": "^1.6.0",
         "puppeteer": "^22.15.0",

@@ -4,6 +4,7 @@ import type { FamilyEditType, FamilyUpdateFormType } from '@/types/families'
 import { useForm } from 'laravel-precognition-vue'
 import { reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
@@ -28,11 +29,14 @@ const inputs = reactive<FamilyUpdateFormType>(
         'second_sponsor',
         'preview',
         'name',
+        'creator',
         'spouse'
     ])
 )
 
 const form = useForm('put', route('tenant.families.infos-update', props.family.id), inputs)
+
+const _residenceCertificateFile = ref(props.family.residence_certificate_file)
 
 const updateSuccess = ref(false)
 
@@ -86,7 +90,7 @@ const submit = () => {
                         @change="form?.validate('file_number')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="file_number"> </base-form-input-error>
+                    <base-form-input-error :form field_name="file_number"></base-form-input-error>
                 </div>
                 <!-- END: File Number -->
 
@@ -102,7 +106,7 @@ const submit = () => {
                         @update:zone="form?.validate('zone_id')"
                     ></the-zone-selector>
 
-                    <base-form-input-error :form field_name="zone_id"> </base-form-input-error>
+                    <base-form-input-error :form field_name="zone_id"></base-form-input-error>
                 </div>
                 <!-- END: Branch -->
 
@@ -143,15 +147,37 @@ const submit = () => {
                         @input="form?.validate('address')"
                     ></the-address-field>
 
-                    <base-form-input-error :form field_name="address"> </base-form-input-error>
+                    <base-form-input-error :form field_name="address"></base-form-input-error>
                 </div>
                 <!-- END: Address -->
 
-                <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
-                    {{ $t('save') }}
+                <!-- BEGIN: Address -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="address">
+                        {{ $t('upload-files.labels.residence_certificate') }}
+                    </base-form-label>
 
-                    <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
-                </base-button>
+                    <base-file-pond
+                        id="birth_certificate_file"
+                        :allow-multiple="false"
+                        :files="_residenceCertificateFile"
+                        :is-picture="false"
+                        :labelIdle="$t('upload-files.labelIdle.residence_certificate')"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        @update:files="form.residence_certificate_file = $event[0]"
+                    ></base-file-pond>
+
+                    <base-form-input-error :form field_name="address"></base-form-input-error>
+                </div>
+                <!-- END: Address -->
+
+                <div class="col-span-12">
+                    <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
+                        {{ $t('save') }}
+
+                        <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
+                    </base-button>
+                </div>
             </div>
         </form>
     </div>

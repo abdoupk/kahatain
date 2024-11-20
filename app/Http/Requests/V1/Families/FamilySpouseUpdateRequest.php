@@ -15,6 +15,7 @@ class FamilySpouseUpdateRequest extends FormRequest
             'function' => 'required|string',
             'income' => 'required|numeric',
             'last_name' => 'required|string',
+            'death_certificate_file' => 'nullable|string',
         ];
     }
 

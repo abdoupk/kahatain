@@ -22,6 +22,7 @@ class FamilyEditResource extends JsonResource
             'branch_id' => $this->branch_id,
             'zone_id' => $this->zone_id,
             'location' => $this->location,
+            'residence_certificate_file' => $this->getFirstMediaUrl('residence_files'),
 
             'spouse' => new SpouseResource($this->whenLoaded('deceased')),
 

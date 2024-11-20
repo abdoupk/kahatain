@@ -6,6 +6,7 @@ import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useForm } from 'laravel-precognition-vue'
 import { onMounted, reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -13,6 +14,8 @@ import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
+import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
+import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
@@ -46,6 +49,8 @@ const inputs = reactive<OrphanUpdateFormType>(
 )
 
 const form = useForm('put', route('tenant.orphans.infos-update', props.orphan.id), inputs)
+
+const pic = ref(props.orphan.photo)
 
 const updateSuccess = ref(false)
 
@@ -83,6 +88,19 @@ onMounted(async () => {
         </div>
 
         <form @submit.prevent="submit">
+            <!-- Begin: Photo -->
+            <div class="me-2 ms-auto mt-2 h-36 w-36">
+                <base-file-pond
+                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
+                    id="photo"
+                    :allow-multiple="false"
+                    :files="pic"
+                    is-picture
+                    @update:files="form.photo = $event[0]"
+                ></base-file-pond>
+            </div>
+            <!-- End: Photo -->
+
             <div class="grid grid-cols-12 gap-4 p-5">
                 <!-- BEGIN: First Name -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -103,7 +121,7 @@ onMounted(async () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"></base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -126,7 +144,7 @@ onMounted(async () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"></base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -138,7 +156,7 @@ onMounted(async () => {
 
                     <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
 
-                    <base-form-input-error :form field_name="birth_date"> </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_date"></base-form-input-error>
                 </div>
                 <!-- END: BirthDate -->
 
@@ -155,7 +173,7 @@ onMounted(async () => {
                     >
                     </the-family-status-selector>
 
-                    <base-form-input-error :form field_name="family_status"> </base-form-input-error>
+                    <base-form-input-error :form field_name="family_status"></base-form-input-error>
                 </div>
                 <!-- END: Family Status -->
 
@@ -173,7 +191,7 @@ onMounted(async () => {
                         ></the-academic-level-selector>
                     </div>
 
-                    <base-form-input-error :form field_name="academic_level_id"> </base-form-input-error>
+                    <base-form-input-error :form field_name="academic_level_id"></base-form-input-error>
                 </div>
                 <!-- END: Academic Level -->
 
@@ -198,7 +216,7 @@ onMounted(async () => {
                         <option value="female">{{ $t('female') }}</option>
                     </base-form-select>
 
-                    <base-form-input-error :form field_name="gender"> </base-form-input-error>
+                    <base-form-input-error :form field_name="gender"></base-form-input-error>
                 </div>
                 <!-- END: Gender -->
 
@@ -218,7 +236,7 @@ onMounted(async () => {
                             ></the-clothes-size-selector>
                         </div>
 
-                        <base-form-input-error :form field_name="pants_size"> </base-form-input-error>
+                        <base-form-input-error :form field_name="pants_size"></base-form-input-error>
                     </div>
                     <!-- END: Pants Size -->
 
@@ -237,7 +255,7 @@ onMounted(async () => {
                             ></the-clothes-size-selector>
                         </div>
 
-                        <base-form-input-error :form field_name="shirt_size"> </base-form-input-error>
+                        <base-form-input-error :form field_name="shirt_size"></base-form-input-error>
                     </div>
                     <!-- END: Shirt Size -->
 
@@ -255,7 +273,7 @@ onMounted(async () => {
                             ></the-shoes-size-selector>
                         </div>
 
-                        <base-form-input-error :form field_name="shoes_size"> </base-form-input-error>
+                        <base-form-input-error :form field_name="shoes_size"></base-form-input-error>
                     </div>
                     <!-- END: Shoes Size -->
                 </template>
@@ -273,7 +291,7 @@ onMounted(async () => {
                             @update:diaper="form?.validate('diapers_type')"
                         ></the-diapers-selector>
 
-                        <base-form-input-error :form field_name="diapers_type"> </base-form-input-error>
+                        <base-form-input-error :form field_name="diapers_type"></base-form-input-error>
                     </div>
                     <!-- END: Diapers Type -->
 
@@ -296,7 +314,7 @@ onMounted(async () => {
                             @change="form?.validate('diapers_quantity')"
                         ></base-form-input>
 
-                        <base-form-input-error :form field_name="diapers_quantity"> </base-form-input-error>
+                        <base-form-input-error :form field_name="diapers_quantity"></base-form-input-error>
                     </div>
                     <!-- END: Diapers Quantity -->
 
@@ -312,7 +330,7 @@ onMounted(async () => {
                             @update:baby-milk="form?.validate('baby_milk_type')"
                         ></the-baby-milk-selector>
 
-                        <base-form-input-error :form field_name="baby_milk_type"> </base-form-input-error>
+                        <base-form-input-error :form field_name="baby_milk_type"></base-form-input-error>
                     </div>
                     <!-- END: Baby Milk Type -->
 
@@ -335,7 +353,7 @@ onMounted(async () => {
                             @change="form?.validate('baby_milk_quantity')"
                         ></base-form-input>
 
-                        <base-form-input-error :form field_name="baby_milk_quantity"> </base-form-input-error>
+                        <base-form-input-error :form field_name="baby_milk_quantity"></base-form-input-error>
                     </div>
                     <!-- END: Baby Milk Quantity -->
                 </template>
@@ -346,19 +364,26 @@ onMounted(async () => {
                         {{ $t('validation.attributes.income') }}
                     </base-form-label>
 
-                    <base-form-input
-                        v-model="form.income"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.income')
-                            })
-                        "
-                        data-test="orphan_income"
-                        type="text"
-                        @change="form?.validate('income')"
-                    ></base-form-input>
+                    <base-input-group>
+                        <base-form-input
+                            v-model="form.income"
+                            :placeholder="
+                                $t('auth.placeholders.fill', {
+                                    attribute: $t('validation.attributes.income')
+                                })
+                            "
+                            data-test="orphan_income"
+                            type="text"
+                            maxlength="12"
+                            @change="form?.validate('income')"
+                        ></base-form-input>
 
-                    <base-form-input-error :form field_name="income"> </base-form-input-error>
+                        <base-input-group-text>
+                            {{ $t('DA') }}
+                        </base-input-group-text>
+                    </base-input-group>
+
+                    <base-form-input-error :form field_name="income"></base-form-input-error>
                 </div>
                 <!-- End: Income-->
 
@@ -381,7 +406,7 @@ onMounted(async () => {
                         @change="form?.validate('note')"
                     ></base-form-text-area>
 
-                    <base-form-input-error :form="form" field_name="note"> </base-form-input-error>
+                    <base-form-input-error :form="form" field_name="note"></base-form-input-error>
                 </div>
                 <!-- END: Notes -->
 

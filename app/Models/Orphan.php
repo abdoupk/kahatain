@@ -315,6 +315,7 @@ class Orphan extends Model implements HasMedia
             'shoesSize',
             'shirtSize',
             'pantsSize',
+            'family',
         ]);
     }
 

@@ -19,6 +19,7 @@ import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelect
 import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown, omit } from '@/utils/helper'
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 
 const props = defineProps<{ sponsor: SponsorUpdateFormType }>()
 
@@ -33,6 +34,12 @@ const inputs = reactive<SponsorUpdateFormType>(
 const form = useForm('put', route('tenant.sponsors.infos-update', props.sponsor.id), inputs)
 
 const updateSuccess = ref(false)
+
+const _photo = ref(form.photo)
+
+const _diplomaFile = ref(form.diploma_file)
+
+const _birthCertificateFile = ref(form.birth_certificate_file)
 
 const submit = () => {
     form.submit({
@@ -68,6 +75,17 @@ onMounted(async () => {
         </div>
 
         <form @submit.prevent="submit">
+            <div class="me-2 ms-auto h-36 w-36">
+                <base-file-pond
+                    id="photo"
+                    :allow-multiple="false"
+                    :files="_photo"
+                    is-picture
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_photo')"
+                    @update:files="form.photo = $event[0]"
+                ></base-file-pond>
+            </div>
+
             <div class="grid grid-cols-12 gap-4 p-5">
                 <!-- BEGIN: First Name -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -300,6 +318,46 @@ onMounted(async () => {
                     <base-form-input-error :form field_name="sponsor_type"></base-form-input-error>
                 </div>
                 <!-- END: Sponsor Type -->
+
+                <!-- Begin: Upload files  -->
+                <div class="col-span-12 mt-6">
+                    <h1 class="mb-6 text-lg rtl:!font-semibold">{{ $t('upload-files.files') }}</h1>
+
+                    <div class="grid grid-cols-12 gap-3">
+                        <div class="col-span-12 lg:col-span-6">
+                            <base-form-label class="mb-2" for="birth_certificate_file">
+                                {{ $t('upload-files.labels.birth_certificate') }}
+                            </base-form-label>
+
+                            <base-file-pond
+                                id="birth_certificate_file"
+                                :allow-multiple="false"
+                                :files="_birthCertificateFile"
+                                :is-picture="false"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
+                                @update:files="form.birth_certificate_file = $event[0]"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_birth_certificate')"
+                            ></base-file-pond>
+                        </div>
+
+                        <div class="col-span-12 lg:col-span-6">
+                            <base-form-label class="mb-2" for="diploma_file">
+                                {{ $t('diploma') }}
+                            </base-form-label>
+
+                            <base-file-pond
+                                id="diploma_file"
+                                :allow-multiple="false"
+                                :files="_diplomaFile"
+                                :is-picture="false"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_diploma')"
+                                @update:files="form.diploma_file = $event[0]"
+                            ></base-file-pond>
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Upload Files   -->
 
                 <base-button :disabled="form.processing" class="col-span-12 !mt-0 w-20" type="submit" variant="primary">
                     {{ $t('save') }}

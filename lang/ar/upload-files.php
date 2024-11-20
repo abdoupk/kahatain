@@ -25,5 +25,6 @@ return [
         'sponsor_cnas' => 'قم بسحب وإفلات شهادة الانتساب الخاصة بالمتكفل أو <span class="filepond--label-action">تصفح</span>',
         'spouse_death_certificate' => 'قم بسحب وإفلات شهادة الوفاة الخاصة بالمتكفل أو <span class="filepond--label-action">تصفح</span>',
         'orphan_photo' => 'قم بسحب وإفلات صورة اليتيم الخاصة بالمتكفل أو <span class="filepond--label-action">تصفح</span>',
+        'residence_certificate' => 'قم بسحب وإفلات شهادة الإقامة أو <span class="filepond--label-action">تصفح</span>',
     ],
 ];

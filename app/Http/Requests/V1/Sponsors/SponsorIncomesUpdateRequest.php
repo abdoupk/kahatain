@@ -9,13 +9,18 @@ class SponsorIncomesUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'account' => 'required',
-            'casnos' => 'required',
-            'cnas' => 'required',
-            'cnr' => 'required',
-            'other_income' => 'required',
-            'pension' => 'required',
-            'total_income' => 'required|numeric',
+            'spouse.income' => 'sometimes|nullable|numeric',
+            'incomes.cnr' => 'nullable|numeric',
+            'incomes.cnas' => 'nullable|numeric',
+            'incomes.casnos' => 'nullable|numeric',
+            'incomes.pension' => 'nullable|numeric',
+            'incomes.other_income' => 'nullable|numeric',
+            'incomes.bank_file' => 'nullable|string',
+            'incomes.ccp_file' => 'nullable|string',
+            'incomes.cnr_file' => 'nullable|string',
+            'incomes.cnas_file' => 'nullable|string',
+            'incomes.casnos_file' => 'nullable|string',
+            'incomes.account.*.*' => 'nullable|numeric',
         ];
     }
 

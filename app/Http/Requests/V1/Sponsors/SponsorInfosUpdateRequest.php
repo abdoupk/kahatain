@@ -23,6 +23,9 @@ class SponsorInfosUpdateRequest extends FormRequest
             'mother_name' => 'required',
             'phone_number' => 'required',
             'sponsor_type' => 'required',
+            'photo' => 'nullable|string',
+            'diploma_file' => 'nullable|string',
+            'birth_certificate_file' => 'nullable|string',
         ];
     }
 

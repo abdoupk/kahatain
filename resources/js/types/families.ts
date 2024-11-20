@@ -26,6 +26,7 @@ export interface SpouseType {
     name: string
     birth_date: string
     death_date: string
+    death_certificate_file: string
     function: string
     income: string
 }
@@ -127,6 +128,11 @@ export interface FamilyShowType {
     address: string
     file_number: string
     start_date: Date
+    residence: {
+        residence_certificate_file: string
+        created_at: string
+        file_type: string
+    }
     branch: string
     zone: string
     orphans: OrphanType[]
@@ -149,6 +155,7 @@ export interface FamilyEditType {
     spouse: SpouseType
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType
+    residence_certificate_file: string | null
     housing: {
         id: string
         family_id: string
@@ -177,6 +184,7 @@ export interface FamilyUpdateFormType {
     start_date: Date
     branch_id: string
     zone_id: string
+    residence_certificate_file: string | null
     spouse: SpouseType
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType

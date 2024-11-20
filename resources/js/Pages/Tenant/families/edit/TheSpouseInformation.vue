@@ -4,6 +4,7 @@ import type { FamilyUpdateSpouseFormType, SpouseType } from '@/types/families'
 import { useForm } from 'laravel-precognition-vue'
 import { reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -23,6 +24,8 @@ const props = defineProps<{ spouse: SpouseType }>()
 const inputs = reactive<FamilyUpdateSpouseFormType>(omit(props.spouse, ['id', 'family_id', 'name']))
 
 const form = useForm('put', route('tenant.families.spouse-update', props.spouse.family_id), inputs)
+
+const deathCertificateFile = ref(props.spouse.death_certificate_file)
 
 const updateSuccess = ref(false)
 
@@ -175,11 +178,31 @@ const submit = () => {
                 </div>
                 <!-- END: Income -->
 
-                <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
-                    {{ $t('save') }}
+                <!-- BEGIN: Death certificate file -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="death_certificate_file">
+                        {{ $t('upload-files.labels.death_certificate') }}
+                    </base-form-label>
 
-                    <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
-                </base-button>
+                    <base-file-pond
+                        id="death_certificate_file"
+                        :allow-multiple="false"
+                        :files="deathCertificateFile"
+                        :is-picture="false"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        :label-idle="$t('upload-files.labelIdle.spouse_death_certificate')"
+                        @update:files="form.death_certificate_file = $event[0]"
+                    ></base-file-pond>
+                </div>
+                <!-- END: Death certificate file -->
+
+                <div class="col-span-12">
+                    <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
+                        {{ $t('save') }}
+
+                        <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
+                    </base-button>
+                </div>
             </div>
         </form>
     </div>

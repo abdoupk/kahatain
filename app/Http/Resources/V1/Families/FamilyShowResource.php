@@ -28,6 +28,11 @@ class FamilyShowResource extends JsonResource
 
             'furnishings' => new FurnishingResource($this->whenLoaded('furnishings')),
             'housing' => new HousingResource($this->whenLoaded('housing')),
+            'residence' => [
+                'residence_certificate_file' => $this->getFirstMediaUrl('residence_files'),
+                'file_type' => $this->getFirstMedia('residence_files')->type,
+                'created_at' => $this->getFirstMedia('residence_files')->created_at,
+            ],
 
             'preview' => new PreviewResource($this->whenLoaded('preview')),
         ];

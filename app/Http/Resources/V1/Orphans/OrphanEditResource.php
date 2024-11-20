@@ -46,6 +46,7 @@ class OrphanEditResource extends JsonResource
             'gender' => $this->gender,
             'note' => $this->note,
             'income' => $this->income,
+            'photo' => $this->getFirstMediaUrl('photos'),
 
             'academic_achievements' => AcademicAchievementResource::collection(
                 $this->whenLoaded('academicAchievements')

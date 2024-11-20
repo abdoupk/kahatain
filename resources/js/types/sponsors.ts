@@ -57,4 +57,7 @@ export interface SponsorUpdateFormType {
     }
     incomes: IncomeType
     sponsorships: SponsorSponsorshipType
+    photo: string
+    birth_certificate_file: string
+    diploma_file: string
 }

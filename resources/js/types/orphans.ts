@@ -100,4 +100,5 @@ export interface OrphanUpdateFormType {
     college_achievements: CollegeAchievementsType[]
     vocational_training_achievements: VocationalTrainingAchievementsType[]
     income: number | null
+    photo: string
 }

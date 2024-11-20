@@ -20,7 +20,7 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
 
     public function __invoke(OrphanInfosUpdateRequest $request, Orphan $orphan): ResponseFactory|Application|Response
     {
-        $orphan->update($request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type']));
+        $orphan->update($request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type', 'photo']));
 
         if (now()->diff($orphan->birth_date)->y < 2) {
             $orphan->babyNeeds()->update($request->only(
@@ -33,6 +33,8 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
         }
 
         monthlySponsorship($orphan->load('family')->family);
+
+        addToMediaCollection($orphan, $request->photo, 'photos');
 
         dispatch(new OrphanUpdatedJob($orphan, auth()->user()));
 

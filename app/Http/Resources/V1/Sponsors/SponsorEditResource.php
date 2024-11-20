@@ -29,6 +29,9 @@ class SponsorEditResource extends JsonResource
             'diploma' => $this->diploma,
             'ccp' => $this->ccp,
             'gender' => $this->gender,
+            'diploma_file' => $this->getFirstMediaUrl('diploma_files'),
+            'birth_certificate_file' => $this->getFirstMediaUrl('birth_certificate_files'),
+            'photo' => $this->getFirstMediaUrl('photos'),
 
             'incomes' => new IncomeResource($this->whenLoaded('incomes')),
             'creator' => new MemberResource($this->whenLoaded('creator')),

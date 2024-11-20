@@ -38,7 +38,8 @@ class FamilyShowController extends Controller implements HasMiddleware
                         'furnishings',
                         'branch',
                         'preview.inspectors',
-                        'deceased',
+                        'deceased.media',
+                        'media',
                     ]
                 )),
             ]

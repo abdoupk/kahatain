@@ -36,11 +36,9 @@ const _diplomaFile = ref(props.form?.sponsor?.diploma_file)
 const _birthCertificateFile = ref(props.form?.sponsor?.birth_certificate_file)
 
 onMounted(async () => {
-    academicLevels.value = await academicLevelsStore.getAcademicLevelsForSponsors()
-})
-
-onMounted(() => {
     document.getElementById('first_name')?.focus()
+
+    academicLevels.value = await academicLevelsStore.getAcademicLevelsForSponsors()
 })
 </script>
 
@@ -419,6 +417,7 @@ onMounted(() => {
                         :files="_birthCertificateFile"
                         :is-picture="false"
                         accepted-file-types="image/jpeg, image/png, application/pdf"
+                        :label-idle="$t('upload-files.labelIdle.sponsor_birth_certificate')"
                         @update:files="createFamilyStore.family.sponsor.birth_certificate_file = $event[0]"
                     ></base-file-pond>
                 </div>
@@ -434,6 +433,7 @@ onMounted(() => {
                         :files="_diplomaFile"
                         :is-picture="false"
                         accepted-file-types="image/jpeg, image/png, application/pdf"
+                        :idle-label="$t('upload-files.labelIdle.sponsor_diploma')"
                         @update:files="createFamilyStore.family.sponsor.diploma_file = $event[0]"
                     ></base-file-pond>
                 </div>

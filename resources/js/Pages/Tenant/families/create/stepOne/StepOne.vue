@@ -131,6 +131,7 @@ onMounted(() => {
                             :files="_residenceCertificateFile"
                             :is-picture="false"
                             accepted-file-types="image/jpeg, image/png, application/pdf"
+                            :labelIdle="$t('upload-files.labelIdle.residence_certificate')"
                             @update:files="createFamilyStore.family.residence_certificate_file = $event[0]"
                         ></base-file-pond>
                     </div>

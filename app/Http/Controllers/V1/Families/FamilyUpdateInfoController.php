@@ -17,7 +17,9 @@ class FamilyUpdateInfoController extends Controller implements HasMiddleware
 
     public function __invoke(FamilyInfosUpdateRequest $request, Family $family)
     {
-        $family->update($request->validated());
+        $family->update($request->except(['residence_certificate_file', 'c']));
+
+        addToMediaCollection($family, $request->validated('residence_certificate_file'), 'residence_files');
 
         if ($request->zone_id !== $family->zone_id) {
             $family->zone()->searchable();

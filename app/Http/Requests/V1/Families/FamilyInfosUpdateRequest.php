@@ -15,6 +15,7 @@ class FamilyInfosUpdateRequest extends FormRequest
             'location.lng' => 'nullable|numeric',
             'branch_id' => 'required|exists:App\Models\Branch,id',
             'zone_id' => 'required|exists:App\Models\Zone,id',
+            'residence_certificate_file' => 'nullable|string',
         ];
     }
 

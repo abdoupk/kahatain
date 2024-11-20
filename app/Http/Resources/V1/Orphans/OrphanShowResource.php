@@ -28,6 +28,7 @@ class OrphanShowResource extends JsonResource
             'income' => $this->income,
             'creator' => new MemberResource($this->whenLoaded('creator')),
             'gender' => $this->gender,
+            'photo' => $this->getFirstMediaUrl('photos'),
 
             'academic_achievements' => AcademicAchievementResource::collection(
                 $this->whenLoaded('academicAchievements')

@@ -30,7 +30,8 @@ class OrphanEditController extends Controller implements HasMiddleware
                     'shirtSize',
                     'collegeAchievements.academicLevel',
                     'vocationalTrainingAchievements.vocationalTraining',
-                    'lastAcademicYearAchievement.academicLevel'
+                    'lastAcademicYearAchievement.academicLevel',
+                    'media'
                 )),
             ]
         );
