@@ -19,15 +19,11 @@ const inputs = reactive({ incomes: omit(props.sponsor.incomes, ['id', 'total_inc
 
 const form = useForm<SponsorUpdateFormType>('put', route('tenant.sponsors.incomes-update', props.sponsor.id), inputs)
 
-console.log(inputs)
-
 const updateSuccess = ref(false)
 
 const createFamilyStore = useCreateFamilyStore()
 
 createFamilyStore.family.incomes = props.sponsor.incomes
-
-console.log()
 
 watch(
     () => createFamilyStore.family.incomes,

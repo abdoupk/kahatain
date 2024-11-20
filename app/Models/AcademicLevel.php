@@ -308,4 +308,11 @@ class AcademicLevel extends Model
     {
         return $this->toArray();
     }
+
+    protected function casts(): array
+    {
+        return [
+            'subject_ids' => 'array',
+        ];
+    }
 }

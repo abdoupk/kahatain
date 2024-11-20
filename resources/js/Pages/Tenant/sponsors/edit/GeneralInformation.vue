@@ -8,6 +8,7 @@ import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useForm } from 'laravel-precognition-vue'
 import { onMounted, reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -19,7 +20,6 @@ import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelect
 import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown, omit } from '@/utils/helper'
-import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 
 const props = defineProps<{ sponsor: SponsorUpdateFormType }>()
 
