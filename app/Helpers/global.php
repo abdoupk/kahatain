@@ -59,7 +59,7 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
         ->format('A4')
 //        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
 //        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
-//        ->margins(2, 4, 2, 4)
+        ->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
 
@@ -105,7 +105,7 @@ function saveArchiveToPDF(
         ->format('A4')
 //        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
 //        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
-//        ->margins(2, 4, 2, 4)
+        ->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
 

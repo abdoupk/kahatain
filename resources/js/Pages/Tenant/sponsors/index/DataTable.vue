@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
+import { $t } from '@/utils/i18n'
 
 import type { IndexParams, PaginationData, SponsorsIndexResource } from '@/types/types'
 
@@ -113,6 +113,15 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
 
                         <the-table-td-actions v-if="hasPermission(['delete_sponsors', 'update_sponsors'])">
                             <div class="flex items-center justify-center">
+                                <Link :href="route('tenant.sponsors.show', sponsor.id)" class="me-3 flex items-center">
+                                    <svg-loader
+                                        v-if="hasPermission('show_sponsors')"
+                                        class="me-1 h-4 w-4 fill-current"
+                                        name="icon-eye"
+                                    />
+                                    {{ $t('edit') }}
+                                </Link>
+
                                 <Link :href="route('tenant.sponsors.edit', sponsor.id)" class="me-3 flex items-center">
                                     <svg-loader
                                         v-if="hasPermission('update_sponsors')"
