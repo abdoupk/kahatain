@@ -192,9 +192,33 @@ class Subject extends Model
         ],
         [
             'id' => 28,
-            'ar_name' => 'الاعلام الالي',
+            'ar_name' => 'الإعلام الألي',
             'fr_name' => 'Informatique',
             'en_name' => 'Computer Science',
+        ],
+        [
+            'id' => 29,
+            'ar_name' => 'التربية البدنية و الرياضية',
+            'fr_name' => 'Éducation physique et sportive',
+            'en_name' => 'Physical education and sports',
+        ],
+        [
+            'id' => 30,
+            'ar_name' => 'الأدب العربي',
+            'fr_name' => 'Littérature arabe',
+            'en_name' => 'Arabic literature',
+        ],
+        [
+            'id' => 31,
+            'ar_name' => 'العلوم الإسلامية',
+            'fr_name' => 'sciences islamiques',
+            'en_name' => 'Islamic sciences',
+        ],
+        [
+            'id' => 32,
+            'ar_name' => 'التكنولوجيا',
+            'fr_name' => 'Technologie',
+            'en_name' => 'Technology',
         ],
     ];
 
