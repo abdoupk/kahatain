@@ -391,6 +391,7 @@ export interface CreateSponsorshipForm {
 }
 
 export interface CreateFinancialTransactionForm {
+    name:string
     amount: number | null
     description: string
     date: Date | string
@@ -841,6 +842,7 @@ export interface NeedsIndexResource {
 
 export interface FinancialTransactionsIndexResource {
     id: string
+    name: string
     description: string
     amount: number
     date: Date

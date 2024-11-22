@@ -24,6 +24,7 @@ export const useFinancialTransactionsStore = defineStore('financialTransactions'
         financialTransaction: {
             id: '',
             specification: 'drilling_wells',
+            name: '',
             amount: null,
             date: new Date(),
             description: '',

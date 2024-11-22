@@ -253,6 +253,10 @@ export const financialTransactionSpecifications = [
         value: 'analysis'
     },
     {
+        label: 'zakat',
+        value: 'zakat'
+    },
+    {
         label: 'therapy',
         value: 'therapy'
     },

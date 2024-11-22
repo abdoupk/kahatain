@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('finances', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
             $table->float('amount');
             $table->text('description')->nullable();
             $table->timestamp('date');

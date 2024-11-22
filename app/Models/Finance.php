@@ -59,6 +59,7 @@ class Finance extends Model
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
 
     protected $fillable = [
+        'name',
         'amount',
         'description',
         'date',
@@ -111,6 +112,7 @@ class Finance extends Model
     {
         return [
             'amount' => $this->amount,
+            'name' => $this->name,
             'description' => $this->description,
             'date' => strtotime($this->date),
             'specification' => [

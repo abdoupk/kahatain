@@ -126,31 +126,31 @@ const modalType = computed(() => {
         :modal-type="modalType"
         :open
         :title="modalTitle"
-        size="xl"
+        size="lg"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <!-- Begin: Amount  -->
+            <!-- Begin: Name  -->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="the_amount">
-                    {{ $t('validation.attributes.the_amount') }}
+                <base-form-label htmlFor="name">
+                    {{ $t('validation.attributes.address') }}
                 </base-form-label>
 
                 <base-form-input
-                    id="the_amount"
+                    id="name"
                     ref="firstInputRef"
-                    v-model="form.amount"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.amount') })"
-                    type="number"
-                    @change="form.validate('amount')"
+                    v-model="form.name"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.name') })"
+                    type="text"
+                    @change="form.validate('name')"
                 />
 
-                <div v-if="form.errors?.amount" class="mt-2">
-                    <base-input-error :message="form.errors.amount"></base-input-error>
+                <div v-if="form.errors?.name" class="mt-2">
+                    <base-input-error :message="form.errors.name"></base-input-error>
                 </div>
             </div>
-            <!-- End: Amount  -->
+            <!-- End: Name -->
 
             <!-- Begin: Date  -->
             <div class="col-span-12 sm:col-span-4">
@@ -165,6 +165,26 @@ const modalType = computed(() => {
                 </div>
             </div>
             <!-- End: Date  -->
+
+            <!-- Begin: Amount  -->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label htmlFor="the_amount">
+                    {{ $t('validation.attributes.the_amount') }}
+                </base-form-label>
+
+                <base-form-input
+                    id="the_amount"
+                    v-model="form.amount"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.the_amount') })"
+                    type="number"
+                    @change="form.validate('amount')"
+                />
+
+                <div v-if="form.errors?.amount" class="mt-2">
+                    <base-input-error :message="form.errors.amount"></base-input-error>
+                </div>
+            </div>
+            <!-- End: Amount  -->
 
             <!-- Begin: Specification  -->
             <div class="col-span-12 sm:col-span-6">
