@@ -181,6 +181,7 @@ return [
                     'name',
                     'tenant_id',
                     'academic_level.id',
+                    'academic_level.phase_key',
                     'vocational_training.id',
                     'pants_size',
                     'shoes_size',

@@ -262,6 +262,14 @@ export interface Zone {
     geom?: object
 }
 
+export interface Transcript {
+    id: string
+    trimester: string
+    orphan_id: string
+    average: number | null
+    subjects: SubjectType[]
+}
+
 export interface Benefactor {
     id: string
     first_name: string
@@ -1023,4 +1031,12 @@ export type Committee = {
 export interface CommitteesIndexResource extends Zone {
     created_at: string
     members_count?: number
+}
+
+export interface OrphansTranscriptsIndexResource {
+    id: string
+    name: string
+    birth_date: string
+    academic_level: string
+    academic_level_phase: string
 }

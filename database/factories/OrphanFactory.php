@@ -74,6 +74,7 @@ class OrphanFactory extends Factory
             'is_unemployed' => $unemployed,
             'tenant_id' => fake()->uuid,
             'family_id' => fake()->uuid,
+            'institution' => fake('ar_SA')->company,
             'created_at' => now()->subDays(fake()->numberBetween(0, 35)),
             'updated_at' => now()->subDays(fake()->numberBetween(0, 35)),
             'created_by' => User::inRandomOrder()->first()?->id,

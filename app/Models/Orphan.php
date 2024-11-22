@@ -139,6 +139,7 @@ class Orphan extends Model implements HasMedia
         'deleted_at',
         'ccp',
         'phone_number',
+        'institution',
     ];
 
     protected static function boot(): void
@@ -217,6 +218,7 @@ class Orphan extends Model implements HasMedia
                 'id' => $this->academic_level_id,
                 'level' => $this->academicLevel?->level,
                 'phase' => $this->academicLevel?->phase,
+                'phase_key' => $this->academicLevel?->phase_key,
             ],
             'vocational_training' => [
                 'id' => $this->vocational_training_id,

@@ -190,7 +190,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
         $additional_filters .= ' AND __soft_deleted = 0';
     }
 
-    $query = trim(request()->input('search', '')) ?? '';
+    $query = trim(request()->string('search', '')) ?? '';
 
     $tenantFilter = '';
 
@@ -215,6 +215,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
             string $query,
             array $options
         ) use ($meilisearchOptions) {
+            ray($meilisearchOptions['filter']);
             unset($options['filter']);
 
             return $meilisearch->search($query, $options + $meilisearchOptions);

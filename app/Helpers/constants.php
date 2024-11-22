@@ -3,9 +3,11 @@
 const LIMIT = 5000;
 
 const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
-    'eid_el_adha', 'eid_el_fitr', 'other', 'school_entry', 'analysis',
+    'eid_el_adha', 'eid_el_fitr', 'zakat', 'other', 'school_entry', 'analysis',
     'therapy', 'ramadan_basket',
 ];
+
+const FILTER_STUDENTS = 'AND academic_level.phase_key IN [elementary_school, middle_school, high_school]';
 
 const FILTER_RAMADAN_BASKET = '';
 //'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';

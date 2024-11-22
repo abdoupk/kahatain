@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '@/utils/i18n'
-
 import type { IndexParams, PaginationData, SponsorsIndexResource } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
@@ -15,6 +13,7 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatDate, hasPermission } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{ sponsors: PaginationData<SponsorsIndexResource>; params: IndexParams }>()
 

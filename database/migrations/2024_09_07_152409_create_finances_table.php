@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('date');
             $table->uuid('tenant_id');
-            $table->enum('specification', ['drilling_wells', 'monthly_sponsorship', 'eid_el_adha', 'eid_el_fitr', 'other', 'school_entry', 'analysis', 'therapy', 'ramadan_basket']);
+            $table->enum('specification', DONATION_SPECIFICATION);
             $table->timestamps();
             $table->softDeletes();
             $table->uuid('created_by');

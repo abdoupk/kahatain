@@ -231,23 +231,19 @@ onMounted(() => {
                         <template #default>
                             <step-two :form>
                                 <template #sponsorForm>
-                                    <sponsor-form :form
-                                    ></sponsor-form>
+                                    <sponsor-form :form></sponsor-form>
                                 </template>
 
                                 <template #incomeForm>
-                                    <income-form :form
-                                    ></income-form>
+                                    <income-form :form></income-form>
                                 </template>
 
                                 <template #secondSponsorForm>
-                                    <second-sponsor-form :form
-                                    ></second-sponsor-form>
+                                    <second-sponsor-form :form></second-sponsor-form>
                                 </template>
 
                                 <template #spouseForm>
-                                    <spouse-form :form
-                                    ></spouse-form>
+                                    <spouse-form :form></spouse-form>
                                 </template>
 
                                 <the-actions :nextStep :prevStep></the-actions>

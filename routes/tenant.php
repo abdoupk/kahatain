@@ -90,6 +90,8 @@ Route::middleware([
 
             require __DIR__.'/v1/sponsors.php';
 
+            require __DIR__.'/v1/transcripts.php';
+
             require __DIR__.'/v1/vocational-training-achievements.php';
 
             require __DIR__.'/v1/zones.php';

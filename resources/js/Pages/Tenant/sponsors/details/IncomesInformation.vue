@@ -72,7 +72,7 @@ const incomes = omit(props.sponsor.incomes, [
                 <!-- End: CCP account-->
 
                 <!-- Begin: Bank account-->
-                <h2 class="text-lg font-semibold mt-4">
+                <h2 class="mt-4 text-lg font-semibold">
                     {{ $t('incomes.label.bank_account') }}
                 </h2>
 

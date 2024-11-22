@@ -36,4 +36,5 @@ return [
     'benefactors' => 'المحسنين',
     'monthly-sponsorship' => 'الكفالة الشهرية',
     'committees' => 'اللجان',
+    'transcripts' => 'كشوف النقاط',
 ];
