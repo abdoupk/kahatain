@@ -1,4 +1,4 @@
-import type { AddSchoolLessonType } from '@/types/lessons'
+import type { AcademicLevelType, AddSchoolLessonType } from '@/types/lessons'
 
 import type { Form } from 'laravel-precognition-vue/dist/types'
 
@@ -267,6 +267,12 @@ export interface Transcript {
     trimester: string
     orphan_id: string
     average: number | null
+    academic_level?: {
+        id: number
+        level: string
+        phase: string
+        phase_key: string
+    }
     subjects: SubjectType[]
 }
 
@@ -1033,10 +1039,31 @@ export interface CommitteesIndexResource extends Zone {
     members_count?: number
 }
 
+type TrimesterType = {
+    id: string
+    trimester: string
+    average: number
+}
+
 export interface OrphansTranscriptsIndexResource {
     id: string
     name: string
     birth_date: string
-    academic_level: string
-    academic_level_phase: string
+    institution: string
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    academic_level: {
+        id: string
+        level: string
+        phase: string
+        phase_key: string
+    }
+    transcripts: {
+        first_trimester: TrimesterType | null
+        second_trimester: TrimesterType | null
+        third_trimester: TrimesterType | null
+    }
 }

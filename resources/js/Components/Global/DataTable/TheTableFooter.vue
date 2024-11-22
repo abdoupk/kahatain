@@ -22,13 +22,11 @@ const getData = () =>
     })
 
 const handleChangePerPage = (value: number) => {
-    if (value < props.paginationData.meta.total) {
-        params.value.perPage = value
+    params.value.perPage = value
 
-        params.value.page = 1
+    params.value.page = 1
 
-        getData()
-    }
+    getData()
 }
 
 const handleChangePage = (value: number) => {

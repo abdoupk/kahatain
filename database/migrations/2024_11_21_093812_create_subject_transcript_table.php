@@ -11,17 +11,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('subject_transcripts', function (Blueprint $table) {
+        Schema::create('subject_transcript', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->integer(Subject::class);
-            $table->float('rate');
-            $table->foreignUuid(Tenant::class);
-            $table->string(Transcript::class);
+            $table->foreignIdFor(Subject::class);
+            $table->float('grade')->nullable();
+            $table->foreignIdFor(Tenant::class);
+            $table->foreignIdFor(Transcript::class);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('subject_transcripts');
+        Schema::dropIfExists('subject_transcript');
     }
 };

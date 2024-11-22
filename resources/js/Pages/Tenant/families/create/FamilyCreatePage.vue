@@ -239,7 +239,7 @@ onMounted(() => {
                                 </template>
 
                                 <template #secondSponsorForm>
-                                    <second-sponsor-form :form></second-sponsor-form>
+                                   <second-sponsor-form :form></second-sponsor-form>
                                 </template>
 
                                 <template #spouseForm>

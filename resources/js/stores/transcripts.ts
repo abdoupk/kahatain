@@ -15,7 +15,8 @@ export const useTranscriptsStore = defineStore('transcripts', {
             trimester: '',
             orphan_id: '',
             average: null,
-            subjects: []
+            subjects: [],
+            academic_level: {}
         }
     }),
     actions: {
@@ -37,6 +38,14 @@ export const useTranscriptsStore = defineStore('transcripts', {
                 console.log(res.data)
 
                 this.transcript.subjects = res.data.subjects
+            })
+        },
+
+        async getTranscript(transcriptId: string) {
+            await axios.get(route('tenant.transcripts.show', transcriptId)).then((res) => {
+                this.transcript = res.data.transcript
+
+                console.log(res.data.transcript)
             })
         }
     }

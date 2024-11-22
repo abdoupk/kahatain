@@ -475,6 +475,11 @@ class Orphan extends Model implements HasMedia
         $baby->restore();
     }
 
+    public function transcripts(): HasMany
+    {
+        return $this->hasMany(Transcript::class);
+    }
+
     protected function casts(): array
     {
         return [

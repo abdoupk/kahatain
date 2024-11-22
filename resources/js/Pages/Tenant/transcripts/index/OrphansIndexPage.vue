@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IndexParams, OrphansIndexResource, PaginationData } from '@/types/types'
+import type { IndexParams, OrphansTranscriptsIndexResource, PaginationData } from '@/types/types'
 
 import { orphansFilters } from '@/constants/filters'
 import { useTranscriptsStore } from '@/stores/transcripts'
@@ -30,9 +30,11 @@ defineOptions({
 })
 
 const props = defineProps<{
-    orphans: PaginationData<OrphansIndexResource>
+    orphans: PaginationData<OrphansTranscriptsIndexResource>
     params: IndexParams
 }>()
+
+console.log(props.orphans)
 
 const params = ref<IndexParams>({
     perPage: props.params.perPage,
@@ -49,27 +51,30 @@ const transcriptStore = useTranscriptsStore()
 
 const sort = (field: string) => handleSort(field, params.value)
 
-const showEditModal = ($event) => {
-    console.log($event)
+const showEditModal = (transcriptId: string) => {
+    transcriptStore.$reset()
+
+    console.log(transcriptId)
+
+    transcriptStore.getTranscript(transcriptId)
+
+    createEditModalStatus.value = true
 }
 
 const createEditModalStatus = ref<boolean>(false)
 
-const showCreateModal = async ($event) => {
+const showCreateModal = async ($event: { trimester: string; orphan: OrphansTranscriptsIndexResource }) => {
     transcriptStore.$reset()
 
     transcriptStore.transcript.trimester = $event.trimester
 
-    //
-    transcriptStore.transcript.orphan_id = $event.orphan_id
+    transcriptStore.transcript.orphan_id = $event.orphan.id
 
-    //
-    await transcriptStore.getTranscriptSubjects($event.orphan_id)
+    transcriptStore.transcript.academic_level = $event.orphan.academic_level
 
-    //
+    await transcriptStore.getTranscriptSubjects($event.orphan.id)
+
     createEditModalStatus.value = true
-
-    console.log('454545454')
 }
 </script>
 

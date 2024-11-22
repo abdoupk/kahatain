@@ -13,19 +13,29 @@ class OrphansIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
+            'name' => $this->getName(),
             'birth_date' => $this->birth_date,
-            'family_status' => $this->family_status,
-            'health_status' => $this->health_status,
-            'gender' => $this->gender,
-            'income' => $this->income,
-            'is_handicapped' => $this->is_handicapped,
-            'is_unemployed' => $this->is_unemployed,
-            'note' => $this->note,
-            'deleted_by' => $this->deleted_by,
-            'created_at' => $this->created_at,
-            'academic_level_id' => $this->academic_level_id,
+            'institution' => $this->institution,
+            'sponsor' => $this->whenLoaded('sponsor', function () {
+                return [
+                    'id' => $this->sponsor->id,
+                    'name' => $this->sponsor->getName(),
+                    'phone_number' => $this->sponsor->formattedPhoneNumber(),
+                ];
+            }),
+            'academic_level' => [
+                'id' => $this->academicLevel?->id,
+                'phase' => $this->academicLevel?->phase,
+                'level' => $this->academicLevel?->level,
+                'phase_key' => $this->academicLevel?->phase_key,
+            ],
+            'transcripts' => $this->whenLoaded('transcripts', function () {
+                return [
+                    'first_trimester' => $this->transcripts->where('trimester', 'first_trimester')->first(),
+                    'second_trimester' => $this->transcripts->where('trimester', 'second_trimester')->first(),
+                    'third_trimester' => $this->transcripts->where('trimester', 'third_trimester')->first(),
+                ];
+            }),
         ];
     }
 }

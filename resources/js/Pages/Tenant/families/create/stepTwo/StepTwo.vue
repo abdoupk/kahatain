@@ -101,6 +101,7 @@ const handleTabChange = (index) => {
                 <base-tab-panel class="p-5">
                     <slot name="sponsorForm"></slot>
                 </base-tab-panel>
+
                 <base-tab-panel class="p-5">
                     <slot name="incomeForm"></slot>
                 </base-tab-panel>

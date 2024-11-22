@@ -5,8 +5,10 @@ import { useForm } from 'laravel-precognition-vue'
 import { computed, ref } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
+import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
+import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 
@@ -37,7 +39,9 @@ const form = computed(() => {
         })
     }
 
-    return useForm('post', route('tenant.transcripts.store'), { ...transcriptsStore.transcript })
+    return useForm('post', route('tenant.transcripts.store', transcriptsStore.transcript.orphan_id), {
+        ...transcriptsStore.transcript
+    })
 })
 
 // Define custom event emitter for 'close' event
@@ -50,7 +54,7 @@ const handleSuccess = () => {
             route('tenant.transcripts.index'),
             {},
             {
-                only: ['transcripts'],
+                only: ['orphans'],
                 preserveState: true
             }
         )
@@ -97,12 +101,17 @@ const firstInputRef = ref<HTMLElement>()
 const modalType = computed(() => {
     return transcriptsStore.transcript.id ? 'update' : 'create'
 })
+
+const maxGrade = computed(() => {
+    return form.value.academic_level?.phase_key === 'elementary_school' ? 10 : 20
+})
 </script>
 
 <template>
     <create-edit-modal
         :focusable-input="firstInputRef"
         :loading
+        size="lg"
         :modal-type="modalType"
         :open
         :title="modalTitle"
@@ -110,29 +119,53 @@ const modalType = computed(() => {
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <!-- Begin: Name-->
-            <div class="col-span-12 sm:col-span-6" v-for="(subject, index) in transcriptsStore.transcript.subjects">
+            <!-- Begin: Grade-->
+            <div :key="subject.id" class="col-span-12 sm:col-span-4" v-for="(subject, index) in form.subjects">
                 <base-form-label htmlFor="name">
                     {{ subject.name }}
                 </base-form-label>
 
-                <base-form-input
-                    id="name"
-                    ref="firstInputRef"
-                    v-model="transcriptsStore.transcript.subjects[index].grade"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.name') })"
-                    type="number"
-                    @change="form.validate()"
-                />
+                <base-input-group>
+                    <base-form-input
+                        id="name"
+                        v-model="form.subjects[index].grade"
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.grade') })"
+                        type="number"
+                        min="0"
+                        :max="maxGrade"
+                        @change="form.validate(`subjects.${index}.grade`)"
+                    ></base-form-input>
 
-                <!--                <div v-if="form.errors?.name" class="mt-2">-->
-                <!--                    <base-input-error :message="form.errors.name"></base-input-error>-->
-                <!--                </div>-->
+                    <base-input-group-text> /{{ String(maxGrade) }}</base-input-group-text>
+                </base-input-group>
+
+                <base-form-input-error :field_name="`subjects.${index}.grade`" :form></base-form-input-error>
             </div>
-            <!-- End: Name-->
+            <!-- End: Grade-->
 
-            <div class="col-span-12">
-                {{ transcriptsStore.transcript.subjects }}
+            <div class="col-span-12 mt-2 grid grid-cols-12 gap-4">
+                <div class="col-span-5">
+                    <base-form-label htmlFor="trimester_average">
+                        {{ $t('the_trimester_average') }}
+                    </base-form-label>
+
+                    <base-input-group>
+                        <!-- @vue-ignore -->
+                        <base-form-input
+                            id="trimester_average"
+                            v-model="form.average"
+                            :placeholder="$t('auth.placeholders.fill', { attribute: $t('the_trimester_average') })"
+                            type="number"
+                            min="0"
+                            :max="maxGrade"
+                            @change="form.validate('average')"
+                        ></base-form-input>
+
+                        <base-input-group-text> /{{ String(maxGrade) }}</base-input-group-text>
+                    </base-input-group>
+
+                    <base-form-input-error field_name="average" :form></base-form-input-error>
+                </div>
             </div>
         </template>
     </create-edit-modal>

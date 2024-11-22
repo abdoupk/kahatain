@@ -12,7 +12,7 @@ const perPage = defineModel('perPage')
 </script>
 
 <template>
-    <div class="intro-y col-span-12 flex flex-wrap items-center sm:flex-row sm:flex-nowrap">
+    <div class="intro-y !z-0 col-span-12 flex flex-wrap items-center sm:flex-row sm:flex-nowrap">
         <the-pagination
             v-if="pages > 1"
             v-model="page"

@@ -488,5 +488,9 @@
     "the_file": "الملف",
     "no_category_for_ramadan_basket": "لا يوجد تصنيف.",
     "unsaved_changes_warning": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد المغادرة؟",
-    "the_receiving": "الاستلام"
+    "the_receiving": "الاستلام",
+    "first_trimester": "الفصل الأول",
+    "second_trimester": "الفصل الثاني",
+    "third_trimester": "الفصل الثالث",
+    "the_trimester_average": "المعدل الفصلي"
 }

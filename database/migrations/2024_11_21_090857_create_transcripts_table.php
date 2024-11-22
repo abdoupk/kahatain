@@ -12,10 +12,10 @@ return new class extends Migration
     {
         Schema::create('transcripts', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->enum('trimester', ['first', 'second', 'third']);
+            $table->enum('trimester', ['first_trimester', 'second_trimester', 'third_trimester']);
             $table->float('average');
-            $table->foreignUuid(Orphan::class);
-            $table->foreignUuid(Tenant::class);
+            $table->foreignIdFor(Orphan::class);
+            $table->foreignIdFor(Tenant::class);
             $table->timestamps();
         });
     }
