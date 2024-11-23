@@ -188,12 +188,6 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
 
     $query = trim(request()->string('search', '')) ?? '';
 
-    $tenantFilter = '';
-
-    if (Schema::hasColumn($model->getTable(), 'tenant_id')) {
-        $tenantFilter .= ' AND tenant_id = '.tenant('id');
-    }
-
     $meilisearchOptions = [
         'filter' => generateFilterConditions($additional_filters, $model),
         'sort' => generateFormattedSort($model),

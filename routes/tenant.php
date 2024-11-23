@@ -70,8 +70,6 @@ Route::middleware([
 
             require __DIR__.'/v1/monthly-sponsorship.php';
 
-            require __DIR__.'/v1/zakat.php';
-
             require __DIR__.'/v1/needs.php';
 
             require __DIR__.'/v1/notifications.php';
@@ -92,9 +90,13 @@ Route::middleware([
 
             require __DIR__.'/v1/sponsors.php';
 
+            require __DIR__.'/v1/students.php';
+
             require __DIR__.'/v1/transcripts.php';
 
             require __DIR__.'/v1/vocational-training-achievements.php';
+
+            require __DIR__.'/v1/zakat.php';
 
             require __DIR__.'/v1/zones.php';
 

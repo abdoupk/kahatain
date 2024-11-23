@@ -15,6 +15,7 @@ class TranscriptStoreController extends Controller
             'average' => $request->average,
             'trimester' => $request->trimester,
             'orphan_id' => $orphan->id,
+            'academic_level_id' => $orphan->academic_level_id,
         ]);
 
         $transcript->subjects()->sync(

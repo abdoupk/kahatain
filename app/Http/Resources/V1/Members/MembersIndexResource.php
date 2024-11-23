@@ -9,8 +9,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @mixin User
- *
- * @method string getName()
  */
 class MembersIndexResource extends JsonResource
 {

@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Laravel\Scout\Searchable;
 
 /**
@@ -28,6 +29,17 @@ class AcademicLevel extends Model
     public function toSearchableArray(): array
     {
         return $this->toArray();
+    }
+
+    public function subjects(): Collection
+    {
+        return Subject::whereIn('id', $this->subject_ids)
+            ->get()->map(function (Subject $subject) {
+                return [
+                    'id' => $subject->id,
+                    'name' => $subject->getName(),
+                ];
+            });
     }
 
     protected function casts(): array

@@ -64,6 +64,7 @@
         "files": [
             "app/Helpers/families.php",
             "app/Helpers/transcripts.php",
+            "app/Helpers/students.php",
             "app/Helpers/sponsorships/sponsorships.php",
             "app/Helpers/sponsorships/calculate-contributions.php",
             "app/Helpers/sponsorships/calculate-weights.php",

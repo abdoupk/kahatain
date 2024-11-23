@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Laravel\Scout\Searchable;
@@ -19,7 +20,22 @@ class Transcript extends Model
         'average',
         'orphan_id',
         'tenant_id',
+        'academic_level_id',
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'trimester' => $this->trimester,
+            'average' => $this->average,
+            ...$this->subjects()->get()->map(function (Subject $subject) {
+                return [$subject->id => ['grade' => (float) $subject->pivot->grade]];
+            })->collapse(),
+            'orphan_id' => $this->orphan_id,
+            'academic_level_id' => $this->academic_level_id,
+            'tenant_id' => $this->tenant_id,
+        ];
+    }
 
     public function subjects(): BelongsToMany
     {
@@ -31,5 +47,10 @@ class Transcript extends Model
     public function academicLevel(): HasOneThrough
     {
         return $this->hasOneThrough(AcademicLevel::class, Orphan::class, 'id', 'id', 'orphan_id', 'academic_level_id');
+    }
+
+    public function orphan(): BelongsTo
+    {
+        return $this->belongsTo(Orphan::class);
     }
 }

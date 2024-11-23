@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AcademicLevel;
 use App\Models\Orphan;
 use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->float('average');
             $table->foreignIdFor(Orphan::class);
             $table->foreignIdFor(Tenant::class);
+            $table->foreignIdFor(AcademicLevel::class);
             $table->timestamps();
         });
     }
