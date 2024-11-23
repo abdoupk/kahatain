@@ -392,7 +392,7 @@ export interface CreateSponsorshipForm {
 }
 
 export interface CreateFinancialTransactionForm {
-    name:string
+    name: string
     amount: number | null
     description: string
     date: Date | string
@@ -457,6 +457,27 @@ export interface ArchiveIndexResource {
 }
 
 export interface EidAlAdhaFamiliesResource {
+    id: string
+    address: string
+    zone: {
+        id: string
+        name: string
+    }
+    branch: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    orphans_count: number
+    total_income: number
+    income_rate: number
+}
+
+export interface ZakatFamiliesResource {
     id: string
     address: string
     zone: {

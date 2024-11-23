@@ -133,6 +133,11 @@ class Finance extends Model
         ];
     }
 
+    public function family_zakat()
+    {
+        return $this->belongsToMany(FamilyZakat::class);
+    }
+
     protected function casts(): array
     {
         return [

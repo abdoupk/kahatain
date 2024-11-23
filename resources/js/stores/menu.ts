@@ -147,6 +147,13 @@ export const useMenuStore = defineStore('menu', {
                         url: '/dashboard/projects/eid-al-adha'
                     },
                     {
+                        icon: 'icon-zakat',
+                        // Ignore: !hasPermission('list_permission'),
+                        title: $t('zakat'),
+                        routeName: 'tenant.occasions.zakat.index',
+                        url: '/dashboard/projects/zakat'
+                    },
+                    {
                         icon: 'icon-backpack',
                         // Ignore: !hasPermission('list_permission'),
                         title: $t('school_entry'),

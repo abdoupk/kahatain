@@ -44,11 +44,7 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
     $pdfFile = "$directory/$pdfName".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
-    ray(Browsershot::html(view("pdf.$directory", [
-        $variableName => $function(),
-        'title' => $pdfName,
-    ])
-        ->render()));
+
     Browsershot::html(view("pdf.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
@@ -215,7 +211,6 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
             string $query,
             array $options
         ) use ($meilisearchOptions) {
-            ray($meilisearchOptions['filter']);
             unset($options['filter']);
 
             return $meilisearch->search($query, $options + $meilisearchOptions);

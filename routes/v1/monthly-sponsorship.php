@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipPDFController;
 use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexController;
