@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useCreateFamilyStore } from '@/stores/create-family'
 
-import SvgLoader from '@/Components/SvgLoader.vue'
+import OrphanForm from '@/Pages/Tenant/families/create/stepThree/OrphanForm.vue'
 
-defineProps<{ index: number }>()
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 const createFamilyStore = useCreateFamilyStore()
 
@@ -15,22 +15,24 @@ const removeOrphan = (index: number) => {
 </script>
 
 <template>
-    <div class="my-5 flex">
-        <p class="text-base font-medium">
-            {{ $t('child no', { no: String(index + 1) }) }}
-        </p>
+    <template v-for="index in createFamilyStore.family.orphans.length" :key="`orphan-${index}`">
+        <div class="my-5 flex">
+            <p class="text-base font-medium">
+                {{ $t('child no', { no: String(index + 1) }) }}
+            </p>
 
-        <button class="me-2 ms-auto"></button>
+            <button class="me-2 ms-auto"></button>
 
-        <a
-            class="ms-2 inline-block !outline-none focus-visible:!rounded-sm focus-visible:!outline-red-300/70"
-            :class="{ hidden: index === 0 }"
-            href="#"
-            @click.prevent="removeOrphan(index)"
-        >
-            <svg-loader class="fill-danger" name="icon-trash-can"></svg-loader>
-        </a>
-    </div>
+            <a
+                :class="{ hidden: createFamilyStore.family.orphans.length === 0 }"
+                class="ms-2 inline-block !outline-none focus-visible:!rounded-sm focus-visible:!outline-red-300/70"
+                href="#"
+                @click.prevent="removeOrphan(index)"
+            >
+                <svg-loader class="fill-danger" name="icon-trash-can"></svg-loader>
+            </a>
+        </div>
 
-    <slot></slot>
+        <orphan-form :form :index></orphan-form>
+    </template>
 </template>

@@ -3,7 +3,6 @@ import type { EidAlAdhaFamiliesResource, IndexParams, PaginationData } from '@/t
 
 import { useZakatStore } from '@/stores/zakat'
 import { Link } from '@inertiajs/vue3'
-import { ref } from 'vue'
 
 import BaseFormCheckInput from '@/Components/Base/form/form-check/BaseFormCheckInput.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
@@ -20,8 +19,6 @@ const props = defineProps<{ families: PaginationData<EidAlAdhaFamiliesResource>;
 const emit = defineEmits(['sort'])
 
 const zakatStore = useZakatStore()
-
-const selectedFamilies = ref(zakatStore.zakat.checked_families)
 
 const checkAll = ($event) => {
     // Get all family IDs from props.families
@@ -46,7 +43,6 @@ const checkAll = ($event) => {
     <div class="@container">
         {{ zakatStore.zakat.checked_families.length }}
         <Link
-            method="post"
             :href="
                 route('tenant.occasions.zakat.save-to-archive', {
                     families: zakatStore.zakat.checked_families,
@@ -54,6 +50,7 @@ const checkAll = ($event) => {
                     amount: 30000
                 })
             "
+            method="post"
         >
             save
         </Link>
@@ -124,12 +121,12 @@ const checkAll = ($event) => {
                 </base-thead-table>
 
                 <base-tbody-table>
-                    <base-tr-table v-for="(family, index) in families.data" :key="family.id" class="intro-x">
+                    <base-tr-table v-for="family in families.data" :key="family.id" class="intro-x">
                         <the-table-td class="w-16">
                             <base-form-check-input
-                                type="checkbox"
                                 v-model="zakatStore.zakat.checked_families"
                                 :value="family.id"
+                                type="checkbox"
                             ></base-form-check-input>
                         </the-table-td>
 

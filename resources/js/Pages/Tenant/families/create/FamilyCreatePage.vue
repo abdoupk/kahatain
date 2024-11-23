@@ -1,17 +1,12 @@
 <script lang="ts" setup>
 import { Head, router } from '@inertiajs/vue3'
-import type {
-    CreateFamilyForm,
-    InspectorsMembersType
-} from '@/types/types'
+import type { CreateFamilyForm, InspectorsMembersType } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
 import { defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
-import {
-    createFamilyStepsTitles
-} from '@/utils/constants'
+import { createFamilyStepsTitles } from '@/utils/constants'
 import StepLoader from '@/Pages/Tenant/families/create/StepLoader.vue'
 import { $t, $tc } from '@/utils/i18n'
 import { useCreateFamilyStore } from '@/stores/create-family'
@@ -26,19 +21,7 @@ defineProps<{
 
 const StepOne = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepOne/StepOne.vue'))
 
-const OrphanForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepThree/OrphanForm.vue'))
-
-const TheOrphans = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepThree/TheOrphans.vue'))
-
 const StepTitle = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/StepTitle.vue'))
-
-const IncomeForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepTwo/IncomeForm.vue'))
-
-const SecondSponsorForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepTwo/SecondSponsorForm.vue'))
-
-const SponsorForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepTwo/SponsorForm.vue'))
-
-const SpouseForm = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/stepTwo/SpouseForm.vue'))
 
 const TheActions = defineAsyncComponent(() => import('@/Pages/Tenant/families/create/TheActions.vue'))
 
@@ -223,32 +206,20 @@ onMounted(() => {
                 </div>
 
                 <form @submit.prevent="submit">
-                    <step-one :form>
-                        <the-actions :nextStep :prevStep></the-actions>
-                    </step-one>
+                    <suspense v-if="createFamilyStore.current_step === 1">
+                        <step-one :form>
+                            <the-actions :nextStep="nextStep" :prevStep="prevStep"></the-actions>
+                        </step-one>
+
+                        <template #fallback>
+                            <step-loader></step-loader>
+                        </template>
+                    </suspense>
 
                     <suspense v-if="createFamilyStore.current_step === 2">
-                        <template #default>
-                            <step-two :form>
-                                <template #sponsorForm>
-                                    <sponsor-form :form></sponsor-form>
-                                </template>
-
-                                <template #incomeForm>
-                                    <income-form :form></income-form>
-                                </template>
-
-                                <template #secondSponsorForm>
-                                   <second-sponsor-form :form></second-sponsor-form>
-                                </template>
-
-                                <template #spouseForm>
-                                    <spouse-form :form></spouse-form>
-                                </template>
-
-                                <the-actions :nextStep :prevStep></the-actions>
-                            </step-two>
-                        </template>
+                        <step-two :form>
+                            <the-actions :nextStep="nextStep" :prevStep="prevStep"></the-actions>
+                        </step-two>
 
                         <template #fallback>
                             <step-loader></step-loader>
@@ -256,19 +227,9 @@ onMounted(() => {
                     </suspense>
 
                     <suspense v-if="createFamilyStore.current_step === 3">
-                        <template #default>
-                            <step-three>
-                                <template #orphansForm>
-                                    <template v-for="(orphan, index) in form.orphans" :key="`orphan-${index}`">
-                                        <the-orphans :index>
-                                            <orphan-form :form :index></orphan-form>
-                                        </the-orphans>
-                                    </template>
-                                </template>
-
-                                <the-actions :nextStep :prevStep></the-actions>
-                            </step-three>
-                        </template>
+                        <step-three>
+                            <the-actions :nextStep="nextStep" :prevStep="prevStep"></the-actions>
+                        </step-three>
 
                         <template #fallback>
                             <step-loader></step-loader>
@@ -297,7 +258,7 @@ onMounted(() => {
                                                            :form></other-properties-form>
                                 </template>
 
-                                <the-actions :nextStep :prevStep></the-actions>
+                                <the-actions :nextStep="nextStep" :prevStep="prevStep"></the-actions>
                             </step-four>
                         </template>
 
@@ -307,11 +268,9 @@ onMounted(() => {
                     </suspense>
 
                     <suspense v-if="createFamilyStore.current_step === 5">
-                        <template #default>
-                            <step-five :form :members>
-                                <the-actions :nextStep="submit" :prevStep></the-actions>
-                            </step-five>
-                        </template>
+                        <step-five :form :members>
+                            <the-actions :nextStep="submit" :prevStep></the-actions>
+                        </step-five>
 
                         <template #fallback>
                             <step-loader></step-loader>

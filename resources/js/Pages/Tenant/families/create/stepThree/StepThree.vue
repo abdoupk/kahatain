@@ -1,7 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
 import { useCreateFamilyStore } from '@/stores/create-family'
+
+import TheOrphans from '@/Pages/Tenant/families/create/stepThree/TheOrphans.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
@@ -39,14 +41,14 @@ const addOrphan = () => {
 
 <template>
     <div
-        class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
         v-if="createFamilyStore.current_step === 3"
+        class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
         <div class="mb-6 hidden text-lg font-medium lg:block">
             {{ $t('families.create_family.stepThree') }}
         </div>
 
-        <slot name="orphansForm"></slot>
+        <the-orphans></the-orphans>
 
         <base-button
             class="mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"

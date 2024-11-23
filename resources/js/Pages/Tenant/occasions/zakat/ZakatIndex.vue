@@ -17,8 +17,6 @@ import { $t } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/occasions/zakat/DataTable.vue'))
 
-const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/BaseButton.vue'))
-
 const TheNoResultsTable = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheNoResultsTable.vue'))
 
 const TheTableFooter = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheTableFooter.vue'))
@@ -115,11 +113,11 @@ const handleSave = () => {
 
                 <template #ExtraButtons>
                     <save-to-archive
-                        class="me-2"
-                        @save="handleSave"
                         v-if="hasPermission('save_occasions')"
                         :disabled="loading"
                         :loading
+                        class="me-2"
+                        @save="handleSave"
                     ></save-to-archive>
                 </template>
             </the-table-header>

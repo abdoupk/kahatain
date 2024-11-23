@@ -34,8 +34,6 @@ const props = defineProps<{
     params: IndexParams
 }>()
 
-console.log(props.orphans)
-
 const params = ref<IndexParams>({
     perPage: props.params.perPage,
     page: props.params.page,
@@ -53,8 +51,6 @@ const sort = (field: string) => handleSort(field, params.value)
 
 const showEditModal = (transcriptId: string) => {
     transcriptStore.$reset()
-
-    console.log(transcriptId)
 
     transcriptStore.getTranscript(transcriptId)
 

@@ -35,8 +35,6 @@ export const useTranscriptsStore = defineStore('transcripts', {
 
         async getTranscriptSubjects(orphanId: string) {
             await axios.get(route('tenant.transcripts.transcript-subjects', orphanId)).then((res) => {
-                console.log(res.data)
-
                 this.transcript.subjects = res.data.subjects
             })
         },
@@ -44,8 +42,6 @@ export const useTranscriptsStore = defineStore('transcripts', {
         async getTranscript(transcriptId: string) {
             await axios.get(route('tenant.transcripts.show', transcriptId)).then((res) => {
                 this.transcript = res.data.transcript
-
-                console.log(res.data.transcript)
             })
         }
     }

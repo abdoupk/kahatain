@@ -1,6 +1,3 @@
-import type { Zone } from '@/types/types'
-
-import axios from 'axios'
 import { defineStore } from 'pinia'
 
 interface State {

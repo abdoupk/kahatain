@@ -4,6 +4,11 @@ import type { CreateFamilyStepProps } from '@/types/types'
 import { useCreateFamilyStore } from '@/stores/create-family'
 import { computed } from 'vue'
 
+import IncomeForm from '@/Pages/Tenant/families/create/stepTwo/IncomeForm.vue'
+import SecondSponsorForm from '@/Pages/Tenant/families/create/stepTwo/SecondSponsorForm.vue'
+import SponsorForm from '@/Pages/Tenant/families/create/stepTwo/SponsorForm.vue'
+import SpouseForm from '@/Pages/Tenant/families/create/stepTwo/SpouseForm.vue'
+
 import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
 import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
 import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
@@ -99,19 +104,19 @@ const handleTabChange = (index) => {
             </base-tab-list>
             <base-tab-panels>
                 <base-tab-panel class="p-5">
-                    <slot name="sponsorForm"></slot>
+                    <sponsor-form :form></sponsor-form>
                 </base-tab-panel>
 
                 <base-tab-panel class="p-5">
-                    <slot name="incomeForm"></slot>
+                    <income-form :form></income-form>
                 </base-tab-panel>
 
                 <base-tab-panel class="p-5">
-                    <slot name="secondSponsorForm"></slot>
+                    <second-sponsor-form :form></second-sponsor-form>
                 </base-tab-panel>
 
                 <base-tab-panel class="p-5">
-                    <slot name="spouseForm"></slot>
+                    <spouse-form :form></spouse-form>
                 </base-tab-panel>
             </base-tab-panels>
         </base-tab-group>
