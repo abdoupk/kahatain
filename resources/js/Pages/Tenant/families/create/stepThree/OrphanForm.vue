@@ -22,6 +22,7 @@ import TheBabyMilkSelector from '@/Components/Global/TheBabyMilkSelector.vue'
 import TheClothesSizeSelector from '@/Components/Global/TheClothesSizeSelector.vue'
 import TheDiapersSelector from '@/Components/Global/TheDiapersSelector.vue'
 import TheFamilyStatusSelector from '@/Components/Global/TheFamilyStatusSelector.vue'
+import TheInstitutionSelector from '@/Components/Global/TheInstitutionSelector.vue'
 import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
 import TheVocationalTrainingSelector from '@/Components/Global/TheVocationalTrainingSelector.vue'
 
@@ -91,6 +92,13 @@ const handleUpdateAcademicLevel = (value: number) => {
     // @ts-ignore
     props.form?.validate(`orphans.${props.index}.academic_level_id`)
 }
+
+const handleUpdateInstitution = (value: number) => {
+    phase.value = academicLevelsStore.getPhaseFromId(value)
+
+    // @ts-ignore
+    props.form?.validate(`orphans.${props.index}.institution`)
+}
 </script>
 
 <template>
@@ -99,11 +107,11 @@ const handleUpdateAcademicLevel = (value: number) => {
         <div class="col-span-12">
             <div class="me-2 ms-auto mt-2 h-36 w-36">
                 <base-file-pond
-                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
                     :id="`photo_${index}`"
                     :key="`photo_${index}`"
                     :allow-multiple="false"
                     :files="pic"
+                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
                     is-picture
                     @update:files="createFamilyStore.family.orphans[index].photo = $event[0]"
                 ></base-file-pond>
@@ -130,7 +138,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                 @change="form?.validate(`orphans.${index}.first_name`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.first_name`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.first_name`" :form></base-form-input-error>
         </div>
         <!-- End: First Name-->
 
@@ -153,7 +161,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                 @change="form?.validate(`orphans.${index}.last_name`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.last_name`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.last_name`" :form></base-form-input-error>
         </div>
         <!-- End: Last Name-->
 
@@ -165,7 +173,7 @@ const handleUpdateAcademicLevel = (value: number) => {
 
             <base-v-calendar v-model:date="createFamilyStore.family.orphans[index].birth_date"></base-v-calendar>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.birth_date`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.birth_date`" :form></base-form-input-error>
         </div>
         <!-- End: Birth Date-->
 
@@ -191,7 +199,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                 <option value="female">{{ $t('female') }}</option>
             </base-form-select>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.gender`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.gender`" :form></base-form-input-error>
         </div>
         <!-- End: Gender-->
 
@@ -213,12 +221,12 @@ const handleUpdateAcademicLevel = (value: number) => {
                 @change="form?.validate(`orphans.${index}.health_status`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.health_status`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.health_status`" :form></base-form-input-error>
         </div>
         <!-- End: Health Status-->
 
         <!-- Begin: Family Status-->
-        <div class="col-span-12 sm:col-span-6" v-if="isOlderThan18">
+        <div v-if="isOlderThan18" class="col-span-12 sm:col-span-6">
             <base-form-label for="family_status">
                 {{ $t('family_status') }}
             </base-form-label>
@@ -231,28 +239,49 @@ const handleUpdateAcademicLevel = (value: number) => {
                 ></the-family-status-selector>
             </div>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.family_status`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.family_status`" :form></base-form-input-error>
         </div>
         <!-- End: Family Status-->
 
-        <!-- Begin: Academic Level-->
-        <div v-if="shouldBeInSchool" class="col-span-12 sm:col-span-6">
-            <base-form-label for="academic_level">
-                {{ $t('validation.attributes.sponsor.academic_level') }}
-            </base-form-label>
+        <template v-if="shouldBeInSchool">
+            <!-- Begin: Academic Level-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label for="academic_level">
+                    {{ $t('validation.attributes.sponsor.academic_level') }}
+                </base-form-label>
 
-            <div>
-                <the-academic-level-selector
-                    :id="`academic_level_${index}`"
-                    v-model:academic-level="createFamilyStore.family.orphans[index].academic_level_id"
-                    :academic-levels="academicLevels"
-                    @update:academic-level="handleUpdateAcademicLevel"
-                ></the-academic-level-selector>
+                <div>
+                    <the-academic-level-selector
+                        :id="`academic_level_${index}`"
+                        v-model:academic-level="createFamilyStore.family.orphans[index].academic_level_id"
+                        :academic-levels="academicLevels"
+                        @update:academic-level="handleUpdateAcademicLevel"
+                    ></the-academic-level-selector>
+                </div>
+
+                <base-form-input-error :field_name="`orphans.${index}.academic_level_id`" :form></base-form-input-error>
             </div>
+            <!-- End: Academic Level-->
 
-            <base-form-input-error :form :field_name="`orphans.${index}.academic_level_id`"></base-form-input-error>
-        </div>
-        <!-- End: Academic Level-->
+            <!-- Begin: Institution-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label for="institution">
+                    {{ $t('validation.attributes.institution') }}
+                </base-form-label>
+
+                <div>
+                    <the-institution-selector
+                        :id="`institution_${index}`"
+                        v-model:academic-level="createFamilyStore.family.orphans[index].institution_id"
+                        :academic-levels="academicLevels"
+                        @update:academic-level="handleUpdateInstitution"
+                    ></the-institution-selector>
+                </div>
+
+                <base-form-input-error :field_name="`orphans.${index}.institution_id`" :form></base-form-input-error>
+            </div>
+            <!-- End: Institution-->
+        </template>
 
         <!-- Begin: Vocational Training-->
         <div v-if="phase === 'التكوين المهني'" class="col-span-12 sm:col-span-6">
@@ -268,7 +297,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                 ></the-vocational-training-selector>
             </div>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.vocational_training_id`">
+            <base-form-input-error :field_name="`orphans.${index}.vocational_training_id`" :form>
             </base-form-input-error>
         </div>
         <!-- End: Vocational Training-->
@@ -284,13 +313,13 @@ const handleUpdateAcademicLevel = (value: number) => {
                 <base-form-input
                     :id="`ccp_${index}`"
                     v-model="createFamilyStore.family.orphans[index].ccp"
-                    @update:model-value="form?.validate(`orphans.${index}.ccp`)"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('ccp') })"
-                    @keydown="allowOnlyNumbersOnKeyDown"
                     maxlength="12"
+                    @keydown="allowOnlyNumbersOnKeyDown"
+                    @update:model-value="form?.validate(`orphans.${index}.ccp`)"
                 ></base-form-input>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.ccp`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.ccp`" :form></base-form-input-error>
             </div>
             <!-- End: CCp-->
 
@@ -303,13 +332,13 @@ const handleUpdateAcademicLevel = (value: number) => {
                 <base-form-input
                     :id="`phone_number_${index}`"
                     v-model="createFamilyStore.family.orphans[index].phone_number"
-                    @update:model-value="form?.validate(`orphans.${index}.phone_number`)"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.phone_number') })"
-                    @keydown="allowOnlyNumbersOnKeyDown"
                     maxlength="10"
+                    @keydown="allowOnlyNumbersOnKeyDown"
+                    @update:model-value="form?.validate(`orphans.${index}.phone_number`)"
                 ></base-form-input>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.phone_number`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.phone_number`" :form></base-form-input-error>
             </div>
             <!-- End: Phone Number-->
         </template>
@@ -329,7 +358,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     @update:baby-milk="form?.validate(`orphans.${index}.baby_milk_type`)"
                 ></the-baby-milk-selector>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.baby_milk_type`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.baby_milk_type`" :form></base-form-input-error>
             </div>
             <!-- End: Baby Milk Type-->
 
@@ -351,7 +380,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     @change="form?.validate(`orphans.${index}.baby_milk_quantity`)"
                 ></base-form-input>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.baby_milk_quantity`">
+                <base-form-input-error :field_name="`orphans.${index}.baby_milk_quantity`" :form>
                 </base-form-input-error>
             </div>
             <!-- End: Baby Milk Quantity-->
@@ -368,7 +397,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     @update:diaper="form?.validate(`orphans.${index}.diapers_type`)"
                 ></the-diapers-selector>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.diapers_type`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.diapers_type`" :form></base-form-input-error>
             </div>
             <!-- End: Diapers Type-->
 
@@ -390,7 +419,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     @change="form?.validate(`orphans.${index}.diapers_quantity`)"
                 ></base-form-input>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.diapers_quantity`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.diapers_quantity`" :form></base-form-input-error>
             </div>
             <!-- End: Diapers Quantity-->
         </div>
@@ -418,7 +447,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     ></the-shoes-size-selector>
                 </div>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.shoes_size`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.shoes_size`" :form></base-form-input-error>
             </div>
             <!-- End: Shoes Size-->
 
@@ -443,7 +472,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     ></the-clothes-size-selector>
                 </div>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.shirt_size`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.shirt_size`" :form></base-form-input-error>
             </div>
             <!-- End: Shirt Size-->
 
@@ -466,7 +495,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                     ></the-clothes-size-selector>
                 </div>
 
-                <base-form-input-error :form :field_name="`orphans.${index}.pants_size`"></base-form-input-error>
+                <base-form-input-error :field_name="`orphans.${index}.pants_size`" :form></base-form-input-error>
             </div>
             <!-- End: Pants Size-->
         </template>
@@ -525,7 +554,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                 @change="form?.validate(`orphans.${index}.income`)"
             ></base-form-input>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.income`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.income`" :form></base-form-input-error>
         </div>
         <!-- End: Income-->
 
@@ -547,7 +576,7 @@ const handleUpdateAcademicLevel = (value: number) => {
                 @change="form?.validate(`orphans.${index}.note`)"
             ></base-form-text-area>
 
-            <base-form-input-error :form :field_name="`orphans.${index}.note`"></base-form-input-error>
+            <base-form-input-error :field_name="`orphans.${index}.note`" :form></base-form-input-error>
         </div>
         <!-- End: Note -->
 

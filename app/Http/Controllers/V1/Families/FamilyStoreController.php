@@ -192,15 +192,4 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
         $family->furnishings()->create($request->validated('furnishings'));
     }
-
-    /**
-     * @throws FileDoesNotExist
-     * @throws FileIsTooBig
-     */
-    private function addFamilyAttachments(Family $family, CreateFamilyRequest $request)
-    {
-        if ($request->residence_file !== null) {
-            $family->addMediaFromDisk(getFileNameFromTemporaryPath($request->residence_file), 'public')->toMediaCollection('residence_files');
-        }
-    }
 }

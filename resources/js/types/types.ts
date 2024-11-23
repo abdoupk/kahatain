@@ -1,4 +1,4 @@
-import type { AcademicLevelType, AddSchoolLessonType } from '@/types/lessons'
+import type { AddSchoolLessonType } from '@/types/lessons'
 
 import type { Form } from 'laravel-precognition-vue/dist/types'
 
@@ -746,6 +746,7 @@ export type OrphanType = {
     diapers_quantity: number
     is_handicapped: boolean
     is_unemployed: boolean
+    institution_id: number
 }
 
 export type IncomeType = {
