@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { linkTo } from '@/Layouts/menu'
 
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     level: 'first' | 'second' | 'third'

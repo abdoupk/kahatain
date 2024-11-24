@@ -12,7 +12,7 @@ import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroup
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'

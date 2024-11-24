@@ -19,7 +19,7 @@ const BaseDialogTitle = defineAsyncComponent(() => import('@/Components/Base/hea
 
 const SpinnerButtonLoader = defineAsyncComponent(() => import('@/Components/Global/SpinnerButtonLoader.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
 
 defineProps<{
     open: boolean

@@ -13,7 +13,7 @@ import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { $t, $tc } from '@/utils/i18n'
 

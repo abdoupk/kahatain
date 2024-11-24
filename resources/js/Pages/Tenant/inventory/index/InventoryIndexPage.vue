@@ -7,8 +7,8 @@ import { defineAsyncComponent, ref, watchEffect } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'

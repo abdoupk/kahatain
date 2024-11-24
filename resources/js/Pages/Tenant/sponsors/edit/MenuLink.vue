@@ -3,7 +3,7 @@ import type { SVGType } from '@/types/types'
 
 import { inject } from 'vue'
 
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 interface SponsorDetailView {
     view: string

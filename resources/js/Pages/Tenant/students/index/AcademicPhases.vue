@@ -7,7 +7,7 @@ import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
 import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 </script>
 
 <template>

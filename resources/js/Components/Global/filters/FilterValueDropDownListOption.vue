@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     active?: boolean

@@ -2,7 +2,7 @@
 import { provide, ref, watch } from 'vue'
 
 import BaseNotification, { type NotificationElement } from '@/Components/Base/notification/BaseNotification.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 const successNotification = ref<NotificationElement>()
 

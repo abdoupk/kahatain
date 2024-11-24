@@ -29,23 +29,37 @@ createInertiaApp({
             .use(pinia)
             .use(ZiggyVue)
 
-        app.config.errorHandler = (err, instance, info) => {
+        app.config.errorHandler = (err) => {
             if (isAxiosError(err)) {
                 switch (err.response?.status) {
                     case 401:
+                        toast($t('errors.descriptions.401'))
+
+                        break
+
                     case 419:
                         router.post(route('tenant.logout'))
+
                         break
+
                     case 403:
                         toast($t('errors.descriptions.403'))
+
                         break
+
                     case 404:
                         toast($t('errors.descriptions.404'))
+
                         break
+
                     case 500:
                         toast($t('errors.descriptions.500'))
+
                         break
                 }
+            } else if (import.meta.env.MODE === 'development') {
+                // eslint-disable-next-line no-console
+                console.error(err)
             }
         }
 
@@ -57,4 +71,4 @@ createInertiaApp({
     progress: {
         color: '#4B5563'
     }
-}).catch((error) => console.error(error))
+})

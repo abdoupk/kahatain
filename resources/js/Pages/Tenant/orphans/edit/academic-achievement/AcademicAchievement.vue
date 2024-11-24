@@ -12,7 +12,7 @@ import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import DeleteModal from '@/Components/Global/DeleteModal.vue'
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { $tc } from '@/utils/i18n'
 

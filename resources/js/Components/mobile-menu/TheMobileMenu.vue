@@ -9,7 +9,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import { enter, leave, linkTo, nestedMenu } from '@/Layouts/menu'
 
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { toRaw } from '@/utils/helper'
 

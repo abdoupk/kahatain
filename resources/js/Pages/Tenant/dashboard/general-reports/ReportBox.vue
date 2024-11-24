@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import { computed } from 'vue'
 
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

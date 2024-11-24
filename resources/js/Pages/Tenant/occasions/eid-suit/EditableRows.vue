@@ -4,7 +4,7 @@ import type { EidSuitOrphansResource } from '@/types/types'
 import EditableRow from '@/Pages/Tenant/occasions/eid-suit/EditableRow.vue'
 
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     orphan: EidSuitOrphansResource

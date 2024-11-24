@@ -5,7 +5,7 @@ import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseDialog from '@/Components/Base/headless/Dialog/BaseDialog.vue'
 import BaseDialogPanel from '@/Components/Base/headless/Dialog/BaseDialogPanel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{ open: boolean; deleteProgress: boolean }>()
 

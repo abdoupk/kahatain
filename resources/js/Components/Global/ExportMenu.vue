@@ -10,7 +10,7 @@ import BaseMenuButton from '@/Components/Base/headless/Menu/BaseMenuButton.vue'
 import BaseMenuItem from '@/Components/Base/headless/Menu/BaseMenuItem.vue'
 import BaseMenuItems from '@/Components/Base/headless/Menu/BaseMenuItems.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { formatUrl } from '@/utils/helper'
 

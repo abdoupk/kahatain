@@ -22,7 +22,7 @@ const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form
 
 const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
 
 defineProps<{
     open: boolean

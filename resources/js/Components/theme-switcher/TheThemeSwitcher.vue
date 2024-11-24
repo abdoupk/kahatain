@@ -13,7 +13,7 @@ const BaseSlideoverPanel = defineAsyncComponent(
     () => import('@/Components/Base/headless/Slideover/BaseSlideoverPanel.vue')
 )
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
 
 const AppearanceSelector = defineAsyncComponent(() => import('@/Components/theme-switcher/AppearanceSelector.vue'))
 

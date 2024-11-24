@@ -25,7 +25,7 @@ const BaseTippy = defineAsyncComponent(() => import('@/Components/Base/tippy/Bas
 
 const TheContentLoader = defineAsyncComponent(() => import('@/Components/Global/theContentLoader.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/occasions/monthly-sponsorship/DataTable.vue'))
 

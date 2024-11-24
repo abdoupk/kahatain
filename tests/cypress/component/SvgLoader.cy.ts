@@ -1,4 +1,4 @@
-import SvgLoader from '../../../resources/js/Components/SvgLoader.vue'
+import SvgLoader from '../../../resources/js/Components/Global/SvgLoader.vue'
 
 describe('<SvgLoader />', () => {
     it('renders', () => {

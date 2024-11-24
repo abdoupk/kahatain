@@ -8,7 +8,7 @@ import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
 import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

@@ -58,11 +58,11 @@ module.exports = {
         ]
     },
     ignorePatterns: [
-        '.eslintrc.cjs',
-        'vite.config.ts',
-        'cypress.config.ts',
-        'vitest.config.ts',
-        'resources/js/types/*.d.ts',
-        'resources/js/types/*.ts'
+        '.eslintrc.cjs'
+        // 'vite.config.ts',
+        // 'cypress.config.ts',
+        // 'vitest.config.ts',
+        // 'resources/js/types/*.d.ts',
+        // 'resources/js/types/*.ts'
     ]
 }

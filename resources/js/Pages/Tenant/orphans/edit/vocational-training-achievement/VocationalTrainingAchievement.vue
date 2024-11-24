@@ -11,7 +11,7 @@ import VocationalTrainingAchievementCreateEditModal from '@/Pages/Tenant/orphans
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import DeleteModal from '@/Components/Global/DeleteModal.vue'
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 const props = defineProps<{
     orphan: OrphanUpdateFormType

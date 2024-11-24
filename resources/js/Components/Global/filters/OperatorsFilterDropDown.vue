@@ -3,7 +3,7 @@ import type { ListBoxOperator } from '@/types/types'
 
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{ operators: ListBoxOperator[] }>()
 

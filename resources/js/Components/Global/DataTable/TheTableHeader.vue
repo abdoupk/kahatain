@@ -7,7 +7,7 @@ import AdvancedFilter from '@/Pages/Tenant/families/index/AdvancedFilter.vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import ExportMenu from '@/Components/Global/ExportMenu.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { debounce, formatFilters, formatParams, getDataForIndexPages, isEmpty } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'

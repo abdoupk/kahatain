@@ -4,7 +4,7 @@ import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BasePopover from '@/Components/Base/headless/Popover/BasePopover.vue'
 import BasePopoverButton from '@/Components/Base/headless/Popover/BasePopoverButton.vue'
 import BasePopoverPanel from '@/Components/Base/headless/Popover/BasePopoverPanel.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     loading: boolean

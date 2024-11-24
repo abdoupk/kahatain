@@ -23,7 +23,7 @@ const TheTableTdActions = defineAsyncComponent(() => import('@/Components/Global
 
 const TheTableTh = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheTableTh.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
 
 defineProps<{
     recentFamilies: RecentFamiliesType

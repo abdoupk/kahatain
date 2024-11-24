@@ -15,7 +15,7 @@ import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
 import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
 import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

@@ -5,7 +5,7 @@ import 'v-calendar/style.css'
 import { ref } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { getLocale } from '@/utils/i18n'
 

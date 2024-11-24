@@ -8,7 +8,7 @@ import BaseThTable from '@/Components/Base/table/BaseThTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     orphan: OrphanShowType
