@@ -39,13 +39,6 @@ const params = ref<IndexParams>({
 })
 
 const sort = (field: string) => handleSort(field, params.value)
-
-console.log(
-    route('tenant.students.phase.index', {
-        phase: 'elementary',
-        academicLevel: 6
-    })
-)
 </script>
 
 <template>

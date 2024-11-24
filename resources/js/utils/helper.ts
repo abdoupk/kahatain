@@ -205,7 +205,7 @@ const handleSort = (field: string, params: IndexParams) => {
     params.fields = (params?.fields ?? []) || []
 
     params.directions = { ...params.directions }
-    console.log(params.fields, field, '1')
+
     if (params.fields.includes(field)) {
         const idx = params.fields.indexOf(field)
 
@@ -217,15 +217,11 @@ const handleSort = (field: string, params: IndexParams) => {
             delete params.directions[field]
         }
     } else {
-        console.log(params.fields, field, '2')
-
         params.fields.push(field)
 
         params.directions[field] = 'asc'
     }
 
-    console.log(params.fields, field, '3')
-    console.log(params)
     return params
 }
 
@@ -435,7 +431,6 @@ const formatParams = (params: IndexParams) => {
     }
 
     Object.keys(data).forEach((key) => {
-        console.log(key)
         if (!data[key as keyof IndexParams]) delete data[key as keyof IndexParams]
     })
 

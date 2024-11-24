@@ -31,21 +31,7 @@ module.exports = {
     rules: {
         'no-console': 'warn',
         'capitalized-comments': ['error', 'always'],
-        'vue/multi-word-component-names': [
-            'error',
-            {
-                ignores: [
-                    'Register',
-                    'Login',
-                    'Checkbox',
-                    'Dropdown',
-                    'Modal',
-                    'Dashboard',
-                    'Edit',
-                    'Welcome'
-                ]
-            }
-        ],
+        'vue/multi-word-component-names': ['error'],
         'padding-line-between-statements': [
             'error',
             {
@@ -71,14 +57,12 @@ module.exports = {
             }
         ]
     },
-    ignorePatterns: ['.eslintrc.cjs',
+    ignorePatterns: [
+        '.eslintrc.cjs',
         'vite.config.ts',
         'cypress.config.ts',
         'vitest.config.ts',
-        'resources/js/*.ts',
-        'resources/js/Components/Base/dropzone/index.ts',
-        'resources/js/generated/**/*.*',
-        'resources/js/utils/*.ts',
         'resources/js/types/*.d.ts',
-        'resources/js/types/*.ts']
+        'resources/js/types/*.ts'
+    ]
 }
