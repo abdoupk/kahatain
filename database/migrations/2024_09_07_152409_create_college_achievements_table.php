@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AcademicLevel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->float('average')->nullable();
             $table->uuid('tenant_id');
-            $table->integer('academic_level_id');
+            $table->foreignIdFor(AcademicLevel::class);
             $table->softDeletes();
             $table->timestamps();
         });

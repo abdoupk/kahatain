@@ -323,7 +323,7 @@ function getAcademicLevelFromId(id, academicLevels) {
     if (!id) return ''
     else {
         return academicLevels.reduce((acc, curr) => {
-            const level = curr.levels.find((level) => Number(level.id) === id)
+            const level = curr.levels.find((level) => level.id === id)
 
             if (level) acc = level
 

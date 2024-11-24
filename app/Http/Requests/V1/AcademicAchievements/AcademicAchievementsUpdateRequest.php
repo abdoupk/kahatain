@@ -9,7 +9,7 @@ class AcademicAchievementsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'academic_level_id' => 'required|integer',
+            'academic_level_id' => 'required|uuid,exists:academic_levels,id',
             'academic_year' => 'required|integer',
             'first_trimester' => 'nullable|numeric',
             'second_trimester' => 'nullable|numeric',

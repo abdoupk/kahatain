@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AcademicLevel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('academic_achievements', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('academic_level_id')->nullable();
+            $table->foreignIdFor(AcademicLevel::class)->nullable();
             $table->integer('academic_year')->nullable();
             $table->float('first_trimester')->nullable();
             $table->float('second_trimester')->nullable();

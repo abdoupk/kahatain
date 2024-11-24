@@ -19,7 +19,7 @@ class LessonCreateRequest extends FormRequest
             'orphans.*' => 'required|exists:orphans,id',
             'school_id' => 'required|exists:App\Models\PrivateSchool,id',
             'subject_id' => 'required|integer',
-            'academic_level_id' => 'required|integer',
+            'academic_level_id' => 'required|uuid,exists:academic_levels,id',
             'frequency' => 'nullable|in:weekly,monthly,daily|required_with:interval',
             'interval' => 'nullable|integer|min:1|required_with:frequency',
         ];

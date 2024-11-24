@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AcademicLevel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->date('birth_date')->index('idx_orphans_birth_date');
             $table->text('family_status')->nullable()->index('idx_orphans_family_status');
             $table->text('health_status')->nullable()->index('idx_orphans_health_status');
-            $table->integer('academic_level_id')->nullable()->index('idx_orphans_academic_level');
+            $table->foreignIdFor(AcademicLevel::class)->nullable()->index('idx_orphans_academic_level');
             $table->integer('vocational_training_id')->nullable();
             $table->text('shoes_size')->nullable()->index('idx_orphans_shoes_size');
             $table->text('pants_size')->nullable()->index('idx_orphans_pants_size');

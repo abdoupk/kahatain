@@ -9,7 +9,7 @@ class SponsorInfosUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'academic_level_id' => 'required|integer',
+            'academic_level_id' => 'required|uuid,exists:academic_levels,id',
             'birth_certificate_number' => 'required',
             'birth_date' => 'required',
             'ccp' => 'required',

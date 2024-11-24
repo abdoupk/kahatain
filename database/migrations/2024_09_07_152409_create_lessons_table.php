@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AcademicLevel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('subject_id');
-            $table->integer('academic_level_id');
+            $table->foreignIdFor(AcademicLevel::class);
             $table->uuid('private_school_id');
             $table->integer('quota');
             $table->uuid('tenant_id');

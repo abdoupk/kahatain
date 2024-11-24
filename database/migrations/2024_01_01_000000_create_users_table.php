@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\AcademicLevel;
+use App\Models\Branch;
+use App\Models\Tenant;
+use App\Models\Zone;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,21 +24,20 @@ return new class extends Migration
             $table->json('location')->nullable();
             $table->text('workplace')->nullable();
             $table->text('function')->nullable();
-            $table->uuid('zone_id')->nullable();
-            $table->uuid('branch_id')->nullable();
+            $table->foreignIdFor(Zone::class)->nullable();
+            $table->foreignIdFor(Branch::class)->nullable();
             $table->text('email')->nullable(false);
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('qualification')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->text('password')->nullable(false);
             $table->text('remember_token')->nullable();
-            $table->uuid('tenant_id');
-            $table->integer('academic_level_id')->nullable();
+            $table->foreignIdFor(Tenant::class)->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreignIdFor(AcademicLevel::class)->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->uuid('deleted_by')->nullable();
-            $table->uuid('created_by')->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'created_by')->nullable();
             $table->softDeletes();
         });
 

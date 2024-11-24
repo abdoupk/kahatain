@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Laravel\Scout\Searchable;
 
 /**
- * @property int $id
+ * @property string $id
  * @property string|null $level
  * @property string|null $phase
  *
@@ -24,11 +25,17 @@ use Laravel\Scout\Searchable;
  */
 class AcademicLevel extends Model
 {
-    use Searchable;
+    use HasUuids, Searchable;
 
     public function toSearchableArray(): array
     {
-        return $this->toArray();
+        return [
+            'id' => $this->id,
+            'level' => $this->level,
+            'phase' => $this->phase,
+            'phase_key' => $this->phase_key,
+            'subjects' => $this->subjects(),
+        ];
     }
 
     public function subjects(): Collection

@@ -29,37 +29,36 @@ createInertiaApp({
             .use(pinia)
             .use(ZiggyVue)
 
-        app.config.errorHandler = (err) => {
-            if (isAxiosError(err)) {
-                switch (err.response?.status) {
-                    case 401:
-                        toast($t('errors.descriptions.401'))
+        if (import.meta.env.MODE !== 'development') {
+            app.config.errorHandler = (err) => {
+                if (isAxiosError(err)) {
+                    switch (err.response?.status) {
+                        case 401:
+                            toast($t('errors.descriptions.401'))
 
-                        break
+                            break
 
-                    case 419:
-                        router.post(route('tenant.logout'))
+                        case 419:
+                            router.post(route('tenant.logout'))
 
-                        break
+                            break
 
-                    case 403:
-                        toast($t('errors.descriptions.403'))
+                        case 403:
+                            toast($t('errors.descriptions.403'))
 
-                        break
+                            break
 
-                    case 404:
-                        toast($t('errors.descriptions.404'))
+                        case 404:
+                            toast($t('errors.descriptions.404'))
 
-                        break
+                            break
 
-                    case 500:
-                        toast($t('errors.descriptions.500'))
+                        case 500:
+                            toast($t('errors.descriptions.500'))
 
-                        break
+                            break
+                    }
                 }
-            } else if (import.meta.env.MODE === 'development') {
-                // eslint-disable-next-line no-console
-                console.error(err)
             }
         }
 
