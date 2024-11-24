@@ -25,10 +25,12 @@ const emit = defineEmits(['sort'])
                         <the-table-th
                             v-for="(subject, index) in students.data[0].subjects"
                             :key="subject.id"
-                            :direction="params.directions && params.directions[`${index}.grade`]"
+                            :direction="
+                                params.directions && params.directions[`first_trimester.grade_${String(index)}`]
+                            "
                             class="text-start"
                             sortable
-                            @click="emit('sort', `${index}.grade`)"
+                            @click="emit('sort', `first_trimester.grade_${String(index)}`)"
                         >
                             {{ subject.name }}
                         </the-table-th>

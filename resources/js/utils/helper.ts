@@ -225,7 +225,7 @@ const handleSort = (field: string, params: IndexParams) => {
     }
 
     console.log(params.fields, field, '3')
-
+    console.log(params)
     return params
 }
 
@@ -435,6 +435,7 @@ const formatParams = (params: IndexParams) => {
     }
 
     Object.keys(data).forEach((key) => {
+        console.log(key)
         if (!data[key as keyof IndexParams]) delete data[key as keyof IndexParams]
     })
 

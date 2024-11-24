@@ -618,6 +618,18 @@ export interface EidSuitOrphansResource {
         shirt_size: string
         age: number
     }
+    eid_suit: {
+        id: string | null
+        shoes_shop_name: string | null
+        shoes_shop_phone_number: string | null
+        clothes_shop_name: string | null
+        clothes_shop_phone_number: string | null
+        note: string | null
+        member?: {
+            id: string | null
+            name: string | null
+        }
+    } | null
 }
 
 export interface InventoryIndexResource {

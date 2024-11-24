@@ -12,5 +12,5 @@ Route::prefix('students')->name('students.')->group(function (): void {
     Route::get('{phase}/{academicLevel}', PhaseStudentsIndexController::class)
 
 //        ->where('academicLevel', '[0-9a-fA-F\-]{36}')
-        ->name('phase');
+        ->name('phase.index');
 });

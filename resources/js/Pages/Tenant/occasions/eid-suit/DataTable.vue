@@ -2,7 +2,10 @@
 import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
+import { useForm } from 'laravel-precognition-vue'
+import { nextTick, ref } from 'vue'
 
+import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
@@ -10,18 +13,74 @@ import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
+import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatCurrency } from '@/utils/helper'
+import { debounce, formatCurrency } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 defineProps<{ orphans: PaginationData<EidSuitOrphansResource>; params: IndexParams }>()
 
 const emit = defineEmits(['sort'])
+
+const selectedOrphan = ref({
+    orphan_id: '',
+    clothes_shop_name: '',
+    clothes_shop_phone_number: '',
+    designated_member: '',
+    shoes_shop_name: '',
+    shoes_shop_phone_number: '',
+    note: ''
+})
+
+const handleInputBlur = (orphan: EidSuitOrphansResource, field: string, event: Event) => {
+    if (event?.target.value) {
+        if (selectedOrphan.value.orphan_id !== orphan.id) {
+            selectedOrphan.value = {}
+        }
+
+        selectedOrphan.value.orphan_id = orphan.id
+
+        selectedOrphan.value[field] = (event.target as HTMLInputElement).value
+
+        orphan.orphan.edit = false
+    }
+}
+
+const form = useForm('get', route('tenant.orphans.edit', selectedOrphan.value.orphan_id), {
+    ...selectedOrphan.value
+})
+
+const submit = debounce(() => {
+    alert('11')
+}, 2000)
+
+const handleSelectDesignatedMember = (orphan_id: string, event: { id: string; name: string }) => {
+    if (event.id) {
+        selectedOrphan.value.orphan_id = orphan_id
+
+        selectedOrphan.value.designated_member = event
+    }
+
+    submit()
+}
+
+const handleclick = (orphan: EidSuitOrphansResource, field: string) => {
+    orphan.orphan.edit = true
+
+    nextTick(() => {
+        const a = document.getElementById(`clothes_shop_phone_number_${orphan.id}`)
+
+        a?.focus()
+
+        a.value = orphan.eid_suit[field]
+    })
+}
 </script>
 
 <template>
     <div class="@container">
-        <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+        <div class="intro-y !z-30 col-span-12 hidden overflow-x-scroll @3xl:block">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
@@ -73,6 +132,29 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
+                            :direction="params.directions && params.directions['family.income_rate']"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'family.income_rate')"
+                        >
+                            {{ $t('income_rate') }}
+                        </the-table-th>
+
+                        <the-table-th>{{ $t('clothes_shop_name') }}</the-table-th>
+
+                        <the-table-th>{{ $t('clothes_shop_phone_number') }}</the-table-th>
+
+                        <the-table-th>{{ $t('shoes_shop_name') }}</the-table-th>
+
+                        <the-table-th>{{ $t('shoes_shop_phone_number') }}</the-table-th>
+
+                        <the-table-th>{{ $t('designated_member') }}</the-table-th>
+
+                        <the-table-th>{{ $t('validation.attributes.note') }}</the-table-th>
+
+                        <the-table-th>{{ $t('location') }}</the-table-th>
+
+                        <the-table-th
                             :direction="params.directions && params.directions['sponsor.name']"
                             class="text-start"
                             sortable
@@ -86,15 +168,6 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th class="text-start">{{ $t('validation.attributes.address') }}</the-table-th>
-
-                        <the-table-th
-                            :direction="params.directions && params.directions['family.income_rate']"
-                            class="!w-32 text-center"
-                            sortable
-                            @click="emit('sort', 'family.income_rate')"
-                        >
-                            {{ $t('income_rate') }}
-                        </the-table-th>
                     </base-tr-table>
                 </base-thead-table>
 
@@ -130,6 +203,65 @@ const emit = defineEmits(['sort'])
                             <span v-else> {{ $t('low_than_one_year') }}</span>
                         </the-table-td>
 
+                        <the-table-td class="text-center">
+                            <div class="whitespace-nowrap">
+                                {{ formatCurrency(orphan.family.income_rate) }}
+                            </div>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <base-form-input
+                                :value="selectedOrphan.orphan_id === orphan.id ? selectedOrphan.clothes_shop_name : ''"
+                                @blur.prevent="handleInputBlur(orphan, 'clothes_shop_name', $event)"
+                            ></base-form-input>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <span
+                                v-if="!orphan.orphan.edit"
+                                class="cursor-pointer"
+                                @click="handleclick(orphan, 'clothes_shop_phone_number')"
+                                >t nameest</span
+                            >
+                            <base-form-input
+                                v-else
+                                :id="`clothes_shop_phone_number_${orphan.id}`"
+                                maxlength="10"
+                                minlength="10"
+                                @blur.prevent="handleInputBlur(orphan, 'clothes_shop_phone_number', $event)"
+                            ></base-form-input>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <base-form-input
+                                @blur.prevent="handleInputBlur(orphan.id, 'shoes_shop_name', $event)"
+                            ></base-form-input>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <base-form-input
+                                @blur.prevent="handleInputBlur(orphan.id, 'shoes_shop_phone_number', $event)"
+                            ></base-form-input>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <members-filter-drop-down
+                                :value="selectedOrphan.orphan_id === orphan.id ? selectedOrphan.designated_member : ''"
+                                class="!w-40"
+                                @update:value="handleSelectDesignatedMember(orphan.id, $event)"
+                            ></members-filter-drop-down>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <base-form-input
+                                @blur.prevent="handleInputBlur(orphan.id, 'note', $event)"
+                            ></base-form-input>
+                        </the-table-td>
+
+                        <the-table-td>
+                            <svg-loader class="h-5 w-5" name="icon-map-location-dot"></svg-loader>
+                        </the-table-td>
+
                         <the-table-td class="!min-w-24 !max-w-24 truncate">
                             <Link :href="route('tenant.sponsors.show', orphan.sponsor.id)" class="font-medium">
                                 {{ orphan.sponsor.name }}
@@ -149,12 +281,6 @@ const emit = defineEmits(['sort'])
                             >
                                 {{ orphan.family.zone?.name }}
                             </Link>
-                        </the-table-td>
-
-                        <the-table-td class="text-center">
-                            <div class="whitespace-nowrap">
-                                {{ formatCurrency(orphan.family.income_rate) }}
-                            </div>
                         </the-table-td>
                     </base-tr-table>
                 </base-tbody-table>
@@ -214,6 +340,10 @@ const emit = defineEmits(['sort'])
                                 <p class="col-span-8">
                                     {{ orphan.orphan.pants_size }}
                                 </p>
+                            </div>
+
+                            <div class="col-span-12">
+                                <base-form-input></base-form-input>
                             </div>
                         </div>
                         <div

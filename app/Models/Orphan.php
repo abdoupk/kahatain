@@ -480,6 +480,11 @@ class Orphan extends Model implements HasMedia
         return $this->hasMany(Transcript::class);
     }
 
+    public function eidSuit(): HasOne
+    {
+        return $this->hasOne(OrphanEidSuit::class);
+    }
+
     protected function casts(): array
     {
         return [

@@ -36,6 +36,18 @@ class EidSuitResource extends JsonResource
                 'shoes_size' => $this->shoesSize?->label,
                 'age' => $this->birth_date->age ?? null,
             ],
+            'eid_suit' => [
+                'id' => $this->eidSuit?->id,
+                'shoes_shop_name' => $this->eidSuit?->shoes_shop_name,
+                'shoes_shop_phone_number' => $this->eidSuit?->shoes_shop_phone_number,
+                'clothes_shop_name' => $this->eidSuit?->clothes_shop_name,
+                'clothes_shop_phone_number' => $this->eidSuit?->clothes_shop_phone_number,
+                'note' => $this->eidSuit?->note,
+                'member' => [
+                    'id' => $this->eidSuit?->member->id,
+                    'name' => $this->eidSuit?->member->getName(),
+                ],
+            ],
         ];
     }
 }

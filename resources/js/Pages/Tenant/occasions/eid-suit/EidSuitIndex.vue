@@ -120,6 +120,8 @@ const handleSave = () => {
                     >
                         {{ $t('save') }}
                     </base-button>
+
+                    <base-button variant="soft-secondary">تحديث مجمع</base-button>
                 </template>
             </the-table-header>
 

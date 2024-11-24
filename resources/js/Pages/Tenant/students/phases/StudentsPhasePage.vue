@@ -39,6 +39,13 @@ const params = ref<IndexParams>({
 })
 
 const sort = (field: string) => handleSort(field, params.value)
+
+console.log(
+    route('tenant.students.phase.index', {
+        phase: 'elementary',
+        academicLevel: 6
+    })
+)
 </script>
 
 <template>
@@ -50,9 +57,14 @@ const sort = (field: string) => handleSort(field, params.value)
                 :exportable="hasPermission('export_orphans')"
                 :filters="[]"
                 :pagination-data="students"
-                :params="params"
+                :params
                 :title="$t('list', { attribute: $t('the_orphans') })"
-                :url="$page.url"
+                :url="
+                    route('tenant.students.phase.index', {
+                        phase: 'elementary',
+                        academicLevel: 6
+                    })
+                "
                 entries="students"
                 export-pdf-url="tenant.orphans.export.pdf"
                 export-xlsx-url="tenant.orphans.export.xlsx"
