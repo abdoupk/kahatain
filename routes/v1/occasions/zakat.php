@@ -9,8 +9,8 @@ use App\Http\Controllers\V1\Occasions\Zakat\SaveFamiliesZakatToArchiveController
 use App\Http\Controllers\V1\Occasions\Zakat\ZakatStoreController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
-Route::prefix('projects/zakat')
-    ->name('occasions.zakat.')
+Route::prefix('zakat')
+    ->name('zakat.')
     ->group(function (): void {
         Route::get(
             '',

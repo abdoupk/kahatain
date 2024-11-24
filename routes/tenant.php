@@ -74,8 +74,6 @@ Route::middleware([
 
             require __DIR__.'/v1/notifications.php';
 
-            require __DIR__.'/v1/occasions.php';
-
             require __DIR__.'/v1/orphans.php';
 
             require __DIR__.'/v1/profile.php';
@@ -96,9 +94,24 @@ Route::middleware([
 
             require __DIR__.'/v1/vocational-training-achievements.php';
 
-            require __DIR__.'/v1/zakat.php';
-
             require __DIR__.'/v1/zones.php';
+
+            Route::prefix('projects')->name('occasions.')
+                ->group(function (): void {
+                    require __DIR__.'/v1/occasions/ramadan-basket.php';
+
+                    require __DIR__.'/v1/occasions/babies-milk-and-diapers.php';
+
+                    require __DIR__.'/v1/occasions/eid-al-adha.php';
+
+                    require __DIR__.'/v1/occasions/eid-suit.php';
+
+                    require __DIR__.'/v1/occasions/monthly-sponsorship.php';
+
+                    require __DIR__.'/v1/occasions/school-entry.php';
+
+                    require __DIR__.'/v1/occasions/zakat.php';
+                });
 
             Route::get('trash', TrashIndexController::class)->name('trash');
 
@@ -108,12 +121,6 @@ Route::middleware([
                 'logout',
                 [AuthenticatedSessionController::class, 'destroy']
             )->name('logout');
-
-            Route::get('/test', function () {
-                return view('pdf.families', [
-                    'families' => [],
-                ]);
-            });
 
             Route::post('upload-file', UploadFileController::class)->name('upload.file');
         });

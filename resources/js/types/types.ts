@@ -617,6 +617,13 @@ export interface EidSuitOrphansResource {
         pants_size: string
         shirt_size: string
         age: number
+        edit?: {
+            shoes_shop_name: boolean
+            shoes_shop_phone_number: boolean
+            clothes_shop_name: boolean
+            clothes_shop_phone_number: boolean
+            note: boolean
+        }
     }
     eid_suit: {
         id: string | null

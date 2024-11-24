@@ -2,8 +2,8 @@
 import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
-import { useForm } from 'laravel-precognition-vue'
-import { nextTick, ref } from 'vue'
+
+import EditableRows from '@/Pages/Tenant/occasions/eid-suit/EditableRows.vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
@@ -13,69 +13,13 @@ import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
-import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { debounce, formatCurrency } from '@/utils/helper'
+import { formatCurrency } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 defineProps<{ orphans: PaginationData<EidSuitOrphansResource>; params: IndexParams }>()
 
 const emit = defineEmits(['sort'])
-
-const selectedOrphan = ref({
-    orphan_id: '',
-    clothes_shop_name: '',
-    clothes_shop_phone_number: '',
-    designated_member: '',
-    shoes_shop_name: '',
-    shoes_shop_phone_number: '',
-    note: ''
-})
-
-const handleInputBlur = (orphan: EidSuitOrphansResource, field: string, event: Event) => {
-    if (event?.target.value) {
-        if (selectedOrphan.value.orphan_id !== orphan.id) {
-            selectedOrphan.value = {}
-        }
-
-        selectedOrphan.value.orphan_id = orphan.id
-
-        selectedOrphan.value[field] = (event.target as HTMLInputElement).value
-
-        orphan.orphan.edit = false
-    }
-}
-
-const form = useForm('get', route('tenant.orphans.edit', selectedOrphan.value.orphan_id), {
-    ...selectedOrphan.value
-})
-
-const submit = debounce(() => {
-    alert('11')
-}, 2000)
-
-const handleSelectDesignatedMember = (orphan_id: string, event: { id: string; name: string }) => {
-    if (event.id) {
-        selectedOrphan.value.orphan_id = orphan_id
-
-        selectedOrphan.value.designated_member = event
-    }
-
-    submit()
-}
-
-const handleclick = (orphan: EidSuitOrphansResource, field: string) => {
-    orphan.orphan.edit = true
-
-    nextTick(() => {
-        const a = document.getElementById(`clothes_shop_phone_number_${orphan.id}`)
-
-        a?.focus()
-
-        a.value = orphan.eid_suit[field]
-    })
-}
 </script>
 
 <template>
@@ -209,58 +153,7 @@ const handleclick = (orphan: EidSuitOrphansResource, field: string) => {
                             </div>
                         </the-table-td>
 
-                        <the-table-td>
-                            <base-form-input
-                                :value="selectedOrphan.orphan_id === orphan.id ? selectedOrphan.clothes_shop_name : ''"
-                                @blur.prevent="handleInputBlur(orphan, 'clothes_shop_name', $event)"
-                            ></base-form-input>
-                        </the-table-td>
-
-                        <the-table-td>
-                            <span
-                                v-if="!orphan.orphan.edit"
-                                class="cursor-pointer"
-                                @click="handleclick(orphan, 'clothes_shop_phone_number')"
-                                >t nameest</span
-                            >
-                            <base-form-input
-                                v-else
-                                :id="`clothes_shop_phone_number_${orphan.id}`"
-                                maxlength="10"
-                                minlength="10"
-                                @blur.prevent="handleInputBlur(orphan, 'clothes_shop_phone_number', $event)"
-                            ></base-form-input>
-                        </the-table-td>
-
-                        <the-table-td>
-                            <base-form-input
-                                @blur.prevent="handleInputBlur(orphan.id, 'shoes_shop_name', $event)"
-                            ></base-form-input>
-                        </the-table-td>
-
-                        <the-table-td>
-                            <base-form-input
-                                @blur.prevent="handleInputBlur(orphan.id, 'shoes_shop_phone_number', $event)"
-                            ></base-form-input>
-                        </the-table-td>
-
-                        <the-table-td>
-                            <members-filter-drop-down
-                                :value="selectedOrphan.orphan_id === orphan.id ? selectedOrphan.designated_member : ''"
-                                class="!w-40"
-                                @update:value="handleSelectDesignatedMember(orphan.id, $event)"
-                            ></members-filter-drop-down>
-                        </the-table-td>
-
-                        <the-table-td>
-                            <base-form-input
-                                @blur.prevent="handleInputBlur(orphan.id, 'note', $event)"
-                            ></base-form-input>
-                        </the-table-td>
-
-                        <the-table-td>
-                            <svg-loader class="h-5 w-5" name="icon-map-location-dot"></svg-loader>
-                        </the-table-td>
+                        <editable-rows :orphan></editable-rows>
 
                         <the-table-td class="!min-w-24 !max-w-24 truncate">
                             <Link :href="route('tenant.sponsors.show', orphan.sponsor.id)" class="font-medium">
