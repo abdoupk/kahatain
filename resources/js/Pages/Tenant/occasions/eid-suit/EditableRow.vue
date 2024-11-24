@@ -24,19 +24,25 @@ orphan.value.orphan.edit = {
     note: false
 }
 
-const selectedOrphan = ref({
+const data = ref({
     orphan_id: ''
 })
 
+const isPhoneNumber = (value: string) => {
+    props.field === 'clothes_shop_phone_number' || props.field === 'shoes_shop_phone_number'
+
+    return value
+}
+
 const updateInput = (event: Event) => {
     if (event?.target.value) {
-        if (selectedOrphan.value.orphan_id !== orphan.value.orphan.id) {
-            selectedOrphan.value = {}
+        if (data.value.orphan_id !== orphan.value.orphan.id) {
+            data.value = {}
         }
 
-        selectedOrphan.value.orphan_id = orphan.value.orphan.id
+        data.value.orphan_id = orphan.value.orphan.id
 
-        selectedOrphan.value[props.field] = (event.target as HTMLInputElement).value
+        data.value[props.field] = (event.target as HTMLInputElement).value
 
         orphan.value.eid_suit[props.field] = (event.target as HTMLInputElement).value
 
@@ -46,17 +52,11 @@ const updateInput = (event: Event) => {
     orphan.value.orphan.edit[props.field] = false
 }
 
-const form = useForm('get', route('tenant.orphans.edit', selectedOrphan.value.orphan_id), {
-    ...selectedOrphan.value
-})
-
 const submit = debounce(() => {
-    form.submit({
-        onSuccess() {
-            console.log('success')
-        }
+    useForm('patch', route('tenant.occasions.eid-suit.save-infos', props.orphan.orphan.id), data.value).submit({
+        onSuccess() {}
     })
-}, 2000)
+}, 200)
 
 // Const handleSelectDesignatedMember = (orphan_id: string, event: { id: string; name: string }) => {
 //     If (event.id) {

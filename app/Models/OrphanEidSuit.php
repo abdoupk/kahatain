@@ -31,7 +31,7 @@ class OrphanEidSuit extends Model
 
     public function member(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     protected function casts(): array

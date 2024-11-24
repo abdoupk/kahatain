@@ -14,12 +14,12 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
             $table->foreignIdFor(Tenant::class);
             $table->foreignIdFor(Orphan::class);
-            $table->string('note');
-            $table->string('clothes_shop_name');
-            $table->string('clothes_shop_phone_number');
-            $table->string('shoes_shop_name');
-            $table->string('shoes_shop_phone_number');
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->string('note')->nullable();
+            $table->string('clothes_shop_name')->nullable();
+            $table->string('clothes_shop_phone_number')->nullable();
+            $table->string('shoes_shop_name')->nullable();
+            $table->string('shoes_shop_phone_number')->nullable();
+            $table->foreignIdFor(\App\Models\User::class)->nullable();
             $table->json('location')->nullable();
             $table->timestamps();
         });

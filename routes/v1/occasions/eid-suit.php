@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\Occasions\EidSuit\EidSuitIndexController;
 use App\Http\Controllers\V1\Occasions\EidSuit\ExportOrphansEidSuitPDFController;
 use App\Http\Controllers\V1\Occasions\EidSuit\ExportOrphansEidSuitXlsxController;
+use App\Http\Controllers\V1\Occasions\EidSuit\SaveOrphanEidSuitInfosController;
 use App\Http\Controllers\V1\Occasions\EidSuit\SaveOrphansEidSuitToArchiveController;
 
 Route::prefix('eid-suit')->name('eid-suit.')
@@ -31,4 +32,6 @@ Route::prefix('eid-suit')->name('eid-suit.')
             'save-to-archive',
             SaveOrphansEidSuitToArchiveController::class
         )->name('save-to-archive');
+
+        Route::patch('save-infos/{orphan}', SaveOrphanEidSuitInfosController::class)->name('save-infos');
     });

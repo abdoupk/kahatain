@@ -82,7 +82,7 @@ function listOfOrphansBenefitingFromTheEidSuitSponsorship(): LengthAwarePaginato
                 ->with([
                     'sponsor:id,first_name,last_name,phone_number',
                     'family.zone:id,name',
-                    'eidSuit',
+                    'eidSuit.member:id,first_name,last_name',
                     'shoesSize',
                     'pantsSize',
                     'shirtSize',
