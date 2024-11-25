@@ -500,5 +500,11 @@
     "designated_member": "العضو المكلف",
     "transcripts": "كشوف النقاط",
     "transcript": "كشف نقاط",
-    "orphan_students": "الأيتام المتمدرسين"
+    "orphan_students": "الأيتام المتمدرسين",
+    "bulk_update": "تحديث مجمع",
+    "phase_elementary_school": "الطور الابتدائي",
+    "phase_middle_school": "الطور المتوسط",
+    "phase_high_school": "الطور الثانوي",
+    "download_school_tools_list": "تحميل قائمة الادوات المدرسية",
+    "total_students": "اجمالي المتمدرسين"
 }

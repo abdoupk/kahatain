@@ -74,6 +74,7 @@ export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-map'
     | 'icon-grid'
+    | 'icon-arrows-rotate'
     | 'icon-user-graduate'
     | 'icon-zakat'
     | 'icon-head-side-gear'

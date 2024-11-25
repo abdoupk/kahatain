@@ -69,6 +69,7 @@
     "breadcrumb.monthly-sponsorship": "الكفالة الشهرية",
     "breadcrumb.committees": "اللجان",
     "breadcrumb.transcripts": "كشوف النقاط",
+    "breadcrumb.students": "الأيتام المتمدرسين",
     "entries.families": "[11,*]عائلة|[3,10]عائلات|{2}عائلتين",
     "entries.roles": "[11,*]دور|[3,10]أدوار|{2}دورين",
     "entries.branches": "[11,*]فرع|[3,10]فروع|{2}فرعين",
@@ -1324,5 +1325,11 @@
     "designated_member": "العضو المكلف",
     "transcripts": "كشوف النقاط",
     "transcript": "كشف نقاط",
-    "orphan_students": "الأيتام المتمدرسين"
+    "orphan_students": "الأيتام المتمدرسين",
+    "bulk_update": "تحديث مجمع",
+    "phase_elementary_school": "الطور الابتدائي",
+    "phase_middle_school": "الطور المتوسط",
+    "phase_high_school": "الطور الثانوي",
+    "download_school_tools_list": "تحميل قائمة الادوات المدرسية",
+    "total_students": "اجمالي المتمدرسين"
 }

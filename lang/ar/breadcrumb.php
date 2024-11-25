@@ -37,4 +37,5 @@ return [
     'monthly-sponsorship' => 'الكفالة الشهرية',
     'committees' => 'اللجان',
     'transcripts' => 'كشوف النقاط',
+    'students' => 'الأيتام المتمدرسين',
 ];

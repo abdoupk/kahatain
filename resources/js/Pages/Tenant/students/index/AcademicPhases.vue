@@ -29,24 +29,25 @@ defineProps<{
                     <div class="col-span-12 flex flex-col justify-center px-8 py-12 lg:col-span-4">
                         <svg-loader class="h-10 w-10 text-pending" name="icon-chart-pie-simple"></svg-loader>
 
-                        <div class="mt-12 flex items-center justify-start text-slate-600 dark:text-slate-300">
-                            My Total Assets
+                        <div
+                            class="mt-12 flex items-center justify-start text-base/6 text-slate-600 dark:text-slate-300 rtl:!font-semibold"
+                        >
+                            {{ $t('total_students') }}
                         </div>
 
                         <div class="mt-4 flex items-center justify-start">
-                            <div class="relative ms-0.5 pl-3 text-2xl font-medium">
-                                <span class="absolute start-0 top-0 -ms-0.5 text-xl font-medium"> $ </span>
-                                1,413,102.02
-                            </div>
+                            <div class="relative ms-0.5 text-2xl font-bold">1,413,102.02</div>
+
                             <a class="ms-4 text-slate-500" href="">
-                                <svg-loader class="h-4 w-4" name="icon-child-reaching" />
+                                <svg-loader class="h-4 w-4" name="icon-arrows-rotate"></svg-loader>
                             </a>
                         </div>
 
-                        <div class="mt-4 text-xs text-slate-500">Last updated 1 hour ago</div>
-
-                        <base-button class="relative mt-12 justify-start rounded-full" variant="outline-secondary">
-                            Download Reports
+                        <base-button
+                            class="relative mt-12 justify-start rounded-full font-semibold"
+                            variant="outline-secondary"
+                        >
+                            {{ $t('download_school_tools_list') }}
                             <span
                                 class="absolute bottom-0 end-0 top-0 my-auto me-0.5 ms-auto flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white"
                             >
