@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Laravel\Scout\Searchable;
 
@@ -47,6 +48,11 @@ class AcademicLevel extends Model
                     'name' => $subject->getName(),
                 ];
             });
+    }
+
+    public function orphans(): HasMany
+    {
+        return $this->hasMany(Orphan::class);
     }
 
     protected function casts(): array

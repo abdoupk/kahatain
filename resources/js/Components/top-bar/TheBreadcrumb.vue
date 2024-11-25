@@ -25,8 +25,19 @@ const breadcrumbs = computedEager(() => {
 
         const resolvedHref = href === '/' ? '/dashboard' : href
 
-        if (prevText === 'details') {
+        if (
+            prevText === 'details' ||
+            prevText === 'elementary-school' ||
+            prevText === 'middle-school' ||
+            prevText === 'high-school'
+        ) {
             continue
+        } else if (prevText === 'students') {
+            breadCrumbs.push({
+                href: '#',
+                active: false,
+                text: $t('breadcrumb.show_students_transcript')
+            })
         } else if (prevText !== 'edit' && prevText !== 'create' && prevText !== 'show') {
             breadCrumbs.push({
                 href: path === 'projects' || (path === 'details' && prevText === 'archive') ? '#' : resolvedHref,

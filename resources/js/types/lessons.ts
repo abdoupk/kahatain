@@ -32,6 +32,23 @@ export type LevelType = {
 export interface AcademicLevelType {
     levels: LevelType[]
     phase: string
+    phase_key: string
+    subjects?: {
+        id: string
+        name: string
+    }
+}
+
+type PhaseType = {
+    level: string
+    id: string
+    orphans_count: number
+}
+
+export interface AcademicLevelsIndexResource {
+    elementary: PhaseType[]
+    middle: PhaseType[]
+    high: PhaseType[]
 }
 
 export interface LessonShowType {

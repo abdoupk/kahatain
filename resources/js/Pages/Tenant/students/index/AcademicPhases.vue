@@ -1,18 +1,22 @@
 <script lang="ts" setup>
+import { AcademicLevelsIndexResource } from '@/types/lessons'
+
+import AcademicLevelPhasePanel from '@/Pages/Tenant/students/index/AcademicLevelPhasePanel.vue'
+import AcademicLevelTab from '@/Pages/Tenant/students/index/AcademicLevelTab.vue'
+
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
-import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
 import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
 import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
-import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
-import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
-import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import SvgLoader from '@/Components/Global/SvgLoader.vue'
+
+defineProps<{
+    academicLevels: AcademicLevelsIndexResource
+}>()
 </script>
 
 <template>
     <!-- BEGIN: General Report -->
-    <div class="col-span-12 mt-8 lg:col-span-9">
+    <div class="col-span-12 mt-8">
         <div class="intro-y flex h-10 items-center">
             <h2 class="me-5 truncate text-lg font-medium">General Report</h2>
         </div>
@@ -27,10 +31,6 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
                         <div class="mt-12 flex items-center justify-start text-slate-600 dark:text-slate-300">
                             My Total Assets
-
-                            <base-tippy content="Total value of your sales: $158.409.416">
-                                <svg-loader class="ms-1.5 h-4 w-4" name="icon-circle-x-mark"></svg-loader>
-                            </base-tippy>
                         </div>
 
                         <div class="mt-4 flex items-center justify-start">
@@ -60,108 +60,14 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
                     >
                         <base-tab-group>
                             <base-tab-list
-                                class="mx-auto mb-8 flex w-60 rounded-md border border-dashed border-slate-300 p-1 dark:border-darkmode-300"
+                                class="mx-auto mb-8 flex w-full rounded-md border border-dashed border-slate-300 p-1 dark:border-darkmode-300"
                                 role="tablist"
                                 variant="pills"
                             >
-                                <base-tab>
-                                    <base-tab-button as="button" class="w-full px-2 py-1.5"> Weekly</base-tab-button>
-                                </base-tab>
-                                <base-tab>
-                                    <base-tab-button as="button" class="w-full px-2 py-1.5"> Monthly</base-tab-button>
-                                </base-tab>
+                                <academic-level-tab :phases="Object.keys(academicLevels)"></academic-level-tab>
                             </base-tab-list>
 
-                            <base-tab-panels class="px-5 pb-5">
-                                <base-tab-panel class="grid grid-cols-12 gap-x-10 gap-y-8">
-                                    <div class="col-span-6 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Unpaid Loan</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">4.501</div>
-                                            <base-tippy
-                                                class="ms-2 flex cursor-pointer text-xs font-medium text-danger"
-                                                content="2% Lower than last month"
-                                            >
-                                                2%
-                                                <svg-loader class="ms-0.5 h-4 w-4" name="icon-chevron-down" />
-                                            </base-tippy>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Active Partner</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">2</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Paid Installment</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">$72.000</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Disbursement</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">$54.000</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Success Payment</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">2.500</div>
-                                            <base-tippy
-                                                class="ms-2 flex cursor-pointer text-xs font-medium text-success"
-                                                content="52% Higher than last month"
-                                            >
-                                                52%
-                                                <svg-loader
-                                                    class="ms-0.5 h-4 w-4 rotate-180"
-                                                    name="icon-chevron-down"
-                                                />
-                                            </base-tippy>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Unpaid Loan</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">$72.000</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Posted Campaign</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">4.501</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Social Media</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">2</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4">
-                                        <div class="text-slate-500">Net Margin</div>
-                                        <div class="mt-1.5 flex items-center">
-                                            <div class="text-base">$72.000</div>
-                                            <base-tippy
-                                                class="ms-2 flex cursor-pointer text-xs font-medium text-success"
-                                                content="49% Higher than last month"
-                                            >
-                                                49%
-                                                <svg-loader class="ms-0.5 h-4 w-4" name="icon-chevron-down" />
-                                            </base-tippy>
-                                        </div>
-                                    </div>
-                                </base-tab-panel>
-                            </base-tab-panels>
+                            <academic-level-phase-panel :phases="academicLevels"></academic-level-phase-panel>
                         </base-tab-group>
                     </div>
                 </div>
