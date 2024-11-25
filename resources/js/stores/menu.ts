@@ -239,6 +239,20 @@ export const useMenuStore = defineStore('menu', {
                 url: '/dashboard/lessons'
             },
             {
+                icon: 'icon-user-graduate',
+                // Ignore: !hasPermission('list_permission'),
+                title: $t('orphan_students'),
+                routeName: 'tenant.students.index',
+                url: '/dashboard/students'
+            },
+            {
+                icon: 'icon-grid',
+                // Ignore: !hasPermission('list_permission'),
+                title: $t('transcripts'),
+                routeName: 'tenant.transcripts.index',
+                url: '/dashboard/transcripts'
+            },
+            {
                 icon: 'icon-school-lock',
                 ignore: !hasPermission('list_schools'),
                 routeName: 'tenant.schools.index',
