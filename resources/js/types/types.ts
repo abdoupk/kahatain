@@ -641,6 +641,10 @@ export interface EidSuitOrphansResource {
             id: string | null
             name: string | null
         }
+        clothes_shop_address: string
+        clothes_shop_location: string
+        shoes_shop_address: string
+        shoes_shop_location: string
     } | null
 }
 

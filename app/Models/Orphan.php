@@ -233,6 +233,8 @@ class Orphan extends Model implements HasMedia
                 'clothes_shop_name' => $this->eidSuit?->clothes_shop_name,
                 'clothes_shop_address' => $this->eidSuit?->clothes_shop_address,
                 'clothes_shop_phone_number' => $this->eidSuit?->clothes_shop_phone_number,
+                'clothes_shop_location' => $this->eidSuit?->clothes_shop_location,
+                'shoes_shop_location' => $this->eidSuit?->shoes_shop_location,
             ],
             'tenant_id' => $this->tenant_id,
             'family_id' => $this->family_id,

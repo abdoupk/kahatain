@@ -2,6 +2,7 @@
 import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
+import { ref } from 'vue'
 
 import EditableRows from '@/Pages/Tenant/occasions/eid-suit/EditableRows.vue'
 
@@ -20,10 +21,13 @@ import { $t, $tc } from '@/utils/i18n'
 defineProps<{ orphans: PaginationData<EidSuitOrphansResource>; params: IndexParams }>()
 
 const emit = defineEmits(['sort'])
+
+const test = ref(false)
 </script>
 
 <template>
     <div class="@container">
+        {{ test }}
         <div class="intro-y !z-30 col-span-12 hidden overflow-y-hidden overflow-x-scroll @3xl:block">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
@@ -153,7 +157,7 @@ const emit = defineEmits(['sort'])
                             </div>
                         </the-table-td>
 
-                        <editable-rows :orphan></editable-rows>
+                        <editable-rows :orphan @showLocationAddressModal="test = $event"></editable-rows>
 
                         <the-table-td class="!min-w-24 !max-w-24 truncate">
                             <Link :href="route('tenant.sponsors.show', orphan.sponsor.id)" class="font-medium">

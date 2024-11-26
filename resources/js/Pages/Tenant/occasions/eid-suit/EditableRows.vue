@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type { EidSuitOrphansResource } from '@/types/types'
 
-import EditableMemeberCell from '@/Pages/Tenant/occasions/eid-suit/EditableMemeberCell.vue'
+import EditableMemberCell from '@/Pages/Tenant/occasions/eid-suit/EditableMemberCell.vue'
 import EditableRow from '@/Pages/Tenant/occasions/eid-suit/EditableRow.vue'
+import MapCell from '@/Pages/Tenant/occasions/eid-suit/MapCell.vue'
 
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { searchShopOwnerName, searchShopOwnerPhoneNumber } from '@/utils/search'
 
@@ -50,11 +50,19 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         field="shoes_shop_phone_number"
     ></editable-row>
 
-    <editable-memeber-cell :orphan></editable-memeber-cell>
+    <editable-member-cell :orphan></editable-member-cell>
 
     <editable-row :orphan field="note"></editable-row>
 
     <the-table-td>
-        <svg-loader class="h-5 w-5" name="icon-map-location-dot"></svg-loader>
+        <map-cell
+            :orphan
+            shop-type="clothes"
+            @show-location-address-modal="$emit('showLocationAddressModal', orphan)"
+        ></map-cell>
+    </the-table-td>
+
+    <the-table-td>
+        <map-cell :orphan shop-type="shoes"></map-cell>
     </the-table-td>
 </template>
