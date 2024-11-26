@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { EidAlAdhaFamiliesResource, IndexParams, PaginationData } from '@/types/types'
+import type { IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
 
 import { useZakatStore } from '@/stores/zakat'
 import { Link } from '@inertiajs/vue3'
@@ -14,7 +14,7 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
 import { formatCurrency } from '@/utils/helper'
 
-const props = defineProps<{ families: PaginationData<EidAlAdhaFamiliesResource>; params: IndexParams }>()
+const props = defineProps<{ families: PaginationData<ZakatFamiliesResource>; params: IndexParams }>()
 
 const emit = defineEmits(['sort'])
 
@@ -26,40 +26,31 @@ const checkAll = ($event) => {
 
     if ($event.target.checked) {
         // If checked, add all families to selectedFamilies
-        if (zakatStore.zakat.checked_families.length) {
+        if (zakatStore.zakat.families.length) {
             // Avoid duplication by filtering out existing ones
-            zakatStore.zakat.checked_families = [...new Set([...zakatStore.zakat.checked_families, ...families])]
+            zakatStore.zakat.families = [...new Set([...zakatStore.zakat.families, ...families])]
         } else {
-            zakatStore.zakat.checked_families = families
+            zakatStore.zakat.families = families
         }
     } else {
         // If unchecked, remove the current families from selectedFamilies
-        zakatStore.zakat.checked_families = zakatStore.zakat.checked_families.filter((id) => !families.includes(id))
+        zakatStore.zakat.families = zakatStore.zakat.families.filter((id) => !families.includes(id))
     }
 }
 </script>
 
 <template>
     <div class="@container">
-        {{ zakatStore.zakat.checked_families.length }}
-        <Link
-            :href="
-                route('tenant.occasions.zakat.save-to-archive', {
-                    families: zakatStore.zakat.checked_families,
-                    zakat_id: '9d8db878-1a3d-41ab-bcd4-ba81affcf011',
-                    amount: 30000
-                })
-            "
-            method="post"
-        >
-            save
-        </Link>
-        <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+        <div class="intro-y !z-30 col-span-12 hidden @3xl:mb-4 @3xl:block @3xl:overflow-x-auto">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
                         <the-table-th class="text-start">
-                            <base-form-check-input type="checkbox" @change="checkAll"></base-form-check-input>
+                            <base-form-check-input
+                                :checked="useZakatStore().zakat.families.length"
+                                type="checkbox"
+                                @change="checkAll"
+                            ></base-form-check-input>
                         </the-table-th>
 
                         <the-table-th
@@ -101,6 +92,15 @@ const checkAll = ($event) => {
                         </the-table-th>
 
                         <the-table-th
+                            :direction="params.directions && params.directions['aggregate_zakat_benefit']"
+                            class="!w-32 text-center"
+                            sortable
+                            @click="emit('sort', 'aggregate_zakat_benefit')"
+                        >
+                            {{ $t('aggregate_zakat_benefit') }}
+                        </the-table-th>
+
+                        <the-table-th
                             :direction="params.directions && params.directions['total_income']"
                             class="!w-32 text-center"
                             sortable
@@ -124,13 +124,13 @@ const checkAll = ($event) => {
                     <base-tr-table v-for="family in families.data" :key="family.id" class="intro-x">
                         <the-table-td class="w-16">
                             <base-form-check-input
-                                v-model="zakatStore.zakat.checked_families"
+                                v-model="zakatStore.zakat.families"
                                 :value="family.id"
                                 type="checkbox"
                             ></base-form-check-input>
                         </the-table-td>
 
-                        <the-table-td class="!min-w-24 !max-w-24 truncate">
+                        <the-table-td class="!w-24 truncate">
                             <Link
                                 v-if="family.sponsor.id"
                                 :href="route('tenant.sponsors.show', family.sponsor.id)"
@@ -142,7 +142,7 @@ const checkAll = ($event) => {
                             <p v-else class="font-medium">{{ family.sponsor.name }}</p>
                         </the-table-td>
 
-                        <the-table-td class="text-center">
+                        <the-table-td class="whitespace-nowrap text-center">
                             {{ family.sponsor.phone_number }}
                         </the-table-td>
 
@@ -167,8 +167,12 @@ const checkAll = ($event) => {
                         </the-table-td>
 
                         <the-table-td class="text-center">
+                            {{ family.orphans_count }}
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
                             <div class="whitespace-nowrap">
-                                {{ family.orphans_count }}
+                                {{ formatCurrency(family.aggregate_zakat_benefit) }}
                             </div>
                         </the-table-td>
 

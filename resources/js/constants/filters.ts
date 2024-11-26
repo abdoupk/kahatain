@@ -331,7 +331,7 @@ export const orphansFilters: ListBoxFilter[] = [
 export const eidAlAdhaFilters: ListBoxFilter[] = [
     {
         icon: 'icon-family',
-        field: 'family.id',
+        field: 'id',
         label: 'family',
         type: 'object',
         operators: filterObjectOperators
@@ -361,6 +361,65 @@ export const eidAlAdhaFilters: ListBoxFilter[] = [
         icon: 'icon-children',
         field: 'orphans_count',
         label: 'orphans_count',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'total_income',
+        label: 'total_income',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    }
+]
+
+export const zakatFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-family',
+        field: 'id',
+        label: 'family',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'address.zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
+        field: 'orphans_count',
+        label: 'orphans_count',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'aggregate_zakat_benefit',
+        label: 'aggregate_zakat_benefit',
         type: 'number',
         operators: filterNumberOperators
     },

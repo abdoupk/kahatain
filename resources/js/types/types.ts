@@ -499,6 +499,7 @@ export interface ZakatFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+    aggregate_zakat_benefit: number | null
 }
 
 export interface RamadanBasketFamiliesResource {
@@ -626,6 +627,7 @@ export interface EidSuitOrphansResource {
             clothes_shop_name: boolean
             clothes_shop_phone_number: boolean
             note: boolean
+            member: boolean
         }
     }
     eid_suit: {

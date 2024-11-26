@@ -1,32 +1,56 @@
 <script lang="ts" setup>
 import type { EidSuitOrphansResource } from '@/types/types'
 
+import EditableMemeberCell from '@/Pages/Tenant/occasions/eid-suit/EditableMemeberCell.vue'
 import EditableRow from '@/Pages/Tenant/occasions/eid-suit/EditableRow.vue'
 
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
+import { searchShopOwnerName, searchShopOwnerPhoneNumber } from '@/utils/search'
+
 defineProps<{
     orphan: EidSuitOrphansResource
 }>()
+
+function loadShopOwnerNames(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerName(query).then((results) => {
+        setOptions(results)
+    })
+}
+
+function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerPhoneNumber(query).then((results) => {
+        setOptions(results)
+    })
+}
 </script>
 
 <template>
-    <editable-row :orphan class="text-center" field="clothes_shop_name"></editable-row>
+    <editable-row
+        :loadOptions="loadShopOwnerNames"
+        :orphan
+        class="text-center"
+        field="clothes_shop_name"
+    ></editable-row>
 
-    <editable-row :orphan class="text-center" field="clothes_shop_phone_number"></editable-row>
+    <editable-row
+        :load-options="loadShopOwnerPhoneNumbers"
+        :orphan
+        class="text-center"
+        field="clothes_shop_phone_number"
+    ></editable-row>
 
-    <editable-row :orphan class="text-center" field="shoes_shop_name"></editable-row>
+    <editable-row :load-options="loadShopOwnerNames" :orphan class="text-center" field="shoes_shop_name"></editable-row>
 
-    <editable-row :orphan class="text-center" field="shoes_shop_phone_number"></editable-row>
+    <editable-row
+        :load-options="loadShopOwnerPhoneNumbers"
+        :orphan
+        class="text-center"
+        field="shoes_shop_phone_number"
+    ></editable-row>
 
-    <!--    <the-table-td>-->
-    <!--        <members-filter-drop-down-->
-    <!--            :value="selectedOrphan.orphan_id === orphan.id ? selectedOrphan.designated_member : ''"-->
-    <!--            class="!w-40"-->
-    <!--            @update:value="handleSelectDesignatedMember(orphan.id, $event)"-->
-    <!--        ></members-filter-drop-down>-->
-    <!--    </the-table-td>-->
+    <editable-memeber-cell :orphan></editable-memeber-cell>
 
     <editable-row :orphan field="note"></editable-row>
 

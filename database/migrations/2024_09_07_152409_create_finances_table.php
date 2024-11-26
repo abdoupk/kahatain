@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->uuid('created_by');
-            $table->uuid('received_by');
+            $table->uuid('received_by')->nullable();
             $table->uuid('deleted_by')->nullable();
 
             $table->index(['id'], 'idx_finances_id');

@@ -24,7 +24,7 @@ const emit = defineEmits(['sort'])
 
 <template>
     <div class="@container">
-        <div class="intro-y !z-30 col-span-12 hidden overflow-x-scroll @3xl:block">
+        <div class="intro-y !z-30 col-span-12 hidden overflow-y-hidden overflow-x-scroll @3xl:block">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>

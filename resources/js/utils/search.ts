@@ -1,3 +1,4 @@
+/* eslint-disable array-element-newline */
 import type { SVGType } from '@/types/types'
 
 import { usePage } from '@inertiajs/vue3'
@@ -451,4 +452,64 @@ const constructTitle = (hit: Hit, indexUid: string) => {
         default:
             return ''
     }
+}
+
+export const searchShopOwnerName = async (query: string) => {
+    const results = await client.index('orphans').search(query, {
+        q: query,
+        limit: 5,
+        sort: ['updated_at:desc'],
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+        attributesToRetrieve: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name'],
+        attributesToSearchOn: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name']
+    })
+
+    return [
+        ...new Map(
+            results.hits
+                .flatMap((result) =>
+                    [
+                        result.eid_suit.clothes_shop_name && {
+                            id: result.eid_suit.clothes_shop_name.replaceAll(' ', '_'),
+                            name: result.eid_suit.clothes_shop_name
+                        },
+                        result.eid_suit.shoes_shop_name && {
+                            id: result.eid_suit.shoes_shop_name.replaceAll(' ', '_'),
+                            name: result.eid_suit.shoes_shop_name
+                        }
+                    ].filter(Boolean)
+                )
+                .map((item) => [item.id, item]) // Use `id` as the unique key
+        ).values()
+    ]
+}
+
+export const searchShopOwnerPhoneNumber = async (query: string) => {
+    const results = await client.index('orphans').search(query, {
+        q: query,
+        limit: 5,
+        sort: ['updated_at:desc'],
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+        attributesToRetrieve: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number'],
+        attributesToSearchOn: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number']
+    })
+
+    return [
+        ...new Map(
+            results.hits
+                .flatMap((result) =>
+                    [
+                        result.eid_suit.clothes_shop_phone_number && {
+                            id: result.eid_suit.clothes_shop_phone_number,
+                            name: result.eid_suit.clothes_shop_phone_number
+                        },
+                        result.eid_suit.shoes_shop_phone_number && {
+                            id: result.eid_suit.shoes_shop_phone_number,
+                            name: result.eid_suit.shoes_shop_phone_number
+                        }
+                    ].filter(Boolean)
+                )
+                .map((item) => [item.id, item]) // Map `id` to the item
+        ).values()
+    ]
 }

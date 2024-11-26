@@ -9,6 +9,7 @@ use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlyBasketController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlySponsorshipController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsRamadanBasketController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsSchoolEntryController;
+use App\Http\Controllers\V1\Archive\ArchiveDetailsZakatController;
 use App\Http\Controllers\V1\Archive\ArchiveIndexController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveBabiesMilkAndDiapersPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveBabiesMilkAndDiapersXlsxController;
@@ -20,6 +21,8 @@ use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsors
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketXlsxController;
+use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesZakatPDFController;
+use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesZakatXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansEidSuitPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansEidSuitXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansSchoolEntryPDFController;
@@ -53,6 +56,11 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
                 'ramadan-basket/{archive}',
                 ArchiveDetailsRamadanBasketController::class
             )->name('ramadan-basket');
+
+            Route::get(
+                'zakat/{archive}',
+                ArchiveDetailsZakatController::class
+            )->name('zakat');
 
             Route::get(
                 'school-entry/{archive}',
@@ -140,5 +148,15 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
             'monthly-sponsorship/export-xlsx/{archive}',
             ExportArchiveFamiliesMonthlySponsorshipXlsxController::class
         )->name('monthly-sponsorship.xlsx');
+
+        Route::get(
+            'zakat/export-pdf/{archive}',
+            ExportArchiveFamiliesZakatPDFController::class
+        )->name('zakat.pdf');
+
+        Route::get(
+            'zakat/export-xlsx/{archive}',
+            ExportArchiveFamiliesZakatXlsxController::class
+        )->name('zakat.xlsx');
     });
 });

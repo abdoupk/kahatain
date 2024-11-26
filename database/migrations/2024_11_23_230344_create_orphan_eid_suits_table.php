@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('shoes_shop_name')->nullable();
             $table->string('shoes_shop_phone_number')->nullable();
             $table->foreignIdFor(\App\Models\User::class)->nullable();
-            $table->json('location')->nullable();
+            $table->string('shoes_shop_address')->nullable();
+            $table->json('shoes_shop_location')->nullable();
+            $table->string('clothes_shop_address')->nullable();
+            $table->json('clothes_shop_location')->nullable();
             $table->timestamps();
         });
     }

@@ -19,7 +19,8 @@ watch(
                 id: '',
                 name: $t('filters.select_an_option')
             }
-    }
+    },
+    { immediate: true }
 )
 </script>
 

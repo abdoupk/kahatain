@@ -33,7 +33,8 @@ Route::prefix('zakat')
         Route::post(
             'save-to-archive',
             SaveFamiliesZakatToArchiveController::class
-        )->name('save-to-archive');
+        )->name('save-to-archive')
+            ->middleware([HandlePrecognitiveRequests::class]);
 
         Route::post(
             '',

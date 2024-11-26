@@ -38,4 +38,6 @@ return [
     'committees' => 'اللجان',
     'transcripts' => 'كشوف النقاط',
     'students' => 'الأيتام المتمدرسين',
+    'show_students_transcript' => 'عرض كشفوف النقاط',
+    'zakat' => 'الزكاة',
 ];

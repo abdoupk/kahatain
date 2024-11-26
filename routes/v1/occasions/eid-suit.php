@@ -33,5 +33,8 @@ Route::prefix('eid-suit')->name('eid-suit.')
             SaveOrphansEidSuitToArchiveController::class
         )->name('save-to-archive');
 
-        Route::patch('save-infos/{orphan}', SaveOrphanEidSuitInfosController::class)->name('save-infos');
+        Route::patch(
+            'save-infos/{orphan}',
+            SaveOrphanEidSuitInfosController::class)
+            ->name('save-infos');
     });

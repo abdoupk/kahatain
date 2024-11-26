@@ -44,8 +44,8 @@ class EidSuitResource extends JsonResource
                 'clothes_shop_phone_number' => $this->eidSuit?->clothes_shop_phone_number,
                 'note' => $this->eidSuit?->note,
                 'member' => [
-                    'id' => $this->eidSuit?->member?->id,
-                    'name' => $this->eidSuit?->member?->getName(),
+                    'id' => $this->eidSuit?->member?->id ?? '',
+                    'name' => $this->eidSuit?->member?->getName() ?? '',
                 ],
             ],
         ];

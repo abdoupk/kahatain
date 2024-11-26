@@ -225,62 +225,15 @@ class Orphan extends Model implements HasMedia
                 'speciality' => $this->vocationalTraining?->speciality,
                 'division' => $this->vocationalTraining?->division,
             ],
-            'academic_achievements' => $this->academicAchievements
-                ->map(function (AcademicAchievement $academicAchievement) {
-                    return [
-                        'id' => $academicAchievement->id,
-                        'academic_level' => $academicAchievement->academicLevel?->level,
-                        'academic_year' => $academicAchievement->academic_year,
-                        'first_trimester' => (float) number_format($academicAchievement->first_trimester, 2),
-                        'second_trimester' => (float) number_format($academicAchievement->second_trimester, 2),
-                        'third_trimester' => (float) number_format($academicAchievement->third_trimester, 2),
-                        'average' => (float) number_format($academicAchievement->average, 2),
-                    ];
-                })->toArray(),
-            'last_academic_year_achievement' => [
-                'id' => $this->lastAcademicYearAchievement?->id,
-                'academic_level' => [
-                    'id' => $this->lastAcademicYearAchievement?->academicLevel?->id,
-                    'level' => $this->lastAcademicYearAchievement?->academicLevel?->level,
-                    'phase' => $this->lastAcademicYearAchievement?->academicLevel?->phase,
-                ],
-                'average' => (float) number_format($this->lastAcademicYearAchievement?->average, 2),
+            'eid_suit' => [
+                'id' => $this->eidSuit?->id,
+                'shoes_shop_name' => $this->eidSuit?->shoes_shop_name,
+                'shoes_shop_address' => $this->eidSuit?->shoes_shop_address,
+                'shoes_shop_phone_number' => $this->eidSuit?->shoes_shop_phone_number,
+                'clothes_shop_name' => $this->eidSuit?->clothes_shop_name,
+                'clothes_shop_address' => $this->eidSuit?->clothes_shop_address,
+                'clothes_shop_phone_number' => $this->eidSuit?->clothes_shop_phone_number,
             ],
-            'college_achievements' => $this->collegeAchievements
-                ->map(function (CollegeAchievement $collegeAchievement) {
-                    return [
-                        'id' => $collegeAchievement->id,
-                        'academic_level' => $collegeAchievement->academicLevel?->level,
-                        'academic_year' => $collegeAchievement->year,
-                        'first_semester' => (float) number_format(
-                            $collegeAchievement->first_semester,
-                            2
-                        ),
-                        'second_semester' => (float) number_format(
-                            $collegeAchievement->second_semester,
-                            2
-                        ),
-                        'average' => (float) number_format(
-                            $collegeAchievement->average,
-                            2
-                        ),
-                        'speciality' => $collegeAchievement->speciality,
-                        'university' => $collegeAchievement->university,
-                    ];
-                })->toArray(),
-            'vocational_training_achievements' => $this->vocationalTrainingAchievements
-                ->map(function (
-                    VocationalTrainingAchievement $vocationalTrainingAchievement
-                ) {
-                    return [
-                        'id' => $vocationalTrainingAchievement->id,
-                        'vocational_training_speciality' => $vocationalTrainingAchievement
-                            ->vocationalTraining?->speciality,
-                        'vocational_training_division' => $vocationalTrainingAchievement
-                            ->vocationalTraining?->division,
-                        'institute' => $vocationalTrainingAchievement->institute,
-                    ];
-                })->toArray(),
             'tenant_id' => $this->tenant_id,
             'family_id' => $this->family_id,
             'family' => [
@@ -293,6 +246,7 @@ class Orphan extends Model implements HasMedia
                 ],
             ],
             'created_at' => strtotime($this->created_at),
+            'updated_at' => strtotime($this->updated_at),
         ];
     }
 

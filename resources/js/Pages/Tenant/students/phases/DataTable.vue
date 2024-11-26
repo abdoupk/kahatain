@@ -22,6 +22,10 @@ const emit = defineEmits(['sort'])
                     <base-tr-table>
                         <the-table-th class="text-start"> #</the-table-th>
 
+                        <the-table-th class="text-start">
+                            {{ $t('the_orphan') }}
+                        </the-table-th>
+
                         <the-table-th
                             v-for="(subject, index) in students.data[0].subjects"
                             :key="subject.id"
@@ -41,6 +45,10 @@ const emit = defineEmits(['sort'])
                     <base-tr-table v-for="(orphan, index) in students.data" :key="orphan.id" class="intro-x">
                         <the-table-td class="w-16">
                             {{ (students.meta.from ?? 0) + index }}
+                        </the-table-td>
+
+                        <the-table-td class="!min-w-40 !max-w-40 truncate">
+                            {{ orphan.orphan.name }}
                         </the-table-td>
 
                         <the-table-td v-for="subject in orphan.subjects" :key="subject.id" class=""

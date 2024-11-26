@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { ArchiveOccasionType, IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
 
-import { eidAlAdhaFilters } from '@/constants/filters'
+import { zakatFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
+import { useZakatStore } from '@/stores/zakat'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
@@ -12,7 +13,7 @@ import SaveToArchive from '@/Pages/Tenant/occasions/zakat/SaveToArchive.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
-import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
+import { handleSort, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/occasions/zakat/DataTable.vue'))
@@ -24,8 +25,6 @@ const TheTableFooter = defineAsyncComponent(() => import('@/Components/Global/Da
 const TheTableHeader = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheTableHeader.vue'))
 
 const TheOccasionHint = defineAsyncComponent(() => import('@/Components/Global/TheOccasionHint.vue'))
-
-const TheWarningModal = defineAsyncComponent(() => import('@/Components/Global/TheWarningModal.vue'))
 
 defineOptions({
     layout: TheLayout
@@ -46,55 +45,24 @@ const params = ref<IndexParams>({
     search: props.params.search
 })
 
-const exportable = ref(!!props.archive?.created_at && hasPermission('export_occasions'))
-
-const loading = ref(false)
-
-const showWarningModalStatus = ref(false)
-
 const sort = (field: string) => handleSort(field, params.value)
-
-const save = () => {
-    getDataForIndexPages(route('tenant.occasions.zakat.save-to-archive'), params.value, {
-        onStart: () => {
-            loading.value = true
-        },
-        onSuccess: () => {
-            loading.value = false
-
-            showWarningModalStatus.value = false
-
-            setTimeout(() => {
-                exportable.value = true
-            }, 500)
-        },
-        preserveScroll: true,
-        preserveState: true,
-        only: ['families']
-    })
-}
-
-const handleSave = () => {
-    if (props.archive?.created_at) showWarningModalStatus.value = true
-    else save()
-}
 </script>
 
 <template>
-    <Head :title="$t('the_families_zakat')"></Head>
+    <Head :title="$t('zakat')"></Head>
 
     <suspense>
         <div>
             <the-table-header
-                :exportable
-                :filters="eidAlAdhaFilters"
+                :filters="zakatFilters"
                 :pagination-data="families"
                 :params="params"
-                :title="$t('list', { attribute: $t('the_families_zakat') })"
+                :title="$t('list', { attribute: $t('the_families') })"
                 :url="route('tenant.occasions.zakat.index')"
                 entries="families"
                 export-pdf-url="tenant.occasions.zakat.export.pdf"
                 export-xlsx-url="tenant.occasions.zakat.export.xlsx"
+                exportable
                 filterable
                 searchable
                 @change-filters="params.filters = $event"
@@ -113,11 +81,8 @@ const handleSave = () => {
 
                 <template #ExtraButtons>
                     <save-to-archive
-                        v-if="hasPermission('save_occasions')"
-                        :disabled="loading"
-                        :loading
-                        class="me-2"
-                        @save="handleSave"
+                        v-if="hasPermission('save_occasions') && useZakatStore().zakat.families.length > 0"
+                        :params
                     ></save-to-archive>
                 </template>
             </the-table-header>
@@ -133,15 +98,6 @@ const handleSave = () => {
             </template>
 
             <the-no-results-table v-else></the-no-results-table>
-
-            <the-warning-modal
-                :on-progress="loading"
-                :open="showWarningModalStatus"
-                @accept="save"
-                @close="showWarningModalStatus = false"
-            >
-                {{ $t('exports.archive.warnings.zakat') }}
-            </the-warning-modal>
         </div>
 
         <template #fallback>

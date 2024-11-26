@@ -72,4 +72,5 @@ return [
     'role' => 'الدور',
     'competence' => 'المهارة',
     'committee' => 'اللجنة',
+    'aggregate_zakat_benefit' => 'الاستفادة من الزكاة',
 ];

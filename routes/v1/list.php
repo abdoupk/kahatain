@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\AcademicLevel\AcademicLevelIndexController;
 use App\Http\Controllers\V1\Branches\ListBranchesController;
 use App\Http\Controllers\V1\Competences\CompetenceIndexController;
+use App\Http\Controllers\V1\List\ListAvailableZakat;
 use App\Http\Controllers\V1\List\ListBabyMilkController;
 use App\Http\Controllers\V1\List\ListBenefactorsController;
 use App\Http\Controllers\V1\List\ListClothesSizesController;
@@ -94,4 +95,9 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'benefactors',
         ListBenefactorsController::class
     )->name('benefactors');
+
+    Route::get(
+        'available-zakats',
+        ListAvailableZakat::class
+    )->name('available-zakats');
 });

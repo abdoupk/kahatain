@@ -85,7 +85,6 @@ const handleSave = () => {
     <suspense>
         <div>
             <the-table-header
-                :exportable
                 :filters="eidSuitsFilters"
                 :pagination-data="orphans"
                 :params="params"
@@ -94,6 +93,7 @@ const handleSave = () => {
                 entries="orphans"
                 export-pdf-url="tenant.occasions.eid-suit.export.pdf"
                 export-xlsx-url="tenant.occasions.eid-suit.export.xlsx"
+                exportable
                 filterable
                 searchable
                 @change-filters="params.filters = $event"
@@ -119,10 +119,6 @@ const handleSave = () => {
                         @click.prevent="handleSave"
                     >
                         {{ $t('save') }}
-                    </base-button>
-
-                    <base-button class="me-2" variant="soft-secondary">
-                        {{ $t('') }}
                     </base-button>
                 </template>
             </the-table-header>

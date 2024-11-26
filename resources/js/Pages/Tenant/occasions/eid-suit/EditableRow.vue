@@ -4,14 +4,15 @@ import { EidSuitOrphansResource } from '@/types/types'
 import { useForm } from 'laravel-precognition-vue'
 import { nextTick, ref } from 'vue'
 
+import RowCombobox from '@/Pages/Tenant/occasions/eid-suit/RowCombobox.vue'
+
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
-
-import { debounce } from '@/utils/helper'
 
 const props = defineProps<{
     orphan: EidSuitOrphansResource
     field: 'clothes_shop_phone_number' | 'clothes_shop_name' | 'shoes_shop_name' | 'shoes_shop_phone_number' | 'note'
+    loadOptions?: (results: { id: string; name: string }[]) => void
 }>()
 
 const orphan = ref(props.orphan)
@@ -25,74 +26,71 @@ orphan.value.orphan.edit = {
 }
 
 const data = ref({
-    orphan_id: ''
+    orphan_id: props.orphan.orphan.id
 })
 
-const isPhoneNumber = (value: string) => {
-    props.field === 'clothes_shop_phone_number' || props.field === 'shoes_shop_phone_number'
-
-    return value
-}
-
-const updateInput = (event: Event) => {
-    if (event?.target.value) {
-        if (data.value.orphan_id !== orphan.value.orphan.id) {
-            data.value = {}
-        }
-
-        data.value.orphan_id = orphan.value.orphan.id
-
-        data.value[props.field] = (event.target as HTMLInputElement).value
-
-        orphan.value.eid_suit[props.field] = (event.target as HTMLInputElement).value
-
-        submit()
-    }
-
-    orphan.value.orphan.edit[props.field] = false
-}
-
-const submit = debounce(() => {
+const submit = () => {
     useForm('patch', route('tenant.occasions.eid-suit.save-infos', props.orphan.orphan.id), data.value).submit({
         onSuccess() {}
     })
-}, 200)
+}
 
-// Const handleSelectDesignatedMember = (orphan_id: string, event: { id: string; name: string }) => {
-//     If (event.id) {
-//         SelectedOrphan.value.orphan_id = orphan_id
-//
-//         SelectedOrphan.value.designated_member = event
-//     }
-//
-//     Submit()
-// }
+const handleSubmit = ($event) => {
+    if (props.field === 'note') {
+        data.value[props.field] = $event.target.value
+
+        orphan.value.eid_suit[props.field] = $event.target.value
+    } else {
+        data.value[props.field] = $event.name
+
+        orphan.value.eid_suit[props.field] = $event.name
+    }
+
+    orphan.value.orphan.edit[props.field] = false
+
+    submit()
+}
 
 const handleSelectCell = () => {
     orphan.value.orphan.edit[props.field] = true
 
     nextTick(() => {
-        const input: HTMLInputElement = document.getElementById(`${props.field}_${orphan.value.orphan.id}`)
-
-        input?.focus()
-
-        input.value = orphan.value.eid_suit[props.field]
+        if (props.field === 'note') {
+            document.getElementById(`${props.field}_${orphan.value.orphan.id}`)?.focus()
+        } else document.getElementById(`${props.field}_${orphan.value.orphan.id}`)?.querySelector('input')?.focus()
     })
 }
 </script>
 
 <template>
-    <the-table-td class="text-center">
+    <the-table-td v-if="field !== 'note'" class="text-center">
         <span v-if="!orphan.orphan?.edit[field]" class="block w-32 cursor-pointer truncate" @click="handleSelectCell">
             {{ orphan.eid_suit[field] ?? '-' }}
         </span>
 
-        <base-form-input
+        <row-combobox
             v-else
             :id="`${field}_${orphan.orphan.id}`"
-            class="w-32"
-            @keydown.enter.prevent="updateInput($event)"
-            @blur.prevent="updateInput($event)"
+            :load-options
+            :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
+            class="!mt-0 w-32"
+            @focusout.prevent="orphan.orphan.edit[field] = false"
+            @update:model-value="handleSubmit"
+        ></row-combobox>
+    </the-table-td>
+
+    <the-table-td v-else class="text-center">
+        <span v-if="!orphan.orphan?.edit.note" class="block w-32 cursor-pointer truncate" @click="handleSelectCell">
+            {{ orphan.eid_suit.note ?? '-' }}
+        </span>
+
+        <base-form-input
+            v-else
+            :id="`note_${orphan.orphan.id}`"
+            v-model.lazy="orphan.eid_suit.note"
+            class="!mt-0 w-32"
+            @focusout.prevent="handleSubmit"
+            @keydown.enter="handleSubmit"
         ></base-form-input>
     </the-table-td>
 </template>
