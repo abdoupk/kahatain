@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property string $id
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class CommitteeUser extends Pivot
 {
-    use HasUuids;
+    use BelongsToTenant, HasUuids;
 
     public $timestamps = false;
 
