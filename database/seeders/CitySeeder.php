@@ -17,8 +17,7 @@ class CitySeeder extends Seeder
      */
     public function run(): void
     {
-        $jsonPath = database_path('data/cities.json');
-        $cities = json_decode(File::get($jsonPath), true, 512, JSON_THROW_ON_ERROR);
+        $cities = json_decode(File::get(database_path('data/cities.json')), true, 512, JSON_THROW_ON_ERROR);
 
         DB::table('cities')->insert(array_map(static function ($city) {
             return [
