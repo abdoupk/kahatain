@@ -9,10 +9,9 @@ class StudentsIndexController extends Controller
 {
     public function __invoke(): Response
     {
-        ray(getAcademicLevelsForStudentsIndex());
-
         return inertia('Tenant/students/index/StudentIndexPage', [
             'academicLevels' => getAcademicLevelsForStudentsIndex(),
+            'totalStudents' => getTotalStudents(),
         ]);
     }
 }

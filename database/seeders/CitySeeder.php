@@ -33,6 +33,7 @@ class CitySeeder extends Seeder
                 'wilaya_code' => $city['wilaya_code'],
                 'wilaya_name' => $city['wilaya_name'],
                 'wilaya_name_ascii' => $city['wilaya_name_ascii'],
+                'commune_code' => $city['commune_code'],
             ];
         }, $cities));
 

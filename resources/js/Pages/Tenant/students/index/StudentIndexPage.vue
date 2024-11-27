@@ -12,13 +12,14 @@ defineOptions({
 
 defineProps<{
     academicLevels: AcademicLevelsIndexResource
+    totalStudents: number
 }>()
 </script>
 
 <template>
     <div class="grid grid-cols-12 gap-6">
         <!-- BEGIN: Academic Phases -->
-        <academic-phases :academicLevels></academic-phases>
+        <academic-phases :academicLevels :totalStudents></academic-phases>
         <!-- END: Academic Phases -->
 
         <!-- BEGIN: Students Chart -->

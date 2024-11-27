@@ -73,6 +73,7 @@ export interface ISettingState {
 export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-map'
+    | 'icon-external-link'
     | 'icon-grid'
     | 'icon-arrows-rotate'
     | 'icon-user-graduate'
@@ -700,11 +701,13 @@ export interface IndexParams {
     directions?: {
         [key: string]: 'asc' | 'desc'
     }
-    filters?: {
-        field: string
-        value: string
-        operator: string
-    }[]
+    filters?:
+        | {
+              field: string
+              value: string
+              operator: string
+          }[]
+        | null
     archive?: string
 }
 

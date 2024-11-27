@@ -5,6 +5,8 @@ import { Link } from '@inertiajs/vue3'
 
 import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     phases: AcademicLevelsIndexResource
@@ -24,11 +26,22 @@ defineProps<{
                     "
                     class="text-slate-500 rtl:!font-semibold"
                 >
-                    {{ level.level }}
+                    <span class="inline"> {{ level.level }}</span>
+
+                    <svg-loader class="ms-2 inline h-4 w-4" name="icon-external-link"></svg-loader>
                 </Link>
 
                 <div class="mt-1.5 flex items-center">
-                    <div class="text-base">{{ level.orphans_count }}</div>
+                    <div class="text-base">
+                        {{ level.orphans_count }}
+                    </div>
+
+                    <base-tippy
+                        class="ms-2 flex cursor-pointer text-xs font-medium text-danger"
+                        content="2% Lower than last month"
+                    >
+                        {{ level.achievement_percentage }}%
+                    </base-tippy>
                 </div>
             </div>
         </base-tab-panel>

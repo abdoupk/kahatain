@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('longitude');
             $table->string('post_code', 5)->index('idx_cities_post_code');
 
+            $table->string('commune_code', 4)->nullable();
+
             $table->index(['id'], 'idx_cities_id');
         });
     }

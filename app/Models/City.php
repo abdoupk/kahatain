@@ -54,6 +54,7 @@ class City extends Model
         'latitude',
         'longitude',
         'post_code',
+        'commune_code',
     ];
 
     public function getFullName(?string $locale = 'ar'): string

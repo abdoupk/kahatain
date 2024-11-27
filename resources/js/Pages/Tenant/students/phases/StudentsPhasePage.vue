@@ -85,7 +85,7 @@ const handleSelectTrimester = (trimester: string) => {
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraFilters>
-                    <trimester-filter @filter="handleSelectTrimester"></trimester-filter>
+                    <trimester-filter :params @filter="handleSelectTrimester"></trimester-filter>
                 </template>
             </the-table-header>
 

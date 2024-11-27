@@ -4,6 +4,8 @@ namespace App\Http\Controllers\V1\Occasions\Zakat;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Occasions\SaveZakatToArchiveRequest;
+use App\Jobs\V1\Occasion\ZakatFamiliesListSavedJob;
+use App\Models\Archive;
 use App\Models\Family;
 use App\Models\FamilyZakat;
 use App\Models\Finance;
@@ -47,6 +49,15 @@ class SaveFamiliesZakatToArchiveController extends Controller
             DB::table('families')
                 ->whereIn('id', $request->families)
                 ->update(['aggregate_zakat_benefit' => DB::raw('aggregate_zakat_benefit + '.$amount)]);
+
+            $archive = Archive::create([
+                'occasion' => 'zakat',
+                'saved_by' => auth()->user()->id,
+            ]);
+
+            $archive->families()->syncWithPivotValues($request->families, ['tenant_id' => tenant('id')]);
+
+            dispatch(new ZakatFamiliesListSavedJob($archive, auth()->user()));
         });
 
         return response('', 204);

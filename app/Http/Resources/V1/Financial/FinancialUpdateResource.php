@@ -15,6 +15,7 @@ class FinancialUpdateResource extends JsonResource
         return [
             'id' => $this->id,
             'amount' => $this->amount,
+            'name' => $this->name,
             'description' => $this->description,
             'date' => $this->date->format('Y/m/d'),
             'specification' => $this->specification,

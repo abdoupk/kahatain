@@ -43,6 +43,12 @@ type PhaseType = {
     level: string
     id: string
     orphans_count: number
+    transcripts?: {
+        first_trimester_transcripts_count: number
+        second_trimester_transcripts_count: number
+        third_trimester_transcripts_count: number
+    }
+    achievement_percentage?: number
 }
 
 export interface AcademicLevelsIndexResource {

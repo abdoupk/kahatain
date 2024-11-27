@@ -11,6 +11,7 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 defineProps<{
     academicLevels: AcademicLevelsIndexResource
+    totalStudents: number
 }>()
 </script>
 
@@ -27,7 +28,7 @@ defineProps<{
             >
                 <div class="box grid grid-cols-12">
                     <div class="col-span-12 flex flex-col justify-center px-8 py-12 lg:col-span-4">
-                        <svg-loader class="h-10 w-10 text-pending" name="icon-chart-pie-simple"></svg-loader>
+                        <svg-loader class="h-10 w-10 text-pending" name="icon-user-graduate"></svg-loader>
 
                         <div
                             class="mt-12 flex items-center justify-start text-base/6 text-slate-600 dark:text-slate-300 rtl:!font-semibold"
@@ -36,11 +37,9 @@ defineProps<{
                         </div>
 
                         <div class="mt-4 flex items-center justify-start">
-                            <div class="relative ms-0.5 text-2xl font-bold">1,413,102.02</div>
-
-                            <a class="ms-4 text-slate-500" href="">
-                                <svg-loader class="h-4 w-4" name="icon-arrows-rotate"></svg-loader>
-                            </a>
+                            <div class="relative ms-0.5 text-2xl font-bold">
+                                {{ totalStudents }}
+                            </div>
                         </div>
 
                         <base-button

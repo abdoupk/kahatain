@@ -18,7 +18,7 @@ const removeOrphan = (index: number) => {
     <template v-for="index in createFamilyStore.family.orphans.length" :key="`orphan-${index}`">
         <div class="my-5 flex">
             <p class="text-base font-medium">
-                {{ $t('child no', { no: String(index + 1) }) }}
+                {{ $t('child no', { no: String(index) }) }}
             </p>
 
             <button class="me-2 ms-auto"></button>
@@ -33,6 +33,6 @@ const removeOrphan = (index: number) => {
             </a>
         </div>
 
-        <orphan-form :form :index></orphan-form>
+        <orphan-form :form :index="index - 1"></orphan-form>
     </template>
 </template>

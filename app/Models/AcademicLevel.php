@@ -55,6 +55,11 @@ class AcademicLevel extends Model
         return $this->hasMany(Orphan::class);
     }
 
+    public function transcripts(): HasMany
+    {
+        return $this->hasMany(Transcript::class);
+    }
+
     protected function casts(): array
     {
         return [
