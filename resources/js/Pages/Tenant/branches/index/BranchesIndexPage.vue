@@ -13,11 +13,13 @@ import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $tc } from '@/utils/i18n'
 
-const BranchCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/branches/BranchCreateEditModal.vue'))
+const BranchCreateEditModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/branches/create/BranchCreateEditModal.vue')
+)
 
 const BranchShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/branches/BranchShowModal.vue'))
 
-const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/branches/DataTable.vue'))
+const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/branches/index/DataTable.vue'))
 
 const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/BaseButton.vue'))
 

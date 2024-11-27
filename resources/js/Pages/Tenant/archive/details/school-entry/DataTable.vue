@@ -12,7 +12,10 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
 import { $t } from '@/utils/i18n'
 
-defineProps<{ orphans: PaginationData<SchoolEntryOrphansResource>; params: IndexParams }>()
+defineProps<{
+    orphans: PaginationData<SchoolEntryOrphansResource>
+    params: IndexParams
+}>()
 </script>
 
 <template>

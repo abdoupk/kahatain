@@ -13,7 +13,10 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import { formatCurrency } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ families: PaginationData<EidAlAdhaFamiliesResource>; params: IndexParams }>()
+defineProps<{
+    families: PaginationData<EidAlAdhaFamiliesResource>
+    params: IndexParams
+}>()
 </script>
 
 <template>

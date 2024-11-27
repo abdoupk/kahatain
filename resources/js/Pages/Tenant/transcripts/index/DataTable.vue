@@ -18,7 +18,10 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ orphans: PaginationData<OrphansTranscriptsIndexResource>; params: IndexParams }>()
+defineProps<{
+    orphans: PaginationData<OrphansTranscriptsIndexResource>
+    params: IndexParams
+}>()
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showCreateModal', 'showEditModal'])
@@ -153,12 +156,12 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                         <the-table-td-actions v-if="hasPermission(['update_orphans'])">
                             <div class="flex items-center justify-center">
                                 <transcript-actions
-                                    @show-create-modal="emit('showCreateModal', $event)"
-                                    @show-edit-modal="emit('showEditModal', $event)"
+                                    :orphan
                                     :shouldCreateFirstTrimesterTranscript
                                     :shouldCreateSecondTrimesterTranscript
                                     :shouldCreateThirdTrimesterTranscript
-                                    :orphan
+                                    @show-create-modal="emit('showCreateModal', $event)"
+                                    @show-edit-modal="emit('showEditModal', $event)"
                                 ></transcript-actions>
                             </div>
                         </the-table-td-actions>
@@ -171,8 +174,8 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
             <div
                 v-for="(orphan, index) in orphans.data"
                 :key="orphan.id"
-                class="intro-y col-span-12 @xl:col-span-6"
                 :style="{ zIndex: orphans.data.length - index }"
+                class="intro-y col-span-12 @xl:col-span-6"
             >
                 <div class="box p-5">
                     <div class="flex">
@@ -201,12 +204,12 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
 
                         <div class="flex w-1/4 items-center justify-end">
                             <transcript-actions
-                                @show-create-modal="emit('showCreateModal', $event)"
-                                @show-edit-modal="emit('showEditModal', $event)"
                                 :orphan
                                 :shouldCreateFirstTrimesterTranscript
                                 :shouldCreateSecondTrimesterTranscript
                                 :shouldCreateThirdTrimesterTranscript
+                                @show-create-modal="emit('showCreateModal', $event)"
+                                @show-edit-modal="emit('showEditModal', $event)"
                             ></transcript-actions>
                         </div>
                     </div>

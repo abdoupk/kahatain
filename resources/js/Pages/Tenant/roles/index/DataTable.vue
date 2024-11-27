@@ -12,7 +12,10 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 import { formatDate } from '@/utils/helper'
 
-defineProps<{ roles: PaginationData<RolesIndexResource>; params: IndexParams }>()
+defineProps<{
+    roles: PaginationData<RolesIndexResource>
+    params: IndexParams
+}>()
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])

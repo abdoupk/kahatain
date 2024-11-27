@@ -20,7 +20,10 @@ const familyStatusFilter = computed(() => {
     return `family_status.${getLocale()}`
 })
 
-defineProps<{ orphans: PaginationData<OrphansIndexResource>; params: IndexParams }>()
+defineProps<{
+    orphans: PaginationData<OrphansIndexResource>
+    params: IndexParams
+}>()
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])

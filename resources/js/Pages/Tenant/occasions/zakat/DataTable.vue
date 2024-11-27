@@ -14,7 +14,10 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
 import { formatCurrency } from '@/utils/helper'
 
-const props = defineProps<{ families: PaginationData<ZakatFamiliesResource>; params: IndexParams }>()
+const props = defineProps<{
+    families: PaginationData<ZakatFamiliesResource>
+    params: IndexParams
+}>()
 
 const emit = defineEmits(['sort'])
 

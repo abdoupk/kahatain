@@ -13,7 +13,9 @@ import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
-const ItemCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/inventory/ItemCreateEditModal.vue'))
+const ItemCreateEditModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/inventory/create/ItemCreateEditModal.vue')
+)
 
 const ItemShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/inventory/ItemShowModal.vue'))
 

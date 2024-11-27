@@ -14,7 +14,10 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import { formatDate, formatNumber, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ items: PaginationData<InventoryIndexResource>; params: IndexParams }>()
+defineProps<{
+    items: PaginationData<InventoryIndexResource>
+    params: IndexParams
+}>()
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetailsModal'])

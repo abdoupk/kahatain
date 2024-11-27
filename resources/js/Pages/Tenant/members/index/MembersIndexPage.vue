@@ -13,7 +13,7 @@ import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
-const MemberCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/MemberCreateModal.vue'))
+const MemberCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/create/MemberCreateModal.vue'))
 
 const MemberShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/MemberShowModal.vue'))
 

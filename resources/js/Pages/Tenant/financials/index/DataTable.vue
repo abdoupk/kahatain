@@ -16,7 +16,10 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import { formatCurrency, formatDate, hasPermission } from '@/utils/helper'
 import { $t, getLocale } from '@/utils/i18n'
 
-defineProps<{ finances: PaginationData<FinancialTransactionsIndexResource>; params: IndexParams }>()
+defineProps<{
+    finances: PaginationData<FinancialTransactionsIndexResource>
+    params: IndexParams
+}>()
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showDeleteModal', 'showDetailsModal', 'showEditModal'])
@@ -31,8 +34,8 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showDetailsModal', 'showEd
                         <the-table-th class="text-start"> #</the-table-th>
 
                         <the-table-th class="max-w-40 truncate text-start">
-                            {{ $t('validation.attributes.address') }}</the-table-th
-                        >
+                            {{ $t('validation.attributes.address') }}
+                        </the-table-th>
 
                         <the-table-th
                             :direction="params.directions?.creator"

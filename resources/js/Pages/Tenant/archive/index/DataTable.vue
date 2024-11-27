@@ -14,7 +14,10 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import { formatDate } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ items: PaginationData<ArchiveIndexResource>; params: IndexParams }>()
+defineProps<{
+    items: PaginationData<ArchiveIndexResource>
+    params: IndexParams
+}>()
 </script>
 
 <template>

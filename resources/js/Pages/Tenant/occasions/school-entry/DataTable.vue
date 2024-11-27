@@ -12,7 +12,10 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
 import { formatCurrency } from '@/utils/helper'
 
-defineProps<{ orphans: PaginationData<SchoolEntryOrphansResource>; params: IndexParams }>()
+defineProps<{
+    orphans: PaginationData<SchoolEntryOrphansResource>
+    params: IndexParams
+}>()
 
 const emit = defineEmits(['sort'])
 </script>

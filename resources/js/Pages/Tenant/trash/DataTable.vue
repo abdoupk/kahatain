@@ -15,7 +15,10 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import { formatDate, formatDateAndTime, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ items: PaginationData<TrashIndexResource>; params: IndexParams }>()
+defineProps<{
+    items: PaginationData<TrashIndexResource>
+    params: IndexParams
+}>()
 
 const emit = defineEmits(['showDeleteModal', 'restore'])
 </script>

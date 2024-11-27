@@ -15,7 +15,10 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{ families: PaginationData<FamiliesIndexResource>; params: IndexParams }>()
+defineProps<{
+    families: PaginationData<FamiliesIndexResource>
+    params: IndexParams
+}>()
 
 const emit = defineEmits(['sort', 'showDeleteModal'])
 </script>
@@ -105,8 +108,8 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                             <div class="flex items-center justify-center">
                                 <Link
                                     v-if="hasPermission('view_families')"
-                                    class="me-3 flex items-center"
                                     :href="route('tenant.families.show', family.id)"
+                                    class="me-3 flex items-center"
                                 >
                                     <svg-loader class="me-1 h-5 w-5 fill-current" name="icon-eye" />
                                     {{ $t('show') }}
