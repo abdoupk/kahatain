@@ -19,7 +19,7 @@ class BranchesIndexController extends Controller implements HasMiddleware
 
     public function __invoke(): Response
     {
-        return Inertia::render('Tenant/branches/BranchesIndexPage', [
+        return Inertia::render('Tenant/branches/index/BranchesIndexPage', [
             'branches' => BranchesIndexResource::collection(getBranches()),
             'params' => getParams(),
         ]);
