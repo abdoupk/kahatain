@@ -9,6 +9,7 @@ import ZakatSelector from '@/Pages/Tenant/occasions/zakat/ZakatSelector.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BasePopover from '@/Components/Base/headless/Popover/BasePopover.vue'
 import BasePopoverButton from '@/Components/Base/headless/Popover/BasePopoverButton.vue'
@@ -68,7 +69,7 @@ const handleSelectZakat = ($event) => {
 </script>
 
 <template>
-    <div class="me-2 text-center">
+    <div class="me-2">
         <base-popover v-slot="{ close }" class="inline-block">
             <base-popover-button :as="BaseButton" variant="primary">
                 {{ $t('save') }}
@@ -81,30 +82,72 @@ const handleSelectZakat = ($event) => {
                     <div class="!w-[450px] p-2">
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-6">
-                                <div class="text-start text-sm rtl:!font-semibold">zakat</div>
+                                <base-form-label class="!mb-0">
+                                    {{ $t('zakat') }}
+                                </base-form-label>
 
-                                <zakat-selector @update:value="handleSelectZakat"></zakat-selector>
+                                <zakat-selector class="!mt-0" @update:value="handleSelectZakat"></zakat-selector>
                             </div>
 
                             <div class="col-span-6">
-                                <div class="text-start text-sm rtl:!font-semibold">
+                                <base-form-label>
                                     {{ $t('validation.attributes.address') }}
-                                </div>
+                                </base-form-label>
 
                                 <base-form-input
-                                    class="mt-2 flex-1"
-                                    placeholder="example@gmail.com"
+                                    :placeholder="
+                                        $t('auth.placeholders.fill', { attribute: $t('validation.attributes.address') })
+                                    "
+                                    class="flex-1"
                                     type="text"
                                     @update:model-value="form.name = $event"
                                 ></base-form-input>
                             </div>
                         </div>
 
-                        <div class="">{{ formatCurrency(form.amount) }}</div>
-                        <div class="">{{ zakatStore.zakat.families.length }}</div>
-                        <div class="">{{ form.amount / zakatStore.zakat.families.length }}</div>
+                        <div class="mt-6 grid grid-cols-12 gap-4">
+                            <div class="col-span-12 grid grid-cols-12">
+                                <div class="col-span-4">
+                                    <div class="text-start text-sm rtl:!font-semibold">
+                                        {{ $t('the_amount') }}
+                                    </div>
+                                </div>
 
-                        <div class="">
+                                <div class="col-span-8">
+                                    {{ formatCurrency(form.amount) }}
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 grid grid-cols-12">
+                                <div class="col-span-4">
+                                    <div class="text-start text-sm rtl:!font-semibold">
+                                        {{ $t('zakat_selected_families') }}
+                                    </div>
+                                </div>
+
+                                <div class="col-span-8">
+                                    {{ zakatStore.zakat.families.length }}
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 grid grid-cols-12">
+                                <div class="col-span-4">
+                                    <div class="text-start text-sm rtl:!font-semibold">
+                                        {{ $t('zakat_per_family') }}
+                                    </div>
+                                </div>
+
+                                <div class="col-span-8">
+                                    {{ formatCurrency(form.amount / zakatStore.zakat.families.length) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <base-form-label>
+                                {{ $t('validation.attributes.notes') }}
+                            </base-form-label>
+
                             <base-form-text-area
                                 v-model="form.note"
                                 :placeholder="$t('validation.attributes.notes')"
