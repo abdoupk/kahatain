@@ -16,18 +16,18 @@ const addressField = ref(props.shopType + '_shop_address')
 
 const locationField = ref(props.shopType + '_shop_location')
 
-const showLocationAddressModal = ref(false)
-
 const emit = defineEmits(['showLocationAddressModal'])
+
+const handleClick = () => {
+    emit('showLocationAddressModal', {
+        orphan_id: props.orphan.orphan.id,
+        address: props.orphan.eid_suit[addressField.value],
+        location: props.orphan.eid_suit[locationField.value],
+        shop_type: props.shopType
+    })
+}
 </script>
 
 <template>
-    <svg-loader
-        v-if="!orphan.eid_suit[addressField] && !orphan.eid_suit[locationField]?.lang"
-        class="h-5 w-5 cursor-pointer"
-        name="icon-location"
-        @click.prevent="emit('showLocationAddressModal')"
-    ></svg-loader>
-
-    <svg-loader v-else class="h-5 w-5 cursor-pointer" name="icon-map-location-dot"></svg-loader>
+    <svg-loader class="h-5 w-5 cursor-pointer" name="icon-map-location-dot" @click.prevent="handleClick"></svg-loader>
 </template>

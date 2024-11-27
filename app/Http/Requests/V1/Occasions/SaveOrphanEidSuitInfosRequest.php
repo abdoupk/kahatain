@@ -16,8 +16,11 @@ class SaveOrphanEidSuitInfosRequest extends FormRequest
             'clothes_shop_phone_number' => ['sometimes', 'regex:/^(06|07|05)\d{8}$/'],
             'shoes_shop_name' => 'sometimes|string|max:255',
             'shoes_shop_phone_number' => ['sometimes', 'regex:/^(06|07|05)\d{8}$/'],
+            'clothes_shop_address' => 'nullable|string|max:255',
+            'shoes_shop_address' => 'nullable|string|max:255',
+            'shoes_shop_location' => 'nullable|array',
+            'clothes_shop_location' => 'nullable|array',
             'note' => 'sometimes|string|max:255',
-            'location' => 'sometimes',
             'user_id' => 'sometimes',
         ];
     }

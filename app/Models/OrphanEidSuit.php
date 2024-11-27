@@ -43,6 +43,8 @@ class OrphanEidSuit extends Model
             'tenant_id' => 'string',
             'orphan_id' => 'string',
             'user_id' => 'string',
+            'shoes_shop_location' => 'array',
+            'clothes_shop_location' => 'array',
         ];
     }
 }

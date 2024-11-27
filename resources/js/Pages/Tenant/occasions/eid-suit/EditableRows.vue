@@ -58,11 +58,15 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         <map-cell
             :orphan
             shop-type="clothes"
-            @show-location-address-modal="$emit('showLocationAddressModal', orphan)"
+            @show-location-address-modal="$emit('showLocationAddressModal', $event)"
         ></map-cell>
     </the-table-td>
 
     <the-table-td>
-        <map-cell :orphan shop-type="shoes"></map-cell>
+        <map-cell
+            :orphan
+            shop-type="shoes"
+            @show-location-address-modal="$emit('showLocationAddressModal', $event)"
+        ></map-cell>
     </the-table-td>
 </template>
