@@ -13,7 +13,6 @@ class FinanceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake('ar_SA')->name,
             'amount' => fake()->numberBetween(-1000000, 1000000),
             'description' => fake('ar_SA')->realText(),
             'date' => now()->subDays(fake()->numberBetween(1, 913)),

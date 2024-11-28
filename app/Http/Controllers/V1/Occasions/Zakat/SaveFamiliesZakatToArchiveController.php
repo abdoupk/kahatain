@@ -39,9 +39,7 @@ class SaveFamiliesZakatToArchiveController extends Controller
             FamilyZakat::insert($data->toArray());
 
             Finance::create([
-                'name' => $request->name,
                 'specification' => 'zakat',
-                'description' => $request->note,
                 'date' => now(),
                 'amount' => -1 * (float) $request->amount,
             ]);

@@ -131,41 +131,6 @@ const modalType = computed(() => {
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <!-- Begin: Name  -->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="name">
-                    {{ $t('validation.attributes.address') }}
-                </base-form-label>
-
-                <base-form-input
-                    id="name"
-                    ref="firstInputRef"
-                    v-model="form.name"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.name') })"
-                    type="text"
-                    @change="form.validate('name')"
-                />
-
-                <div v-if="form.errors?.name" class="mt-2">
-                    <base-input-error :message="form.errors.name"></base-input-error>
-                </div>
-            </div>
-            <!-- End: Name -->
-
-            <!-- Begin: Date  -->
-            <div class="col-span-12 sm:col-span-4">
-                <base-form-label htmlFor="date">
-                    {{ $t('validation.attributes.date') }}
-                </base-form-label>
-
-                <base-v-calendar v-model:date="form.date"></base-v-calendar>
-
-                <div v-if="form.errors?.date" class="mt-2">
-                    <base-input-error :message="form.errors.date"></base-input-error>
-                </div>
-            </div>
-            <!-- End: Date  -->
-
             <!-- Begin: Amount  -->
             <div class="col-span-12 sm:col-span-6">
                 <base-form-label htmlFor="the_amount">
@@ -185,6 +150,20 @@ const modalType = computed(() => {
                 </div>
             </div>
             <!-- End: Amount  -->
+
+            <!-- Begin: Date  -->
+            <div class="col-span-12 sm:col-span-4">
+                <base-form-label htmlFor="date">
+                    {{ $t('validation.attributes.date') }}
+                </base-form-label>
+
+                <base-v-calendar v-model:date="form.date"></base-v-calendar>
+
+                <div v-if="form.errors?.date" class="mt-2">
+                    <base-input-error :message="form.errors.date"></base-input-error>
+                </div>
+            </div>
+            <!-- End: Date  -->
 
             <!-- Begin: Specification  -->
             <div class="col-span-12 sm:col-span-6">

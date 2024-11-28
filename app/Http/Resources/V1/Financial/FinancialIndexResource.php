@@ -14,7 +14,6 @@ class FinancialIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
             'amount' => $this->amount,
             'description' => $this->description,
             'date' => $this->date,

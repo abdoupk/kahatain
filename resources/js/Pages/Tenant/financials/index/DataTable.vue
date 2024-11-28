@@ -33,10 +33,6 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showDetailsModal', 'showEd
                     <base-tr-table>
                         <the-table-th class="text-start"> #</the-table-th>
 
-                        <the-table-th class="max-w-40 truncate text-start">
-                            {{ $t('validation.attributes.address') }}
-                        </the-table-th>
-
                         <the-table-th
                             :direction="params.directions?.creator"
                             class="text-start"
@@ -96,10 +92,6 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showDetailsModal', 'showEd
                     <base-tr-table v-for="(finance, index) in finances.data" :key="finance.id" class="intro-x">
                         <the-table-td class="w-16">
                             {{ (finances.meta.from ?? 0) + index }}
-                        </the-table-td>
-
-                        <the-table-td class="!min-w-40 !max-w-40 truncate">
-                            {{ finance.name }}
                         </the-table-td>
 
                         <the-table-td class="!min-w-40 !max-w-40 truncate">

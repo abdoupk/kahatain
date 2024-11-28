@@ -16,7 +16,6 @@ class FinancialCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
             'amount' => ['required', 'numeric', 'gt:0'],
             'description' => ['nullable'],
             'date' => ['required', 'date'],

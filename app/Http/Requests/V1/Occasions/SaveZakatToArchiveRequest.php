@@ -12,8 +12,6 @@ class SaveZakatToArchiveRequest extends FormRequest
             'families' => 'required|array|min:1',
             'zakat_id' => 'required|exists:finances,id',
             'amount' => 'required|numeric',
-            'note' => 'nullable|string',
-            'name' => 'required|string',
         ];
     }
 

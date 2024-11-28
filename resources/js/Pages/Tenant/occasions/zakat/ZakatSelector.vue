@@ -4,12 +4,14 @@ import type { FilterValueType } from '@/types/types'
 import { useZakatStore } from '@/stores/zakat'
 import { onMounted } from 'vue'
 
-import FilterValueDropDown from '@/Components/Global/filters/FilterValueDropDown.vue'
+import ZakatListDropDown from '@/Pages/Tenant/occasions/zakat/ZakatListDropDown.vue'
+
+import { $t } from '@/utils/i18n'
 
 const value = defineModel<FilterValueType>('value', {
     default: {
         id: '',
-        name: ''
+        name: $t('filters.select_an_option')
     }
 })
 
@@ -21,5 +23,5 @@ onMounted(async () => {
 </script>
 
 <template>
-    <filter-value-drop-down v-model:value="value" :data="zakatStore.zakats"></filter-value-drop-down>
+    <zakat-list-drop-down v-model:value="value" :data="zakatStore.zakats"></zakat-list-drop-down>
 </template>

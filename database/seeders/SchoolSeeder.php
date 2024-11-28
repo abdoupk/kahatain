@@ -18,20 +18,29 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
-        $schools = json_decode(File::get(database_path('data/schools.json')), true, 512, JSON_THROW_ON_ERROR);
+        // Decode JSON file in manageable chunks
+        $filePath = database_path('data/schools.json');
+        $schools = json_decode(File::get($filePath), true, 512, JSON_THROW_ON_ERROR);
 
-        DB::table('schools')->insert(array_map(static function ($school) {
-            return [
-                'id' => Str::uuid(),
-                'name' => $school['name'],
-                'phase_key' => $school['phase_key'],
-                'city_id' => $school['city_id'],
-                'e_id' => $school['e_id'],
-                'created_at' => $school['created_at'],
-                'updated_at' => $school['updated_at'],
-            ];
-        }, $schools));
+        $batchSize = 1000; // Adjust batch size as needed
+        $batches = array_chunk($schools, $batchSize);
 
-        Artisan::call('scout:import', ['model' => 'App\Models\School']);
+        foreach ($batches as $batch) {
+            $data = array_map(static function ($school) {
+                return [
+                    'id' => Str::uuid(),
+                    'name' => $school['name'],
+                    'phase_key' => $school['phase_key'],
+                    'city_id' => $school['city_id'],
+                    'e_id' => $school['e_id'],
+                    'created_at' => $school['created_at'],
+                    'updated_at' => $school['updated_at'],
+                ];
+            }, $batch);
+
+            DB::table('schools')->insert($data);
+
+            Artisan::call('scout:import', ['model' => 'App\Models\School']);
+        }
     }
 }

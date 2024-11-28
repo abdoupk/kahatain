@@ -8,9 +8,7 @@ import { nextTick, ref } from 'vue'
 import ZakatSelector from '@/Pages/Tenant/occasions/zakat/ZakatSelector.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BasePopover from '@/Components/Base/headless/Popover/BasePopover.vue'
 import BasePopoverButton from '@/Components/Base/headless/Popover/BasePopoverButton.vue'
 import BasePopoverPanel from '@/Components/Base/headless/Popover/BasePopoverPanel.vue'
@@ -80,29 +78,12 @@ const handleSelectZakat = ($event) => {
             <base-popover-panel placement="bottom-start">
                 <form @submit.prevent="showWarningModalStatus = true">
                     <div class="!w-[450px] p-2">
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-6">
-                                <base-form-label class="!mb-0">
-                                    {{ $t('zakat') }}
-                                </base-form-label>
+                        <div class="w-full">
+                            <base-form-label class="!mb-0">
+                                {{ $t('zakat') }}
+                            </base-form-label>
 
-                                <zakat-selector class="!mt-0" @update:value="handleSelectZakat"></zakat-selector>
-                            </div>
-
-                            <div class="col-span-6">
-                                <base-form-label>
-                                    {{ $t('validation.attributes.address') }}
-                                </base-form-label>
-
-                                <base-form-input
-                                    :placeholder="
-                                        $t('auth.placeholders.fill', { attribute: $t('validation.attributes.address') })
-                                    "
-                                    class="flex-1"
-                                    type="text"
-                                    @update:model-value="form.name = $event"
-                                ></base-form-input>
-                            </div>
+                            <zakat-selector class="!mt-0" @update:value="handleSelectZakat"></zakat-selector>
                         </div>
 
                         <div class="mt-6 grid grid-cols-12 gap-4">
@@ -141,18 +122,6 @@ const handleSelectZakat = ($event) => {
                                     {{ formatCurrency(form.amount / zakatStore.zakat.families.length) }}
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="mt-3">
-                            <base-form-label>
-                                {{ $t('validation.attributes.notes') }}
-                            </base-form-label>
-
-                            <base-form-text-area
-                                v-model="form.note"
-                                :placeholder="$t('validation.attributes.notes')"
-                                rows="4"
-                            ></base-form-text-area>
                         </div>
 
                         <div class="mt-3 flex items-center">
