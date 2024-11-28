@@ -5,6 +5,7 @@
     "archive.school_entry": "دخول المدرسي لسنة :year",
     "archive.monthly_basket": "قفة الشهرية لشهر :date",
     "archive.monthly_sponsorship": "كفالة الشهرية لشهر :date",
+    "archive.zakat": "تقسيم زكاة بقيمة :amount على :count عائلة",
     "archive.babies_milk_and_diapers": "حليب الأطفال والحفاضات لشهر :date",
     "archive.families_count": "عدد العائلات المستفيدة",
     "archive.saved_by": "حفظ بواسطة",
