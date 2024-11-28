@@ -119,3 +119,20 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(): Collectio
             ->withCount('orphans'))
         ->get();
 }
+
+function listOfFamiliesBenefitingFromTheZakatForExport(): Collection
+{
+    return search(
+        Family::getModel(),
+        limit: LIMIT)
+        ->query(fn ($query) => $query
+            ->with(
+                [
+                    'sponsor:id,first_name,last_name,family_id,phone_number',
+                    'zone:id,name',
+                    'branch:id,name',
+                ]
+            )
+            ->withCount('orphans'))
+        ->get();
+}

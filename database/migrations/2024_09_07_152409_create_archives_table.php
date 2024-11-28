@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('tenant_id');
             $table->uuid('saved_by');
             $table->text('occasion');
+            $table->json('metadata')->nullable();
             $table->timestamps();
         });
     }

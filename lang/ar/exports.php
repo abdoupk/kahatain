@@ -5,11 +5,13 @@ return [
     'eid_suit' => 'قائمة المستفيدين من بدلة العيد لسنة :date',
     'monthly_basket_families' => 'قائمة المستفيدين من القفة الشهرية لشهر :date',
     'monthly_sponsorship_families' => 'قائمة المستفيدين من الكفالة الشهرية لشهر :date',
+    'zakat_families' => 'قائمة استفادة العائلات من الزكاة بتاريخ :date',
     'ramadan_basket_families' => 'قائمة المستفيدين من قفة رمضان لسنة :date',
     'babies_milk_and_diapers' => 'قائمة المستفيدين من الحفاضات وحليب الأطفال لشهر :date',
     'school_entry' => 'قائمة المستفيدين من الحقائب المدرسية لسنة :date',
     'archive' => [
         'eid_al_adha_families' => 'أرشيف المستفيدين من الأضحية لسنة :date',
+        'zakat_families' => 'أرشيف المستفيدين من الزكاة بقيمة اجمالية :attribute بتاريخ :date',
         'eid_suit' => 'أرشيف المستفيدين من بدلة العيد لسنة :date',
         'monthly_basket_families' => 'أرشيف المستفيدين من القفة الشهرية لشهر :date',
         'monthly_sponsorship_families' => 'أرشيف المستفيدين من الكفالة الشهرية لشهر :date',

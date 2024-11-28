@@ -28,7 +28,10 @@ let pdf: pdfjsLib.PDFDocumentProxy | null = null // Use the correct type for pdf
 // Load the PDF document
 const loadPdf = async (url: string) => {
     try {
-        const loadingTask = pdfjsLib.getDocument(url)
+        const loadingTask = pdfjsLib.getDocument({
+            url: url,
+            disableFontFace: true
+        })
 
         pdf = await loadingTask.promise
 

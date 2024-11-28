@@ -28,7 +28,7 @@ defineProps<{
                 >
                     <span class="inline"> {{ level.level }}</span>
 
-                    <svg-loader class="ms-2 inline h-4 w-4" name="icon-external-link"></svg-loader>
+                    <svg-loader class="ms-1.5 inline h-5 w-5" name="icon-link"></svg-loader>
                 </Link>
 
                 <div class="mt-1.5 flex items-center">

@@ -56,7 +56,11 @@ class ArchiveIndexResource extends JsonResource
                 'archive.monthly_sponsorship',
                 ['date' => $this->created_at->translatedFormat('F Y')]
             ),
-            'zakat' => 'zakat',
+            // TODO change to trans choice
+            'zakat' => trans('archive.zakat', [
+                'amount' => formatCurrency($this->metadata['amount']),
+                'count' => $this->metadata['families_count'] ?? 0,
+            ]),
         };
     }
 

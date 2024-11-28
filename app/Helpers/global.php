@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @throws Throwable
  * @throws CouldNotTakeBrowsershot
  */
-function saveToPDF(string $directory, string $variableName, callable $function, string|null|Carbon $date = null): StreamedResponse
+function saveToPDF(string $directory, string $variableName, callable $function, string|null|Carbon $date = null, string $attribute = ''): StreamedResponse
 {
     $disk = Storage::disk('public');
 
@@ -39,6 +39,7 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
 
     $pdfName = __('exports.'.$pdfName, [
         'date' => $date,
+        'attribute' => $attribute,
     ]);
 
     $pdfFile = "$directory/$pdfName".'.pdf';
@@ -70,7 +71,8 @@ function saveArchiveToPDF(
     string $directory,
     callable $function,
     string $date,
-    ?string $variableName = 'families'
+    ?string $variableName = 'families',
+    ?string $attribute = ''
 ): StreamedResponse {
     $disk = Storage::disk('public');
 
@@ -85,9 +87,9 @@ function saveArchiveToPDF(
             '/',
             "archives/$directory/sponsorships"
         )[1]
-    ), ['date' => $date]);
+    ), ['date' => $date, 'attribute' => $attribute]);
 
-    $pdfFile = "$directory/$pdfName".'.pdf';
+    $pdfFile = "$directory/".Str::slug($pdfName, '-', 'ar').'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 

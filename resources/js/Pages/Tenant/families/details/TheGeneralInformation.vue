@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
-
 import type { FamilyShowType } from '@/types/families'
 
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
 import ThePdfViewer from '@/Components/Global/ThePdfViewer.vue'
 
 import { formatDate } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{ family: FamilyShowType }>()
 </script>

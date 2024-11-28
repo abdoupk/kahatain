@@ -12,7 +12,7 @@ class ArchiveDetailsZakatController extends Controller
     {
         return inertia('Tenant/archive/details/zakat/ZakatIndexArchiveDetailsPage',
             [
-                'archive' => ['id' => $archive->id, 'date' => $archive->created_at->year],
+                'archive' => ['id' => $archive->id, 'date' => $archive->created_at->translatedFormat('j'.__('glue').'F Y')],
                 'families' => ZakatArchiveIndexResource::collection(
                     $archive->listFamilies()
                         ->with([
@@ -24,6 +24,7 @@ class ArchiveDetailsZakatController extends Controller
                         ->paginate(request()->integer('perPage', 10))
                 ),
                 'params' => getParams(),
+                'amount' => $archive->metadata['amount'] ?? 0,
             ]);
     }
 }

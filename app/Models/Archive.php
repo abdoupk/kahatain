@@ -59,6 +59,7 @@ class Archive extends Model
         'occasion',
         'tenant_id',
         'saved_by',
+        'metadata',
     ];
 
     public function savedBy(): BelongsTo
@@ -141,6 +142,7 @@ class Archive extends Model
         return [
             'tenant_id' => 'string',
             'saved_by' => 'string',
+            'metadata' => 'array',
         ];
     }
 }

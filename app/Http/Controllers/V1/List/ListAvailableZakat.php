@@ -18,6 +18,7 @@ class ListAvailableZakat extends Controller
             ->get()->map(function (Finance $finance) {
                 return [
                     'id' => $finance->id,
+                    'amount' => $finance->amount,
                     'name' => formatCurrency($finance->amount)
                         .' ('
                         .$finance->date->translatedFormat('j F Y')

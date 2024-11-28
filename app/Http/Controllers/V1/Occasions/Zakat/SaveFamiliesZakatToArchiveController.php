@@ -51,6 +51,11 @@ class SaveFamiliesZakatToArchiveController extends Controller
             $archive = Archive::create([
                 'occasion' => 'zakat',
                 'saved_by' => auth()->user()->id,
+                'metadata' => [
+                    'amount' => $request->amount,
+                    'zakat_id' => $request->zakat_id,
+                    'families_count' => count($request->families),
+                ],
             ]);
 
             $archive->families()->syncWithPivotValues($request->families, ['tenant_id' => tenant('id')]);

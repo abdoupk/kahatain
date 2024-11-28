@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ArchiveOccasionType, EidAlAdhaFamiliesResource, IndexParams, PaginationData } from '@/types/types'
+import type { ArchiveOccasionType, IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
 
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -8,7 +8,7 @@ import TheLayout from '@/Layouts/TheLayout.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
-import { hasPermission } from '@/utils/helper'
+import { formatCurrency, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/archive/details/zakat/DataTable.vue'))
@@ -24,9 +24,10 @@ defineOptions({
 })
 
 const props = defineProps<{
-    families: PaginationData<EidAlAdhaFamiliesResource>
+    families: PaginationData<ZakatFamiliesResource>
     params: IndexParams
     archive: ArchiveOccasionType
+    amount: number
 }>()
 
 const params = ref<IndexParams>({
@@ -38,10 +39,19 @@ const params = ref<IndexParams>({
     search: props.params.search,
     archive: props.archive.id
 })
+
+const total = formatCurrency(props.amount)
 </script>
 
 <template>
-    <Head :title="$t('exports.archive.zakat', { date: String(archive.date) })"></Head>
+    <Head
+        :title="
+            $t('exports.archive.zakat_families', {
+                date: String(archive.date),
+                attribute: String(total)
+            })
+        "
+    ></Head>
 
     <suspense>
         <div>
@@ -50,7 +60,7 @@ const params = ref<IndexParams>({
                 :filters="[]"
                 :pagination-data="families"
                 :params="params"
-                :title="$t('exports.archive.zakat', { date: String(archive.date) })"
+                :title="$t('exports.archive.zakat_families', { date: String(archive.date), attribute: String(total) })"
                 :url="$page.url"
                 entries="families"
                 export-pdf-url="tenant.archive.export.zakat.pdf"
