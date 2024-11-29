@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class VocationalTrainingSeeder extends Seeder
+class SchoolToolSeeder extends Seeder
 {
     public function run(): void {}
 }

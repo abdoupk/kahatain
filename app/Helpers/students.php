@@ -18,9 +18,9 @@ function getAcademicLevelsForStudentsIndex(): array
     return AcademicLevel::withCount('orphans')
         ->with('transcripts')
         ->where(function ($query) {
-            $query->where('phase_key', 'elementary_school')
-                ->orWhere('phase_key', 'middle_school')
-                ->orWhere('phase_key', 'high_school');
+            $query->where('phase_key', 'primary_education')
+                ->orWhere('phase_key', 'middle_education')
+                ->orWhere('phase_key', 'secondary_education');
         })
         ->get()
         ->mapToGroups(function (AcademicLevel $academicLevel) {
@@ -42,18 +42,18 @@ function getTotalStudents()
 {
     ray(AcademicLevel::withCount('orphans')
         ->where(function ($query) {
-            $query->where('phase_key', 'elementary_school')
-                ->orWhere('phase_key', 'middle_school')
-                ->orWhere('phase_key', 'high_school');
+            $query->where('phase_key', 'primary_education')
+                ->orWhere('phase_key', 'middle_education')
+                ->orWhere('phase_key', 'secondary_education');
         })
         ->get()
         ->sum('orphans_count'));
 
     return AcademicLevel::withCount('orphans')
         ->where(function ($query) {
-            $query->where('phase_key', 'elementary_school')
-                ->orWhere('phase_key', 'middle_school')
-                ->orWhere('phase_key', 'high_school');
+            $query->where('phase_key', 'primary_education')
+                ->orWhere('phase_key', 'middle_education')
+                ->orWhere('phase_key', 'secondary_education');
         })
         ->get()
         ->sum('orphans_count');

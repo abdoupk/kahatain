@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
-class VocationalTrainingCenter extends Model
+class University extends Model
 {
     use HasUuids, Searchable;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'latin_name',
-        'arabic_name',
-        'code',
-        'wilaya_code',
-        'e_id',
+        'name',
+        'type',
+        'zone',
     ];
 }

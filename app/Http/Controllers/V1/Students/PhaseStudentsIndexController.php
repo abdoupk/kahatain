@@ -10,7 +10,7 @@ class PhaseStudentsIndexController extends Controller
 {
     public function __invoke(string $phase, AcademicLevel $academicLevel)
     {
-        if (! in_array($phase, ['elementary-school', 'middle-school', 'high-school'])) {
+        if (! in_array($phase, ['primary-education', 'middle-education', 'secondary-education'])) {
             abort(404);
         }
 

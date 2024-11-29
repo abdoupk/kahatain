@@ -52,9 +52,9 @@ type PhaseType = {
 }
 
 export interface AcademicLevelsIndexResource {
-    elementary: PhaseType[]
+    primary: PhaseType[]
     middle: PhaseType[]
-    high: PhaseType[]
+    secondary: PhaseType[]
 }
 
 export interface LessonShowType {

@@ -27,9 +27,9 @@ const breadcrumbs = computedEager(() => {
 
         if (
             prevText === 'details' ||
-            prevText === 'elementary-school' ||
-            prevText === 'middle-school' ||
-            prevText === 'high-school'
+            prevText === 'primary-education' ||
+            prevText === 'middle-education' ||
+            prevText === 'secondary-education'
         ) {
             continue
         } else if (prevText === 'students') {

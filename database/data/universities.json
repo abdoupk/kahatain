@@ -1,0 +1,672 @@
+[
+    {
+        "name": "جامعة البويرة – آكلي محند أولحاج",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الجلفة – زيان عاشور ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة غرداية ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة خميس مليانة – الجيلالي بونعامة ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة المدية – يحي فارس ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الجزائر هواري بومدين للعلوم و التكنولوجيا ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة بجاية – عبد الرحمان ميرة ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة بومرداس – محمد بوقرة ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة تيزي وزو – مولود معمري ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الأغواط – عمار ثليجي ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة البليدة 1 – سعد دحلب ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة البليدة 2 – لونيسي علي ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الجزائر1 – بن يوسف بن خدة ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الجزائر 2 – أبوالقاسم سعد الله ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الجزائر3 ابراهيم سلطان شيبوط ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة التكوين المتواصل ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة تامنغست ",
+        "zone": "center",
+        "type": "university"
+    },
+    {
+        "name": "جامعة جيجل – محمد الصديق بن يحي ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة تبسة – العربي التبسي  ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة برج بوعريريج – محمد البشير الابراهيمي ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الطارف – الشاذلي بن جديد ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة خنشلة – عباس لغرور ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة أم البواقي – العربي بن مهيدي ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الوادي – حمة لخضر",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة سوق أهراس – محمد الشريف مساعدية ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة عنابة – باجي مختار ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة سكيكدة – 20 أوت 1955 ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة قالمة – 08 ماي 1945 ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة باتنة 1 – الحاج لخضر ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة بسكرة – محمد خيضر ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة المسيلة – محمد بوضياف ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة ورقلة – قاصدي مرباح ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة قسنطينة للعلوم الإسلامية الأمير عبد القادر ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة سطيف1 – فرحات عباس ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة سطيف2 – لمين دباغين ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة قسنطينة1 – الإخوة منتوري ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة قسنطينة 2 – عبد الحميد مهري ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة قسنطينة 3- المجاهد صالح بوبنيدر ",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": " جامعة باتنة 2 – مصطفى بن بولعيد",
+        "zone": "east",
+        "type": "university"
+    },
+    {
+        "name": "جامعة طاهري محمد بشار ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة مصطفى اسطمبولي معسكر ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الدكتور مولاي الطاهر سعيدة ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة أبو بكر بلقايد تلمسان ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة احمد دراية أدرار ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة بن خلدون تيارت ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة جيلالي ليابس سيدي بلعباس ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة عبد الحميد ابن باديس مستغانم ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة احمد بن بلة وهران 1 السانية ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة محمد بوضياف العلوم والتكنولوجيا- وهران ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة وهران 2 محمد بن أحمد المدعو الرائد سي موسى ",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة الشلف – حسيبة بن بوعلي",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة تيسمسيلت",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة عين تموشنت",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "جامعة غليزان",
+        "zone": "west",
+        "type": "university"
+    },
+    {
+        "name": "المركز الجامعي بتيبازة – عبد الله مرسلي",
+        "zone": "center",
+        "type": "university_center"
+    },
+    {
+        "name": "المركز الجامعي إليزي المقاوم الشيخ آمود بن مختار",
+        "zone": "center",
+        "type": "university_center"
+    },
+    {
+        "name": "المركز الجامعي آفلو",
+        "zone": "center",
+        "type": "university_center"
+    },
+    {
+        "name": "  المركز الجامعي لميلة – عبد الحفيظ بوالصوف",
+        "zone": "east",
+        "type": "university_center"
+    },
+    {
+        "name": " المركز الجامعي بريكة – أحمد حمودة بن عبد الرزاق المدعو سي الحواس",
+        "zone": "east",
+        "type": "university_center"
+    },
+    {
+        "name": "المركز الجامعي بالنعامة – صالحي أحمد المدعو علي",
+        "type": "university_center",
+        "zone": "west"
+    },
+    {
+        "name": "المركز الجامعي بالبيض – نور البشير",
+        "type": "university_center",
+        "zone": "west"
+    },
+    {
+        "name": "المركز الجامعي بتندوف – المجاهد علي كافي",
+        "type": "university_center",
+        "zone": "west"
+    },
+    {
+        "name": "المركز الجامعي لمغنية",
+        "type": "university_center",
+        "zone": "west"
+    },
+    {
+        "name": "معهد المناجمنت والتطوير  الشراقة.الجزائر–MDI",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "لمدرسة العليا للفندقة والإطعام عين البنيان بالجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "عهد المناجمنت سعيد حمدين بالجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "عهد التكوين في التأمينات والتسيير  بن عكنون.الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "عهد إدارة الأعمال ( أنسيم سوب)  حيدرة الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "درسة ادارة الأعمال المدينة الجديدة تيزي وزو",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "درسة التكوين في تقنيات التسيير دالي ابراهيم الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "عهد البصريات برج بوعريريج",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "درسة ادارة الأعمال بالجزائر(بيزناس سكول) حيدرة الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المدرسة العليا للعلوم والتكنولوجيا واد الرمان العاشور.الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المعهد العالي للعلوم  برج الكيفان الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المعهد العالي للتجارة والاقتصاد سطيف",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المعهد العالي للتسيير  دالي براهيم",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "معهد البصريات اولاد فايت. الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "معهد التكنولوجيا ( نوميديا) سيدي عبد الله .الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المدرسة العليا لمهن البناء  بلوزداد.الجزائر",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المعهد العالي لألداب واللغات “الغفران” غرداية",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المعهد العالي للعلوم والتكنولوجيا – علوم تجريبية ابن رشد ",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": "المعهد العالي للعلوم الانسانية والتطبيقية غرداية",
+        "type": "private_institution",
+        "zone": null
+    },
+    {
+        "name": " المدرسة العليا للأساتذة بوزريعة الشيخ مبارك بن محمد إبراهيمي الميلي الجزائري",
+        "type": "higher_normal_school",
+        "zone": "center"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة القبة الشيخ محمد البشير الإبراهيمي",
+        "type": "higher_normal_school",
+        "zone": "center"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة بالأغواط – طالب عبد الرحمان",
+        "type": "higher_normal_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة العليا للأساتذة الصم والبكم",
+        "type": "higher_normal_school",
+        "zone": "center"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة الآداب والعلوم الانسانية قسنطينة الكاتبة آسيا جبار",
+        "type": "higher_normal_school",
+        "zone": "east"
+    },
+    {
+        "name": " المدرسة العليا لأساتذة التعليم التكنولوجي بسكيكدة",
+        "type": "higher_normal_school",
+        "zone": "east"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة سطيف المجاهد مسعود زغار",
+        "type": "higher_normal_school",
+        "zone": "east"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة بوسعادة المجاهد الفريق احمد قايد صالح",
+        "type": "higher_normal_school",
+        "zone": "east"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة ورقلة",
+        "type": "higher_normal_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة العليا للأساتذة بمستغانم",
+        "type": "higher_normal_school",
+        "zone": "west"
+    },
+    {
+        "name": "  المدرسة العليا للأساتذة بوهران",
+        "type": "higher_normal_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا للأساتذة ببشار",
+        "type": "higher_normal_school",
+        "zone": "west"
+    },
+    {
+        "name": "المدرسة الوطنية المتعددة التقنيات",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للري-المجاهد عرباوي عبد الله",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للأشغال العمومية – فرانسيس جونسون-",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للبيطرة-الشهيد الربيع بوشامة",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة المتعددة العلوم للهندسة المعمارية والعمران-المجاهد حسين آيت أحمد",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للفلاحة -المجاهد خالف عبد الله المدعو قاصدي مرباح",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "مدرسة الدراسات العليا التجارية",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للإعلام الآلي",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للإحصاء والاقتصاد التطبيقي",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة العليا للتجارة- المجاهد مولود قاسم نايت بلقاسم",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا لعلوم البحر و تهيئة الساحل",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للمناجمنت",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للصحافة وعلوم الإعلام",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للعلوم السياسية",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة العليا في علوم الغذاء والصناعات الغذائية الفلاحية بالجزائر سابقا- ق. ت.",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة العليا للتسيير و الاقتصاد الرقمي",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة العليا في علوم وتكنولوجيات الإعلام الآلي ببجاية",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للذكاء الاصطناعي",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للرياضيات",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة العليا للتكنولوجيات المتقدّمة",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للأمن السيبراني",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا في علم النانو وتكنولوجيا النانو",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للأنظمة المستقلة",
+        "type": "national_higher_school",
+        "zone": "center"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للتكنولوجيا و الهندسة عنابة",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة الوطنية المتعددة التقنيات بقسنطينة-المفكر مالك بن نبي",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة الوطنية العليا في البيوتكنولوجيا بقسنطينة – الشهيد توفيق خزندار",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة العليا علوم التسير بعنابة سابقا- ق. ت.ع.ا.ت.ع.ت – عنابة",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة العليا المحاسبة والمالية بقسنطينة سابقا- ق. ت.ع.ا.ت.ع.ت – قسنطينة",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للغابات – خنشلة",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للطاقات المتجددة والبيئة والتنمية المستدامة",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": "المدرسة الوطنية العليا للزراعات الصحراوية – الوادي",
+        "type": "national_higher_school",
+        "zone": "east"
+    },
+    {
+        "name": " المدرسة الوطنية المتعددة التقنيات بوهران – موريس أودان",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا للإعلام الآلي بسيدي بلعباس- 08 ماي1945",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا في علوم التطبيقية بتلمسان سابقا- ق. ت. ع. ت.- تلمسان",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا لإدارة الأعمال بتلمسان سابقا- ق. ت.ع.ا.ت.ع.ت – تلمسان",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا للإقتصاد بوهران سابقا- ق. ت.ع.ا.ت.ع.ت – وھران",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا في الهندسة الكهروبائية والطاقوية بوهران سابقا-ق. ت. ع. ت.- وھران",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا في علوم الفلآحة بمستغانم سابقا-ق. ت. ع.ط.ح. – مستغانم",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة العليا للعلوم البيولوجية بوهران سابقا-ق. ت. ع.ط.ح. – وھران",
+        "type": "national_higher_school",
+        "zone": "west"
+    },
+    {
+        "name": " المدرسة الوطنية العليا للزراعات الصحراوية – أدرار",
+        "type": "national_higher_school",
+        "zone": "west"
+    }
+]

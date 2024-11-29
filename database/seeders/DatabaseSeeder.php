@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SchoolSeeder::class);
 
+        $this->call(UniversitySeeder::class);
+
+        $this->call(SchoolToolSeeder::class);
+
+        $this->call(VocationalTrainingCenterSeeder::class);
+
         $this->call(SubjectSeeder::class);
 
         $this->call(AcademicLevelSeeder::class);
