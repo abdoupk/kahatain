@@ -9,6 +9,9 @@ import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateM
 import MenuLink from '@/Pages/Tenant/sponsors/details/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
+
+import { hasPermission } from '@/utils/helper'
 
 const props = defineProps<{ sponsor: SponsorShowType }>()
 
@@ -42,6 +45,12 @@ const showNeedCreateModal = () => {
                         {{ sponsor.creator?.name }}
                     </Link>
                 </div>
+
+                <Link v-if="hasPermission('edit_sponsor')" :href="route('tenant.sponsors.edit', sponsor.id)">
+                    <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
+
+                    <span class="ms-1 rtl:!font-semibold"> {{ $t('edit') }}</span>
+                </Link>
             </div>
 
             <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">

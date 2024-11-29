@@ -512,5 +512,6 @@
     "total_students": "اجمالي المتمدرسين",
     "aggregate_zakat_benefit": "الاستفادة الكلية من الزكاة",
     "zakat_per_family": "المبلغ لكل عائلة",
-    "zakat_selected_families": "عدد العائلات المحددة"
+    "zakat_selected_families": "عدد العائلات المحددة",
+    "no_residence_certificate": "لم يتم رفع بطاقة الإقامة"
 }

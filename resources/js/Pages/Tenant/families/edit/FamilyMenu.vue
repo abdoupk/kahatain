@@ -9,6 +9,9 @@ import MenuLink from '@/Pages/Tenant/families/edit/MenuLink.vue'
 import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateModal.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
+
+import { hasPermission } from '@/utils/helper'
 
 defineProps<{ family: FamilyEditType }>()
 
@@ -37,6 +40,12 @@ const showNeedCreateModal = () => {
                         {{ family.creator?.name }}
                     </Link>
                 </div>
+
+                <Link v-if="hasPermission('show_family')" :href="route('tenant.families.show', family.id)">
+                    <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>
+
+                    <span class="ms-1 rtl:!font-semibold"> {{ $t('show') }}</span>
+                </Link>
             </div>
 
             <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">

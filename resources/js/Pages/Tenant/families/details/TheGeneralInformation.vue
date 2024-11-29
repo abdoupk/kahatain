@@ -55,6 +55,7 @@ defineProps<{ family: FamilyShowType }>()
             </h2>
 
             <div
+                v-if="family.residence.created_at"
                 class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-sm font-semibold text-slate-400 dark:bg-darkmode-400"
             >
                 {{ formatDate(family.residence.created_at, 'long') }}
@@ -64,18 +65,21 @@ defineProps<{ family: FamilyShowType }>()
         <div class="w-full p-5">
             <template v-if="family.residence.residence_certificate_file">
                 <img
-                    class="max-h-64 max-w-full object-cover"
                     v-if="family.residence.file_type === 'image'"
                     :src="family.residence.residence_certificate_file"
                     alt=""
+                    class="max-h-64 max-w-full object-cover"
                 />
-                <div class="" v-else>
+
+                <div v-else class="">
                     <the-pdf-viewer :pdf-url="family.residence.residence_certificate_file"></the-pdf-viewer>
                 </div>
             </template>
 
             <div v-else class="intro-x mt-12 flex flex-col items-center justify-center">
-                <no-results-found> dont have residence certificate</no-results-found>
+                <no-results-found>
+                    {{ $t('no_residence_certificate') }}
+                </no-results-found>
             </div>
         </div>
     </div>

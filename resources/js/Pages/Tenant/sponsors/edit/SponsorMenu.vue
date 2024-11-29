@@ -9,6 +9,9 @@ import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateM
 import MenuLink from '@/Pages/Tenant/sponsors/details/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import SvgLoader from '@/Components/Global/SvgLoader.vue'
+
+import { hasPermission } from '@/utils/helper'
 
 const props = defineProps<{ sponsor: SponsorUpdateFormType }>()
 
@@ -36,16 +39,26 @@ const showNeedCreateModal = () => {
     <div class="col-span-12 flex flex-col-reverse lg:col-span-4 lg:block 2xl:col-span-3">
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
-                <div class="me-auto ms-4">
-                    <div class="text-base font-bold">{{ name }}</div>
+                <div class="me-auto flex flex-row items-center">
+                    <div class="me-4 ms-1">photo</div>
 
-                    <Link
-                        :href="route('tenant.members.index') + '?show=' + sponsor.creator?.id"
-                        class="font-semibold text-slate-500"
-                    >
-                        {{ sponsor.creator?.name }}
-                    </Link>
+                    <div class="">
+                        <div class="text-base font-bold">{{ name }}</div>
+
+                        <Link
+                            :href="route('tenant.members.index') + '?show=' + sponsor.creator?.id"
+                            class="font-semibold text-slate-500"
+                        >
+                            {{ sponsor.creator?.name }}
+                        </Link>
+                    </div>
                 </div>
+
+                <Link v-if="hasPermission('show_sponsor')" :href="route('tenant.sponsors.show', sponsor.id)">
+                    <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>
+
+                    <span class="ms-1 rtl:!font-semibold"> {{ $t('show') }}</span>
+                </Link>
             </div>
 
             <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">

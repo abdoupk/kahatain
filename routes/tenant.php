@@ -6,7 +6,6 @@ use App\Http\Controllers\V1\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\V1\CitySearchController;
 use App\Http\Controllers\V1\Trash\TrashIndexController;
 use App\Http\Controllers\V1\UploadFileController;
-use App\Models\Family;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -28,10 +27,6 @@ Route::middleware([
                 'login',
                 [AuthenticatedSessionController::class, 'store']
             );
-
-            Route::view('/test', 'pdf.families', [
-                'families' => Family::all(),
-            ]);
         });
 
         Route::middleware('guest')->group(function (): void {
