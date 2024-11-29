@@ -290,9 +290,8 @@ export const permissions = {
     committees: ['create', 'delete', 'list', 'update', 'view'],
     benefactors: ['create', 'delete', 'list', 'update', 'view'],
     sponsorships: ['create'],
-    // TODO: add permissions
     transcripts: ['create', 'delete', 'list', 'update', 'view'],
-    students: ['create', 'delete', 'list', 'update', 'view'],
+    students: ['list'],
     monthly_sponsorships: ['update_settings']
 }
 

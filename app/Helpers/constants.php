@@ -7,7 +7,7 @@ const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
     'therapy', 'ramadan_basket',
 ];
 
-const FILTER_STUDENTS = 'AND academic_level.phase_key IN [elementary_school, middle_school, high_school]';
+const FILTER_STUDENTS = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';
 
 const FILTER_RAMADAN_BASKET = '';
 //'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';

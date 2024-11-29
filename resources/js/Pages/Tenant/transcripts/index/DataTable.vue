@@ -24,10 +24,9 @@ defineProps<{
 }>()
 
 // eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showCreateModal', 'showEditModal'])
+const emit = defineEmits(['sort', 'showCreateModal', 'showDeleteModal', 'showEditModal'])
 
-// TODO: change this to curent date
-const now = dayjs('2025-7-30')
+const now = dayjs()
 
 const shouldCreateFirstTrimesterTranscript = computed(() => {
     const isFebToAug = now.month() >= 1 && now.month() <= 7
@@ -162,6 +161,7 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                                     :shouldCreateThirdTrimesterTranscript
                                     @show-create-modal="emit('showCreateModal', $event)"
                                     @show-edit-modal="emit('showEditModal', $event)"
+                                    @show-delete-modal="emit('showDeleteModal', $event)"
                                 ></transcript-actions>
                             </div>
                         </the-table-td-actions>
@@ -210,6 +210,7 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                                 :shouldCreateThirdTrimesterTranscript
                                 @show-create-modal="emit('showCreateModal', $event)"
                                 @show-edit-modal="emit('showEditModal', $event)"
+                                @show-delete-modal="emit('showDeleteModal', $event)"
                             ></transcript-actions>
                         </div>
                     </div>

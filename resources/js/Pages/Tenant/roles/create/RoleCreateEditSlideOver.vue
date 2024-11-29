@@ -153,7 +153,7 @@ watch(
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <div class="col-span-12">
+            <div class="w-3/5">
                 <base-form-label htmlFor="name">
                     {{ $t('validation.attributes.role_name') }}
                 </base-form-label>

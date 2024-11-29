@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { OrphansTranscriptsIndexResource } from '@/types/types'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
@@ -17,7 +17,7 @@ defineProps<{
     shouldCreateThirdTrimesterTranscript: boolean
 }>()
 
-const emit = defineEmits(['showCreateModal', 'showEditModal'])
+const emit = defineEmits(['showCreateModal', 'showEditModal', 'showDeleteModal'])
 
 const handleCreateTranscript = (trimester: string, orphan: OrphansTranscriptsIndexResource, close) => {
     emit('showCreateModal', {
@@ -33,12 +33,18 @@ const handleEditTranscript = (transcriptId: string, close) => {
 
     close()
 }
+
+const handleDeleteTranscript = (transcriptId: string, close) => {
+    emit('showDeleteModal', transcriptId)
+
+    close()
+}
 </script>
 
 <template>
     <!-- Begin: Create Transcript-->
     <base-menu v-slot="{ close }">
-        <base-menu-button class="w-full border-0 shadow-none focus:outline-none focus:ring-0" :as="BaseButton">
+        <base-menu-button :as="BaseButton" class="w-full border-0 shadow-none focus:outline-none focus:ring-0">
             <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-plus"></svg-loader>
 
             {{ $t('create') }}
@@ -46,25 +52,25 @@ const handleEditTranscript = (transcriptId: string, close) => {
 
         <base-menu-items>
             <base-menu-item
+                :disabled="!shouldCreateFirstTrimesterTranscript || orphan.transcripts.first_trimester"
                 class="w-full whitespace-nowrap"
                 @click.prevent="handleCreateTranscript('first_trimester', orphan, close)"
-                :disabled="!shouldCreateFirstTrimesterTranscript || orphan.transcripts.first_trimester"
             >
                 {{ $t('first_trimester') }}
             </base-menu-item>
 
             <base-menu-item
+                :disabled="!shouldCreateSecondTrimesterTranscript || orphan.transcripts.second_trimester"
                 class="w-full whitespace-nowrap"
                 @click.prevent="handleCreateTranscript('second_trimester', orphan, close)"
-                :disabled="!shouldCreateSecondTrimesterTranscript || orphan.transcripts.second_trimester"
             >
                 {{ $t('second_trimester') }}
             </base-menu-item>
 
             <base-menu-item
+                :disabled="!shouldCreateThirdTrimesterTranscript || orphan.transcripts.third_trimester"
                 class="w-full whitespace-nowrap"
                 @click.prevent="handleCreateTranscript('third_trimester', orphan, close)"
-                :disabled="!shouldCreateThirdTrimesterTranscript || orphan.transcripts.third_trimester"
             >
                 {{ $t('third_trimester') }}
             </base-menu-item>
@@ -74,7 +80,7 @@ const handleEditTranscript = (transcriptId: string, close) => {
 
     <!-- Begin: Update Transcript-->
     <base-menu v-slot="{ close }">
-        <base-menu-button class="-ms-1 w-full border-0 shadow-none focus:outline-none focus:ring-0" :as="BaseButton">
+        <base-menu-button :as="BaseButton" class="-ms-1 w-full border-0 shadow-none focus:outline-none focus:ring-0">
             <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
             {{ $t('edit') }}
         </base-menu-button>
@@ -106,4 +112,39 @@ const handleEditTranscript = (transcriptId: string, close) => {
         </base-menu-items>
     </base-menu>
     <!-- End: Update Transcript-->
+
+    <!-- Begin: Delete Transcript-->
+    <base-menu v-slot="{ close }">
+        <base-menu-button :as="BaseButton" class="-ms-1 w-full border-0 shadow-none focus:outline-none focus:ring-0">
+            <svg-loader class="me-1 h-4 w-4 fill-danger" name="icon-trash-can" />
+            {{ $t('delete') }}
+        </base-menu-button>
+
+        <base-menu-items>
+            <base-menu-item
+                :disabled="!orphan.transcripts.first_trimester"
+                class="w-full whitespace-nowrap"
+                @click.prevent="handleDeleteTranscript(orphan.transcripts.first_trimester?.id, close)"
+            >
+                {{ $t('first_trimester') }}
+            </base-menu-item>
+
+            <base-menu-item
+                :disabled="!orphan.transcripts.second_trimester"
+                class="w-full whitespace-nowrap"
+                @click.prevent="handleDeleteTranscript(orphan.transcripts.second_trimester?.id, close)"
+            >
+                {{ $t('second_trimester') }}
+            </base-menu-item>
+
+            <base-menu-item
+                :disabled="!orphan.transcripts.third_trimester"
+                class="w-full whitespace-nowrap"
+                @click.prevent="handleDeleteTranscript(orphan.transcripts.third_trimester?.id, close)"
+            >
+                {{ $t('third_trimester') }}
+            </base-menu-item>
+        </base-menu-items>
+    </base-menu>
+    <!-- End: Delete Transcript-->
 </template>

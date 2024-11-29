@@ -32,6 +32,8 @@ class PermissionSeeder extends Seeder
             'archive' => ['export', 'list', 'view'],
             'trash' => ['destroy', 'list', 'restore'],
             'occasions' => ['save', 'view', 'export'],
+            'transcripts' => ['create', 'delete', 'list', 'update', 'view'],
+            'students' => ['list'],
         ];
 
         $inventoryPermissions = ['add_to_inventory', 'delete_from_inventory', 'list_items', 'update_inventory', 'view_item'];
