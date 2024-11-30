@@ -56,7 +56,7 @@ defineProps<{
                     </div>
 
                     <div
-                        class="col-span-12 border-t border-dashed border-slate-200 p-8 dark:border-darkmode-300 lg:col-span-8 lg:border-l lg:border-t-0"
+                        class="col-span-12 border-t border-dashed border-slate-200 p-8 dark:border-darkmode-300 lg:col-span-8 lg:border-s lg:border-t-0"
                     >
                         <base-tab-group>
                             <base-tab-list
