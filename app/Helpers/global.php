@@ -4,6 +4,7 @@
 
 /** @noinspection NullPointerExceptionInspection */
 
+use App\Helpers\PdfMerger;
 use App\Models\Family;
 use App\Models\Income;
 use App\Models\Orphan;
@@ -17,10 +18,16 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Builder;
 use LaravelIdea\Helper\App\Models\_IH_User_C;
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
+use setasign\Fpdi\PdfParser\Filter\FilterException;
+use setasign\Fpdi\PdfParser\PdfParserException;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
+use setasign\Fpdi\PdfReader\PdfReaderException;
 use Spatie\Browsershot\Browsershot;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -338,4 +345,32 @@ function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model,
             $model->addMediaFromDisk(getFileNameFromTemporaryPath($file), 'public')->toMediaCollection($collectionName);
         }
     }
+}
+
+/**
+ * @throws CrossReferenceException
+ * @throws FileDoesNotExist
+ * @throws FileIsTooBig
+ * @throws FilterException
+ * @throws PdfParserException
+ * @throws PdfReaderException
+ * @throws PdfTypeException
+ */
+function mergePdf(Family|Tenant|Orphan|Sponsor|Spouse|Income $model): void
+{
+    $pdfFiles = [];
+
+    $model->getMedia('*')->each(function (Media $media) use (&$pdfFiles) {
+        if ($media->type === 'pdf') {
+            $pdfFiles[] = $media->getPath();
+        }
+    });
+
+    $fileName = Str::random(20).'.pdf';
+
+    (new PdfMerger)->merge($pdfFiles, storage_path($fileName));
+
+    $model->clearMediaCollection('merged_files');
+
+    $model->addMedia(storage_path($fileName))->toMediaCollection('merged_files');
 }

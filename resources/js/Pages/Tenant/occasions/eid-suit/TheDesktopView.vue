@@ -156,6 +156,7 @@ const emit = defineEmits(['sort'])
                     <editable-rows
                         :orphan
                         @showLocationAddressModal="$emit('showLocationAddressModal', $event)"
+                        @showSuccessNotification="$emit('showSuccessNotification')"
                     ></editable-rows>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">

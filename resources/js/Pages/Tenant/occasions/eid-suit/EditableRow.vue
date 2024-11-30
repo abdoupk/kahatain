@@ -2,7 +2,7 @@
 import { EidSuitOrphansResource } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
-import { nextTick, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 import RowCombobox from '@/Pages/Tenant/occasions/eid-suit/RowCombobox.vue'
 
@@ -15,7 +15,17 @@ const props = defineProps<{
     loadOptions?: (results: { id: string; name: string }[]) => void
 }>()
 
+const emit = defineEmits(['showSuccessNotification'])
+
 const orphan = ref(props.orphan)
+
+const hasError = ref(false)
+
+const data = ref({
+    orphan_id: props.orphan.orphan.id
+})
+
+const phoneNumberRegex = /^06|07|05\d{8}$/
 
 orphan.value.orphan.edit = {
     clothes_shop_name: false,
@@ -25,13 +35,11 @@ orphan.value.orphan.edit = {
     note: false
 }
 
-const data = ref({
-    orphan_id: props.orphan.orphan.id
-})
-
 const submit = () => {
     useForm('patch', route('tenant.occasions.eid-suit.save-infos', props.orphan.orphan.id), data.value).submit({
-        onSuccess() {}
+        onSuccess() {
+            emit('showSuccessNotification')
+        }
     })
 }
 
@@ -46,10 +54,20 @@ const handleSubmit = ($event) => {
         orphan.value.eid_suit[props.field] = $event.name
     }
 
-    orphan.value.orphan.edit[props.field] = false
+    if (validate.value) {
+        orphan.value.orphan.edit[props.field] = false
 
-    submit()
+        submit()
+    }
 }
+
+const validate = computed(() => {
+    if (props.field === 'clothes_shop_phone_number' || props.field === 'shoes_shop_phone_number') {
+        return phoneNumberRegex.test(data.value[props.field])
+    }
+
+    return data.value[props.field].length <= 255
+})
 
 const handleSelectCell = () => {
     orphan.value.orphan.edit[props.field] = true
@@ -59,6 +77,22 @@ const handleSelectCell = () => {
             document.getElementById(`${props.field}_${orphan.value.orphan.id}`)?.focus()
         } else document.getElementById(`${props.field}_${orphan.value.orphan.id}`)?.querySelector('input')?.focus()
     })
+}
+
+const maxLength = computed(() => {
+    if (props.field === 'clothes_shop_phone_number' || props.field === 'shoes_shop_phone_number') {
+        return '10'
+    }
+
+    return '255'
+})
+
+const handleFocusOut = () => {
+    if (!validate.value) {
+        orphan.value.eid_suit[props.field] = null
+    }
+
+    orphan.value.orphan.edit[props.field] = false
 }
 </script>
 
@@ -71,10 +105,12 @@ const handleSelectCell = () => {
         <row-combobox
             v-else
             :id="`${field}_${orphan.orphan.id}`"
+            :max-length
             :load-options
+            :valid="true"
             :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
             class="!mt-0 w-32"
-            @focusout.prevent="orphan.orphan.edit[field] = false"
+            @focusout.prevent="handleFocusOut"
             @update:model-value="handleSubmit"
         ></row-combobox>
     </the-table-td>
@@ -89,7 +125,7 @@ const handleSelectCell = () => {
             :id="`note_${orphan.orphan.id}`"
             v-model.lazy="orphan.eid_suit.note"
             class="!mt-0 w-32"
-            @focusout.prevent="handleSubmit"
+            @focusout.prevent="handleFocusOut"
             @keydown.enter="handleSubmit"
         ></base-form-input>
     </the-table-td>

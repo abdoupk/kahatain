@@ -41,7 +41,7 @@ const showNeedCreateModal = () => {
                     </Link>
                 </div>
 
-                <Link v-if="hasPermission('show_family')" :href="route('tenant.families.show', family.id)">
+                <Link v-if="hasPermission('show_families')" :href="route('tenant.families.show', family.id)">
                     <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>
 
                     <span class="ms-1 rtl:!font-semibold"> {{ $t('show') }}</span>

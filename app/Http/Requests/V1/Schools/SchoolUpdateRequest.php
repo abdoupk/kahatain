@@ -12,7 +12,7 @@ class SchoolUpdateRequest extends FormRequest
             'name' => 'required|string|max:255',
             'lessons.*.quota' => 'required|integer',
             'lessons.*.subject_id' => 'required|integer',
-            'lessons.*.academic_level_id' => 'required|uuid,exists:academic_levels,id',
+            'lessons.*.academic_level_id' => 'required|uuid|exists:academic_levels,id',
         ];
     }
 

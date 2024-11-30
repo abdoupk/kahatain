@@ -27,7 +27,7 @@ class PdfMerger
 
             for ($i = 1; $i <= $pageCount; $i++) {
                 $templateId = $pdf->importPage($i);
-                $pdf->AddPage();
+                $pdf->AddPage(size: 'A4');
                 $pdf->useTemplate($templateId);
             }
         }

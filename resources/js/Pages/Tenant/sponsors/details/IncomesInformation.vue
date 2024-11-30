@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import type { SponsorShowType } from '@/types/sponsors'
 
+import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
+import TheGallery from '@/Components/Global/TheGallery.vue'
+import ThePdfViewer from '@/Components/Global/ThePdfViewer.vue'
+
 import { formatCurrency, omit } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ sponsor: SponsorShowType }>()
 
@@ -12,6 +17,7 @@ const incomes = omit(props.sponsor.incomes, [
     'ccp_file',
     'bank_file',
     'cnr_file',
+    'files',
     'account'
 ])
 </script>
@@ -112,4 +118,42 @@ const incomes = omit(props.sponsor.incomes, [
         </div>
     </div>
     <!-- END: Incomes -->
+
+    <template v-if="sponsor.incomes.files?.pdf || sponsor.incomes.files?.images.length">
+        <!-- BEGIN: Files Images -->
+        <div v-if="sponsor.incomes.files?.images.length" class="intro-y box col-span-12 @container 2xl:col-span-6">
+            <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
+                <h2 class="me-auto text-xl font-bold">{{ $t('attachements') }} (images)</h2>
+            </div>
+
+            <div class="w-full p-5">
+                <the-gallery :images="sponsor.incomes.files.images" gallery-id="sponsor-incomes-images"></the-gallery>
+            </div>
+        </div>
+        <!-- END: Files Images -->
+
+        <!-- BEGIN: Files PDF -->
+        <div v-if="sponsor.incomes.files?.pdf" class="intro-y box col-span-12 @container 2xl:col-span-6">
+            <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
+                <h2 class="me-auto text-xl font-bold">{{ $t('attachements') }} (pdf)</h2>
+            </div>
+
+            <div class="w-full p-5">
+                <the-pdf-viewer :pdf-url="sponsor.incomes.files.pdf"></the-pdf-viewer>
+            </div>
+        </div>
+        <!-- END: Files PDF -->
+    </template>
+
+    <!-- BEGIN: No Files -->
+    <div v-else class="intro-y box col-span-12 @container 2xl:col-span-6">
+        <div class="w-full p-5">
+            <div class="intro-x mt-12 flex flex-col items-center justify-center">
+                <no-results-found>
+                    {{ $t('no_residence_certificate') }}
+                </no-results-found>
+            </div>
+        </div>
+    </div>
+    <!-- END: No Files   -->
 </template>

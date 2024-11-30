@@ -180,7 +180,7 @@ const handleUpdateInstitution = (value: number) => {
         <!-- Begin: Gender-->
         <div class="col-span-12 sm:col-span-6">
             <base-form-label for="orphans.gender">
-                {{ $t('validation.attributes.date_of_birth') }}
+                {{ $t('validation.attributes.gender') }}
             </base-form-label>
 
             <base-form-select

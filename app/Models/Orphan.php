@@ -266,10 +266,8 @@ class Orphan extends Model implements HasMedia
     {
         return $models->load([
             'academicLevel',
-            'academicAchievements.academicLevel',
-            'collegeAchievements.academicLevel',
-            'vocationalTrainingAchievements.vocationalTraining',
-            'lastAcademicYearAchievement.academicLevel',
+            'vocationalTraining',
+            'eidSuit',
             'shoesSize',
             'shirtSize',
             'pantsSize',

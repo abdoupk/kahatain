@@ -9,7 +9,7 @@ class CollegeAchievementsCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'academic_level_id' => 'required|uuid,exists:academic_levels,id',
+            'academic_level_id' => 'required|uuid|exists:academic_levels,id',
             'year' => 'required|integer',
             'first_semester' => 'nullable|numeric',
             'second_semester' => 'nullable|numeric',

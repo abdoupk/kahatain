@@ -39,22 +39,18 @@ const showNeedCreateModal = () => {
     <div class="col-span-12 flex flex-col-reverse lg:col-span-4 lg:block 2xl:col-span-3">
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
-                <div class="me-auto flex flex-row items-center">
-                    <div class="me-4 ms-1">photo</div>
+                <div class="me-auto">
+                    <div class="text-base font-bold">{{ name }}</div>
 
-                    <div class="">
-                        <div class="text-base font-bold">{{ name }}</div>
-
-                        <Link
-                            :href="route('tenant.members.index') + '?show=' + sponsor.creator?.id"
-                            class="font-semibold text-slate-500"
-                        >
-                            {{ sponsor.creator?.name }}
-                        </Link>
-                    </div>
+                    <Link
+                        :href="route('tenant.members.index') + '?show=' + sponsor.creator?.id"
+                        class="font-semibold text-slate-500"
+                    >
+                        {{ sponsor.creator?.name }}
+                    </Link>
                 </div>
 
-                <Link v-if="hasPermission('show_sponsor')" :href="route('tenant.sponsors.show', sponsor.id)">
+                <Link v-if="hasPermission('show_sponsors')" :href="route('tenant.sponsors.show', sponsor.id)">
                     <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>
 
                     <span class="ms-1 rtl:!font-semibold"> {{ $t('show') }}</span>

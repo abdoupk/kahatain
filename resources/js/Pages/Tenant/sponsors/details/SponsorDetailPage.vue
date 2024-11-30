@@ -24,9 +24,11 @@ defineOptions({
     layout: TheLayout
 })
 
-defineProps<{
+const props = defineProps<{
     sponsor: SponsorShowType
 }>()
+
+console.log(props.sponsor)
 
 const view = ref('general_information')
 

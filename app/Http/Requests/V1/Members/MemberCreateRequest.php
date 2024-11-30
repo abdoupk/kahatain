@@ -24,7 +24,7 @@ class MemberCreateRequest extends FormRequest
             'phone' => ['required', 'regex:/^(06|07|05)\d{8}$/', 'unique:users,phone'],
             'zone_id' => 'required|exists:zones,id',
             'branch_id' => 'required|exists:branches,id',
-            'academic_level_id' => 'required|uuid,exists:academic_levels,id',
+            'academic_level_id' => 'required|uuid|exists:academic_levels,id',
             'password' => ['required', Password::defaults(), 'confirmed'],
             'qualification' => 'nullable|string',
             'address' => 'required|string',

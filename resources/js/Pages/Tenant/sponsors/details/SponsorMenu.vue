@@ -35,6 +35,10 @@ const showNeedCreateModal = () => {
     <div class="col-span-12 flex flex-col-reverse lg:col-span-4 lg:block 2xl:col-span-3">
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
+                <div class="image-fit h-12 w-12">
+                    <img :src="sponsor.photo" alt="" class="rounded-full" />
+                </div>
+
                 <div class="me-auto ms-4">
                     <div class="text-base font-bold">{{ sponsor.name }}</div>
 
@@ -46,7 +50,7 @@ const showNeedCreateModal = () => {
                     </Link>
                 </div>
 
-                <Link v-if="hasPermission('edit_sponsor')" :href="route('tenant.sponsors.edit', sponsor.id)">
+                <Link v-if="hasPermission('edit_sponsors')" :href="route('tenant.sponsors.edit', sponsor.id)">
                     <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
 
                     <span class="ms-1 rtl:!font-semibold"> {{ $t('edit') }}</span>

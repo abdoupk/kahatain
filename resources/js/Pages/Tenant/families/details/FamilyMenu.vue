@@ -41,7 +41,7 @@ const showNeedCreateModal = () => {
                     </Link>
                 </div>
 
-                <Link v-if="hasPermission('edit_family')" :href="route('tenant.families.edit', family.id)">
+                <Link v-if="hasPermission('edit_families')" :href="route('tenant.families.edit', family.id)">
                     <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
 
                     <span class="ms-1 rtl:!font-semibold"> {{ $t('edit') }}</span>

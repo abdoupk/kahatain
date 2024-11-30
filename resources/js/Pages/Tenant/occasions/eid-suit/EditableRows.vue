@@ -32,6 +32,7 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         :orphan
         class="text-center"
         field="clothes_shop_name"
+        @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
     <editable-row
@@ -39,15 +40,23 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         :orphan
         class="text-center"
         field="clothes_shop_phone_number"
+        @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
-    <editable-row :load-options="loadShopOwnerNames" :orphan class="text-center" field="shoes_shop_name"></editable-row>
+    <editable-row
+        :load-options="loadShopOwnerNames"
+        :orphan
+        class="text-center"
+        field="shoes_shop_name"
+        @show-success-notification="$emit('showSuccessNotification')"
+    ></editable-row>
 
     <editable-row
         :load-options="loadShopOwnerPhoneNumbers"
         :orphan
         class="text-center"
         field="shoes_shop_phone_number"
+        @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
     <editable-member-cell :orphan></editable-member-cell>

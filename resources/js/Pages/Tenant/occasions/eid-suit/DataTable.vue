@@ -115,6 +115,7 @@ const handleCloseLocationModal = () => {
             :orphans
             :params
             @showLocationAddressModal="handleShowLocationAddressModal"
+            @showSuccessNotification="showSuccessNotification = true"
             @sort="$emit('sort', $event)"
         ></the-desktop-view>
 
@@ -144,5 +145,5 @@ const handleCloseLocationModal = () => {
         </div>
     </family-address-selector>
 
-    <success-notification :open="showSuccessNotification" :title="$t('successfully_restored')"></success-notification>
+    <success-notification :open="showSuccessNotification" :title="$t('successfully_updated')"></success-notification>
 </template>

@@ -121,6 +121,15 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
 
                         <the-table-td-actions v-if="hasPermission(['update_orphans', 'delete_orphans'])">
                             <div class="flex items-center justify-center">
+                                <Link :href="route('tenant.orphans.show', orphan.id)" class="me-3 flex items-center">
+                                    <svg-loader
+                                        v-if="hasPermission('show_orphans')"
+                                        class="me-1 h-4 w-4 fill-current"
+                                        name="icon-eye"
+                                    />
+                                    {{ $t('show') }}
+                                </Link>
+
                                 <Link
                                     v-if="hasPermission('update_orphans')"
                                     :href="route('tenant.orphans.edit', orphan.id)"

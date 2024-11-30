@@ -26,8 +26,34 @@ export interface SponsorShowType {
     orphans_count: number
     birth_certificate_number: string
     card_number: string
-    incomes: IncomeType
-    sponsorships: SponsorSponsorshipType
+    incomes: {
+        cnr: number
+        casnos: number
+        cnas: number
+        pension: number
+        other_income: number
+        account: {
+            bank: {
+                performance_grant: number | null
+                monthly_income: number | null
+                balance: number | null
+            }
+            ccp: {
+                performance_grant: number | null
+                monthly_income: number | null
+                balance: number | null
+            }
+        }
+        files: {
+            pdf: string
+            images: {
+                thumbnail: string
+                original: string
+                width: number
+                height: number
+            }[]
+        }
+    }
     creator: {
         id: string
         name: string

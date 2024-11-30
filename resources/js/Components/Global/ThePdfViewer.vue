@@ -1,18 +1,29 @@
 <template>
     <div>
-        <canvas ref="pdfCanvas"></canvas>
-        <div>
-            <button @click="prevPage" :disabled="pageNum <= 1">Previous</button>
-            <button @click="nextPage" :disabled="pageNum >= numPages">Next</button>
+        <div class="mx-auto mb-2 block text-center">
+            <button :disabled="pageNum <= 1" @click="prevPage">Previous</button>
+
+            <button :disabled="pageNum >= numPages" @click="nextPage">Next</button>
+
+            <button @click="zoomIn">Zoom In</button>
+
+            <button @click="zoomOut">Zoom Out</button>
+
             <span>Page {{ pageNum }} of {{ numPages }}</span>
         </div>
+
+        <canvas ref="pdfCanvas" class="max-h-[calc(100vh-6rem)] border border-slate-300 dark:border-slate-600"></canvas>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import * as pdfjsLib from 'pdfjs-dist'
 import workerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url'
 import { onMounted, ref } from 'vue'
+
+const props = defineProps<{
+    pdfUrl: string
+}>()
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl
 
@@ -22,6 +33,8 @@ const pdfCanvas = ref<HTMLCanvasElement | null>(null)
 const pageNum = ref(1)
 
 const numPages = ref(0)
+
+const zoomLevel = ref(1)
 
 let pdf: pdfjsLib.PDFDocumentProxy | null = null // Use the correct type for pdf
 
@@ -45,13 +58,13 @@ const loadPdf = async (url: string) => {
 }
 
 // Render a specific page
-const renderPage = async (num: number) => {
+const renderPage = async (num: number, zoom = 1) => {
     if (!pdf || !pdfCanvas.value) return
 
     try {
         const page = await pdf.getPage(num)
 
-        const viewport = page.getViewport({ scale: 1 }) // Adjust scale as needed
+        const viewport = page.getViewport({ scale: zoom }) // Adjust scale as needed
 
         const context = pdfCanvas.value.getContext('2d')
 
@@ -88,15 +101,26 @@ const prevPage = () => {
     }
 }
 
+const zoomIn = () => {
+    zoomLevel.value += 0.1
+
+    renderPage(pageNum.value, zoomLevel.value)
+}
+
+const zoomOut = () => {
+    zoomLevel.value -= 0.1
+
+    renderPage(pageNum.value, zoomLevel.value)
+}
+
 // Load the PDF when the component is mounted
 onMounted(() => {
-    loadPdf('https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf') // Update with your PDF path
+    loadPdf(props.pdfUrl) // Update with your PDF path
 })
 </script>
 
 <style scoped>
 canvas {
-    border: 1px solid black;
     width: 100%;
 }
 </style>

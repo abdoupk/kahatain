@@ -121,7 +121,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                                         class="me-1 h-4 w-4 fill-current"
                                         name="icon-eye"
                                     />
-                                    {{ $t('edit') }}
+                                    {{ $t('show') }}
                                 </Link>
 
                                 <Link :href="route('tenant.sponsors.edit', sponsor.id)" class="me-3 flex items-center">

@@ -252,6 +252,14 @@ class Sponsor extends Model implements HasMedia
         $needs->restore();
     }
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(368)
+            ->height(232)
+            ->nonOptimized();
+    }
+
     protected function casts(): array
     {
         return [

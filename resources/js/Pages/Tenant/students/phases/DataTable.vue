@@ -22,8 +22,12 @@ const emit = defineEmits(['sort'])
                     <base-tr-table>
                         <the-table-th class="text-start"> #</the-table-th>
 
-                        <the-table-th class="text-start">
+                        <the-table-th class="text-start" sortable>
                             {{ $t('the_orphan') }}
+                        </the-table-th>
+
+                        <the-table-th class="text-start" sortable>
+                            {{ $t('the_trimester_average') }}
                         </the-table-th>
 
                         <the-table-th
