@@ -7,6 +7,10 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 
 const createFamilyStore = useCreateFamilyStore()
 
+defineProps<{
+    form: Form<CreateFamilyForm>
+}>()
+
 const removeOrphan = (index: number) => {
     if (index > 0) {
         createFamilyStore.family.orphans.splice(index, 1)

@@ -24,11 +24,13 @@ class VocationalTrainingCenterSeeder extends Seeder
         DB::table('vocational_training_centers')->insert(array_map(static function ($vocationalTrainingCenter) {
             return [
                 'id' => Str::uuid(),
-                'code' => $vocationalTrainingCenter['id'],
+                'code' => $vocationalTrainingCenter['code'],
                 'e_id' => $vocationalTrainingCenter['e_id'],
                 'latin_name' => $vocationalTrainingCenter['latin_name'],
                 'arabic_name' => $vocationalTrainingCenter['arabic_name'],
                 'wilaya_code' => $vocationalTrainingCenter['wilaya_code'],
+                'created_at' => $vocationalTrainingCenter['created_at'],
+                'updated_at' => $vocationalTrainingCenter['updated_at'],
             ];
         }, $vocationalTrainingCenters));
 

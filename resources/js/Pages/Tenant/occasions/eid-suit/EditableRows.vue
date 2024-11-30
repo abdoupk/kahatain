@@ -43,6 +43,14 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
+    <the-table-td>
+        <map-cell
+            :orphan
+            shop-type="shoes"
+            @show-location-address-modal="$emit('showLocationAddressModal', $event)"
+        ></map-cell>
+    </the-table-td>
+
     <editable-row
         :load-options="loadShopOwnerNames"
         :orphan
@@ -59,18 +67,6 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
-    <editable-member-cell :orphan></editable-member-cell>
-
-    <editable-row :orphan field="note"></editable-row>
-
-    <the-table-td>
-        <map-cell
-            :orphan
-            shop-type="clothes"
-            @show-location-address-modal="$emit('showLocationAddressModal', $event)"
-        ></map-cell>
-    </the-table-td>
-
     <the-table-td>
         <map-cell
             :orphan
@@ -78,4 +74,8 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
             @show-location-address-modal="$emit('showLocationAddressModal', $event)"
         ></map-cell>
     </the-table-td>
+
+    <editable-member-cell :orphan></editable-member-cell>
+
+    <editable-row :orphan field="note"></editable-row>
 </template>

@@ -54,6 +54,8 @@ function formatedAcademicLevels(): array
     foreach (AcademicLevel::all() as $row) {
         $formattedArray[$row['phase']]['phase'] = $row['phase'];
 
+        $formattedArray[$row['phase']]['phase_key'] = $row['phase_key'];
+
         $formattedArray[$row['phase']]['levels'][] = ['name' => $row['level'], 'id' => $row['id']];
     }
 

@@ -3,7 +3,7 @@ import { Head, router } from '@inertiajs/vue3'
 import type { CreateFamilyForm, InspectorsMembersType } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
-import { defineAsyncComponent, nextTick, onMounted, ref, watch } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 import { createFamilyStepsTitles } from '@/utils/constants'
@@ -165,10 +165,6 @@ onMounted(() => {
         }
 
         if (createFamilyStore.creating_completed) {
-            createFamilyStore.$reset()
-
-            createFamilyStore.is_dirty = false
-
             return true
         } else if (createFamilyStore.is_dirty) {
             if (!confirm($t('unsaved_changes_warning'))) {
@@ -176,14 +172,16 @@ onMounted(() => {
 
                 return false
             } else {
-                createFamilyStore.$reset()
-
-                createFamilyStore.is_dirty = false
-
                 return true
             }
         }
     })
+})
+
+onUnmounted(() => {
+    createFamilyStore.$reset()
+
+    createFamilyStore.is_dirty = false
 })
 </script>
 
@@ -227,7 +225,7 @@ onMounted(() => {
                     </suspense>
 
                     <suspense v-if="createFamilyStore.current_step === 3">
-                        <step-three>
+                        <step-three :form>
                             <the-actions :nextStep="nextStep" :prevStep="prevStep"></the-actions>
                         </step-three>
 

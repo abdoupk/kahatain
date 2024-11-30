@@ -37,7 +37,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div :id="galleryId" class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-0">
+    <div :id="galleryId" class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-x-0 md:gap-y-2">
         <a
             v-for="(image, key) in images"
             :key="key"

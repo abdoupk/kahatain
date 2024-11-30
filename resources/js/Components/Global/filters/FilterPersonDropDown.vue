@@ -8,8 +8,15 @@ import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import FilterValueDropDownListOption from '@/Components/Global/filters/FilterValueDropDownListOption.vue'
 
 import { $t } from '@/utils/i18n'
+import { useComputedAttrs } from '@/utils/useComputedAttrs.ts'
 
 const emit = defineEmits(['update:modelValue'])
+
+defineOptions({
+    inheritAttrs: false
+})
+
+const attrs = useComputedAttrs()
 
 const props = defineProps({
     modelValue: Object,
@@ -76,7 +83,7 @@ function handleUpdateModelValue(selected) {
 
 <template>
     <combobox :model-value="props.modelValue" by="name" @update:model-value="handleUpdateModelValue">
-        <div class="relative mt-2">
+        <div :class="attrs.class" class="relative mt-2">
             <div>
                 <combobox-input
                     :class="
@@ -86,6 +93,7 @@ function handleUpdateModelValue(selected) {
                     "
                     :displayValue="(option) => (option.name !== $t('filters.select_an_option') ? option.name : '')"
                     :placeholder="$t('Search...')"
+                    v-bind="attrs.attrs"
                     @change="query = $event.target.value"
                 />
 

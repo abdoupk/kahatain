@@ -4,7 +4,7 @@
     <!-- BEGIN: Students Chart -->
     <div class="col-span-3 mt-8">
         <div class="intro-y flex h-10 items-center">
-            <h2 class="me-5 truncate text-lg font-medium">Sales Report</h2>
+            <h2 class="me-5 truncate text-lg font-medium">Report</h2>
         </div>
 
         <div

@@ -48,7 +48,7 @@ const addOrphan = () => {
             {{ $t('families.create_family.stepThree') }}
         </div>
 
-        <the-orphans></the-orphans>
+        <the-orphans :form></the-orphans>
 
         <base-button
             class="mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"

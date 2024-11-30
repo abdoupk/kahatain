@@ -1,46 +1,19 @@
 <script lang="ts" setup>
-import type { AcademicLevelType } from '@/types/lessons'
+import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
 
-import { onMounted, ref, watch } from 'vue'
-
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
-
-import { getAcademicLevelFromId } from '@/utils/helper'
-
-const props = defineProps<{
-    academicLevels: AcademicLevelType[]
+defineProps<{
+    phaseKey: 'primary_education' | 'middle_education' | 'secondary_education'
+    loadOptions: (query: string, setOptions: (results: { id: string; name: string }[]) => void) => void
 }>()
 
-const vueSelectAcademicLevel = ref('')
-
-const academicLevel = defineModel('academicLevel')
-
-onMounted(() => {
-    vueSelectAcademicLevel.value = getAcademicLevelFromId(academicLevel.value, props.academicLevels)
-})
-
-watch(
-    () => [academicLevel.value, props.academicLevels],
-    () => {
-        vueSelectAcademicLevel.value = getAcademicLevelFromId(academicLevel.value, props.academicLevels)
+const value = defineModel<{ id: string; name: string }>('value', {
+    default: {
+        id: '',
+        name: ''
     }
-)
+})
 </script>
 
 <template>
-    <!-- @vue-ignore -->
-    <base-vue-select
-        id="academic_level"
-        v-model:value="vueSelectAcademicLevel"
-        :allow-empty="false"
-        :options="academicLevels"
-        :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('academic_level') })"
-        class="h-full w-full"
-        group-label="phase"
-        group-values="levels"
-        label="name"
-        track-by="id"
-        @update:value="(value) => (academicLevel = value.id)"
-    >
-    </base-vue-select>
+    <filter-person-drop-down v-model="value" :load-options class="!mt-0"></filter-person-drop-down>
 </template>

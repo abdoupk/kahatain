@@ -62,7 +62,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
                 await this.getAcademicLevels()
             }
 
-            return this.academicLevels.filter((academicLevel) => academicLevel.phase === 'الطور الجامعي')
+            return this.academicLevels.filter((academicLevel) => academicLevel.phase_key === 'university')
         },
 
         async getAcademicLevelsForSponsorsForSelectFilterValue() {
@@ -101,9 +101,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
             return this.academicLevels
                 .filter(
                     (academicLevel) =>
-                        !['الطور الابتدائي',
-'الطور المتوسط',
-'الطور الثانوي'].includes(academicLevel.phase)
+                        !['الطور الابتدائي', 'الطور المتوسط', 'الطور الثانوي'].includes(academicLevel.phase)
                 )
                 .flatMap(({ levels, phase }) =>
                     levels
@@ -120,7 +118,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
                 const level = item.levels.find((level) => level.id === id)
 
                 if (level) {
-                    return item.phase
+                    return item.phase_key
                 }
             }
 

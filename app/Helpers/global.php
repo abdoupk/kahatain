@@ -374,3 +374,29 @@ function mergePdf(Family|Tenant|Orphan|Sponsor|Spouse|Income $model): void
 
     $model->addMedia(storage_path($fileName))->toMediaCollection('merged_files');
 }
+
+function getImageData(Income|Family|Sponsor $model, string $collection): array
+{
+    [$width, $height] = getimagesize($model->getFirstMediaPath($collection));
+
+    return [
+        'thumb' => $model->getFirstMediaUrl($collection, 'thumb'),
+        'original' => $model->getFirstMediaUrl($collection),
+        'width' => $width,
+        'height' => $height,
+    ];
+}
+
+function getFormatedData(Sponsor|Family|Income $model): array
+{
+    return [
+        'files' => [
+            'pdf' => $model->getFirstMediaUrl('merged_files'),
+            'images' => array_filter($model->getMedia('*')->map(function (Media $media) use ($model) {
+                if ($media->type === 'image') {
+                    return getImageData($model, $media->collection_name);
+                }
+            })->toArray()),
+        ],
+    ];
+}

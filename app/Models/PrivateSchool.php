@@ -79,7 +79,7 @@ class PrivateSchool extends Model
 
     public function searchableAs(): string
     {
-        return 'schools';
+        return 'private_schools';
     }
 
     public function makeSearchableUsing(Collection $models): Collection

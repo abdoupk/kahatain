@@ -17,4 +17,9 @@ class VocationalTrainingCenter extends Model
         'wilaya_code',
         'e_id',
     ];
+
+    public function getName(): string
+    {
+        return app()->getLocale() === 'ar' ? $this->arabic_name : $this->latin_name;
+    }
 }

@@ -69,6 +69,24 @@ export const useSchoolsStore = defineStore('schools', {
             return this.schools
                 .find((school) => school.id === schoolId)
                 .subjects.find((subject) => subject.id === subjectId)
+        },
+
+        async searchSchools(search: string, phase_key: string) {
+            const { data: schools } = await axios.get(
+                route('tenant.schools.search-schools', {
+                    search,
+                    phase_key,
+                    city_id: 1144
+                })
+            )
+
+            return schools
+        },
+
+        async searchUniversities(search: string) {
+            const { data: universities } = await axios.get(route('tenant.schools.search-universities', { search }))
+
+            return universities
         }
     }
 })

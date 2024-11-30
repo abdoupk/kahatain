@@ -1328,8 +1328,10 @@
     "third_trimester": "الفصل الثالث",
     "the_trimester_average": "المعدل الفصلي",
     "shoes_shop_name": "اسم محل الاحذية",
+    "shoes_shop_location": "موقع محل الاحذية",
     "shoes_shop_phone_number": "رقم هاتف محل الاحذية",
     "clothes_shop_name": "اسم محل الملابس",
+    "clothes_shop_location": "موقع محل الملابس",
     "clothes_shop_phone_number": "رقم هاتف محل الملابس",
     "designated_member": "العضو المكلف",
     "transcripts": "كشوف النقاط",
@@ -1344,5 +1346,6 @@
     "aggregate_zakat_benefit": "الاستفادة الكلية من الزكاة",
     "zakat_per_family": "المبلغ لكل عائلة",
     "zakat_selected_families": "عدد العائلات المحددة",
-    "no_residence_certificate": "لم يتم رفع بطاقة الإقامة"
+    "no_residence_certificate": "لم يتم رفع بطاقة الإقامة",
+    "no_diploma_or_birth_certificate": "لم يتم رفع  الدبلوم او شهادة الميلاد"
 }

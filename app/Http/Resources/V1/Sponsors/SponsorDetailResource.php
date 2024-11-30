@@ -39,6 +39,7 @@ class SponsorDetailResource extends JsonResource
             'zone' => new ZoneResource($this->family->zone),
             'branch' => new BranchesResource($this->family->branch),
             'creator' => new MemberResource($this->whenLoaded('creator')),
+            ...getFormatedData($this->resource),
         ];
     }
 }

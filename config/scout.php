@@ -508,7 +508,7 @@ return [
                     'created_at',
                 ],
             ],
-            'schools' => [
+            'private_schools' => [
                 'filterableAttributes' => [
                     '__soft_deleted',
                     'id',
@@ -575,6 +575,20 @@ return [
                     'id',
                 ],
             ],
+            'vocational_training_centers' => [
+                'filterableAttributes' => [
+                    'id',
+                    'wilaya_code',
+                ],
+                'searchableAttributes' => [
+                    'arabic_name',
+                    'latin_name',
+                ],
+                'sortableAttributes' => [
+                    'id',
+                    'created_at',
+                ],
+            ],
             'transcripts' => [
                 'filterableAttributes' => [
                     'tenant_id',
@@ -636,19 +650,47 @@ return [
                     'created_at',
                 ],
             ],
+            'universities' => [
+                'filterableAttributes' => [
+                    'zone',
+                    'type',
+                ],
+                'searchableAttributes' => [
+                    'name',
+                ],
+                'sortableAttributes' => [
+                    'id',
+                ],
+            ],
+            'schools' => [
+                'filterableAttributes' => [
+                    'id',
+                    'city_id',
+                    'phase_key',
+                    'name',
+                    'tenant_id',
+                ],
+                'searchableAttributes' => [
+                    'name',
+                ],
+                'sortableAttributes' => [
+                    'created_at',
+                    'name',
+                ],
+            ],
         ],
     ],
 
     /*
-        |--------------------------------------------------------------------------
-        | Typesense Configuration
-        |--------------------------------------------------------------------------
-        |
-        | Here you may configure your Typesense settings. Typesense is an open
-        | source search engine using minimal configuration. Below, you will
-        | state the host, key, and schema configuration for the instance.
-        |
-        */
+    |--------------------------------------------------------------------------
+    | Typesense Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure your Typesense settings. Typesense is an open
+    | source search engine using minimal configuration. Below, you will
+    | state the host, key, and schema configuration for the instance.
+    |
+    */
 
     'typesense' => [
         'client-settings' => [

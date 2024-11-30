@@ -10,6 +10,8 @@ use App\Http\Controllers\V1\PrivateSchools\SchoolShowController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolsIndexController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolStoreController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolUpdateController;
+use App\Http\Controllers\V1\Schools\SchoolsSearchController;
+use App\Http\Controllers\V1\Universities\UniversitiesSearchController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::prefix('schools')->name('schools.')->group(callback: function (): void {
@@ -63,4 +65,14 @@ Route::prefix('schools')->name('schools.')->group(callback: function (): void {
     )
         ->name('force-delete')
         ->withTrashed();
+
+    Route::get(
+        'search-schools',
+        SchoolsSearchController::class
+    )->name('search-schools');
+
+    Route::get(
+        'search-universities',
+        UniversitiesSearchController::class
+    )->name('search-universities');
 });

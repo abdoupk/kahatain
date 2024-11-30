@@ -1122,3 +1122,13 @@ export interface OrphansTranscriptsIndexResource {
         third_trimester: TrimesterType | null
     }
 }
+
+export type UploadedFilesType = {
+    pdf: string
+    images: {
+        thumbnail: string
+        original: string
+        width: number
+        height: number
+    }[]
+}

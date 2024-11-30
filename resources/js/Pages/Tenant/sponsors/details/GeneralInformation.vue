@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import type { SponsorShowType } from '@/types/sponsors'
 
+import TheAttachementsViewer from '@/Components/Global/TheAttachementsViewer.vue'
+
 import { formatDate } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{ sponsor: SponsorShowType }>()
 </script>
@@ -87,4 +90,10 @@ defineProps<{ sponsor: SponsorShowType }>()
         </div>
     </div>
     <!-- END: Sponsor Information -->
+
+    <the-attachements-viewer
+        :images="sponsor.files.images"
+        :no-files-message="$t('no_diploma_or_birth_certificate')"
+        :pdf="sponsor.files.pdf"
+    ></the-attachements-viewer>
 </template>

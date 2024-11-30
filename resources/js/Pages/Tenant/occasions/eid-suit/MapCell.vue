@@ -29,5 +29,11 @@ const handleClick = () => {
 </script>
 
 <template>
-    <svg-loader class="h-5 w-5 cursor-pointer" name="icon-map-location-dot" @click.prevent="handleClick"></svg-loader>
+    <div class="flex items-center justify-center">
+        <svg-loader
+            class="h-5 w-5 cursor-pointer"
+            name="icon-map-location-dot"
+            @click.prevent="handleClick"
+        ></svg-loader>
+    </div>
 </template>

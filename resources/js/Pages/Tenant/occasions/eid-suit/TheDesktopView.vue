@@ -88,15 +88,17 @@ const emit = defineEmits(['sort'])
 
                     <the-table-th>{{ $t('clothes_shop_phone_number') }}</the-table-th>
 
+                    <the-table-th>{{ $t('clothes_shop_location') }}</the-table-th>
+
                     <the-table-th>{{ $t('shoes_shop_name') }}</the-table-th>
 
                     <the-table-th>{{ $t('shoes_shop_phone_number') }}</the-table-th>
 
+                    <the-table-th>{{ $t('shoes_shop_location') }}</the-table-th>
+
                     <the-table-th>{{ $t('designated_member') }}</the-table-th>
 
                     <the-table-th>{{ $t('validation.attributes.note') }}</the-table-th>
-
-                    <the-table-th>{{ $t('location') }}</the-table-th>
 
                     <the-table-th
                         :direction="params.directions && params.directions['sponsor.name']"

@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import type { AcademicLevelType } from '@/types/lessons'
 import type { CreateFamilyForm } from '@/types/types'
 
-import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
@@ -17,16 +15,14 @@ import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
-import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
+import TheAcademicInfos from '@/Components/Global/TheAcademicInfos.vue'
 import TheBabyMilkSelector from '@/Components/Global/TheBabyMilkSelector.vue'
 import TheClothesSizeSelector from '@/Components/Global/TheClothesSizeSelector.vue'
 import TheDiapersSelector from '@/Components/Global/TheDiapersSelector.vue'
 import TheFamilyStatusSelector from '@/Components/Global/TheFamilyStatusSelector.vue'
-import TheInstitutionSelector from '@/Components/Global/TheInstitutionSelector.vue'
 import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
-import TheVocationalTrainingSelector from '@/Components/Global/TheVocationalTrainingSelector.vue'
 
-import { allowOnlyNumbersOnKeyDown, isOlderThan } from '@/utils/helper'
+import { isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -37,8 +33,6 @@ const props = defineProps<{
 const createFamilyStore = useCreateFamilyStore()
 
 // TODO: fix this when add new orphan change focus
-
-const phase = ref()
 
 const isStillBaby = computed(() => {
     return (
@@ -63,42 +57,11 @@ const isShouldHasIncome = computed(() => {
     )
 })
 
-const isAcademic = computed(() => {
-    return phase.value === 'الطور الجامعي'
-})
-
-const academicLevelsStore = useAcademicLevelsStore()
-
-const shouldBeInSchool = computed(() => {
-    return (
-        createFamilyStore.family.orphans[props.index].birth_date &&
-        isOlderThan(createFamilyStore.family.orphans[props.index].birth_date, 5)
-    )
-})
-
-const academicLevels = ref<AcademicLevelType[]>([])
-
 const pic = props.form?.orphans[props.index]?.photo
 
 onMounted(async () => {
     document.getElementById(`first_name_${props.index}`)?.focus()
-
-    academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
 })
-
-const handleUpdateAcademicLevel = (value: number) => {
-    phase.value = academicLevelsStore.getPhaseFromId(value)
-
-    // @ts-ignore
-    props.form?.validate(`orphans.${props.index}.academic_level_id`)
-}
-
-const handleUpdateInstitution = (value: number) => {
-    phase.value = academicLevelsStore.getPhaseFromId(value)
-
-    // @ts-ignore
-    props.form?.validate(`orphans.${props.index}.institution`)
-}
 </script>
 
 <template>
@@ -121,7 +84,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: First Name-->
         <div class="col-span-12 sm:col-span-6">
-            <base-form-label for="first_name">
+            <base-form-label :for="`first_name_${index}`">
                 {{ $t('validation.attributes.first_name') }}
             </base-form-label>
 
@@ -144,7 +107,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: Last Name-->
         <div class="col-span-12 sm:col-span-6">
-            <base-form-label for="last_name">
+            <base-form-label :for="`last_name_${index}`">
                 {{ $t('validation.attributes.last_name') }}
             </base-form-label>
 
@@ -167,7 +130,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: Birth Date-->
         <div class="col-span-12 sm:col-span-6">
-            <base-form-label for="orphans.birth_date">
+            <base-form-label :for="`birth_date_${index}`">
                 {{ $t('validation.attributes.date_of_birth') }}
             </base-form-label>
 
@@ -179,7 +142,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: Gender-->
         <div class="col-span-12 sm:col-span-6">
-            <base-form-label for="orphans.gender">
+            <base-form-label :for="`gender_${index}`">
                 {{ $t('validation.attributes.gender') }}
             </base-form-label>
 
@@ -205,7 +168,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: Health Status-->
         <div class="col-span-12 sm:col-span-6">
-            <base-form-label for="health_status">
+            <base-form-label :for="`health_status_${index}`">
                 {{ $t('validation.attributes.sponsor.health_status') }}
             </base-form-label>
 
@@ -227,7 +190,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: Family Status-->
         <div v-if="isOlderThan18" class="col-span-12 sm:col-span-6">
-            <base-form-label for="family_status">
+            <base-form-label :for="`family_status_${index}`">
                 {{ $t('family_status') }}
             </base-form-label>
 
@@ -242,113 +205,26 @@ const handleUpdateInstitution = (value: number) => {
             <base-form-input-error :field_name="`orphans.${index}.family_status`" :form></base-form-input-error>
         </div>
         <!-- End: Family Status-->
-
-        <template v-if="shouldBeInSchool">
-            <!-- Begin: Academic Level-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="academic_level">
-                    {{ $t('validation.attributes.sponsor.academic_level') }}
-                </base-form-label>
-
-                <div>
-                    <the-academic-level-selector
-                        :id="`academic_level_${index}`"
-                        v-model:academic-level="createFamilyStore.family.orphans[index].academic_level_id"
-                        :academic-levels="academicLevels"
-                        @update:academic-level="handleUpdateAcademicLevel"
-                    ></the-academic-level-selector>
-                </div>
-
-                <base-form-input-error :field_name="`orphans.${index}.academic_level_id`" :form></base-form-input-error>
-            </div>
-            <!-- End: Academic Level-->
-
-            <!-- Begin: Institution-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="institution">
-                    {{ $t('validation.attributes.institution') }}
-                </base-form-label>
-
-                <div>
-                    <the-institution-selector
-                        :id="`institution_${index}`"
-                        v-model:academic-level="createFamilyStore.family.orphans[index].institution_id"
-                        :academic-levels="academicLevels"
-                        @update:academic-level="handleUpdateInstitution"
-                    ></the-institution-selector>
-                </div>
-
-                <base-form-input-error :field_name="`orphans.${index}.institution_id`" :form></base-form-input-error>
-            </div>
-            <!-- End: Institution-->
-        </template>
-
-        <!-- Begin: Vocational Training-->
-        <div v-if="phase === 'التكوين المهني'" class="col-span-12 sm:col-span-6">
-            <base-form-label :for="`vocational_training_id_${index}`">
-                {{ $t('speciality') }}
-            </base-form-label>
-
-            <div>
-                <the-vocational-training-selector
-                    :id="`vocational_training_id_${index}`"
-                    v-model:vocational-training="createFamilyStore.family.orphans[index].vocational_training_id"
-                    @update:vocational-training="() => form?.validate(`orphans.${index}.vocational_training_id`)"
-                ></the-vocational-training-selector>
-            </div>
-
-            <base-form-input-error :field_name="`orphans.${index}.vocational_training_id`" :form>
-            </base-form-input-error>
-        </div>
-        <!-- End: Vocational Training-->
-
-        <!-- Begin: if orphan is academic -->
-        <template v-if="isAcademic">
-            <!-- Begin: CCp-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="ccp">
-                    {{ $t('ccp') }}
-                </base-form-label>
-
-                <base-form-input
-                    :id="`ccp_${index}`"
-                    v-model="createFamilyStore.family.orphans[index].ccp"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('ccp') })"
-                    maxlength="12"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                    @update:model-value="form?.validate(`orphans.${index}.ccp`)"
-                ></base-form-input>
-
-                <base-form-input-error :field_name="`orphans.${index}.ccp`" :form></base-form-input-error>
-            </div>
-            <!-- End: CCp-->
-
-            <!-- Begin: Phone Number-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="phone_number">
-                    {{ $t('validation.attributes.phone_number') }}
-                </base-form-label>
-
-                <base-form-input
-                    :id="`phone_number_${index}`"
-                    v-model="createFamilyStore.family.orphans[index].phone_number"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.phone_number') })"
-                    maxlength="10"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                    @update:model-value="form?.validate(`orphans.${index}.phone_number`)"
-                ></base-form-input>
-
-                <base-form-input-error :field_name="`orphans.${index}.phone_number`" :form></base-form-input-error>
-            </div>
-            <!-- End: Phone Number-->
-        </template>
-        <!-- End: if orphan is academic -->
+        <the-academic-infos
+            v-model:academic-level="createFamilyStore.family.orphans[index].academic_level_id"
+            v-model:birth-date="createFamilyStore.family.orphans[index].birth_date"
+            v-model:ccp="createFamilyStore.family.orphans[index].ccp"
+            v-model:institution="createFamilyStore.family.orphans[index].institution_id"
+            v-model:phone-number="createFamilyStore.family.orphans[index].phone_number"
+            :academic_level_id_field_name="`orphans.${index}.academic_level_id`"
+            :birth_date_field_name="`orphans.${index}.birth_date`"
+            :ccp_field_name="`orphans.${index}.ccp`"
+            :form="form"
+            :institution_field_name="`orphans.${index}.institution_id`"
+            :phone_number_field_name="`orphans.${index}.phone_number`"
+            :vocational_training_id_field_name="`orphans.${index}.vocational_training_id`"
+        ></the-academic-infos>
 
         <!-- Begin: if orphan is still baby-->
         <div v-if="isStillBaby" class="col-span-12 grid grid-cols-12 gap-4 gap-y-5">
             <!-- Begin: Baby Milk Type-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="baby_milk_type">
+                <base-form-label :for="`baby_milk_type_${index}`">
                     {{ $t('baby_milk_type') }}
                 </base-form-label>
 
@@ -364,7 +240,7 @@ const handleUpdateInstitution = (value: number) => {
 
             <!-- Begin: Baby Milk Quantity-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="baby_milk_quantity">
+                <base-form-label :for="`baby_milk_quantity_${index}`">
                     {{ $t('baby_milk_quantity') }}
                 </base-form-label>
 
@@ -387,7 +263,7 @@ const handleUpdateInstitution = (value: number) => {
 
             <!-- Begin: Diapers Type-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="diapers_type">
+                <base-form-label :for="`diapers_type_${index}`">
                     {{ $t('diapers_type') }}
                 </base-form-label>
 
@@ -403,7 +279,7 @@ const handleUpdateInstitution = (value: number) => {
 
             <!-- Begin: Diapers Quantity-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="diapers_quantity">
+                <base-form-label :for="`diapers_quantity_${index}`">
                     {{ $t('diapers_quantity') }}
                 </base-form-label>
 
@@ -429,7 +305,7 @@ const handleUpdateInstitution = (value: number) => {
         <template v-else>
             <!-- Begin: Shoes Size-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="shoes_size">
+                <base-form-label :for="`shoes_size_${index}`">
                     {{ $t('shoes_size') }}
                 </base-form-label>
 
@@ -453,7 +329,7 @@ const handleUpdateInstitution = (value: number) => {
 
             <!-- Begin: Shirt Size-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="shirt_size">
+                <base-form-label :for="`shirt_size_${index}`">
                     {{ $t('shirt_size') }}
                 </base-form-label>
 
@@ -478,7 +354,7 @@ const handleUpdateInstitution = (value: number) => {
 
             <!-- Begin: Pants Size-->
             <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="pants_size">
+                <base-form-label :for="`pants_size_${index}`">
                     {{ $t('pants_size') }}
                 </base-form-label>
                 <div>
@@ -506,12 +382,12 @@ const handleUpdateInstitution = (value: number) => {
             <div class="col-span-6 sm:col-span-3">
                 <base-form-switch class="text-lg">
                     <base-form-switch-input
-                        id="is_handicapped"
+                        :id="`is_handicapped_${index}`"
                         v-model="createFamilyStore.family.orphans[index].is_handicapped"
                         type="checkbox"
                     ></base-form-switch-input>
 
-                    <base-form-switch-label class="whitespace-nowrap text-nowrap" htmlFor="is_handicapped">
+                    <base-form-switch-label :htmlFor="`is_handicapped_${index}`" class="whitespace-nowrap text-nowrap">
                         {{ $t('handicapped') }}
                     </base-form-switch-label>
                 </base-form-switch>
@@ -522,12 +398,12 @@ const handleUpdateInstitution = (value: number) => {
             <div v-if="isOlderThan18" class="col-span-6 sm:col-span-3">
                 <base-form-switch class="text-lg">
                     <base-form-switch-input
-                        id="is_unemployed"
+                        :id="`is_unemployed_${index}`"
                         v-model="createFamilyStore.family.orphans[index].is_unemployed"
                         type="checkbox"
                     ></base-form-switch-input>
 
-                    <base-form-switch-label class="whitespace-nowrap text-nowrap" htmlFor="is_unemployed">
+                    <base-form-switch-label :htmlFor="`is_unemployed_${index}`" class="whitespace-nowrap text-nowrap">
                         {{ $t('unemployed') }}
                     </base-form-switch-label>
                 </base-form-switch>
@@ -537,7 +413,7 @@ const handleUpdateInstitution = (value: number) => {
 
         <!-- Begin: Income-->
         <div v-if="isShouldHasIncome" class="col-span-12 sm:col-span-6">
-            <base-form-label for="income">
+            <base-form-label :for="`income_${index}`">
                 {{ $t('validation.attributes.income') }}
             </base-form-label>
 

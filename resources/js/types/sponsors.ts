@@ -1,5 +1,5 @@
 import type { SponsorSponsorshipType } from '@/types/families'
-import type { IncomeType, Zone } from '@/types/types'
+import { IncomeType, UploadedFilesType, Zone } from '@/types/types'
 
 export interface SponsorShowType {
     id: string
@@ -44,20 +44,13 @@ export interface SponsorShowType {
                 balance: number | null
             }
         }
-        files: {
-            pdf: string
-            images: {
-                thumbnail: string
-                original: string
-                width: number
-                height: number
-            }[]
-        }
+        files: UploadedFilesType
     }
     creator: {
         id: string
         name: string
     }
+    files: UploadedFilesType
 }
 
 export interface SponsorUpdateFormType {
