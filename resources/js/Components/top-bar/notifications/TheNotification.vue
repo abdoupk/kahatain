@@ -121,8 +121,7 @@ window.Echo?.private('App.Models.User.' + usePage().props.auth.user.id).notifica
             unstyled: true,
             classes: {
                 toast: 'rounded-lg border border-slate-200/60 bg-white py-5 px-6 shadow-xl dark:border-darkmode-600 dark:bg-darkmode-600 dark:text-slate-300',
-                title: 'rtl:font-medium text-slate-800 dark:text-slate-300',
-                description: 'text-red-400'
+                title: 'rtl:font-semibold text-slate-800 dark:text-slate-300'
             }
         }"
         close-button

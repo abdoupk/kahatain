@@ -271,13 +271,6 @@ export const orphansFilters: ListBoxFilter[] = [
         operators: filterDateOperators
     },
     {
-        icon: 'icon-hands-holding-heart',
-        field: 'sponsorships',
-        label: 'orphan_sponsorships',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-stethoscope',
         field: 'health_status',
         label: 'health_status',

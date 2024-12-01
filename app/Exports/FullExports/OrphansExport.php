@@ -16,7 +16,7 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
     {
         return Orphan::with(
             ['academicLevel', 'shirtSize', 'shoesSize', 'pantsSize',
-                'sponsorships', 'vocationalTraining',
+                'vocationalTraining',
             ]
         )->get();
     }
@@ -46,13 +46,6 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
             __('the_income'),
             __('unemployed'),
             __('handicapped'),
-            __('sponsorships.medical_sponsorship'),
-            __('sponsorships.university_scholarship'),
-            __('sponsorships.association_trips'),
-            __('sponsorships.summer_camp'),
-            __('sponsorships.eid_suit'),
-            __('sponsorships.private_lessons'),
-            __('sponsorships.school_bag'),
         ];
     }
 
@@ -72,13 +65,6 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
             formatCurrency($row->income ?? 0),
             $row->is_unemployed ? __('no') : __('yes'),
             $row->is_handicapped ? __('yes') : __('no'),
-            $row->sponsorships->medical_sponsorship ? __('yes') : __('no'),
-            $row->sponsorships->university_scholarship ? __('yes') : __('no'),
-            $row->sponsorships->association_trips ? __('yes') : __('no'),
-            $row->sponsorships->summer_camp ? __('yes') : __('no'),
-            $row->sponsorships->eid_suit ? __('yes') : __('no'),
-            $row->sponsorships->private_lessons ? __('yes') : __('no'),
-            $row->sponsorships->school_bag ? __('yes') : __('no'),
         ];
     }
 }

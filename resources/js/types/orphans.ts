@@ -95,10 +95,12 @@ export interface OrphanUpdateFormType {
         id: string
         name: string
     }
-    academic_achievements: AcademicAchievementsType[]
-    last_academic_year_achievement?: string
-    college_achievements: CollegeAchievementsType[]
-    vocational_training_achievements: VocationalTrainingAchievementsType[]
     income: number | null
     photo: string
+    ccp: string
+    phone_number: string
+    vocational_training_id: string
+    institution_id: string
+    is_handicapped: boolean
+    is_unemployed: boolean
 }

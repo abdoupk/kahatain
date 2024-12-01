@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -437,6 +438,11 @@ class Orphan extends Model implements HasMedia
     public function eidSuit(): HasOne
     {
         return $this->hasOne(OrphanEidSuit::class);
+    }
+
+    public function institution(): MorphOne
+    {
+        return $this->MorphOne(Institution::class, 'institutionable');
     }
 
     protected function casts(): array

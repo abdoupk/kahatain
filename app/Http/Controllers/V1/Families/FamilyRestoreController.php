@@ -46,12 +46,6 @@ class FamilyRestoreController extends Controller implements HasMiddleware
 
     private function makeSearchable(Family $family): void
     {
-        $family->sponsorships->searchable();
-
-        $family->orphansSponsorships->searchable();
-
-        $family->sponsorSponsorships->searchable();
-
         $family->orphansNeeds()->searchable();
 
         $family->sponsorsNeeds()->searchable();

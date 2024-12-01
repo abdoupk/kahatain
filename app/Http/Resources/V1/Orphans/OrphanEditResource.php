@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\V1\Orphans;
 
-use App\Http\Resources\AcademicAchievementResource;
 use App\Http\Resources\V1\Members\MemberResource;
 use App\Models\Orphan;
 use Illuminate\Http\Request;
@@ -38,7 +37,6 @@ class OrphanEditResource extends JsonResource
             'family_status' => $this->family_status,
             'health_status' => $this->health_status,
             'academic_level_id' => $this->academicLevel?->id,
-            'last_academic_year_achievement' => $this->formatedLastAcademicYear(),
             ...$babyNeeds,
             'shoes_size' => $this->shoes_size,
             'pants_size' => $this->pants_size,
@@ -47,17 +45,12 @@ class OrphanEditResource extends JsonResource
             'note' => $this->note,
             'income' => $this->income,
             'photo' => $this->getFirstMediaUrl('photos'),
-
-            'academic_achievements' => AcademicAchievementResource::collection(
-                $this->whenLoaded('academicAchievements')
-            ),
-
-            'vocational_training_achievements' => VocationalTrainingAchievementResource::collection(
-                $this->whenLoaded('vocationalTrainingAchievements')
-            ),
-            'college_achievements' => CollegeAchievementResource::collection(
-                $this->whenLoaded('collegeAchievements')
-            ),
+            'institution_id' => $this->institution,
+            'ccp' => $this->ccp,
+            'vocational_training_id' => $this->vocational_training_id,
+            'is_handicapped' => $this->is_handicapped,
+            'is_unemployed' => $this->is_unemployed,
+            'phone_number' => $this->phone_number,
         ];
     }
 }

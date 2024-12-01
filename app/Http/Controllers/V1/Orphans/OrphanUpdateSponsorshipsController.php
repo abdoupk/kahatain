@@ -18,8 +18,6 @@ class OrphanUpdateSponsorshipsController extends Controller implements HasMiddle
 
     public function __invoke(OrphanSponsorshipsUpdateRequest $request, Orphan $orphan): Response
     {
-        $orphan->sponsorships()->update($request->validated());
-
         dispatch(new OrphanUpdatedJob($orphan, auth()->user()));
 
         return response('', 201);

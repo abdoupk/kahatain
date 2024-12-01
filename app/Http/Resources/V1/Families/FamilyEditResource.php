@@ -34,8 +34,6 @@ class FamilyEditResource extends JsonResource
 
             'housing' => new FamilyEditHousingResource($this->whenLoaded('housing')),
 
-            'family_sponsorships' => new FamilyEditSponsorshipResource($this->whenLoaded('sponsorships')),
-
             'preview' => new FamilyEditPreviewResource($this->whenLoaded('preview')),
         ];
     }

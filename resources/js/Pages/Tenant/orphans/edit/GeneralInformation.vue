@@ -4,7 +4,7 @@ import type { OrphanUpdateFormType } from '@/types/orphans'
 
 import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useForm } from 'laravel-precognition-vue'
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
@@ -16,9 +16,12 @@ import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
 import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
+import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
+import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
+import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
+import TheAcademicInfos from '@/Components/Global/TheAcademicInfos.vue'
 import TheBabyMilkSelector from '@/Components/Global/TheBabyMilkSelector.vue'
 import TheClothesSizeSelector from '@/Components/Global/TheClothesSizeSelector.vue'
 import TheDiapersSelector from '@/Components/Global/TheDiapersSelector.vue'
@@ -53,6 +56,14 @@ const form = useForm('put', route('tenant.orphans.infos-update', props.orphan.id
 const pic = ref(props.orphan.photo)
 
 const updateSuccess = ref(false)
+
+const isOlderThan18 = computed(() => isOlderThan(form.birth_date, 18))
+
+const isShouldHasIncome = computed(() => {
+    if (!isOlderThan18.value) return false
+
+    return !form.is_handicapped && !form.is_unemployed
+})
 
 const submit = () => {
     form.submit({
@@ -91,10 +102,10 @@ onMounted(async () => {
             <!-- Begin: Photo -->
             <div class="me-2 ms-auto mt-2 h-36 w-36">
                 <base-file-pond
-                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
                     id="photo"
                     :allow-multiple="false"
                     :files="pic"
+                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
                     is-picture
                     @update:files="form.photo = $event[0]"
                 ></base-file-pond>
@@ -178,21 +189,21 @@ onMounted(async () => {
                 <!-- END: Family Status -->
 
                 <!-- BEGIN: Academic Level -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="academic_level_id">
-                        {{ $t('academic_level') }}
-                    </base-form-label>
-
-                    <div>
-                        <the-academic-level-selector
-                            id="academic_level_id"
-                            v-model:academic-level="form.academic_level_id"
-                            :academicLevels
-                        ></the-academic-level-selector>
-                    </div>
-
-                    <base-form-input-error :form field_name="academic_level_id"></base-form-input-error>
-                </div>
+                <the-academic-infos
+                    v-model:academic-level="form.academic_level_id"
+                    v-model:ccp="form.ccp"
+                    v-model:institution="form.institution_id"
+                    v-model:phone-number="form.phone_number"
+                    v-model:vocational-training="form.vocational_training_id"
+                    :birth-date="form.birth_date"
+                    :form
+                    academic_level_id_field_name="academic_level_id"
+                    birth_date_field_name="birth_date"
+                    ccp_field_name="ccp"
+                    institution_field_name="institution_id"
+                    phone_number_field_name="phone_number"
+                    vocational_training_id_field_name="vocational_training_id"
+                ></the-academic-infos>
                 <!-- END: Academic Level -->
 
                 <!-- BEGIN: Gender -->
@@ -358,8 +369,42 @@ onMounted(async () => {
                     <!-- END: Baby Milk Quantity -->
                 </template>
 
+                <div class="col-span-12 grid grid-cols-12 gap-4 sm:col-span-6 sm:mt-8">
+                    <!--Begin: Handicapped-->
+                    <div class="col-span-6 sm:col-span-3">
+                        <base-form-switch class="text-lg">
+                            <base-form-switch-input
+                                :id="`is_handicapped`"
+                                v-model="form.is_handicapped"
+                                type="checkbox"
+                            ></base-form-switch-input>
+
+                            <base-form-switch-label :htmlFor="`is_handicapped`" class="whitespace-nowrap text-nowrap">
+                                {{ $t('handicapped') }}
+                            </base-form-switch-label>
+                        </base-form-switch>
+                    </div>
+                    <!--END: Handicapped-->
+
+                    <!--Begin: Unemployed-->
+                    <div v-if="isOlderThan18" class="col-span-6 ms-0 sm:col-span-3 sm:ms-12">
+                        <base-form-switch class="text-lg">
+                            <base-form-switch-input
+                                :id="`is_unemployed`"
+                                v-model="form.is_unemployed"
+                                type="checkbox"
+                            ></base-form-switch-input>
+
+                            <base-form-switch-label :htmlFor="`is_unemployed`" class="whitespace-nowrap text-nowrap">
+                                {{ $t('unemployed') }}
+                            </base-form-switch-label>
+                        </base-form-switch>
+                    </div>
+                    <!--END: Unemployed-->
+                </div>
+
                 <!-- Begin: Income-->
-                <div class="col-span-12 sm:col-span-6">
+                <div v-if="isShouldHasIncome" class="col-span-12 sm:col-span-6">
                     <base-form-label for="income">
                         {{ $t('validation.attributes.income') }}
                     </base-form-label>
@@ -373,8 +418,8 @@ onMounted(async () => {
                                 })
                             "
                             data-test="orphan_income"
-                            type="text"
                             maxlength="12"
+                            type="text"
                             @change="form?.validate('income')"
                         ></base-form-input>
 
