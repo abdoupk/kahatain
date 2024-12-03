@@ -192,8 +192,6 @@ return [
                     'age',
                     'income',
                     'birth_date',
-                    'last_academic_year_achievement.academic_level.id',
-                    'last_academic_year_achievement.average',
                 ],
                 'searchableAttributes' => [
                     'name',
@@ -238,8 +236,6 @@ return [
                     'sponsor.name',
                     'family.income_rate',
                     'family.zone.name',
-                    'last_academic_year_achievement.academic_level.id',
-                    'last_academic_year_achievement.average',
                     'created_at',
                     'updated_at',
                 ],

@@ -58,7 +58,6 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePagi
                 ->with(
                     [
                         'sponsor:id,first_name,last_name,phone_number',
-                        'lastAcademicYearAchievement.academicLevel',
                         'family.zone:id,name',
                         'family:income_rate,zone_id,address,id',
                     ]

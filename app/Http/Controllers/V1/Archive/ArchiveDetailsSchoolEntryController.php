@@ -24,9 +24,7 @@ class ArchiveDetailsSchoolEntryController extends Controller implements HasMiddl
                 $archive->listOrphans()
                     ->with([
                         'academicLevel',
-                        'lastAcademicYearAchievement',
                         'family:id,address,zone_id',
-                        'academicAchievements',
                         'family.zone:id,name',
                     ])
                     ->paginate(request()->integer('perPage', 10))

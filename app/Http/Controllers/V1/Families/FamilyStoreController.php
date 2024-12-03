@@ -168,10 +168,11 @@ class FamilyStoreController extends Controller implements HasMiddleware
             }
 
             if (isset($orphan['vocational_training_id'])) {
-                $orphans[$key]->vocationalTrainingAchievements()->create([
-                    'year' => now()->year,
-                    'vocational_training_id' => $request->validated('orphans')[$key]['vocational_training_id'],
-                ]);
+                //                TODO : add vocational training
+                //                $orphans[$key]->vocationalTrainingAchievements()->create([
+                //                    'year' => now()->year,
+                //                    'vocational_training_id' => $request->validated('orphans')[$key]['vocational_training_id'],
+                //                ]);
             }
         }
 

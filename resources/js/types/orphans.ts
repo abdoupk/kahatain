@@ -24,53 +24,6 @@ export interface OrphanShowType {
         diapers_type: string
         diapers_quantity: number
     }
-    academic_achievements: AcademicAchievementsType[]
-    last_academic_year_achievement?: string
-    college_achievements: CollegeAchievementsType[]
-    vocational_training_achievements: VocationalTrainingAchievementsType[]
-}
-
-export interface AcademicAchievementsType {
-    id: string
-    academic_level: string
-    first_trimester: number
-    second_trimester: number
-    third_trimester: number
-    average: number
-    academic_year: number
-    note?: string
-}
-
-export interface CollegeAchievementsType {
-    id: string
-    academic_level: string
-    first_semester: number
-    second_semester: number
-    average: number
-    year: number
-    speciality?: string
-    university?: string
-    note?: string
-}
-
-export interface VocationalTrainingAchievementsType {
-    id: string
-    institute: string
-    year: number
-    note?: string
-    speciality?: string
-    division?: string
-}
-
-export interface CollegeAchievementsType {
-    id: string
-    academic_level: string
-    first_trimester: number
-    second_trimester: number
-    third_trimester: number
-    average: number
-    academic_year: number
-    note?: string
 }
 
 export interface OrphanUpdateFormType {

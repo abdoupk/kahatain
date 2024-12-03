@@ -37,15 +37,11 @@ Route::middleware([
         });
 
         Route::middleware('auth')->group(function (): void {
-            require __DIR__.'/v1/academic-achievements.php';
-
             require __DIR__.'/v1/archive.php';
 
             require __DIR__.'/v1/benefactors.php';
 
             require __DIR__.'/v1/branches.php';
-
-            require __DIR__.'/v1/college-achievements.php';
 
             require __DIR__.'/v1/committees.php';
 

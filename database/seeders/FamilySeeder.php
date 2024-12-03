@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\AcademicLevel;
 use App\Models\Baby;
 use App\Models\Branch;
 use App\Models\Family;
@@ -14,7 +13,6 @@ use App\Models\Sponsor;
 use App\Models\Spouse;
 use App\Models\Tenant;
 use App\Models\User;
-use App\Models\VocationalTraining;
 use App\Models\Zone;
 use Illuminate\Database\Seeder;
 use JsonException;
@@ -88,32 +86,12 @@ class FamilySeeder extends Seeder
                                     ];
                                 });
                         }
-                        $orphan = $orphan->hasAcademicAchievements(3, function (array $attributes, Orphan $orphan) {
-                            return [
-                                'tenant_id' => $orphan->tenant_id,
-                                'orphan_id' => $orphan->id,
-                            ];
-                        })
-                            ->hasVocationalTrainingAchievements(2, function (array $attributes, Orphan $orphan) {
-                                return [
-                                    'tenant_id' => $orphan->tenant_id,
-                                    'vocational_training_id' => VocationalTraining::inRandomOrder()->first()?->id,
-                                    'orphan_id' => $orphan->id,
-                                ];
-                            })
-                            ->hasCollegeAchievements(3, function (array $attributes, Orphan $orphan) {
-                                return [
-                                    'tenant_id' => $orphan->tenant_id,
-                                    'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
-                                    'orphan_id' => $orphan->id,
-                                ];
-                            })
-                            ->create([
-                                'tenant_id' => $tenant->id,
-                                'family_id' => $family?->id,
-                                'created_by' => User::whereTenantId($tenant->id)->first()?->id,
-                                'sponsor_id' => $sponsor->id,
-                            ]);
+                        $orphan->create([
+                            'tenant_id' => $tenant->id,
+                            'family_id' => $family?->id,
+                            'created_by' => User::whereTenantId($tenant->id)->first()?->id,
+                            'sponsor_id' => $sponsor->id,
+                        ]);
                         Baby::factory()->create([
                             'tenant_id' => $tenant->id,
                             'orphan_id' => $orphan->id,

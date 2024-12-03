@@ -66,7 +66,6 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(): Collec
             fn ($query) => $query
                 ->with([
                     'sponsor:id,first_name,last_name,phone_number',
-                    'lastAcademicYearAchievement.academicLevel',
                     'family.zone:id,name',
                 ])
         )->get();

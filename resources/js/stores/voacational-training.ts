@@ -17,9 +17,7 @@ export const useVocationalTrainingStore = defineStore('vocational-training', {
         },
 
         async searchSpecialities(search: string) {
-            const { data: specialities } = await axios.get(
-                route('tenant.vocational-training-achievements.search', { search })
-            )
+            const { data: specialities } = await axios.get(route('tenant.vocational-training.search', { search }))
 
             return specialities
         },

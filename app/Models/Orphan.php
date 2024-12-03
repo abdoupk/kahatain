@@ -50,8 +50,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, AcademicAchievement> $academicAchievements
- * @property-read int|null $academic_achievements_count
  * @property-read AcademicLevel|null $academicLevel
  * @property-read Collection<int, Sponsorship> $aid
  * @property-read int|null $aid_count
@@ -64,7 +62,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read Collection<int, EventOccurrence> $events
  * @property-read int|null $events_count
  * @property-read Family $family
- * @property-read AcademicAchievement|null $lastAcademicYearAchievement
  * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read Collection<int, Need> $needs
@@ -276,32 +273,12 @@ class Orphan extends Model implements HasMedia
         ]);
     }
 
-    public function academicAchievements(): HasMany
-    {
-        return $this->hasMany(AcademicAchievement::class);
-    }
-
-    public function lastAcademicYearAchievement(): HasOne
-    {
-        return $this->hasOne(AcademicAchievement::class, 'orphan_id')->with('academicLevel')
-            ->where(function ($query): void {
-                $query->whereRaw('academic_achievements.academic_year = ?', now()->year)
-                    ->orWhereRaw('academic_achievements.academic_year = ? ', now()->year - 1);
-            })
-            ->latest('academic_achievements.academic_year');
-    }
-
     public function creator(): BelongsTo
     {
         return $this->belongsTo(
             User::class,
             'created_by'
         );
-    }
-
-    public function vocationalTrainingAchievements(): HasMany
-    {
-        return $this->hasMany(VocationalTrainingAchievement::class);
     }
 
     public function academicLevel(): BelongsTo
@@ -328,11 +305,6 @@ class Orphan extends Model implements HasMedia
             'orphan_id',
             'event_occurrence_id'
         );
-    }
-
-    public function collegeAchievements(): HasMany
-    {
-        return $this->hasMany(CollegeAchievement::class);
     }
 
     public function formatedLastAcademicYear(): string

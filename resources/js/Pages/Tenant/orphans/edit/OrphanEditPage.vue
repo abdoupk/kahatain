@@ -18,18 +18,6 @@ const SponsorshipsInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/orphans/edit/SponsorshipsInformation.vue')
 )
 
-const AcademicAchievement = defineAsyncComponent(
-    () => import('@/Pages/Tenant/orphans/edit/academic-achievement/AcademicAchievement.vue')
-)
-
-const CollegeAchievement = defineAsyncComponent(
-    () => import('@/Pages/Tenant/orphans/edit/college-achievement/CollegeAchievement.vue')
-)
-
-const VocationalTrainingAchievement = defineAsyncComponent(
-    () => import('@/Pages/Tenant/orphans/edit/vocational-training-achievement/VocationalTrainingAchievement.vue')
-)
-
 defineOptions({
     layout: TheLayout
 })
@@ -75,15 +63,6 @@ provide('orphanDetailView', { view, updateView })
                             v-if="view === 'sponsorships_information'"
                             :orphan
                         ></sponsorships-information>
-
-                        <academic-achievement v-if="view === 'academic_achievement'" :orphan></academic-achievement>
-
-                        <college-achievement v-if="view === 'college_achievement'" :orphan></college-achievement>
-
-                        <vocational-training-achievement
-                            v-if="view === 'vocational_training_achievement'"
-                            :orphan
-                        ></vocational-training-achievement>
                     </div>
                 </div>
             </div>

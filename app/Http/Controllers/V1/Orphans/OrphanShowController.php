@@ -23,12 +23,9 @@ class OrphanShowController extends Controller implements HasMiddleware
         return Inertia::render('Tenant/orphans/details/OrphanDetailPage', [
             'orphan' => new OrphanShowResource(
                 $orphan->load(
-                    'academicAchievements.academicLevel',
                     'babyNeeds.diapers',
                     'babyNeeds.babyMilk',
                     'creator',
-                    'collegeAchievements.academicLevel',
-                    'vocationalTrainingAchievements.vocationalTraining'
                 )
             ),
         ]);

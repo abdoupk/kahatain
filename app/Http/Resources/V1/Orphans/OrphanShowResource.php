@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\V1\Orphans;
 
-use App\Http\Resources\AcademicAchievementResource;
 use App\Http\Resources\V1\Members\MemberResource;
 use App\Models\Orphan;
 use Illuminate\Http\Request;
@@ -29,17 +28,6 @@ class OrphanShowResource extends JsonResource
             'creator' => new MemberResource($this->whenLoaded('creator')),
             'gender' => $this->gender,
             'photo' => $this->getFirstMediaUrl('photos'),
-
-            'academic_achievements' => AcademicAchievementResource::collection(
-                $this->whenLoaded('academicAchievements')
-            ),
-
-            'vocational_training_achievements' => VocationalTrainingAchievementResource::collection(
-                $this->whenLoaded('vocationalTrainingAchievements')
-            ),
-            'college_achievements' => CollegeAchievementResource::collection(
-                $this->whenLoaded('collegeAchievements')
-            ),
         ];
     }
 }

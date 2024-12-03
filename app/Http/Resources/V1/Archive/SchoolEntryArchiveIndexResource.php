@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Archive;
 
+use App\Models\Orphan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,9 +28,8 @@ class SchoolEntryArchiveIndexResource extends JsonResource
             'orphan' => [
                 'id' => $this->id,
                 'name' => $this->getName(),
-                'academic_phase' => $this->lastAcademicYearAchievement?->academicLevel?->phase,
-                'academic_level' => $this->lastAcademicYearAchievement?->academicLevel?->level,
-                'last_year_average' => $this->lastAcademicYearAchievement?->average,
+                'academic_phase' => $this->academicLevel?->phase,
+                'academic_level' => $this->academicLevel?->level,
             ],
         ];
     }
