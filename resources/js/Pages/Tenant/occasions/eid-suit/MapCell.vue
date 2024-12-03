@@ -10,8 +10,6 @@ const props = defineProps<{
     shopType: 'clothes' | 'shoes'
 }>()
 
-const orphan = ref(props.orphan)
-
 const addressField = ref(props.shopType + '_shop_address')
 
 const locationField = ref(props.shopType + '_shop_location')
