@@ -4,6 +4,7 @@ import type { ArchiveOccasionType, EidAlAdhaFamiliesResource, IndexParams, Pagin
 import { eidAlAdhaFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
+import { useForm } from 'laravel-precognition-vue'
 import { defineAsyncComponent, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
@@ -53,6 +54,17 @@ const loading = ref(false)
 const showWarningModalStatus = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
+
+const handleChangeStatus = (familyId: string, status: string) => {
+    console.log(familyId, status)
+
+    useForm('patch', route('tenant.occasions.eid-al-adha.change-status', familyId), {
+        status
+    }).submit({
+        preserveScroll: true,
+        preserveState: true
+    })
+}
 
 const save = () => {
     getDataForIndexPages(route('tenant.occasions.eid-al-adha.save-to-archive'), params.value, {
@@ -125,7 +137,7 @@ const handleSave = () => {
             </the-table-header>
 
             <template v-if="families.data.length > 0">
-                <data-table :families :params @sort="sort"></data-table>
+                <data-table :families :params @sort="sort" @change-status="handleChangeStatus"></data-table>
 
                 <the-table-footer
                     :pagination-data="families"

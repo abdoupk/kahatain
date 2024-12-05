@@ -22,7 +22,7 @@ function getBabiesForExport(): Collection
 
 function listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(): Collection
 {
-    return search(Orphan::getModel(), FILTER_EID_SUIT, limit: 10000)
+    return search(Orphan::getModel(), FILTER_EID_SUIT(), limit: 10000)
         ->query(
             fn ($query) => $query
                 ->with([

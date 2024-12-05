@@ -2,18 +2,16 @@
 import type { CreateFamilyStepProps } from '@/types/types'
 
 import { useCreateFamilyStore } from '@/stores/create-family'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 import TheBranchSelector from '@/Components/Global/TheBranchSelector.vue'
 import TheZoneSelector from '@/Components/Global/TheZoneSelector.vue'
 
-import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<CreateFamilyStepProps>()
@@ -21,10 +19,6 @@ const props = defineProps<CreateFamilyStepProps>()
 const createFamilyStore = useCreateFamilyStore()
 
 const _residenceCertificateFile = ref(props.form?.residence_certificate_file)
-
-onMounted(() => {
-    document.getElementById('file_number')?.focus()
-})
 </script>
 
 <template>
@@ -37,27 +31,6 @@ onMounted(() => {
         </div>
 
         <div class="mt-5 grid grid-cols-12 gap-4 gap-y-5">
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label for="file_number">
-                    {{ $t('validation.attributes.file_number') }}
-                </base-form-label>
-
-                <base-form-input
-                    id="file_number"
-                    v-model="createFamilyStore.family.file_number"
-                    :placeholder="
-                        $t('auth.placeholders.fill', {
-                            attribute: $t('file_number')
-                        })
-                    "
-                    type="text"
-                    @input="form?.validate('file_number')"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                ></base-form-input>
-
-                <base-form-input-error :form field_name="file_number"></base-form-input-error>
-            </div>
-
             <div class="col-span-12 sm:col-span-6">
                 <base-form-label for="start_date">
                     {{ $t('validation.attributes.starting_sponsorship_date') }}
@@ -130,8 +103,8 @@ onMounted(() => {
                             :allow-multiple="false"
                             :files="_residenceCertificateFile"
                             :is-picture="false"
-                            accepted-file-types="image/jpeg, image/png, application/pdf"
                             :labelIdle="$t('upload-files.labelIdle.residence_certificate')"
+                            accepted-file-types="image/jpeg, image/png, application/pdf"
                             @update:files="createFamilyStore.family.residence_certificate_file = $event[0]"
                         ></base-file-pond>
                     </div>

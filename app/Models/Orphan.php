@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -137,7 +136,8 @@ class Orphan extends Model implements HasMedia
         'deleted_at',
         'ccp',
         'phone_number',
-        'institution',
+        'institution_id',
+        'institution_type',
     ];
 
     protected static function boot(): void
@@ -307,20 +307,6 @@ class Orphan extends Model implements HasMedia
         );
     }
 
-    public function formatedLastAcademicYear(): string
-    {
-        if (is_null($this->lastAcademicYearAchievement)) {
-            return '';
-        }
-
-        return $this->
-            lastAcademicYearAchievement?->academicLevel
-                ->level
-            .' ('.
-            $this->lastAcademicYearAchievement?->academic_year
-            .')';
-    }
-
     public function archives(): MorphToMany
     {
         return $this->morphToMany(
@@ -412,9 +398,9 @@ class Orphan extends Model implements HasMedia
         return $this->hasOne(OrphanEidSuit::class);
     }
 
-    public function institution(): MorphOne
+    public function institution(): BelongsTo
     {
-        return $this->MorphOne(Institution::class, 'institutionable');
+        return $this->morphTo();
     }
 
     protected function casts(): array

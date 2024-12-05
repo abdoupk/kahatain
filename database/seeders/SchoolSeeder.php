@@ -27,6 +27,14 @@ class SchoolSeeder extends Seeder
 
         foreach ($batches as $batch) {
             $data = array_map(static function ($school) {
+                if ($school['phase_key'] === 'middle_school') {
+                    $school['phase_key'] = 'middle_education';
+                } elseif ($school['phase_key'] === 'high_school') {
+                    $school['phase_key'] = 'secondary_education';
+                } elseif ($school['phase_key'] === 'elementary_school') {
+                    $school['phase_key'] = 'primary_education';
+                }
+
                 return [
                     'id' => Str::uuid(),
                     'name' => $school['name'],

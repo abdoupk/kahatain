@@ -135,7 +135,7 @@
     "income information": "معلومات عن الدخل",
     "incomes_information": "معلومات عن الدخل",
     "second sponsor information": "معلومات عن المتكفل الثاني",
-    "spouse information": "معلومات عن الزوج (ة)",
+    "spouse information": "معلومات عن المتوفي (ة)",
     "DA": "دج",
     "the_amount": "المبلغ",
     "other_properties": "ممتلكات اخرى",
@@ -385,7 +385,9 @@
     "direct_bail": "الكفالة الشهرية",
     "project_support": "دعم مشروع منتج",
     "general_information_of_association": "معلومات عن الجمعية",
-    "unemployed": "بطال (ة)",
+    "unemployed": "منحة البطالة",
+    "zakat_el_fitr": "زكاة الفطر",
+    "no_remarriage": "شهادة عدم الزواج",
     "handicapped": "معاق (ة)",
     "calculate_the_income_rate": "حساب معدل الدخل",
     "the_income": "الدخل",
@@ -516,5 +518,9 @@
     "zakat_per_family": "المبلغ لكل عائلة",
     "zakat_selected_families": "عدد العائلات المحددة",
     "no_residence_certificate": "لم يتم رفع بطاقة الإقامة",
-    "no_diploma_or_birth_certificate": "لم يتم رفع  الدبلوم او شهادة الميلاد"
+    "no_diploma_or_birth_certificate": "لم يتم رفع  الدبلوم او شهادة الميلاد",
+    "middle_school": "المتوسطة",
+    "primary_school": "الابتدائية",
+    "secondary_school": "الثانوية",
+    "vocational_training_center": "مركز التكوين المهني"
 }

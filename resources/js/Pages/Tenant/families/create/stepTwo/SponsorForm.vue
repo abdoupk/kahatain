@@ -33,6 +33,8 @@ const academicLevels = ref<AcademicLevelType[]>([])
 
 const _diplomaFile = ref(props.form?.sponsor?.diploma_file)
 
+const _noRemarriageFile = ref(props.form?.sponsor?.no_remarriage_file)
+
 const _birthCertificateFile = ref(props.form?.sponsor?.birth_certificate_file)
 
 onMounted(async () => {
@@ -436,6 +438,24 @@ onMounted(async () => {
                         :idle-label="$t('upload-files.labelIdle.sponsor_diploma')"
                         @update:files="createFamilyStore.family.sponsor.diploma_file = $event[0]"
                     ></base-file-pond>
+                </div>
+
+                <div class="col-span-12 lg:col-span-6">
+                    <base-form-label class="mb-2" for="no_remarriage_file">
+                        {{ $t('no_remarriage') }}
+                    </base-form-label>
+
+                    <base-file-pond
+                        id="no_remarriage_file"
+                        :allow-multiple="false"
+                        :files="_noRemarriageFile"
+                        :idle-label="$t('upload-files.labelIdle.sponsor_no_remarriage')"
+                        :is-picture="false"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        @update:files="createFamilyStore.family.sponsor.no_remarriage_file = $event[0]"
+                    ></base-file-pond>
+
+                    <base-form-input-error :form field_name="sponsor.no_remarriage_file"></base-form-input-error>
                 </div>
             </div>
         </div>

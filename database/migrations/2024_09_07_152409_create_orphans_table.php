@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('ccp')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('institution_id')->nullable();
+            $table->string('institution_type')->nullable();
             $table->text('note')->nullable()->index('idx_orphans_note');
             $table->uuid('tenant_id')->index('idx_orphans_tenant_id');
             $table->uuid('family_id')->index('idx_orphans_family_id');

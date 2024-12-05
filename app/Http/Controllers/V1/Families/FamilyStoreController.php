@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Families;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Families\CreateFamilyRequest;
 use App\Jobs\V1\Family\FamilyCreatedJob;
+use App\Models\Branch;
 use App\Models\Family;
 use App\Models\Sponsor;
 use Arr;
@@ -35,7 +36,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
                         ...$request->only(
                             'address',
                             'zone_id',
-                            'file_number',
                             'start_date',
                             'branch_id',
                             'location'
@@ -43,6 +43,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                         'name' => $request->validated('sponsor.first_name')
                             .'  '.
                             $request->validated('sponsor.last_name'),
+                        'file_number' => Branch::with('city')->find($request->validated('branch_id'))->city->commune_code.'/'.Family::count('*') + 1,
                     ]
                 );
 
@@ -81,7 +82,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
      */
     private function storeSponsor(CreateFamilyRequest $request, Model|Family $family): Sponsor
     {
-        $sponsor = $family->sponsor()->create(Arr::except($request->validated('sponsor'), ['photo', 'diploma_file', 'birth_certificate_file']));
+        $sponsor = $family->sponsor()->create(Arr::except($request->validated('sponsor'), ['photo', 'diploma_file', 'no_remarriage_file', 'birth_certificate_file']));
 
         $income = $sponsor->incomes()->create([
             ...$request->only(
@@ -106,6 +107,8 @@ class FamilyStoreController extends Controller implements HasMiddleware
         addToMediaCollection($income, $request->validated('incomes.cnas_file'), 'cnas_files');
 
         addToMediaCollection($income, $request->validated('incomes.cnr_file'), 'cnr_files');
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.no_remarriage_file'), 'no_remarriage_files');
 
         return $sponsor;
     }
@@ -140,7 +143,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
                     'baby_milk_type',
                     'diapers_quantity',
                     'diapers_type',
-                    'vocational_training_id',
                 ]);
             }, ARRAY_FILTER_USE_KEY);
         }, $validatedOrphans));
@@ -166,14 +168,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
                     'orphan_id' => $orphans[$key]->id,
                 ];
             }
-
-            if (isset($orphan['vocational_training_id'])) {
-                //                TODO : add vocational training
-                //                $orphans[$key]->vocationalTrainingAchievements()->create([
-                //                    'year' => now()->year,
-                //                    'vocational_training_id' => $request->validated('orphans')[$key]['vocational_training_id'],
-                //                ]);
-            }
         }
 
         if (! empty($babiesToCreate)) {
@@ -191,6 +185,9 @@ class FamilyStoreController extends Controller implements HasMiddleware
             'other_properties' => $request->validated('other_properties'),
         ]);
 
-        $family->furnishings()->create($request->validated('furnishings'));
+        ray($request->validated('furnishings'));
+        $family->furnishings()->create([
+            ...$request->validated('furnishings'),
+        ]);
     }
 }

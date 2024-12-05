@@ -10,9 +10,11 @@ class SchoolsSearchController extends Collection
 {
     public function __invoke()
     {
+        $phase = request()->phase_key ?? 'primary_education';
+
         return JsonResource::collection(search(School::getModel(),
-            additional_filters: 'phase_key = middle_school AND city_id = 1144 ',
-            limit: 100
+            additional_filters: "phase_key = $phase AND city_id = ".tenant('infos')['city_id'].' ',
+            limit: 300
         )->get());
     }
 }

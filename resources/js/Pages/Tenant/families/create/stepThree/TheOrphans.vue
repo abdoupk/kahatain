@@ -31,7 +31,7 @@ const removeOrphan = (index: number) => {
                 :class="{ hidden: createFamilyStore.family.orphans.length === 0 }"
                 class="ms-2 inline-block !outline-none focus-visible:!rounded-sm focus-visible:!outline-red-300/70"
                 href="#"
-                @click.prevent="removeOrphan(index)"
+                @click.prevent="removeOrphan(index - 1)"
             >
                 <svg-loader class="fill-danger" name="icon-trash-can"></svg-loader>
             </a>

@@ -10,8 +10,12 @@ class SearchVocationalTrainingCentersController extends Controller
 {
     public function __invoke()
     {
-        return JsonResource::collection(search(VocationalTrainingCenter::getModel(),
-            limit: 25)->get()->map(function (VocationalTrainingCenter $vocationalTrainingCenter) {
+        return JsonResource::collection(search(
+            VocationalTrainingCenter::getModel(),
+            additional_filters: 'wilaya_code = '.tenant('infos')['wilaya']['wilaya_code'].' ',
+            limit: 200)
+            ->get()
+            ->map(function (VocationalTrainingCenter $vocationalTrainingCenter) {
                 return [
                     'id' => $vocationalTrainingCenter->id,
                     'name' => $vocationalTrainingCenter->getName(),

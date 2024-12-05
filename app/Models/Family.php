@@ -215,6 +215,8 @@ class Family extends Model implements HasMedia
                 'sponsor.incomes',
                 'orphans',
                 'aid',
+                'housing',
+                'furnishings',
             ]
         );
     }
@@ -248,6 +250,8 @@ class Family extends Model implements HasMedia
                 'degree_of_kinship' => $this->secondSponsor?->degree_of_kinship,
                 'address' => $this->secondSponsor?->address,
             ],
+            'housing' => $this->housing?->only(['id', 'name', 'value', 'number_of_rooms', 'housing_receipt_number', 'other_properties']),
+            'furnishings' => $this->furnishings?->only(['television', 'refrigerator', 'fireplace', 'washing_machine', 'water_heater', 'oven', 'wardrobe', 'cupboard', 'covers', 'mattresses', 'other_furnishings']),
             'branch' => $this->branch?->only(['id', 'name']),
             'total_income' => $this->total_income,
             'orphans_count' => $this->orphans->count(),
@@ -372,6 +376,11 @@ class Family extends Model implements HasMedia
     public function preview(): HasOne
     {
         return $this->hasOne(Preview::class);
+    }
+
+    public function eidAlAdhas(): HasMany
+    {
+        return $this->hasMany(FamilyEidAlAdha::class);
     }
 
     protected function casts(): array

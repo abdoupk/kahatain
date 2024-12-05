@@ -7,6 +7,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateFamilyRequest extends FormRequest
 {
+    public function messages(): array
+    {
+        return [
+            'sponsor.no_remarriage_file.required' => __('validation.required', ['attribute' => __('no_remarriage')]),
+        ];
+    }
+
     public function attributes(): array
     {
         return [
@@ -50,7 +57,6 @@ class CreateFamilyRequest extends FormRequest
             'location.lat' => 'nullable|numeric',
             'location.lng' => 'nullable|numeric',
             'zone_id' => 'required|string|exists:App\Models\Zone,id',
-            'file_number' => 'required|numeric',
             'start_date' => 'required|date',
             'orphans.*.first_name' => 'required|string',
             'orphans.*.last_name' => 'required|string',
@@ -79,6 +85,7 @@ class CreateFamilyRequest extends FormRequest
             'sponsor.diploma' => 'nullable|string',
             'sponsor.diploma_file' => 'nullable|string',
             'sponsor.photo' => 'nullable|string',
+            'sponsor.no_remarriage_file' => 'required|string',
             'sponsor.birth_certificate_file' => 'nullable|string',
             'sponsor.ccp' => ['required', 'string', 'regex:/^\d{12}$/', 'unique:App\Models\Orphan,ccp'],
             'second_sponsor.first_name' => 'nullable|string',
@@ -106,11 +113,12 @@ class CreateFamilyRequest extends FormRequest
             'incomes.cnas_file' => 'nullable|string',
             'incomes.casnos_file' => 'nullable|string',
             'incomes.account.*.*' => 'nullable|numeric',
-            'housing.housing_type.value' => 'required',
+            'housing.housing_type.value' => 'required_unless:housing.housing_type.name,inheritance',
             'housing.housing_type.name' => 'required',
             'housing.number_of_rooms' => 'required|numeric',
             'housing.housing_receipt_number' => 'nullable|string',
-            'furnishings.*' => 'required',
+            'furnishings.*.checked' => 'required|boolean',
+            'furnishings.*.note' => 'nullable|string',
             'other_properties' => 'nullable|string',
             'inspectors_members' => 'required|array|min:1',
             'preview_date' => 'required|date',

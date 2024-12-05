@@ -12,17 +12,47 @@ class FurnishingFactory extends Factory
     public function definition(): array
     {
         return [
-            'television' => fake('ar_SA')->word,
-            'refrigerator' => fake('ar_SA')->word,
-            'fireplace' => fake('ar_SA')->word,
-            'washing_machine' => fake('ar_SA')->word,
-            'water_heater' => fake('ar_SA')->word,
-            'oven' => fake('ar_SA')->word,
-            'wardrobe' => fake('ar_SA')->word,
-            'cupboard' => fake('ar_SA')->word,
-            'covers' => fake('ar_SA')->word,
-            'mattresses' => fake('ar_SA')->word,
-            'other_furnishings' => fake('ar_SA')->word,
+            'television' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'refrigerator' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'fireplace' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'washing_machine' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'water_heater' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'oven' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'wardrobe' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'cupboard' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'covers' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'mattresses' => [
+                'checked' => fake()->boolean(60),
+                'note' => fake('ar_SA')->word,
+            ],
+            'other_furnishings' => fake()->word,
             'family_id' => fake()->uuid,
             'tenant_id' => fake()->uuid,
         ];

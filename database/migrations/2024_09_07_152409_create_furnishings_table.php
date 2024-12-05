@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('furnishings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('television')->nullable();
-            $table->text('refrigerator')->nullable();
-            $table->text('fireplace')->nullable();
-            $table->text('washing_machine')->nullable();
-            $table->text('water_heater')->nullable();
-            $table->text('oven')->nullable();
-            $table->text('wardrobe')->nullable();
-            $table->text('cupboard')->nullable();
-            $table->text('covers')->nullable();
-            $table->text('mattresses')->nullable();
+            $table->jsonb('television')->nullable();
+            $table->jsonb('refrigerator')->nullable();
+            $table->jsonb('fireplace')->nullable();
+            $table->jsonb('washing_machine')->nullable();
+            $table->jsonb('water_heater')->nullable();
+            $table->jsonb('oven')->nullable();
+            $table->jsonb('wardrobe')->nullable();
+            $table->jsonb('cupboard')->nullable();
+            $table->jsonb('covers')->nullable();
+            $table->jsonb('mattresses')->nullable();
             $table->text('other_furnishings')->nullable();
             $table->uuid('family_id');
             $table->uuid('tenant_id');

@@ -238,22 +238,15 @@ onUnmounted(() => {
                         <template #default>
                             <step-four :form>
                                 <template #housingForm>
-                                    <housing-form
-                                        v-model:housing-receipt-number="form.housing.housing_receipt_number"
-                                        v-model:housing-type="form.housing.housing_type"
-                                        v-model:number-of-rooms="form.housing.number_of_rooms"
-                                        :form
-                                    ></housing-form>
+                                    <housing-form :form></housing-form>
                                 </template>
 
                                 <template #furnishingForm>
-                                    <furnishing-form :form
-                                                     @update:furnishings="form.furnishings = {...$event}"></furnishing-form>
+                                    <furnishing-form :form></furnishing-form>
                                 </template>
 
                                 <template #otherPropertiesForm>
-                                    <other-properties-form v-model:other-properties="form.other_properties"
-                                                           :form></other-properties-form>
+                                    <other-properties-form :form></other-properties-form>
                                 </template>
 
                                 <the-actions :nextStep="nextStep" :prevStep="prevStep"></the-actions>

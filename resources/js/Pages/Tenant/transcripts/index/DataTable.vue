@@ -129,7 +129,7 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                         </the-table-td>
 
                         <the-table-td class="max-w-20 truncate text-center">
-                            {{ orphan.institution }}
+                            {{ orphan.institution?.name }}
                         </the-table-td>
 
                         <the-table-td class="whitespace-nowrap text-center">

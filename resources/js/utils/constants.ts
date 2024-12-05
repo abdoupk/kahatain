@@ -241,8 +241,8 @@ export const financialTransactionSpecifications = [
         value: 'eid_el_adha'
     },
     {
-        label: 'eid_el_fitr',
-        value: 'eid_el_fitr'
+        label: 'zakat_el_fitr',
+        value: 'zakat_el_fitr'
     },
     {
         label: 'school_entry',

@@ -48,12 +48,52 @@ const vocationalTraining = defineModel('vocationalTraining', { default: '' })
 
 const institution = defineModel('institution', { default: '' })
 
+const institutionType = defineModel('institutionType', { default: 'school' })
+
 const phoneNumber = defineModel('phoneNumber', { default: '' })
 
 const ccp = defineModel('ccp', { default: '' })
 
+const institutionName = computed(() => {
+    switch (phase.value) {
+        case 'university':
+            return $t('university')
+
+        case 'vocational_training':
+            return $t('vocational_training_center')
+
+        case 'primary_education':
+            return $t('primary_school')
+
+        case 'secondary_education':
+            return $t('secondary_school')
+
+        case 'middle_education':
+            return $t('middle_school')
+
+        default:
+            return $t('validation.attributes.institution')
+    }
+})
+
 const handleUpdateAcademicLevel = (value: string) => {
     phase.value = academicLevelsStore.getPhaseFromId(value)
+
+    if (phase.value === 'vocational_training') {
+        institutionType.value = 'vocational_training_center'
+    }
+
+    if (phase.value === 'university') {
+        institutionType.value = 'university'
+    }
+
+    if (
+        phase.value === 'primary_education' ||
+        phase.value === 'secondary_education' ||
+        phase.value === 'middle_education'
+    ) {
+        institutionType.value = 'school'
+    }
 }
 
 onMounted(async () => {
@@ -63,7 +103,7 @@ onMounted(async () => {
 const schoolsStore = useSchoolsStore()
 
 function loadSchools(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
-    schoolsStore.searchSchools(query, 'middle-school').then((results) => {
+    schoolsStore.searchSchools(query, phase.value).then((results) => {
         setOptions(results)
     })
 }
@@ -105,39 +145,36 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
         <!-- End: Academic Level-->
 
         <!-- Begin: Institution-->
-        <div class="col-span-12 sm:col-span-6">
+        <div v-if="phase !== 'other'" class="col-span-12 sm:col-span-6">
             <base-form-label :for="institution_field_name">
-                {{ $t('validation.attributes.institution') }}
+                {{ institutionName }}
             </base-form-label>
 
             <the-institution-selector
                 v-if="isAcademic"
                 :id="institution_field_name"
-                :institution="institution"
                 :load-options="loadUniversities"
                 :phase-key="phase"
                 class="!mt-0"
-                @update:value="institution = $event"
+                @update:value="institution = $event.id"
             ></the-institution-selector>
 
             <the-institution-selector
                 v-else-if="phase === 'vocational_training'"
                 :id="institution_field_name"
-                :institution="institution"
                 :load-options="loadVocationalTrainingCenters"
                 :phase-key="phase"
                 class="!mt-0"
-                @update:value="institution = $event"
+                @update:value="institution = $event.id"
             ></the-institution-selector>
 
             <the-institution-selector
                 v-else
                 :id="institution_field_name"
-                :institution="institution"
                 :load-options="loadSchools"
                 :phase-key="phase"
                 class="!mt-0"
-                @update:value="institution = $event"
+                @update:value="institution = $event.id"
             ></the-institution-selector>
 
             <base-form-input-error :field_name="institution_field_name" :form></base-form-input-error>

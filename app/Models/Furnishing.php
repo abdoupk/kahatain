@@ -78,4 +78,21 @@ class Furnishing extends Model
     {
         return $this->belongsTo(Family::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'television' => 'array',
+            'refrigerator' => 'array',
+            'fireplace' => 'array',
+            'washing_machine' => 'array',
+            'water_heater' => 'array',
+            'oven' => 'array',
+            'wardrobe' => 'array',
+            'cupboard' => 'array',
+            'covers' => 'array',
+            'mattresses' => 'array',
+            'other_furnishings' => 'array',
+        ];
+    }
 }

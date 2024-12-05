@@ -13,7 +13,7 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
             $table->string('name');
             $table->foreignIdFor(City::class);
-            $table->enum('phase_key', ['elementary_school', 'middle_school', 'high_school']);
+            $table->enum('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
             $table->string('e_id');
             $table->timestamps();
         });

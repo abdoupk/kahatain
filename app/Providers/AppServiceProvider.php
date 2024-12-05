@@ -34,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
             'family' => 'App\Models\Family',
             'baby' => 'App\Models\Baby',
             'settings' => 'App\Models\Settings',
+            'income' => 'App\Models\Income',
+            'vocational_training_center' => 'App\Models\VocationalTrainingCenter',
+            'school' => 'App\Models\School',
+            'university' => 'App\Models\University',
         ]);
 
         Str::macro('domain', function (?string $domain): string {

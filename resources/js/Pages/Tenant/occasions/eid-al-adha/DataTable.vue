@@ -3,21 +3,24 @@ import type { EidAlAdhaFamiliesResource, IndexParams, PaginationData } from '@/t
 
 import { Link } from '@inertiajs/vue3'
 
+import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
+import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
 import { formatCurrency } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{
     families: PaginationData<EidAlAdhaFamiliesResource>
     params: IndexParams
 }>()
 
-const emit = defineEmits(['sort'])
+const emit = defineEmits(['sort', 'change-status'])
 </script>
 
 <template>
@@ -83,6 +86,8 @@ const emit = defineEmits(['sort'])
                         >
                             {{ $t('income_rate') }}
                         </the-table-th>
+
+                        <the-table-th>actions</the-table-th>
                     </base-tr-table>
                 </base-thead-table>
 
@@ -145,6 +150,22 @@ const emit = defineEmits(['sort'])
                                 {{ formatCurrency(family.income_rate) }}
                             </div>
                         </the-table-td>
+
+                        <the-table-td-actions>
+                            <base-form-select
+                                :value="family.status"
+                                @change="emit('change-status', family.id, $event.target.value)"
+                            >
+                                <option selected value="">{{ $t('filters.select_an_option') }}</option>
+                                <option value="benefit">{{ $t('benefit') }}</option>
+                                <option value="dont_benefit">{{ $t('dont_benefit') }}</option>
+                                <option value="sacrificed">
+                                    {{ $t('sacrificed') }}
+                                </option>
+                                <option value="meat">{{ $t('meat') }}</option>
+                                <option value="benefactor">{{ $t('benefactor') }}</option>
+                            </base-form-select>
+                        </the-table-td-actions>
                     </base-tr-table>
                 </base-tbody-table>
             </base-table>

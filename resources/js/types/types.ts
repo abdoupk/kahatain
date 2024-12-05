@@ -479,7 +479,10 @@ export interface EidAlAdhaFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+    status: FamilyEidAlAdhaStatusType
 }
+
+export type FamilyEidAlAdhaStatusType = 'benefit' | 'benefactor' | 'sacrificed' | 'meat' | 'dont_benefit'
 
 export interface ZakatFamiliesResource {
     id: string
@@ -732,6 +735,7 @@ type SponsorType = {
     photo: string
     birth_certificate_file: string
     diploma_file: string
+    no_remarriage_file: string
 }
 
 type SecondSponsorType = {
@@ -777,7 +781,8 @@ export type OrphanType = {
     diapers_quantity: number
     is_handicapped: boolean
     is_unemployed: boolean
-    institution_id: number
+    institution_id: string
+    institution_type: string
 }
 
 export type IncomeType = {
@@ -1104,7 +1109,10 @@ export interface OrphansTranscriptsIndexResource {
     id: string
     name: string
     birth_date: string
-    institution: string
+    institution: {
+        id: string
+        name: string
+    }
     sponsor: {
         id: string
         name: string

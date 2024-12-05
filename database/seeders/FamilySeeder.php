@@ -71,10 +71,8 @@ class FamilySeeder extends Seeder
 
                     for ($j = 0; $j < fake()->numberBetween(2, 6); $j++) {
 
-                        $orphan = Orphan::factory();
-
                         if ($i == 0) {
-                            $orphan = $orphan
+                            $orphan = Orphan::factory()
                                 ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Orphan $orphan) use ($tenant) {
                                     return [
                                         'tenant_id' => $orphan->tenant_id,
@@ -84,14 +82,21 @@ class FamilySeeder extends Seeder
                                         'recipientable_id' => $orphan->id,
                                         'recipientable_type' => 'orphan',
                                     ];
-                                });
+                                })->create([
+                                    'tenant_id' => $tenant->id,
+                                    'family_id' => $family?->id,
+                                    'created_by' => User::whereTenantId($tenant->id)->first()?->id,
+                                    'sponsor_id' => $sponsor->id,
+                                ]);
+                        } else {
+                            $orphan = Orphan::factory()->create([
+                                'tenant_id' => $tenant->id,
+                                'family_id' => $family?->id,
+                                'created_by' => User::whereTenantId($tenant->id)->first()?->id,
+                                'sponsor_id' => $sponsor->id,
+                            ]);
                         }
-                        $orphan->create([
-                            'tenant_id' => $tenant->id,
-                            'family_id' => $family?->id,
-                            'created_by' => User::whereTenantId($tenant->id)->first()?->id,
-                            'sponsor_id' => $sponsor->id,
-                        ]);
+
                         Baby::factory()->create([
                             'tenant_id' => $tenant->id,
                             'orphan_id' => $orphan->id,

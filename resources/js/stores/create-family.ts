@@ -68,7 +68,8 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 ccp: '',
                 photo: '',
                 diploma_file: '',
-                birth_certificate_file: ''
+                birth_certificate_file: '',
+                no_remarriage_file: ''
             },
             incomes: {
                 cnr: 0,
@@ -136,7 +137,8 @@ export const useCreateFamilyStore = defineStore('create-family', {
                     is_unemployed: false,
                     gender: 'male',
                     ccp: null,
-                    phone_number: null
+                    phone_number: null,
+                    institution_type: null
                 }
             ],
             housing: {
@@ -148,17 +150,50 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 number_of_rooms: 0
             },
             furnishings: {
-                television: false,
-                refrigerator: false,
-                fireplace: false,
-                washing_machine: false,
-                water_heater: false,
-                oven: false,
-                wardrobe: false,
-                cupboard: false,
-                covers: false,
-                mattresses: false,
-                other_furnishings: false
+                television: {
+                    checked: false,
+                    note: ''
+                },
+                refrigerator: {
+                    checked: false,
+                    note: ''
+                },
+                fireplace: {
+                    checked: false,
+                    note: ''
+                },
+                washing_machine: {
+                    checked: false,
+                    note: ''
+                },
+                water_heater: {
+                    checked: false,
+                    note: ''
+                },
+                oven: {
+                    checked: false,
+                    note: ''
+                },
+                wardrobe: {
+                    checked: false,
+                    note: ''
+                },
+                cupboard: {
+                    checked: false,
+                    note: ''
+                },
+                covers: {
+                    checked: false,
+                    note: ''
+                },
+                mattresses: {
+                    checked: false,
+                    note: ''
+                },
+                other_furnishings: {
+                    checked: false,
+                    note: ''
+                }
             },
             report: '',
             preview_date: null,

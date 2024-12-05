@@ -67,10 +67,10 @@ const emit = defineEmits(['sort'])
                     </the-table-th>
 
                     <the-table-th
-                        :direction="params.directions && params.directions['age']"
+                        :direction="params.directions && params.directions['birth_date']"
                         class="text-center"
                         sortable
-                        @click="emit('sort', 'age')"
+                        @click="emit('sort', 'birth_date')"
                     >
                         {{ $t('age') }}
                     </the-table-th>

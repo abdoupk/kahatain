@@ -3,7 +3,7 @@
 const LIMIT = 5000;
 
 const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
-    'eid_el_adha', 'eid_el_fitr', 'zakat', 'other', 'school_entry', 'analysis',
+    'eid_el_adha', 'eid_el_fitr', 'zakat_el_fitr', 'zakat', 'other', 'school_entry', 'analysis',
     'therapy', 'ramadan_basket',
 ];
 
@@ -12,9 +12,12 @@ const FILTER_STUDENTS = 'AND academic_level.phase_key IN [primary_education, mid
 const FILTER_RAMADAN_BASKET = '';
 //'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
 
-// TODO: get Only older than > 2 years
-const FILTER_EID_SUIT = '';
-//'AND eid_suit = true AND eid_suit IS NOT NULL';
+function FILTER_EID_SUIT(): string
+{
+    $less_than_six_years = strtotime('now - 6 years');
+
+    return "AND ( birth_date IS NOT EMPTY AND birth_date >= $less_than_six_years OR is_handicapped = true OR academic_level.phase_key IN [primary_education, middle_education, secondary_education] )";
+}
 
 const FILTER_EID_AL_ADHA = '';
 //'AND eid_al_adha != false AND eid_al_adha IS NOT NULL';

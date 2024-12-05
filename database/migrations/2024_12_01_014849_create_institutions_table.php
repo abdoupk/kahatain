@@ -10,6 +10,8 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
+            $table->morphs('institutionable');
+            $table->timestamps();
         });
     }
 };

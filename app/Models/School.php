@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Laravel\Scout\Searchable;
 
 class School extends Model
@@ -16,6 +17,16 @@ class School extends Model
         'city_id',
         'e_id',
     ];
+
+    public function orphans(): MorphMany
+    {
+        return $this->morphMany(Orphan::class, 'institution');
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 
     protected function casts(): array
     {

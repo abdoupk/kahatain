@@ -15,7 +15,7 @@ class OrphansIndexResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getName(),
             'birth_date' => $this->birth_date,
-            'institution' => $this->institution,
+            'institution' => InstitutionResource::make($this->institution),
             'sponsor' => $this->whenLoaded('sponsor', function () {
                 return [
                     'id' => $this->sponsor->id,

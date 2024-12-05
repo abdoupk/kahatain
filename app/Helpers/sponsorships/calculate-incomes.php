@@ -56,5 +56,5 @@ function setUnemployedOrphanIncome(Orphan $orphan): float
 {
     $calculation = json_decode($orphan->load(['tenant'])->tenant['calculation'], true)['monthly_sponsorship'];
 
-    return $calculation['unemployment_benefit'];
+    return $orphan->income + $calculation['unemployment_benefit'];
 }

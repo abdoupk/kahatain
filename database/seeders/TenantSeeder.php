@@ -28,6 +28,11 @@ class TenantSeeder extends Seeder
                 'domain' => 'foo.'.config('app.domain'),
                 'association' => 'kafil el yatim El-bayadh ',
                 'city_id' => 1144,
+                'wilaya' => [
+                    'wilaya_code' => '32',
+                    'commune_code' => '3201',
+                    'postal_code' => '32001',
+                ],
             ],
         ]);
 
@@ -42,6 +47,11 @@ class TenantSeeder extends Seeder
                 'domain' => 'bar.'.config('app.domain'),
                 'association' => 'kafil el yatim El-bayadh 02',
                 'city_id' => 1144,
+                'wilaya' => [
+                    'wilaya_code' => '32',
+                    'commune_code' => '3201',
+                    'postal_code' => '32001',
+                ],
             ],
         ]);
 

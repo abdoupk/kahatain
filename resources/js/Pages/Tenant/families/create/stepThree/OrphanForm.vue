@@ -51,16 +51,13 @@ const isOlderThan18 = computed(() => {
 const isShouldHasIncome = computed(() => {
     if (!isOlderThan18.value) return false
 
-    return (
-        !createFamilyStore.family.orphans[props.index].is_handicapped &&
-        !createFamilyStore.family.orphans[props.index].is_unemployed
-    )
+    return !createFamilyStore.family.orphans[props.index].is_handicapped
 })
 
 const pic = props.form?.orphans[props.index]?.photo
 
 onMounted(async () => {
-    document.getElementById(`first_name_${props.index}`)?.focus()
+    document.getElementById(`last_name_${props.index}`)?.focus()
 })
 </script>
 
@@ -81,29 +78,6 @@ onMounted(async () => {
             </div>
         </div>
         <!-- End: Photo-->
-
-        <!-- Begin: First Name-->
-        <div class="col-span-12 sm:col-span-6">
-            <base-form-label :for="`first_name_${index}`">
-                {{ $t('validation.attributes.first_name') }}
-            </base-form-label>
-
-            <base-form-input
-                :id="`first_name_${index}`"
-                v-model="createFamilyStore.family.orphans[index].first_name"
-                :placeholder="
-                    $t('auth.placeholders.fill', {
-                        attribute: $t('validation.attributes.first_name')
-                    })
-                "
-                data-test="orphan_first_name"
-                type="text"
-                @change="form?.validate(`orphans.${index}.first_name`)"
-            ></base-form-input>
-
-            <base-form-input-error :field_name="`orphans.${index}.first_name`" :form></base-form-input-error>
-        </div>
-        <!-- End: First Name-->
 
         <!-- Begin: Last Name-->
         <div class="col-span-12 sm:col-span-6">
@@ -127,6 +101,29 @@ onMounted(async () => {
             <base-form-input-error :field_name="`orphans.${index}.last_name`" :form></base-form-input-error>
         </div>
         <!-- End: Last Name-->
+
+        <!-- Begin: First Name-->
+        <div class="col-span-12 sm:col-span-6">
+            <base-form-label :for="`first_name_${index}`">
+                {{ $t('validation.attributes.first_name') }}
+            </base-form-label>
+
+            <base-form-input
+                :id="`first_name_${index}`"
+                v-model="createFamilyStore.family.orphans[index].first_name"
+                :placeholder="
+                    $t('auth.placeholders.fill', {
+                        attribute: $t('validation.attributes.first_name')
+                    })
+                "
+                data-test="orphan_first_name"
+                type="text"
+                @change="form?.validate(`orphans.${index}.first_name`)"
+            ></base-form-input>
+
+            <base-form-input-error :field_name="`orphans.${index}.first_name`" :form></base-form-input-error>
+        </div>
+        <!-- End: First Name-->
 
         <!-- Begin: Birth Date-->
         <div class="col-span-12 sm:col-span-6">
@@ -205,12 +202,15 @@ onMounted(async () => {
             <base-form-input-error :field_name="`orphans.${index}.family_status`" :form></base-form-input-error>
         </div>
         <!-- End: Family Status-->
+
         <the-academic-infos
             v-model:academic-level="createFamilyStore.family.orphans[index].academic_level_id"
             v-model:birth-date="createFamilyStore.family.orphans[index].birth_date"
             v-model:ccp="createFamilyStore.family.orphans[index].ccp"
             v-model:institution="createFamilyStore.family.orphans[index].institution_id"
             v-model:phone-number="createFamilyStore.family.orphans[index].phone_number"
+            v-model:institution-type="createFamilyStore.family.orphans[index].institution_type"
+            v-model:vocational-training="createFamilyStore.family.orphans[index].vocational_training_id"
             :academic_level_id_field_name="`orphans.${index}.academic_level_id`"
             :birth_date_field_name="`orphans.${index}.birth_date`"
             :ccp_field_name="`orphans.${index}.ccp`"
