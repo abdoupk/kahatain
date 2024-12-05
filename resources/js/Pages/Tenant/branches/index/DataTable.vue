@@ -12,7 +12,7 @@ import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'

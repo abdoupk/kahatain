@@ -4,7 +4,7 @@ import { computedEager } from '@vueuse/core'
 
 import BasePagination from '@/Components/Base/pagination/BasePagination.vue'
 import BasePaginationLink from '@/Components/Base/pagination/BasePaginationLink.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 import PaginationPage from '@/Components/pagination/atom/PaginationPage.vue'
 
 const {

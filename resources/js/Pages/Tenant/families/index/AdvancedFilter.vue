@@ -7,9 +7,9 @@ import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BasePopover from '@/Components/Base/headless/Popover/BasePopover.vue'
 import BasePopoverButton from '@/Components/Base/headless/Popover/BasePopoverButton.vue'
 import BasePopoverPanel from '@/Components/Base/headless/Popover/BasePopoverPanel.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import FilterRule from '@/Components/Global/filters/FilterRule.vue'
 import FilterValue from '@/Components/Global/filters/FilterValue.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

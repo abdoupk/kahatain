@@ -3,8 +3,8 @@ import { ref } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import FamilyAddressSelector from '@/Components/Global/TheAddressField/TheFamilyAddressSelector.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

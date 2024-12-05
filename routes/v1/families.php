@@ -56,7 +56,7 @@ Route::prefix('families')->name('families.')->group(function (): void {
     )
         ->name('show');
 
-    Route::delete(
+    Route::put(
         '{family}',
         FamilyDeleteController::class
     )

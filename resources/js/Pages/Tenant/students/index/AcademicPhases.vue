@@ -7,7 +7,7 @@ import AcademicLevelTab from '@/Pages/Tenant/students/index/AcademicLevelTab.vue
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
 import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 defineProps<{
     academicLevels: AcademicLevelsIndexResource

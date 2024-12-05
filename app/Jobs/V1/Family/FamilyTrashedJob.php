@@ -16,10 +16,16 @@ class FamilyTrashedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public Family $family, public User $user) {}
+    public function __construct(public Family $family, public User $user, public string $reason)
+    {
+    }
 
     public function handle(): void
     {
+        $this->family->unSearchWithRelations();
+
+        $this->family->deleteWithRelationships($this->user->id, $this->reason);
+
         Notification::send(
             getUsersShouldBeNotified(
                 permissions: ['list_trash'],

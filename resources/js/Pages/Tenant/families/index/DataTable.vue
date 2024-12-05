@@ -10,7 +10,7 @@ import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -74,7 +74,7 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
 
                         <the-table-td class="!min-w-40 !max-w-40 truncate">
                             <Link
-                                v-if="hasPermission('view_sponsors')"
+                                v-if="hasPermission('view_sponsors') && family.sponsor?.id"
                                 :href="route('tenant.sponsors.show', family.sponsor.id)"
                                 class="font-medium"
                             >

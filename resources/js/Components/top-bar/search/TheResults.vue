@@ -2,7 +2,7 @@
 import { ComboboxOption, ComboboxOptions } from '@headlessui/vue'
 import type { Hits } from 'meilisearch'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 import TheNoResultsFound from '@/Components/top-bar/search/TheNoResultsFound.vue'
 
 import { isEmpty } from '@/utils/helper'

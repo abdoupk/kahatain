@@ -3,7 +3,7 @@ import { EidSuitOrphansResource } from '@/types/types'
 
 import { ref } from 'vue'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 const props = defineProps<{
     orphan: EidSuitOrphansResource

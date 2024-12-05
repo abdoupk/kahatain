@@ -4,7 +4,7 @@ import type { ListBoxFilter } from '@/types/types'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { onMounted } from 'vue'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 const props = defineProps<{ filters: ListBoxFilter[] }>()
 

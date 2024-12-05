@@ -128,6 +128,7 @@ class Family extends Model implements HasMedia
         'ramadan_basket_category',
         'ramadan_sponsorship_difference',
         'aggregate_zakat_benefit',
+        'deletion_reason',
     ];
 
     protected static function boot(): void
@@ -153,17 +154,17 @@ class Family extends Model implements HasMedia
     {
         $this->unsearchable();
 
-        $this->orphans->unsearchable();
+        $this->orphans()->unsearchable();
 
-        $this->babies->unsearchable();
+        $this->babies()->unsearchable();
 
-        $this->orphansNeeds->unsearchable();
+        $this->orphansNeeds()->unsearchable();
 
-        $this->sponsorsNeeds->unsearchable();
+        $this->sponsorsNeeds()->unsearchable();
 
         $this->sponsor()->unsearchable();
 
-        $this->preview->unsearchable();
+        $this->preview()->unsearchable();
     }
 
     public function sponsor(): HasOne
@@ -290,25 +291,29 @@ class Family extends Model implements HasMedia
         return $this->morphToMany(Archive::class, 'archiveable');
     }
 
-    public function deleteWithRelationships(): void
+    public function deleteWithRelationships(string $userId, string $reason): void
     {
-        $this->delete();
+        $this->update([
+            'deletion_reason' => $reason,
+        ]);
 
         $this->babies()->delete();
 
         DB::table('needs')->where('needable_id', $this->sponsor->id)
             ->orWhereIn('needable_id', $this->orphans->pluck('id'))
-            ->update(['deleted_at' => now(), 'deleted_by' => auth()->user()->id]);
+            ->update(['deleted_at' => now(), 'deleted_by' => $userId]);
 
         $this->sponsor()->update([
             'deleted_at' => now(),
-            'deleted_by' => auth()->user()->id,
+            'deleted_by' => $userId,
         ]);
 
         $this->orphans()->update([
             'deleted_at' => now(),
-            'deleted_by' => auth()->user()->id,
+            'deleted_by' => $userId,
         ]);
+
+        $this->delete();
     }
 
     public function babies(): HasMany

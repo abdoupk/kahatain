@@ -161,8 +161,8 @@ export const familiesFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-hands-holding-heart',
-        field: 'family_sponsorships',
-        label: 'family_sponsorships',
+        field: 'furnishings',
+        label: 'furnishings',
         type: 'object',
         operators: filterObjectOperators
     }
@@ -866,5 +866,57 @@ export const membersFilters: ListBoxFilter[] = [
         label: 'gender',
         type: 'object',
         operators: filterObjectOperators
+    }
+]
+
+export const financialFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-calendar',
+        field: 'created_at',
+        label: 'created_at',
+        type: 'date',
+        operators: filterDateOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'abs_amount',
+        label: 'amount',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'specification.en',
+        label: 'finance_specification',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'finance_type',
+        label: 'finance_type',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-users-gear',
+        field: 'receiver.id',
+        label: 'receiver',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-users-gear',
+        field: 'creator.id',
+        label: 'creator',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'date',
+        label: 'date',
+        type: 'date',
+        operators: filterDateOperators
     }
 ]

@@ -9,6 +9,9 @@ import CitiesFilterDropDown from '@/Components/Global/filters/CitiesFilterDropDo
 import ClothesSizeFilterDropDown from '@/Components/Global/filters/ClothesSizeFilterDropDown.vue'
 import FamiliesFilterDropDown from '@/Components/Global/filters/FamiliesFilterDropDown.vue'
 import FamilySponsorShipFilterDropDown from '@/Components/Global/filters/FamilySponsorShipFilterDropDown.vue'
+import FinanceSpecificationFilterDropDown from '@/Components/Global/filters/FinanceSpecificationFilterDropDown.vue'
+import FinanceTypeFilterDropDown from '@/Components/Global/filters/FinanceTypeFilterDropDown.vue'
+import FurnishingsFilterDropDown from '@/Components/Global/filters/FurnishingsFilterDropDown.vue'
 import GenderTypeFilterDropDown from '@/Components/Global/filters/GenderTypeFilterDropDown.vue'
 import MemberAcademicLevelFilterDropDown from '@/Components/Global/filters/MemberAcademicLevelFilterDropDown.vue'
 import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
@@ -50,7 +53,9 @@ const value = defineModel<FilterValueType>('value')
             ></cities-filter-drop-down>
 
             <members-filter-drop-down
-                v-else-if="field?.label === 'branch_president'"
+                v-else-if="
+                    field?.label === 'branch_president' || field?.label === 'creator' || field?.label === 'receiver'
+                "
                 v-model:value="value"
                 class="text-sm"
             ></members-filter-drop-down>
@@ -138,6 +143,24 @@ const value = defineModel<FilterValueType>('value')
                 v-model:value="value"
                 class="text-sm"
             ></gender-type-filter-drop-down>
+
+            <furnishings-filter-drop-down
+                v-if="field?.label === 'furnishings'"
+                v-model:value="value"
+                class="text-sm"
+            ></furnishings-filter-drop-down>
+
+            <finance-type-filter-drop-down
+                v-if="field?.label === 'finance_type'"
+                v-model:value="value"
+                class="text-sm"
+            ></finance-type-filter-drop-down>
+
+            <finance-specification-filter-drop-down
+                v-if="field?.label === 'finance_specification'"
+                v-model:value="value"
+                class="text-sm"
+            ></finance-specification-filter-drop-down>
         </template>
 
         <template v-else-if="field?.type === 'date'">

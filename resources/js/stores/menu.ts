@@ -114,7 +114,7 @@ export const useMenuStore = defineStore('menu', {
                     {
                         icon: 'icon-hands-holding-child',
                         ignore: !hasPermission('list_sponsors'),
-                        title: $t('list', { attribute: $t('sponsors') }),
+                        title: $t('list', { attribute: $t('the_sponsors') }),
                         routeName: 'tenant.sponsors.index',
                         url: '/dashboard/sponsors'
                     },

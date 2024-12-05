@@ -4,8 +4,8 @@ import { twMerge } from 'tailwind-merge'
 import { computed, ref, watch } from 'vue'
 
 import SpinnerLoader from '@/Components/Global/SpinnerLoader.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import FilterValueDropDownListOption from '@/Components/Global/filters/FilterValueDropDownListOption.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

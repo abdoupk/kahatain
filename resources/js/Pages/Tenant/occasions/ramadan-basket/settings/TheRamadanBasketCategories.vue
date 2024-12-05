@@ -18,7 +18,7 @@ const BaseInputGroupText = defineAsyncComponent(
     () => import('@/Components/Base/form/InputGroup/BaseInputGroupText.vue')
 )
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 defineProps<{
     form: Form<CreateSponsorshipForm>

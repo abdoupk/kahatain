@@ -176,9 +176,7 @@ function generateFormattedSort(Model $model): array
 
             return "$key:$value";
         }, array_values($directions), array_keys($directions));
-    }
-
-    if (! Schema::hasColumn($model->getTable(), 'created_at')) {
+    } elseif (!Schema::hasColumn($model->getTable(), 'created_at')) {
         return ['id:desc'];
     }
 

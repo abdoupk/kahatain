@@ -20,7 +20,7 @@ const BasePopoverButton = defineAsyncComponent(() => import('@/Components/Base/h
 
 const BasePopoverPanel = defineAsyncComponent(() => import('@/Components/Base/headless/Popover/BasePopoverPanel.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const TheNotificationMenu = defineAsyncComponent(
     () => import('@/Components/top-bar/notifications/TheNotificationMenu.vue')

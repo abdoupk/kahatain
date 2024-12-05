@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge'
 import { linkTo } from '@/Layouts/menu'
 import SideMenuTooltip from '@/Layouts/rubick/side-menu/SideMenuTooltip.vue'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 defineProps<{
     level: 'first' | 'second' | 'third'

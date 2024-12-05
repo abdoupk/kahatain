@@ -2,8 +2,8 @@
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { watch } from 'vue'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import FilterValueDropDownListOption from '@/Components/Global/filters/FilterValueDropDownListOption.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 
@@ -44,19 +44,6 @@ watch(
                 <listbox-options
                     class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-darkmode-800 sm:text-sm"
                 >
-                    <listbox-option
-                        key="none"
-                        v-slot="{ active, selected }"
-                        :value="{ value: '', label: $t('empty') }"
-                        as="template"
-                    >
-                        <filter-value-drop-down-list-option
-                            :active
-                            :label="$t('empty')"
-                            :selected
-                        ></filter-value-drop-down-list-option>
-                    </listbox-option>
-
                     <listbox-option
                         v-for="datum in data"
                         :key="datum.value"

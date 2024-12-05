@@ -6,7 +6,7 @@ import { useCreateFamilyStore } from '@/stores/create-family'
 import TheOrphans from '@/Pages/Tenant/families/create/stepThree/TheOrphans.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
 

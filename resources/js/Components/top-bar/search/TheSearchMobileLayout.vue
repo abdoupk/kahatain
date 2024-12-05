@@ -13,7 +13,7 @@ const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/
 
 const BaseDialogPanel = defineAsyncComponent(() => import('@/Components/Base/headless/Dialog/BaseDialogPanel.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const TheResults = defineAsyncComponent(() => import('@/Components/top-bar/search/TheResults.vue'))
 

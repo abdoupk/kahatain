@@ -129,6 +129,8 @@ class Finance extends Model
                 'id' => $this->receiver?->id,
                 'name' => $this->receiver?->getName(),
             ],
+            'finance_type' => $this->amount > 0 ? 'income' : 'expense',
+            'abs_amount' => abs($this->amount),
             'tenant_id' => $this->tenant_id,
             'created_at' => strtotime($this->created_at),
         ];

@@ -17,7 +17,7 @@ const BaseDialogPanel = defineAsyncComponent(() => import('@/Components/Base/hea
 
 const BaseDialogTitle = defineAsyncComponent(() => import('@/Components/Base/headless/Dialog/BaseDialogTitle.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 defineProps<{
     open: boolean

@@ -17,7 +17,7 @@ const BaseTheadTable = defineAsyncComponent(() => import('@/Components/Base/tabl
 
 const BaseTrTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTrTable.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 defineProps<{
     sponsorships: object[]

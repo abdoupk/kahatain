@@ -3,7 +3,7 @@ import { useCreateFamilyStore } from '@/stores/create-family'
 
 import OrphanForm from '@/Pages/Tenant/families/create/stepThree/OrphanForm.vue'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 const createFamilyStore = useCreateFamilyStore()
 

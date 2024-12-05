@@ -3,7 +3,7 @@ import type { SVGType } from '@/types/types'
 
 import { inject } from 'vue'
 
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 interface OrphanDetailView {
     view: string

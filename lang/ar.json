@@ -475,6 +475,8 @@
     "search_a_committee": "ابحث عن لجنة",
     "benefit": "يستفيد",
     "dont_benefit": "لا يستفيد",
+    "deletion_reason": "سبب الحذف",
+    "please_provide_the_reason_for_deleting_this_family": "يرجى تقديم سبب الحذف لهذه العائلة",
     "families_distribution": "توزيع العائلات",
     "view_fullscreen": "عرض ملء الشاشة",
     "exit_fullscreen": "الخروج من وضع ملء الشاشة",

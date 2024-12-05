@@ -31,6 +31,9 @@ class FamilySeeder extends Seeder
                         ->hasHousing(1, [
                             'tenant_id' => $tenant->id,
                         ])
+                        ->hasFurnishings(1, [
+                            'tenant_id' => $tenant->id,
+                        ])
                         ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Family $family) use ($tenant) {
                             return [
                                 'tenant_id' => $family->tenant_id,

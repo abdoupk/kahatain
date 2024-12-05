@@ -34,6 +34,7 @@ return new class extends Migration
             $table->uuid('created_by')->nullable();
             $table->uuid('deleted_by')->nullable();
             $table->timestamps();
+            $table->text('deletion_reason')->nullable();
             $table->softDeletes();
 
             $table->index(['id'], 'idx_families_id');

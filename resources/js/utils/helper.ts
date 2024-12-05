@@ -346,7 +346,9 @@ function getVocationalTrainingSpecialityFromId(id, specialities) {
 }
 
 function handleFilterValue(filter: ListBoxFilter, value): string {
-    if (filter.type === 'date') {
+    if (filter.field === 'furnishings') {
+        return true
+    } else if (filter.type === 'date') {
         const convertedDate = Date.parse(value) / 1000
 
         if (isNaN(convertedDate)) return ''
@@ -382,6 +384,9 @@ const handleFilterName = (field: ListBoxFilter, value: { value: string } | strin
         return `${field.label}.${value.value}`
     } else if (isOrphanSponsorship && typeof value !== 'string') {
         return `${field.field}.${value.value}`
+    } else if (field.field === 'furnishings') {
+        if (value?.value) return `${field.label}.${value.value}.checked`
+        return ''
     } else {
         return field.field || field
     }

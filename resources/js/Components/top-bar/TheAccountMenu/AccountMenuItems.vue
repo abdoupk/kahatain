@@ -12,7 +12,7 @@ const BaseMenuHeader = defineAsyncComponent(() => import('@/Components/Base/head
 
 const BaseMenuItems = defineAsyncComponent(() => import('@/Components/Base/headless/Menu/BaseMenuItems.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 </script>
 
 <template>

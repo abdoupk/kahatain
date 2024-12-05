@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import BaseThTable from '@/Components/Base/table/BaseThTable.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 const { sortable = false } = defineProps<{
     sortable?: boolean

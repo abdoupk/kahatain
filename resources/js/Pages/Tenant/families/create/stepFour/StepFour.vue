@@ -9,7 +9,7 @@ import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
 import { computed } from 'vue'
 import { checkErrors } from '@/utils/helper'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 import { useCreateFamilyStore } from '@/stores/create-family'
 
 const props = defineProps<CreateFamilyStepProps & { selectedIndex: number }>()

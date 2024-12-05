@@ -12,8 +12,8 @@ import TheLayout from '@/Layouts/TheLayout.vue'
 import TheSettingsModal from '@/Pages/Tenant/occasions/ramadan-basket/settings/TheSettingsModal.vue'
 
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'

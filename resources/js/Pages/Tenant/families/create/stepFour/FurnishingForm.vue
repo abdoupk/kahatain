@@ -35,7 +35,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.television.note"
-                        :disabled="!createFamilyStore.family.furnishings.television.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -64,7 +63,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.refrigerator.note"
-                        :disabled="!createFamilyStore.family.furnishings.refrigerator.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -93,7 +91,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.fireplace.note"
-                        :disabled="!createFamilyStore.family.furnishings.fireplace.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -122,7 +119,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.washing_machine.note"
-                        :disabled="!createFamilyStore.family.furnishings.washing_machine.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -151,7 +147,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.water_heater.note"
-                        :disabled="!createFamilyStore.family.furnishings.water_heater.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -180,7 +175,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.oven.note"
-                        :disabled="!createFamilyStore.family.furnishings.oven.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -209,7 +203,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.wardrobe.note"
-                        :disabled="!createFamilyStore.family.furnishings.wardrobe.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -238,7 +231,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.cupboard.note"
-                        :disabled="!createFamilyStore.family.furnishings.cupboard.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -267,7 +259,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.covers.note"
-                        :disabled="!createFamilyStore.family.furnishings.covers.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -296,7 +287,6 @@ onMounted(() => {
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
                         v-model="createFamilyStore.family.furnishings.mattresses.note"
-                        :disabled="!createFamilyStore.family.furnishings.mattresses.checked"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"

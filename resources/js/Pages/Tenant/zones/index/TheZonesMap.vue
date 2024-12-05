@@ -11,7 +11,7 @@ import { computed, ref, watch } from 'vue'
 import LeafletMapLoader, { Init } from '@/Components/Base/LeafletMapLoader/LeafletMapLoader.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
-import SvgLoader from '@/Components/Global/SvgLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { getLeafletMapConfig } from '@/utils/helper'
 import { $t } from '@/utils/i18n'

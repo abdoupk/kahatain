@@ -73,4 +73,11 @@ return [
     'competence' => 'المهارة',
     'committee' => 'اللجنة',
     'aggregate_zakat_benefit' => 'الاستفادة من الزكاة',
+    'date' => 'التاريخ',
+    'amount' => 'المبلغ',
+    'finance_type' => 'نوع المعاملة المالية',
+    'finance_specification' => 'التعين',
+    'creator' => 'العضو المنشئ',
+    'receiver' => 'العضو المستلم',
+    'furnishings' => 'الأثاث',
 ];

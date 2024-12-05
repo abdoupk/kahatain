@@ -10,7 +10,7 @@ import { search } from '@/utils/search'
 
 const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
 
-const SvgLoader = defineAsyncComponent(() => import('@/Components/Global/SvgLoader.vue'))
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const TheResults = defineAsyncComponent(() => import('@/Components/top-bar/search/TheResults.vue'))
 

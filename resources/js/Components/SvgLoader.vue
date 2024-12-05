@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{ name: SVGType }>(), {
 
 const attrs = useComputedAttrs()
 
-const svgComponent = shallowRef(defineAsyncComponent(() => import(`../../../svg/${props.name}.svg`)))
+const svgComponent = shallowRef(defineAsyncComponent(() => import(`../../svg/${props.name}.svg`)))
 
 watch(
     () => props.name,
