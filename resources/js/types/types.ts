@@ -855,6 +855,7 @@ export type CreateFamilyForm = {
     preview_date: string
     inspectors_members: string | string[]
     branch_id: string
+    city_id: number
 }
 
 export type InspectorsMembersType = Array<{ id: string; name: string }>

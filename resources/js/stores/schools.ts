@@ -71,12 +71,12 @@ export const useSchoolsStore = defineStore('schools', {
                 .subjects.find((subject) => subject.id === subjectId)
         },
 
-        async searchSchools(search: string, phase_key: string) {
+        async searchSchools(search: string, phase_key: string, city_id: number) {
             const { data: schools } = await axios.get(
                 route('tenant.schools.search-schools', {
                     search,
                     phase_key,
-                    city_id: 1144
+                    city_id
                 })
             )
 

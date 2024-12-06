@@ -62,6 +62,8 @@ const showNeedCreateModal = () => {
                 <menu-link icon="icon-house" view-name="housing_information"></menu-link>
 
                 <menu-link icon="icon-file-lines" view-name="the_report"></menu-link>
+
+                <menu-link icon="icon-clock-rotate-left" view-name="family_benefit_history"></menu-link>
             </div>
 
             <!--            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">-->

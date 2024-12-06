@@ -3,50 +3,20 @@
 namespace App\Http\Controllers\V1\Families;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\Families\FamilyShowResource;
 use App\Models\Family;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
-use Inertia\Response;
 
-class FamilyShowController extends Controller implements HasMiddleware
+class FamiliesHistoryController extends Controller
 {
-    public static function middleware()
+    public function __invoke(Request $request, Family $family)
     {
-        return ['can:view_families'];
-    }
-
-    public function __invoke(Family $family): Response
-    {
-        return Inertia::render(
-            'Tenant/families/details/FamilyDetailPage',
-            [
-                'family' => FamilyShowResource::make($family->load(
-                    [
-                        'zone',
-                        'orphans.academicLevel',
-                        'orphans.shoesSize',
-                        'orphans.pantsSize',
-                        'orphans.babyNeeds.babyMilk',
-                        'orphans.babyNeeds.diapers',
-                        'orphans.shirtSize',
-                        'furnishings',
-                        'housing',
-                        'sponsor.incomes',
-                        'sponsor.creator',
-                        'secondSponsor',
-                        'furnishings',
-                        'branch',
-                        'preview.inspectors',
-                        'deceased.media',
-                        'media',
-                    ]
-                )),
-                'archives' => fn () => $this->getArchives($family),
-                'needs' => fn () => $this->getNeeds($family),
-            ]
-        );
+        return Inertia::render('Tenant/families/history/HistoryIndexPage', [
+            'archives' => fn () => $this->getArchives($family),
+            'needs' => fn () => $this->getNeeds($family),
+            'familyId' => $family->id,
+        ]);
     }
 
     public function getArchives(Family $family)

@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\AcademicLevel;
+use App\Models\AcademicLevelSchoolTool;
 use App\Models\Orphan;
 use App\Models\Transcript;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 function getPhaseStudents(string $academic_level_id): LengthAwarePaginator
 {
@@ -41,14 +43,6 @@ function getAcademicLevelsForStudentsIndex(): array
 
 function getTotalStudents()
 {
-    ray(AcademicLevel::withCount('orphans')
-        ->where(function ($query) {
-            $query->where('phase_key', 'primary_education')
-                ->orWhere('phase_key', 'middle_education')
-                ->orWhere('phase_key', 'secondary_education');
-        })
-        ->get()
-        ->sum('orphans_count'));
 
     return AcademicLevel::withCount('orphans')
         ->where(function ($query) {
@@ -78,4 +72,76 @@ function calculateAchievementsPercentage(int $orphansCount, int $transcriptsCoun
     $weight = ($month <= 3) ? 2 : (($month <= 7) ? 3 : (($month === 12 || $month === 11) ? 1 : 0));
 
     return $transcriptsCount === 0 ? 0 : number_format(($transcriptsCount / ($orphansCount * $weight)) * 100, 2);
+}
+
+function generateSchoolTools()
+{
+    $orphans = Orphan::whereHas('academicLevel.AcademicLevelSchoolTools.schoolTool', function ($query) {
+        $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
+    })
+        ->whereTenantId('cec7a8a7-0d17-4922-800c-638a0798ddcd')
+        ->with([
+            'academicLevel' => function ($query) {
+                $query->select('id', 'level', 'phase_key');
+            },
+            'academicLevel.AcademicLevelSchoolTools' => function ($query) {
+                $query->select('id', 'academic_level_id', 'school_tool_id', 'qty')
+                    ->with('schoolTool:id,name');
+            },
+        ])
+        ->get();
+
+    // Process data grouped by phase_key and academic_level
+    $tableData = $orphans
+        ->flatMap(function (Orphan $orphan) {
+            return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
+                return [
+                    'phase_key' => $orphan->academicLevel->phase_key,
+                    'academic_level_id' => $orphan->academicLevel->id,
+                    'academic_level' => $orphan->academicLevel->level,
+                    'gender' => $orphan->gender,
+                    'school_tool_id' => $tool->school_tool_id,
+                    'school_tool_name' => $tool->schoolTool->name,
+                    'qty' => $tool->qty,
+                ];
+            });
+        })
+        ->groupBy('phase_key') // Group by phase_key
+        ->map(function (Collection $phaseData) {
+            return $phaseData
+                ->groupBy('academic_level_id') // Group by academic level within each phase
+                ->mapWithKeys(function (Collection $toolsByLevel, $academicLevelId) {
+                    $academicLevelName = $toolsByLevel->first()['academic_level'];
+
+                    $tools = $toolsByLevel
+                        ->groupBy('school_tool_id') // Group by tool within each academic level
+                        ->map(function (Collection $tools) {
+                            $maleTotal = $tools->where('gender', 'male')->sum('qty');
+                            $femaleTotal = $tools->where('gender', 'female')->sum('qty');
+                            $globalTotal = $tools->sum('qty');
+
+                            return [
+                                'name' => $tools->first()['school_tool_name'],
+                                'male' => $maleTotal,
+                                'female' => $femaleTotal,
+                                'total' => $globalTotal,
+                            ];
+                        });
+
+                    // Add totals for each academic level
+                    $academicLevelTotals = [
+                        'male' => $tools->sum('male'),
+                        'female' => $tools->sum('female'),
+                        'total' => $tools->sum('total'),
+                    ];
+
+                    return [$academicLevelName => [
+                        'tools' => $tools->values(),
+                        'totals' => $academicLevelTotals,
+                    ]];
+                });
+        });
+
+    return $tableData;
+
 }

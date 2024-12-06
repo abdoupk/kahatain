@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Collection;
 use Laravel\Scout\Searchable;
 
@@ -58,6 +59,17 @@ class AcademicLevel extends Model
     public function transcripts(): HasMany
     {
         return $this->hasMany(Transcript::class);
+    }
+
+    public function AcademicLevelSchoolTools(): HasMany
+    {
+        return $this->hasMany(AcademicLevelSchoolTool::class);
+        //        return $this->hasManyThrough(SchoolTool::class, AcademicLevelSchoolTool::class, 'academic_level_id', 'id', 'id', 'school_tool_id');
+    }
+
+    public function schoolTools(): HasManyThrough
+    {
+        return $this->hasManyThrough(SchoolTool::class, AcademicLevelSchoolTool::class, 'academic_level_id', 'id', 'id', 'school_tool_id');
     }
 
     protected function casts(): array

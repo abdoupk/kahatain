@@ -50,6 +50,7 @@ const _residenceCertificateFile = ref(props.form?.residence_certificate_file)
                     <the-branch-selector
                         id="branch"
                         v-model:branch="createFamilyStore.family.branch_id"
+                        v-model:city-id="createFamilyStore.family.city_id"
                         @update:branch="form?.validate('branch_id')"
                     ></the-branch-selector>
                 </div>

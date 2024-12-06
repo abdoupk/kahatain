@@ -91,7 +91,7 @@ const queryPerson = computed(() => {
                             hasError && '!border-red-500 focus:border-danger focus:ring-danger'
                         ])
                     "
-                    :displayValue="(option) => (option.name !== $t('filters.select_an_option') ? option.name : '')"
+                    :displayValue="(option) => (option?.name !== $t('filters.select_an_option') ? option?.name : '')"
                     :maxlength="maxLength"
                     :placeholder="$t('Search...')"
                     @change="query = $event.target.value"

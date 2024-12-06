@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AcademicLevelSeeder::class);
 
+        $this->call(AcademicLevelSchoolToolSeeder::class);
+
         $this->call(TenantSeeder::class);
 
         $this->call(PermissionSeeder::class);

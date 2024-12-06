@@ -28,8 +28,6 @@ const props = defineProps<{
     phone_number_field_name: string
 }>()
 
-console.log(props.form.data())
-
 const phase = ref('')
 
 const academicLevelsStore = useAcademicLevelsStore()

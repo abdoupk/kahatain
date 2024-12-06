@@ -6,6 +6,8 @@ import { defineAsyncComponent, provide, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import HistoryIndexPage from '@/Pages/Tenant/families/history/HistoryIndexPage.vue'
+
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { $t } from '@/utils/i18n'
@@ -54,7 +56,7 @@ defineOptions({
     layout: TheLayout
 })
 
-defineProps<{ family: FamilyShowType }>()
+defineProps<{ family: FamilyShowType; archives: any; needs: any }>()
 
 const view = ref('general_information')
 
@@ -106,6 +108,13 @@ provide('familyDetailView', { view, updateView })
                         ></the-orphans-information>
 
                         <the-report v-if="view === 'the_report'" :preview="family.preview"></the-report>
+
+                        <history-index-page
+                            v-if="view === 'family_benefit_history'"
+                            :archives
+                            :family-id="family.id"
+                            :needs
+                        ></history-index-page>
 
                         <the-family-sponsorship
                             v-if="view === 'family_sponsorship'"

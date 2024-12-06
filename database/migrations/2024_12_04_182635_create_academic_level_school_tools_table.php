@@ -11,8 +11,6 @@ return new class extends Migration
         Schema::create('academic_level_school_tools', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
             $table->tinyInteger('qty');
-            $table->float('min_price')->nullable();
-            $table->float('max_price')->nullable();
             $table->foreignUuid('academic_level_id')->constrained('academic_levels');
             $table->foreignId('school_tool_id');
             $table->timestamps();
