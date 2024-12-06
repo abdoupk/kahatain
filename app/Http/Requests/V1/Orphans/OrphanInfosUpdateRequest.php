@@ -61,6 +61,8 @@ class OrphanInfosUpdateRequest extends FormRequest
             'diapers_quantity' => 'required_without:shoes_size,shoes_size,shirt_size',
             'baby_milk_type' => 'required_without:shoes_size,shoes_size,shirt_size',
             'diapers_type' => 'required_without:shoes_size,shoes_size,shirt_size',
+            'institution_id' => 'nullable|uuid',
+            'institution_type' => 'nullable|string',
         ];
     }
 

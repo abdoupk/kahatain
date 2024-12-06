@@ -238,6 +238,8 @@
     "therapy": "العلاج",
     "expense": "مصروف",
     "income": "دخل",
+    "no_death_certificate": "لم يتم رفع شهادة الوفاة حتى ألآن",
+    "no_files_uploaded": "لم يتم رفع الملفات حتى ألآن",
     "orphans_count": "عدد الأيتام",
     "display information": "عرض المعلومات",
     "save": "حفظ",
@@ -524,5 +526,9 @@
     "middle_school": "المتوسطة",
     "primary_school": "الابتدائية",
     "secondary_school": "الثانوية",
-    "vocational_training_center": "مركز التكوين المهني"
+    "vocational_training_center": "مركز التكوين المهني",
+    "all_transcripts_for_this_phase_have_been_filled_out": "كل كشوف النقاط لهذا الطور تم تعبئتهم",
+    "no_transcripts_have_been_filled_out_for_this_phase": "لم يتم تعبئة كشوف النقاط لهذا الطور بعد",
+    "of_transcripts_for_this_phase_have_been_filled_out": ":percentage% من كشوف النقاط لهذا الطور تم تعبئتهم",
+    "of_transcripts_for_this_phase_have_not_been_filled_out": ":percentage% من كشوف النقاط لهذا الطور لم يتم تعبئتهم"
 }

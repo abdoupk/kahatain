@@ -21,9 +21,7 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ secondSponsor: SecondSponsorType }>()
 
-const inputs = reactive<FamilyUpdateSecondSponsorFormType>(omit(props.secondSponsor, ['id',
-'family_id',
-'name']))
+const inputs = reactive<FamilyUpdateSecondSponsorFormType>(omit(props.secondSponsor, ['id', 'family_id', 'name']))
 
 const form = useForm('put', route('tenant.families.second-sponsor-update', props.secondSponsor.family_id), inputs)
 

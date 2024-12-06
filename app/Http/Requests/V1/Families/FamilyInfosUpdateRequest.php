@@ -10,7 +10,6 @@ class FamilyInfosUpdateRequest extends FormRequest
     {
         return [
             'address' => 'required|string|min:3',
-            'file_number' => 'required|string',
             'location.lat' => 'nullable|numeric',
             'location.lng' => 'nullable|numeric',
             'branch_id' => 'required|exists:App\Models\Branch,id',

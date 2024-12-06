@@ -16,7 +16,6 @@ class FamilyEditResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
-            'file_number' => $this->file_number,
             'start_date' => $this->start_date,
 
             'branch_id' => $this->branch_id,

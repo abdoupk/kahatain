@@ -9,6 +9,7 @@ import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateM
 import MenuLink from '@/Pages/Tenant/sponsors/details/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import TheAvatar from '@/Components/Global/TheAvatar.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { hasPermission } from '@/utils/helper'
@@ -36,7 +37,8 @@ const showNeedCreateModal = () => {
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
                 <div class="image-fit h-12 w-12">
-                    <img :src="sponsor.photo" alt="" class="rounded-full" />
+                    <img v-if="sponsor.photo" :src="sponsor.photo" alt="" class="rounded-full" />
+                    <the-avatar v-else :gender="sponsor.gender" :name="sponsor.name"></the-avatar>
                 </div>
 
                 <div class="me-auto ms-4">

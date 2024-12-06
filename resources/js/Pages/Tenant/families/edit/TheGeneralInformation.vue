@@ -6,7 +6,6 @@ import { reactive, ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
@@ -71,29 +70,6 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div class="grid grid-cols-12 gap-4 p-5">
-                <!-- BEGIN: File Number -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="file_number">
-                        {{ $t('validation.attributes.file_number') }}
-                    </base-form-label>
-
-                    <base-form-input
-                        id="file_number"
-                        v-model="form.file_number"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.file_number')
-                            })
-                        "
-                        data-test="orphan_file_number"
-                        type="text"
-                        @change="form?.validate('file_number')"
-                    ></base-form-input>
-
-                    <base-form-input-error :form field_name="file_number"></base-form-input-error>
-                </div>
-                <!-- END: File Number -->
-
                 <!-- BEGIN: Branch -->
                 <div class="col-span-12 @xl:col-span-6">
                     <base-form-label for="zone_id">
@@ -152,8 +128,8 @@ const submit = () => {
                 <!-- END: Address -->
 
                 <!-- BEGIN: Address -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="address">
+                <div class="col-span-12 @xl:col-span-6 @xl:col-start-1">
+                    <base-form-label for="birth_certificate_file">
                         {{ $t('upload-files.labels.residence_certificate') }}
                     </base-form-label>
 

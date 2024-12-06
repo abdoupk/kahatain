@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('academic_levels', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
+            $table->tinyInteger('i_id');
             $table->string('level');
             $table->string('phase');
             $table->string('phase_key')->nullable();

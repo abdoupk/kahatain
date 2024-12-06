@@ -26,6 +26,7 @@ class SponsorInfosUpdateRequest extends FormRequest
             'photo' => 'nullable|string',
             'diploma_file' => 'nullable|string',
             'birth_certificate_file' => 'nullable|string',
+            'no_remarriage_file' => 'nullable|string',
         ];
     }
 

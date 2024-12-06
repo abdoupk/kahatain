@@ -35,6 +35,8 @@ class SponsorUpdateInfosController extends Controller implements HasMiddleware
 
         addToMediaCollection($sponsor, $request->birth_certificate_file, 'birth_certificate_files');
 
+        addToMediaCollection($sponsor, $request->no_remarriage_file, 'no_remarriage_files');
+
         addToMediaCollection($sponsor, $request->photo, 'photos');
 
         dispatch(new SponsorUpdatedJob($sponsor, auth()->user()));

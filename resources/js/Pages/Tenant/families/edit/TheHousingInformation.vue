@@ -6,8 +6,9 @@ import type {
     FurnishingType
 } from '@/types/families'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import { useForm } from 'laravel-precognition-vue'
-import { reactive, ref } from 'vue'
+import { onUnmounted, reactive, ref, watch } from 'vue'
 
 import FurnishingForm from '@/Pages/Tenant/families/create/stepFour/FurnishingForm.vue'
 import HousingForm from '@/Pages/Tenant/families/create/stepFour/HousingForm.vue'
@@ -22,6 +23,8 @@ const props = defineProps<{
     housing: FamilyEditHousingType
     furnishings: FurnishingType
 }>()
+
+const createFamilyStore = useCreateFamilyStore()
 
 const housingInputs = reactive<FamilyUpdateHousingFormType>(omit(props.housing, ['family_id', 'id']))
 
@@ -66,6 +69,20 @@ const FurnishingsSubmit = () => {
         }
     })
 }
+
+createFamilyStore.family.furnishings = props.furnishings
+
+watch(
+    () => createFamilyStore.family.furnishings,
+    (value) => {
+        furnishings_form.setData({ ...value })
+    },
+    { deep: true }
+)
+
+onUnmounted(() => {
+    createFamilyStore.$reset()
+})
 </script>
 
 <template>

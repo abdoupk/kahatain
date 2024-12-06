@@ -85,7 +85,7 @@ const showHousingInformations = computed(() => {
                     {{ $t(`furnishings.${key}`) }}
                 </h2>
 
-                <p class="text-base font-medium">
+                <p class="max-w-full truncate text-base font-medium">
                     {{ handleFurnishings(value) }}
                 </p>
             </div>

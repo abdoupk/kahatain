@@ -18,9 +18,7 @@ onMounted(async () => {
     await vocationalTrainingStore.getVocationalTrainingSpecialities()
 
     specialities.value = vocationalTrainingStore.vocationalTrainingSpecialities
-})
 
-onMounted(() => {
     vueSelectVocationalTraining.value = getVocationalTrainingSpecialityFromId(
         vocationalTraining.value,
         specialities.value
@@ -30,7 +28,7 @@ onMounted(() => {
 watch(
     () => [vocationalTraining.value],
     (value) => {
-        vueSelectVocationalTraining.value = getVocationalTrainingSpecialityFromId(value, specialities.value)
+        vueSelectVocationalTraining.value = getVocationalTrainingSpecialityFromId(value[0], specialities.value)
     }
 )
 </script>

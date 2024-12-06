@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CitySeeder::class);
 
-        //        $this->call(SchoolSeeder::class);
+        $this->call(SchoolSeeder::class);
 
-        //        $this->call(UniversitySeeder::class);
+        $this->call(UniversitySeeder::class);
 
-        //        $this->call(SchoolToolSeeder::class);
+        $this->call(SchoolToolSeeder::class);
 
-        //        $this->call(VocationalTrainingCenterSeeder::class);
+        $this->call(VocationalTrainingCenterSeeder::class);
 
         $this->call(SubjectSeeder::class);
 

@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import type { SpouseType } from '@/types/families'
 
+import TheAttachementsViewer from '@/Components/Global/TheAttachementsViewer.vue'
+
 import { formatCurrency, formatDate } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 defineProps<{ spouse: SpouseType }>()
 </script>
@@ -36,4 +39,10 @@ defineProps<{ spouse: SpouseType }>()
         </div>
     </div>
     <!-- END: Spouse Information -->
+
+    <the-attachements-viewer
+        :images="spouse.files?.images"
+        :no-files-message="$t('no_death_certificate')"
+        :pdf="spouse.files?.pdf"
+    ></the-attachements-viewer>
 </template>

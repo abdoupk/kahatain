@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { SponsorType } from '@/types/families'
 
-import { formatCurrency, formatDate, omit } from '@/utils/helper'
+import SponsorIncomes from '@/Pages/Tenant/sponsors/SponsorIncomes.vue'
+
+import { formatDate } from '@/utils/helper'
 
 defineProps<{ sponsor: SponsorType }>()
 </script>
@@ -76,15 +78,7 @@ defineProps<{ sponsor: SponsorType }>()
             <h2 class="me-auto text-xl font-bold">{{ $t('income information') }}</h2>
         </div>
 
-        <div class="grid grid-cols-12 gap-4 p-5">
-            <div v-for="(income, key) in omit(sponsor.incomes, ['id'])" :key class="col-span-12 @xl:col-span-6">
-                <h2 class="text-lg font-semibold">
-                    {{ $t(`incomes.label.${key}`) }}
-                </h2>
-
-                <h3 class="text-base font-medium">{{ formatCurrency(income) }}</h3>
-            </div>
-        </div>
+        <sponsor-incomes :sponsor></sponsor-incomes>
     </div>
     <!-- END: Incomes -->
 </template>

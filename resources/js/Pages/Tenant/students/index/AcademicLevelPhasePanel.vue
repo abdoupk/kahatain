@@ -2,15 +2,30 @@
 import { AcademicLevelsIndexResource } from '@/types/lessons'
 
 import { Link } from '@inertiajs/vue3'
+import { twMerge } from 'tailwind-merge'
 
 import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
+import { $t } from '@/utils/i18n'
+
 defineProps<{
     phases: AcademicLevelsIndexResource
 }>()
+
+const getContentMessage = (percentage: number) => {
+    if (percentage === 100) {
+        return $t('all_transcripts_for_this_phase_have_been_filled_out')
+    } else if (percentage > 50 && percentage < 100) {
+        return $t('of_transcripts_for_this_phase_have_been_filled_out', { percentage: String(percentage) })
+    } else if (percentage > 0 && percentage < 50) {
+        return $t('of_transcripts_for_this_phase_have_not_been_filled_out', { percentage: String(100 - percentage) })
+    } else if (percentage === 0) {
+        return $t('no_transcripts_have_been_filled_out_for_this_phase')
+    }
+}
 </script>
 
 <template>
@@ -37,8 +52,17 @@ defineProps<{
                     </div>
 
                     <base-tippy
-                        class="ms-2 flex cursor-pointer text-xs font-medium text-danger"
-                        content="2% Lower than last month"
+                        :class="
+                            twMerge([
+                                level.achievement_percentage === 100 && 'text-success',
+                                level.achievement_percentage < 100 &&
+                                    level.achievement_percentage > 50 &&
+                                    'text-pending',
+                                level.achievement_percentage < 50 && 'text-danger'
+                            ])
+                        "
+                        :content="getContentMessage(level.achievement_percentage)"
+                        class="ms-2 flex cursor-pointer text-xs font-medium"
                     >
                         {{ level.achievement_percentage }}%
                     </base-tippy>

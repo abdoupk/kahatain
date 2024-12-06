@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('shop')->nullable();
             $table->uuid('created_by');
             $table->uuid('deleted_by')->nullable();
+            $table->dateTime('until')->nullable();
             $table->uuid('tenant_id');
             $table->timestamps();
             $table->softDeletes();

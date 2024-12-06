@@ -46,6 +46,12 @@ defineProps<{ sponsor: SponsorShowType }>()
             </div>
 
             <div class="col-span-12 @xl:col-span-6">
+                <h2 class="text-lg font-semibold">{{ $t('validation.attributes.phone_number') }}</h2>
+
+                <h3 class="text-base font-medium">{{ sponsor.phone_number || '————' }}</h3>
+            </div>
+
+            <div class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sponsor.function') }}</h2>
                 <h3 class="text-base font-medium">{{ sponsor.function || '————' }}</h3>
             </div>

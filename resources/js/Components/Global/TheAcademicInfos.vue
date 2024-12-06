@@ -28,6 +28,8 @@ const props = defineProps<{
     phone_number_field_name: string
 }>()
 
+console.log(props.form.data())
+
 const phase = ref('')
 
 const academicLevelsStore = useAcademicLevelsStore()
@@ -79,6 +81,11 @@ const institutionName = computed(() => {
 const handleUpdateAcademicLevel = (value: string) => {
     phase.value = academicLevelsStore.getPhaseFromId(value)
 
+    institution.value = {
+        id: '',
+        name: ''
+    }
+
     if (phase.value === 'vocational_training') {
         institutionType.value = 'vocational_training_center'
     }
@@ -98,6 +105,8 @@ const handleUpdateAcademicLevel = (value: string) => {
 
 onMounted(async () => {
     academicLevels.value = await academicLevelsStore.getAcademicLevelsForOrphans()
+
+    phase.value = academicLevelsStore.getPhaseFromId(academicLevel.value)
 })
 
 const schoolsStore = useSchoolsStore()
@@ -153,28 +162,28 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
             <the-institution-selector
                 v-if="isAcademic"
                 :id="institution_field_name"
+                v-model:value="institution"
                 :load-options="loadUniversities"
                 :phase-key="phase"
                 class="!mt-0"
-                @update:value="institution = $event.id"
             ></the-institution-selector>
 
             <the-institution-selector
                 v-else-if="phase === 'vocational_training'"
                 :id="institution_field_name"
+                v-model:value="institution"
                 :load-options="loadVocationalTrainingCenters"
                 :phase-key="phase"
                 class="!mt-0"
-                @update:value="institution = $event.id"
             ></the-institution-selector>
 
             <the-institution-selector
                 v-else
                 :id="institution_field_name"
+                v-model:value="institution"
                 :load-options="loadSchools"
                 :phase-key="phase"
                 class="!mt-0"
-                @update:value="institution = $event.id"
             ></the-institution-selector>
 
             <base-form-input-error :field_name="institution_field_name" :form></base-form-input-error>

@@ -39,6 +39,8 @@ const _photo = ref(form.photo)
 
 const _diplomaFile = ref(form.diploma_file)
 
+const _noRemarriageFile = ref(form.no_remarriage_file)
+
 const _birthCertificateFile = ref(form.birth_certificate_file)
 
 const submit = () => {
@@ -144,6 +146,30 @@ onMounted(async () => {
                     <base-form-input-error :form field_name="birth_date"></base-form-input-error>
                 </div>
                 <!-- END: BirthDate -->
+
+                <!-- Begin: Phone Number -->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="phone_number">
+                        {{ $t('validation.attributes.phone') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="phone_number"
+                        v-model="form.phone_number"
+                        :placeholder="
+                            $t('auth.placeholders.fill', {
+                                attribute: $t('validation.attributes.phone')
+                            })
+                        "
+                        maxlength="10"
+                        type="text"
+                        @change="form?.validate('phone_number')"
+                        @keydown="allowOnlyNumbersOnKeyDown"
+                    ></base-form-input>
+
+                    <base-form-input-error :form field_name="sponsor.phone_number"></base-form-input-error>
+                </div>
+                <!-- End: Phone Number -->
 
                 <!-- BEGIN: Father Name -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -353,6 +379,22 @@ onMounted(async () => {
                                 accepted-file-types="image/jpeg, image/png, application/pdf"
                                 :label-idle="$t('upload-files.labelIdle.sponsor_diploma')"
                                 @update:files="form.diploma_file = $event[0]"
+                            ></base-file-pond>
+                        </div>
+
+                        <div class="col-span-12 lg:col-span-6">
+                            <base-form-label class="mb-2" for="no_remarriage_file">
+                                {{ $t('no_remarriage') }}
+                            </base-form-label>
+
+                            <base-file-pond
+                                id="no_remarriage_file"
+                                :allow-multiple="false"
+                                :files="_noRemarriageFile"
+                                :is-picture="false"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_no_remarriage')"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
+                                @update:files="form.no_remarriage_file = $event[0]"
                             ></base-file-pond>
                         </div>
                     </div>

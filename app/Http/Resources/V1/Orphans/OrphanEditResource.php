@@ -45,7 +45,12 @@ class OrphanEditResource extends JsonResource
             'note' => $this->note,
             'income' => $this->income,
             'photo' => $this->getFirstMediaUrl('photos'),
-            'institution_id' => $this->institution,
+            'institution_id' => $this->institution_id,
+            'institution_type' => $this->institution_type,
+            'institution' => [
+                'id' => $this->institution_id,
+                'name' => $this->institution?->getName(),
+            ],
             'ccp' => $this->ccp,
             'vocational_training_id' => $this->vocational_training_id,
             'is_handicapped' => $this->is_handicapped,

@@ -289,15 +289,18 @@ const handleSponsorship = (sponsorshipValue: string) => {
 }
 
 const handleFurnishings = (sponsorshipValue) => {
-    if (sponsorshipValue === '0') {
-        return $t('no')
+    let text = ''
+    if (sponsorshipValue.checked) {
+        text = $t('yes')
+    } else {
+        text = $t('no')
     }
 
-    if (sponsorshipValue === '1') {
-        return $t('yes')
+    if (sponsorshipValue.note && sponsorshipValue.note.length > 0) {
+        text += ` (${sponsorshipValue.note})`
     }
 
-    return sponsorshipValue || '————'
+    return text
 }
 
 const groupByKey = (arr, key) => {
@@ -336,8 +339,7 @@ function getVocationalTrainingSpecialityFromId(id, specialities) {
     if (!id) return ''
     else {
         return specialities.reduce((acc, curr) => {
-            const speciality = curr.specialities.find((speciality) => Number(speciality.id) === id[0])
-
+            const speciality = curr.specialities.find((speciality) => Number(speciality.id) === id)
             if (speciality) acc = speciality
 
             return acc

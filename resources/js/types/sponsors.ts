@@ -79,4 +79,5 @@ export interface SponsorUpdateFormType {
     photo: string
     birth_certificate_file: string
     diploma_file: string
+    no_remarriage_file: string
 }

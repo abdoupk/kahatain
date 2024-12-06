@@ -13,6 +13,7 @@ class AcademicLevelSeeder extends Seeder
         $rows = [
             [
                 'id' => Str::uuid(),
+                'i_id' => 1,
                 'level' => 'تحضيري',
                 'phase' => 'الطور الابتدائي',
                 'phase_key' => 'primary_education',
@@ -20,6 +21,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 2,
                 'level' => 'الأولى ابتدائي',
                 'phase' => 'الطور الابتدائي',
                 'phase_key' => 'primary_education',
@@ -27,6 +29,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 3,
                 'level' => 'الثانية ابتدائي',
                 'phase' => 'الطور الابتدائي',
                 'phase_key' => 'primary_education',
@@ -34,6 +37,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 4,
                 'level' => 'الثالثة ابتدائي',
                 'phase' => 'الطور الابتدائي',
                 'phase_key' => 'primary_education',
@@ -41,6 +45,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 5,
                 'level' => 'الرابعة ابتدائي',
                 'phase' => 'الطور الابتدائي',
                 'phase_key' => 'primary_education',
@@ -48,6 +53,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 6,
                 'level' => 'الخامسة ابتدائي',
                 'phase' => 'الطور الابتدائي',
                 'phase_key' => 'primary_education',
@@ -55,6 +61,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 7,
                 'level' => 'الأولى المتوسط',
                 'phase' => 'الطور المتوسط',
                 'phase_key' => 'middle_education',
@@ -62,6 +69,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 8,
                 'level' => 'الثانية المتوسط',
                 'phase' => 'الطور المتوسط',
                 'phase_key' => 'middle_education',
@@ -69,6 +77,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 9,
                 'level' => 'الثالثة المتوسط',
                 'phase' => 'الطور المتوسط',
                 'phase_key' => 'middle_education',
@@ -76,6 +85,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 10,
                 'level' => 'الرابعة المتوسط',
                 'phase' => 'الطور المتوسط',
                 'phase_key' => 'middle_education',
@@ -83,6 +93,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 11,
                 'level' => 'الأولى ثانوي آداب',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -90,6 +101,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 12,
                 'level' => 'الأولى ثانوي علوم',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -97,6 +109,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 13,
                 'level' => 'الثانية ثانوي رياضيات',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -104,6 +117,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 14,
                 'level' => 'الثانية ثانوي تقني رياضي (هندسة مدنية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -111,6 +125,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 15,
                 'level' => 'الثانية ثانوي تقني رياضي (هندسة الطرائق)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -118,6 +133,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 16,
                 'level' => 'الثانية ثانوي تقني رياضي (هندسة ميكانيكية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -125,6 +141,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 17,
                 'level' => 'الثانية ثانوي تقني رياضي (هندسة كهربائية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -132,6 +149,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 18,
                 'level' => 'الثانية ثانوي علوم تجريبية',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -139,6 +157,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 19,
                 'level' => 'الثانية ثانوي تسيير و اقتصاد',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -146,6 +165,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 20,
                 'level' => 'الثانية ثانوي أدب و فلسفة',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -153,6 +173,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 21,
                 'level' => 'الثانية ثانوي لغات أجنبية (اللغة الألمانية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -160,6 +181,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 22,
                 'level' => 'الثانية ثانوي لغات أجنبية (اللغة الإسبانية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -167,6 +189,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 23,
                 'level' => 'الثانية ثانوي لغات أجنبية (اللغة الإيطالية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -174,6 +197,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 24,
                 'level' => 'الثالثة ثانوي رياضيات',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -181,6 +205,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 25,
                 'level' => 'الثالثة ثانوي تقني رياضي (هندسة مدنية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -188,6 +213,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 26,
                 'level' => 'الثالثة ثانوي تقني رياضي (هندسة الطرائق)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -195,6 +221,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 27,
                 'level' => 'الثالثة ثانوي تقني رياضي (هندسة ميكانيكية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -202,6 +229,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 28,
                 'level' => 'الثالثة ثانوي تقني رياضي (هندسة كهربائية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -209,6 +237,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 29,
                 'level' => 'الثالثة ثانوي علوم تجريبية',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -216,6 +245,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 30,
                 'level' => 'الثالثة ثانوي تسيير و إقتصاد',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -223,6 +253,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 31,
                 'level' => 'الثالثة ثانوي أدب و فلسفة',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -230,6 +261,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 32,
                 'level' => 'الثالثة ثانوي لغات أجنبية (اللغة الألمانية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -237,6 +269,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 33,
                 'level' => 'الثالثة ثانوي لغات أجنبية (اللغة الإسبانية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -244,6 +277,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 34,
                 'level' => 'الثالثة ثانوي لغات أجنبية (اللغة الإيطالية)',
                 'phase' => 'الطور الثانوي',
                 'phase_key' => 'secondary_education',
@@ -251,6 +285,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 35,
                 'level' => 'الأولى ليسانس',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -259,6 +294,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 36,
                 'level' => 'الثانية ليسانس',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -266,6 +302,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 37,
                 'level' => 'الثالثة ليسانس',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -273,6 +310,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 38,
                 'level' => 'الأولى ماستر',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -280,6 +318,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 39,
                 'level' => 'الثانية ماستر',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -287,6 +326,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 40,
                 'level' => 'الأولى دكتوراه',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -294,6 +334,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 41,
                 'level' => 'الثانية دكتوراه',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -301,6 +342,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 42,
                 'level' => 'الثالثة دكتوراه',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -308,6 +350,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 43,
                 'level' => 'الرابعة دكتوراه',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -315,6 +358,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 44,
                 'level' => 'الخامسة دكتوراه',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -322,6 +366,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 45,
                 'level' => 'متخرج',
                 'phase' => 'الطور الجامعي',
                 'phase_key' => 'university',
@@ -329,6 +374,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 46,
                 'level' => 'السنة الأولى',
                 'phase' => 'الشبه طبي',
                 'phase_key' => 'paramedical',
@@ -336,6 +382,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 47,
                 'level' => 'السنة الثانية',
                 'phase' => 'الشبه طبي',
                 'phase_key' => 'paramedical',
@@ -343,6 +390,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 48,
                 'level' => 'السنة الثالثة',
                 'phase' => 'الشبه طبي',
                 'phase_key' => 'paramedical',
@@ -350,6 +398,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 49,
                 'level' => 'السنة الرابعة',
                 'phase' => 'الشبه طبي',
                 'phase_key' => 'paramedical',
@@ -357,6 +406,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 50,
                 'level' => 'السنة الخامسة',
                 'phase' => 'الشبه طبي',
                 'phase_key' => 'paramedical',
@@ -364,6 +414,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 51,
                 'level' => 'مفصول',
                 'phase' => 'اخر',
                 'phase_key' => 'other',
@@ -371,6 +422,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 52,
                 'level' => 'امي',
                 'phase' => 'اخر',
                 'phase_key' => 'other',
@@ -378,6 +430,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 53,
                 'level' => 'السنة الأولى',
                 'phase' => 'التكوين المهني',
                 'phase_key' => 'vocational_training',
@@ -385,6 +438,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 54,
                 'level' => 'السنة الثانية',
                 'phase' => 'التكوين المهني',
                 'phase_key' => 'vocational_training',
@@ -392,6 +446,7 @@ class AcademicLevelSeeder extends Seeder
             ],
             [
                 'id' => Str::uuid(),
+                'i_id' => 55,
                 'level' => 'السنة الثالثة',
                 'phase' => 'التكوين المهني',
                 'phase_key' => 'vocational_training',

@@ -53,7 +53,16 @@ export interface OrphanUpdateFormType {
     ccp: string
     phone_number: string
     vocational_training_id: string
+    vocational_training: {
+        id: string
+        name: string
+    }
     institution_id: string
+    institution_type: string
+    institution: {
+        id: string
+        name: string
+    }
     is_handicapped: boolean
     is_unemployed: boolean
 }

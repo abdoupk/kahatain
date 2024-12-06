@@ -1,4 +1,4 @@
-import { PositionType } from '@/types/types'
+import { PositionType, UploadedFilesType } from '@/types/types'
 
 export interface OrphanType {
     id: string
@@ -29,6 +29,7 @@ export interface SpouseType {
     death_certificate_file: string
     function: string
     income: string
+    files?: UploadedFilesType
 }
 
 interface IncomeType {

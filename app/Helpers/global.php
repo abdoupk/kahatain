@@ -176,7 +176,7 @@ function generateFormattedSort(Model $model): array
 
             return "$key:$value";
         }, array_values($directions), array_keys($directions));
-    } elseif (!Schema::hasColumn($model->getTable(), 'created_at')) {
+    } elseif (! Schema::hasColumn($model->getTable(), 'created_at')) {
         return ['id:desc'];
     }
 
@@ -385,7 +385,7 @@ function getImageData(Income|Family|Sponsor $model, string $collection): array
     ];
 }
 
-function getFormatedData(Sponsor|Family|Income $model): array
+function getFormatedData(Sponsor|Family|Income|Spouse $model): array
 {
     return [
         'files' => [

@@ -21,6 +21,7 @@ class SpouseResource extends JsonResource
             'function' => $this->function,
             'income' => $this->income,
             'death_certificate_file' => $this->getFirstMediaUrl('death_certificate_files'),
+            ...getFormatedData($this->resource),
         ];
     }
 }
