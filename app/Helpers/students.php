@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\AcademicLevel;
+use App\Models\Orphan;
 use App\Models\Transcript;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -57,6 +58,18 @@ function getTotalStudents()
         })
         ->get()
         ->sum('orphans_count');
+}
+
+function getStudentsPerPhase(): array
+{
+    return Orphan::whereHas('academicLevel', function ($query) {
+        $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
+    })
+        ->join('academic_levels', 'orphans.academic_level_id', '=', 'academic_levels.id')
+        ->groupBy('academic_levels.phase_key')
+        ->selectRaw('academic_levels.phase_key as phase, count(*) as total')
+        ->get()
+        ->toArray();
 }
 
 function calculateAchievementsPercentage(int $orphansCount, int $transcriptsCount): float

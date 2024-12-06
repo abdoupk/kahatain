@@ -12,6 +12,7 @@ class StudentsIndexController extends Controller
         return inertia('Tenant/students/index/StudentIndexPage', [
             'academicLevels' => getAcademicLevelsForStudentsIndex(),
             'totalStudents' => getTotalStudents(),
+            'studentsPerPhase' => getStudentsPerPhase(),
         ]);
     }
 }

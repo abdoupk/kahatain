@@ -66,3 +66,8 @@ export interface OrphanUpdateFormType {
     is_handicapped: boolean
     is_unemployed: boolean
 }
+
+export type StudentsPerPhase = {
+    phase: string
+    total: number
+}[]
