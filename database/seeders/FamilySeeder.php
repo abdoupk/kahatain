@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AcademicLevel;
 use App\Models\Baby;
 use App\Models\Branch;
 use App\Models\Family;
@@ -96,6 +97,7 @@ class FamilySeeder extends Seeder
                                 'tenant_id' => $tenant->id,
                                 'family_id' => $family?->id,
                                 'created_by' => User::whereTenantId($tenant->id)->first()?->id,
+                                'academic_level_id' => AcademicLevel::whereIId($i)->first()?->id,
                                 'sponsor_id' => $sponsor->id,
                             ]);
                         }

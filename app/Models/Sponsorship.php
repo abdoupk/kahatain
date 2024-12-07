@@ -30,7 +30,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property Carbon|null $deleted_at
  * @property-read Benefactor|null $benefactor
  * @property-read User|null $creator
- * @property-read Model|Eloquent $recipientable
+ * @property-read Family|Orphan $recipientable
  * @property-read Tenant|null $tenant
  *
  * @method static SponsorshipFactory factory($count = null, $state = [])

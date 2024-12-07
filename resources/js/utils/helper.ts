@@ -239,6 +239,7 @@ const pathNameOfCurrentPage = (): string => {
 }
 
 const formatDate = (date: string | Date, dateStyle: 'full' | 'long' | 'medium' | 'short' | undefined) => {
+    if (!date) return '————'
     try {
         return new Intl.DateTimeFormat(`${getLocale()}-DZ`, {
             dateStyle

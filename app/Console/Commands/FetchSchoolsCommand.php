@@ -51,6 +51,7 @@ class FetchSchoolsCommand extends Command
                                 ], [
                                     'name' => $data[$index]['text'],
                                     'city_id' => $city->id,
+                                    'wilaya_code' => $city->wilaya_code,
                                     'phase_key' => $i === 1 ? 'elementary_school' : ($i === 2 ? 'middle_school' : 'high_school'),
                                     'e_id' => $data[$index]['val'],
                                 ]);

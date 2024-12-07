@@ -15,6 +15,7 @@ class School extends Model
         'name',
         'phase_key',
         'city_id',
+        'wilaya_code',
         'e_id',
     ];
 

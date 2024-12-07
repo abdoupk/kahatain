@@ -14,23 +14,6 @@ class DashboardController extends Controller
 {
     public function __invoke(): Response
     {
-        $family = Family::with(['archives', 'orphans.archives', 'babies.archives'])
-            ->find('9da94371-79df-40cf-b99e-c47caf6763e8');
-
-        $allArchives = $family->archives->merge(
-            $family->orphans->flatMap(function ($orphan) {
-                return $orphan->archives;
-            })
-        );
-
-        $allArchives = $allArchives->merge(
-            $family->babies->flatMap(function ($baby) {
-                return $baby->archives;
-            })
-        );
-
-        ray($allArchives);
-
         return Inertia::render('Tenant/dashboard/TheDashboardPage', [
             'reports' => fn () => generateGlobalDashBoardReportStatistics(),
             'financialReports' => fn () => generateFinancialReport(),

@@ -383,6 +383,7 @@ export interface CreateNeedForm {
 
 export interface CreateSponsorshipForm {
     amount: number | null
+    until: Date | string
     sponsorship_type: string
     recipientable_type: 'orphan' | 'family'
     recipientable_id: string

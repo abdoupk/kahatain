@@ -19,30 +19,35 @@ class FamilyShowController extends Controller implements HasMiddleware
 
     public function __invoke(Family $family): Response
     {
+        $family = $family->load(
+            [
+                'zone',
+                'orphans.academicLevel',
+                'orphans.shoesSize',
+                'orphans.pantsSize',
+                'orphans.archives',
+                'orphans.babyNeeds.babyMilk',
+                'orphans.babyNeeds.diapers',
+                'orphans.shirtSize',
+                'babies.archives',
+                'furnishings',
+                'housing',
+                'sponsor.incomes',
+                'sponsor.creator',
+                'secondSponsor',
+                'furnishings',
+                'branch',
+                'preview.inspectors',
+                'deceased.media',
+                'media',
+                'archives',
+            ]
+        );
+
         return Inertia::render(
             'Tenant/families/details/FamilyDetailPage',
             [
-                'family' => FamilyShowResource::make($family->load(
-                    [
-                        'zone',
-                        'orphans.academicLevel',
-                        'orphans.shoesSize',
-                        'orphans.pantsSize',
-                        'orphans.babyNeeds.babyMilk',
-                        'orphans.babyNeeds.diapers',
-                        'orphans.shirtSize',
-                        'furnishings',
-                        'housing',
-                        'sponsor.incomes',
-                        'sponsor.creator',
-                        'secondSponsor',
-                        'furnishings',
-                        'branch',
-                        'preview.inspectors',
-                        'deceased.media',
-                        'media',
-                    ]
-                )),
+                'family' => FamilyShowResource::make($family),
                 'archives' => fn () => $this->getArchives($family),
                 'needs' => fn () => $this->getNeeds($family),
             ]

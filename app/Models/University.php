@@ -19,6 +19,11 @@ class University extends Model
         'zone',
     ];
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function orphans(): MorphMany
     {
         return $this->morphMany(Orphan::class, 'institution');

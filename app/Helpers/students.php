@@ -79,7 +79,7 @@ function generateSchoolTools()
     $orphans = Orphan::whereHas('academicLevel.AcademicLevelSchoolTools.schoolTool', function ($query) {
         $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
     })
-        ->whereTenantId('cec7a8a7-0d17-4922-800c-638a0798ddcd')
+        ->whereTenantId(tenant('id'))
         ->with([
             'academicLevel' => function ($query) {
                 $query->select('id', 'level', 'phase_key');

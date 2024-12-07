@@ -38,10 +38,12 @@ Route::middleware([
 
         Route::middleware('auth')->group(function (): void {
             // TODO: remove this
-            Route::view('/test', 'pdf.school-tools', [
-                'title' => 'School tools',
-                'data' => generateSchoolTools(),
-            ])->name('test');
+            Route::get('/test', function () {
+                return view('pdf.school-tools', [
+                    'title' => 'School tools',
+                    'data' => generateSchoolTools(),
+                ]);
+            })->name('test');
 
             require __DIR__.'/v1/archive.php';
 

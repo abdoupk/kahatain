@@ -5,9 +5,12 @@ namespace Database\Factories;
 use App\Models\AcademicLevel;
 use App\Models\ClothesSize;
 use App\Models\Orphan;
+use App\Models\School;
 use App\Models\ShoeSize;
+use App\Models\University;
 use App\Models\User;
 use App\Models\VocationalTraining;
+use App\Models\VocationalTrainingCenter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrphanFactory extends Factory
@@ -55,6 +58,21 @@ class OrphanFactory extends Factory
         if ($family_status === 'unemployed') {
             $unemployed = true;
         }
+        $institution_id = null;
+
+        $institution_type = fake()->randomElement(['school', 'university', 'vocational_training_center']);
+
+        if ($institution_type === 'vocational_training_center') {
+            $institution_id = VocationalTrainingCenter::inRandomOrder()->first()->id;
+        }
+
+        if ($institution_type === 'school') {
+            $institution_id = School::inRandomOrder()->first()->id;
+        }
+
+        if ($institution_type === 'university') {
+            $institution_id = University::inRandomOrder()->first()->id;
+        }
 
         return [
             'first_name' => fake('ar_SA')->firstName,
@@ -74,7 +92,8 @@ class OrphanFactory extends Factory
             'is_unemployed' => $unemployed,
             'tenant_id' => fake()->uuid,
             'family_id' => fake()->uuid,
-            'institution_id' => fake()->uuid,
+            'institution_id' => $institution_id,
+            'institution_type' => $institution_type,
             'created_at' => now()->subDays(fake()->numberBetween(0, 35)),
             'updated_at' => now()->subDays(fake()->numberBetween(0, 35)),
             'created_by' => User::inRandomOrder()->first()?->id,

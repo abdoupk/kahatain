@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignIdFor(City::class);
             $table->enum('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
+            $table->string('wilaya_code');
             $table->string('e_id');
             $table->timestamps();
         });

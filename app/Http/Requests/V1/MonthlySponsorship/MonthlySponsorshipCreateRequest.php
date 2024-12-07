@@ -41,6 +41,7 @@ class MonthlySponsorshipCreateRequest extends FormRequest
             'shop.name' => $requiredShop,
             'shop.address' => $requiredShop,
             'shop.phone' => $requiredShop,
+            'until' => 'nullable|date',
         ];
     }
 

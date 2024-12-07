@@ -4,6 +4,8 @@ import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 
+import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
+
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
@@ -156,7 +158,7 @@ const modalType = computed(() => {
                     ></the-benefactor-selector>
                 </div>
 
-                <base-form-input-error :form field_name="benefactor.id"> </base-form-input-error>
+                <base-form-input-error :form field_name="benefactor.id"></base-form-input-error>
             </div>
             <!--Begin: The Benefactor-->
 
@@ -193,7 +195,7 @@ const modalType = computed(() => {
                     </option>
                 </base-form-select>
 
-                <base-form-input-error :form field_name="sponsorship_type"> </base-form-input-error>
+                <base-form-input-error :form field_name="sponsorship_type"></base-form-input-error>
             </div>
             <!--End: Sponsorship Type-->
 
@@ -220,9 +222,21 @@ const modalType = computed(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error :form field_name="amount"> </base-form-input-error>
+                <base-form-input-error :form field_name="amount"></base-form-input-error>
             </div>
             <!--End: The amount-->
+
+            <!--Begin: Until-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label for="until">
+                    {{ $t('validation.attributes.until') }}
+                </base-form-label>
+
+                <base-v-calendar id="until" v-model:date="form.until"></base-v-calendar>
+
+                <base-form-input-error :form field_name="until"></base-form-input-error>
+            </div>
+            <!--End: Until-->
 
             <!--Begin: The shop-->
             <div
@@ -275,7 +289,7 @@ const modalType = computed(() => {
                         @keydown="allowOnlyNumbersOnKeyDown"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="shop.phone"> </base-form-input-error>
+                    <base-form-input-error :form field_name="shop.phone"></base-form-input-error>
                 </div>
                 <!-- End: The shopKeeper phone number-->
 
@@ -293,7 +307,7 @@ const modalType = computed(() => {
                         @change="form?.validate('shop.address')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="shop.address"> </base-form-input-error>
+                    <base-form-input-error :form field_name="shop.address"></base-form-input-error>
                 </div>
                 <!-- End: The shopKeeper address-->
             </div>

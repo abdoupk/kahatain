@@ -52,7 +52,8 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
                 name: '',
                 phone: '',
                 address: ''
-            }
+            },
+            until: null
         },
         monthly_sponsorship: {
             categories: [
