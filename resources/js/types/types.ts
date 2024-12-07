@@ -1047,7 +1047,10 @@ export type AuthInformation = {
     phone: string
     gender: 'male' | 'female'
     address: string
-    qualification: string
+    competences: {
+        id: string
+        name: string
+    }[]
 }
 
 export type ArchiveOccasionType = {

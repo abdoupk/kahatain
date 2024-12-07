@@ -11,6 +11,7 @@ import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
+import TheCompetenceSelector from '@/Components/Global/TheCompetenceSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -164,17 +165,7 @@ const submit = () => {
                         {{ $t('validation.attributes.qualification') }}
                     </base-form-label>
 
-                    <div>
-                        <base-form-input
-                            id="qualification"
-                            v-model="form.qualification"
-                            :placeholder="
-                                $t('auth.placeholders.fill', { attribute: $t('validation.attributes.qualification') })
-                            "
-                            type="text"
-                            @change="form.validate('qualification')"
-                        />
-                    </div>
+                    <the-competence-selector v-model:competences="form.competences"></the-competence-selector>
 
                     <div v-if="form.errors?.qualification" class="mt-2">
                         <base-input-error :message="form.errors.qualification"></base-input-error>

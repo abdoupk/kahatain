@@ -679,12 +679,15 @@ return [
                 'filterableAttributes' => [
                     'id',
                     'city_id',
+                    'city.wilaya_code',
                     'phase_key',
                     'name',
                     'tenant_id',
                 ],
                 'searchableAttributes' => [
                     'name',
+                    'city.commune_name_ascii',
+                    'city.commune_name',
                 ],
                 'sortableAttributes' => [
                     'created_at',

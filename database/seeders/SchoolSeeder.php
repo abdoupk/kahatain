@@ -40,7 +40,6 @@ class SchoolSeeder extends Seeder
                     'name' => $school['name'],
                     'phase_key' => $school['phase_key'],
                     'city_id' => $school['city_id'],
-                    'wilaya_code' => $school['wilaya_code'] ?? substr($school['e_id'], 0, 2),
                     'e_id' => $school['e_id'],
                     'created_at' => $school['created_at'],
                     'updated_at' => $school['updated_at'],

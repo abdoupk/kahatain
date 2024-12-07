@@ -562,8 +562,18 @@ const groupRecentActivitiesByDate = (activities) => {
     }, {})
 }
 
+function removeEmptyKeys(obj) {
+    Object.keys(obj).forEach((key) => {
+        if (obj[key] === null || obj[key] === '') {
+            delete obj[key]
+        }
+    })
+    return obj
+}
+
 export {
     isEqual,
+    removeEmptyKeys,
     getLeafletMapConfig,
     groupRecentActivitiesByDate,
     hasPermission,

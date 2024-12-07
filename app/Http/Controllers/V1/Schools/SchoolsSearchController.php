@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\V1\Schools;
 
+use App\Http\Resources\V1\Schools\SearchSchoolsResource;
 use App\Models\School;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 
 class SchoolsSearchController extends Collection
@@ -11,11 +11,11 @@ class SchoolsSearchController extends Collection
     public function __invoke()
     {
         $phase = request()->phase_key ?? 'primary_education';
-        $cityId = request()->city_id ?? tenant('infos')['city_id'];
+        $wilayaCode = tenant('infos')['city']['wilaya_code'] ?? null;
 
-        return JsonResource::collection(search(School::getModel(),
-            additional_filters: "phase_key = $phase AND city_id = ".$cityId.' ',
+        return SearchSchoolsResource::collection(search(School::getModel(),
+            additional_filters: "phase_key = $phase AND city.wilaya_code = ".$wilayaCode.' ',
             limit: 300
-        )->get());
+        )->query(fn ($query) => $query->with('city'))->get());
     }
 }
