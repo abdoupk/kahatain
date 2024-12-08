@@ -82,7 +82,7 @@ function generateSchoolTools()
         ->whereTenantId(tenant('id'))
         ->with([
             'academicLevel' => function ($query) {
-                $query->select('id', 'level', 'phase_key');
+                $query->select('id', 'level', 'phase_key', 'i_id'); // Include i_id for sorting
             },
             'academicLevel.AcademicLevelSchoolTools' => function ($query) {
                 $query->select('id', 'academic_level_id', 'school_tool_id', 'qty')
@@ -97,6 +97,7 @@ function generateSchoolTools()
             return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
                 return [
                     'phase_key' => $orphan->academicLevel->phase_key,
+                    'i_id' => $orphan->academicLevel->i_id, // Use i_id for sorting
                     'academic_level_id' => $orphan->academicLevel->id,
                     'academic_level' => $orphan->academicLevel->level,
                     'gender' => $orphan->gender,
@@ -110,6 +111,7 @@ function generateSchoolTools()
         ->map(function (Collection $phaseData) {
             return $phaseData
                 ->groupBy('academic_level_id') // Group by academic level within each phase
+                ->sortBy(fn ($toolsByLevel) => $toolsByLevel->first()['i_id']) // Sort by i_id
                 ->mapWithKeys(function (Collection $toolsByLevel, $academicLevelId) {
                     $academicLevelName = $toolsByLevel->first()['academic_level'];
 

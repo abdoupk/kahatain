@@ -29,7 +29,7 @@ const acceptButtonRef = ref(null)
 
                     <br />
 
-                    {{ $t('This process cannot be undone.') }}
+                    <span class="rtl:!font-semibold">{{ $t('This process cannot be undone.') }}</span>
                 </div>
             </div>
 

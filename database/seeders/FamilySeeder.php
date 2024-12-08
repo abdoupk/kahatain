@@ -27,7 +27,7 @@ class FamilySeeder extends Seeder
              * @throws JsonException
              */
             function (Tenant $tenant) {
-                for ($i = 0; $i < 10; $i++) {
+                for ($i = 0; $i < 34; $i++) {
                     $family = Family::factory()
                         ->hasHousing(1, [
                             'tenant_id' => $tenant->id,

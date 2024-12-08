@@ -1371,5 +1371,12 @@
     "of_transcripts_for_this_phase_have_not_been_filled_out": ":percentage% من كشوف النقاط لهذا الطور لم يتم تعبئتهم",
     "family_benefit_history": "سجل الاستفادة",
     "meat": "اللحم",
-    "sacrificed": "مضحي"
+    "sacrificed": "مضحي (ة)",
+    "new_school_year": "موسم دراسي جديد",
+    "new_school_year_confirmation_message": "هل تريد حقًا بدء عام دراسي جديد، حال تأكيد سيتم إزالة جميع كشوف نقاط الموسم الماضي",
+    "males": "ذكور",
+    "females": "إناث",
+    "the_total": "المجموع",
+    "total_in_each_academic_level": "المجموع في كل مستوى دراسي",
+    "school_tools": "الأدوات المدرسية"
 }
