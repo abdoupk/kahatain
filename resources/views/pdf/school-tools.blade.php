@@ -1,5 +1,4 @@
 @foreach ($data as $phaseKey => $academicLevels)
-
     <x-table>
         <x-slot name="title">
             <h1 class="text-center">{{ __('school_tools') }}</h1>
@@ -9,22 +8,22 @@
 
         <x-slot name="thead">
             <tr>
-                <x-th>{{__('school_tools')}}</x-th>
+                <x-th>{{ __('school_tools') }}</x-th>
                 @foreach ($academicLevels as $academicLevel => $levelData)
                     <x-th colspan="3">{{ $academicLevel }}</x-th>
                 @endforeach
-                <x-th colspan="3">{{__('total_in_each_academic_level')}}</x-th>
+                <x-th colspan="3">{{ __('total_in_each_academic_level') }}</x-th>
             </tr>
             <tr>
                 <x-th></x-th>
                 @foreach ($academicLevels as $academicLevel => $levelData)
-                    <x-th>{{__('males')}}</x-th>
-                    <x-th>{{__('females')}}</x-th>
-                    <x-th>{{__('the_total')}}</x-th>
+                    <x-th>{{ __('males') }}</x-th>
+                    <x-th>{{ __('females') }}</x-th>
+                    <x-th>{{ __('the_total') }}</x-th>
                 @endforeach
-                <x-th>{{__('males')}}</x-th>
-                <x-th>{{__('females')}}</x-th>
-                <x-th>{{__('the_total')}}</x-th>
+                <x-th>{{ __('males') }}</x-th>
+                <x-th>{{ __('females') }}</x-th>
+                <x-th>{{ __('the_total') }}</x-th>
             </tr>
         </x-slot>
 

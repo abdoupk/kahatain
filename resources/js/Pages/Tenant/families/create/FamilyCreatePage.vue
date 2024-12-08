@@ -131,10 +131,13 @@ const goTo = async (index: number) => {
 }
 
 const submit = () => {
+    createFamilyStore.family.orphans.map((orphan, index) => {
+        orphan.institution_id = orphan.institution_id?.id
+    })
+
     createFamilyStore.validating = true
 
     form.submit({
-
         onSuccess() {
             createFamilyStore.creating_completed = true
 

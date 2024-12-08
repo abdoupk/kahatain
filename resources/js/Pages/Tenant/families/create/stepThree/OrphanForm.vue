@@ -193,6 +193,7 @@ onMounted(async () => {
 
             <div>
                 <the-family-status-selector
+                    v-model:gender="createFamilyStore.family.orphans[index].gender"
                     :id="`family_status_${index}`"
                     v-model:family-status="createFamilyStore.family.orphans[index].family_status"
                     @update:family-status="form?.validate(`orphans.${index}.family_status`)"
@@ -218,7 +219,6 @@ onMounted(async () => {
             :institution_field_name="`orphans.${index}.institution_id`"
             :phone_number_field_name="`orphans.${index}.phone_number`"
             :vocational_training_id_field_name="`orphans.${index}.vocational_training_id`"
-            @update:institution="(value) => (createFamilyStore.family.orphans[index].institution_id = value.id)"
         ></the-academic-infos>
 
         <!-- Begin: if orphan is still baby-->

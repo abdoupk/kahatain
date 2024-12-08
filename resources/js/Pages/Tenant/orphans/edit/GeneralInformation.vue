@@ -179,6 +179,7 @@ onMounted(async () => {
 
                     <the-family-status-selector
                         id="family_status"
+                        v-model:gender="form.gender"
                         v-model:family-status="form.family_status"
                         @update:family-status="form?.validate(`family_status`)"
                     >
