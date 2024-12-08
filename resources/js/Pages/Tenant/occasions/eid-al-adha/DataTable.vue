@@ -87,7 +87,7 @@ const emit = defineEmits(['sort', 'change-status'])
                             {{ $t('income_rate') }}
                         </the-table-th>
 
-                        <the-table-th>actions</the-table-th>
+                        <the-table-th>{{ $t('actions') }}</the-table-th>
                     </base-tr-table>
                 </base-thead-table>
 
@@ -109,7 +109,7 @@ const emit = defineEmits(['sort', 'change-status'])
                             <p v-else class="font-medium">{{ family.sponsor.name }}</p>
                         </the-table-td>
 
-                        <the-table-td class="text-center">
+                        <the-table-td class="whitespace-nowrap text-center">
                             {{ family.sponsor.phone_number }}
                         </the-table-td>
 
@@ -151,7 +151,7 @@ const emit = defineEmits(['sort', 'change-status'])
                             </div>
                         </the-table-td>
 
-                        <the-table-td-actions>
+                        <the-table-td-actions class="min-w-32">
                             <base-form-select
                                 :value="family.status"
                                 @change="emit('change-status', family.id, $event.target.value)"

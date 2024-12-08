@@ -5,10 +5,11 @@ import { eidAlAdhaFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { defineAsyncComponent, ref } from 'vue'
+import { defineAsyncComponent, nextTick, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
@@ -53,14 +54,21 @@ const loading = ref(false)
 
 const showWarningModalStatus = ref(false)
 
+const showSuccessNotification = ref(false)
+
 const sort = (field: string) => handleSort(field, params.value)
 
 const handleChangeStatus = (familyId: string, status: string) => {
-    console.log(familyId, status)
-
     useForm('patch', route('tenant.occasions.eid-al-adha.change-status', familyId), {
         status
     }).submit({
+        onSuccess: () => {
+            showSuccessNotification.value = true
+
+            nextTick(() => {
+                showSuccessNotification.value = false
+            })
+        },
         preserveScroll: true,
         preserveState: true
     })
@@ -156,6 +164,11 @@ const handleSave = () => {
             >
                 {{ $t('exports.archive.warnings.eid_al_adha') }}
             </the-warning-modal>
+
+            <success-notification
+                :open="showSuccessNotification"
+                :title="$t('successfully_updated')"
+            ></success-notification>
         </div>
 
         <template #fallback>

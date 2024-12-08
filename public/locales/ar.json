@@ -1369,5 +1369,7 @@
     "no_transcripts_have_been_filled_out_for_this_phase": "لم يتم تعبئة كشوف النقاط لهذا الطور بعد",
     "of_transcripts_for_this_phase_have_been_filled_out": ":percentage% من كشوف النقاط لهذا الطور تم تعبئتهم",
     "of_transcripts_for_this_phase_have_not_been_filled_out": ":percentage% من كشوف النقاط لهذا الطور لم يتم تعبئتهم",
-    "family_benefit_history": "سجل الاستفادة"
+    "family_benefit_history": "سجل الاستفادة",
+    "meat": "اللحم",
+    "sacrificed": "مضحي"
 }

@@ -25,7 +25,7 @@ const data = ref({
     orphan_id: props.orphan.orphan.id
 })
 
-const phoneNumberRegex = /^06|07|05\d{8}$/
+const phoneNumberRegex = /^(0[5-7]\d{8})$/
 
 orphan.value.orphan.edit = {
     clothes_shop_name: false,
@@ -105,10 +105,10 @@ const handleFocusOut = () => {
         <row-combobox
             v-else
             :id="`${field}_${orphan.orphan.id}`"
-            :max-length
             :load-options
-            :valid="true"
+            :max-length
             :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
+            :valid="validate"
             class="!mt-0 w-32"
             @focusout.prevent="handleFocusOut"
             @update:model-value="handleSubmit"
