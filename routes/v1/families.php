@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Http\Controllers\V1\Families\ExportFamiliesPDFController;
 use App\Http\Controllers\V1\Families\ExportFamiliesXlsxController;
-use App\Http\Controllers\V1\Families\FamiliesHistoryController;
 use App\Http\Controllers\V1\Families\FamiliesIndexController;
 use App\Http\Controllers\V1\Families\FamiliesPositionsController;
 use App\Http\Controllers\V1\Families\FamiliesStatisticsController;
@@ -31,12 +30,6 @@ Route::prefix('families')->name('families.')->group(function (): void {
         FamiliesIndexController::class
     )
         ->name('index');
-
-    Route::get(
-        'history/{family}',
-        FamiliesHistoryController::class
-    )
-        ->name('history');
 
     Route::get(
         '/create',

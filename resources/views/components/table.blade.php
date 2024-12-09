@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <table class="w-full table border-black text-black mt-2">
+    <table class="w-full table border-collapse text-black mt-2 ">
         <thead>
             <tr>
                 {{ $thead }}

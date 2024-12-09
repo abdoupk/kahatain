@@ -74,8 +74,9 @@ function calculateAchievementsPercentage(int $orphansCount, int $transcriptsCoun
     return $transcriptsCount === 0 ? 0 : number_format(($transcriptsCount / ($orphansCount * $weight)) * 100, 2);
 }
 
-function generateSchoolTools()
+function generateSchoolTools(): array
 {
+    // Fetch orphans with their academic level, tools, and branch details
     $orphans = Orphan::whereHas('academicLevel.AcademicLevelSchoolTools.schoolTool', function ($query) {
         $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
     })
@@ -88,62 +89,133 @@ function generateSchoolTools()
                 $query->select('id', 'academic_level_id', 'school_tool_id', 'qty')
                     ->with('schoolTool:id,name');
             },
+            'family.branch' => function ($query) {
+                $query->select('id', 'name'); // Include branch details
+            },
         ])
         ->get();
 
-    // Process data grouped by phase_key and academic_level
-    $tableData = $orphans
-        ->flatMap(function (Orphan $orphan) {
-            return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
-                return [
-                    'phase_key' => $orphan->academicLevel->phase_key,
-                    'i_id' => $orphan->academicLevel->i_id, // Use i_id for sorting
-                    'academic_level_id' => $orphan->academicLevel->id,
-                    'academic_level' => $orphan->academicLevel->level,
-                    'gender' => $orphan->gender,
-                    'school_tool_id' => $tool->school_tool_id,
-                    'school_tool_name' => $tool->schoolTool->name,
-                    'qty' => $tool->qty,
-                ];
-            });
-        })
+    // Group data globally by phase
+    $globalData = $orphans->flatMap(function (Orphan $orphan) {
+        return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
+            return [
+                'phase_key' => $orphan->academicLevel->phase_key,
+                'i_id' => $orphan->academicLevel->i_id,
+                'academic_level_id' => $orphan->academicLevel->id,
+                'academic_level' => renameAcademicLevel($orphan->academicLevel->level),
+                'gender' => $orphan->gender,
+                'school_tool_id' => $tool->school_tool_id,
+                'school_tool_name' => $tool->schoolTool->name,
+                'qty' => $tool->qty,
+            ];
+        });
+    })
         ->groupBy('phase_key') // Group by phase_key
-        ->map(function (Collection $phaseData) {
-            return $phaseData
-                ->groupBy('academic_level_id') // Group by academic level within each phase
-                ->sortBy(fn ($toolsByLevel) => $toolsByLevel->first()['i_id']) // Sort by i_id
-                ->mapWithKeys(function (Collection $toolsByLevel, $academicLevelId) {
-                    $academicLevelName = $toolsByLevel->first()['academic_level'];
+        ->map(fn (Collection $phaseData) => formatData($phaseData));
 
-                    $tools = $toolsByLevel
-                        ->groupBy('school_tool_id') // Group by tool within each academic level
-                        ->map(function (Collection $tools) {
-                            $maleTotal = $tools->where('gender', 'male')->sum('qty');
-                            $femaleTotal = $tools->where('gender', 'female')->sum('qty');
-                            $globalTotal = $tools->sum('qty');
-
-                            return [
-                                'name' => $tools->first()['school_tool_name'],
-                                'male' => $maleTotal,
-                                'female' => $femaleTotal,
-                                'total' => $globalTotal,
-                            ];
-                        });
-
-                    // Add totals for each academic level
-                    $academicLevelTotals = [
-                        'male' => $tools->sum('male'),
-                        'female' => $tools->sum('female'),
-                        'total' => $tools->sum('total'),
-                    ];
-
-                    return [$academicLevelName => [
-                        'tools' => $tools->values(),
-                        'totals' => $academicLevelTotals,
-                    ]];
-                });
+    // Group data by branches
+    $branchData = $orphans->flatMap(function (Orphan $orphan) {
+        return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
+            return [
+                'branch_id' => $orphan->family->branch->id ?? null,
+                'branch_name' => $orphan->family->branch->name ?? null,
+                'phase_key' => $orphan->academicLevel->phase_key,
+                'i_id' => $orphan->academicLevel->i_id,
+                'academic_level_id' => $orphan->academicLevel->id,
+                'academic_level' => renameAcademicLevel($orphan->academicLevel->level),
+                'gender' => $orphan->gender,
+                'school_tool_id' => $tool->school_tool_id,
+                'school_tool_name' => $tool->schoolTool->name,
+                'qty' => $tool->qty,
+            ];
+        });
+    })
+        ->groupBy('branch_id') // Group by branch ID
+        ->map(function (Collection $branchData, $branchId) {
+            return [
+                'branch_name' => $branchData->first()['branch_name'],
+                'data' => $branchData
+                    ->groupBy('phase_key') // Group by phase_key within each branch
+                    ->map(fn (Collection $phaseData) => formatData($phaseData)),
+            ];
         });
 
-    return $tableData;
+    // Aggregate tool totals (male, female, total) across all levels and branches
+    $toolsData = $orphans->flatMap(function (Orphan $orphan) {
+        return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
+            return [
+                'school_tool_name' => $tool->schoolTool->name,
+                'gender' => $orphan->gender,
+                'qty' => $tool->qty,
+            ];
+        });
+    })
+        ->groupBy('school_tool_name')
+        ->map(function (Collection $toolData) {
+            $maleTotal = $toolData->where('gender', 'male')->sum('qty');
+            $femaleTotal = $toolData->where('gender', 'female')->sum('qty');
+            $globalTotal = $toolData->sum('qty');
 
+            return [
+                'male' => $maleTotal,
+                'female' => $femaleTotal,
+                'total' => $globalTotal,
+            ];
+        });
+
+    // Return grouped global and branch data
+    return [
+        'global' => $globalData,
+        'branches' => $branchData,
+        'totals' => $toolsData,
+    ];
+}
+
+function formatData(Collection $phaseData)
+{
+    return $phaseData
+        ->groupBy('i_id') // Group by academic level for sorting
+        ->sortKeys()
+        ->mapWithKeys(function (Collection $toolsByLevel, $academicLevelId) {
+            $academicLevelName = $toolsByLevel->first()['academic_level'];
+
+            // Aggregate tools by school_tool_id
+            $tools = $toolsByLevel
+                ->groupBy('school_tool_id')
+                ->map(function (Collection $tools) {
+                    $maleTotal = $tools->where('gender', 'male')->sum('qty');
+                    $femaleTotal = $tools->where('gender', 'female')->sum('qty');
+                    $globalTotal = $tools->sum('qty');
+
+                    return [
+                        'name' => $tools->first()['school_tool_name'],
+                        'male' => $maleTotal,
+                        'female' => $femaleTotal,
+                        'total' => $globalTotal,
+                    ];
+                });
+
+            // Aggregate academic level totals
+            $academicLevelTotals = [
+                'male' => $tools->sum('male'),
+                'female' => $tools->sum('female'),
+                'total' => $tools->sum('total'),
+            ];
+
+            return [$academicLevelName => [
+                'tools' => $tools->values(),
+                'totals' => $academicLevelTotals,
+            ]];
+        });
+}
+
+function renameAcademicLevel($levelName)
+{
+    return match (true) {
+        Str::contains($levelName, 'الثالثة ثانوي تقني رياضي') => 'الثالثة ثانوي تقني رياضي',
+        Str::contains($levelName, 'الثانية ثانوي تقني رياضي') => 'الثانية ثانوي تقني رياضي',
+        Str::contains($levelName, 'الثانية ثانوي لغات') => 'الثانية ثانوي لغات أجنبية',
+        Str::contains($levelName, 'الثالثة ثانوي لغات') => 'الثالثة ثانوي لغات أجنبية',
+        default => $levelName,
+    };
 }

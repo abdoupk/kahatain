@@ -7,6 +7,10 @@ use Illuminate\Database\Seeder;
 
 class AcademicLevelSchoolToolSeeder extends Seeder
 {
+    private array $commonTools = [41, 51, 48, 49, 50, 29, 7, 8, 9, 10, 11, 12, 13, 32, 55, 3, 4, 56, 14, 20, 21, 22, 54, 46, 47, 34];
+
+    private array $commonQts = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 100, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
     public function run(): void
     {
         // primary school
@@ -15,12 +19,14 @@ class AcademicLevelSchoolToolSeeder extends Seeder
         // middle school
         $this->middleEducation();
 
-        // high school
+        // high school 1st year
         $this->highEducationFirstYear();
 
-        //        $this->highEducationSecondYear();
+        // high school 2nd year
+        $this->highEducationSecondYear();
 
-        //        $this->highEducationThirdYear();
+        // high school 3rd year
+        $this->highEducationThirdYear();
     }
 
     public function createRelationShip(AcademicLevel $academicLevel, array $toolIds, array $qts): void
@@ -107,90 +113,150 @@ class AcademicLevelSchoolToolSeeder extends Seeder
     private function highEducationSecondYear(): void
     {
         // 2nd science
-        $toolIds = [];
+        $toolIds = [44, 25, 26, 1, 28, 57, 58, 37, 45];
 
-        $qts = [];
+        $qts = [3, 4, 4, 1, 1, 1, 1, 2, 1, 1, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(18)->first(), $toolIds, $qts);
 
         // 2nd Math
-        $toolIds = [];
+        $toolIds = [44, 25, 26, 1, 28, 57, 58, 37, 45];
 
-        $qts = [];
+        $qts = [3, 4, 2, 1, 1, 1, 1, 2, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(13)->first(), $toolIds, $qts);
 
         // 2nd Technology
-        $toolIds = [];
+        $toolIds = [44, 25, 26, 1, 28, 37, 45];
 
-        $qts = [];
+        $qts = [3, 5, 3, 1, 1, 1, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(14)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(15)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(16)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(17)->first(), $toolIds, $qts);
 
         // 2nd Economy
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1, 37];
 
-        $qts = [];
+        $qts = [7, 4, 1, 1, 1, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(19)->first(), $toolIds, $qts);
 
         // 2nd Philosophy
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1, 57, 58, 37, 19];
 
-        $qts = [];
+        $qts = [4, 3, 2, 1, 1, 1, 1, 2, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(20)->first(), $toolIds, $qts);
 
         // 2nd Languages
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1, 37];
 
-        $qts = [];
+        $qts = [3, 3, 3, 1, 1, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(21)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(22)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(23)->first(), $toolIds, $qts);
     }
 
     private function highEducationThirdYear(): void
     {
         // 3rd science
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1, 57, 58, 45, 37];
 
-        $qts = [];
+        $qts = [6, 3, 2, 1, 1, 1, 1, 1, 2];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(29)->first(), $toolIds, $qts);
 
         // 3rd Math
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1, 57, 58, 45, 37];
 
-        $qts = [];
+        $qts = [0, 0, 0, 0, 1, 1, 1, 1, 2];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $toolIds = array_merge($toolIds, $this->commonTools);
+
+        $qts = array_merge($qts, $this->commonQts);
+
+        $newTools = array_slice($toolIds, 0, 1);
+
+        $newQts = array_slice($qts, 0, 1);
+
+        $a = array_merge($newQts, [34]);
+
+        $b = array_merge($newTools, [2]);
+
+        $this->createRelationShip(AcademicLevel::whereIId(24)->first(), $b, $a);
 
         // 3rd Technology
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1, 45, 59];
 
-        $qts = [];
+        $qts = [5, 3, 3, 1, 1, 1, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $this->createRelationShip(AcademicLevel::whereIId(25)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(26)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(27)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(28)->first(), $toolIds, $qts);
 
         // 3rd Economy
-        $toolIds = [];
+        $toolIds = [44, 25, 26, 28, 1];
 
-        $qts = [];
-
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
-
-        // 3rd Philosophy
-        $toolIds = [];
-
-        $qts = [];
+        $qts = [1, 7, 4, 1, 1];
 
         $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
 
         // 3rd Languages
-        $toolIds = [];
+        $toolIds = [25, 26, 27, 28, 1];
 
-        $qts = [];
+        $qts = [3, 2, 4, 1, 1];
 
-        $this->createRelationShip(AcademicLevel::whereIId(11)->first(), $toolIds, $qts);
+        $this->createRelationShip(AcademicLevel::whereIId(32)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(33)->first(), $toolIds, $qts);
+
+        $this->createRelationShip(AcademicLevel::whereIId(34)->first(), $toolIds, $qts);
+
+        // 3rd Philosophy
+        $toolIds = [44, 25, 26, 28, 1];
+
+        $qts = [2, 4, 2, 1, 1];
+
+        $this->createRelationShip(AcademicLevel::whereIId(31)->first(), $toolIds, $qts);
     }
 }

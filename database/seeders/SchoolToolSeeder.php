@@ -241,6 +241,10 @@ class SchoolToolSeeder extends Seeder
                 'id' => 58,
                 'name' => 'أوراق فردية',
             ],
+            [
+                'id' => 59,
+                'name' => 'حافظة أوراق',
+            ],
         ];
 
         SchoolTool::insert($tools);

@@ -67,10 +67,11 @@ class FamilyShowController extends Controller implements HasMiddleware
             })
         );
 
-        // Paginate the combined archives
-        $perPageArchives = 1; // Number of items per page for archives
+        $perPageArchives = 10;
         $currentPageArchives = request()->integer('archives_page', 1);
+
         $currentItemsArchives = $allArchives->slice(($currentPageArchives - 1) * $perPageArchives, $perPageArchives)->all();
+
         $paginatedArchives = new LengthAwarePaginator($currentItemsArchives, $allArchives->count(), $perPageArchives, $currentPageArchives, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
             'query' => [
@@ -105,9 +106,11 @@ class FamilyShowController extends Controller implements HasMiddleware
 
         $allNeeds = $needs->merge($orphanNeeds);
 
-        $perPageNeeds = 1;
+        $perPageNeeds = 10;
         $currentPageNeeds = request()->integer('needs_page', 1);
+
         $currentItemsArchives = $allNeeds->slice(($currentPageNeeds - 1) * $perPageNeeds, $perPageNeeds)->all();
+
         $paginatedArchives = new LengthAwarePaginator($currentItemsArchives, $allNeeds->count(), $perPageNeeds, $currentPageNeeds, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
             'query' => [
