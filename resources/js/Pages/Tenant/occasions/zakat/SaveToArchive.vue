@@ -145,6 +145,10 @@ const handleSelectZakat = ($event) => {
         @accept="handleSave"
         @close="showWarningModalStatus = false"
     >
-        {{ $t('exports.archive.warnings.zakat') }}
+        {{
+            $t('exports.archive.warnings.zakat', {
+                amount: formatCurrency(form.amount / zakatStore.zakat.families.length)
+            })
+        }}
     </the-warning-modal>
 </template>
