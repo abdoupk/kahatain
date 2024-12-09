@@ -63,7 +63,9 @@ const handleDownloadSchoolTools = () => {
     <!-- BEGIN: General Report -->
     <div class="col-span-12 mt-8">
         <div class="intro-y flex h-10 items-center">
-            <h2 class="me-5 truncate text-lg font-medium">General Report</h2>
+            <h2 class="me-5 truncate text-lg font-medium rtl:!font-semibold">
+                {{ $t('student_list') }}
+            </h2>
         </div>
 
         <div class="intro-y mt-5">

@@ -1,23 +1,28 @@
 <script lang="ts" setup>
-import { StudentsPerPhase } from '@/types/orphans'
+import { StudentsPerInstitution, StudentsPerPhase } from '@/types/orphans'
 
 import { twMerge } from 'tailwind-merge'
 
 import AcademicLevelPhaseDonutChart from '@/Pages/Tenant/students/index/AcademicLevelPhaseDonutChart.vue'
+
+import BasePolarBarChart from '@/Components/Base/chart/BasePolarBarChart.vue'
 
 import { $t } from '@/utils/i18n'
 
 defineProps<{
     totalStudents: number
     studentsPerPhase: StudentsPerPhase
+    studentsPerSchool: StudentsPerInstitution
 }>()
 </script>
 
 <template>
-    <!-- BEGIN: Students Chart -->
+    <!-- BEGIN: Students by Academic Phases Chart -->
     <div class="col-span-12 mt-8 sm:col-span-6">
         <div class="intro-y flex h-10 items-center">
-            <h2 class="me-5 truncate text-lg font-medium">Report</h2>
+            <h2 class="me-5 truncate text-lg font-medium rtl:font-semibold">
+                {{ $t('statistics') }}
+            </h2>
         </div>
 
         <div
@@ -60,5 +65,28 @@ defineProps<{
             </div>
         </div>
     </div>
-    <!-- END: Students Chart -->
+    <!-- END: Students by Academic Phases Chart -->
+
+    <!-- BEGIN: Students by School Chart -->
+    <div class="col-span-12 sm:col-span-6 sm:mt-20">
+        <div
+            class="intro-y relative mt-5 before:absolute before:inset-x-0 before:mx-auto before:mt-2.5 before:hidden before:h-full before:w-[90%] before:rounded-md before:bg-white/60 before:shadow-[0px_3px_5px_#0000000b] before:content-[''] before:dark:bg-darkmode-400/70 xl:before:block"
+        >
+            <div class="box p-5 sm:-mt-2">
+                <h2 class="me-5 truncate text-lg font-medium rtl:font-semibold">
+                    {{ $t('top_seven_schools') }}
+                </h2>
+                <div class="mt-3 flex items-center justify-center">
+                    <base-polar-bar-chart
+                        :chart-data="studentsPerSchool.map((school) => school.total)"
+                        :height="300"
+                        :labels="studentsPerSchool.map((school) => school.name)"
+                        :width="300"
+                        hide-legend
+                    ></base-polar-bar-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Students by School Chart -->
 </template>

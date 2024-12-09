@@ -99,7 +99,7 @@ defineProps<{ sponsor: SponsorShowType }>()
 
     <the-attachements-viewer
         :images="sponsor.files.images"
-        :no-files-message="$t('no_diploma_or_birth_certificate')"
+        :no-files-message="$t('no_diploma_or_birth_certificate_or_no_remarriage')"
         :pdf="sponsor.files.pdf"
     ></the-attachements-viewer>
 </template>

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import type { OrphanShowType } from '@/types/orphans'
 
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatCurrency, formatDate, isOlderThan } from '@/utils/helper'
+import { formatCurrency, formatDate, hasPermission, isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineOptions({
@@ -39,6 +40,15 @@ defineProps<{
                                 class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3"
                             >
                                 <h2 class="me-auto text-xl font-bold">{{ orphan.name }}</h2>
+
+                                <Link
+                                    v-if="hasPermission('edit_orphans')"
+                                    :href="route('tenant.orphans.edit', orphan.id)"
+                                >
+                                    <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
+
+                                    {{ $t('edit') }}
+                                </Link>
                             </div>
 
                             <div class="grid grid-cols-12 gap-4 p-5">

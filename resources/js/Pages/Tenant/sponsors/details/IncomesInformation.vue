@@ -23,7 +23,7 @@ defineProps<{ sponsor: SponsorShowType }>()
 
     <the-attachements-viewer
         :images="sponsor.incomes.files.images"
-        :no-files-message="$t('no_files_uploaded')"
+        :no-files-message="$t('no_incomes_files_uploaded')"
         :pdf="sponsor.incomes.files.pdf"
     ></the-attachements-viewer>
 </template>

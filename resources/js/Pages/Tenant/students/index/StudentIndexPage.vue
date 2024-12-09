@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { AcademicLevelsIndexResource } from '@/types/lessons'
-import { StudentsPerPhase } from '@/types/orphans'
+import { StudentsPerInstitution, StudentsPerPhase } from '@/types/orphans'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -15,6 +15,7 @@ defineProps<{
     academicLevels: AcademicLevelsIndexResource
     totalStudents: number
     studentsPerPhase: StudentsPerPhase
+    studentsPerSchool: StudentsPerInstitution
 }>()
 </script>
 
@@ -25,7 +26,7 @@ defineProps<{
         <!-- END: Academic Phases -->
 
         <!-- BEGIN: Students Chart -->
-        <students-chart :studentsPerPhase :totalStudents></students-chart>
+        <students-chart :studentsPerPhase :studentsPerSchool :totalStudents></students-chart>
         <!-- END: Students Chart -->
     </div>
 </template>

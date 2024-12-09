@@ -14,6 +14,7 @@ const props = defineProps<{
     height?: number
     labels: string[]
     chartData: number[]
+    hideLegend?: boolean
 }>()
 
 const darkMode = computed(() => useSettingsStore().appearance === 'dark')
@@ -41,12 +42,14 @@ const options = computed<ChartOptions>(() => {
         maintainAspectRatio: false,
 
         plugins: {
-            legend: {
-                rtl: getLocale() === 'ar',
-                labels: {
-                    color: labelColor
-                }
-            },
+            legend: props.hideLegend
+                ? { display: false }
+                : {
+                      rtl: getLocale() === 'ar',
+                      labels: {
+                          color: labelColor
+                      }
+                  },
             tooltip: {
                 rtl: getLocale() === 'ar'
             }

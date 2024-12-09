@@ -23,6 +23,7 @@ defineProps<{
                     :chart-data="familiesByBranch.data"
                     :height="336"
                     :labels="familiesByBranch.labels"
+                    hide-legend
                 ></base-pie-chart>
 
                 <the-no-data-chart v-else class="h-[336px]"></the-no-data-chart>

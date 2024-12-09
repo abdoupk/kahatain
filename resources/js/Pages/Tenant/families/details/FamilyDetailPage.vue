@@ -14,10 +14,6 @@ import { $t } from '@/utils/i18n'
 
 const FamilyMenu = defineAsyncComponent(() => import('@/Pages/Tenant/families/details/FamilyMenu.vue'))
 
-const TheFamilySponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/details/TheFamilySponsorship.vue')
-)
-
 const TheGeneralInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheGeneralInformation.vue')
 )
@@ -30,10 +26,6 @@ const TheOrphansInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheOrphansInformation.vue')
 )
 
-const TheOrphansSponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/details/TheOrphansSponsorship.vue')
-)
-
 const TheReport = defineAsyncComponent(() => import('@/Pages/Tenant/families/details/TheReport.vue'))
 
 const TheSecondSponsorInformation = defineAsyncComponent(
@@ -44,10 +36,6 @@ const TheSponsorInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheSponsorInformation.vue')
 )
 
-const TheSponsorSponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/details/TheSponsorSponsorship.vue')
-)
-
 const TheSpouseInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheSpouseInformation.vue')
 )
@@ -56,7 +44,11 @@ defineOptions({
     layout: TheLayout
 })
 
-defineProps<{ family: FamilyShowType; archives: any; needs: any }>()
+defineProps<{
+    family: FamilyShowType
+    archives: any
+    needs: any
+}>()
 
 const view = ref('general_information')
 
@@ -115,21 +107,6 @@ provide('familyDetailView', { view, updateView })
                             :family-id="family.id"
                             :needs
                         ></history-index-page>
-
-                        <the-family-sponsorship
-                            v-if="view === 'family_sponsorship'"
-                            :sponsorships="family.family_sponsorships"
-                        ></the-family-sponsorship>
-
-                        <the-sponsor-sponsorship
-                            v-if="view === 'sponsor_sponsorship'"
-                            :sponsorships="family.sponsor_sponsorships"
-                        ></the-sponsor-sponsorship>
-
-                        <the-orphans-sponsorship
-                            v-if="view === 'orphans_sponsorship'"
-                            :sponsor-ships="family.orphans_sponsorships"
-                        ></the-orphans-sponsorship>
 
                         <the-spouse-information
                             v-if="view === 'spouse_information'"

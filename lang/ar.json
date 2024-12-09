@@ -240,6 +240,7 @@
     "income": "دخل",
     "no_death_certificate": "لم يتم رفع شهادة الوفاة حتى ألآن",
     "no_files_uploaded": "لم يتم رفع الملفات حتى ألآن",
+    "no_incomes_files_uploaded": "لم يتم رفع ملفات إثبات الدخل حتى ألآن",
     "orphans_count": "عدد الأيتام",
     "display information": "عرض المعلومات",
     "save": "حفظ",
@@ -522,7 +523,7 @@
     "zakat_per_family": "المبلغ لكل عائلة",
     "zakat_selected_families": "عدد العائلات المحددة",
     "no_residence_certificate": "لم يتم رفع بطاقة الإقامة",
-    "no_diploma_or_birth_certificate": "لم يتم رفع  الدبلوم او شهادة الميلاد",
+    "no_diploma_or_birth_certificate_or_no_remarriage": "لم يتم رفع  الدبلوم او شهادة الميلاد او شهادة عدم الزواج",
     "middle_school": "المتوسطة",
     "primary_school": "الابتدائية",
     "secondary_school": "الثانوية",
@@ -540,5 +541,6 @@
     "females": "إناث",
     "the_total": "المجموع",
     "total_in_each_academic_level": "المجموع في كل مستوى دراسي",
-    "school_tools": "الأدوات المدرسية"
+    "school_tools": "الأدوات المدرسية",
+    "student_list": "قائمة المتمدرسين"
 }

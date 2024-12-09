@@ -3,6 +3,7 @@ import type { AcademicLevelType } from '@/types/lessons'
 import type { OrphanUpdateFormType } from '@/types/orphans'
 
 import { useAcademicLevelsStore } from '@/stores/academic-level'
+import { Link } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, onMounted, reactive, ref } from 'vue'
 
@@ -27,8 +28,9 @@ import TheClothesSizeSelector from '@/Components/Global/TheClothesSizeSelector.v
 import TheDiapersSelector from '@/Components/Global/TheDiapersSelector.vue'
 import TheFamilyStatusSelector from '@/Components/Global/TheFamilyStatusSelector.vue'
 import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { isOlderThan, omit } from '@/utils/helper'
+import { hasPermission, isOlderThan, omit } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -96,6 +98,12 @@ onMounted(async () => {
     <div class="intro-y box col-span-12 @container 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ $t('display information') }}</h2>
+
+            <Link v-if="hasPermission('show_orphans')" :href="route('tenant.orphans.show', orphan.id)">
+                <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>
+
+                {{ $t('show') }}
+            </Link>
         </div>
 
         <form @submit.prevent="submit">
@@ -179,8 +187,8 @@ onMounted(async () => {
 
                     <the-family-status-selector
                         id="family_status"
-                        v-model:gender="form.gender"
                         v-model:family-status="form.family_status"
+                        v-model:gender="form.gender"
                         @update:family-status="form?.validate(`family_status`)"
                     >
                     </the-family-status-selector>

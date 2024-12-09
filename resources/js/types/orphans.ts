@@ -71,3 +71,8 @@ export type StudentsPerPhase = {
     phase: string
     total: number
 }[]
+
+export type StudentsPerInstitution = {
+    phase: string
+    total: number
+}[]

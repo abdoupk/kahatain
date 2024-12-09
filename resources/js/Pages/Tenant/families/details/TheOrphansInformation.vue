@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import type { OrphanType } from '@/types/families'
 
-import { formatDate, isOlderThan } from '@/utils/helper'
+import { Link } from '@inertiajs/vue3'
+
+import SvgLoader from '@/Components/SvgLoader.vue'
+
+import { formatDate, hasPermission, isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{ orphans: OrphanType[] }>()
@@ -12,6 +16,12 @@ defineProps<{ orphans: OrphanType[] }>()
     <div v-for="orphan in orphans" :key="orphan.id" class="intro-y box col-span-12 @container 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ orphan.name }}</h2>
+
+            <Link v-if="hasPermission('edit_orphans')" :href="route('tenant.orphans.edit', orphan.id)">
+                <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
+
+                {{ $t('edit') }}
+            </Link>
         </div>
 
         <div class="grid grid-cols-12 gap-4 p-5">

@@ -23,6 +23,7 @@ defineProps<{
                     :chart-data="familiesByZone.data"
                     :height="336"
                     :labels="familiesByZone.labels"
+                    hide-legend
                 ></base-polar-bar-chart>
 
                 <the-no-data-chart v-else class="h-[336px]"></the-no-data-chart>

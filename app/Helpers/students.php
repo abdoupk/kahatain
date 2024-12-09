@@ -43,7 +43,6 @@ function getAcademicLevelsForStudentsIndex(): array
 
 function getTotalStudents()
 {
-
     return AcademicLevel::withCount('orphans')
         ->where(function ($query) {
             $query->where('phase_key', 'primary_education')
@@ -209,7 +208,7 @@ function formatData(Collection $phaseData)
         });
 }
 
-function renameAcademicLevel($levelName)
+function renameAcademicLevel($levelName): string
 {
     return match (true) {
         Str::contains($levelName, 'الثالثة ثانوي تقني رياضي') => 'الثالثة ثانوي تقني رياضي',
@@ -218,4 +217,20 @@ function renameAcademicLevel($levelName)
         Str::contains($levelName, 'الثالثة ثانوي لغات') => 'الثالثة ثانوي لغات أجنبية',
         default => $levelName,
     };
+}
+
+function getStudentsPerSchool(): array
+{
+    return Orphan::whereHas('academicLevel', function ($query) {
+        $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
+    })->whereHas('institution', function ($query) {
+        $query->where('institution_type', 'school');
+    })
+        ->join('schools', 'orphans.institution_id', '=', 'schools.id')
+        ->groupBy(['schools.id', 'schools.name'])
+        ->selectRaw('schools.name as name, count(*) as total')
+        ->get()
+        ->sortByDesc('total')
+        ->take(7)
+        ->toArray();
 }

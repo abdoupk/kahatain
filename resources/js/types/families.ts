@@ -63,6 +63,7 @@ export interface SponsorType {
         name: string
     }
     incomes: IncomeType
+    files?: UploadedFilesType
 }
 
 export interface SecondSponsorType {
@@ -129,11 +130,7 @@ export interface FamilyShowType {
     address: string
     file_number: string
     start_date: Date
-    residence: {
-        residence_certificate_file: string
-        created_at: string
-        file_type: string
-    }
+    files: UploadedFilesType
     branch: string
     zone: string
     orphans: OrphanType[]

@@ -10,9 +10,10 @@ class StudentsIndexController extends Controller
     public function __invoke(): Response
     {
         return inertia('Tenant/students/index/StudentIndexPage', [
-            'academicLevels' => getAcademicLevelsForStudentsIndex(),
-            'totalStudents' => getTotalStudents(),
-            'studentsPerPhase' => getStudentsPerPhase(),
+            'academicLevels' => fn () => getAcademicLevelsForStudentsIndex(),
+            'totalStudents' => fn () => getTotalStudents(),
+            'studentsPerPhase' => fn () => getStudentsPerPhase(),
+            'studentsPerSchool' => fn () => getStudentsPerSchool(),
         ]);
     }
 }
