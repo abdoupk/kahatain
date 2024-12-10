@@ -111,6 +111,8 @@ Route::middleware([
 
                     require __DIR__.'/v1/occasions/monthly-sponsorship.php';
 
+                    require __DIR__.'/v1/occasions/occasions-statistics.php';
+
                     require __DIR__.'/v1/occasions/school-entry.php';
 
                     require __DIR__.'/v1/occasions/zakat.php';

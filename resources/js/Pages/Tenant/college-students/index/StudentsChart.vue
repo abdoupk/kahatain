@@ -74,7 +74,7 @@ defineProps<{
         >
             <div class="box p-5 sm:-mt-2">
                 <h2 class="me-5 truncate text-lg font-medium rtl:font-semibold">
-                    {{ $t('top_seven_schools') }}
+                    {{ $t('top_seven_universities') }}
                 </h2>
                 <div class="mt-3 flex items-center justify-center">
                     <base-polar-bar-chart

@@ -6,6 +6,7 @@ import { computed } from 'vue'
 import BaseChart from '@/Components/Base/chart/BaseChart.vue'
 
 import { extractColor, getColor } from '@/utils/colors'
+import { getLocale } from '@/utils/i18n'
 
 const props = defineProps<{
     data: number[]
@@ -42,6 +43,9 @@ const options = computed<ChartOptions>(() => {
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                rtl: getLocale() === 'ar'
             }
         },
         cutout: '80%'
