@@ -47,7 +47,7 @@ class FamilyShowController extends Controller implements HasMiddleware
         return Inertia::render(
             'Tenant/families/details/FamilyDetailPage',
             [
-                'family' => FamilyShowResource::make($family),
+                'family' => fn () => FamilyShowResource::make($family),
                 'archives' => fn () => $this->getArchives($family),
                 'needs' => fn () => $this->getNeeds($family),
             ]

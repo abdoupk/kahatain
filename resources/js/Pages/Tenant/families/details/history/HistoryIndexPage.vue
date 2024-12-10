@@ -1,16 +1,18 @@
 <script lang="ts" setup>
+import type { PaginationData } from '@/types/types'
+
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import ArchivesDataTable from '@/Pages/Tenant/families/history/ArchivesDataTable.vue'
-import NeedsDataTable from '@/Pages/Tenant/families/history/NeedsDataTable.vue'
+import ArchivesDataTable from '@/Pages/Tenant/families/details/history/ArchivesDataTable.vue'
+import NeedsDataTable from '@/Pages/Tenant/families/details/history/NeedsDataTable.vue'
 
 defineOptions({
     layout: TheLayout
 })
 
 defineProps<{
-    needs: any
-    archives: any
+    archives: PaginationData<unknown>
+    needs: PaginationData<unknown>
     familyId: string
 }>()
 </script>

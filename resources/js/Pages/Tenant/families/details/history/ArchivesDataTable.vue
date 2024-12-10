@@ -1,38 +1,103 @@
 <script lang="ts" setup>
 import { router } from '@inertiajs/vue3'
 
+import BaseTable from '@/Components/Base/table/BaseTable.vue'
+import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
+import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
+import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
+import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
+import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
 import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
 
+import { formatCurrency, formatDate } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
+
 defineProps<{
-    archives: any
-    needsMeta: any
+    archives: PaginationData<unknown>
+    needsMeta: PaginationData['meta']
     familyId: string
 }>()
 </script>
 
 <template>
-    <h1 v-for="archive in archives.data" :key="archive.id">
-        {{ archive.occasion }}
-    </h1>
+    <div class="intro-y">
+        <h3 class="text-base font-medium rtl:!font-semibold">
+            {{ $t('benefit_archive') }}
+        </h3>
 
-    <pagination-data-table
-        :page="archives.meta.current_page"
-        :pages="archives.meta.last_page"
-        :per-page="archives.meta.per_page"
-        @change-page="
-            ($e) => {
-                router.get(
-                    route('tenant.families.history', {
-                        family: familyId,
-                        archives_page: $e,
-                        needs_page: needsMeta.current_page,
-                        needs_perPage: needsMeta.per_page,
-                        archives_perPage: archives.meta.per_page
-                    }),
-                    { page: archives.meta.current_page },
-                    { only: ['archives'], preserveScroll: true, preserveState: true }
-                )
-            }
-        "
-    ></pagination-data-table>
+        <div v-if="archives.data.length" class="mt-2 overflow-y-hidden">
+            <base-table class="mt-2 border-separate border-spacing-y-[10px]">
+                <base-thead-table>
+                    <base-tr-table>
+                        <the-table-th class="text-center"> #</the-table-th>
+
+                        <the-table-th class="text-center">
+                            {{ $t('recipient_type') }}
+                        </the-table-th>
+
+                        <the-table-th class="text-center">
+                            {{ $t('the_benefit_type') }}
+                        </the-table-th>
+
+                        <the-table-th class="text-center">
+                            {{ $t('the_benefit_date') }}
+                        </the-table-th>
+                    </base-tr-table>
+                </base-thead-table>
+
+                <base-tbody-table>
+                    <base-tr-table v-for="(archive, index) in archives.data" :key="archive.id" class="intro-x">
+                        <the-table-td class="w-16">
+                            {{ (archives.meta.from ?? 0) + index }}
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            {{ $t(`the_${archive.pivot.archiveable_type}`) }}
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            {{ $t(`occasions.${archive.occasion}`) }}
+
+                            <template v-if="archive.metadata">
+                                ({{ formatCurrency(archive.metadata.amount) }})
+                            </template>
+                        </the-table-td>
+
+                        <the-table-td class="text-center">
+                            {{ formatDate(archive.created_at, 'full') }}
+                        </the-table-td>
+                    </base-tr-table>
+                </base-tbody-table>
+            </base-table>
+        </div>
+
+        <div
+            v-else
+            class="intro-x col-span-12 mt-8 flex flex-col items-center justify-center @container 2xl:col-span-6"
+        >
+            <no-results-found></no-results-found>
+        </div>
+
+        <pagination-data-table
+            v-if="archives.data.length"
+            :page="archives.meta.current_page"
+            :pages="archives.meta.last_page"
+            :per-page="archives.meta.per_page"
+            @change-page="
+                ($e) => {
+                    router.get(
+                        route('tenant.families.show', familyId),
+                        {
+                            archives_page: $e,
+                            needs_page: needsMeta.current_page,
+                            needs_perPage: needsMeta.per_page,
+                            archives_perPage: archives.meta.per_page
+                        },
+                        { only: ['archives'], preserveScroll: true, preserveState: true }
+                    )
+                }
+            "
+        ></pagination-data-table>
+    </div>
 </template>

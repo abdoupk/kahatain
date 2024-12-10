@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { FamilyShowType } from '@/types/families'
+import { PaginationData } from '@/types/types'
 
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, provide, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import HistoryIndexPage from '@/Pages/Tenant/families/history/HistoryIndexPage.vue'
+import HistoryIndexPage from '@/Pages/Tenant/families/details/history/HistoryIndexPage.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
@@ -46,11 +47,11 @@ defineOptions({
 
 defineProps<{
     family: FamilyShowType
-    archives: any
-    needs: any
+    archives: PaginationData<unknown>
+    needs: PaginationData<unknown>
 }>()
 
-const view = ref('general_information')
+const view = ref('family_benefit_history')
 
 function updateView(newValue: string) {
     view.value = newValue
@@ -101,18 +102,18 @@ provide('familyDetailView', { view, updateView })
 
                         <the-report v-if="view === 'the_report'" :preview="family.preview"></the-report>
 
-                        <history-index-page
-                            v-if="view === 'family_benefit_history'"
-                            :archives
-                            :family-id="family.id"
-                            :needs
-                        ></history-index-page>
-
                         <the-spouse-information
                             v-if="view === 'spouse_information'"
                             :spouse="family.spouse"
                         ></the-spouse-information>
                     </div>
+
+                    <history-index-page
+                        v-if="view === 'family_benefit_history'"
+                        :archives
+                        :family-id="family.id"
+                        :needs
+                    ></history-index-page>
                 </div>
             </div>
         </div>
