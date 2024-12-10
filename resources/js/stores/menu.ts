@@ -134,56 +134,49 @@ export const useMenuStore = defineStore('menu', {
                 subMenu: [
                     {
                         icon: 'icon-money',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('direct_bail'),
                         routeName: 'tenant.monthly-sponsorship.index',
                         url: '/dashboard/projects/monthly-sponsorship'
                     },
                     {
                         icon: 'icon-ram',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('eid_el_adha'),
                         routeName: 'tenant.occasions.eid-al-adha.index',
                         url: '/dashboard/projects/eid-al-adha'
                     },
                     {
                         icon: 'icon-zakat',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('zakat'),
                         routeName: 'tenant.occasions.zakat.index',
                         url: '/dashboard/projects/zakat'
                     },
                     {
                         icon: 'icon-backpack',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('school_entry'),
                         routeName: 'tenant.occasions.school-entry.index',
                         url: '/dashboard/projects/school-entry'
                     },
                     {
                         icon: 'icon-moon-stars',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('eid_el_fitr'),
                         routeName: 'tenant.occasions.eid-suit.index',
                         url: '/dashboard/projects/eid-suit'
                     },
                     {
                         icon: 'icon-moon',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('ramadan basket'),
                         routeName: 'tenant.occasions.ramadan-basket.index',
                         url: '/dashboard/projects/ramadan-basket'
                     },
-                    // {
-                    //     Icon: 'icon-basket-shopping',
-                    //     // Ignore: !hasPermission('list_permission'),
-                    //     Title: $t('monthly basket'),
-                    //     RouteName: 'tenant.occasions.monthly-basket.index',
-                    //     Url: '/dashboard/projects/monthly-basket'
-                    // },
                     {
                         icon: 'icon-baby-carriage',
-                        // Ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_permission'),
                         title: $t('milk and diapers'),
                         routeName: 'tenant.occasions.babies-milk-and-diapers.index',
                         url: '/dashboard/projects/babies-milk-and-diapers'
@@ -193,7 +186,7 @@ export const useMenuStore = defineStore('menu', {
             {
                 icon: 'icon-hands-holding-dollar',
                 // eslint-disable-next-line capitalized-comments
-                // ignore: !hasPermission('list_schools'),
+                ignore: !hasPermission('list_schools'),
                 routeName: 'tenant.benefactors.index',
                 title: $t('benefactors'),
                 url: '/dashboard/benefactors'
@@ -240,14 +233,14 @@ export const useMenuStore = defineStore('menu', {
             },
             {
                 icon: 'icon-user-graduate',
-                // Ignore: !hasPermission('list_permission'),
+                ignore: !hasPermission('list_permission'),
                 title: $t('orphan_students'),
                 routeName: 'tenant.students.index',
                 url: '/dashboard/students'
             },
             {
                 icon: 'icon-grid',
-                // Ignore: !hasPermission('list_permission'),
+                ignore: !hasPermission('list_permission'),
                 title: $t('transcripts'),
                 routeName: 'tenant.transcripts.index',
                 url: '/dashboard/transcripts'
