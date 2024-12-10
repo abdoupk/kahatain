@@ -128,6 +128,8 @@ class Family extends Model implements HasMedia
         'ramadan_basket_category',
         'ramadan_sponsorship_difference',
         'aggregate_zakat_benefit',
+        'aggregate_white_meat_benefit',
+        'aggregate_red_meat_benefit',
         'deletion_reason',
     ];
 
@@ -273,6 +275,8 @@ class Family extends Model implements HasMedia
                 'lat' => $this->location['lat'],
                 'lng' => $this->location['lng'],
             ],
+            'aggregate_white_meat_benefit' => (int) $this->aggregate_white_meat_benefit,
+            'aggregate_red_meat_benefit' => (int) $this->aggregate_red_meat_benefit,
         ];
     }
 

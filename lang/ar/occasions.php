@@ -8,4 +8,5 @@ return [
     'school_entry' => 'دخول المدرسي',
     'monthly_sponsorship' => 'كفالة الشهرية',
     'zakat' => ' استفادة من الزكاة',
+    'meat_distribution' => 'توزيع اللحم',
 ];

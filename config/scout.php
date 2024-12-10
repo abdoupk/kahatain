@@ -394,6 +394,8 @@ return [
                     'amount_from_benefactor',
                     'basket_from_benefactor',
                     'aggregate_zakat_benefit',
+                    'aggregate_white_meat_benefit',
+                    'aggregate_red_meat_benefit',
                     'housing.value',
                     'housing.name',
                     'housing.housing_receipt_number',
@@ -421,6 +423,8 @@ return [
                     'ramadan_basket_category',
                     'ramadan_sponsorship_difference',
                     'aggregate_zakat_benefit',
+                    'aggregate_white_meat_benefit',
+                    'aggregate_red_meat_benefit',
                 ],
             ],
             'zones' => [

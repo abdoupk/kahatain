@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ArchiveOccasionType, IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
+import type { IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
 
 import { zakatFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
@@ -33,7 +33,6 @@ defineOptions({
 const props = defineProps<{
     families: PaginationData<ZakatFamiliesResource>
     params: IndexParams
-    archive: ArchiveOccasionType
 }>()
 
 const params = ref<IndexParams>({

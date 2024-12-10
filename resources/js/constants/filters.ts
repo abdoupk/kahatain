@@ -432,6 +432,72 @@ export const zakatFilters: ListBoxFilter[] = [
     }
 ]
 
+export const meatDistributionFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-family',
+        field: 'id',
+        label: 'family',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'address.zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
+        field: 'orphans_count',
+        label: 'orphans_count',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'aggregate_red_meat_benefit',
+        label: 'aggregate_red_meat_benefit',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'aggregate_white_meat_benefit',
+        label: 'aggregate_white_meat_benefit',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'total_income',
+        label: 'total_income',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-dollar-sign',
+        field: 'income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    }
+]
+
 export const schoolEntryFilters: ListBoxFilter[] = [
     {
         icon: 'icon-hands-holding-child',

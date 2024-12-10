@@ -40,5 +40,6 @@ return [
     'students' => 'الأيتام المتمدرسين',
     'show_students_transcript' => 'عرض كشفوف النقاط',
     'zakat' => 'الزكاة',
+    'meat-distribution' => 'توزيع اللحم',
     'college-students' => 'الأيتام الجامعيين',
 ];

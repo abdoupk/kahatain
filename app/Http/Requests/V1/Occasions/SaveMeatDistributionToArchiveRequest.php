@@ -10,8 +10,7 @@ class SaveMeatDistributionToArchiveRequest extends FormRequest
     {
         return [
             'families' => 'required|array|min:1',
-            'zakat_id' => 'required|exists:finances,id',
-            'amount' => 'required|numeric',
+            'meat_type' => 'required|in:white_meat,red_meat',
         ];
     }
 

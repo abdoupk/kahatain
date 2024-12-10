@@ -30,7 +30,8 @@ class MeatDistributionResource extends JsonResource
             'orphans_count' => $this->orphans_count,
             'total_income' => $this->total_income,
             'income_rate' => $this->income_rate,
-            'aggregate_zakat_benefit' => $this->aggregate_zakat_benefit,
+            'aggregate_white_meat_benefit' => $this->aggregate_white_meat_benefit,
+            'aggregate_red_meat_benefit' => $this->aggregate_red_meat_benefit,
         ];
     }
 }

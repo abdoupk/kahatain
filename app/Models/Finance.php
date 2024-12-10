@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
@@ -134,11 +133,6 @@ class Finance extends Model
             'tenant_id' => $this->tenant_id,
             'created_at' => strtotime($this->created_at),
         ];
-    }
-
-    public function familyZakats(): HasMany
-    {
-        return $this->hasMany(FamilyZakat::class, 'zakat_id');
     }
 
     protected function casts(): array

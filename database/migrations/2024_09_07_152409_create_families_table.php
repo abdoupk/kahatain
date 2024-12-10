@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('ramadan_basket_category')->nullable();
             $table->uuid('tenant_id')->index('idx_families_tenant_id');
             $table->float('aggregate_zakat_benefit')->default(0);
+            $table->mediumInteger('aggregate_white_meat_benefit')->default(0);
+            $table->mediumInteger('aggregate_red_meat_benefit')->default(0);
             $table->uuid('created_by')->nullable();
             $table->uuid('deleted_by')->nullable();
             $table->timestamps();

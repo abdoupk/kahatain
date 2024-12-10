@@ -73,6 +73,7 @@ export interface ISettingState {
 export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-map'
+    | 'icon-meat'
     | 'icon-sparkles'
     | 'icon-clock-rotate-left'
     | 'icon-link'
@@ -507,6 +508,29 @@ export interface ZakatFamiliesResource {
     total_income: number
     income_rate: number
     aggregate_zakat_benefit: number | null
+}
+
+export interface MeatDistributionFamiliesResource {
+    id: string
+    address: string
+    zone: {
+        id: string
+        name: string
+    }
+    branch: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    orphans_count: number
+    total_income: number
+    income_rate: number
+    aggregate_white_meat_benefit: number | null
+    aggregate_red_meat_benefit: number | null
 }
 
 export interface RamadanBasketFamiliesResource {

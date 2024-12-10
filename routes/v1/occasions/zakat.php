@@ -6,7 +6,6 @@ use App\Http\Controllers\V1\Occasions\Zakat\ExportFamiliesZakatPDFController;
 use App\Http\Controllers\V1\Occasions\Zakat\ExportFamiliesZakatXlsxController;
 use App\Http\Controllers\V1\Occasions\Zakat\FamiliesZakatIndexController;
 use App\Http\Controllers\V1\Occasions\Zakat\SaveFamiliesZakatToArchiveController;
-use App\Http\Controllers\V1\Occasions\Zakat\ZakatStoreController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::prefix('zakat')
@@ -34,11 +33,5 @@ Route::prefix('zakat')
             'save-to-archive',
             SaveFamiliesZakatToArchiveController::class
         )->name('save-to-archive')
-            ->middleware([HandlePrecognitiveRequests::class]);
-
-        Route::post(
-            '',
-            ZakatStoreController::class
-        )->name('store')
             ->middleware([HandlePrecognitiveRequests::class]);
     });

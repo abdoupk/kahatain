@@ -114,6 +114,8 @@ Route::middleware([
                     require __DIR__.'/v1/occasions/school-entry.php';
 
                     require __DIR__.'/v1/occasions/zakat.php';
+
+                    require __DIR__.'/v1/occasions/meat-distribution.php';
                 });
 
             Route::get('trash', TrashIndexController::class)->name('trash');

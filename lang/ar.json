@@ -253,6 +253,8 @@
     "school": "مدرسة",
     "quota_total": "عدد المقاعد الإجمالي",
     "general_average": "المعدل العام",
+    "aggregate_white_meat_benefit": "عدد الاستفادة من توزيع اللحوم البيضاء",
+    "aggregate_red_meat_benefit": "عدد الاستفادة من توزيع اللحوم الحمراء",
     "academic_year": "العام الدراسي",
     "No academic achievement added yet.": "لم يتم إضافة أي تحصيل أكاديمي حتى الآن.",
     "No college achievement added yet.": "لم يتم إضافة أي تحصيل جامعي حتى الآن.",
@@ -555,5 +557,11 @@
     "the_total": "المجموع",
     "total_in_each_academic_level": "المجموع في كل مستوى دراسي",
     "school_tools": "الأدوات المدرسية",
-    "student_list": "قائمة المتمدرسين"
+    "student_list": "قائمة المتمدرسين",
+    "white_meat": "لحوم بيضاء",
+    "red_meat": "لحوم حمراء",
+    "the_white_meat": "اللحوم البيضاء",
+    "the_red_meat": "اللحوم الحمراء",
+    "meat_type": "نوع اللحوم",
+    "meat_distribution": "توزيع اللحم"
 }
