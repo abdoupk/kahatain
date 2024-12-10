@@ -161,7 +161,7 @@ watch(
                 <base-form-input
                     id="name"
                     ref="firstInputRef"
-                    v-model="form.name"
+                    v-model="rolesStore.role.name"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.role_name') })"
                     type="text"
                 />
