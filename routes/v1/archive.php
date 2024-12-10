@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\Archive\ArchiveDetailsBabiesMilkAndDiapersController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsEidAlAdhaController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsEidSuitController;
+use App\Http\Controllers\V1\Archive\ArchiveDetailsMeatDistributionController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlyBasketController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlySponsorshipController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsRamadanBasketController;
@@ -61,6 +62,11 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
                 'zakat/{archive}',
                 ArchiveDetailsZakatController::class
             )->name('zakat');
+
+            Route::get(
+                'meat-distribution/{archive}',
+                ArchiveDetailsMeatDistributionController::class
+            )->name('meat-distribution');
 
             Route::get(
                 'school-entry/{archive}',

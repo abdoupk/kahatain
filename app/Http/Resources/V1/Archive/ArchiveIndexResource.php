@@ -61,6 +61,9 @@ class ArchiveIndexResource extends JsonResource
                 'amount' => formatCurrency($this->metadata['amount']),
                 'count' => $this->metadata['families_count'] ?? 0,
             ]),
+
+            // TODO change to trans choice
+            'meat_distribution' => 'توزيع اللحم',
         };
     }
 
@@ -97,6 +100,11 @@ class ArchiveIndexResource extends JsonResource
             ),
             'zakat' => route(
                 'tenant.archive.details.zakat',
+                $this->id
+            ),
+
+            'meat_distribution' => route(
+                'tenant.archive.details.meat-distribution',
                 $this->id
             ),
         };
