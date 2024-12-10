@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('is_handicapped');
             $table->boolean('is_unemployed');
             $table->string('ccp')->nullable();
+            $table->float('academic_average')->nullable();
             $table->string('phone_number')->nullable();
             $table->uuid('institution_id')->nullable();
             $table->string('institution_type')->nullable();

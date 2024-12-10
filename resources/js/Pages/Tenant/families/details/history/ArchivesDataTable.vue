@@ -13,11 +13,40 @@ import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
 import { formatCurrency, formatDate } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{
+const props = defineProps<{
     archives: PaginationData<unknown>
     needsMeta: PaginationData['meta']
     familyId: string
 }>()
+
+function fetchArchives(data: object) {
+    const newPerPage = data.archives_perPage || props.archives.meta.per_page
+
+    const totalItems = props.archives.meta.total
+
+    const totalPages = Math.ceil(totalItems / newPerPage)
+
+    // Check if the current page exceeds the total pages
+    if (props.archives.meta.current_page > totalPages) {
+        // Reset current page to the last available page
+        data.archives_page = totalPages
+    }
+
+    let routerData = {
+        archives_page: props.archives.meta.current_page,
+        archives_perPage: props.archives.meta.per_page,
+        needs_page: props.needsMeta.current_page,
+        needs_perPage: props.needsMeta.per_page
+    }
+
+    routerData = { ...routerData, ...data }
+
+    router.get(route('tenant.families.show', props.familyId), routerData, {
+        only: ['archives'],
+        preserveState: true,
+        preserveScroll: true
+    })
+}
 </script>
 
 <template>
@@ -84,20 +113,8 @@ defineProps<{
             :page="archives.meta.current_page"
             :pages="archives.meta.last_page"
             :per-page="archives.meta.per_page"
-            @change-page="
-                ($e) => {
-                    router.get(
-                        route('tenant.families.show', familyId),
-                        {
-                            archives_page: $e,
-                            needs_page: needsMeta.current_page,
-                            needs_perPage: needsMeta.per_page,
-                            archives_perPage: archives.meta.per_page
-                        },
-                        { only: ['archives'], preserveScroll: true, preserveState: true }
-                    )
-                }
-            "
+            @update:per-page="fetchArchives({ archives_perPage: $event })"
+            @change-page="fetchArchives({ archives_page: $event })"
         ></pagination-data-table>
     </div>
 </template>

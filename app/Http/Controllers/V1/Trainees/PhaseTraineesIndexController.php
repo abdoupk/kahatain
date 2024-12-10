@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\CollegeStudents;
+namespace App\Http\Controllers\V1\Trainees;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Students\PhaseStudentsIndexResource;

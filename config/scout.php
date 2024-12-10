@@ -192,6 +192,7 @@ return [
                     'income',
                     'birth_date',
                     'is_handicapped',
+                    'academic_average',
                 ],
                 'searchableAttributes' => [
                     'name',
@@ -220,6 +221,7 @@ return [
                     'eid_suit.clothes_shop_name',
                     'eid_suit.clothes_shop_address',
                     'eid_suit.clothes_shop_phone_number',
+                    'academic_average',
                 ],
                 'sortableAttributes' => [
                     'name',
@@ -238,6 +240,7 @@ return [
                     'family.zone.name',
                     'created_at',
                     'updated_at',
+                    'academic_average',
                 ],
             ],
             'babies' => [

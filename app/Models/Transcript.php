@@ -17,7 +17,6 @@ class Transcript extends Model
 
     protected $fillable = [
         'trimester',
-        'average',
         'orphan_id',
         'tenant_id',
         'academic_level_id',

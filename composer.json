@@ -66,6 +66,8 @@
             "app/Helpers/families.php",
             "app/Helpers/transcripts.php",
             "app/Helpers/students.php",
+            "app/Helpers/college-students.php",
+            "app/Helpers/trainees.php",
             "app/Helpers/sponsorships/sponsorships.php",
             "app/Helpers/sponsorships/calculate-contributions.php",
             "app/Helpers/sponsorships/calculate-weights.php",

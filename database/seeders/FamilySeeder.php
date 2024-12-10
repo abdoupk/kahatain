@@ -97,7 +97,7 @@ class FamilySeeder extends Seeder
                                 'tenant_id' => $tenant->id,
                                 'family_id' => $family?->id,
                                 'created_by' => User::whereTenantId($tenant->id)->first()?->id,
-                                'academic_level_id' => AcademicLevel::whereIId($i)->first()?->id,
+                                'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
                                 'sponsor_id' => $sponsor->id,
                             ]);
                         }

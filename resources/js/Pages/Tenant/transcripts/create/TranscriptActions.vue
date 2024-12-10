@@ -147,4 +147,43 @@ const handleDeleteTranscript = (transcriptId: string, close) => {
         </base-menu-items>
     </base-menu>
     <!-- End: Delete Transcript-->
+
+    <!-- Begin: Delete Transcript-->
+    <base-menu v-slot="{ close }">
+        <base-menu-button
+            :as="BaseButton"
+            class="-ms-1 w-full whitespace-nowrap border-0 shadow-none focus:outline-none focus:ring-0"
+        >
+            <svg-loader class="me-1 h-5 w-5 fill-success" name="icon-file-certificate" />
+
+            {{ $t('general_average') }}
+        </base-menu-button>
+
+        <base-menu-items>
+            <base-menu-item
+                :disabled="!orphan.transcripts.first_trimester"
+                class="w-full whitespace-nowrap"
+                @click.prevent="handleDeleteTranscript(orphan.transcripts.first_trimester?.id, close)"
+            >
+                {{ $t('first_trimester') }}
+            </base-menu-item>
+
+            <base-menu-item
+                :disabled="!orphan.transcripts.second_trimester"
+                class="w-full whitespace-nowrap"
+                @click.prevent="handleDeleteTranscript(orphan.transcripts.second_trimester?.id, close)"
+            >
+                {{ $t('second_trimester') }}
+            </base-menu-item>
+
+            <base-menu-item
+                :disabled="!orphan.transcripts.third_trimester"
+                class="w-full whitespace-nowrap"
+                @click.prevent="handleDeleteTranscript(orphan.transcripts.third_trimester?.id, close)"
+            >
+                {{ $t('third_trimester') }}
+            </base-menu-item>
+        </base-menu-items>
+    </base-menu>
+    <!-- End: Delete Transcript-->
 </template>

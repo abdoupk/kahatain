@@ -118,6 +118,7 @@ class Orphan extends Model implements HasMedia
         'gender',
         'birth_date',
         'family_status',
+        'academic_average',
         'health_status',
         'academic_level_id',
         'vocational_training_id',
@@ -245,6 +246,7 @@ class Orphan extends Model implements HasMedia
                     'name' => $this->family->zone->name,
                 ],
             ],
+            'academic_average' => $this->academic_average,
             'created_at' => strtotime($this->created_at),
             'updated_at' => strtotime($this->updated_at),
         ];
@@ -391,6 +393,11 @@ class Orphan extends Model implements HasMedia
     public function transcripts(): HasMany
     {
         return $this->hasMany(Transcript::class);
+    }
+
+    public function highEducationTranscripts(): HasMany
+    {
+        return $this->hasMany(HighEducationTranscript::class);
     }
 
     public function eidSuit(): HasOne

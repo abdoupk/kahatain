@@ -61,6 +61,11 @@ class AcademicLevel extends Model
         return $this->hasMany(Transcript::class);
     }
 
+    public function highEducationTranscripts(): HasMany
+    {
+        return $this->hasMany(HighEducationTranscript::class);
+    }
+
     public function AcademicLevelSchoolTools(): HasMany
     {
         return $this->hasMany(AcademicLevelSchoolTool::class);

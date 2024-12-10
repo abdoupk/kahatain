@@ -9,11 +9,13 @@ class CollegeStudentsIndexController extends Controller
 {
     public function __invoke(): Response
     {
-        return inertia('Tenant/students/index/StudentIndexPage', [
-            'academicLevels' => fn () => getAcademicLevelsForStudentsIndex(),
-            'totalStudents' => fn () => getTotalStudents(),
-            'studentsPerPhase' => fn () => getStudentsPerPhase(),
-            'studentsPerSchool' => fn () => getStudentsPerSchool(),
+        return inertia('Tenant/college-students/index/CollegeStudentsIndex', [
+            'orphans' => fn () => getCollegeStudents(),
+            'params' => getParams(),
+            'academicLevels' => fn () => getAcademicLevelsForCollegeStudentsIndex(),
+            'totalCollegeStudents' => fn () => getTotalCollegeStudents(),
+            'collegeStudentsPerPhase' => fn () => getCollegeStudentsPerPhase(),
+            'studentsPerUniversity' => fn () => getCollegeStudentsPerUniversity(),
         ]);
     }
 }

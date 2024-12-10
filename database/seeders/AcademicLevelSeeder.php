@@ -288,7 +288,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 35,
                 'level' => 'الأولى ليسانس',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'licence',
                 'subject_ids' => null,
 
             ],
@@ -297,7 +297,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 36,
                 'level' => 'الثانية ليسانس',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'licence',
                 'subject_ids' => null,
             ],
             [
@@ -305,7 +305,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 37,
                 'level' => 'الثالثة ليسانس',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'licence',
                 'subject_ids' => null,
             ],
             [
@@ -313,7 +313,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 38,
                 'level' => 'الأولى ماستر',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'master',
                 'subject_ids' => null,
             ],
             [
@@ -321,7 +321,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 39,
                 'level' => 'الثانية ماستر',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'master',
                 'subject_ids' => null,
             ],
             [
@@ -329,7 +329,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 40,
                 'level' => 'الأولى دكتوراه',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'doctorate',
                 'subject_ids' => null,
             ],
             [
@@ -337,7 +337,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 41,
                 'level' => 'الثانية دكتوراه',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'doctorate',
                 'subject_ids' => null,
             ],
             [
@@ -345,7 +345,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 42,
                 'level' => 'الثالثة دكتوراه',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'doctorate',
                 'subject_ids' => null,
             ],
             [
@@ -353,7 +353,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 43,
                 'level' => 'الرابعة دكتوراه',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'doctorate',
                 'subject_ids' => null,
             ],
             [
@@ -361,7 +361,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 44,
                 'level' => 'الخامسة دكتوراه',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => 'doctorate',
                 'subject_ids' => null,
             ],
             [
@@ -369,7 +369,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 45,
                 'level' => 'متخرج',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => 'university',
+                'phase_key' => null,
                 'subject_ids' => null,
             ],
             [

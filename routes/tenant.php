@@ -51,6 +51,8 @@ Route::middleware([
 
             require __DIR__.'/v1/branches.php';
 
+            require __DIR__.'/v1/college-students.php';
+
             require __DIR__.'/v1/committees.php';
 
             require __DIR__.'/v1/dashboard.php';
@@ -88,6 +90,8 @@ Route::middleware([
             require __DIR__.'/v1/sponsors.php';
 
             require __DIR__.'/v1/students.php';
+
+            require __DIR__.'/v1/trainees.php';
 
             require __DIR__.'/v1/transcripts.php';
 

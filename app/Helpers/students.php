@@ -68,6 +68,7 @@ function getStudentsPerPhase(): array
 function calculateAchievementsPercentage(int $orphansCount, int $transcriptsCount): float
 {
     $month = now()->month;
+
     $weight = ($month <= 3) ? 2 : (($month <= 7) ? 3 : (($month === 12 || $month === 11) ? 1 : 0));
 
     return $transcriptsCount === 0 ? 0 : number_format(($transcriptsCount / ($orphansCount * $weight)) * 100, 2);
