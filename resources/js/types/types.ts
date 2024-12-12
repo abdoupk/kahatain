@@ -73,6 +73,7 @@ export interface ISettingState {
 export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-map'
+    | 'icon-user-helmet-safety'
     | 'icon-meat'
     | 'icon-sparkles'
     | 'icon-clock-rotate-left'

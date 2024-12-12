@@ -51,7 +51,7 @@ defineProps<{
     needs: PaginationData<unknown>
 }>()
 
-const view = ref('family_benefit_history')
+const view = ref('general_information')
 
 function updateView(newValue: string) {
     view.value = newValue

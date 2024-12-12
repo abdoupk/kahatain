@@ -11,14 +11,16 @@ const props = defineProps<{
     paginationData: PaginationData<unknown>
     params: IndexParams
     url: string
+    preserveScroll?: boolean
+    preserveState?: boolean
 }>()
 
 const params = ref(props.params)
 
 const getData = () =>
     getDataForIndexPages(props.url, params.value, {
-        preserveState: false,
-        preserveScroll: false
+        preserveState: props.preserveState || false,
+        preserveScroll: props.preserveScroll || false
     })
 
 const handleChangePerPage = (value: number) => {

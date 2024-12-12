@@ -97,7 +97,9 @@ onMounted(async () => {
     <!-- BEGIN: Orphan Information -->
     <div class="intro-y box col-span-12 @container 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-            <h2 class="me-auto text-xl font-bold">{{ $t('display information') }}</h2>
+            <h2 class="me-auto text-xl font-bold">
+                {{ $t('display information') }}
+            </h2>
 
             <Link v-if="hasPermission('show_orphans')" :href="route('tenant.orphans.show', orphan.id)">
                 <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>

@@ -89,6 +89,7 @@
     "entries.benefactors": "[11,*]محسن|[3,10]محسنين|{2}محسنين",
     "entries.committees": "[11,*]لجنة|[3,10]لجان|{2}لجنتين",
     "entries.students": "[11,*]تلميذ|[3,10]تلاميذ|{2}تلميذين",
+    "entries.college_students": "[11,*]طالب|[3,10]طلاب|{2}طالبين",
     "errors.descriptions.503": "عذرًا، نحن نقوم ببعض أعمال الصيانة. يرجى التحقق مرة أخرى قريبا.",
     "errors.descriptions.500": "عفوًا، حدث خطأ ما في خوادمنا.",
     "errors.descriptions.404": "عذرا، الصفحة التي تبحث عنها لا يمكن العثور عليها.",
@@ -1414,5 +1415,10 @@
     "the_white_meat": "اللحوم البيضاء",
     "the_red_meat": "اللحوم الحمراء",
     "meat_type": "نوع اللحوم",
-    "meat_distribution": "توزيع اللحم"
+    "meat_distribution": "توزيع اللحم",
+    "the_educational_committee": "اللجنة التربوية",
+    "orphan_college_students": "الأيتام الجامعيين",
+    "orphan_trainees": "الأيتام المتكونين",
+    "the_college_student": "الطالب",
+    "the_college_students": "الطلاب الجامعيين"
 }

@@ -124,7 +124,7 @@ const handleExport = (params: IndexParams) => {
             </div>
 
             <div class="ms-auto text-slate-500 md:mx-auto">
-                <span v-if="paginationData.meta.total > 0">
+                <span v-if="paginationData.meta?.total > 0">
                     {{
                         $t('showing_results', {
                             from: paginationData.meta.from?.toString(),

@@ -564,5 +564,10 @@
     "the_white_meat": "اللحوم البيضاء",
     "the_red_meat": "اللحوم الحمراء",
     "meat_type": "نوع اللحوم",
-    "meat_distribution": "توزيع اللحم"
+    "meat_distribution": "توزيع اللحم",
+    "the_educational_committee": "اللجنة التربوية",
+    "orphan_college_students": "الأيتام الجامعيين",
+    "orphan_trainees": "الأيتام المتكونين",
+    "the_college_student": "الطالب",
+    "the_college_students": "الطلاب الجامعيين"
 }

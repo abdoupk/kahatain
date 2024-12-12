@@ -180,6 +180,20 @@ export const useMenuStore = defineStore('menu', {
                         title: $t('milk and diapers'),
                         routeName: 'tenant.occasions.babies-milk-and-diapers.index',
                         url: '/dashboard/projects/babies-milk-and-diapers'
+                    },
+                    {
+                        icon: 'icon-meat',
+                        ignore: !hasPermission('list_permission'),
+                        title: $t('meat_distribution'),
+                        routeName: 'tenant.occasions.meat-distribution.index',
+                        url: '/dashboard/projects/meat-distribution'
+                    },
+                    {
+                        icon: 'icon-chart-pie-simple',
+                        ignore: !hasPermission('list_permission'),
+                        title: $t('statistics'),
+                        routeName: 'tenant.occasions.statistics',
+                        url: '/dashboard/projects/statistics'
                     }
                 ]
             },
@@ -226,31 +240,62 @@ export const useMenuStore = defineStore('menu', {
             },
             {
                 icon: 'icon-graduation-cap',
-                ignore: !hasPermission('list_lessons'),
-                routeName: 'tenant.lessons.index',
-                title: $t('private_lessons'),
-                url: '/dashboard/lessons'
-            },
-            {
-                icon: 'icon-user-graduate',
-                ignore: !hasPermission('list_permission'),
-                title: $t('orphan_students'),
-                routeName: 'tenant.students.index',
-                url: '/dashboard/students'
-            },
-            {
-                icon: 'icon-grid',
-                ignore: !hasPermission('list_permission'),
-                title: $t('transcripts'),
-                routeName: 'tenant.transcripts.index',
-                url: '/dashboard/transcripts'
-            },
-            {
-                icon: 'icon-school-lock',
-                ignore: !hasPermission('list_schools'),
-                routeName: 'tenant.schools.index',
-                title: $t('private_schools'),
-                url: '/dashboard/schools'
+                ignore: !hasPermission(['list_families', 'create_families']),
+                routeName: '',
+                title: $t('the_educational_committee'),
+                subMenu: [
+                    {
+                        icon: 'icon-graduation-cap',
+                        ignore: !hasPermission('list_families'),
+                        title: $t('orphan_students'),
+                        subMenu: [
+                            {
+                                icon: 'icon-user-graduate',
+                                ignore: !hasPermission('list_permission'),
+                                title: $t('list', {
+                                    attribute: $t('orphan_students')
+                                }),
+                                routeName: 'tenant.students.index',
+                                url: '/dashboard/students'
+                            },
+                            {
+                                icon: 'icon-graduation-cap',
+                                ignore: !hasPermission('list_lessons'),
+                                routeName: 'tenant.lessons.index',
+                                title: $t('private_lessons'),
+                                url: '/dashboard/lessons'
+                            },
+                            {
+                                icon: 'icon-grid',
+                                ignore: !hasPermission('list_permission'),
+                                title: $t('transcripts'),
+                                routeName: 'tenant.transcripts.index',
+                                url: '/dashboard/transcripts'
+                            },
+                            {
+                                icon: 'icon-school-lock',
+                                ignore: !hasPermission('list_schools'),
+                                routeName: 'tenant.schools.index',
+                                title: $t('private_schools'),
+                                url: '/dashboard/schools'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'icon-diploma',
+                        ignore: !hasPermission('list_permission'),
+                        title: $t('orphan_college_students'),
+                        routeName: 'tenant.college-students.index',
+                        url: '/dashboard/college-students'
+                    },
+                    {
+                        icon: 'icon-user-helmet-safety',
+                        ignore: !hasPermission('list_permission'),
+                        title: $t('orphan_trainees'),
+                        routeName: 'tenant.trainees.index',
+                        url: '/dashboard/trainees'
+                    }
+                ]
             },
             // eslint-disable-next-line array-element-newline
             hasPermission(['list_archive', 'list_items', 'list_trash', 'view_settings']) ? 'divider' : '',

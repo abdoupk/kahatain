@@ -4,8 +4,8 @@ import { AcademicLevelsIndexResource } from '@/types/lessons'
 import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
-import AcademicLevelPhasePanel from '@/Pages/Tenant/students/index/AcademicLevelPhasePanel.vue'
-import AcademicLevelTab from '@/Pages/Tenant/students/index/AcademicLevelTab.vue'
+import AcademicLevelPhasePanel from '@/Pages/Tenant/college-students/index/AcademicLevelPhasePanel.vue'
+import AcademicLevelTab from '@/Pages/Tenant/college-students/index/AcademicLevelTab.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'

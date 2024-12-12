@@ -2,6 +2,7 @@
 
 use App\Models\AcademicLevel;
 use App\Models\Orphan;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 function getAcademicLevelsForCollegeStudentsIndex(): array
 {
@@ -72,9 +73,7 @@ function calculateHighEducationTranscriptsAchievementsPercentage(int $orphansCou
     return $transcriptsCount === 0 ? 0 : number_format(($transcriptsCount / ($orphansCount * $weight)) * 100, 2);
 }
 
-function getCollegeStudents()
+function getCollegeStudents(): LengthAwarePaginator
 {
-    return Orphan::whereHas('academicLevel', function ($query) {
-        $query->whereIn('phase_key', ['master', 'licence', 'doctorate']);
-    })->with(['highEducationTranscripts', 'institution'])->get();
+    return search(Orphan::getModel(), additional_filters: FILTER_COLLEGE_STUDENTS)->query(fn ($query) => $query->with(['highEducationTranscripts', 'institution', 'academicLevel']))->paginate(request()->integer('perPage', 10));
 }
