@@ -18,7 +18,9 @@ class DownloadSchoolToolsListController extends Controller
             ->landscape()
             ->withBrowsershot(function (Browsershot $browsershot) {
                 $browsershot
-                    ->margins(2, 2, 2, 2)
+                    ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
+                    ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
+                    ->margins(2, 4, 2, 4)
                     ->format('A3');
             })
             ->name('test-2023-04-10.pdf')
