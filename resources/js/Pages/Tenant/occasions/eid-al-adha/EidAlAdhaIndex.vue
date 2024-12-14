@@ -58,9 +58,9 @@ const showSuccessNotification = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
 
-const handleChangeStatus = (familyId: string, status: string) => {
-    useForm('patch', route('tenant.occasions.eid-al-adha.change-status', familyId), {
-        status
+const handleChangeStatus = (data: { id: string; status: string }) => {
+    useForm('patch', route('tenant.occasions.eid-al-adha.change-status', data.id), {
+        status: data.status
     }).submit({
         onSuccess: () => {
             showSuccessNotification.value = true

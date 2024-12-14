@@ -153,7 +153,12 @@ const emit = defineEmits(['sort', 'change-status'])
                     <the-table-td-actions class="min-w-32">
                         <base-form-select
                             :value="family.status"
-                            @change="emit('change-status', family.id, $event.target.value)"
+                            @change="
+                                emit('change-status', {
+                                    id: family.id,
+                                    status: $event.target.value
+                                })
+                            "
                         >
                             <option selected value="">{{ $t('filters.select_an_option') }}</option>
                             <option value="benefit">{{ $t('benefit') }}</option>
