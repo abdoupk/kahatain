@@ -10,7 +10,7 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 
 defineProps<{
     academicLevels: AcademicLevelsIndexResource
-    totalCollegeStudents: number
+    totalTrainees: number
 }>()
 </script>
 
@@ -19,7 +19,7 @@ defineProps<{
     <div class="col-span-12 mt-8">
         <div class="intro-y flex h-10 items-center">
             <h2 class="me-5 truncate text-lg font-medium rtl:!font-semibold">
-                {{ $t('college_student_list') }}
+                {{ $t('orphan_trainees_list') }}
             </h2>
         </div>
 
@@ -39,7 +39,7 @@ defineProps<{
 
                         <div class="mb-8 mt-4 flex items-center justify-start">
                             <div class="relative ms-0.5 text-2xl font-bold">
-                                {{ totalCollegeStudents }}
+                                {{ totalTrainees }}
                             </div>
                         </div>
                     </div>

@@ -369,7 +369,7 @@ class AcademicLevelSeeder extends Seeder
                 'i_id' => 45,
                 'level' => 'متخرج',
                 'phase' => 'الطور الجامعي',
-                'phase_key' => null,
+                'phase_key' => 'university',
                 'subject_ids' => null,
             ],
             [

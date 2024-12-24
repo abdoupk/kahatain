@@ -65,5 +65,10 @@ return [
         'labels' => [
         ],
     ],
+    'occasions' => [
+        'titles' => [
+            'babies_milk_and_diapers' => 'الاحذية و السراويل',
+        ],
+    ],
     'header' => 'الإحصائيات الخاصة ب:attribute',
 ];

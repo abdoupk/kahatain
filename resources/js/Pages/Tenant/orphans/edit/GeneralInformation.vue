@@ -64,6 +64,16 @@ const isOlderThan18 = computed(() => isOlderThan(form.birth_date, 18))
 const isShouldHasIncome = computed(() => {
     if (!isOlderThan18.value) return false
 
+    const phase = useAcademicLevelsStore().getPhaseFromId(form.academic_level_id)
+
+    if (
+        // eslint-disable-next-line array-element-newline
+        ['secondary_education', 'middle_education', 'primary_education', 'license', 'master', 'doctorate'].includes(
+            phase
+        )
+    )
+        return false
+
     return !form.is_handicapped && !form.is_unemployed
 })
 
@@ -322,7 +332,7 @@ onMounted(async () => {
                     <!-- BEGIN: Diapers Quantity -->
                     <div class="col-span-12 @xl:col-span-6">
                         <base-form-label for="diapers_quantity">
-                            {{ $t('diapers_quantity') }}
+                            {{ $t('diapers_quantity_label') }}
                         </base-form-label>
 
                         <base-form-input
@@ -361,7 +371,7 @@ onMounted(async () => {
                     <!-- BEGIN: Baby Milk Quantity -->
                     <div class="col-span-12 @xl:col-span-6">
                         <base-form-label for="baby_milk_quantity">
-                            {{ $t('baby_milk_quantity') }}
+                            {{ $t('baby_milk_quantity_label') }}
                         </base-form-label>
 
                         <base-form-input

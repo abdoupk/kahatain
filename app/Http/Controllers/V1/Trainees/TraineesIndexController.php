@@ -13,7 +13,7 @@ class TraineesIndexController extends Controller
             'academicLevels' => fn () => getAcademicLevelsForTraineesIndex(),
             'totalTrainees' => fn () => getTotalTrainees(),
             'traineesPerPhase' => fn () => getTraineesPerPhase(),
-            'studentsPerVocationalTrainingCenter' => fn () => getTraineesPerVocationalTrainingCenter(),
+            'traineesPerInstitution' => fn () => getTraineesPerVocationalTrainingCenter(),
         ]);
     }
 }

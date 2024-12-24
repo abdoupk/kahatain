@@ -56,7 +56,16 @@ const ccp = defineModel('ccp', { default: '' })
 
 const institutionName = computed(() => {
     switch (phase.value) {
+        case 'master':
+            return $t('university')
+
         case 'university':
+            return $t('university')
+
+        case 'license':
+            return $t('university')
+
+        case 'doctorate':
             return $t('university')
 
         case 'vocational_training':

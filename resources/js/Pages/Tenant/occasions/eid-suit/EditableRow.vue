@@ -54,6 +54,13 @@ const handleSubmit = ($event) => {
         orphan.value.eid_suit[props.field] = $event.name
     }
 
+    if (
+        props.field === 'clothes_shop_phone_number' ||
+        (props.field === 'shoes_shop_phone_number' && data.value[props.field]?.length < 10)
+    ) {
+        hasError.value = true
+    }
+
     if (validate.value) {
         orphan.value.orphan.edit[props.field] = false
 
@@ -66,7 +73,7 @@ const validate = computed(() => {
         return phoneNumberRegex.test(data.value[props.field])
     }
 
-    return data.value[props.field].length <= 255
+    return data.value[props.field]?.length <= 255
 })
 
 const handleSelectCell = () => {
@@ -105,10 +112,10 @@ const handleFocusOut = () => {
         <row-combobox
             v-else
             :id="`${field}_${orphan.orphan.id}`"
+            :has-error
             :load-options
             :max-length
             :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
-            :valid="validate"
             class="!mt-0 w-32"
             @focusout.prevent="handleFocusOut"
             @update:model-value="handleSubmit"

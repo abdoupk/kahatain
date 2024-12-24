@@ -6,9 +6,7 @@ import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
-import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -19,7 +17,7 @@ defineProps<{
 }>()
 
 // eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showEditModal', 'showDetailsModal'])
+const emit = defineEmits(['sort'])
 </script>
 
 <template>
@@ -56,9 +54,7 @@ const emit = defineEmits(['sort', 'showEditModal', 'showDetailsModal'])
 
                     <the-table-th class="text-center">{{ $t('validation.attributes.phone_number') }}</the-table-th>
 
-                    <the-table-th v-if="hasPermission(['update_orphans'])" class="text-center">
-                        {{ $t('actions') }}
-                    </the-table-th>
+                    <the-table-th class="text-center">{{ $t('ccp') }}</the-table-th>
                 </base-tr-table>
             </base-thead-table>
 
@@ -94,28 +90,9 @@ const emit = defineEmits(['sort', 'showEditModal', 'showDetailsModal'])
                         {{ orphan.phone_number }}
                     </the-table-td>
 
-                    <the-table-td-actions>
-                        <div class="flex items-center justify-center">
-                            <a class="me-3 flex items-center" href="javascript:void(0)">
-                                <svg-loader
-                                    v-if="hasPermission('show_orphans')"
-                                    class="me-1 h-4 w-4 fill-current"
-                                    name="icon-eye"
-                                />
-                                {{ $t('show') }}
-                            </a>
-
-                            <a
-                                v-if="hasPermission('update_orphans')"
-                                class="me-3 flex items-center"
-                                href="javascript:void(0)"
-                                @click.prevent="emit('showEditModal', orphan.id)"
-                            >
-                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
-                                {{ $t('edit') }}
-                            </a>
-                        </div>
-                    </the-table-td-actions>
+                    <the-table-td class="whitespace-nowrap text-center">
+                        {{ orphan.ccp || '————' }}
+                    </the-table-td>
                 </base-tr-table>
             </base-tbody-table>
         </base-table>

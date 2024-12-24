@@ -94,9 +94,9 @@ const handleSubmit = async () => {
     loading.value = true
 
     try {
-        form.value.end_date = dayjs(form.value.end_date).add(1, 'hour')
+        form.value.end_date = dayjs(form.value.end_date).add(1, 'hour').toDate()
 
-        form.value.start_date = dayjs(form.value.start_date).add(1, 'hour')
+        form.value.start_date = dayjs(form.value.start_date).add(1, 'hour').toDate()
 
         await form.value.submit().then(handleSuccess)
     } finally {

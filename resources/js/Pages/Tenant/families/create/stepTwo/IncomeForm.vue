@@ -39,13 +39,7 @@ const _ccpFile = ref(props.form.incomes.ccp_file)
 
 const totalIncome = computed(() => {
     const incomeSources = [
-        createFamilyStore.family.incomes.cnr,
-        createFamilyStore.family.incomes.cnas,
-        createFamilyStore.family.incomes.casnos,
-        createFamilyStore.family.incomes.pension,
         createFamilyStore.family.incomes.other_income,
-        createFamilyStore.family.incomes.account.ccp.balance,
-        createFamilyStore.family.incomes.account.bank.balance,
         createFamilyStore.family.incomes.account.ccp.performance_grant / 3,
         createFamilyStore.family.incomes.account.bank.performance_grant / 3,
         createFamilyStore.family.incomes.account.ccp.monthly_income,
@@ -89,8 +83,6 @@ const toggle = (key: keyof IncomesType) => {
                 break
 
             case 'other_income':
-                createFamilyStore.family.incomes.other_income = null
-
                 break
 
             case 'ccp_account':
@@ -148,28 +140,6 @@ onMounted(() => {
                 </base-form-switch-label>
             </base-form-switch>
         </div>
-
-        <div class="col-span-8 mt-3 lg:col-span-3 lg:mt-0">
-            <base-input-group>
-                <!-- @vue-ignore -->
-                <base-form-input
-                    v-model="createFamilyStore.family.incomes.cnr"
-                    :disabled="!items.cnr"
-                    :placeholder="$t('validation.attributes.the_amount')"
-                    maxlength="6"
-                    type="text"
-                    @change="form?.validate('incomes.cnr')"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                ></base-form-input>
-
-                <base-input-group-text>
-                    {{ $t('DA') }}
-                </base-input-group-text>
-            </base-input-group>
-        </div>
-
-        <base-form-input-error class="col-span-12 lg:col-start-5" field_name="incomes.cnr" :form>
-        </base-form-input-error>
     </div>
     <!-- End: CNR -->
 
@@ -189,28 +159,6 @@ onMounted(() => {
                 </base-form-switch-label>
             </base-form-switch>
         </div>
-
-        <div class="col-span-8 mt-3 lg:col-span-3 lg:mt-0">
-            <base-input-group>
-                <!-- @vue-ignore -->
-                <base-form-input
-                    v-model="createFamilyStore.family.incomes.cnas"
-                    :disabled="!items.cnas"
-                    :placeholder="$t('validation.attributes.the_amount')"
-                    maxlength="6"
-                    type="text"
-                    @change="form?.validate('incomes.cnas')"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                ></base-form-input>
-
-                <base-input-group-text>
-                    {{ $t('DA') }}
-                </base-input-group-text>
-            </base-input-group>
-        </div>
-
-        <base-form-input-error :form field_name="incomes.cnas" class="col-span-12 lg:col-start-5">
-        </base-form-input-error>
     </div>
     <!-- End: CNAS -->
 
@@ -230,28 +178,6 @@ onMounted(() => {
                 </base-form-switch-label>
             </base-form-switch>
         </div>
-
-        <div class="col-span-8 mt-3 lg:col-span-3 lg:mt-0">
-            <base-input-group>
-                <!-- @vue-ignore -->
-                <base-form-input
-                    v-model="createFamilyStore.family.incomes.casnos"
-                    :disabled="!items.casnos"
-                    :placeholder="$t('validation.attributes.the_amount')"
-                    maxlength="6"
-                    type="text"
-                    @change="form?.validate('incomes.casnos')"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                ></base-form-input>
-
-                <base-input-group-text>
-                    {{ $t('DA') }}
-                </base-input-group-text>
-            </base-input-group>
-        </div>
-
-        <base-form-input-error :form field_name="incomes.casnos" class="col-span-12 lg:col-start-5">
-        </base-form-input-error>
     </div>
     <!-- End: CASNOS -->
 
@@ -271,28 +197,6 @@ onMounted(() => {
                 </base-form-switch-label>
             </base-form-switch>
         </div>
-
-        <div class="col-span-8 mt-3 lg:col-span-3 lg:mt-0">
-            <base-input-group>
-                <!-- @vue-ignore -->
-                <base-form-input
-                    v-model="createFamilyStore.family.incomes.pension"
-                    :disabled="!items.pension"
-                    :placeholder="$t('validation.attributes.the_amount')"
-                    maxlength="6"
-                    type="text"
-                    @change="form?.validate('incomes.pension')"
-                    @keydown="allowOnlyNumbersOnKeyDown"
-                ></base-form-input>
-
-                <base-input-group-text>
-                    {{ $t('DA') }}
-                </base-input-group-text>
-            </base-input-group>
-        </div>
-
-        <base-form-input-error :form field_name="incomes.pension" class="col-span-12 lg:col-start-5">
-        </base-form-input-error>
     </div>
     <!-- End: PENSION -->
 

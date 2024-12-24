@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyForm } from '@/types/types'
 
+import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { computed, onMounted } from 'vue'
@@ -50,6 +51,18 @@ const isOlderThan18 = computed(() => {
 
 const isShouldHasIncome = computed(() => {
     if (!isOlderThan18.value) return false
+
+    const phase = useAcademicLevelsStore().getPhaseFromId(
+        createFamilyStore.family.orphans[props.index].academic_level_id
+    )
+
+    if (
+        // eslint-disable-next-line array-element-newline
+        ['secondary_education', 'middle_education', 'primary_education', 'license', 'master', 'doctorate'].includes(
+            phase
+        )
+    )
+        return false
 
     return !createFamilyStore.family.orphans[props.index].is_handicapped
 })
@@ -193,9 +206,9 @@ onMounted(async () => {
 
             <div>
                 <the-family-status-selector
-                    v-model:gender="createFamilyStore.family.orphans[index].gender"
                     :id="`family_status_${index}`"
                     v-model:family-status="createFamilyStore.family.orphans[index].family_status"
+                    v-model:gender="createFamilyStore.family.orphans[index].gender"
                     @update:family-status="form?.validate(`orphans.${index}.family_status`)"
                 ></the-family-status-selector>
             </div>
@@ -209,8 +222,8 @@ onMounted(async () => {
             v-model:birth-date="createFamilyStore.family.orphans[index].birth_date"
             v-model:ccp="createFamilyStore.family.orphans[index].ccp"
             v-model:institution="createFamilyStore.family.orphans[index].institution_id"
-            v-model:phone-number="createFamilyStore.family.orphans[index].phone_number"
             v-model:institution-type="createFamilyStore.family.orphans[index].institution_type"
+            v-model:phone-number="createFamilyStore.family.orphans[index].phone_number"
             v-model:vocational-training="createFamilyStore.family.orphans[index].vocational_training_id"
             :academic_level_id_field_name="`orphans.${index}.academic_level_id`"
             :birth_date_field_name="`orphans.${index}.birth_date`"
@@ -242,7 +255,7 @@ onMounted(async () => {
             <!-- Begin: Baby Milk Quantity-->
             <div class="col-span-12 sm:col-span-6">
                 <base-form-label :for="`baby_milk_quantity_${index}`">
-                    {{ $t('baby_milk_quantity') }}
+                    {{ $t('baby_milk_quantity_label') }}
                 </base-form-label>
 
                 <base-form-input
@@ -281,7 +294,7 @@ onMounted(async () => {
             <!-- Begin: Diapers Quantity-->
             <div class="col-span-12 sm:col-span-6">
                 <base-form-label :for="`diapers_quantity_${index}`">
-                    {{ $t('diapers_quantity') }}
+                    {{ $t('diapers_quantity_label') }}
                 </base-form-label>
 
                 <base-form-input
