@@ -8,9 +8,10 @@ use App\Models\Orphan;
 use App\Models\School;
 use App\Models\ShoeSize;
 use App\Models\University;
+use App\Models\UniversitySpeciality;
 use App\Models\User;
-use App\Models\VocationalTraining;
 use App\Models\VocationalTrainingCenter;
+use App\Models\VocationalTrainingSpeciality;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrphanFactory extends Factory
@@ -74,6 +75,19 @@ class OrphanFactory extends Factory
             $institution_id = University::inRandomOrder()->first()->id;
         }
 
+        $speciality_type = null;
+        $speciality_id = null;
+
+        if ($institution_type === 'university') {
+            $speciality_id = UniversitySpeciality::inRandomOrder()->first()->id;
+            $speciality_type = 'university';
+        }
+
+        if ($institution_type === 'vocational_training_center') {
+            $speciality_id = VocationalTrainingSpeciality::inRandomOrder()->first()->id;
+            $speciality_type = 'vocational_training';
+        }
+
         return [
             'first_name' => fake('ar_SA')->firstName,
             'last_name' => fake('ar_SA')->lastName,
@@ -81,7 +95,8 @@ class OrphanFactory extends Factory
             'family_status' => $family_status,
             'health_status' => fake('ar_SA')->realText('10'),
             'academic_level_id' => AcademicLevel::inRandomOrder()->first()->id,
-            'vocational_training_id' => VocationalTraining::inRandomOrder()->first()->id,
+            'speciality_id' => $speciality_id,
+            'speciality_type' => $speciality_type,
             'shoes_size' => ShoeSize::inRandomOrder()->first()->id,
             'pants_size' => ClothesSize::inRandomOrder()->first()->id,
             'shirt_size' => ClothesSize::inRandomOrder()->first()->id,

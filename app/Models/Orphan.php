@@ -410,6 +410,11 @@ class Orphan extends Model implements HasMedia
         return $this->morphTo();
     }
 
+    public function speciality(): BelongsTo
+    {
+        return $this->morphTo();
+    }
+
     protected function casts(): array
     {
         return [

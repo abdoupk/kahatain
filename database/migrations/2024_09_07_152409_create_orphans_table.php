@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('family_status')->nullable()->index('idx_orphans_family_status');
             $table->text('health_status')->nullable()->index('idx_orphans_health_status');
             $table->foreignIdFor(AcademicLevel::class)->nullable()->index('idx_orphans_academic_level');
-            $table->integer('vocational_training_id')->nullable();
+            //            $table->integer('vocational_training_id')->nullable();
             $table->text('shoes_size')->nullable()->index('idx_orphans_shoes_size');
             $table->text('pants_size')->nullable()->index('idx_orphans_pants_size');
             $table->text('shirt_size')->nullable()->index('idx_orphans_shirt_size');
@@ -33,6 +33,8 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->uuid('institution_id')->nullable();
             $table->string('institution_type')->nullable();
+            $table->integer('speciality_id')->nullable();
+            $table->string('speciality_type')->nullable();
             $table->text('note')->nullable()->index('idx_orphans_note');
             $table->uuid('tenant_id')->index('idx_orphans_tenant_id');
             $table->uuid('family_id')->index('idx_orphans_family_id');

@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AcademicLevelSchoolToolSeeder::class);
 
+        $this->call(UniversitySpecialitySeeder::class);
+
+        $this->call(VocationalTrainingSpecialitySeeder::class);
+
         $this->call(TenantSeeder::class);
 
         $this->call(PermissionSeeder::class);
@@ -46,7 +50,9 @@ class DatabaseSeeder extends Seeder
 
         Artisan::call('scout:sync-index-settings');
 
-        Artisan::call('scout:import', ['model' => 'App\Models\VocationalTraining']);
+        Artisan::call('scout:import', ['model' => 'App\Models\VocationalTrainingSpeciality']);
+
+        Artisan::call('scout:import', ['model' => 'App\Models\UniversitySpeciality']);
 
         Artisan::call('generate:locales');
     }
