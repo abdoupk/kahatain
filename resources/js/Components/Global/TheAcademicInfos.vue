@@ -12,6 +12,7 @@ import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheInstitutionSelector from '@/Components/Global/TheInstitutionSelector.vue'
+import TheUniversitySpecialitySelector from '@/Components/Global/TheUniversitySpecialitySelector.vue'
 import TheVocationalTrainingSelector from '@/Components/Global/TheVocationalTrainingSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown, isOlderThan } from '@/utils/helper'
@@ -34,6 +35,10 @@ const academicLevelsStore = useAcademicLevelsStore()
 
 const academicLevels = ref<AcademicLevelType[]>([])
 
+const specialityType = defineModel('specialityType', { default: null })
+
+const specialityId = defineModel('specialityId', { default: null })
+
 const isAcademic = computed(() => {
     return phase.value === 'university'
 })
@@ -43,8 +48,6 @@ const academicLevel = defineModel('academicLevel', { default: '' })
 const shouldBeInSchool = computed(() => {
     return props.birthDate && isOlderThan(props.birthDate, 5)
 })
-
-const vocationalTraining = defineModel('vocationalTraining', { default: '' })
 
 const institution = defineModel('institution', { default: '' })
 
@@ -95,10 +98,14 @@ const handleUpdateAcademicLevel = (value: string) => {
 
     if (phase.value === 'vocational_training') {
         institutionType.value = 'vocational_training_center'
+
+        specialityType.value = 'vocational_training_speciality'
     }
 
     if (phase.value === 'university') {
         institutionType.value = 'university'
+
+        specialityType.value = 'university_speciality'
     }
 
     if (
@@ -199,16 +206,23 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
     </template>
 
     <!-- Begin: Vocational Training-->
-    <div v-if="phase === 'vocational_training'" class="col-span-12 sm:col-span-6">
+    <div v-if="phase === 'vocational_training' || phase === 'university'" class="col-span-12 sm:col-span-6">
         <base-form-label :for="vocational_training_id_field_name">
             {{ $t('speciality') }}
         </base-form-label>
 
-        <div>
+        <div v-if="phase === 'vocational_training'">
             <the-vocational-training-selector
                 :id="vocational_training_id_field_name"
-                v-model:vocational-training="vocationalTraining"
+                v-model:vocational-training="specialityId"
             ></the-vocational-training-selector>
+        </div>
+
+        <div v-if="phase === 'university'">
+            <the-university-speciality-selector
+                :id="vocational_training_id_field_name"
+                v-model:university-speciality="specialityId"
+            ></the-university-speciality-selector>
         </div>
 
         <base-form-input-error :field_name="vocational_training_id_field_name" :form></base-form-input-error>

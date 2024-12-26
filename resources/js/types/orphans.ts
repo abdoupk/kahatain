@@ -7,6 +7,8 @@ export interface OrphanShowType {
     family_status: string
     health_status: string
     academic_level: string
+    speciality: string
+    institution: string
     shoes_size: string
     pants_size: string
     shirt_size: string
@@ -39,7 +41,6 @@ export interface OrphanUpdateFormType {
     shirt_size: string
     note: string
     gender: string
-    sponsorships: OrphanSponsorshipType
     baby_milk_type: string
     baby_milk_quantity: number
     diapers_type: string
@@ -53,6 +54,8 @@ export interface OrphanUpdateFormType {
     ccp: string
     phone_number: string
     vocational_training_id: string
+    speciality_type: string
+    speciality_id: number
     vocational_training: {
         id: string
         name: string
@@ -60,6 +63,10 @@ export interface OrphanUpdateFormType {
     institution_id: string
     institution_type: string
     institution: {
+        id: string
+        name: string
+    }
+    speciality: {
         id: string
         name: string
     }

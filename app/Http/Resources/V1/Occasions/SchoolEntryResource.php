@@ -33,6 +33,7 @@ class SchoolEntryResource extends JsonResource
                 'name' => $this->getName(),
                 'academic_phase' => $this->academicLevel?->phase,
                 'academic_level' => $this->academicLevel?->level,
+                'academic_average' => $this->academic_average,
             ],
         ];
     }

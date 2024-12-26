@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /* @mixin Family */
-class MonthlyBasketArchiveIndexResource extends JsonResource
+class MeatDistributionArchiveIndexResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -15,12 +15,12 @@ class MonthlyBasketArchiveIndexResource extends JsonResource
             'id' => $this->id,
             'address' => $this->address,
             'zone' => [
-                'id' => $this->zone->id,
-                'name' => $this->zone->name,
+                'id' => $this->zone?->id,
+                'name' => $this->zone?->name,
             ],
             'branch' => [
-                'id' => $this->branch->id,
-                'name' => $this->branch->name,
+                'id' => $this->branch?->id,
+                'name' => $this->branch?->name,
             ],
             'sponsor' => [
                 'id' => $this->sponsor?->id,
@@ -30,6 +30,8 @@ class MonthlyBasketArchiveIndexResource extends JsonResource
             'orphans_count' => $this->orphans_count,
             'total_income' => $this->total_income,
             'income_rate' => $this->income_rate,
+            'aggregate_white_meat_benefit' => $this->aggregate_white_meat_benefit,
+            'aggregate_red_meat_benefit' => $this->aggregate_red_meat_benefit,
         ];
     }
 }

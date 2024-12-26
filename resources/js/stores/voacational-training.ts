@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 
 export const useVocationalTrainingStore = defineStore('vocational-training', {
     state: () => ({
-        vocationalTrainingSpecialities: []
+        vocationalTrainingSpecialities: [],
+        universitySpecialities: []
     }),
     actions: {
         async getVocationalTrainingSpecialities() {
@@ -13,6 +14,14 @@ export const useVocationalTrainingStore = defineStore('vocational-training', {
                 )
 
                 this.vocationalTrainingSpecialities = vocationalTrainingSpecialities
+            }
+        },
+
+        async getUniversitySpecialities() {
+            if (this.universitySpecialities.length === 0) {
+                const { data: universitySpecialities } = await axios.get(route('tenant.list.university-specialities'))
+
+                this.universitySpecialities = universitySpecialities
             }
         },
 

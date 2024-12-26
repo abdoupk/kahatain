@@ -10,6 +10,8 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class OrphanUpdateInfosController extends Controller implements HasMiddleware
 {
@@ -18,9 +20,13 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
         return ['can:update_orphans'];
     }
 
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
     public function __invoke(OrphanInfosUpdateRequest $request, Orphan $orphan): ResponseFactory|Application|Response
     {
-        $orphan->update($request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type', 'photo', 'institution']));
+        $orphan->update($request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type', 'photo', 'institution', 'speciality']));
 
         if (now()->diff($orphan->birth_date)->y < 2) {
             $orphan->babyNeeds()->update($request->only(

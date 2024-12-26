@@ -27,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::morphMap([
             'tenant' => 'App\Models\Tenant',
+            'university_speciality' => 'App\Models\UniversitySpeciality',
+            'vocational_training_speciality' => 'App\Models\VocationalTrainingSpeciality',
             'domain' => 'App\Models\Domain',
             'user' => 'App\Models\User',
             'orphan' => 'App\Models\Orphan',

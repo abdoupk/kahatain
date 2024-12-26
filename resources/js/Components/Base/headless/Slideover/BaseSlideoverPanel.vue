@@ -45,7 +45,7 @@ const computedClass = computed(() =>
         leave="ease-in-out duration-[400ms]"
         leave-from="opacity-100"
         leave-to="opacity-0"
-        class="fixed inset-0 bg-black/60"
+        class="fixed inset-0 bg-gradient-to-b from-theme-1/50 via-theme-2/50 to-black/50 backdrop-blur-sm"
         aria-hidden="true"
     />
     <transition-child

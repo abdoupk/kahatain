@@ -7,6 +7,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
@@ -65,7 +66,9 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">
-                        {{ family.address }}
+                        <base-tippy :content="family.address">
+                            {{ family.address }}
+                        </base-tippy>
 
                         <Link
                             :href="route('tenant.zones.index') + `?show=${family.zone?.id}`"
@@ -80,7 +83,9 @@ defineProps<{
                             :href="route('tenant.branches.index') + `?show=${family.branch?.id}`"
                             class="mt-0.5 block truncate whitespace-nowrap"
                         >
-                            {{ family.branch?.name }}
+                            <base-tippy :content="family.branch?.name">
+                                {{ family.branch?.name }}
+                            </base-tippy>
                         </Link>
                     </the-table-td>
 

@@ -86,6 +86,22 @@ defineProps<{
                                     </h3>
                                 </div>
 
+                                <div v-if="orphan.institution" class="col-span-12 @xl:col-span-6">
+                                    <h2 class="text-lg font-semibold">{{ $t('validation.attributes.institution') }}</h2>
+
+                                    <h3 class="text-base font-medium">
+                                        {{ orphan.institution }}
+                                    </h3>
+                                </div>
+
+                                <div v-if="orphan.speciality" class="col-span-12 @xl:col-span-6">
+                                    <h2 class="text-lg font-semibold">{{ $t('speciality') }}</h2>
+
+                                    <h3 class="text-base font-medium">
+                                        {{ orphan.speciality }}
+                                    </h3>
+                                </div>
+
                                 <div class="col-span-12 @xl:col-span-6">
                                     <h2 class="text-lg font-semibold">{{ $t('validation.attributes.sex') }}</h2>
 

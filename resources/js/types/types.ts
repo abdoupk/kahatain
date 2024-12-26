@@ -609,7 +609,7 @@ export interface SchoolEntryOrphansResource {
         name: string
         academic_phase: string
         academic_level: string
-        last_year_average: string
+        academic_average: number
     }
 }
 

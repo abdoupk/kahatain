@@ -16,6 +16,7 @@ use App\Http\Controllers\V1\List\ListRolesController;
 use App\Http\Controllers\V1\List\ListSchoolsController;
 use App\Http\Controllers\V1\List\ListShoesSizesController;
 use App\Http\Controllers\V1\List\ListSubjectsController;
+use App\Http\Controllers\V1\Universities\UniversitySpecialitiesIndexController;
 use App\Http\Controllers\V1\VocationalTraining\VocationalTrainingIndexController;
 use App\Http\Controllers\V1\Zones\ListZonesController;
 
@@ -80,6 +81,11 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'vocational-training',
         VocationalTrainingIndexController::class
     )->name('vocational-trainings-specialities');
+
+    Route::get(
+        'university-specialities',
+        UniversitySpecialitiesIndexController::class
+    )->name('university-specialities');
 
     Route::get(
         'competences',

@@ -63,6 +63,8 @@ class OrphanInfosUpdateRequest extends FormRequest
             'diapers_type' => 'required_without:shoes_size,shoes_size,shirt_size',
             'institution_id' => 'nullable|uuid',
             'institution_type' => 'nullable|string',
+            'speciality_id' => 'nullable|integer',
+            'speciality_type' => 'nullable|string',
         ];
     }
 

@@ -3,7 +3,7 @@ import type { IndexParams, OrphansTranscriptsIndexResource, PaginationData } fro
 
 import { Link } from '@inertiajs/vue3'
 import dayjs from 'dayjs'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import TranscriptActions from '@/Pages/Tenant/transcripts/create/TranscriptActions.vue'
 
@@ -11,9 +11,11 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
+import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 
 import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -27,6 +29,16 @@ defineProps<{
 const emit = defineEmits(['sort', 'showCreateModal', 'showDeleteModal', 'showEditModal'])
 
 const now = dayjs()
+
+const showSuccessNotification = ref(false)
+
+const handleShowSuccessNotification = () => {
+    showSuccessNotification.value = true
+
+    setTimeout(() => {
+        showSuccessNotification.value = false
+    }, 500)
+}
 
 const shouldCreateFirstTrimesterTranscript = computed(() => {
     const isFebToAug = now.month() >= 1 && now.month() <= 7
@@ -46,7 +58,7 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block">
+    <div class="intro-y !z-30 col-span-12 hidden overflow-x-auto overflow-y-hidden @3xl:block">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -120,7 +132,9 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate text-center">
-                        {{ orphan.academic_level.level }}
+                        <base-tippy :content="orphan.academic_level.level">
+                            {{ orphan.academic_level.level }}
+                        </base-tippy>
 
                         <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                             {{ orphan.academic_level.phase }}
@@ -158,6 +172,7 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                                 :shouldCreateFirstTrimesterTranscript
                                 :shouldCreateSecondTrimesterTranscript
                                 :shouldCreateThirdTrimesterTranscript
+                                @show-success-notification="handleShowSuccessNotification"
                                 @show-create-modal="emit('showCreateModal', $event)"
                                 @show-edit-modal="emit('showEditModal', $event)"
                                 @show-delete-modal="emit('showDeleteModal', $event)"
@@ -168,4 +183,6 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
             </base-tbody-table>
         </base-table>
     </div>
+
+    <success-notification :open="showSuccessNotification" :title="$t('successfully_updated')"></success-notification>
 </template>

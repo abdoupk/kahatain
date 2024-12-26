@@ -40,7 +40,7 @@ const computedClass = computed(() =>
     <transition-child
         aria-hidden="true"
         as="div"
-        class="fixed inset-0 bg-black/60"
+        class="fixed inset-0 bg-gradient-to-b from-theme-1/50 via-theme-2/50 to-black/50 backdrop-blur-sm"
         enter="ease-in-out duration-500"
         enter-from="opacity-0"
         enter-to="opacity-100"

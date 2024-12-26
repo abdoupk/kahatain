@@ -216,7 +216,8 @@ onMounted(async () => {
                     v-model:institution="form.institution"
                     v-model:institution-type="form.institution_type"
                     v-model:phone-number="form.phone_number"
-                    v-model:vocational-training="form.vocational_training_id"
+                    v-model:speciality-id="form.speciality_id"
+                    v-model:speciality-type="form.speciality_type"
                     :birth-date="form.birth_date"
                     :form
                     academic_level_id_field_name="academic_level_id"

@@ -7,6 +7,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
@@ -84,7 +85,10 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">
-                        {{ family.address }}
+                        <base-tippy :content="family.address">
+                            {{ family.address }}
+                        </base-tippy>
+
                         <Link
                             :href="route('tenant.zones.index') + '?show=' + family.zone.id"
                             class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"

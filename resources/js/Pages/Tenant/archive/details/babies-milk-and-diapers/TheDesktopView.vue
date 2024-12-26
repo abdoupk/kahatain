@@ -7,6 +7,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
@@ -71,7 +72,9 @@ defineProps<{
                             :href="route('tenant.orphans.show', orphan.orphan.id)"
                             class="font-medium"
                         >
-                            {{ orphan.orphan.name }}
+                            <base-tippy :content="orphan.orphan.name">
+                                {{ orphan.orphan.name }}
+                            </base-tippy>
                         </Link>
                     </the-table-td>
 
@@ -101,7 +104,9 @@ defineProps<{
                             :href="route('tenant.sponsors.show', orphan.sponsor.id)"
                             class="font-medium"
                         >
-                            {{ orphan.sponsor.name }}
+                            <base-tippy :content="orphan.sponsor.name">
+                                {{ orphan.sponsor.name }}
+                            </base-tippy>
                         </Link>
                     </the-table-td>
 

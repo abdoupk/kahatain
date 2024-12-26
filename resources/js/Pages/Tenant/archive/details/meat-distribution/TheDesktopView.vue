@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
+import type { IndexParams, MeatDistributionFamiliesResource, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
 
@@ -7,6 +7,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
@@ -14,13 +15,13 @@ import { formatCurrency } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
-    families: PaginationData<ZakatFamiliesResource>
+    families: PaginationData<MeatDistributionFamiliesResource>
     params: IndexParams
 }>()
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+    <div class="intro-y !z-30 col-span-12 hidden @3xl:mb-4 @3xl:block @3xl:overflow-x-auto">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -34,20 +35,20 @@ defineProps<{
                         {{ $t('validation.attributes.sponsor.phone_number') }}
                     </the-table-th>
 
-                    <the-table-th class="text-start">
-                        {{ $t('validation.attributes.address') }}
-                    </the-table-th>
+                    <the-table-th class="text-start">{{ $t('validation.attributes.address') }}</the-table-th>
 
-                    <the-table-th class="text-start">
-                        {{ $t('the_branch') }}
-                    </the-table-th>
-
-                    <the-table-th class="!w-32 text-center">
-                        {{ $t('aggregate_zakat_benefit') }}
-                    </the-table-th>
+                    <the-table-th class="text-start">{{ $t('the_branch') }}</the-table-th>
 
                     <the-table-th class="!w-32 text-center">
                         {{ $t('children_count') }}
+                    </the-table-th>
+
+                    <the-table-th class="!w-32 text-center">
+                        {{ $t('aggregate_white_meat_benefit') }}
+                    </the-table-th>
+
+                    <the-table-th class="!w-32 text-center">
+                        {{ $t('aggregate_red_meat_benefit') }}
                     </the-table-th>
 
                     <the-table-th class="!w-32 text-center">
@@ -62,14 +63,18 @@ defineProps<{
 
             <base-tbody-table>
                 <base-tr-table v-for="(family, index) in families.data" :key="family.id" class="intro-x">
-                    <the-table-td class="w-16">
-                        {{ (families.meta.from ?? 0) + index }}
-                    </the-table-td>
+                    <the-table-td class="w-16"> {{ (families.meta.from ?? 0) + index }}</the-table-td>
 
-                    <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.sponsors.show', family.sponsor.id)" class="font-medium">
+                    <the-table-td class="!w-24 truncate">
+                        <Link
+                            v-if="family.sponsor.id"
+                            :href="route('tenant.sponsors.show', family.sponsor.id)"
+                            class="font-medium"
+                        >
                             {{ family.sponsor.name }}
                         </Link>
+
+                        <p v-else class="font-medium">{{ family.sponsor.name }}</p>
                     </the-table-td>
 
                     <the-table-td class="whitespace-nowrap text-center">
@@ -77,10 +82,12 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">
-                        {{ family.address }}
+                        <base-tippy :content="family.address">
+                            {{ family.address }}
+                        </base-tippy>
 
                         <Link
-                            :href="route('tenant.zones.index') + `?show=${family.zone?.id}`"
+                            :href="route('tenant.zones.index') + `?show=${family.zone.id}`"
                             class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"
                         >
                             {{ family.zone?.name }}
@@ -92,24 +99,38 @@ defineProps<{
                             :href="route('tenant.branches.index') + `?show=${family.branch?.id}`"
                             class="mt-0.5 block truncate whitespace-nowrap"
                         >
-                            {{ family.branch?.name }}
+                            <base-tippy :content="family.branch?.name">
+                                {{ family.branch?.name }}
+                            </base-tippy>
                         </Link>
-                    </the-table-td>
-
-                    <the-table-td class="text-center">
-                        {{ formatCurrency(family.aggregate_zakat_benefit) }}
                     </the-table-td>
 
                     <the-table-td class="text-center">
                         {{ family.orphans_count }}
                     </the-table-td>
 
-                    <the-table-td class="whitespace-nowrap text-center">
-                        {{ formatCurrency(family.total_income) }}
+                    <the-table-td class="text-center">
+                        <div class="whitespace-nowrap">
+                            {{ family.aggregate_white_meat_benefit }}
+                        </div>
                     </the-table-td>
 
-                    <the-table-td class="whitespace-nowrap text-center">
-                        {{ formatCurrency(family.income_rate) }}
+                    <the-table-td class="text-center">
+                        <div class="whitespace-nowrap">
+                            {{ family.aggregate_red_meat_benefit }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatCurrency(family.total_income) }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatCurrency(family.income_rate) }}
+                        </div>
                     </the-table-td>
                 </base-tr-table>
             </base-tbody-table>

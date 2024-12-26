@@ -117,6 +117,7 @@
     "exports.archive.ramadan_basket_families": "أرشيف المستفيدين من قفة رمضان لسنة :date",
     "exports.archive.babies_milk_and_diapers": "أرشيف المستفيدين من الحفاضات وحليب الأطفال لشهر :date",
     "exports.archive.school_entry": "أرشيف المستفيدين من الحقائب المدرسية لسنة :date",
+    "exports.archive.meat_distribution_families": "أرشيف المستفيدين من توزيع اللحوم ليوم :date",
     "exports.archive.warnings.eid_al_adha": "هل أنت متأكد من رغبتك في تعديل قائمة المستفيدين من الأضحية؟",
     "exports.archive.warnings.eid_suit": "هل أنت متأكد من رغبتك في تعديل قائمة المستفيدين من بدلة العيد؟",
     "exports.archive.warnings.school_entry": "هل أنت متأكد من رغبتك في تعديل قائمة المستفيدين من الحقائب المدرسية؟",

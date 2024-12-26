@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\OrphanFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,98 +13,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property string $first_name
- * @property string $last_name
- * @property Carbon $birth_date
- * @property string|null $family_status
- * @property string|null $health_status
- * @property int|null $academic_level_id
- * @property int|null $vocational_training_id
- * @property string|null $shoes_size
- * @property string|null $pants_size
- * @property string|null $shirt_size
- * @property string $gender
- * @property float|null $income
- * @property bool $is_handicapped
- * @property bool $is_unemployed
- * @property string|null $note
- * @property string $tenant_id
- * @property string $family_id
- * @property string $sponsor_id
- * @property string $created_by
- * @property string|null $deleted_by
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read AcademicLevel|null $academicLevel
- * @property-read Collection<int, Sponsorship> $aid
- * @property-read int|null $aid_count
- * @property-read Collection<int, Archive> $archives
- * @property-read int|null $archives_count
- * @property-read Baby|null $babyNeeds
- * @property-read Collection<int, CollegeAchievement> $collegeAchievements
- * @property-read int|null $college_achievements_count
- * @property-read User $creator
- * @property-read Collection<int, EventOccurrence> $events
- * @property-read int|null $events_count
- * @property-read Family $family
- * @property-read MediaCollection<int, Media> $media
- * @property-read int|null $media_count
- * @property-read Collection<int, Need> $needs
- * @property-read int|null $needs_count
- * @property-read ClothesSize|null $pantsSize
- * @property-read ClothesSize|null $shirtSize
- * @property-read ShoeSize|null $shoesSize
- * @property-read Sponsor $sponsor
- * @property-read Tenant $tenant
- * @property-read VocationalTraining|null $vocationalTraining
- * @property-read Collection<int, VocationalTrainingAchievement> $vocationalTrainingAchievements
- * @property-read int|null $vocational_training_achievements_count
- *
- * @method static OrphanFactory factory($count = null, $state = [])
- * @method static Builder<static>|Orphan newModelQuery()
- * @method static Builder<static>|Orphan newQuery()
- * @method static Builder<static>|Orphan onlyTrashed()
- * @method static Builder<static>|Orphan query()
- * @method static Builder<static>|Orphan whereAcademicLevelId($value)
- * @method static Builder<static>|Orphan whereBirthDate($value)
- * @method static Builder<static>|Orphan whereCreatedAt($value)
- * @method static Builder<static>|Orphan whereCreatedBy($value)
- * @method static Builder<static>|Orphan whereDeletedAt($value)
- * @method static Builder<static>|Orphan whereDeletedBy($value)
- * @method static Builder<static>|Orphan whereFamilyId($value)
- * @method static Builder<static>|Orphan whereFamilyStatus($value)
- * @method static Builder<static>|Orphan whereFirstName($value)
- * @method static Builder<static>|Orphan whereGender($value)
- * @method static Builder<static>|Orphan whereHealthStatus($value)
- * @method static Builder<static>|Orphan whereId($value)
- * @method static Builder<static>|Orphan whereIncome($value)
- * @method static Builder<static>|Orphan whereIsHandicapped($value)
- * @method static Builder<static>|Orphan whereIsUnemployed($value)
- * @method static Builder<static>|Orphan whereLastName($value)
- * @method static Builder<static>|Orphan whereNote($value)
- * @method static Builder<static>|Orphan wherePantsSize($value)
- * @method static Builder<static>|Orphan whereShirtSize($value)
- * @method static Builder<static>|Orphan whereShoesSize($value)
- * @method static Builder<static>|Orphan whereSponsorId($value)
- * @method static Builder<static>|Orphan whereTenantId($value)
- * @method static Builder<static>|Orphan whereUpdatedAt($value)
- * @method static Builder<static>|Orphan whereVocationalTrainingId($value)
- * @method static Builder<static>|Orphan withTrashed()
- * @method static Builder<static>|Orphan withoutTrashed()
- *
- * @mixin Eloquent
- */
 class Orphan extends Model implements HasMedia
 {
     use BelongsToTenant, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;
@@ -121,7 +31,8 @@ class Orphan extends Model implements HasMedia
         'academic_average',
         'health_status',
         'academic_level_id',
-        'vocational_training_id',
+        'speciality_id',
+        'speciality_type',
         'academic_year',
         'shoes_size',
         'pants_size',
@@ -215,14 +126,14 @@ class Orphan extends Model implements HasMedia
             'note' => $this->note,
             'academic_level' => [
                 'id' => $this->academic_level_id,
+                'i_id' => $this->academicLevel?->i_id,
                 'level' => $this->academicLevel?->level,
                 'phase' => $this->academicLevel?->phase,
                 'phase_key' => $this->academicLevel?->phase_key,
             ],
-            'vocational_training' => [
-                'id' => $this->vocational_training_id,
-                'speciality' => $this->vocationalTraining?->speciality,
-                'division' => $this->vocationalTraining?->division,
+            'speciality' => [
+                'id' => $this->speciality?->id,
+                'speciality' => $this->speciality?->speciality,
             ],
             'eid_suit' => [
                 'id' => $this->eidSuit?->id,
@@ -266,7 +177,7 @@ class Orphan extends Model implements HasMedia
     {
         return $models->load([
             'academicLevel',
-            'vocationalTraining',
+            'speciality',
             'eidSuit',
             'shoesSize',
             'shirtSize',

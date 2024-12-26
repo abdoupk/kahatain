@@ -7,6 +7,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
@@ -63,7 +64,9 @@ defineProps<{
 
                     <the-table-td class="max-w-40 truncate">
                         <template v-if="orphan.orphan.academic_level">
-                            {{ orphan.orphan.academic_level }}
+                            <base-tippy :content="orphan.orphan.academic_level">
+                                {{ orphan.orphan.academic_level }}
+                            </base-tippy>
                             <p class="mt-0.5 block whitespace-nowrap text-xs text-slate-500">
                                 {{ orphan.orphan?.academic_phase }}
                             </p>
@@ -91,7 +94,10 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">
-                        {{ orphan.family.address }}
+                        <base-tippy :content="orphan.family.address">
+                            {{ orphan.family.address }}
+                        </base-tippy>
+
                         <Link
                             :href="route('tenant.zones.index') + `?show=${orphan.family.zone?.id}`"
                             class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"

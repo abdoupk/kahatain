@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ArchiveOccasionType, IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
+import type { ArchiveOccasionType, IndexParams, MeatDistributionFamiliesResource, PaginationData } from '@/types/types'
 
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -8,10 +8,9 @@ import TheLayout from '@/Layouts/TheLayout.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
-import { formatCurrency, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/archive/details/zakat/DataTable.vue'))
+const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/archive/details/meat-distribution/DataTable.vue'))
 
 const TheNoResultsTable = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheNoResultsTable.vue'))
 
@@ -24,10 +23,9 @@ defineOptions({
 })
 
 const props = defineProps<{
-    families: PaginationData<ZakatFamiliesResource>
+    families: PaginationData<MeatDistributionFamiliesResource>
     params: IndexParams
     archive: ArchiveOccasionType
-    amount: number
 }>()
 
 const params = ref<IndexParams>({
@@ -39,16 +37,13 @@ const params = ref<IndexParams>({
     search: props.params.search,
     archive: props.archive.id
 })
-
-const total = formatCurrency(props.amount)
 </script>
 
 <template>
     <Head
         :title="
-            $t('exports.archive.zakat_families', {
-                date: String(archive.date),
-                attribute: String(total)
+            $t('exports.archive.meat_distribution_families', {
+                date: String(archive.date)
             })
         "
     ></Head>
@@ -56,15 +51,12 @@ const total = formatCurrency(props.amount)
     <suspense>
         <div>
             <the-table-header
-                :exportable="hasPermission('export_occasions')"
                 :filters="[]"
                 :pagination-data="families"
                 :params="params"
-                :title="$t('exports.archive.zakat_families', { date: String(archive.date), attribute: String(total) })"
+                :title="$t('exports.archive.meat_distribution_families', { date: String(archive.date) })"
                 :url="$page.url"
                 entries="families"
-                export-pdf-url="tenant.archive.export.zakat.pdf"
-                export-xlsx-url="tenant.archive.export.zakat.xlsx"
             >
             </the-table-header>
 

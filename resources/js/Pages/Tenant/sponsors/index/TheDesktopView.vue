@@ -7,6 +7,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
@@ -101,7 +102,9 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate text-center">
-                        {{ sponsor.academic_level }}
+                        <base-tippy :content="sponsor.academic_level">
+                            {{ sponsor.academic_level }}
+                        </base-tippy>
 
                         <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                             {{ sponsor.academic_level_phase }}

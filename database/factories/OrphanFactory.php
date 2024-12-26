@@ -80,12 +80,12 @@ class OrphanFactory extends Factory
 
         if ($institution_type === 'university') {
             $speciality_id = UniversitySpeciality::inRandomOrder()->first()->id;
-            $speciality_type = 'university';
+            $speciality_type = 'university_speciality';
         }
 
         if ($institution_type === 'vocational_training_center') {
             $speciality_id = VocationalTrainingSpeciality::inRandomOrder()->first()->id;
-            $speciality_type = 'vocational_training';
+            $speciality_type = 'vocational_training_speciality';
         }
 
         return [

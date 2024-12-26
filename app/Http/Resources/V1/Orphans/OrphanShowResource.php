@@ -19,6 +19,8 @@ class OrphanShowResource extends JsonResource
             'family_status' => $this->family_status,
             'health_status' => $this->health_status,
             'academic_level' => $this->academicLevel?->level,
+            'institution' => $this->institution?->getName(),
+            'speciality' => $this->speciality?->speciality,
             'shoes_size' => $this->shoesSize?->label,
             'pants_size' => $this->pantsSize?->label,
             'shirt_size' => $this->shirtSize?->label,

@@ -228,7 +228,7 @@ return [
                     'family_status.ar',
                     'family_status.fr',
                     'family_status.en',
-                    'academic_level.id',
+                    'academic_level.i_id',
                     'vocational_training.id',
                     'birth_date',
                     'age',
@@ -308,7 +308,7 @@ return [
                     'id',
                     'name',
                     'tenant_id',
-                    'academic_level_id',
+                    'academic_level.i_id',
                     'sponsor_type',
                     'gender',
                     'income',
@@ -329,7 +329,7 @@ return [
                     'diploma',
                     'ccp',
                 ],
-                'sortableAttributes' => ['name', 'birth_date', 'academic_level.id', 'health_status', 'created_at'],
+                'sortableAttributes' => ['name', 'birth_date', 'academic_level.i_id', 'health_status', 'created_at'],
             ],
             'families' => [
                 'rankingRules' => [

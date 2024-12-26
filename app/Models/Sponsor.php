@@ -162,6 +162,7 @@ class Sponsor extends Model implements HasMedia
             'orphans_count' => $this->orphans?->count(),
             'academic_level' => [
                 'id' => $this->academic_level_id,
+                'i_id' => $this->academicLevel?->i_id,
                 'level' => $this->academicLevel?->level,
                 'phase' => $this->academicLevel?->phase,
             ],

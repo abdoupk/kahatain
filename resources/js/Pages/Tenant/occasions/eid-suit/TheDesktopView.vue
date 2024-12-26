@@ -9,6 +9,7 @@ import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
@@ -163,7 +164,9 @@ const emit = defineEmits(['sort'])
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
                         <Link :href="route('tenant.sponsors.show', orphan.sponsor.id)" class="font-medium">
-                            {{ orphan.sponsor.name }}
+                            <base-tippy :content="orphan.sponsor.name">
+                                {{ orphan.sponsor.name }}
+                            </base-tippy>
                         </Link>
                     </the-table-td>
 
@@ -172,7 +175,9 @@ const emit = defineEmits(['sort'])
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">
-                        {{ orphan.family.address }}
+                        <base-tippy :content="orphan.family.address">
+                            {{ orphan.family.address }}
+                        </base-tippy>
 
                         <Link
                             :href="route('tenant.zones.index') + `?show=${orphan.family.zone?.id}`"
