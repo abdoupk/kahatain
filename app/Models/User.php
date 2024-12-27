@@ -155,7 +155,7 @@ class User extends Authenticatable
         static::created(static function (User $user): void {
             $user->settings()->create([
                 'theme' => 'enigma',
-                'color_scheme' => 'default',
+                'color_scheme' => 'theme_1',
                 'layout' => 'side_menu',
                 'appearance' => 'light',
                 'locale' => 'ar',

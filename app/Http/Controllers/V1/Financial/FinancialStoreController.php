@@ -17,7 +17,7 @@ class FinancialStoreController extends Controller implements HasMiddleware
     public function __invoke(FinancialCreateRequest $request)
     {
         Finance::create([
-            ...$request->only(['specification', 'date', 'description', 'name']),
+            ...$request->only(['specification', 'date', 'description']),
             'received_by' => $request->only('member_id')['member_id'],
             'amount' => $request->type === 'income' ? abs($request->amount) : abs($request->amount) * -1,
         ]);

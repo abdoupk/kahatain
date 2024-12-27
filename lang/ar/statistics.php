@@ -67,7 +67,14 @@ return [
     ],
     'occasions' => [
         'titles' => [
-            'babies_milk_and_diapers' => 'الاحذية و السراويل',
+            'babies_milk_and_diapers' => 'الاستفادة من الحليب والحفاضات',
+            'eid_suit' => 'الاستفادة من بدلة العيد',
+            'eid_al_adha' => 'الاستفادة من الأضحية',
+            'ramadan_basket' => 'الاستفادة من القفة الرمضانية',
+            'school_entry' => 'الاستفادة من الحقيبة المدرسية',
+            'monthly_sponsorship' => 'الاستفادة من الكفالة الشهرية',
+            'zakat' => ' الاستفادة من الزكاة',
+            'meat_distribution' => 'الاستفادة من توزيع اللحوم',
         ],
     ],
     'header' => 'الإحصائيات الخاصة ب:attribute',

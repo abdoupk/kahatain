@@ -793,7 +793,8 @@ export type OrphanType = {
     family_status: string
     health_status: string
     academic_level_id: number | null
-    vocational_training_id: number | null
+    speciality_id: number | null
+    speciality_type: string | null
     shoes_size: string
     pants_size: string
     shirt_size: string

@@ -19,7 +19,7 @@ class OrphansStatisticsController extends Controller
             'orphansByBranch' => getOrphansByBranch(),
             'orphansByPantsAndShirtSize' => getByPantsAndShirtSize(),
             'orphansByShoeSize' => getOrphansByShoeSize(),
-            'orphansByVocationalTraining' => getOrphansByVocationalTraining(),
+            'orphansByVocationalTraining' => [],
             'orphansByCreatedDate' => getOrphansGroupByCreatedDate(),
             'orphansGroupHealthStatus' => getOrphansGroupHealthStatus(),
         ]);

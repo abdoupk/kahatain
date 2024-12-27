@@ -123,7 +123,6 @@ export const useCreateFamilyStore = defineStore('create-family', {
                     health_status: '',
                     academic_level_id: null,
                     institution_id: null,
-                    vocational_training_id: null,
                     shoes_size: '',
                     pants_size: '',
                     shirt_size: '',
@@ -138,7 +137,9 @@ export const useCreateFamilyStore = defineStore('create-family', {
                     gender: 'male',
                     ccp: null,
                     phone_number: null,
-                    institution_type: null
+                    institution_type: null,
+                    speciality_id: null,
+                    speciality_type: null
                 }
             ],
             housing: {

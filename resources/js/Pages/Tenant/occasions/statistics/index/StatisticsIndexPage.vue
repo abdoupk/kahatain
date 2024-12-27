@@ -1,8 +1,20 @@
 <script lang="ts" setup>
+import {
+    BabiesMilkAndDiapersStatisticsType,
+    EidAlAdhaStatisticsType,
+    EidSuitStatisticsType,
+    MeatDistributionStatisticsType,
+    MonthlySponsorshipStatisticsType,
+    RamadanBasketStatisticsType,
+    SchoolEntryStatisticsType,
+    ZakatStatisticsType
+} from '@/types/statistics'
+
 import { defineAsyncComponent } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import TheStatisticBox from '@/Components/Global/TheStatisticBox.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
@@ -41,6 +53,25 @@ const ZakatStatistics = defineAsyncComponent(
 defineOptions({
     layout: TheLayout
 })
+
+defineProps<{
+    babiesMilkAndDiapers: BabiesMilkAndDiapersStatisticsType
+    ramadanBasket: RamadanBasketStatisticsType
+    eidSuit: EidSuitStatisticsType
+    eidAlAdha: EidAlAdhaStatisticsType
+    schoolEntry: SchoolEntryStatisticsType
+    monthlySponsorship: MonthlySponsorshipStatisticsType
+    zakat: ZakatStatisticsType
+    meatDistribution: MeatDistributionStatisticsType
+    minMaxDate: {
+        min_year: string
+        max_year: string
+    }
+}>()
+
+const handleChangeDateForSchoolEntry = () => {
+    console.log('555')
+}
 </script>
 
 <template>
@@ -55,7 +86,9 @@ defineOptions({
 
                     <template #chart>
                         <suspense suspensible>
-                            <babies-milk-and-diapers-statistics></babies-milk-and-diapers-statistics>
+                            <babies-milk-and-diapers-statistics
+                                :babiesMilkAndDiapers
+                            ></babies-milk-and-diapers-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -65,11 +98,11 @@ defineOptions({
             <!-- Begin: eidSuit -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title> {{ $t('statistics.occasions.titles.eid_suit') }}</template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <eid-suit-statistics></eid-suit-statistics>
+                            <eid-suit-statistics :eidSuit></eid-suit-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -79,11 +112,11 @@ defineOptions({
             <!-- Begin: eidAlAdha -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title> {{ $t('statistics.occasions.titles.eid_al_adha') }}</template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <eid-al-adha-statistics></eid-al-adha-statistics>
+                            <eid-al-adha-statistics :eidAlAdha></eid-al-adha-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -93,11 +126,11 @@ defineOptions({
             <!-- Begin: zakat -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title> {{ $t('statistics.occasions.titles.zakat') }}</template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <zakat-statistics></zakat-statistics>
+                            <zakat-statistics :zakat></zakat-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -107,11 +140,11 @@ defineOptions({
             <!-- Begin: monthlySponsorship -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title> {{ $t('statistics.occasions.titles.monthly_sponsorship') }}</template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <monthly-sponsorship-statistics></monthly-sponsorship-statistics>
+                            <monthly-sponsorship-statistics :monthlySponsorship></monthly-sponsorship-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -121,11 +154,11 @@ defineOptions({
             <!-- Begin: ramadanBasket -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title> {{ $t('statistics.occasions.titles.ramadan_basket') }}</template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <ramadan-basket-statistics></ramadan-basket-statistics>
+                            <ramadan-basket-statistics :ramadanBasket></ramadan-basket-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -135,11 +168,11 @@ defineOptions({
             <!-- Begin: meatDistribution -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title> {{ $t('statistics.occasions.titles.meat_distribution') }}</template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <meat-distribution-statistics></meat-distribution-statistics>
+                            <meat-distribution-statistics :meatDistribution></meat-distribution-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>
@@ -149,11 +182,28 @@ defineOptions({
             <!-- Begin: schoolEntry -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title>
+                        {{ $t('statistics.occasions.titles.school_entry') }}
+                    </template>
+
+                    <template #actions>
+                        <base-form-select @update:model-value="handleChangeDateForSchoolEntry">
+                            <option
+                                v-for="option in Array.from(
+                                    { length: minMaxDate.max_year - minMaxDate.min_year + 1 },
+                                    (_, i) => minMaxDate.min_year + i
+                                )"
+                                :key="option"
+                                :value="option"
+                            >
+                                {{ option }}
+                            </option>
+                        </base-form-select>
+                    </template>
 
                     <template #chart>
                         <suspense suspensible>
-                            <school-entry-statistics></school-entry-statistics>
+                            <school-entry-statistics :schoolEntry></school-entry-statistics>
                         </suspense>
                     </template>
                 </the-statistic-box>

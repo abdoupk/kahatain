@@ -1,5 +1,27 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { EidAlAdhaStatisticsType } from '@/types/statistics'
 
-<template>babies</template>
+import BaseRadarChart from '@/Components/Base/chart/BaseRadarChart.vue'
+import TheNoDataChart from '@/Components/Global/TheNoDataChart.vue'
 
-<style lang="postcss" scoped></style>
+import { $t } from '@/utils/i18n'
+
+const props = defineProps<{ eidAlAdha: EidAlAdhaStatisticsType }>()
+
+console.log(props.eidAlAdha)
+
+const datasets = [
+    {
+        data: Object.values(props.eidAlAdha[0]),
+        label: $t('statistics.orphans.titles.orphans_by_family_status')
+    }
+]
+</script>
+
+<template>
+    <suspense v-if="datasets[0].data.length" suspensible>
+        <base-radar-chart :datasets :labels="Object.keys(eidAlAdha[0])"></base-radar-chart>
+    </suspense>
+
+    <the-no-data-chart v-else></the-no-data-chart>
+</template>

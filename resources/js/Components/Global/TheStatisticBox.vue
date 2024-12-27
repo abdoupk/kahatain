@@ -2,10 +2,12 @@
 
 <template>
     <div class="intro-y box">
-        <div class="flex flex-col items-center border-b border-slate-200/60 p-5 dark:border-darkmode-400 sm:flex-row">
-            <div class="me-auto text-base font-medium rtl:font-semibold">
+        <div class="flex flex-row items-center justify-between p-5 dark:border-darkmode-400 sm:flex-row 2xl:flex-col">
+            <div class="me-auto w-full text-base font-medium rtl:font-semibold">
                 <slot name="title"></slot>
             </div>
+
+            <slot name="actions"></slot>
         </div>
 
         <div class="p-5">

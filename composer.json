@@ -78,6 +78,7 @@
             "app/Helpers/constants.php",
             "app/Helpers/occasions.php",
             "app/Helpers/statistics/families_statistics.php",
+            "app/Helpers/statistics/occasions_statistics.php",
             "app/Helpers/statistics/sponsors_statistics.php",
             "app/Helpers/statistics/orphans_statistics.php",
             "app/Helpers/statistics/financial_statistics.php",

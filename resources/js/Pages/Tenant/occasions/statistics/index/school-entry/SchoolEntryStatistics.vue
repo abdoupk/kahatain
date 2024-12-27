@@ -1,5 +1,32 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { SchoolEntryStatisticsType } from '@/types/statistics'
 
-<template></template>
+import BaseVerticalBarChart from '@/Components/Base/chart/BaseVerticalBarChart.vue'
+import TheNoDataChart from '@/Components/Global/TheNoDataChart.vue'
 
-<style lang="postcss" scoped></style>
+import { $t } from '@/utils/i18n'
+
+defineProps<{
+    schoolEntry: SchoolEntryStatisticsType
+}>()
+</script>
+
+<template>
+    <base-vertical-bar-chart
+        v-if="schoolEntry.length"
+        :datasets="[
+            {
+                data: schoolEntry.map((d) => d.male_count),
+                label: $t('male')
+            },
+            {
+                data: schoolEntry.map((d) => d.female_count),
+                label: $t('female')
+            }
+        ]"
+        :height="300"
+        :labels="schoolEntry.map((d) => d.year)"
+    ></base-vertical-bar-chart>
+
+    <the-no-data-chart v-else></the-no-data-chart>
+</template>

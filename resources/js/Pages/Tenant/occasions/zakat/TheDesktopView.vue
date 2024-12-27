@@ -15,7 +15,7 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
 import { formatCurrency } from '@/utils/helper'
 
-defineProps<{
+const props = defineProps<{
     families: PaginationData<ZakatFamiliesResource>
     params: IndexParams
 }>()
