@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Occasions\SaveZakatToArchiveRequest;
 use App\Jobs\V1\Occasion\ZakatFamiliesListSavedJob;
 use App\Models\Archive;
+use App\Models\FamilyZakat;
 use App\Models\Finance;
 use DB;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Str;
 use Throwable;
 
 class SaveFamiliesZakatToArchiveController extends Controller implements HasMiddleware
@@ -27,6 +29,20 @@ class SaveFamiliesZakatToArchiveController extends Controller implements HasMidd
                 'date' => now(),
                 'amount' => -1 * (float) $request->amount,
             ]);
+
+            $data = [];
+
+            foreach ($request->families as $family) {
+                $data[] = [
+                    'id' => Str::uuid(),
+                    'family_id' => $family,
+                    'amount' => $amount,
+                    'zakat_id' => $request->zakat_id,
+                    'tenant_id' => tenant('id'),
+                ];
+            }
+
+            FamilyZakat::insert($data);
 
             DB::table('families')
                 ->whereIn('id', $request->families)

@@ -8,9 +8,7 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ eidAlAdha: EidAlAdhaStatisticsType }>()
 
-console.log(props.eidAlAdha)
-
-const datasets = [
+const datasets = props.eidAlAdha.length && [
     {
         data: Object.values(props.eidAlAdha[0]),
         label: $t('statistics.orphans.titles.orphans_by_family_status')
@@ -19,7 +17,7 @@ const datasets = [
 </script>
 
 <template>
-    <suspense v-if="datasets[0].data.length" suspensible>
+    <suspense v-if="datasets && datasets[0].data.length" suspensible>
         <base-radar-chart :datasets :labels="Object.keys(eidAlAdha[0])"></base-radar-chart>
     </suspense>
 

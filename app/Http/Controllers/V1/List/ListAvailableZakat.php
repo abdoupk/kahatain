@@ -12,6 +12,9 @@ class ListAvailableZakat extends Controller
         return Finance::with(['receiver:id,first_name,last_name'])
             ->whereSpecification('zakat')
             ->where('amount', '>', 0)
+            ->whereNotIn('id', function ($query) {
+                $query->select('zakat_id')->from('family_zakats');
+            })->latest('created_at')
             ->get()->map(function (Finance $finance) {
                 return [
                     'id' => $finance->id,

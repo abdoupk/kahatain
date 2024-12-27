@@ -46,6 +46,8 @@ const data = computed<ChartData>(() => {
 
 const options = computed<ChartOptions>(() => {
     return {
+        responsive: true,
+        maintainAspectRatio: false, // Ensures proper scaling
         elements: {
             line: {
                 borderWidth: 2
