@@ -1319,6 +1319,7 @@
     "mother_name": "اسم ولقب الام",
     "neighborhoods": "الاحياء التابعة للمنطقة",
     "select_location": "حدد الموقع",
+    "reset_eid_suit_data": "اعادة تعيين البيانات",
     "search_or_add_a_competence": "ابحث عن مهارة او أضفها",
     "add_this_competence": "اضف هذه المهارة",
     "leaflet.touch": "استخدم إصبعين لتحريك الخريطة",

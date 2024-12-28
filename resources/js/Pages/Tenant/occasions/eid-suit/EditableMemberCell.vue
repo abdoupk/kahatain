@@ -13,6 +13,8 @@ const props = defineProps<{
 
 const orphan = ref(props.orphan)
 
+const emit = defineEmits(['showSuccessNotification'])
+
 const handleSelectCell = () => {
     orphan.value.orphan.edit.member = true
 
@@ -31,6 +33,8 @@ const handleSelectDesignatedMember = (event: { id: string; name: string }) => {
                 orphan.value.orphan.edit.member = false
 
                 orphan.value.eid_suit.member = event
+
+                emit('showSuccessNotification')
             }
         })
     }
@@ -41,7 +45,7 @@ const handleSelectDesignatedMember = (event: { id: string; name: string }) => {
     <the-table-td>
         <div
             v-if="orphan.eid_suit?.member.id && !orphan.orphan.edit?.member"
-            class="block w-32 cursor-pointer truncate text-center"
+            class="block w-40 cursor-pointer truncate text-center"
             @click="handleSelectCell"
         >
             {{ orphan.eid_suit?.member.name }}
@@ -49,7 +53,7 @@ const handleSelectDesignatedMember = (event: { id: string; name: string }) => {
 
         <span
             v-else-if="!orphan.eid_suit?.member.id && !orphan.orphan.edit?.member"
-            class="block w-32 cursor-pointer text-center"
+            class="block w-40 cursor-pointer text-center"
             @click="handleSelectCell"
         >
             -

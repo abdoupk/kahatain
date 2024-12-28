@@ -33,6 +33,7 @@ function listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(): Collection
                     'pantsSize',
                     'shirtSize',
                     'family.branch:id,name',
+                    'eidSuit.member:id,first_name,last_name',
                 ])
         )
         ->get();

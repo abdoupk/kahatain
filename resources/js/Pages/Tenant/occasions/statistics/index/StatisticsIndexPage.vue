@@ -54,7 +54,7 @@ defineOptions({
     layout: TheLayout
 })
 
-defineProps<{
+const props = defineProps<{
     babiesMilkAndDiapers: BabiesMilkAndDiapersStatisticsType
     ramadanBasket: RamadanBasketStatisticsType
     eidSuit: EidSuitStatisticsType
@@ -69,9 +69,22 @@ defineProps<{
     }
 }>()
 
-const handleChangeDateForSchoolEntry = () => {
+const dateRanges = Array.from(
+    { length: props.minMaxDate.max_year - props.minMaxDate.min_year + 1 },
+    (_, i) => props.minMaxDate.min_year + i
+)
+
+const handleChangeDateForBabiesMilkAndDiapers = () => {
     console.log('555')
 }
+
+const handleChangeDateForEidAlAdha = () => {}
+
+const handleChangeDateForZakat = () => {}
+
+const handleChangeDateForMonthlySponsorship = () => {}
+
+const handleChangeDateForMeatDistribution = () => {}
 </script>
 
 <template>
@@ -82,7 +95,21 @@ const handleChangeDateForSchoolEntry = () => {
             <!-- Begin: babiesMilkAndDiapers -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}</template>
+                    <template #title>
+                        {{ $t('statistics.occasions.titles.babies_milk_and_diapers') }}
+                    </template>
+
+                    <template #actions>
+                        <base-form-select
+                            class="w-1/2"
+                            formSelectSize="sm"
+                            @update:model-value="handleChangeDateForBabiesMilkAndDiapers"
+                        >
+                            <option v-for="option in dateRanges" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </base-form-select>
+                    </template>
 
                     <template #chart>
                         <suspense suspensible>
@@ -98,7 +125,9 @@ const handleChangeDateForSchoolEntry = () => {
             <!-- Begin: eidSuit -->
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
-                    <template #title> {{ $t('statistics.occasions.titles.eid_suit') }}</template>
+                    <template #title>
+                        {{ $t('statistics.occasions.titles.eid_suit') }}
+                    </template>
 
                     <template #chart>
                         <suspense suspensible>
@@ -114,6 +143,18 @@ const handleChangeDateForSchoolEntry = () => {
                 <the-statistic-box>
                     <template #title> {{ $t('statistics.occasions.titles.eid_al_adha') }}</template>
 
+                    <template #actions>
+                        <base-form-select
+                            class="w-1/2"
+                            formSelectSize="sm"
+                            @update:model-value="handleChangeDateForEidAlAdha"
+                        >
+                            <option v-for="option in dateRanges" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </base-form-select>
+                    </template>
+
                     <template #chart>
                         <suspense suspensible>
                             <eid-al-adha-statistics :eidAlAdha></eid-al-adha-statistics>
@@ -128,6 +169,18 @@ const handleChangeDateForSchoolEntry = () => {
                 <the-statistic-box>
                     <template #title> {{ $t('statistics.occasions.titles.zakat') }}</template>
 
+                    <template #actions>
+                        <base-form-select
+                            class="w-1/2"
+                            formSelectSize="sm"
+                            @update:model-value="handleChangeDateForZakat"
+                        >
+                            <option v-for="option in dateRanges" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </base-form-select>
+                    </template>
+
                     <template #chart>
                         <suspense suspensible>
                             <zakat-statistics :zakat></zakat-statistics>
@@ -141,6 +194,18 @@ const handleChangeDateForSchoolEntry = () => {
             <div class="col-span-12 lg:col-span-6">
                 <the-statistic-box>
                     <template #title> {{ $t('statistics.occasions.titles.monthly_sponsorship') }}</template>
+
+                    <template #actions>
+                        <base-form-select
+                            class="w-1/2"
+                            formSelectSize="sm"
+                            @update:model-value="handleChangeDateForMonthlySponsorship"
+                        >
+                            <option v-for="option in dateRanges" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </base-form-select>
+                    </template>
 
                     <template #chart>
                         <suspense suspensible>
@@ -170,6 +235,18 @@ const handleChangeDateForSchoolEntry = () => {
                 <the-statistic-box>
                     <template #title> {{ $t('statistics.occasions.titles.meat_distribution') }}</template>
 
+                    <template #actions>
+                        <base-form-select
+                            class="w-1/2"
+                            formSelectSize="sm"
+                            @update:model-value="handleChangeDateForMeatDistribution"
+                        >
+                            <option v-for="option in dateRanges" :key="option" :value="option">
+                                {{ option }}
+                            </option>
+                        </base-form-select>
+                    </template>
+
                     <template #chart>
                         <suspense suspensible>
                             <meat-distribution-statistics :meatDistribution></meat-distribution-statistics>
@@ -184,21 +261,6 @@ const handleChangeDateForSchoolEntry = () => {
                 <the-statistic-box>
                     <template #title>
                         {{ $t('statistics.occasions.titles.school_entry') }}
-                    </template>
-
-                    <template #actions>
-                        <base-form-select @update:model-value="handleChangeDateForSchoolEntry">
-                            <option
-                                v-for="option in Array.from(
-                                    { length: minMaxDate.max_year - minMaxDate.min_year + 1 },
-                                    (_, i) => minMaxDate.min_year + i
-                                )"
-                                :key="option"
-                                :value="option"
-                            >
-                                {{ option }}
-                            </option>
-                        </base-form-select>
                     </template>
 
                     <template #chart>

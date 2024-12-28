@@ -20,7 +20,7 @@ defineProps<{ meatDistribution: MeatDistributionStatisticsType }>()
             :datasets="[
                 {
                     data: Object.values(meatDistribution),
-                    label: $t('babies_count'),
+                    label: $t('families_count'),
                     borderColor: () =>
                         useSettingsStore().appearance === 'dark'
                             ? getColor('#cbd5e1', 0.6)

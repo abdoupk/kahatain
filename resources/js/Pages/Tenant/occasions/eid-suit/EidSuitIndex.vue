@@ -3,8 +3,8 @@ import type { ArchiveOccasionType, EidSuitOrphansResource, IndexParams, Paginati
 
 import { eidSuitsFilters } from '@/constants/filters'
 import { useSettingsStore } from '@/stores/settings'
-import { Head } from '@inertiajs/vue3'
-import { defineAsyncComponent, ref } from 'vue'
+import { Head, router } from '@inertiajs/vue3'
+import { defineAsyncComponent, nextTick, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -49,6 +49,14 @@ const exportable = ref(!!props.archive?.created_at && hasPermission('export_occa
 
 const loading = ref(false)
 
+const loadingReset = ref(false)
+
+const showWarningModalStatusForReset = ref(false)
+
+const handleReset = () => {
+    showWarningModalStatusForReset.value = true
+}
+
 const showWarningModalStatus = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
@@ -71,6 +79,33 @@ const save = () => {
         preserveState: true,
         only: ['orphans']
     })
+}
+
+const reset = () => {
+    loadingReset.value = true
+
+    router.patch(
+        route('tenant.occasions.eid-suit.reset'),
+        {},
+        {
+            onSuccess: () => {
+                getDataForIndexPages(route('tenant.occasions.eid-suit.index'), params.value, {
+                    preserveScroll: true,
+                    preserveState: false,
+                    only: ['orphans']
+                })
+            },
+            onFinish: () => {
+                nextTick(() => {
+                    loadingReset.value = false
+
+                    setTimeout(() => {
+                        showWarningModalStatusForReset.value = false
+                    }, 300)
+                })
+            }
+        }
+    )
 }
 
 const handleSave = () => {
@@ -120,6 +155,15 @@ const handleSave = () => {
                     >
                         {{ $t('save') }}
                     </base-button>
+
+                    <base-button
+                        :disabled="loadingReset"
+                        class="me-2 shadow-md"
+                        variant="outline-danger"
+                        @click.prevent="handleReset"
+                    >
+                        {{ $t('reset_eid_suit_data') }}
+                    </base-button>
                 </template>
             </the-table-header>
 
@@ -142,6 +186,15 @@ const handleSave = () => {
                 @close="showWarningModalStatus = false"
             >
                 {{ $t('exports.archive.warnings.eid_suit') }}
+            </the-warning-modal>
+
+            <the-warning-modal
+                :on-progress="loadingReset"
+                :open="showWarningModalStatusForReset"
+                @accept="reset"
+                @close="showWarningModalStatusForReset = false"
+            >
+                {{ $t('reset_eid_suit_data') }}
             </the-warning-modal>
         </div>
 

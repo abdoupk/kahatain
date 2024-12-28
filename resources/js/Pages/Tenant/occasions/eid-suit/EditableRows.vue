@@ -75,7 +75,7 @@ function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: st
         ></map-cell>
     </the-table-td>
 
-    <editable-member-cell :orphan></editable-member-cell>
+    <editable-member-cell :orphan @show-success-notification="$emit('showSuccessNotification')"></editable-member-cell>
 
     <editable-row
         :orphan

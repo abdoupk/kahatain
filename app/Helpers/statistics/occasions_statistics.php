@@ -5,7 +5,7 @@ use App\Models\Archive;
 function getStatisticsForBabiesMilkAndDiaper(): array
 {
     return array_replace(array_fill(1, 12, 0), Archive::withCount('babies')->whereOccasion('babies_milk_and_diapers')
-        ->whereYear('created_at', request()->integer('eid_suit_year', date('Y')))
+        ->whereYear('created_at', request()->integer('babies_milk_and_diapers_year', date('Y')))
         ->selectRaw('EXTRACT(MONTH FROM created_at) as month')
         ->pluck('babies_count', 'month')
         ->toArray());
@@ -86,13 +86,20 @@ function getStatisticsForRamadanBasket(): array
 
 function getStatisticsForMeatDistribution(): array
 {
-    return array_replace(array_fill(1, 12, 0), Archive::whereOccasion('meat_distribution')
-        ->whereYear('created_at', request()->integer('eid_suit_year', date('Y')))
-//        ->selectRaw('case WHEN amount >= 0 THEN \'incomes\' ELSE \'expenses\' END AS sign, EXTRACT(MONTH FROM created_at) as month, SUM(amount) as total')
-        ->selectRaw('count(*) as count, EXTRACT(MONTH FROM created_at) as month')
-        ->groupBy('month')
-        ->pluck('count', 'month')
-        ->toArray());
+    return array_replace(
+        array_fill(1, 12, 0),
+        Archive::join('archiveables', fn ($join) => $join
+            ->on('archives.id', '=', 'archiveables.archive_id')
+            ->where('archiveables.archiveable_type', '=', 'family')
+        )
+            ->join('families', 'families.id', '=', 'archiveables.archiveable_id')
+            ->whereOccasion('meat_distribution')
+            ->whereYear('archives.created_at', request()->integer('meat_distribution_year', date('Y')))
+            ->selectRaw('EXTRACT(MONTH FROM archives.created_at) as month, COUNT(DISTINCT families.id) as families_count')
+            ->groupBy('month')
+            ->pluck('families_count', 'month') // Retrieve the families count for each month
+            ->toArray()
+    );
 }
 
 function getStatisticsForEidSuit(): array

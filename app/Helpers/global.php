@@ -130,7 +130,6 @@ function getParams(): array
         'filters' => request()->input('filters'),
     ];
 }
-
 function generateFormatedConditions(): array
 {
     $filters = (array) request()->input('filters', []);
@@ -151,11 +150,11 @@ function generateFormatedConditions(): array
     return [];
 }
 
-function generateFilterConditions(?string $additional_filters, ?Model $model): string
+function generateFilterConditions(?string $additional_filters = ''): string
 {
     $filters = array_merge(generateFormatedConditions());
 
-    if (! $filters && Schema::hasColumn($model->getTable(), 'tenant_id')) {
+    if (! $filters) {
         return 'tenant_id = '.tenant('id').' '.$additional_filters;
     }
 
@@ -164,7 +163,7 @@ function generateFilterConditions(?string $additional_filters, ?Model $model): s
     }, $filters)).' '.$additional_filters;
 }
 
-function generateFormattedSort(Model $model): array
+function generateFormattedSort(): array
 {
     $directions = (array) request()->input('directions', []);
 
@@ -177,8 +176,6 @@ function generateFormattedSort(Model $model): array
 
             return "$key:$value";
         }, array_values($directions), array_keys($directions));
-    } elseif (! Schema::hasColumn($model->getTable(), 'created_at')) {
-        return ['id:desc'];
     }
 
     return ['created_at:desc'];
@@ -194,11 +191,11 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
         $additional_filters .= ' AND __soft_deleted = 0';
     }
 
-    $query = trim(request()->string('search', '')) ?? '';
+    $query = trim(request()->input('search', '')) ?? '';
 
     $meilisearchOptions = [
-        'filter' => generateFilterConditions($additional_filters, $model),
-        'sort' => generateFormattedSort($model),
+        'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
+        'sort' => generateFormattedSort(),
         'limit' => $limit,
     ];
 

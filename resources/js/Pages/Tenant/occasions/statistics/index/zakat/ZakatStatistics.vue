@@ -8,7 +8,7 @@ import TheNoDataChart from '@/Components/Global/TheNoDataChart.vue'
 
 import { extractColor, getColor } from '@/utils/colors'
 import { abbreviationMonths } from '@/utils/constants'
-import { sumObjectValues } from '@/utils/helper'
+import { formatCurrency, sumObjectValues } from '@/utils/helper'
 import { $t, getLocale } from '@/utils/i18n'
 
 defineProps<{
@@ -19,18 +19,19 @@ defineProps<{
 <template>
     <suspense v-if="sumObjectValues(Object.values(zakat))" suspensible>
         <base-line-chart
+            :callback="(tickValue) => formatCurrency(tickValue)"
+            :height="300"
+            :labels="abbreviationMonths[getLocale()]"
             :datasets="[
                 {
                     data: Object.values(zakat),
-                    label: $t('babies_count'),
+                    label: $t('the_amount'),
                     borderColor: () =>
                         useSettingsStore().appearance === 'dark'
                             ? getColor('#cbd5e1', 0.6)
                             : extractColor('primary', 0.8)
                 }
             ]"
-            :height="300"
-            :labels="abbreviationMonths[getLocale()]"
         ></base-line-chart>
     </suspense>
 

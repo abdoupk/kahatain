@@ -120,7 +120,7 @@ const handleShowSuccessNotification = () => {
         :loading
         :location="selectedOrphan.location"
         :open="showMapModalStatus"
-        title="test"
+        :title="$t('select_location')"
         @close="showMapModalStatus = false"
         @set-location="setLocation"
     >
