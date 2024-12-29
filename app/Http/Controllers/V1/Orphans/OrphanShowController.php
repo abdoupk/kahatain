@@ -20,14 +20,6 @@ class OrphanShowController extends Controller implements HasMiddleware
 
     public function __invoke(Orphan $orphan): Response
     {
-        ray(new OrphanShowResource($orphan->load(
-            'babyNeeds.diapers',
-            'babyNeeds.babyMilk',
-            'creator',
-            'speciality',
-            'institution'
-        )));
-
         return Inertia::render('Tenant/orphans/details/OrphanDetailPage', [
             'orphan' => new OrphanShowResource(
                 $orphan->load(

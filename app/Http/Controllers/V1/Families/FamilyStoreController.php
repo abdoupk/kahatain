@@ -185,7 +185,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
             'other_properties' => $request->validated('other_properties'),
         ]);
 
-        ray($request->validated('furnishings'));
         $family->furnishings()->create([
             ...$request->validated('furnishings'),
         ]);

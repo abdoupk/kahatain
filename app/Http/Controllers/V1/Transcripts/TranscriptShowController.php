@@ -10,8 +10,6 @@ class TranscriptShowController extends Controller
 {
     public function __invoke(Transcript $transcript)
     {
-        ray(TranscriptUpdateResource::make($transcript->load(['subjects', 'academicLevel'])));
-
         return response()->json([
             'transcript' => TranscriptUpdateResource::make($transcript->load(['subjects', 'academicLevel'])),
         ]);

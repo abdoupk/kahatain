@@ -23,7 +23,6 @@ class SponsorUpdateIncomesController extends Controller implements HasMiddleware
      */
     public function __invoke(SponsorIncomesUpdateRequest $request, Sponsor $sponsor)
     {
-        ray($request->all());
         $sponsor->incomes()->update([
             ...$request->only(['incomes.casnos', 'incomes.ccp', 'incomes.cnr', 'incomes.cnas', 'incomes.other_income', 'incomes.pension', 'incomes.account'])['incomes'],
             'total_income' => setTotalIncomeAttribute($request->except(['incomes.bank_file', 'incomes.ccp_file', 'incomes.casnos_file', 'incomes.cnas_file', 'incomes.cnr_file', 'incomes.cnas', 'incomes.casnos', 'incomes.cnr', 'incomes.pension'])['incomes']),

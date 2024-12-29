@@ -17,7 +17,6 @@ class FamilyUpdateFurnishingsController extends Controller implements HasMiddlew
 
     public function __invoke(FamilyFurnishingsUpdateRequest $request, Family $family)
     {
-        ray($request->validated());
         $family->furnishings()->update($request->validated());
 
         dispatch(new FamilyUpdatedJob($family, auth()->user()));

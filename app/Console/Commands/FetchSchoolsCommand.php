@@ -57,8 +57,7 @@ class FetchSchoolsCommand extends Command
                             }
                         }
                     } else {
-                        ray($response->getStatusCode());
-                        ray($response->getBody());
+                        Log::error('Failed to fetch schools for city '.$city->id);
                     }
 
                     sleep(3);

@@ -25,8 +25,6 @@ class FamilyDeleteController extends Controller implements HasMiddleware
 
         $family->delete();
 
-        ray($request->all());
-
         dispatch(new FamilyTrashedJob($family, auth()->user(), $request->reason));
 
         return redirect()->back();

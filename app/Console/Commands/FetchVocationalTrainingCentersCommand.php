@@ -99,16 +99,11 @@ class FetchVocationalTrainingCentersCommand extends Command
                             }
                         }
                     } else {
-                        ray($response->getBody()->getContents());
-
-                        ray($response->getStatusCode());
+                        Log::error($response->getBody()->getContents());
                     }
 
                     sleep(rand(1, 5));
                 } catch (Exception $exception) {
-                    ray($exception);
-                    ray($wilaya, $level);
-
                     continue;
                 }
             }

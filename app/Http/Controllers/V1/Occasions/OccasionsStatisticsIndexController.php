@@ -10,8 +10,6 @@ class OccasionsStatisticsIndexController extends Controller
 {
     public function __invoke(): Response
     {
-        ray(getStatisticsForRamadanBasket());
-
         return inertia()->render('Tenant/occasions/statistics/index/StatisticsIndexPage',
             [
                 'babiesMilkAndDiapers' => fn () => getStatisticsForBabiesMilkAndDiaper(),

@@ -11,8 +11,6 @@ class TranscriptsIndexController extends Controller
 {
     public function __invoke(): Response
     {
-        ray(OrphansIndexResource::collection(getOrphansForTranscripts()));
-
         return Inertia::render('Tenant/transcripts/index/OrphansIndexPage', [
             'orphans' => OrphansIndexResource::collection(getOrphansForTranscripts()),
             'params' => getParams(),
