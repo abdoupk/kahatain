@@ -2,18 +2,10 @@
 
 namespace App\Http\Requests\V1\Families;
 
-use App\Rules\VocationalTrainingRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateFamilyRequest extends FormRequest
 {
-    public function messages(): array
-    {
-        return [
-            'sponsor.no_remarriage_file.required' => __('validation.required', ['attribute' => __('no_remarriage')]),
-        ];
-    }
-
     public function attributes(): array
     {
         return [
@@ -31,7 +23,7 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.baby_milk_quantity' => __('baby_milk_quantity'),
             'orphans.*.diapers_type' => __('diapers_type'),
             'orphans.*.diapers_quantity' => __('diapers_quantity'),
-            'orphans.*.vocational_training_id' => __('speciality'),
+            'orphans.*.speciality' => __('speciality'),
             'orphans.*.ccp' => __('ccp'),
             'orphans.*.gender' => __('validation.attributes.gender'),
             'orphans.*.phone_number' => __('validation.attributes.phone_number'),
@@ -64,7 +56,6 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.family_status' => 'nullable|string',
             'orphans.*.health_status' => 'nullable|string',
             'orphans.*.academic_level_id' => 'nullable|uuid|exists:academic_levels,id',
-            'orphans.*.vocational_training_id' => [new VocationalTrainingRule],
             'orphans.*.gender' => 'required|in:male,female',
             'orphans.*.ccp' => ['nullable', 'string', 'regex:/^\d{12}$/', 'unique:App\Models\Orphan,ccp'],
             'orphans.*.phone_number' => ['nullable', 'string', 'regex:/^(06|07|05)\d{8}$/', 'unique:App\Models\Orphan,phone_number'],

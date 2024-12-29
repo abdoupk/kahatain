@@ -15,6 +15,7 @@ function getStatisticsForEidAlAdha(): array
 {
     return Archive::with('families.eidAlAdhas')
         ->whereOccasion('eid_al_adha')
+        ->whereYear('archives.created_at', request()->integer('eid_al_adha_year', date('Y')))
         ->selectRaw("
         archives.id,
         EXTRACT(YEAR FROM archives.created_at) as year,
@@ -29,7 +30,10 @@ function getStatisticsForEidAlAdha(): array
             ->where('archiveables.archiveable_type', '=', 'family')
         )
         ->join('families', 'families.id', '=', 'archiveables.archiveable_id')
-        ->join('family_eid_al_adhas', 'family_eid_al_adhas.family_id', '=', 'families.id')
+        ->join('family_eid_al_adhas', fn ($join) => $join
+            ->on('families.id', '=', 'family_eid_al_adhas.family_id')
+            ->where('family_eid_al_adhas.year', '=', request()->integer('eid_al_adha_year', date('Y')))
+        )
         ->groupByRaw('archives.id, EXTRACT(YEAR FROM archives.created_at)')
         ->get()
         ->map(function ($archive) {

@@ -7,6 +7,7 @@ import AdvancedFilter from '@/Pages/Tenant/families/index/AdvancedFilter.vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import ExportMenu from '@/Components/Global/ExportMenu.vue'
+import TheMobileSorting from '@/Components/Global/TheMobileSorting.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { debounce, formatFilters, formatParams, getDataForIndexPages, isEmpty } from '@/utils/helper'
@@ -24,6 +25,11 @@ const props = defineProps<{
     exportable?: boolean
     filterable?: boolean
     searchable?: boolean
+    sortable?: boolean
+    sortableFields?: {
+        label: string
+        value: string
+    }[]
     dontShowFilters?: boolean
 }>()
 
@@ -84,6 +90,14 @@ const handleExport = (params: IndexParams) => {
         exportXlsxUrl.value = route(props.exportXlsxUrl, formatParams(params))
     }
 }
+
+const handleSort = ({ field, direction }) => {
+    params.value.fields = [field]
+
+    params.value.directions = { [field]: direction }
+
+    getData()
+}
 </script>
 
 <template>
@@ -93,7 +107,7 @@ const handleExport = (params: IndexParams) => {
 
     <slot name="Hints"></slot>
 
-    <div class="mt-5 grid grid-cols-12 gap-6">
+    <div class="mt-5 grid grid-cols-12 gap-6 @container">
         <div class="intro-y col-span-12 mt-2 flex flex-wrap items-center sm:flex-nowrap">
             <slot name="ExtraButtons"></slot>
 
@@ -102,11 +116,18 @@ const handleExport = (params: IndexParams) => {
             <advanced-filter
                 v-if="filterable"
                 :filters
-                class="ms-2 hidden sm:block"
+                class="ms-2 hidden @[33rem]:block"
                 placement="bottom-start"
                 @update:value="handleFilter"
                 @reset-filter="handleFilterReset"
             ></advanced-filter>
+
+            <the-mobile-sorting
+                v-if="sortable"
+                :sortable-fields
+                class="@3xl:hiddens ms-2 hidden @[33rem]:block"
+                @sort="handleSort"
+            ></the-mobile-sorting>
 
             <slot name="ExtraFilters"></slot>
 
@@ -123,7 +144,7 @@ const handleExport = (params: IndexParams) => {
                 ></svg-loader>
             </div>
 
-            <div class="ms-auto text-slate-500 md:mx-auto">
+            <div class="me-2 ms-auto whitespace-nowrap text-center text-slate-500 md:mx-auto">
                 <span v-if="paginationData.meta?.total > 0">
                     {{
                         $t('showing_results', {
@@ -140,11 +161,18 @@ const handleExport = (params: IndexParams) => {
                 <advanced-filter
                     v-if="filterable"
                     :filters
-                    class="me-2 sm:hidden"
+                    class="me-2 @[33rem]:hidden"
                     placement="bottom-start"
                     @update:value="handleFilter"
                     @reset-filter="handleFilterReset"
                 ></advanced-filter>
+
+                <the-mobile-sorting
+                    v-if="sortable"
+                    :sortable-fields
+                    class="@[33rem]:hidden"
+                    @sort="handleSort"
+                ></the-mobile-sorting>
 
                 <div v-if="searchable" class="relative w-full text-slate-500 md:w-56">
                     <base-form-input

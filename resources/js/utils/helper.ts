@@ -434,7 +434,7 @@ const getDataForIndexPages = (url: string, params: IndexParams, options: object)
 const formatParams = (params: IndexParams) => {
     let data = { ...params }
 
-    if (params.search === '' || params.search === undefined) {
+    if (params?.search === '' || params?.search === undefined) {
         delete data.search
     }
 

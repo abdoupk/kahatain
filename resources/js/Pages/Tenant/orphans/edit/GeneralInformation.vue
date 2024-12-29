@@ -68,13 +68,27 @@ const isShouldHasIncome = computed(() => {
 
     if (
         // eslint-disable-next-line array-element-newline
-        ['secondary_education', 'middle_education', 'primary_education', 'license', 'master', 'doctorate'].includes(
-            phase
-        )
+        [
+            'secondary_education',
+            'middle_education',
+            'primary_education',
+            'license',
+            'master',
+            'doctorate',
+            'university'
+        ].includes(phase)
     )
         return false
 
     return !form.is_handicapped && !form.is_unemployed
+})
+
+const isShouldHasUnemploymentBenefit = computed(() => {
+    const phase = useAcademicLevelsStore().getPhaseFromId(form.academic_level_id)
+
+    if (['paramedical', 'vocational_training'].includes(phase)) return false
+
+    return isShouldHasIncome.value
 })
 
 const submit = () => {
@@ -411,7 +425,7 @@ onMounted(async () => {
                     <!--END: Handicapped-->
 
                     <!--Begin: Unemployed-->
-                    <div v-if="isOlderThan18" class="col-span-6 ms-0 sm:col-span-3 sm:ms-12">
+                    <div v-if="isShouldHasUnemploymentBenefit" class="col-span-6 ms-0 sm:col-span-3 sm:ms-12">
                         <base-form-switch class="text-lg">
                             <base-form-switch-input
                                 :id="`is_unemployed`"

@@ -89,7 +89,7 @@ const handleDownloadSchoolTools = () => {
                         </div>
 
                         <base-button
-                            class="relative mt-12 justify-start rounded-full font-semibold"
+                            class="relative mt-12 justify-start rounded-full font-semibold sm:w-2/3 lg:w-full"
                             variant="outline-danger"
                             @click.prevent="showWarningModalStatus = true"
                         >
@@ -102,7 +102,7 @@ const handleDownloadSchoolTools = () => {
                         </base-button>
 
                         <base-button
-                            class="relative mt-12 justify-start rounded-full font-semibold"
+                            class="relative mt-12 justify-start rounded-full font-semibold sm:w-2/3 lg:w-full"
                             variant="outline-secondary"
                             @click.prevent="handleDownloadSchoolTools"
                         >

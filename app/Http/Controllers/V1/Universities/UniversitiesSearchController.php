@@ -9,12 +9,10 @@ class UniversitiesSearchController extends Controller
 {
     public function __invoke()
     {
-        return search(
-            University::getModel(),
-            limit: 400
-        )->get()->map(fn (University $university) => [
-            'id' => $university->id,
-            'name' => $university->name,
-        ]);
+        return University::search(request()->string('search'))
+            ->get()->map(fn (University $university) => [
+                'id' => $university->id,
+                'name' => $university->name,
+            ]);
     }
 }

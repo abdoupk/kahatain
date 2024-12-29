@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 /**
  * @property string $archive_id
@@ -24,5 +25,14 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class Archiveable extends Pivot
 {
+    use BelongsToTenant;
+
+    protected $fillable = [
+        'archive_id',
+        'archiveable_id',
+        'archiveable_type',
+        'metadata',
+    ];
+
     protected $table = 'archiveables';
 }

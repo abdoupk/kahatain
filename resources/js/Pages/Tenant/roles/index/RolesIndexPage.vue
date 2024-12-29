@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, PaginationData, RolesIndexResource } from '@/types/types'
 
+import { roleSorts } from '@/constants/sorts'
 import { useRolesStore } from '@/stores/roles'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -132,6 +133,8 @@ const showEditModal = async (roleId: string) => {
                 :title="$t('list', { attribute: $t('the_roles') })"
                 :url="route('tenant.roles.index')"
                 entries="roles"
+                :sortableFields="roleSorts"
+                sortable
                 export-pdf-url=""
                 export-xlsx-url=""
                 searchable

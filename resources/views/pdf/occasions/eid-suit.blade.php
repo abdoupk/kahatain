@@ -116,28 +116,28 @@
                     {{ $orphan->eidSuit?->clothes_shop_name }}
 
                     <div class="mt-0.5 text-slate-500">
-                        {{ formatPhoneNumber($orphan->eidSuit?->clothes_shop_phone_number)  }}
+                        {{ formatPhoneNumber($orphan->eidSuit?->clothes_shop_phone_number) }}
                     </div>
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{  $orphan->eidSuit?->clothes_shop_address  ?? '——' }}
+                    {{ $orphan->eidSuit?->clothes_shop_address ?? '——' }}
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
                     {{ $orphan->eidSuit?->shoes_shop_name }}
 
                     <div class="mt-0.5 text-slate-500">
-                        {{ formatPhoneNumber($orphan->eidSuit?->shoes_shop_phone_number)  }}
+                        {{ formatPhoneNumber($orphan->eidSuit?->shoes_shop_phone_number) }}
                     </div>
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{  $orphan->eidSuit?->shoes_shop_address ?? '——' }}
+                    {{ $orphan->eidSuit?->shoes_shop_address ?? '——' }}
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{  $orphan->eidSuit?->member->getName() ?? '——' }}
+                    {{ $orphan->eidSuit?->member->getName() ?? '——' }}
                 </x-td>
 
                 <x-td class="py-0.5 truncate max-w-28 text-center">

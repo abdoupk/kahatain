@@ -10,6 +10,7 @@ import {
     ZakatStatisticsType
 } from '@/types/statistics'
 
+import { router } from '@inertiajs/vue3'
 import { defineAsyncComponent } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
@@ -74,17 +75,75 @@ const dateRanges = Array.from(
     (_, i) => props.minMaxDate.min_year + i
 )
 
-const handleChangeDateForBabiesMilkAndDiapers = () => {
-    console.log('555')
+const handleChangeDateForBabiesMilkAndDiapers = (value) => {
+    router.get(
+        route('tenant.occasions.statistics'),
+        {
+            babies_milk_and_diapers_year: value
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['babiesMilkAndDiapers']
+        }
+    )
 }
 
-const handleChangeDateForEidAlAdha = () => {}
+const handleChangeDateForEidAlAdha = (value) => {
+    router.get(
+        route('tenant.occasions.statistics'),
+        {
+            eid_al_adha_year: value
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['eidAlAdha']
+        }
+    )
+}
 
-const handleChangeDateForZakat = () => {}
+const handleChangeDateForZakat = (value) => {
+    router.get(
+        route('tenant.occasions.statistics'),
+        {
+            zakat_year: value
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['zakat']
+        }
+    )
+}
 
-const handleChangeDateForMonthlySponsorship = () => {}
+const handleChangeDateForMonthlySponsorship = (value) => {
+    router.get(
+        route('tenant.occasions.statistics'),
+        {
+            monthly_sponsorship_year: value
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['monthlySponsorship']
+        }
+    )
+}
 
-const handleChangeDateForMeatDistribution = () => {}
+const handleChangeDateForMeatDistribution = (value) => {
+    router.get(
+        route('tenant.occasions.statistics'),
+        {
+            meat_distribution_year: value
+        },
+        {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['meatDistribution']
+        }
+    )
+}
 </script>
 
 <template>
@@ -101,6 +160,7 @@ const handleChangeDateForMeatDistribution = () => {}
 
                     <template #actions>
                         <base-form-select
+                            v-model="route().params.babies_milk_and_diapers_year"
                             class="w-1/2"
                             formSelectSize="sm"
                             @update:model-value="handleChangeDateForBabiesMilkAndDiapers"
@@ -133,6 +193,8 @@ const handleChangeDateForMeatDistribution = () => {}
                         <suspense suspensible>
                             <eid-suit-statistics :eidSuit></eid-suit-statistics>
                         </suspense>
+
+                        <div class="h-[0.375rem]"></div>
                     </template>
                 </the-statistic-box>
             </div>
@@ -145,6 +207,7 @@ const handleChangeDateForMeatDistribution = () => {}
 
                     <template #actions>
                         <base-form-select
+                            v-model="route().params.eid_al_adha_year"
                             class="w-1/2"
                             formSelectSize="sm"
                             @update:model-value="handleChangeDateForEidAlAdha"
@@ -171,6 +234,7 @@ const handleChangeDateForMeatDistribution = () => {}
 
                     <template #actions>
                         <base-form-select
+                            v-model="route().params.zakat_year"
                             class="w-1/2"
                             formSelectSize="sm"
                             @update:model-value="handleChangeDateForZakat"
@@ -197,6 +261,7 @@ const handleChangeDateForMeatDistribution = () => {}
 
                     <template #actions>
                         <base-form-select
+                            v-model="route().params.monthly_sponsorship_year"
                             class="w-1/2"
                             formSelectSize="sm"
                             @update:model-value="handleChangeDateForMonthlySponsorship"
@@ -225,6 +290,8 @@ const handleChangeDateForMeatDistribution = () => {}
                         <suspense suspensible>
                             <ramadan-basket-statistics :ramadanBasket></ramadan-basket-statistics>
                         </suspense>
+
+                        <div class="h-[0.375rem]"></div>
                     </template>
                 </the-statistic-box>
             </div>
@@ -237,6 +304,7 @@ const handleChangeDateForMeatDistribution = () => {}
 
                     <template #actions>
                         <base-form-select
+                            v-model="route().params.meat_distribution_year"
                             class="w-1/2"
                             formSelectSize="sm"
                             @update:model-value="handleChangeDateForMeatDistribution"
@@ -267,6 +335,8 @@ const handleChangeDateForMeatDistribution = () => {}
                         <suspense suspensible>
                             <school-entry-statistics :schoolEntry></school-entry-statistics>
                         </suspense>
+
+                        <div class="h-[0.375rem]"></div>
                     </template>
                 </the-statistic-box>
             </div>

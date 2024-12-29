@@ -111,7 +111,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                         </div>
                     </the-table-td>
 
-                    <the-table-td class="text-center">
+                    <the-table-td class="whitespace-nowrap text-center">
                         {{ formatDate(sponsor.birth_date, 'long') }}
                     </the-table-td>
 

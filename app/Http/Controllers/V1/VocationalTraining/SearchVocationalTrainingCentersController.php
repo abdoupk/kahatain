@@ -10,16 +10,15 @@ class SearchVocationalTrainingCentersController extends Controller
 {
     public function __invoke()
     {
-        return JsonResource::collection(search(
-            VocationalTrainingCenter::getModel(),
-            additional_filters: 'wilaya_code = '.tenant('infos')['wilaya']['wilaya_code'].' ',
-            limit: 200)
-            ->get()
-            ->map(function (VocationalTrainingCenter $vocationalTrainingCenter) {
-                return [
-                    'id' => $vocationalTrainingCenter->id,
-                    'name' => $vocationalTrainingCenter->getName(),
-                ];
-            }));
+        return JsonResource::collection(VocationalTrainingCenter::search(request()->string('search'), function ($meilisearch, string $query, array $options) {
+            $options['filter'] = 'wilaya_code = '.tenant('infos')['city']['wilaya_code'].' ';
+
+            return $meilisearch->search($query, $options);
+        })->get()->map(function (VocationalTrainingCenter $vocationalTrainingCenter) {
+            return [
+                'id' => $vocationalTrainingCenter->id,
+                'name' => $vocationalTrainingCenter->getName(),
+            ];
+        }));
     }
 }

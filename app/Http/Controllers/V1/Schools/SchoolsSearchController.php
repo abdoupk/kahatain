@@ -13,9 +13,19 @@ class SchoolsSearchController extends Collection
         $phase = request()->phase_key ?? 'primary_education';
         $wilayaCode = tenant('infos')['city']['wilaya_code'] ?? null;
 
-        return SearchSchoolsResource::collection(search(School::getModel(),
-            additional_filters: "phase_key = $phase AND city.wilaya_code = ".$wilayaCode.' ',
-            limit: 300
-        )->query(fn ($query) => $query->with('city'))->get());
+        return SearchSchoolsResource::collection(
+            School::search(
+                request()->string('search'),
+                static function (
+                    $meilisearch,
+                    string $query,
+                    array $options
+                ) use ($phase, $wilayaCode) {
+                    $options['filter'] = "phase_key = $phase AND city.wilaya_code = ".$wilayaCode.' ';
+
+                    return $meilisearch->search($query, $options);
+                }
+            )->query(fn ($query) => $query->with('city'))->get()
+        );
     }
 }

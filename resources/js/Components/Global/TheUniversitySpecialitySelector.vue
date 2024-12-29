@@ -17,7 +17,9 @@ onMounted(async () => {
 
     specialities.value = vocationalTrainingStore.universitySpecialities
 
-    vueSelectUniversitySpeciality.value = specialities.value.find((speciality) => Number(speciality.id) === value[0])
+    vueSelectUniversitySpeciality.value = specialities.value.find(
+        (speciality) => Number(speciality.id) === universitySpeciality.value
+    )
 })
 
 watch(
