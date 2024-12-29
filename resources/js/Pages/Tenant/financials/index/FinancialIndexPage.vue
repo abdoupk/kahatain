@@ -2,6 +2,7 @@
 import type { FinancialTransactionsIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { financialFilters } from '@/constants/filters'
+import { financesSorts } from '@/constants/sorts'
 import { useFinancialTransactionsStore } from '@/stores/financial-transactions'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -177,13 +178,15 @@ watchEffect(async () => {
                 :filters="financialFilters"
                 :pagination-data="finances"
                 :params="params"
+                :sortableFields="financesSorts"
                 :title="$t('the_financial_transactions')"
                 :url="route('tenant.financial.index')"
                 entries="finances"
                 export-pdf-url="tenant.financial.export.pdf"
                 export-xlsx-url="tenant.financial.export.xlsx"
-                searchable
                 filterable
+                searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

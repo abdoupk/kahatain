@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, NeedsIndexResource, PaginationData } from '@/types/types'
 
+import { needsSorts } from '@/constants/sorts'
 import { useNeedsStore } from '@/stores/needs'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -159,12 +160,14 @@ watchEffect(async () => {
                 :filters="[]"
                 :pagination-data="needs"
                 :params="params"
+                :sortableFields="needsSorts"
                 :title="$t('list', { attribute: $t('the_needs') })"
                 :url="route('tenant.needs.index')"
                 entries="needs"
                 export-pdf-url=""
                 export-xlsx-url=""
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

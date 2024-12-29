@@ -2,6 +2,7 @@
 import type { IndexParams, OrphansIndexResource, PaginationData } from '@/types/types'
 
 import { orphansFilters } from '@/constants/filters'
+import { orphansSorts } from '@/constants/sorts'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
@@ -113,6 +114,8 @@ const sort = (field: string) => handleSort(field, params.value)
                 export-xlsx-url="tenant.orphans.export.xlsx"
                 filterable
                 searchable
+                :sortableFields="orphansSorts"
+                sortable
                 @change-filters="params.filters = $event"
             ></the-table-header>
 

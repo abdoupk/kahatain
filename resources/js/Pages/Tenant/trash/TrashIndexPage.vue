@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, PaginationData, TrashIndexResource } from '@/types/types'
 
+import { transcriptsSorts } from '@/constants/sorts'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
@@ -140,11 +141,13 @@ const deleteItem = () => {
                 :filters="[]"
                 :pagination-data="items"
                 :params="params"
+                :sortableFields="transcriptsSorts"
                 :title="$t('list_trash')"
                 :url="route('tenant.trash')"
                 entries="items"
                 export-pdf-url=""
                 export-xlsx-url=""
+                sortable
             >
             </the-table-header>
 

@@ -7,6 +7,7 @@ import type {
 } from '@/types/types'
 
 import { monthlySponsorshipFilters } from '@/constants/filters'
+import { monthlySponsorshipSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
@@ -118,6 +119,8 @@ const showSettingsModal = () => {
         <div>
             <the-table-header
                 :exportable
+                :sortableFields="monthlySponsorshipSorts"
+                sortable
                 :filters="monthlySponsorshipFilters"
                 :pagination-data="families"
                 :params="params"

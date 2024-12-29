@@ -2,6 +2,7 @@
 import type { ArchiveOccasionType, BabiesMilkAndDiapersResource, IndexParams, PaginationData } from '@/types/types'
 
 import { babiesMilkAndDiapersFilters } from '@/constants/filters'
+import { babiesMilkAndDiapersSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -90,6 +91,7 @@ const handleSave = () => {
                 :filters="babiesMilkAndDiapersFilters"
                 :pagination-data="orphans"
                 :params="params"
+                :sortableFields="babiesMilkAndDiapersSorts"
                 :title="$t('list', { attribute: $t('the_babies_milk_and_diapers') })"
                 :url="route('tenant.occasions.babies-milk-and-diapers.index')"
                 entries="orphans"
@@ -97,6 +99,7 @@ const handleSave = () => {
                 export-xlsx-url="tenant.occasions.babies-milk-and-diapers.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>

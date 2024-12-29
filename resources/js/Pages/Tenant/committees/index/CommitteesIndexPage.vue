@@ -2,6 +2,7 @@
 import type { CommitteesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { committeesFilters } from '@/constants/filters'
+import { committeesSorts } from '@/constants/sorts'
 import { useCommitteesStore } from '@/stores/committees'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -161,6 +162,8 @@ watchEffect(async () => {
                 export-xlsx-url=""
                 filterable
                 searchable
+                :sortableFields="committeesSorts"
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

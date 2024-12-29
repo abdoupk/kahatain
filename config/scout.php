@@ -438,7 +438,7 @@ return [
                     'created_at',
                 ],
                 'searchableAttributes' => ['name', 'families_count', 'description', 'created_at'],
-                'sortableAttributes' => ['name', 'families_count', 'created_at'],
+                'sortableAttributes' => ['name', 'members_count', 'families_count', 'created_at'],
             ],
             'branches' => [
                 'filterableAttributes' => [

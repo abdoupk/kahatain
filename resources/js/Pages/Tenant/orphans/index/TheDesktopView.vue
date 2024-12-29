@@ -60,10 +60,10 @@ const familyStatusFilter = computed(() => {
                     </the-table-th>
 
                     <the-table-th
-                        :direction="params.directions && params.directions['academic_level.id']"
+                        :direction="params.directions && params.directions['academic_level.i_id']"
                         class="text-center"
                         sortable
-                        @click="emit('sort', 'academic_level.id')"
+                        @click="emit('sort', 'academic_level.i_id')"
                         >{{ $t('validation.attributes.sponsor.academic_level') }}
                     </the-table-th>
 

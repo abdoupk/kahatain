@@ -2,6 +2,7 @@
 import type { ArchiveOccasionType, IndexParams, PaginationData, SchoolEntryOrphansResource } from '@/types/types'
 
 import { schoolEntryFilters } from '@/constants/filters'
+import { schoolEntrySorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -87,6 +88,8 @@ const handleSave = () => {
         <div>
             <the-table-header
                 :exportable
+                :sortableFields="schoolEntrySorts"
+                sortable
                 :filters="schoolEntryFilters"
                 :pagination-data="orphans"
                 :params="params"

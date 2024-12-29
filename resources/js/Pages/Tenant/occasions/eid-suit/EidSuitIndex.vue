@@ -2,6 +2,7 @@
 import type { ArchiveOccasionType, EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
 import { eidSuitsFilters } from '@/constants/filters'
+import { eidSuitSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, nextTick, ref } from 'vue'
@@ -123,6 +124,7 @@ const handleSave = () => {
                 :filters="eidSuitsFilters"
                 :pagination-data="orphans"
                 :params="params"
+                :sortableFields="eidSuitSorts"
                 :title="$t('list', { attribute: $t('the_orphans_eid_suit') })"
                 :url="route('tenant.occasions.eid-suit.index')"
                 entries="orphans"
@@ -131,6 +133,7 @@ const handleSave = () => {
                 exportable
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>

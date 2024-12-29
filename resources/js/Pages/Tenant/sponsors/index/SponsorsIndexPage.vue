@@ -2,6 +2,7 @@
 import type { IndexParams, PaginationData, SponsorsIndexResource } from '@/types/types'
 
 import { sponsorsFilters } from '@/constants/filters'
+import { sponsorsSorts } from '@/constants/sorts'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
@@ -113,6 +114,8 @@ const showDeleteModal = (sponsorId: string) => {
                 export-xlsx-url="tenant.sponsors.export.xlsx"
                 filterable
                 searchable
+                :sortableFields="sponsorsSorts"
+                sortable
                 @change-filters="params.filters = $event"
             ></the-table-header>
 

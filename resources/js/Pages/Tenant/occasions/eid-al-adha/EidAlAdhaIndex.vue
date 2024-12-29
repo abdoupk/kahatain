@@ -2,6 +2,7 @@
 import type { ArchiveOccasionType, EidAlAdhaFamiliesResource, IndexParams, PaginationData } from '@/types/types'
 
 import { eidAlAdhaFilters } from '@/constants/filters'
+import { eidAlAdhaSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
@@ -107,6 +108,8 @@ const handleSave = () => {
         <div>
             <the-table-header
                 :exportable
+                :sortableFields="eidAlAdhaSorts"
+                sortable
                 :filters="eidAlAdhaFilters"
                 :pagination-data="families"
                 :params="params"

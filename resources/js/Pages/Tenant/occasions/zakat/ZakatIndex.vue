@@ -2,6 +2,7 @@
 import type { IndexParams, PaginationData, ZakatFamiliesResource } from '@/types/types'
 
 import { zakatFilters } from '@/constants/filters'
+import { zakatSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { useZakatStore } from '@/stores/zakat'
 import { Head } from '@inertiajs/vue3'
@@ -56,6 +57,7 @@ const sort = (field: string) => handleSort(field, params.value)
                 :filters="zakatFilters"
                 :pagination-data="families"
                 :params="params"
+                :sortableFields="zakatSorts"
                 :title="$t('list', { attribute: $t('the_families') })"
                 :url="route('tenant.occasions.zakat.index')"
                 entries="families"
@@ -64,6 +66,7 @@ const sort = (field: string) => handleSort(field, params.value)
                 exportable
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>

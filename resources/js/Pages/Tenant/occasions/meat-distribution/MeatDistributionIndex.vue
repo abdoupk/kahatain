@@ -2,6 +2,7 @@
 import type { IndexParams, MeatDistributionFamiliesResource, PaginationData } from '@/types/types'
 
 import { meatDistributionFilters } from '@/constants/filters'
+import { meatDistributionSorts } from '@/constants/sorts'
 import { useMeatDistributionStore } from '@/stores/meat-distribution'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
@@ -51,11 +52,15 @@ const sort = (field: string) => handleSort(field, params.value)
                 :filters="meatDistributionFilters"
                 :pagination-data="families"
                 :params="params"
+                :sortableFields="meatDistributionSorts"
                 :title="$t('list', { attribute: $t('the_families') })"
                 :url="route('tenant.occasions.meat-distribution.index')"
                 entries="families"
+                export-pdf-url=""
+                export-xlsx-url=""
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>

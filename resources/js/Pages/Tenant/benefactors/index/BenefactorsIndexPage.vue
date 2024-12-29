@@ -2,6 +2,7 @@
 import type { FamiliesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { benefactorsFilters } from '@/constants/filters'
+import { benefactorsSorts } from '@/constants/sorts'
 import { useBenefactorsStore } from '@/stores/benefactors'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head, router } from '@inertiajs/vue3'
@@ -170,6 +171,8 @@ watchEffect(async () => {
     <suspense>
         <div>
             <the-table-header
+                :sortableFields="benefactorsSorts"
+                sortable
                 :filters="benefactorsFilters"
                 :pagination-data="benefactors"
                 :params="params"

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, InventoryIndexResource, PaginationData } from '@/types/types'
 
+import { inventorySorts } from '@/constants/sorts'
 import { useInventoryStore } from '@/stores/inventory'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -178,12 +179,14 @@ watchEffect(async () => {
                 :filters="[]"
                 :pagination-data="items"
                 :params="params"
+                :sortableFields="inventorySorts"
                 :title="$t('the_inventory')"
                 :url="route('tenant.inventory.index')"
                 entries="items"
                 export-pdf-url=""
                 export-xlsx-url=""
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

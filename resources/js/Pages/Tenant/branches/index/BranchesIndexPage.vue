@@ -2,6 +2,7 @@
 import type { BranchesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { branchedFilters } from '@/constants/filters'
+import { branchesSorts } from '@/constants/sorts'
 import { useBranchesStore } from '@/stores/branches'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -160,6 +161,8 @@ watchEffect(async () => {
                 export-pdf-url=""
                 export-xlsx-url=""
                 filterable
+                :sortableFields="branchesSorts"
+                sortable
                 searchable
                 @change-filters="params.filters = $event"
             >

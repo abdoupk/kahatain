@@ -2,6 +2,7 @@
 import type { FamiliesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { familiesFilters } from '@/constants/filters'
+import { familiesSorts } from '@/constants/sorts'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
@@ -134,6 +135,8 @@ const showDeleteModal = (familyId: string) => {
                 export-xlsx-url="tenant.families.export.xlsx"
                 filterable
                 searchable
+                :sortableFields="familiesSorts"
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

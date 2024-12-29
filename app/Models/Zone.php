@@ -100,7 +100,7 @@ class Zone extends Model
 
     public function makeSearchableUsing(Collection $models): Collection
     {
-        return $models->loadCount('families');
+        return $models->loadCount(['families', 'members']);
     }
 
     public function toSearchableArray(): array
@@ -109,6 +109,7 @@ class Zone extends Model
             'id' => $this->id,
             'name' => $this->name,
             'families_count' => (int) $this->families_count,
+            'members_count' => (int) $this->members_count,
             'tenant_id' => $this->tenant_id,
             'description' => $this->description,
             'created_at' => strtotime($this->created_at),

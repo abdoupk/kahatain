@@ -2,6 +2,7 @@
 import type { SubjectType } from '@/types/lessons'
 import type { IndexParams, PaginationData, SchoolsIndexResource } from '@/types/types'
 
+import { privateSchoolsSorts } from '@/constants/sorts'
 import { useSchoolsStore } from '@/stores/schools'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -153,12 +154,14 @@ watchEffect(async () => {
                 :filters="[]"
                 :pagination-data="schools"
                 :params="params"
+                :sortableFields="privateSchoolsSorts"
                 :title="$t('list', { attribute: $t('the_schools') })"
                 :url="route('tenant.schools.index')"
                 entries="schools"
                 export-pdf-url=""
                 export-xlsx-url=""
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

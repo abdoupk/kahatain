@@ -2,6 +2,7 @@
 import type { IndexParams, PaginationData, ZonesIndexResource } from '@/types/types'
 
 import { zonesFilters } from '@/constants/filters'
+import { zonesSorts } from '@/constants/sorts'
 import { useZonesStore } from '@/stores/zones'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -161,6 +162,8 @@ watchEffect(async () => {
                 export-xlsx-url=""
                 filterable
                 searchable
+                :sortableFields="zonesSorts"
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

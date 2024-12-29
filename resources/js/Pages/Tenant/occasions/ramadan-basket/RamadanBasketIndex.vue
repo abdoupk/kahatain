@@ -2,6 +2,7 @@
 import type { ArchiveOccasionType, IndexParams, PaginationData, RamadanBasketFamiliesResource } from '@/types/types'
 
 import { ramadanBasketFilters } from '@/constants/filters'
+import { ramadanBasketSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
@@ -107,6 +108,7 @@ const showSettingsModal = () => {
                 :filters="ramadanBasketFilters"
                 :pagination-data="families"
                 :params="params"
+                :sortableFields="ramadanBasketSorts"
                 :title="$t('list', { attribute: $t('the_families_ramadan_basket') })"
                 :url="route('tenant.occasions.ramadan-basket.index')"
                 entries="families"
@@ -114,6 +116,7 @@ const showSettingsModal = () => {
                 export-xlsx-url="tenant.occasions.ramadan-basket.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>
