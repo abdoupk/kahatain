@@ -6,10 +6,8 @@ use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorship
 use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexController;
 use App\Http\Controllers\V1\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
-use App\Http\Controllers\V1\MonthlySponsorships\MonthlySponsorshipStoreController;
 use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
-use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::prefix('projects/monthly-sponsorship')
     ->name('monthly-sponsorship.')
@@ -41,12 +39,6 @@ Route::prefix('projects/monthly-sponsorship')
             'update-settings',
             UpdateMonthlySponsorshipSettingsController::class
         )->name('update-settings');
-
-        Route::post(
-            '',
-            MonthlySponsorshipStoreController::class
-        )->name('store')
-            ->middleware([HandlePrecognitiveRequests::class]);
 
         Route::get(
             'get-settings',

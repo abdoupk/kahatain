@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams } from '@/types/types'
 
+import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
@@ -50,6 +51,8 @@ const sort = (field: string) => handleSort(field, params.value)
 </script>
 
 <template>
+    <Head :title="$t('the_college_students')"></Head>
+
     <div class="grid grid-cols-12 gap-6">
         <!-- BEGIN: Academic Phases -->
         <academic-phases :academicLevels :totalCollegeStudents></academic-phases>

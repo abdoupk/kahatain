@@ -55,8 +55,12 @@ const emit = defineEmits(['sort'])
                             {{ orphan.orphan.name }}
                         </the-table-td>
 
-                        <the-table-td v-for="subject in orphan.subjects" :key="subject.id" class=""
-                            >{{ subject.grade }}
+                        <the-table-td>
+                            {{ orphan.average ? parseFloat(orphan.average).toFixed(2) : '-' }}
+                        </the-table-td>
+
+                        <the-table-td v-for="subject in orphan.subjects" :key="subject.id">
+                            {{ subject.grade ? parseFloat(subject.grade).toFixed(2) : '-' }}
                         </the-table-td>
                     </base-tr-table>
                 </base-tbody-table>

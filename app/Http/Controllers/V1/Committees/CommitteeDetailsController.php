@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Committees\CommitteeShowResource;
 use App\Models\Committee;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class CommitteeDetailsController extends Controller
+class CommitteeDetailsController extends Controller implements HasMiddleware
 {
     public function __invoke(Committee $committee): JsonResponse
     {
@@ -16,5 +17,10 @@ class CommitteeDetailsController extends Controller
                 ['creator:id,first_name,last_name']
             )->loadCount(['members'])),
         ]);
+    }
+
+    public static function middleware()
+    {
+        return ['can:view_committees'];
     }
 }

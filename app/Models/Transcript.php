@@ -20,6 +20,7 @@ class Transcript extends Model
         'orphan_id',
         'tenant_id',
         'academic_level_id',
+        'average',
     ];
 
     public function toSearchableArray(): array

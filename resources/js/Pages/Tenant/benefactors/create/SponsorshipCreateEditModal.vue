@@ -58,7 +58,7 @@ const form = computed(() => {
         })
     }
 
-    return useForm('post', route('tenant.monthly-sponsorship.store'), { ...sponsorship.sponsorship })
+    return useForm('post', route('tenant.benefactors.store-sponsorship'), { ...sponsorship.sponsorship })
 })
 
 // Define custom event emitter for 'close' event

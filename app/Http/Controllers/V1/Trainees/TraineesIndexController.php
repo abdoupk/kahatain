@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\V1\Trainees;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Response;
 
-class TraineesIndexController extends Controller
+class TraineesIndexController extends Controller implements HasMiddleware
 {
     public function __invoke(): Response
     {
@@ -15,5 +16,10 @@ class TraineesIndexController extends Controller
             'traineesPerPhase' => fn () => getTraineesPerPhase(),
             'traineesPerInstitution' => fn () => getTraineesPerVocationalTrainingCenter(),
         ]);
+    }
+
+    public static function middleware()
+    {
+        return ['can:list_trainees'];
     }
 }

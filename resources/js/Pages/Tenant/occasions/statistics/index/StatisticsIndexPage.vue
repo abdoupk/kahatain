@@ -19,6 +19,8 @@ import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import TheStatisticBox from '@/Components/Global/TheStatisticBox.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
+import { isEmpty } from '@/utils/helper'
+
 const BabiesMilkAndDiapersStatistics = defineAsyncComponent(
     () => import('@/Pages/Tenant/occasions/statistics/index/babies-milk-and-diapers/BabiesMilkAndDiapersStatistics.vue')
 )
@@ -160,6 +162,7 @@ const handleChangeDateForMeatDistribution = (value) => {
 
                     <template #actions>
                         <base-form-select
+                            v-if="!isEmpty(babiesMilkAndDiapers)"
                             v-model="route().params.babies_milk_and_diapers_year"
                             class="w-1/2"
                             formSelectSize="sm"
@@ -194,7 +197,7 @@ const handleChangeDateForMeatDistribution = (value) => {
                             <eid-suit-statistics :eidSuit></eid-suit-statistics>
                         </suspense>
 
-                        <div class="h-[0.375rem]"></div>
+                        <div v-if="!isEmpty(eidSuit)" class="h-[0.375rem]"></div>
                     </template>
                 </the-statistic-box>
             </div>
@@ -207,6 +210,7 @@ const handleChangeDateForMeatDistribution = (value) => {
 
                     <template #actions>
                         <base-form-select
+                            v-if="eidAlAdha?.length"
                             v-model="route().params.eid_al_adha_year"
                             class="w-1/2"
                             formSelectSize="sm"
@@ -234,6 +238,7 @@ const handleChangeDateForMeatDistribution = (value) => {
 
                     <template #actions>
                         <base-form-select
+                            v-if="!isEmpty(zakat)"
                             v-model="route().params.zakat_year"
                             class="w-1/2"
                             formSelectSize="sm"
@@ -261,6 +266,7 @@ const handleChangeDateForMeatDistribution = (value) => {
 
                     <template #actions>
                         <base-form-select
+                            v-if="!isEmpty(monthlySponsorship)"
                             v-model="route().params.monthly_sponsorship_year"
                             class="w-1/2"
                             formSelectSize="sm"
@@ -291,7 +297,7 @@ const handleChangeDateForMeatDistribution = (value) => {
                             <ramadan-basket-statistics :ramadanBasket></ramadan-basket-statistics>
                         </suspense>
 
-                        <div class="h-[0.375rem]"></div>
+                        <div v-if="!isEmpty(ramadanBasket)" class="h-[0.375rem]"></div>
                     </template>
                 </the-statistic-box>
             </div>
@@ -304,6 +310,7 @@ const handleChangeDateForMeatDistribution = (value) => {
 
                     <template #actions>
                         <base-form-select
+                            v-if="!isEmpty(meatDistribution)"
                             v-model="route().params.meat_distribution_year"
                             class="w-1/2"
                             formSelectSize="sm"
@@ -336,7 +343,7 @@ const handleChangeDateForMeatDistribution = (value) => {
                             <school-entry-statistics :schoolEntry></school-entry-statistics>
                         </suspense>
 
-                        <div class="h-[0.375rem]"></div>
+                        <div v-if="!isEmpty(schoolEntry)" class="h-[0.375rem]"></div>
                     </template>
                 </the-statistic-box>
             </div>

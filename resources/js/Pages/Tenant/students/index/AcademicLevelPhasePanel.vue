@@ -9,6 +9,7 @@ import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
+import { hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -33,6 +34,7 @@ const getContentMessage = (percentage: number) => {
         <base-tab-panel v-for="(phase, key) in phases" :key class="grid grid-cols-12 gap-x-10 gap-y-8">
             <div v-for="level in phase" :key="level" class="col-span-12 sm:col-span-6 md:col-span-4">
                 <Link
+                    v-if="hasPermission('view_students')"
                     :href="
                         route('tenant.students.phase.index', {
                             phase: key.replace('_', '-'),
@@ -45,6 +47,10 @@ const getContentMessage = (percentage: number) => {
 
                     <svg-loader class="ms-1.5 inline h-5 w-5" name="icon-link"></svg-loader>
                 </Link>
+
+                <a v-else class="text-slate-500 rtl:!font-semibold" href="javascript:void(0)">
+                    <span class="inline"> {{ level.level }}</span>
+                </a>
 
                 <div class="mt-1.5 flex items-center">
                     <div class="text-base">

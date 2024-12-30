@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\Benefactors\BenefactorDestroyController;
 use App\Http\Controllers\V1\Benefactors\BenefactorDetailsController;
 use App\Http\Controllers\V1\Benefactors\BenefactorIndexController;
 use App\Http\Controllers\V1\Benefactors\BenefactorShowController;
+use App\Http\Controllers\V1\Benefactors\BenefactorSponsorshipStoreController;
 use App\Http\Controllers\V1\Benefactors\BenefactorStoreController;
 use App\Http\Controllers\V1\Benefactors\BenefactorUpdateController;
 use App\Http\Controllers\V1\Benefactors\SearchBenefactorsController;
@@ -42,6 +43,12 @@ Route::prefix('benefactors')->name('benefactors.')->group(function (): void {
         BenefactorStoreController::class
     )
         ->name('store');
+
+    Route::post(
+        '',
+        BenefactorSponsorshipStoreController::class
+    )->name('store-sponsorship')
+        ->middleware([HandlePrecognitiveRequests::class]);
 
     Route::delete(
         '{benefactor}',

@@ -8,8 +8,9 @@ use App\Models\Benefactor;
 use App\Models\Family;
 use App\Models\Orphan;
 use App\Models\Sponsorship;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class BenefactorUpdateController extends Controller
+class BenefactorUpdateController extends Controller implements HasMiddleware
 {
     public function __invoke(BenefactorUpdateRequest $request, Benefactor $benefactor)
     {
@@ -45,5 +46,10 @@ class BenefactorUpdateController extends Controller
         }
 
         return response('', 201);
+    }
+
+    public static function middleware()
+    {
+        return ['can:update_benefactors'];
     }
 }

@@ -10,7 +10,7 @@ import TrimesterFilter from '@/Pages/Tenant/students/phases/TrimesterFilter.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
-import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
+import { getDataForIndexPages, handleSort } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/students/phases/DataTable.vue'))
@@ -67,20 +67,19 @@ const handleSelectTrimester = (trimester: string) => {
 </script>
 
 <template>
-    <Head :title="$t('the_orphans')"></Head>
+    <Head :title="$t('transcripts')"></Head>
 
     <suspense>
         <div>
             <the-table-header
-                :exportable="hasPermission('export_orphans')"
                 :pagination-data="students"
                 :params
                 :dont-show-filters="true"
-                :title="$t('list', { attribute: $t('the_orphans') })"
+                :title="$t('list', { attribute: $t('transcripts') })"
                 :url
                 entries="students"
-                export-pdf-url="tenant.orphans.export.pdf"
-                export-xlsx-url="tenant.orphans.export.xlsx"
+                export-pdf-url=""
+                export-xlsx-url=""
                 searchable
                 @change-filters="params.filters = $event"
             >

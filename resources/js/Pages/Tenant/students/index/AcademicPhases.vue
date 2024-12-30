@@ -13,6 +13,8 @@ import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
 import TheWarningModal from '@/Components/Global/TheWarningModal.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
+import { hasPermission } from '@/utils/helper'
+
 defineProps<{
     academicLevels: AcademicLevelsIndexResource
     totalStudents: number
@@ -89,6 +91,7 @@ const handleDownloadSchoolTools = () => {
                         </div>
 
                         <base-button
+                            v-if="hasPermission('start_new_academic_year')"
                             class="relative mt-12 justify-start rounded-full font-semibold sm:w-2/3 lg:w-full"
                             variant="outline-danger"
                             @click.prevent="showWarningModalStatus = true"
@@ -102,6 +105,7 @@ const handleDownloadSchoolTools = () => {
                         </base-button>
 
                         <base-button
+                            v-if="hasPermission('export_school_supplies')"
                             class="relative mt-12 justify-start rounded-full font-semibold sm:w-2/3 lg:w-full"
                             variant="outline-secondary"
                             @click.prevent="handleDownloadSchoolTools"

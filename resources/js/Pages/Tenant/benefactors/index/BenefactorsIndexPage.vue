@@ -171,11 +171,10 @@ watchEffect(async () => {
     <suspense>
         <div>
             <the-table-header
-                :sortableFields="benefactorsSorts"
-                sortable
                 :filters="benefactorsFilters"
                 :pagination-data="benefactors"
                 :params="params"
+                :sortableFields="benefactorsSorts"
                 :title="$t('list', { attribute: $t('the_benefactors') })"
                 :url="route('tenant.benefactors.index')"
                 entries="benefactors"
@@ -183,6 +182,7 @@ watchEffect(async () => {
                 export-xlsx-url=""
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
@@ -195,7 +195,11 @@ watchEffect(async () => {
                         {{ $tc('add new', 1, { attribute: $t('benefactor') }) }}
                     </base-button>
 
-                    <base-button class="me-2" @click.prevent="showAddNewSponsorshipModal">
+                    <base-button
+                        v-if="hasPermission('add_new_sponsorship_benefactors')"
+                        class="me-2"
+                        @click.prevent="showAddNewSponsorshipModal"
+                    >
                         <base-tippy :content="$tc('add new', 0, { attribute: $t('sponsorship') })">
                             <svg-loader name="icon-plus"></svg-loader>
                         </base-tippy>

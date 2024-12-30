@@ -5,8 +5,9 @@ namespace App\Http\Controllers\V1\Students;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Students\PhaseStudentsIndexResource;
 use App\Models\AcademicLevel;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class PhaseStudentsIndexController extends Controller
+class PhaseStudentsIndexController extends Controller implements HasMiddleware
 {
     public function __invoke(string $phase, AcademicLevel $academicLevel)
     {
@@ -18,5 +19,10 @@ class PhaseStudentsIndexController extends Controller
             'students' => PhaseStudentsIndexResource::collection(getPhaseStudents($academicLevel->id)),
             'params' => getParams(),
         ]);
+    }
+
+    public static function middleware()
+    {
+        return ['can:view_transcripts_students'];
     }
 }

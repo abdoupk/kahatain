@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\V1\Students;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Browsershot\Browsershot;
 
 use function Spatie\LaravelPdf\Support\pdf;
 
-class DownloadSchoolToolsListController extends Controller
+class DownloadSchoolToolsListController extends Controller implements HasMiddleware
 {
     public function __invoke()
     {
@@ -25,5 +26,10 @@ class DownloadSchoolToolsListController extends Controller
             })
             ->name('test-2023-04-10.pdf')
             ->download();
+    }
+
+    public static function middleware()
+    {
+        return ['can:export_school_supplies'];
     }
 }

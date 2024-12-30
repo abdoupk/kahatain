@@ -78,9 +78,9 @@ defineProps<{
                 </h2>
                 <div class="mt-3 flex items-center justify-center">
                     <base-polar-bar-chart
-                        :chart-data="studentsPerUniversity.map((university) => university.total)"
+                        :chart-data="Object.values(studentsPerUniversity).map((university) => university.total)"
                         :height="300"
-                        :labels="studentsPerUniversity.map((university) => university.name)"
+                        :labels="Object.values(studentsPerUniversity).map((university) => university.name)"
                         :width="300"
                         hide-legend
                     ></base-polar-bar-chart>

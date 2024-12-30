@@ -2,6 +2,8 @@
 import { AcademicLevelsIndexResource } from '@/types/lessons'
 import { StudentsPerInstitution, StudentsPerPhase } from '@/types/orphans'
 
+import { Head } from '@inertiajs/vue3'
+
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import AcademicPhases from '@/Pages/Tenant/students/index/AcademicPhases.vue'
@@ -20,6 +22,8 @@ defineProps<{
 </script>
 
 <template>
+    <Head :title="$t('list', { attribute: $t('the_students') })"></Head>
+
     <div class="grid grid-cols-12 gap-6">
         <!-- BEGIN: Academic Phases -->
         <academic-phases :academicLevels :totalStudents></academic-phases>

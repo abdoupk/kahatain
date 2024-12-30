@@ -200,7 +200,7 @@ export const useMenuStore = defineStore('menu', {
             {
                 icon: 'icon-hands-holding-dollar',
                 // eslint-disable-next-line capitalized-comments
-                ignore: !hasPermission('list_schools'),
+                ignore: !hasPermission('list_benefactors'),
                 routeName: 'tenant.benefactors.index',
                 title: $t('benefactors'),
                 url: '/dashboard/benefactors'
@@ -240,18 +240,27 @@ export const useMenuStore = defineStore('menu', {
             },
             {
                 icon: 'icon-graduation-cap',
-                ignore: !hasPermission(['list_families', 'create_families']),
+                // eslint-disable-next-line array-element-newline
+                ignore: !hasPermission([
+                    'list_students',
+                    'list_lessons',
+                    'list_schools',
+                    'list_transcripts',
+                    'list_college_students',
+                    'list_trainees_orphans'
+                ]),
                 routeName: '',
                 title: $t('the_educational_committee'),
                 subMenu: [
                     {
                         icon: 'icon-graduation-cap',
-                        ignore: !hasPermission('list_families'),
+                        // eslint-disable-next-line array-element-newline
+                        ignore: !hasPermission(['list_students', 'list_lessons', 'list_schools', 'list_transcripts']),
                         title: $t('orphan_students'),
                         subMenu: [
                             {
                                 icon: 'icon-user-graduate',
-                                ignore: !hasPermission('list_permission'),
+                                ignore: !hasPermission('list_students'),
                                 title: $t('list', {
                                     attribute: $t('orphan_students')
                                 }),
@@ -267,7 +276,7 @@ export const useMenuStore = defineStore('menu', {
                             },
                             {
                                 icon: 'icon-grid',
-                                ignore: !hasPermission('list_permission'),
+                                ignore: !hasPermission('list_transcripts'),
                                 title: $t('transcripts'),
                                 routeName: 'tenant.transcripts.index',
                                 url: '/dashboard/transcripts'
@@ -283,14 +292,14 @@ export const useMenuStore = defineStore('menu', {
                     },
                     {
                         icon: 'icon-diploma',
-                        ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_college_students'),
                         title: $t('orphan_college_students'),
                         routeName: 'tenant.college-students.index',
                         url: '/dashboard/college-students'
                     },
                     {
                         icon: 'icon-user-helmet-safety',
-                        ignore: !hasPermission('list_permission'),
+                        ignore: !hasPermission('list_trainees_orphans'),
                         title: $t('orphan_trainees'),
                         routeName: 'tenant.trainees.index',
                         url: '/dashboard/trainees'

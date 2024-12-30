@@ -47,9 +47,8 @@ defineProps<{
                         <div
                             :class="
                                 twMerge([
-                                    student.phase === 'licence' && 'bg-pending',
-                                    student.phase === 'doctorate' && 'bg-warning',
-                                    student.phase === 'master' && 'bg-primary'
+                                    student.phase === 'paramedical' && 'bg-pending',
+                                    student.phase === 'vocational_training' && 'bg-warning'
                                 ])
                             "
                             class="me-3 h-2 w-2 rounded-full"

@@ -391,7 +391,7 @@
     "Show More": "اظهار المزيد",
     "Add New Schedules": "اضافة درس دعم",
     "list_trash": "قائمة المحذوفات",
-    "No data available": "لا توجد بيانات متاحة",
+    "No data available": "لا توجد بيانات متاحة للعرض.",
     "the_families_eid_al_adha": "العائلات المستفيدة من الأضحية",
     "the_families_monthly_basket": "العائلات المستفيدة من الكفالة الشهرية",
     "the_orphans_school_entry": "الأيتام المستفيدين من الحقيبة المدرسية",
@@ -582,5 +582,6 @@
     "the_college_students": "الطلاب الجامعيين",
     "the_projects": "المشاريع",
     "phase_paramedical": "الشبه الطبي",
-    "phase_vocational_training": "التكوين المهني"
+    "phase_vocational_training": "التكوين المهني",
+    "the_trainees_orphans": "الأيتام المتكونين"
 }

@@ -75,7 +75,7 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
 </script>
 
 <template>
-    <Head :title="$t('the_orphans')"></Head>
+    <Head :title="$t('transcripts')"></Head>
 
     <suspense>
         <div>
@@ -84,7 +84,7 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
                 :filters="orphansFilters"
                 :pagination-data="orphans"
                 :params="params"
-                :title="$t('list', { attribute: $t('the_orphans') })"
+                :title="$t('list', { attribute: $t('the_students') })"
                 :url="route('tenant.transcripts.index')"
                 entries="orphans"
                 export-pdf-url="tenant.orphans.export.pdf"

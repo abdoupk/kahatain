@@ -288,10 +288,12 @@ export const permissions = {
     archive: ['export', 'list', 'view'],
     trash: ['destroy', 'list', 'restore'],
     committees: ['create', 'delete', 'list', 'update', 'view'],
-    benefactors: ['create', 'delete', 'list', 'update', 'view'],
+    benefactors: ['create', 'delete', 'list', 'update', 'view', 'add_new_sponsorship'],
     sponsorships: ['create'],
     transcripts: ['create', 'delete', 'list', 'update', 'view'],
-    students: ['list'],
+    students: ['list_students', 'start_new_academic_year', 'export_school_supplies', 'view_students'],
+    college_students: ['list'],
+    trainees_orphans: ['list'],
     monthly_sponsorships: ['update_settings']
 }
 

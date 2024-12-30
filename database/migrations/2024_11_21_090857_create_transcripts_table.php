@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Orphan::class);
             $table->foreignIdFor(Tenant::class);
             $table->foreignIdFor(AcademicLevel::class);
+            $table->float('average', 2);
             $table->timestamps();
         });
     }

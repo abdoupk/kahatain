@@ -4,9 +4,10 @@ namespace App\Http\Controllers\V1\CollegeStudents;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CollegeStudents\CollegeStudentsIndexResource;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Response;
 
-class CollegeStudentsIndexController extends Controller
+class CollegeStudentsIndexController extends Controller implements HasMiddleware
 {
     public function __invoke(): Response
     {
@@ -18,5 +19,10 @@ class CollegeStudentsIndexController extends Controller
             'collegeStudentsPerPhase' => fn () => getCollegeStudentsPerPhase(),
             'studentsPerUniversity' => fn () => getCollegeStudentsPerUniversity(),
         ]);
+    }
+
+    public static function middleware()
+    {
+        return ['can:list_college_students'];
     }
 }

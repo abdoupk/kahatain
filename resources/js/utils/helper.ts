@@ -144,7 +144,7 @@ const isEmpty = (value) => {
     } else if (typeof value === 'object' && value !== null) {
         return Object.keys(value).length === 0 || Object.values(value).every((item) => isEmpty(item))
     } else {
-        return value === null || value === undefined || value === ''
+        return value === null || value === undefined || value === '' || value === false || value === 0
     }
 }
 const omit = (obj: any, props: any): any => {

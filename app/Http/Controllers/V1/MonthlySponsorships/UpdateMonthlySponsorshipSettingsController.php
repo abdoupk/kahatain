@@ -5,8 +5,9 @@ namespace App\Http\Controllers\V1\MonthlySponsorships;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\MonthlySponsorship\UpdateMonthlySponsorshipSettingsRequest;
 use App\Jobs\V1\SiteSettings\MonthlySponsorshipSettingsUpdatedJob;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UpdateMonthlySponsorshipSettingsController extends Controller
+class UpdateMonthlySponsorshipSettingsController extends Controller implements HasMiddleware
 {
     public function __invoke(UpdateMonthlySponsorshipSettingsRequest $request)
     {
@@ -19,5 +20,10 @@ class UpdateMonthlySponsorshipSettingsController extends Controller
         dispatch(new MonthlySponsorshipSettingsUpdatedJob(auth()->user()));
 
         return response('', 204);
+    }
+
+    public static function middleware()
+    {
+        return ['can:update_settings_monthly_sponsorships'];
     }
 }

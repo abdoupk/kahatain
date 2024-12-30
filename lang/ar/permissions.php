@@ -15,7 +15,12 @@ return [
     'add_to_inventory' => 'اضافة للمخزن',
     'delete_from_inventory' => 'حذف من المخزن',
     'list_items' => 'عرض العناصر',
+    'list_students' => 'عرض الأيتام المتمدرسين',
+    'view_students' => 'عرض كشوف نقاط الأيتام المتمدرسين',
     'update_inventory' => 'تعديل  عناصر المخزن',
     'view_item' => 'عرض التفاصيل',
     'update_settings' => 'تعديل الإعدادات',
+    'export_school_supplies' => 'تصدير قائمة الأدوات المدرسية',
+    'start_new_academic_year' => 'بدء سنة دراسية جديدة',
+    'add_new_sponsorship' => 'اضافة كفالة جديدة',
 ];

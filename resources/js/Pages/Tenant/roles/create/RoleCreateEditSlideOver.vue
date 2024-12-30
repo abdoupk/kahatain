@@ -95,7 +95,7 @@ const modalType = computed(() => {
 })
 
 const checkAll = (model: keyof typeof permissions, checked: boolean) => {
-    const suffix = model === 'inventory' ? '' : `_${model}`
+    const suffix = model === 'students' ? '' : `_${model}`
 
     permissions[model].forEach((permission: string) => {
         rolesStore.role.permissions[`${permission}${suffix}`] = checked
@@ -125,6 +125,22 @@ const handleCheckboxUpdateForInventory = (permission: string, value: boolean) =>
         })
     } else {
         rolesStore.role.permissions['list_items'] = true
+    }
+
+    rolesStore.role.permissions = Object.assign(form.value.permissions, {
+        [permission]: value
+    })
+}
+
+const handleCheckboxUpdateForStudents = (permission: string, value: boolean) => {
+    rolesStore.role.permissions[permission] = value
+
+    if (permission === 'list_students' && !value) {
+        permissions['students'].forEach((_key: string) => {
+            rolesStore.role.permissions[_key] = false
+        })
+    } else {
+        rolesStore.role.permissions['list_students'] = true
     }
 
     rolesStore.role.permissions = Object.assign(form.value.permissions, {
@@ -191,19 +207,27 @@ watch(
                         <div v-for="permission in permissionMaps" :key="permission">
                             <base-form-switch>
                                 <base-form-switch-input
-                                    :model-value="rolesStore.role.permissions[`${permission}_${key}`]"
-                                    v-if="key !== 'inventory'"
+                                    v-if="key === 'inventory'"
                                     :id="`${permission}_${key}`"
-                                    @update:model-value="handleCheckboxUpdate(permission, key, $event)"
+                                    :model-value="rolesStore.role.permissions[permission]"
                                     type="checkbox"
+                                    @update:model-value="handleCheckboxUpdateForInventory(permission, $event)"
+                                ></base-form-switch-input>
+
+                                <base-form-switch-input
+                                    v-else-if="key === 'students'"
+                                    :id="`${permission}_${key}`"
+                                    :model-value="rolesStore.role.permissions[permission]"
+                                    type="checkbox"
+                                    @update:model-value="handleCheckboxUpdateForStudents(permission, $event)"
                                 ></base-form-switch-input>
 
                                 <base-form-switch-input
                                     v-else
-                                    :model-value="rolesStore.role.permissions[permission]"
                                     :id="`${permission}_${key}`"
-                                    @update:model-value="handleCheckboxUpdateForInventory(permission, $event)"
+                                    :model-value="rolesStore.role.permissions[`${permission}_${key}`]"
                                     type="checkbox"
+                                    @update:model-value="handleCheckboxUpdate(permission, key, $event)"
                                 ></base-form-switch-input>
 
                                 <base-form-switch-label :for="`${permission}_${key}`" class="whitespace-nowrap">
