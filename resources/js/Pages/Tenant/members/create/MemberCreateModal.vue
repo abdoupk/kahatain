@@ -364,7 +364,7 @@ const modalType = computed(() => {
                 <!-- Begin: branch-->
                 <div class="col-span-12 sm:col-span-6">
                     <base-form-label htmlFor="branch">
-                        {{ $t('branch') }}
+                        {{ $t('the_branch') }}
                     </base-form-label>
 
                     <div>

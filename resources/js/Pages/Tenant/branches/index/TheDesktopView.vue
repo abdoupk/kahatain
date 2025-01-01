@@ -68,6 +68,15 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-th>
 
                     <the-table-th
+                        :direction="params.directions?.members_count"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'members_count')"
+                    >
+                        {{ $t('members_count') }}
+                    </the-table-th>
+
+                    <the-table-th
                         :direction="params.directions?.created_at"
                         class="text-center"
                         sortable
@@ -111,6 +120,12 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     <the-table-td>
                         <div class="whitespace-nowrap text-center">
                             {{ branch.families_count }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td>
+                        <div class="whitespace-nowrap text-center">
+                            {{ branch.members_count }}
                         </div>
                     </the-table-td>
 

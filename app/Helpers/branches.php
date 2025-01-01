@@ -15,7 +15,7 @@ function getBranches(): LengthAwarePaginator
         ->query(
             fn (Builder $query) => $query
                 ->with(['president', 'city'])
-                ->withCount('families')
+                ->withCount(['families', 'members'])
         )
         ->paginate(perPage: request()->integer('perPage', 10));
 }

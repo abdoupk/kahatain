@@ -33,10 +33,10 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showDetailsModal', 'showEd
                     <the-table-th class="text-start"> #</the-table-th>
 
                     <the-table-th
-                        :direction="params.directions?.creator"
+                        :direction="params.directions && params.directions?.['creator.name']"
                         class="text-start"
                         sortable
-                        @click="emit('sort', 'creator')"
+                        @click="emit('sort', 'creator.name')"
                     >
                         {{ $t('receiving_member') }}
                     </the-table-th>

@@ -170,7 +170,7 @@ function generateFormattedSort(): array
     if ($directions) {
         /** @phpstan-ignore-next-line */
         return array_map(static function (string $value, string $key) {
-            if ($key === 'birth_date') {
+            if ($key === 'birth_date' || $key === 'orphan.birth_date') {
                 return $value === 'desc' ? "$key:asc" : "$key:desc";
             }
 

@@ -131,6 +131,10 @@ class Orphan extends Model implements HasMedia
                 'phase' => $this->academicLevel?->phase,
                 'phase_key' => $this->academicLevel?->phase_key,
             ],
+            'institution' => [
+                'id' => $this->institution_id,
+                'name' => $this->institution?->getName(),
+            ],
             'speciality' => [
                 'id' => $this->speciality?->id,
                 'speciality' => $this->speciality?->speciality,
@@ -304,11 +308,6 @@ class Orphan extends Model implements HasMedia
     public function transcripts(): HasMany
     {
         return $this->hasMany(Transcript::class);
-    }
-
-    public function highEducationTranscripts(): HasMany
-    {
-        return $this->hasMany(HighEducationTranscript::class);
     }
 
     public function eidSuit(): HasOne

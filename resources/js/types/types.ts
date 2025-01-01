@@ -433,6 +433,7 @@ export interface FamiliesIndexResource {
     name: string
     start_date: Date
     file_number: number
+    orphans_count: number
     zone: Zone
     address: string
     sponsor: {
@@ -955,6 +956,7 @@ export interface BranchesIndexResource {
         name?: string
     }
     families_count?: string
+    members_count?: string
     created_at: string
 }
 
@@ -1143,6 +1145,7 @@ export interface OrphansTranscriptsIndexResource {
     id: string
     name: string
     birth_date: string
+    academic_average: number
     institution: {
         id: string
         name: string

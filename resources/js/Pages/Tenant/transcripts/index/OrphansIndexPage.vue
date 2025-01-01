@@ -2,6 +2,7 @@
 import type { IndexParams, OrphansTranscriptsIndexResource, PaginationData } from '@/types/types'
 
 import { orphansFilters } from '@/constants/filters'
+import { transcriptsSorts } from '@/constants/sorts'
 import { useTranscriptsStore } from '@/stores/transcripts'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
@@ -84,6 +85,7 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
                 :filters="orphansFilters"
                 :pagination-data="orphans"
                 :params="params"
+                :sortableFields="transcriptsSorts"
                 :title="$t('list', { attribute: $t('the_students') })"
                 :url="route('tenant.transcripts.index')"
                 entries="orphans"
@@ -91,6 +93,7 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
                 export-xlsx-url="tenant.orphans.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             ></the-table-header>
 
@@ -98,8 +101,8 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
                 <data-table
                     :orphans
                     :params
-                    @showEditModal="showEditModal"
                     @showCreateModal="showCreateModal"
+                    @showEditModal="showEditModal"
                     @sort="sort"
                 ></data-table>
 

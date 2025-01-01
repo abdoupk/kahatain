@@ -43,6 +43,15 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                     <the-table-th class="text-start">{{ $t('validation.attributes.address') }}</the-table-th>
 
                     <the-table-th
+                        :direction="params.directions?.orphans_count"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'orphans_count')"
+                    >
+                        {{ $t('orphans_count') }}
+                    </the-table-th>
+
+                    <the-table-th
                         :direction="params.directions?.file_number"
                         class="text-center"
                         sortable
@@ -95,6 +104,10 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                         >
                             {{ family.zone?.name }}
                         </Link>
+                    </the-table-td>
+
+                    <the-table-td class="text-center">
+                        {{ family.orphans_count }}
                     </the-table-td>
 
                     <the-table-td class="text-center">

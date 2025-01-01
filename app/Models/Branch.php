@@ -94,6 +94,11 @@ class Branch extends Model
         return $this->hasMany(Family::class);
     }
 
+    public function members(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -106,7 +111,7 @@ class Branch extends Model
 
     public function makeSearchableUsing(Collection $models): Collection
     {
-        return $models->load(['city', 'president'])->loadCount('families');
+        return $models->load(['city', 'president'])->loadCount(['families', 'members']);
     }
 
     public function toSearchableArray(): array
@@ -117,6 +122,7 @@ class Branch extends Model
             'tenant_id' => $this->tenant_id,
             'name' => $this->name,
             'families_count' => $this->families_count,
+            'members_count' => $this->members_count,
             'city' => [
                 'id' => $this->city_id,
                 'ar_name' => $this->city->getFullName(),

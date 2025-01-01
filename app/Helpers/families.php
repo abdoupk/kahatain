@@ -7,7 +7,9 @@ use Illuminate\Support\Collection;
 function getFamilies(): LengthAwarePaginator
 {
     return search(Family::getModel())
-        ->query(fn ($query) => $query->with(['zone:id,name', 'sponsor:id,first_name,last_name,family_id']))
+        ->query(fn ($query) => $query->with(['zone:id,name', 'sponsor:id,first_name,last_name,family_id'])
+            ->withCount('orphans')
+        )
         ->paginate(perPage: request()?->integer('perPage', 10));
 }
 

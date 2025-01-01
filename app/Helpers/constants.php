@@ -12,7 +12,7 @@ const FILTER_STUDENTS = 'AND academic_level.phase_key IN [primary_education, mid
 const FILTER_COLLEGE_STUDENTS = 'AND academic_level.phase_key IN [licence, master, doctorate]';
 
 const FILTER_RAMADAN_BASKET = '';
-//'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
+// 'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
 
 function FILTER_EID_SUIT(): string
 {
@@ -22,7 +22,7 @@ function FILTER_EID_SUIT(): string
 }
 
 const FILTER_EID_AL_ADHA = '';
-//'AND eid_al_adha != false AND eid_al_adha IS NOT NULL';
+// 'AND eid_al_adha != false AND eid_al_adha IS NOT NULL';
 
 const CALCULATION = [
     'weights' => [
@@ -169,17 +169,17 @@ const CALCULATION = [
             [
                 'minimum' => 0,
                 'maximum' => 25000,
-                'category' => 'الصف الأول',
+                'category' => 'الصنف الأول',
             ],
             [
                 'minimum' => 25000,
                 'maximum' => 50000,
-                'category' => 'الصف الثاني',
+                'category' => 'الصنف الثاني',
             ],
             [
                 'minimum' => 50000,
                 'maximum' => 80000,
-                'category' => 'الصف الثالث',
+                'category' => 'الصنف الثالث',
             ],
         ],
     ],

@@ -74,18 +74,26 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                     </the-table-th>
 
                     <the-table-th
-                        :direction="params.directions && params.directions['academic_level.id']"
+                        :direction="params.directions && params.directions['academic_level.i_id']"
                         class="text-center"
                         sortable
-                        @click="emit('sort', 'academic_level.id')"
+                        @click="emit('sort', 'academic_level.i_id')"
                         >{{ $t('validation.attributes.sponsor.academic_level') }}
                     </the-table-th>
 
                     <the-table-th
-                        :direction="params.directions && params.directions['institution']"
+                        :direction="params.directions && params.directions['academic_average']"
                         class="text-center"
                         sortable
-                        @click="emit('sort', 'institution')"
+                        @click="emit('sort', 'academic_average')"
+                        >{{ $t('general_average') }}
+                    </the-table-th>
+
+                    <the-table-th
+                        :direction="params.directions && params.directions['institution.name']"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'institution.name')"
                         >{{ $t('validation.attributes.institution') }}
                     </the-table-th>
 
@@ -139,6 +147,10 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                         <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                             {{ orphan.academic_level.phase }}
                         </div>
+                    </the-table-td>
+
+                    <the-table-td class="max-w-20 truncate text-center">
+                        {{ orphan.academic_average || '————' }}
                     </the-table-td>
 
                     <the-table-td class="max-w-20 truncate text-center">

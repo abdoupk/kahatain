@@ -29,6 +29,7 @@ class OrphansIndexResource extends JsonResource
                 'level' => $this->academicLevel?->level,
                 'phase_key' => $this->academicLevel?->phase_key,
             ],
+            'academic_average' => (float) $this->academic_average,
             'transcripts' => $this->whenLoaded('transcripts', function () {
                 return [
                     'first_trimester' => $this->transcripts->where('trimester', 'first_trimester')->first(),

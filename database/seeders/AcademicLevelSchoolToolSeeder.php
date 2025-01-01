@@ -77,7 +77,7 @@ class AcademicLevelSchoolToolSeeder extends Seeder
 
     public function middleEducation(): void
     {
-        //TODO change 31 to 13
+        // TODO change 31 to 13
         $toolIds = [25, 23, 1, 26, 28, 24, 29, 3, 4, 30, 8, 9, 10, 11, 12, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43];
 
         $qts = [2, 2, 4, 4, 3, 2, 1, 100, 100, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
