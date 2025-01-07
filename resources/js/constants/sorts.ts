@@ -499,7 +499,7 @@ export const transcriptsSorts = [
 export const inventorySorts = [
     {
         value: 'name',
-        label: $t('the_inventory')
+        label: $t('the_item')
     },
     {
         value: 'qty',

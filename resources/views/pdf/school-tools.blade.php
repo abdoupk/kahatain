@@ -1,14 +1,10 @@
 @foreach ($data['global'] as $phaseKey => $academicLevels)
     <x-table>
         <x-slot name="title">
-            <h1 class="text-center">{{ __('school_tools') }}</h1>
-            <h3 class="text-center">{{ __('phase_' . $phaseKey) }}</h3>
+            <h1 class="text-center rtl:text-lg mt-0.5">{{ __('all_school_tools_for_phase', ['phase' => __('phase_' . $phaseKey )]) }}</h1>
         </x-slot>
 
         <x-slot name="thead">
-            @if ($loop->first)
-                <h3 class="text-center print:hidden"> طباعة في A3</h3>
-            @endif
             <tr>
                 <x-th>{{ __('school_tools') }}</x-th>
                 @foreach ($academicLevels as $academicLevel => $levelData)
@@ -73,7 +69,7 @@
 <div class="w-1/2">
     <x-table>
         <x-slot name="title">
-            <h1 class="text-center">{{ __('school_tools') }}</h1>
+            <h1 class="text-center text-lg mt-0.5">{{ __('school_tools_list') }}</h1>
         </x-slot>
 
         <x-slot name="thead">
@@ -104,15 +100,10 @@
     @foreach ($branchData['data'] as $phaseKey => $academicLevels)
         <x-table>
             <x-slot name="title">
-                <h1 class="text-center">{{ __('school_tools') }}</h1>
-                <h3 class="text-center">{{ __('phase_' . $phaseKey) }}</h3>
-                <h4 class="text-center">{{ $branchData['branch_name'] }}</h4>
+                <h1 class="text-center rtl:text-lg mt-0.5">{{ __('all_school_tools_for_branch', ['phase' => __('phase_' . $phaseKey ), 'branch' => $branchData['branch_name']]) }}</h1>
             </x-slot>
 
             <x-slot name="thead">
-                @if ($loop->first)
-                    <h3 class="text-center print:hidden"> طباعة في A3</h3>
-                @endif
                 <tr>
                     <x-th>{{ __('school_tools') }}</x-th>
                     @foreach ($academicLevels as $academicLevel => $levelData)

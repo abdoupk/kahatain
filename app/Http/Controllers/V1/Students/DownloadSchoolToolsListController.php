@@ -24,7 +24,7 @@ class DownloadSchoolToolsListController extends Controller implements HasMiddlew
                     ->margins(2, 4, 2, 4)
                     ->format('A3');
             })
-            ->name('test-2023-04-10.pdf')
+            ->name(__('school_supplies_list', ['date' => now()->format('Y')]))
             ->download();
     }
 

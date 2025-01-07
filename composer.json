@@ -13,7 +13,7 @@
         "ext-zip": "*",
         "calebporzio/sushi": "^2.5",
         "guzzlehttp/guzzle": "^7.8",
-        "inertiajs/inertia-laravel": "^1.0",
+        "inertiajs/inertia-laravel": "2.0",
         "laravel-notification-channels/webpush": "^9.0",
         "laravel/breeze": "^2.0",
         "laravel/fortify": "^1.21",

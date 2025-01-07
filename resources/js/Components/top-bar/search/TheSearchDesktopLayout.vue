@@ -82,8 +82,6 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
                     @blur="
                         () => {
                             querySearch = ''
-
-                            selectedOption = null
                         }
                     "
                     @keydown.esc.prevent="() => (querySearch = '')"

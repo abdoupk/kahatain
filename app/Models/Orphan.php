@@ -206,14 +206,6 @@ class Orphan extends Model implements HasMedia
         );
     }
 
-    public function vocationalTraining(): BelongsTo
-    {
-        return $this->belongsTo(
-            VocationalTraining::class,
-            'vocational_training_id'
-        );
-    }
-
     public function events(): BelongsToMany
     {
         return $this->belongsToMany(

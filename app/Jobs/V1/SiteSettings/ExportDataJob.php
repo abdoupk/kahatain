@@ -21,6 +21,9 @@ use App\Exports\FullExports\SponsorsExport;
 use App\Exports\FullExports\UsersExport;
 use App\Exports\FullExports\ZonesExport;
 use App\Models\Archive;
+use App\Models\Family;
+use App\Models\Income;
+use App\Models\Orphan;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Notifications\SiteSettings\ExportCompleteNotification;
@@ -31,6 +34,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Maatwebsite\Excel\Facades\Excel;
 use Notification;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Storage;
 use ZipArchive;
 
@@ -40,6 +44,10 @@ class ExportDataJob implements ShouldQueue
 
     public function __construct(public string $path, public string $tenant) {}
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function handle(): void
     {
         $zip = new ZipArchive;
@@ -62,6 +70,8 @@ class ExportDataJob implements ShouldQueue
 
         $this->exportRamadanBasketFamiliesList($zip);
 
+        $this->exportFiles($zip);
+
         $zip->close();
 
         $this->cleanup();
@@ -70,14 +80,18 @@ class ExportDataJob implements ShouldQueue
 
         $superAdmin = User::find($tenant->infos['super_admin']['id'])->first();
 
-        Notification::send(
-            $superAdmin,
-            new ExportCompleteNotification(
-                tenant: $tenant
-            )
-        );
+        //        Notification::send(
+        //            $superAdmin,
+        //            new ExportCompleteNotification(
+        //                tenant: $tenant
+        //            )
+        //        );
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportToExcel(ZipArchive $zip): void
     {
         $files = [
@@ -114,6 +128,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportBabiesMilkAndDiapers(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('babies_milk_and_diapers')
@@ -122,7 +140,7 @@ class ExportDataJob implements ShouldQueue
 
         if (! empty($years)) {
             foreach ($years as $year) {
-                $fileName = "{$year}/".__('exports.babies_milk_and_diapers').'.xlsx';
+                $fileName = "$year/".__('exports.babies_milk_and_diapers').'.xlsx';
 
                 Excel::store(new BabiesMilkAndDiapersListExport($year), $fileName);
 
@@ -131,6 +149,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportMonthlyBasketFamiliesList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('monthly_basket')
@@ -139,7 +161,7 @@ class ExportDataJob implements ShouldQueue
 
         if (! empty($years)) {
             foreach ($years as $year) {
-                $fileName = "{$year}/".__('the_families_monthly_basket').'.xlsx';
+                $fileName = "$year/".__('the_families_monthly_basket').'.xlsx';
 
                 Excel::store(new MonthlyBasketFamiliesExport($year), $fileName);
 
@@ -148,6 +170,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportSchoolEntryOrphansList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('school_entry')
@@ -163,6 +189,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportEidSuitOrphansList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('eid_suit')
@@ -178,6 +208,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportEidAlAdhaFamiliesList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('eid_al_adha')
@@ -193,6 +227,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportRamadanBasketFamiliesList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('ramadan_basket')
@@ -206,6 +244,33 @@ class ExportDataJob implements ShouldQueue
 
             $zip->addFile(Storage::path($fileName), $fileName);
         }
+    }
+
+    private function exportFiles(ZipArchive $zip): void
+    {
+        Family::with(['sponsor.incomes', 'spouse', 'orphans'])->each(function (Family $family) use ($zip) {
+            $folderName = 'files/'.$family->name;
+
+            $zip->addEmptyDir($folderName);
+
+            $familyFile = $family->getFirstMediaPath('merged_files');
+
+            if (file_exists($familyFile)) {
+                $zip->addFile($familyFile, "$folderName/".__('the_family_report').'.pdf');
+            }
+            //
+            //            $family->sponsor->incomes()->each(function (Income $income) use ($zip, $folderName) {
+            //                $zip->addFile($income->getFirstMediaPath('merged_files'), "$folderName/$income->id.pdf");
+            //            });
+            //
+            //            $zip->addFile($family->sponsor->getFirstMediaPath('merged_files'), "$folderName/".__('the_sponsor_report').'.pdf');
+            //
+            //            $zip->addFile($family->spouse->getFirstMediaPath('merged_files'), "$folderName/".__('the_spouse_report').'.pdf');
+            //
+            //            $family->orphans()->each(function (Orphan $orphan) use ($zip, $folderName) {
+            //                $zip->addFile($orphan->getFirstMediaPath('merged_files'), "$folderName/$orphan->id.pdf");
+            //            });
+        });
     }
 
     private function cleanup(): void

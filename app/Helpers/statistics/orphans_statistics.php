@@ -153,32 +153,6 @@ function getOrphansByShoeSize(): array
     ];
 }
 
-function getOrphansByVocationalTraining(): array
-{
-    $orphans = Orphan::whereNotNull('vocational_training_id')
-        ->select(
-            'vocational_training_id',
-            DB::raw('count(*) as total')
-        )
-        ->with('vocationalTraining:id,division')
-        ->groupBy('vocational_training_id')
-        ->get();
-
-    $result = $orphans->groupBy(function ($orphan) {
-        return $orphan->vocationalTraining->division;
-    })->map(function ($group) {
-        return [
-            'total' => $group->first()->total,
-            'division' => $group->first()->vocationalTraining->division,
-        ];
-    })->values()->toArray();
-
-    return [
-        'labels' => array_column($result, 'division'),
-        'data' => array_column($result, 'total'),
-    ];
-}
-
 function getOrphansGroupByCreatedDate(): array
 {
     return array_replace(

@@ -15,9 +15,7 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
     public function collection(): Collection
     {
         return Orphan::with(
-            ['academicLevel', 'shirtSize', 'shoesSize', 'pantsSize',
-                'vocationalTraining',
-            ]
+            ['academicLevel', 'shirtSize', 'shoesSize', 'pantsSize', 'institution', 'speciality']
         )->get();
     }
 
@@ -42,7 +40,9 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
             __('shoes_size'),
             __('pants_size'),
             __('academic_level'),
-            __('the_vocational_training'),
+            __('validation.attributes.institution'),
+            __('speciality'),
+            __('academic_level'),
             __('the_income'),
             __('unemployed'),
             __('handicapped'),
@@ -61,7 +61,8 @@ class OrphansExport implements FromCollection, WithEvents, WithHeadings, WithMap
             $row->shoesSize?->label,
             $row->pantsSize?->label,
             $row->academicLevel?->level,
-            $row->vocationalTraining?->speciality,
+            $row->institution?->getName(),
+            $row->speciality?->speciality ?? '----',
             formatCurrency($row->income ?? 0),
             $row->is_unemployed ? __('no') : __('yes'),
             $row->is_handicapped ? __('yes') : __('no'),
