@@ -125,7 +125,7 @@ const handleSort = ({ field, direction }) => {
             <the-mobile-sorting
                 v-if="sortable"
                 :sortable-fields
-                class="@3xl:hiddens ms-2 hidden @[33rem]:block"
+                class="ms-2 hidden @[33rem]:block @3xl:hidden"
                 @sort="handleSort"
             ></the-mobile-sorting>
 

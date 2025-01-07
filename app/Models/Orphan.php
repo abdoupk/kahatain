@@ -187,6 +187,7 @@ class Orphan extends Model implements HasMedia
             'shirtSize',
             'pantsSize',
             'family',
+            'institution',
         ]);
     }
 

@@ -22,7 +22,6 @@ use App\Exports\FullExports\UsersExport;
 use App\Exports\FullExports\ZonesExport;
 use App\Models\Archive;
 use App\Models\Family;
-use App\Models\Income;
 use App\Models\Orphan;
 use App\Models\Tenant;
 use App\Models\User;
@@ -80,12 +79,12 @@ class ExportDataJob implements ShouldQueue
 
         $superAdmin = User::find($tenant->infos['super_admin']['id'])->first();
 
-        //        Notification::send(
-        //            $superAdmin,
-        //            new ExportCompleteNotification(
-        //                tenant: $tenant
-        //            )
-        //        );
+        Notification::send(
+            $superAdmin,
+            new ExportCompleteNotification(
+                tenant: $tenant
+            )
+        );
     }
 
     /**
@@ -253,28 +252,107 @@ class ExportDataJob implements ShouldQueue
 
             $zip->addEmptyDir($folderName);
 
-            $familyFile = $family->getFirstMediaPath('merged_files');
+            $residenceFile = $family->getFirstMedia('residence_files');
 
-            if (file_exists($familyFile)) {
-                $zip->addFile($familyFile, "$folderName/".__('the_family_report').'.pdf');
+            if ($residenceFile) {
+                $zip->addFile($residenceFile->getPath(), "$folderName/".__('upload-files.labels.residence_certificate').'.'.$residenceFile->extension);
             }
-            //
-            //            $family->sponsor->incomes()->each(function (Income $income) use ($zip, $folderName) {
-            //                $zip->addFile($income->getFirstMediaPath('merged_files'), "$folderName/$income->id.pdf");
-            //            });
-            //
-            //            $zip->addFile($family->sponsor->getFirstMediaPath('merged_files'), "$folderName/".__('the_sponsor_report').'.pdf');
-            //
-            //            $zip->addFile($family->spouse->getFirstMediaPath('merged_files'), "$folderName/".__('the_spouse_report').'.pdf');
-            //
-            //            $family->orphans()->each(function (Orphan $orphan) use ($zip, $folderName) {
-            //                $zip->addFile($orphan->getFirstMediaPath('merged_files'), "$folderName/$orphan->id.pdf");
-            //            });
+
+            $this->generateSponsorFiles($family, $zip, $folderName);
+
+            $this->generateIncomesFiles($family, $zip, $folderName);
+
+            $this->generateOrphanFiles($family, $zip, $folderName);
+
+            $this->generateDeathCertificateFiles($family, $zip, $folderName);
         });
     }
 
     private function cleanup(): void
     {
         // TODO cleanup folders and files except exported_data.zip
+    }
+
+    private function generateOrphanFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $family->orphans->each(function (Orphan $orphan) use ($zip, $folderName) {
+            $orphanPhoto = $orphan->getFirstMedia('photos');
+
+            if ($orphanPhoto) {
+                $zip->addFile($orphanPhoto->getPath(), "$folderName/".__('the_photos')."/{$orphan->getName()}".
+                    '.'.$orphanPhoto->extension);
+            }
+        });
+    }
+
+    private function generateSponsorFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $sponsorPhoto = $family->sponsor->getFirstMedia('photos');
+
+        if ($sponsorPhoto) {
+            $zip->addFile($sponsorPhoto->getPath(), "$folderName/".__('the_photos')."/{$family->sponsor->getName()}".'.'.$sponsorPhoto->extension);
+        }
+
+        $sponsorDiplomaFile = $family->sponsor->getFirstMedia('diploma_files');
+
+        if ($sponsorDiplomaFile) {
+            $zip->addFile($sponsorDiplomaFile->getPath(), "$folderName".'/'.__('diploma').'.'.$sponsorDiplomaFile->extension);
+        }
+
+        $sponsorNoRemarriageFile = $family->sponsor->getFirstMedia('no_remarriage_files');
+
+        if ($sponsorNoRemarriageFile) {
+            $zip->addFile($sponsorNoRemarriageFile->getPath(), "$folderName/".__('no_remarriage').'.'.$sponsorNoRemarriageFile->extension);
+        }
+
+        $sponsorBirthCertificateFile = $family->sponsor->getFirstMedia('birth_certificate_files');
+
+        if ($sponsorBirthCertificateFile) {
+            $zip->addFile($sponsorBirthCertificateFile->getPath(), "$folderName/".__('upload-files.labels.birth_certificate').'.'.$sponsorBirthCertificateFile->extension);
+        }
+    }
+
+    private function generateIncomesFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $zip->addEmptyDir("$folderName/".__('incomes_files'));
+
+        $cnrFile = $family->sponsor->incomes->getFirstMedia('cnr_files');
+
+        if ($cnrFile) {
+            $zip->addFile($cnrFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.cnr').'.'.$cnrFile->extension);
+        }
+
+        $cnasFile = $family->sponsor->incomes->getFirstMedia('cnas_files');
+
+        if ($cnasFile) {
+            $zip->addFile($cnasFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.cnas').'.'.$cnasFile->extension);
+        }
+
+        $ccpFile = $family->sponsor->incomes->getFirstMedia('ccp_files');
+
+        if ($ccpFile) {
+            $zip->addFile($ccpFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.ccp').'.'.$ccpFile->extension);
+        }
+
+        $bankFile = $family->sponsor->incomes->getFirstMedia('bank_files');
+
+        if ($bankFile) {
+            $zip->addFile($bankFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.bank').'.'.$bankFile->extension);
+        }
+
+        $casnosFile = $family->sponsor->incomes->getFirstMedia('casnos_files');
+
+        if ($casnosFile) {
+            $zip->addFile($casnosFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.casnos').'.'.$casnosFile->extension);
+        }
+    }
+
+    private function generateDeathCertificateFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $deathCertificateFile = $family->spouse->getFirstMedia('death_certificate_files');
+
+        if ($deathCertificateFile) {
+            $zip->addFile($deathCertificateFile->getPath(), "$folderName/".__('upload-files.labels.death_certificate').'.'.$deathCertificateFile->extension);
+        }
     }
 }

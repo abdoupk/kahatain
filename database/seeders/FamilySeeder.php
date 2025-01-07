@@ -28,6 +28,8 @@ class FamilySeeder extends Seeder
              */
             function (Tenant $tenant) {
                 for ($i = 0; $i < 34; $i++) {
+                    $sponsor_first_name = fake('ar_SA')->firstName();
+                    $sponsor_last_name = fake('ar_SA')->lastName();
                     $family = Family::factory()
                         ->hasHousing(1, [
                             'tenant_id' => $tenant->id,
@@ -49,6 +51,7 @@ class FamilySeeder extends Seeder
                             'branch_id' => Branch::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
                             'zone_id' => Zone::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
                             'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
+                            'name' => $sponsor_first_name.' '.$sponsor_last_name,
                         ]);
 
                     Spouse::factory()->create([
@@ -71,6 +74,8 @@ class FamilySeeder extends Seeder
                             'tenant_id' => $tenant->id,
                             'family_id' => $family->id,
                             'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
+                            'first_name' => $sponsor_first_name,
+                            'last_name' => $sponsor_last_name,
                         ]);
 
                     for ($j = 0; $j < fake()->numberBetween(2, 6); $j++) {

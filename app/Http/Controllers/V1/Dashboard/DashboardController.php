@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
     private function getRecentActivities()
     {
-        return auth()->user()->notifications->take(5)->map(function ($notification) {
+        return auth()->user()->notifications->take(4)->map(function ($notification) {
             return [
                 'id' => $notification->id,
                 'user' => [

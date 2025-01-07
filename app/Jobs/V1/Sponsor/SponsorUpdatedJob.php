@@ -36,7 +36,7 @@ class SponsorUpdatedJob implements ShouldQueue
      */
     public function handle(): void
     {
-        mergePdf($this->sponsor->incomes()->first());
+        mergePdf($this->sponsor->load('incomes')->incomes->first());
 
         Notification::send(
             getUsersShouldBeNotified(
