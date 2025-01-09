@@ -24,25 +24,25 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         {{ committee.name }}
                     </div>
 
-                    <div
+                    <base-tippy
+                        :content="$t('members_count')"
                         class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
-                        <base-tippy :content="$t('members_count')">
-                            {{ committee.members_count }}
-                        </base-tippy>
-                    </div>
+                        {{ committee.members_count }}
+                    </base-tippy>
                 </div>
-                <div class="mt-6 flex">
+                <div class="mt-4 flex">
                     <div class="w-3/4">
                         <p class="truncate">
                             {{ committee.description }}
                         </p>
 
-                        <div
+                        <base-tippy
+                            :content="$t('added_at')"
                             class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
                         >
                             {{ committee.created_at }}
-                        </div>
+                        </base-tippy>
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
                         <a

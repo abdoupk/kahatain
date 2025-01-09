@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { $t } from '../../../utils/i18n'
-
 import { twMerge } from 'tailwind-merge'
 
+import { $t } from '@/utils/i18n'
 import { useComputedAttrs } from '@/utils/useComputedAttrs'
 
 defineOptions({

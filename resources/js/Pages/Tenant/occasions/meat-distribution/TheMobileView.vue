@@ -36,7 +36,7 @@ const emit = defineEmits(['sort'])
 
                         <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                             <Link
-                                :href="route('tenant.zones.index') + `?show=${family.zone.id}`"
+                                :href="route('tenant.zones.index') + `?show=${family.zone?.id}`"
                                 class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"
                             >
                                 {{ family.zone?.name }}

@@ -10,6 +10,9 @@ defineProps<{
     zones: PaginationData<ZonesIndexResource>
     params: IndexParams
 }>()
+
+// eslint-disable-next-line array-element-newline
+const emit = defineEmits(['showDeleteModal', 'showEditModal', 'showDetailsModal'])
 </script>
 
 <template>
@@ -21,15 +24,15 @@ defineProps<{
                         {{ zone.name }}
                     </div>
 
-                    <div
+                    <base-tippy
+                        :content="$t('families_count')"
                         class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
-                        <base-tippy :content="$t('families_count')">
-                            {{ zone.families_count }}
-                        </base-tippy>
-                    </div>
+                        {{ zone.families_count }}
+                    </base-tippy>
                 </div>
-                <div class="mt-6 flex">
+
+                <div class="mt-4 flex">
                     <div class="w-3/4">
                         <p class="truncate">
                             {{ zone.description }}
@@ -50,6 +53,7 @@ defineProps<{
                         >
                             {{ $t('show') }}
                         </a>
+
                         <a
                             v-if="hasPermission('update_zones')"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
@@ -57,6 +61,7 @@ defineProps<{
                             @click="emit('showEditModal', zone.id)"
                             >{{ $t('edit') }}
                         </a>
+
                         <a
                             v-if="hasPermission('delete_zones')"
                             class="font-semibold text-danger"

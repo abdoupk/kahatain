@@ -50,7 +50,7 @@ const checkAll = ($event) => {
                 <base-tr-table>
                     <the-table-th class="text-start">
                         <base-form-check-input
-                            :checked="useZakatStore().zakat.families.length"
+                            :checked="zakatStore.zakat.families.length"
                             type="checkbox"
                             @change="checkAll"
                         ></base-form-check-input>
@@ -155,7 +155,7 @@ const checkAll = ($event) => {
                         </base-tippy>
 
                         <Link
-                            :href="route('tenant.zones.index') + `?show=${family.zone.id}`"
+                            :href="route('tenant.zones.index') + `?show=${family.zone?.id}`"
                             class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"
                         >
                             {{ family.zone?.name }}

@@ -80,4 +80,5 @@ return [
     'creator' => 'العضو المنشئ',
     'receiver' => 'العضو المستلم',
     'furnishings' => 'الأثاث',
+    'speciality' => 'التخصص',
 ];

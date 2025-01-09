@@ -1,4 +1,3 @@
-import type { SponsorSponsorshipType } from '@/types/families'
 import { IncomeType, UploadedFilesType, Zone } from '@/types/types'
 
 export interface SponsorShowType {
@@ -75,7 +74,6 @@ export interface SponsorUpdateFormType {
         name: string
     }
     incomes: IncomeType
-    sponsorships: SponsorSponsorshipType
     photo: string
     birth_certificate_file: string
     diploma_file: string

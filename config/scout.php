@@ -193,6 +193,7 @@ return [
                     'birth_date',
                     'is_handicapped',
                     'academic_average',
+                    'speciality.speciality',
                 ],
                 'searchableAttributes' => [
                     'name',

@@ -41,7 +41,7 @@ Route::prefix('benefactors')->name('benefactors.')->group(function (): void {
     Route::post(
         '',
         BenefactorStoreController::class
-    )
+    )->middleware([HandlePrecognitiveRequests::class])
         ->name('store');
 
     Route::post(

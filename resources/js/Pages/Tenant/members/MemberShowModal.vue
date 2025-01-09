@@ -110,7 +110,7 @@ const membersStore = useMembersStore()
 
             <!-- Begin: Competences-->
             <div class="col-span-6">
-                <h2 class="rtl:font-semibold">{{ $t('competences') }}</h2>
+                <h2 class="rtl:font-semibold">{{ $t('validation.attributes.qualification') }}</h2>
 
                 <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_competences }}</p>
             </div>

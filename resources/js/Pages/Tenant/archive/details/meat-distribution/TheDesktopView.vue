@@ -87,7 +87,7 @@ defineProps<{
                         </base-tippy>
 
                         <Link
-                            :href="route('tenant.zones.index') + `?show=${family.zone.id}`"
+                            :href="route('tenant.zones.index') + `?show=${family.zone?.id}`"
                             class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"
                         >
                             {{ family.zone?.name }}

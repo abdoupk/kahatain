@@ -179,7 +179,7 @@ const showEditModal = async (roleId: string) => {
 
             <success-notification
                 :open="showSuccessNotification"
-                :title="$tc('successfully_trashed', 0, { attribute: $t('the_family') })"
+                :title="$tc('successfully_trashed', 0, { attribute: $t('the_role') })"
             ></success-notification>
         </div>
 

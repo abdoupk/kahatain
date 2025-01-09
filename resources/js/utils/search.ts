@@ -513,3 +513,33 @@ export const searchShopOwnerPhoneNumber = async (query: string) => {
         ).values()
     ]
 }
+
+export const searchShopOwnerAddress = async (query: string) => {
+    const results = await client.index('orphans').search(query, {
+        q: query,
+        limit: 5,
+        sort: ['updated_at:desc'],
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+        attributesToRetrieve: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address'],
+        attributesToSearchOn: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address']
+    })
+
+    return [
+        ...new Map(
+            results.hits
+                .flatMap((result) =>
+                    [
+                        result.eid_suit.clothes_shop_address && {
+                            id: result.eid_suit.clothes_shop_address,
+                            name: result.eid_suit.clothes_shop_address
+                        },
+                        result.eid_suit.shoes_shop_address && {
+                            id: result.eid_suit.shoes_shop_address,
+                            name: result.eid_suit.shoes_shop_address
+                        }
+                    ].filter(Boolean)
+                )
+                .map((item) => [item.id, item]) // Map `id` to the item
+        ).values()
+    ]
+}

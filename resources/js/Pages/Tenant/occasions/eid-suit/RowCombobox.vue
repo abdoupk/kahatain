@@ -67,7 +67,7 @@ let filteredOptions = computed(() =>
     query.value === ''
         ? options.value
         : options.value.filter((option) =>
-              option.name.toLowerCase().replace(/\s+/g, '').includes(query.value.toLowerCase().replace(/\s+/g, ''))
+              option.name?.toLowerCase().replace(/\s+/g, '').includes(query.value?.toLowerCase().replace(/\s+/g, ''))
           )
 )
 

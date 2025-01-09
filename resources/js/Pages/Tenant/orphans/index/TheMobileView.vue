@@ -2,22 +2,16 @@
 import type { IndexParams, OrphansIndexResource, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
+
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 
 import { formatDate, hasPermission } from '@/utils/helper'
-import { $t, getLocale } from '@/utils/i18n'
+import { $t } from '@/utils/i18n'
 
 defineProps<{
     orphans: PaginationData<OrphansIndexResource>
     params: IndexParams
 }>()
-
-// eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
-
-const familyStatusFilter = computed(() => {
-    return `family_status.${getLocale()}`
-})
 </script>
 
 <template>
@@ -28,11 +22,14 @@ const familyStatusFilter = computed(() => {
                     <Link :href="route('tenant.orphans.show', orphan.id)" class="me-3 truncate text-lg font-medium">
                         {{ orphan.name }}
                     </Link>
-                    <div
+
+                    <base-tippy
+                        v-if="orphan.family_status"
+                        :content="$t('family_status')"
                         class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
                         {{ $t(`family_statuses.${orphan.family_status}`) }}
-                    </div>
+                    </base-tippy>
                 </div>
                 <div class="mt-6 flex">
                     <div class="w-3/4">
@@ -45,19 +42,18 @@ const familyStatusFilter = computed(() => {
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
                         <Link
+                            v-if="hasPermission('view_orphans')"
+                            :href="route('tenant.orphans.show', orphan.id)"
+                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                            >{{ $t('show') }}
+                        </Link>
+
+                        <Link
                             v-if="hasPermission('edit_orphans')"
                             :href="route('tenant.orphans.edit', orphan.id)"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             >{{ $t('edit') }}
                         </Link>
-                        <a
-                            v-if="hasPermission('delete_orphans')"
-                            class="font-semibold text-danger"
-                            href="javascript:void(0)"
-                            @click="emit('showDeleteModal', orphan.id)"
-                        >
-                            {{ $t('delete') }}
-                        </a>
                     </div>
                 </div>
             </div>

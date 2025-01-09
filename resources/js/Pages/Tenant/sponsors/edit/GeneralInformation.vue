@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
-
 import type { AcademicLevelType } from '@/types/lessons'
 import type { SponsorUpdateFormType } from '@/types/sponsors'
 
@@ -20,6 +18,7 @@ import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelect
 import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.vue'
 
 import { allowOnlyNumbersOnKeyDown, omit } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ sponsor: SponsorUpdateFormType }>()
 

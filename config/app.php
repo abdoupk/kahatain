@@ -126,4 +126,9 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'browsershot' => [
+        'npm_binary' => env('BROWSERSHOT_NPM_BINARY', 'npm'),
+        'node_binary' => env('BROWSERSHOT_NODE_BINARY', 'node'),
+    ],
+
 ];

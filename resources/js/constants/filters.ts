@@ -314,8 +314,8 @@ export const orphansFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-graduation-cap',
-        field: 'vocational_training.id',
-        label: 'orphan.vocational_training_speciality',
+        field: 'speciality.speciality',
+        label: 'speciality',
         type: 'object',
         operators: filterObjectOperators
     }

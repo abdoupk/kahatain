@@ -49,8 +49,9 @@ const handleSort = (close: () => void) => {
 
                         <base-form-select v-model="field" class="mt-1.5">
                             <option value="">{{ $t('filters.select_an_option') }}</option>
+
                             <option v-for="field in sortableFields" :key="field.value" :value="field.value">
-                                {{ field.label }}
+                                {{ $t(field.label) }}
                             </option>
                         </base-form-select>
                     </div>

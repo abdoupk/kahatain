@@ -22,7 +22,7 @@ defineProps<{
         <!-- BEGIN: Files Images -->
         <div v-if="images.length" class="intro-y box col-span-12 @container 2xl:col-span-6">
             <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-                <h2 class="me-auto text-xl font-bold">{{ $t('attachements') }} (images)</h2>
+                <h2 class="me-auto text-xl font-bold">{{ $t('upload-files.files') }} ({{ $t('photos') }})</h2>
             </div>
 
             <div class="w-full p-5">
@@ -34,7 +34,7 @@ defineProps<{
         <!-- BEGIN: Files PDF -->
         <div v-if="pdf" class="intro-y box col-span-12 @container 2xl:col-span-6">
             <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-                <h2 class="me-auto text-xl font-bold">{{ $t('attachements') }} (pdf)</h2>
+                <h2 class="me-auto text-xl font-bold">{{ $t('upload-files.files') }} (PDF)</h2>
             </div>
 
             <div class="w-full p-5">

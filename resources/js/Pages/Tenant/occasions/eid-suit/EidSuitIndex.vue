@@ -3,11 +3,14 @@ import type { ArchiveOccasionType, EidSuitOrphansResource, IndexParams, Paginati
 
 import { eidSuitsFilters } from '@/constants/filters'
 import { eidSuitSorts } from '@/constants/sorts'
+import { useOrphansStore } from '@/stores/orphans'
 import { useSettingsStore } from '@/stores/settings'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, nextTick, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
+
+import TheBulkUpdateModal from '@/Pages/Tenant/occasions/eid-suit/TheBulkUpdateModal.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
@@ -59,6 +62,8 @@ const handleReset = () => {
 }
 
 const showWarningModalStatus = ref(false)
+
+const showBulkUpdateModalStatus = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
 
@@ -113,6 +118,10 @@ const handleSave = () => {
     if (props.archive?.created_at) showWarningModalStatus.value = true
     else save()
 }
+
+const showBulkUpdateModal = () => {
+    showBulkUpdateModalStatus.value = true
+}
 </script>
 
 <template>
@@ -160,6 +169,16 @@ const handleSave = () => {
                     </base-button>
 
                     <base-button
+                        v-if="useOrphansStore().orphans.length"
+                        :disabled="loading"
+                        class="me-2"
+                        variant="outline-success"
+                        @click.prevent="showBulkUpdateModal"
+                    >
+                        {{ $t('bulk_update') }}
+                    </base-button>
+
+                    <base-button
                         :disabled="loadingReset"
                         class="me-2 shadow-md"
                         variant="outline-danger"
@@ -199,6 +218,12 @@ const handleSave = () => {
             >
                 {{ $t('reset_eid_suit_data') }}
             </the-warning-modal>
+
+            <the-bulk-update-modal
+                :loading="true"
+                :open="showBulkUpdateModalStatus"
+                @close="showBulkUpdateModalStatus = false"
+            ></the-bulk-update-modal>
         </div>
 
         <template #fallback>

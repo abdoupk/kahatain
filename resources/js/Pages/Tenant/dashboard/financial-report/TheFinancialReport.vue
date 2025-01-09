@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
-
 import type { FinancialReportsType } from '@/types/dashboard'
 
 import { router } from '@inertiajs/vue3'
@@ -10,6 +8,7 @@ import TheNoDataChart from '@/Components/Global/TheNoDataChart.vue'
 
 import { financialSpecifications } from '@/utils/constants'
 import { formatCurrency, sumObjectValues } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const BaseFormSelect = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormSelect.vue'))
 

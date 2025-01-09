@@ -7,23 +7,11 @@ import MapCell from '@/Pages/Tenant/occasions/eid-suit/MapCell.vue'
 
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 
-import { searchShopOwnerName, searchShopOwnerPhoneNumber } from '@/utils/search'
+import { loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
 
 defineProps<{
     orphan: EidSuitOrphansResource
 }>()
-
-function loadShopOwnerNames(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
-    searchShopOwnerName(query).then((results) => {
-        setOptions(results)
-    })
-}
-
-function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
-    searchShopOwnerPhoneNumber(query).then((results) => {
-        setOptions(results)
-    })
-}
 </script>
 
 <template>

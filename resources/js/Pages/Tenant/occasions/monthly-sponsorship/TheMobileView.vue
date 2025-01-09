@@ -12,8 +12,6 @@ defineProps<{
     families: PaginationData<MonthlySponsorshipFamiliesResource>
     params: IndexParams
 }>()
-
-const emit = defineEmits(['sort'])
 </script>
 
 <template>
@@ -31,20 +29,21 @@ const emit = defineEmits(['sort'])
                         </Link>
                         <p class="mt-0.5 text-sm text-slate-500">{{ family.sponsor.phone_number }}</p>
                     </div>
-                    <div
+
+                    <base-tippy
+                        :content="$t('income_rate')"
                         class="ms-auto flex h-fit w-fit cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
-                        <base-tippy :content="$t('income_rate')">
-                            {{ family.income_rate }}
-                        </base-tippy>
-                    </div>
+                        {{ formatCurrency(family.income_rate) }}
+                    </base-tippy>
                 </div>
-                <div class="mt-6 flex">
+
+                <div class="mt-4 flex">
                     <div class="w-3/4">
                         <p class="truncate">{{ family.address }}</p>
                         <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                             <Link
-                                :href="route('tenant.zones.index') + `?show=${family.zone.id}`"
+                                :href="route('tenant.zones.index') + `?show=${family.zone?.id}`"
                                 class="whitespace-nowrap text-slate-500"
                             >
                                 {{ family.zone?.name }}

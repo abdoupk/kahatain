@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
+import { useOrphansStore } from '@/stores/orphans'
 import { Link } from '@inertiajs/vue3'
 
 import EditableRows from '@/Pages/Tenant/occasions/eid-suit/EditableRows.vue'
 
+import BaseFormCheckInput from '@/Components/Base/form/form-check/BaseFormCheckInput.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
@@ -16,12 +18,31 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import { formatCurrency } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
-defineProps<{
+const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
     params: IndexParams
 }>()
 
 const emit = defineEmits(['sort'])
+
+const orphansStore = useOrphansStore()
+
+const checkAll = ($event) => {
+    const orphans = props.orphans.data.map((orphan) => orphan.id)
+
+    if ($event.target.checked) {
+        // If checked, add all orphans to selectedFamilies
+        if (orphansStore.orphans.length) {
+            // Avoid duplication by filtering out existing ones
+            orphansStore.orphans = [...new Set([...orphansStore.orphans, ...orphans])]
+        } else {
+            orphansStore.orphans = orphans
+        }
+    } else {
+        // If unchecked, remove the current orphans from selectedFamilies
+        orphansStore.orphans = orphansStore.orphans.filter((id) => !orphans.includes(id))
+    }
+}
 </script>
 
 <template>
@@ -29,7 +50,13 @@ const emit = defineEmits(['sort'])
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
-                    <the-table-th class="text-start"> #</the-table-th>
+                    <the-table-th class="text-start">
+                        <base-form-check-input
+                            :checked="orphansStore.orphans.length"
+                            type="checkbox"
+                            @change="checkAll"
+                        ></base-form-check-input>
+                    </the-table-th>
 
                     <the-table-th
                         :direction="params.directions && params.directions['name']"
@@ -119,9 +146,13 @@ const emit = defineEmits(['sort'])
             </base-thead-table>
 
             <base-tbody-table>
-                <base-tr-table v-for="(orphan, index) in orphans.data" :key="orphan.id" class="intro-x">
+                <base-tr-table v-for="orphan in orphans.data" :key="orphan.id" class="intro-x">
                     <the-table-td class="w-16">
-                        {{ (orphans.meta.from ?? 0) + index }}
+                        <base-form-check-input
+                            v-model="orphansStore.orphans"
+                            :value="orphan.id"
+                            type="checkbox"
+                        ></base-form-check-input>
                     </the-table-td>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">

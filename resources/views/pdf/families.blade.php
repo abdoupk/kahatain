@@ -73,11 +73,11 @@
                 </x-td>
 
                 <x-td>
-                    {{ $family->branch->name }}
+                    {{ $family->branch?->name }}
                 </x-td>
 
                 <x-td class="whitespace-nowrap">
-                    {{ $family->zone->name }}
+                    {{ $family->zone?->name }}
                 </x-td>
 
                 <x-td class="text-center">

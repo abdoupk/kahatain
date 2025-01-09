@@ -23,27 +23,37 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     <div class="me-3 truncate text-lg font-medium">
                         {{ branch.name }}
                     </div>
-                    <div
+
+                    <base-tippy
+                        :content="$t('families_count')"
                         class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
-                        <base-tippy :content="$t('families_count')">
-                            <div class="whitespace-nowrap text-center">
-                                {{ branch.families_count }}
-                            </div>
-                        </base-tippy>
-                    </div>
+                        <div class="whitespace-nowrap text-center">
+                            {{ branch.families_count }}
+                        </div>
+                    </base-tippy>
                 </div>
-                <div class="mt-6 flex">
+
+                <div class="mt-4 flex">
                     <div class="w-3/4">
                         <p class="truncate rtl:font-medium">{{ branch.city }}</p>
 
-                        <div
+                        <base-tippy
+                            :content="$t('added_at')"
                             class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
                         >
                             {{ branch.created_at }}
-                        </div>
+                        </base-tippy>
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
+                        <a
+                            v-if="hasPermission('view_branches')"
+                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                            href="#"
+                            @click.prevent="emit('showDetailsModal', branch.id)"
+                            >{{ $t('show') }}
+                        </a>
+
                         <a
                             v-if="hasPermission('update_branches')"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
@@ -51,6 +61,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                             @click.prevent="emit('showEditModal', branch.id)"
                             >{{ $t('edit') }}
                         </a>
+
                         <a
                             v-if="hasPermission('delete_branches')"
                             class="font-semibold text-danger"

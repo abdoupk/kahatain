@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { IndexParams, PaginationData, RolesIndexResource } from '@/types/types'
 
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+
 import { formatDate } from '@/utils/helper'
 
 defineProps<{
@@ -20,23 +22,26 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                     <div class="me-3 truncate text-lg font-medium">
                         {{ role.name }}
                     </div>
-                    <div
+
+                    <base-tippy
+                        :content="$t('added_at')"
                         class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
                         {{ formatDate(role.created_at, 'full') }}
-                    </div>
+                    </base-tippy>
                 </div>
+
                 <div class="mt-6 flex">
                     <div class="flex w-3/4 flex-col gap-4">
                         <div class="flex">
-                            <div class="w-28">
+                            <div class="w-28 rtl:!font-semibold">
                                 {{ $t('users_count') }}
                             </div>
                             {{ role.users_count }}
                         </div>
 
                         <div class="flex">
-                            <div class="w-28">
+                            <div class="w-28 rtl:!font-semibold">
                                 {{ $t('permissions_count') }}
                             </div>
 

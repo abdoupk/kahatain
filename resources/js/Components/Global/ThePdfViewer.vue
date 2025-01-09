@@ -66,7 +66,19 @@ const renderPage = async (num: number, zoom = 1) => {
 
         const viewport = page.getViewport({ scale: zoom }) // Adjust scale as needed
 
+        // Adjust for landscape orientation
+        const isLandscape = viewport.width > viewport.height
+
+        const adjustedViewport = isLandscape
+            ? page.getViewport({ scale: zoom, rotation: 90 }) // Rotate by 90 degrees for landscape
+            : viewport
+
         const context = pdfCanvas.value.getContext('2d')
+
+        // Set canvas dimensions
+        pdfCanvas.value.height = adjustedViewport.height
+
+        pdfCanvas.value.width = adjustedViewport.width
 
         pdfCanvas.value.height = viewport.height
 

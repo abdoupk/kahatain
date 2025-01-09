@@ -19,11 +19,11 @@ import OrphanAcademicLevelFilterDropDown from '@/Components/Global/filters/Orpha
 import OrphanSponsorShipFilterDropDown from '@/Components/Global/filters/OrphanSponsorShipFilterDropDown.vue'
 import OrphansFilterDropDown from '@/Components/Global/filters/OrphansFilterDropDown.vue'
 import ShoesSizeFilterDropDown from '@/Components/Global/filters/ShoesSizeFilterDropDown.vue'
+import SpecialityFilterDropDown from '@/Components/Global/filters/SpecialityFilterDropDown.vue'
 import SponsorAcademicLevelFilterDropDown from '@/Components/Global/filters/SponsorAcademicLevelFilterDropDown.vue'
 import SponsorSponsorShipFilterDropDown from '@/Components/Global/filters/SponsorSponsorShipFilterDropDown.vue'
 import SponsorTypeFilterDropDown from '@/Components/Global/filters/SponsorTypeFilterDropDown.vue'
 import SponsorsFilterDropDown from '@/Components/Global/filters/SponsorsFilterDropDown.vue'
-import VocationalTrainingFilterDropDown from '@/Components/Global/filters/VocationalTrainingFilterDropDown.vue'
 import ZonesFilterDropDown from '@/Components/Global/filters/ZonesFilterDropDown.vue'
 
 defineProps<{ field?: ListBoxFilter }>()
@@ -102,11 +102,11 @@ const value = defineModel<FilterValueType>('value')
                 class="text-sm"
             ></orphan-academic-level-filter-drop-down>
 
-            <vocational-training-filter-drop-down
-                v-else-if="field?.field === 'vocational_training.id'"
+            <speciality-filter-drop-down
+                v-else-if="field?.label === 'speciality'"
                 v-model:value="value"
                 class="text-sm"
-            ></vocational-training-filter-drop-down>
+            ></speciality-filter-drop-down>
 
             <member-academic-level-filter-drop-down
                 v-else-if="field?.label === 'member_academic_level' || field?.label === 'member.academic_level'"

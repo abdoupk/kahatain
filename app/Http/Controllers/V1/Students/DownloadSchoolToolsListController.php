@@ -19,10 +19,13 @@ class DownloadSchoolToolsListController extends Controller implements HasMiddlew
             ->landscape()
             ->withBrowsershot(function (Browsershot $browsershot) {
                 $browsershot
-//                    ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-//                    ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
                     ->margins(2, 4, 2, 4)
                     ->format('A3');
+
+                if (! app()->environment('local')) {
+                    $browsershot->setNodeBinary(config('app.browsershot.node_binary'));
+                    $browsershot->setNpmBinary(config('app.browsershot.npm_binary'));
+                }
             })
             ->name(__('school_supplies_list', ['date' => now()->format('Y')]))
             ->download();

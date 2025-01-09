@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\V1\Occasions\EidSuit\BulkUpdateEidSuitInfosController;
 use App\Http\Controllers\V1\Occasions\EidSuit\EidSuitIndexController;
 use App\Http\Controllers\V1\Occasions\EidSuit\ExportOrphansEidSuitPDFController;
 use App\Http\Controllers\V1\Occasions\EidSuit\ExportOrphansEidSuitXlsxController;
@@ -43,4 +44,9 @@ Route::prefix('eid-suit')->name('eid-suit.')
             'reset',
             ResetEidSuitInfosController::class)
             ->name('reset');
+
+        Route::patch(
+            'bulk-update',
+            BulkUpdateEidSuitInfosController::class)
+            ->name('bulk-update');
     });

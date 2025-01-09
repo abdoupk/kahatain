@@ -7,6 +7,7 @@ import 'dayjs/locale/fr'
 import { computed } from 'vue'
 
 import { $t, getLocale } from '@/utils/i18n'
+import { searchShopOwnerAddress, searchShopOwnerName, searchShopOwnerPhoneNumber } from '@/utils/search'
 
 const downloadFile = (url: string, filename: string) => {
     const a = document.createElement('a')
@@ -571,12 +572,33 @@ function removeEmptyKeys(obj) {
     return obj
 }
 
+function loadShopOwnerNames(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerName(query).then((results) => {
+        setOptions(results)
+    })
+}
+
+function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerPhoneNumber(query).then((results) => {
+        setOptions(results)
+    })
+}
+
+function loadShopOwnerAddresses(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerAddress(query).then((results) => {
+        setOptions(results)
+    })
+}
+
 export {
     isEqual,
     removeEmptyKeys,
     getLeafletMapConfig,
     groupRecentActivitiesByDate,
+    loadShopOwnerNames,
+    loadShopOwnerPhoneNumbers,
     hasPermission,
+    loadShopOwnerAddresses,
     getRandomItemWithoutRepeat,
     isOlderThan,
     addOpacityToHexColor,

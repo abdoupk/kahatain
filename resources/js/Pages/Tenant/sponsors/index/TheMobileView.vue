@@ -3,6 +3,8 @@ import type { IndexParams, PaginationData, SponsorsIndexResource } from '@/types
 
 import { Link } from '@inertiajs/vue3'
 
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+
 import { hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
@@ -10,9 +12,6 @@ defineProps<{
     sponsors: PaginationData<SponsorsIndexResource>
     params: IndexParams
 }>()
-
-// eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
 </script>
 
 <template>
@@ -37,35 +36,36 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                         {{ $t(`sponsor_types.${sponsor.sponsor_type}`) }}
                     </div>
                 </div>
-                <div class="mt-6 flex">
+
+                <div class="mt-4 flex">
                     <div class="w-3/4">
                         <p class="truncate">{{ sponsor.health_status }}</p>
 
-                        <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                        <div class="mt-1 text-sm text-slate-500 dark:text-slate-400">
                             {{ sponsor.function }}
                         </div>
-                        <div
+
+                        <base-tippy
+                            :content="$t('validation.attributes.phone_number')"
                             class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
                         >
                             {{ sponsor.phone_number }}
-                        </div>
+                        </base-tippy>
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
                         <Link
-                            v-if="hasPermission('update_sponsors')"
+                            v-if="hasPermission('view_sponsors')"
                             :href="route('tenant.sponsors.show', sponsor.id)"
+                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                            >{{ $t('show') }}
+                        </Link>
+
+                        <Link
+                            v-if="hasPermission('update_sponsors')"
+                            :href="route('tenant.sponsors.edit', sponsor.id)"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             >{{ $t('edit') }}
                         </Link>
-
-                        <a
-                            v-if="hasPermission('delete_sponsors')"
-                            class="font-semibold text-danger"
-                            href="javascript:void(0)"
-                            @click="emit('showDeleteModal', sponsor.id)"
-                        >
-                            {{ $t('delete') }}
-                        </a>
                     </div>
                 </div>
             </div>

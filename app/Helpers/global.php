@@ -11,8 +11,9 @@ use App\Models\Orphan;
 use App\Models\Sponsor;
 use App\Models\Spouse;
 use App\Models\Tenant;
+use App\Models\UniversitySpeciality;
 use App\Models\User;
-use App\Models\VocationalTraining;
+use App\Models\VocationalTrainingSpeciality;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -53,17 +54,21 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
 
     $pdfPath = $disk->path($pdfFile);
 
-    Browsershot::html(view("pdf.$directory", [
+    $browsershot = Browsershot::html(view("pdf.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
     ])
         ->render())
         ->ignoreHttpsErrors()
         ->noSandbox()
-        ->format($pageType)
-//        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-//        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
-        ->margins(2, 4, 2, 4)
+        ->format($pageType);
+
+    if (! app()->environment('local')) {
+        $browsershot->setNodeBinary(config('app.browsershot.node_binary'));
+        $browsershot->setNpmBinary(config('app.browsershot.npm_binary'));
+    }
+
+    $browsershot->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
 
@@ -101,17 +106,21 @@ function saveArchiveToPDF(
 
     $pdfPath = $disk->path($pdfFile);
 
-    Browsershot::html(view("pdf.occasions.$directory", [
+    $browsershot = Browsershot::html(view("pdf.occasions.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
     ])
         ->render())
         ->ignoreHttpsErrors()
         ->noSandbox()
-        ->format($pageType)
-//        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-//        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
-        ->margins(2, 4, 2, 4)
+        ->format($pageType);
+
+    if (! app()->environment('local')) {
+        $browsershot->setNodeBinary(config('app.browsershot.node_binary'));
+        $browsershot->setNpmBinary(config('app.browsershot.npm_binary'));
+    }
+
+    $browsershot->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
 
@@ -130,6 +139,7 @@ function getParams(): array
         'filters' => request()->input('filters'),
     ];
 }
+
 function generateFormatedConditions(): array
 {
     $filters = (array) request()->input('filters', []);
@@ -221,7 +231,7 @@ function formatedVocationalTrainingSpecialities(): array
 {
     $formattedArray = [];
 
-    $rows = VocationalTraining::get();
+    $rows = VocationalTrainingSpeciality::get();
 
     foreach ($rows as $row) {
         $formattedArray[$row['division']]['division'] = $row['division'];
@@ -232,14 +242,31 @@ function formatedVocationalTrainingSpecialities(): array
     return array_values($formattedArray);
 }
 
-function searchVocationalTrainingSpecialities()
+function searchVocationalTrainingSpecialities(): \Illuminate\Support\Collection
 {
-    return search(VocationalTraining::getModel(), limit: 25)->get()->map(function (VocationalTraining $vocationalTraining) {
+    $vocationalTrainingSpecialities = VocationalTrainingSpeciality::search(trim(request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+        $options['limit'] = 100;
+
+        return $meilisearch->search($query, $options);
+    })->get()->map(function ($vocationalTrainingSpeciality) {
         return [
-            'id' => $vocationalTraining->id,
-            'name' => $vocationalTraining->speciality,
+            'name' => $vocationalTrainingSpeciality->speciality,
+            'id' => $vocationalTrainingSpeciality->speciality,
         ];
     });
+
+    $universitySpecialities = UniversitySpeciality::search(trim(request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+        $options['limit'] = 100;
+
+        return $meilisearch->search($query, $options);
+    })->get()->map(function ($universitySpeciality) {
+        return [
+            'name' => $universitySpeciality->speciality,
+            'id' => $universitySpeciality->speciality,
+        ];
+    });
+
+    return collect(array_merge($vocationalTrainingSpecialities->toArray(), $universitySpecialities->toArray()));
 }
 
 function formatCurrency(float $amount): false|string
@@ -324,6 +351,10 @@ function getFileNameFromTemporaryPath($url): string
  */
 function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model, string|array|null $files, string $collectionName, ?bool $clearCollection = true): void
 {
+    if ($clearCollection) {
+        $model->clearMediaCollection($collectionName);
+    }
+
     if ($files === null || $files === '') {
         return;
     }
@@ -334,10 +365,6 @@ function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model,
 
     foreach ($files as $file) {
         if (Storage::disk('public')->exists(getFileNameFromTemporaryPath($file))) {
-            if ($clearCollection) {
-                $model->clearMediaCollection($collectionName);
-            }
-
             $model->addMediaFromDisk(getFileNameFromTemporaryPath($file), 'public')->toMediaCollection($collectionName);
         }
     }
@@ -356,19 +383,21 @@ function mergePdf(Family|Tenant|Orphan|Sponsor|Spouse|Income $model): void
 {
     $pdfFiles = [];
 
+    $model->clearMediaCollection('merged_files');
+
     $model->getMedia('*')->each(function (Media $media) use (&$pdfFiles) {
         if ($media->type === 'pdf') {
             $pdfFiles[] = $media->getPath();
         }
     });
 
-    $fileName = Str::random(20).'.pdf';
+    if (count($pdfFiles) > 0) {
+        $fileName = Str::random(20).'.pdf';
 
-    (new PdfMerger)->merge($pdfFiles, storage_path($fileName));
+        (new PdfMerger)->merge($pdfFiles, storage_path($fileName));
 
-    $model->clearMediaCollection('merged_files');
-
-    $model->addMedia(storage_path($fileName))->toMediaCollection('merged_files');
+        $model->addMedia(storage_path($fileName))->toMediaCollection('merged_files');
+    }
 }
 
 function getImageData(Income|Family|Sponsor $model, string $collection): array

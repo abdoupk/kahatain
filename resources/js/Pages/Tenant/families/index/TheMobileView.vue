@@ -3,7 +3,9 @@ import type { FamiliesIndexResource, IndexParams, PaginationData } from '@/types
 
 import { Link } from '@inertiajs/vue3'
 
-import { hasPermission } from '@/utils/helper'
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+
+import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -22,11 +24,13 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                     <div class="me-3 truncate text-lg font-medium">
                         {{ family.name }}
                     </div>
-                    <div
+
+                    <base-tippy
+                        :content="$t('file_number')"
                         class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
                     >
                         {{ family.file_number }}
-                    </div>
+                    </base-tippy>
                 </div>
                 <div class="mt-6 flex">
                     <div class="w-3/4">
@@ -34,19 +38,30 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                         <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                             {{ family.zone?.name }}
                         </div>
-                        <div
+
+                        <base-tippy
+                            :content="$t('filters.starting_sponsorship_date')"
                             class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
                         >
-                            {{ family.start_date }}
-                        </div>
+                            {{ formatDate(family.start_date, 'full') }}
+                        </base-tippy>
                     </div>
+
                     <div class="flex w-1/4 items-center justify-end">
+                        <Link
+                            v-if="hasPermission('view_families')"
+                            :href="route('tenant.families.show', family.id)"
+                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                            >{{ $t('show') }}
+                        </Link>
+
                         <Link
                             v-if="hasPermission('update_families')"
                             :href="route('tenant.families.show', family.id)"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             >{{ $t('edit') }}
                         </Link>
+
                         <a
                             v-if="hasPermission('delete_families')"
                             class="font-semibold text-danger"
