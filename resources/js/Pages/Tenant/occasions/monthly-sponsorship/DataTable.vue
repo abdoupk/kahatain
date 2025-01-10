@@ -16,6 +16,6 @@ const emit = defineEmits(['sort'])
     <div class="@container">
         <the-desktop-view :families :params @sort="emit('sort', $event)"></the-desktop-view>
 
-        <the-mobile-view :families :params @sort="emit('sort', $event)"></the-mobile-view>
+        <the-mobile-view :families :params></the-mobile-view>
     </div>
 </template>

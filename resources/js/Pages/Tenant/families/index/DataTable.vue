@@ -21,11 +21,6 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
             @show-delete-modal="emit('showDeleteModal', $event)"
         ></the-desktop-view>
 
-        <the-mobile-view
-            :families
-            :params
-            @sort="emit('sort', $event)"
-            @show-delete-modal="emit('showDeleteModal', $event)"
-        ></the-mobile-view>
+        <the-mobile-view :families :params @show-delete-modal="emit('showDeleteModal', $event)"></the-mobile-view>
     </div>
 </template>

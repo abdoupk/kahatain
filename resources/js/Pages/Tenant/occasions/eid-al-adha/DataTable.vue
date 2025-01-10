@@ -21,11 +21,6 @@ const emit = defineEmits(['sort', 'change-status'])
             @change-status="emit('change-status', $event)"
         ></the-desktop-view>
 
-        <the-mobile-view
-            :families
-            :params
-            @sort="emit('sort', $event)"
-            @change-status="emit('change-status', $event)"
-        ></the-mobile-view>
+        <the-mobile-view :families :params @change-status="emit('change-status', $event)"></the-mobile-view>
     </div>
 </template>

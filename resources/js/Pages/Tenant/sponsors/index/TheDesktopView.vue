@@ -21,8 +21,7 @@ defineProps<{
     params: IndexParams
 }>()
 
-// eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
+const emit = defineEmits(['sort'])
 </script>
 
 <template>
@@ -134,15 +133,6 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                                 />
                                 {{ $t('edit') }}
                             </Link>
-                            <a
-                                v-if="hasPermission('delete_sponsors')"
-                                class="flex items-center text-danger"
-                                href="javascript:void(0)"
-                                @click="emit('showDeleteModal', sponsor.id)"
-                            >
-                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-trash-can" />
-                                {{ $t('delete') }}
-                            </a>
                         </div>
                     </the-table-td-actions>
                 </base-tr-table>

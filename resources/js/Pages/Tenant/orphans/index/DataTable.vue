@@ -9,26 +9,13 @@ defineProps<{
     params: IndexParams
 }>()
 
-// eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
+const emit = defineEmits(['sort'])
 </script>
 
 <template>
     <div class="@container">
-        <the-desktop-view
-            :orphans
-            :params
-            @sort="emit('sort', $event)"
-            @show-delete-modal="emit('showDeleteModal', $event)"
-            @show-edit-modal="emit('showEditModal', $event)"
-        ></the-desktop-view>
+        <the-desktop-view :orphans :params @sort="emit('sort', $event)"></the-desktop-view>
 
-        <the-mobile-view
-            :orphans
-            :params
-            @sort="emit('sort', $event)"
-            @show-delete-modal="emit('showDeleteModal', $event)"
-            @show-edit-modal="emit('showEditModal', $event)"
-        ></the-mobile-view>
+        <the-mobile-view :orphans :params></the-mobile-view>
     </div>
 </template>

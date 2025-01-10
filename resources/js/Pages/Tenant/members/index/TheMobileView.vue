@@ -12,7 +12,7 @@ defineProps<{
 }>()
 
 // eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetailsModal'])
+const emit = defineEmits(['showDeleteModal', 'showEditModal', 'showDetailsModal'])
 </script>
 
 <template>

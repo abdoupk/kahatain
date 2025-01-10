@@ -22,8 +22,7 @@ defineProps<{
     params: IndexParams
 }>()
 
-// eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
+const emit = defineEmits(['sort'])
 
 const familyStatusFilter = computed(() => {
     return `family_status.${getLocale()}`
@@ -136,20 +135,10 @@ const familyStatusFilter = computed(() => {
                                 v-if="hasPermission('update_orphans')"
                                 :href="route('tenant.orphans.edit', orphan.id)"
                                 class="me-3 flex items-center"
-                                @click.prevent="emit('showEditModal', orphan.id)"
                             >
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </Link>
-                            <a
-                                v-if="hasPermission('delete_orphans')"
-                                class="flex items-center text-danger"
-                                href="javascript:void(0)"
-                                @click="emit('showDeleteModal', orphan.id)"
-                            >
-                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-trash-can" />
-                                {{ $t('delete') }}
-                            </a>
                         </div>
                     </the-table-td-actions>
                 </base-tr-table>

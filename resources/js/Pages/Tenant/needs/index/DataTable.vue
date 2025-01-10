@@ -27,7 +27,6 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
         <the-mobile-view
             :needs
             :params
-            @sort="emit('sort', $event)"
             @show-delete-modal="emit('showDeleteModal', $event)"
             @show-edit-modal="emit('showEditModal', $event)"
             @show-details-modal="emit('showDetailsModal', $event)"
