@@ -12,7 +12,7 @@ defineProps<{
 }>()
 
 // eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetailsModal'])
+const emit = defineEmits(['showDeleteModal', 'showEditModal', 'showDetailsModal'])
 </script>
 
 <template>
@@ -31,43 +31,44 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         {{ committee.members_count }}
                     </base-tippy>
                 </div>
-                <div class="mt-4 flex">
-                    <div class="w-3/4">
-                        <p class="truncate">
-                            {{ committee.description }}
-                        </p>
 
+                <div class="mt-4">
+                    <p>{{ committee.description }}</p>
+
+                    <div class="mt-2 flex">
                         <base-tippy
                             :content="$t('added_at')"
-                            class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
+                            class="flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
                         >
                             {{ committee.created_at }}
                         </base-tippy>
-                    </div>
-                    <div class="flex w-1/4 items-center justify-end">
-                        <a
-                            v-if="hasPermission('view_committees')"
-                            class="me-2 flex items-center"
-                            href="javascript:void(0)"
-                            @click="emit('showDetailsModal', committee.id)"
-                        >
-                            {{ $t('show') }}
-                        </a>
-                        <a
-                            v-if="hasPermission('update_committees')"
-                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
-                            href="javascript:void(0)"
-                            @click="emit('showEditModal', committee.id)"
-                            >{{ $t('edit') }}
-                        </a>
-                        <a
-                            v-if="hasPermission('delete_committees')"
-                            class="font-semibold text-danger"
-                            href="javascript:void(0)"
-                            @click="emit('showDeleteModal', committee.id)"
-                        >
-                            {{ $t('delete') }}
-                        </a>
+
+                        <div class="ms-auto flex items-center justify-end">
+                            <a
+                                v-if="hasPermission('view_committees')"
+                                class="me-2 text-slate-500 dark:text-slate-400 rtl:font-semibold"
+                                href="javascript:void(0)"
+                                @click="emit('showDetailsModal', committee.id)"
+                                >{{ $t('show') }}
+                            </a>
+
+                            <a
+                                v-if="hasPermission('update_committees')"
+                                class="me-2 text-slate-500 dark:text-slate-400 rtl:font-semibold"
+                                href="javascript:void(0)"
+                                @click="emit('showEditModal', committee.id)"
+                                >{{ $t('edit') }}
+                            </a>
+
+                            <a
+                                v-if="hasPermission('delete_committees')"
+                                class="font-semibold text-danger"
+                                href="javascript:void(0)"
+                                @click="emit('showDeleteModal', committee.id)"
+                            >
+                                {{ $t('delete') }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

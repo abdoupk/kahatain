@@ -14,6 +14,7 @@ class BenefactorsIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'address' => $this->address,
             'name' => $this->getName(),
             'phone' => formatPhoneNumber($this->phone),
             'sponsorships_count' => $this->sponsorships_count,

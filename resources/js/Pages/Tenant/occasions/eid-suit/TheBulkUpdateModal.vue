@@ -61,13 +61,15 @@ const handleSubmit = () => {
                 {},
                 {
                     preserveScroll: true,
-                    preserveState: true,
+                    preserveState: false,
                     only: ['orphans'],
                     onFinish: () => {
                         showSuccessNotification.value = false
 
                         nextTick(() => {
                             showSuccessNotification.value = false
+
+                            useOrphansStore().orphans = []
 
                             setTimeout(() => {
                                 emit('close')

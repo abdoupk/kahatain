@@ -1,4 +1,4 @@
-import { $t, getLocale } from '@/utils/i18n'
+import { getLocale } from '@/utils/i18n'
 
 export const memberSorts = [
     {
@@ -126,6 +126,10 @@ export const orphansSorts = [
     {
         value: 'birth_date',
         label: 'filters.birth_date'
+    },
+    {
+        value: 'family.income_rate',
+        label: 'filters.income_rate'
     }
 ]
 
@@ -145,6 +149,10 @@ export const sponsorsSorts = [
     {
         value: 'birth_date',
         label: 'filters.birth_date'
+    },
+    {
+        value: 'family.income_rate',
+        label: 'filters.income_rate'
     }
 ]
 

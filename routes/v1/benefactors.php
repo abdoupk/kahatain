@@ -45,7 +45,7 @@ Route::prefix('benefactors')->name('benefactors.')->group(function (): void {
         ->name('store');
 
     Route::post(
-        '',
+        'store-sponsorship',
         BenefactorSponsorshipStoreController::class
     )->name('store-sponsorship')
         ->middleware([HandlePrecognitiveRequests::class]);

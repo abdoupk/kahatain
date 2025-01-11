@@ -191,6 +191,13 @@ export const sponsorsFilters: ListBoxFilter[] = [
         operators: filterNumberOperators
     },
     {
+        icon: 'icon-hashtag',
+        field: 'family.income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
         icon: 'icon-graduation-cap',
         field: 'academic_level_id',
         label: 'sponsor.academic_level',
@@ -253,6 +260,13 @@ export const orphansFilters: ListBoxFilter[] = [
         icon: 'icon-dollar-sign',
         field: 'income',
         label: 'income',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'family.income_rate',
+        label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
     },

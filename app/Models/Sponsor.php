@@ -144,7 +144,7 @@ class Sponsor extends Model implements HasMedia
 
     public function makeSearchableUsing(Collection $models): Collection
     {
-        return $models->load(['incomes', 'academicLevel', 'orphans']);
+        return $models->load(['incomes', 'academicLevel', 'orphans', 'family']);
     }
 
     public function toSearchableArray(): array
@@ -165,6 +165,10 @@ class Sponsor extends Model implements HasMedia
                 'i_id' => $this->academicLevel?->i_id,
                 'level' => $this->academicLevel?->level,
                 'phase' => $this->academicLevel?->phase,
+            ],
+            'family' => [
+                'id' => $this->family_id,
+                'income_rate' => $this->family?->income_rate,
             ],
             'function' => $this->function,
             'health_status' => $this->health_status,

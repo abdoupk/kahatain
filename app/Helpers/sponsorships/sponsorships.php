@@ -41,6 +41,10 @@ function monthlySponsorship(Family $family): void
     ]);
 
     $family->searchable();
+
+    $family->orphans()->searchable();
+
+    $family->sponsor()->searchable();
 }
 
 function calculateDifferenceBeforeMonthlySponsorship(Family $family, float $totalWeights): float

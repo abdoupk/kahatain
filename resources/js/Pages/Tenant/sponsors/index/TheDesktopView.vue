@@ -13,7 +13,7 @@ import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.v
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatDate, hasPermission } from '@/utils/helper'
+import { formatCurrency, formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -68,7 +68,15 @@ const emit = defineEmits(['sort'])
                         >{{ $t('validation.attributes.date_of_birth') }}
                     </the-table-th>
 
-                    <the-table-th v-if="hasPermission(['delete_sponsors', 'update_sponsors'])" class="text-center">
+                    <the-table-th
+                        :direction="params.directions && params.directions['family.income_rate']"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'family.income_rate')"
+                        >{{ $t('income_rate') }}
+                    </the-table-th>
+
+                    <the-table-th v-if="hasPermission(['view_sponsors', 'update_sponsors'])" class="text-center">
                         {{ $t('actions') }}
                     </the-table-th>
                 </base-tr-table>
@@ -112,6 +120,10 @@ const emit = defineEmits(['sort'])
 
                     <the-table-td class="whitespace-nowrap text-center">
                         {{ formatDate(sponsor.birth_date, 'long') }}
+                    </the-table-td>
+
+                    <the-table-td class="whitespace-nowrap text-center">
+                        {{ formatCurrency(sponsor.income_rate) }}
                     </the-table-td>
 
                     <the-table-td-actions v-if="hasPermission(['delete_sponsors', 'update_sponsors'])">

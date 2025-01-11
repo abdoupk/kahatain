@@ -67,7 +67,16 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <a class="font-medium" href="#" @click.prevent="emit('showDetailsModal', member.id)">
+                        <a
+                            v-if="hasPermission('view_members')"
+                            class="font-medium"
+                            href="#"
+                            @click.prevent="emit('showDetailsModal', member.id)"
+                        >
+                            {{ member.name }}
+                        </a>
+
+                        <a v-else class="font-medium" href="#">
                             {{ member.name }}
                         </a>
                     </the-table-td>
@@ -88,8 +97,18 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </div>
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['update_members', 'delete_members'])">
+                    <the-table-td-actions v-if="hasPermission(['update_members', 'delete_members', 'view_members'])">
                         <div class="flex items-center justify-center">
+                            <a
+                                v-if="hasPermission('view_members')"
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click.prevent="emit('showDetailsModal', member.id)"
+                            >
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </a>
+
                             <a
                                 v-if="hasPermission('update_members')"
                                 class="me-3 flex items-center"

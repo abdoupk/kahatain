@@ -14,7 +14,7 @@ import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.v
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatDate, hasPermission } from '@/utils/helper'
+import { formatCurrency, formatDate, hasPermission } from '@/utils/helper'
 import { $t, getLocale } from '@/utils/i18n'
 
 defineProps<{
@@ -74,6 +74,14 @@ const familyStatusFilter = computed(() => {
                         >{{ $t('validation.attributes.date_of_birth') }}
                     </the-table-th>
 
+                    <the-table-th
+                        :direction="params.directions && params.directions['family.income_rate']"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'family.income_rate')"
+                        >{{ $t('income_rate') }}
+                    </the-table-th>
+
                     <the-table-th v-if="hasPermission(['update_orphans', 'delete_orphans'])" class="text-center">
                         {{ $t('actions') }}
                     </the-table-th>
@@ -116,8 +124,12 @@ const familyStatusFilter = computed(() => {
                         </div>
                     </the-table-td>
 
-                    <the-table-td class="text-center">
+                    <the-table-td class="text-nowrap text-center">
                         {{ formatDate(orphan.birth_date, 'long') }}
+                    </the-table-td>
+
+                    <the-table-td class="text-center">
+                        {{ formatCurrency(orphan.income_rate) }}
                     </the-table-td>
 
                     <the-table-td-actions v-if="hasPermission(['update_orphans', 'delete_orphans'])">

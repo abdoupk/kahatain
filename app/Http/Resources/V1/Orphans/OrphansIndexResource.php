@@ -19,10 +19,16 @@ class OrphansIndexResource extends JsonResource
             'health_status' => $this->health_status,
             'academic_level' => $this->academicLevel?->level,
             'academic_level_phase' => $this->academicLevel?->phase,
-            'shoes_size' => $this->shoes_size,
-            'pants_size' => $this->pants_size,
-            'shirt_size' => $this->shirt_size,
+            'shoes_size' => $this->shoesSize->label,
+            'pants_size' => $this->pantsSize->label,
+            'shirt_size' => $this->shirtSize->label,
+            'baby_milk_type' => $this->babyNeeds->babyMilk->name,
+            'baby_milk_quantity' => $this->babyNeeds->baby_milk_quantity,
+            'baby_diapers_type' => $this->babyNeeds->diapers->name,
+            'baby_diapers_quantity' => $this->babyNeeds->diapers_quantity,
             'note' => $this->note,
+            'age' => $this->birth_date->age,
+            'income_rate' => $this->family->income_rate,
         ];
     }
 }

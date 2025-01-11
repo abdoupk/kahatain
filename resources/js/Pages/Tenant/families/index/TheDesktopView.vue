@@ -21,7 +21,7 @@ defineProps<{
     params: IndexParams
 }>()
 
-const emit = defineEmits(['sort', 'showDeleteModal'])
+const emit = defineEmits(['sort'])
 </script>
 
 <template>
@@ -120,7 +120,7 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                         </div>
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['update_families', 'delete_families'])">
+                    <the-table-td-actions v-if="hasPermission(['update_families', 'delete_families', 'view_families'])">
                         <div class="flex items-center justify-center">
                             <Link
                                 v-if="hasPermission('view_families')"
@@ -139,6 +139,7 @@ const emit = defineEmits(['sort', 'showDeleteModal'])
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </Link>
+
                             <a
                                 v-if="hasPermission('delete_families')"
                                 class="flex items-center text-danger"

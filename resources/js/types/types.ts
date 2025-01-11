@@ -212,31 +212,6 @@ export interface Commune {
 
 export type LangType = 'ar' | 'en' | 'fr'
 
-export type RegisterForm = {
-    association: string
-    domain: string
-    address: string
-    city: string
-    first_name: string
-    last_name: string
-    phone: string
-    email: string
-    password: string
-    password_confirmation: string
-    association_email: string
-    landline: string
-    phones: string[]
-    ccp: string
-    cpa: string
-    links: { [key: string]: string }
-}
-
-export interface RegistrationStepProps {
-    currentStep: number
-    totalSteps: number
-    form?: Form<RegisterForm>
-}
-
 export type RegisterStepOneProps = typeof registerStepOneErrorProps
 
 export type RegisterStepTwoProps = typeof registerStepTwoErrorProps
@@ -694,14 +669,20 @@ export interface InventoryIndexResource {
 export interface OrphansIndexResource {
     id: string
     name: string
+    income_rate: number
     birth_date: string
     family_status: string
     health_status: string
+    age: number
     academic_level: string
     academic_level_phase: string
     shoes_size: string
     pants_size: string
     shirt_size: string
+    baby_milk_type: string
+    baby_milk_quantity: string
+    baby_diapers_type: string
+    baby_diapers_quantity: string
     note?: string
     income: number
 }
@@ -710,6 +691,7 @@ export interface SponsorsIndexResource {
     id: string
     name: string
     phone_number: string
+    income_rate: number
     birth_date: string
     academic_level: string
     academic_level_phase: string
@@ -901,8 +883,6 @@ export interface CreateFamilyStepProps {
     form?: Form<CreateFamilyForm>
 }
 
-export interface FamilyShow {}
-
 export type CreateFamilyStepOneProps = typeof createFamilyStepOneErrorProps
 
 export type CreateFamilyStepTwoProps = typeof createFamilyStepTwoErrorProps
@@ -996,8 +976,6 @@ export interface ListBoxOperator {
 export type FilterValueType = string | { id: string; name: string }
 
 export type FilterValueSponsorshipType = string | { label: string; value: string }
-
-export type ShoesSizesType = { id: number; label: string }[]
 
 export type ClothesSizesType = { id: number; label: string }[]
 

@@ -194,6 +194,7 @@ return [
                     'is_handicapped',
                     'academic_average',
                     'speciality.speciality',
+                    'family.income_rate',
                 ],
                 'searchableAttributes' => [
                     'name',
@@ -317,6 +318,7 @@ return [
                     'income',
                     'orphans_count',
                     'function',
+                    'family.income_rate',
                 ],
                 'searchableAttributes' => [
                     'name',
@@ -332,7 +334,7 @@ return [
                     'diploma',
                     'ccp',
                 ],
-                'sortableAttributes' => ['name', 'birth_date', 'academic_level.i_id', 'health_status', 'created_at'],
+                'sortableAttributes' => ['name', 'family.income_rate', 'birth_date', 'academic_level.i_id', 'health_status', 'created_at'],
             ],
             'families' => [
                 'rankingRules' => [

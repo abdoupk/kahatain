@@ -6,6 +6,22 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class BulkUpdateEidSuitInfosRequest extends FormRequest
 {
+    public function attributes(): array
+    {
+        return [
+            'clothes_shop_name' => __('clothes_shop_name'),
+            'clothes_shop_address' => __('clothes_shop_address'),
+            'clothes_shop_phone_number' => __('clothes_shop_phone_number'),
+            'shoes_shop_name' => __('shoes_shop_name'),
+            'shoes_shop_address' => __('shoes_shop_address'),
+            'shoes_shop_location' => __('shoes_shop_location'),
+            'clothes_shop_location' => __('clothes_shop_location'),
+            'shoes_shop_phone_number' => __('shoes_shop_phone_number'),
+            'designated_member' => __('designated_member'),
+            'note' => __('note'),
+        ];
+    }
+
     public function rules(): array
     {
         return [

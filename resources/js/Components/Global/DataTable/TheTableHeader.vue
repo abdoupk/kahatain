@@ -144,7 +144,7 @@ const handleSort = ({ field, direction }) => {
                 ></svg-loader>
             </div>
 
-            <div class="me-2 ms-auto whitespace-nowrap text-center text-slate-500 md:mx-auto">
+            <div class="me-2 ms-auto mt-2 whitespace-nowrap text-center text-slate-500 @[33rem]:mt-0 md:mx-auto">
                 <span v-if="paginationData.meta?.total > 0">
                     {{
                         $t('showing_results', {

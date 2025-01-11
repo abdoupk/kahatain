@@ -93,8 +93,18 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         {{ zone.created_at }}
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['update_zones', 'delete_zones'])">
+                    <the-table-td-actions v-if="hasPermission(['update_zones', 'delete_zones', 'view_zones'])">
                         <div class="flex items-center justify-center">
+                            <a
+                                v-if="hasPermission('view_zones')"
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click="emit('showDetailsModal', zone.id)"
+                            >
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </a>
+
                             <a
                                 v-if="hasPermission('update_zones')"
                                 class="me-3 flex items-center"
@@ -104,6 +114,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </a>
+
                             <a
                                 v-if="hasPermission('delete_zones')"
                                 class="flex items-center text-danger"

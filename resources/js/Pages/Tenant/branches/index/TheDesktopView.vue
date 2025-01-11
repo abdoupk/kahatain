@@ -135,8 +135,18 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </div>
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['update_branches', 'delete_branches'])">
+                    <the-table-td-actions v-if="hasPermission(['update_branches', 'delete_branches', 'view_branches'])">
                         <div class="flex items-center justify-center">
+                            <a
+                                v-if="hasPermission('view_branches')"
+                                class="me-3 flex items-center"
+                                href="#"
+                                @click.prevent="emit('showDetailsModal', branch.id)"
+                            >
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </a>
+
                             <a
                                 v-if="hasPermission('update_branches')"
                                 class="me-3 flex items-center"
@@ -146,6 +156,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </a>
+
                             <a
                                 v-if="hasPermission('delete_branches')"
                                 class="flex items-center text-danger"

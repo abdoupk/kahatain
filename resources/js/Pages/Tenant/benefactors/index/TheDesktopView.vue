@@ -93,8 +93,20 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         {{ benefactor.created_at }}
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['update_benefactors', 'delete_benefactors'])">
+                    <the-table-td-actions
+                        v-if="hasPermission(['update_benefactors', 'delete_benefactors', 'view_benefactors'])"
+                    >
                         <div class="flex items-center justify-center">
+                            <a
+                                v-if="hasPermission('view_benefactors')"
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click="emit('showDetailsModal', benefactor.id)"
+                            >
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </a>
+
                             <a
                                 v-if="hasPermission('update_benefactors')"
                                 class="me-3 flex items-center"
@@ -104,6 +116,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </a>
+
                             <a
                                 v-if="hasPermission('delete_benefactors')"
                                 class="flex items-center text-danger"

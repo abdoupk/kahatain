@@ -21,6 +21,7 @@ class SponsorsIndexResource extends JsonResource
             'function' => $this->function,
             'health_status' => $this->health_status,
             'sponsor_type' => $this->sponsor_type,
+            'income_rate' => $this->family?->income_rate,
         ];
     }
 }
