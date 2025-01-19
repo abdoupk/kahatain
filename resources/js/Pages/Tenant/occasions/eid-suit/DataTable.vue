@@ -112,7 +112,12 @@ const handleShowSuccessNotification = () => {
             @sort="$emit('sort', $event)"
         ></the-desktop-view>
 
-        <the-mobile-view :orphans :params></the-mobile-view>
+        <the-mobile-view
+            :orphans
+            :params
+            @showLocationAddressModal="handleShowLocationAddressModal"
+            @showSuccessNotification="handleShowSuccessNotification"
+        ></the-mobile-view>
     </div>
 
     <map-modal

@@ -217,7 +217,7 @@ const emit = defineEmits(['sort'])
                     </the-table-td>
 
                     <the-table-td class="text-center">
-                        <div class="whitespace-nowrap">{{ family.monthly_sponsorship_rate * 100 }} %</div>
+                        <div class="whitespace-nowrap">{{ family.monthly_sponsorship_rate }} %</div>
                     </the-table-td>
 
                     <the-table-td class="text-nowrap text-center">

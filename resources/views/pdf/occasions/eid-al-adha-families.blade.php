@@ -31,6 +31,10 @@
         <x-th>
             {{ __('income_rate') }}
         </x-th>
+
+        <x-th>
+            {{ __('notes') }}
+        </x-th>
     </x-slot>
 
     <x-slot name="tbody">
@@ -61,7 +65,10 @@
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $family->income_rate }}
+                    {{ formatCurrency($family->income_rate) }}
+                </x-td>
+
+                <x-td class="min-w-36">
                 </x-td>
             </tr>
         @endforeach

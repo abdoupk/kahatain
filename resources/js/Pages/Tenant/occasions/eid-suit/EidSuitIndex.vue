@@ -180,7 +180,7 @@ const showBulkUpdateModal = () => {
 
                     <base-button
                         :disabled="loadingReset"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="outline-danger"
                         @click.prevent="handleReset"
                     >
