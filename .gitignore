@@ -22,11 +22,9 @@ yarn-error.log
 /.nyc_output/
 /tests/cypress/cypress-coverage/
 /tests/cypress/screenshots/
-/storage/
 
 /caddy
 frankenphp
 frankenphp-worker.php
 rr
 .rr.yaml
-/phpstan-baseline.neon
