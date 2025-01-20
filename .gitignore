@@ -23,6 +23,7 @@ yarn-error.log
 /tests/cypress/cypress-coverage/
 /tests/cypress/screenshots/
 /storage
+stats.html
 /caddy
 frankenphp
 frankenphp-worker.php
