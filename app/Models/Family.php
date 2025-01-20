@@ -315,8 +315,6 @@ class Family extends Model implements HasMedia
             'deleted_at' => now(),
             'deleted_by' => $userId,
         ]);
-
-        $this->delete();
     }
 
     public function babies(): HasMany
