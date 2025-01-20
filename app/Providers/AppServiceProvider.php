@@ -77,18 +77,19 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(! $this->app->isProduction());
 
         Model::handleLazyLoadingViolationUsing(function ($model, $relation): void {
+            if (! $this->app->environment() == 'local') {
+                $full_trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 6);
 
-            $full_trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 6);
+                $trace = array_pop($full_trace);
 
-            $trace = array_pop($full_trace);
+                $file_parts = explode('/', $trace['file']);
 
-            $file_parts = explode('/', $trace['file']);
+                $file = array_pop($file_parts);
 
-            $file = array_pop($file_parts);
+                $class = get_class($model);
 
-            $class = get_class($model);
-
-            // ray()->notify("Attempted to lazy load [$relation] on [line:{$trace['line']}] in [$file] for model [$class].");
+                ray()->notify("Attempted to lazy load [$relation] on [line:{$trace['line']}] in [$file] for model [$class].");
+            }
         });
     }
 }
