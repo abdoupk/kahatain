@@ -43,42 +43,6 @@ class TrashIndexController extends Controller implements HasMiddleware
 UNION ALL
   (
     SELECT
-      o.id,
-      CONCAT(o.first_name, ' ', o.last_name) AS name,
-      o.deleted_at,
-      u.id AS user_id,
-      CONCAT(u.first_name, ' ', u.last_name) AS user_name,
-      'tenant.orphans.restore' AS restore_url,
-      'tenant.orphans.force-delete' AS force_delete_url,
-      'orphan' AS type
-    FROM
-      orphans o
-      LEFT JOIN users u ON o.deleted_by = u.id
-    WHERE
-      o.deleted_at IS NOT NULL
-      AND o.tenant_id = :tenant_id
-  )
-UNION ALL
-  (
-    SELECT
-      s.id,
-      CONCAT(s.first_name, ' ', s.last_name) AS name,
-      s.deleted_at,
-      u.id AS user_id,
-      CONCAT(u.first_name, ' ', u.last_name) AS user_name,
-      'tenant.sponsors.restore' AS restore_url,
-      'tenant.sponsors.force-delete' AS force_delete_url,
-      'sponsor' AS type
-    FROM
-      sponsors s
-      LEFT JOIN users u ON s.deleted_by = u.id
-    WHERE
-      s.deleted_at IS NOT NULL
-      AND s.tenant_id = :tenant_id
-  )
-UNION ALL
-  (
-    SELECT
       m.id,
       CONCAT(m.first_name, ' ', m.last_name) AS name,
       m.deleted_at,
