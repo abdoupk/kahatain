@@ -27,8 +27,6 @@ function calculateIncomes(Family $family)
 
 function getTenantPrice(Family $family): float
 {
-    ray((float) Housing::whereFamilyId($family->id)->whereName('tenant')->first()?->value ?? 0, 'housing value');
-
     return (float) Housing::whereFamilyId($family->id)->whereName('tenant')->first()?->value ?? 0;
 }
 

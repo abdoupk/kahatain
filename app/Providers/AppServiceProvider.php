@@ -88,7 +88,7 @@ class AppServiceProvider extends ServiceProvider
 
             $class = get_class($model);
 
-            ray()->notify("Attempted to lazy load [$relation] on [line:{$trace['line']}] in [$file] for model [$class].");
+            // ray()->notify("Attempted to lazy load [$relation] on [line:{$trace['line']}] in [$file] for model [$class].");
         });
     }
 }
