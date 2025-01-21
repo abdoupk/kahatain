@@ -129,7 +129,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
      */
     public function storeOrphans(CreateFamilyRequest $request, Model|Family $family, Sponsor $sponsor): void
     {
-        $validatedOrphans = $request->orphans;
+        $validatedOrphans = $request->validated('orphans');
         $babiesToCreate = [];
 
         $orphans = $family->orphans()->createMany(array_map(static function ($orphan) use ($sponsor) {
