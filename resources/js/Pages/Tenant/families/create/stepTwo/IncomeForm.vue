@@ -43,6 +43,8 @@ const totalIncome = computed(() => {
         createFamilyStore.family.incomes.account.ccp.performance_grant / 3,
         createFamilyStore.family.incomes.account.bank.performance_grant / 3,
         createFamilyStore.family.incomes.account.ccp.monthly_income,
+        createFamilyStore.family.incomes.account.bank.balance,
+        createFamilyStore.family.incomes.account.ccp.balance,
         createFamilyStore.family.incomes.account.bank.monthly_income
     ]
 
