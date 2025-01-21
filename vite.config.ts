@@ -1,6 +1,5 @@
 import vue from '@vitejs/plugin-vue'
 import laravel from 'laravel-vite-plugin'
-import i18n from 'laravel-vue-i18n/vite'
 import path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
@@ -31,7 +30,6 @@ export default defineConfig({
                 }
             }
         }),
-        i18n(),
         istanbul({
             include: ['resources/js/*'], // List of all directories/files you want to track coverage for
             exclude: ['node_modules'], // List of all directories/files you do not want to track coverage for
