@@ -1,11 +1,12 @@
 import './bootstrap'
 import './echo'
-import i18n from './utils/i18n'
 
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createInertiaApp, router } from '@inertiajs/vue3'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import { i18nVue } from 'laravel-vue-i18n'
 import { createPinia } from 'pinia'
 import { type DefineComponent, createApp, h } from 'vue'
+import { toast } from 'vue-sonner'
 import { ZiggyVue } from 'ziggy-js'
 
 import { usePersistStore } from '@/utils/pinia'
@@ -22,43 +23,49 @@ createInertiaApp({
         resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })
-            .use(i18n)
+            .use(i18nVue, {
+                resolve: async (lang) => {
+                    const languages = import.meta.glob('../../public/locales/*.json')
+
+                    return await languages[`../../public/locales/${lang}.json`]()
+                }
+            })
             .use(plugin)
             .use(pinia)
             .use(ZiggyVue)
 
-        // If (import.meta.env.MODE !== 'development') {
-        //     App.config.errorHandler = (err) => {
-        //         If (isAxiosError(err)) {
-        //             Switch (err.response?.status) {
-        //                 Case 401:
-        //                     Toast($t('errors.descriptions.401'))
-        //
-        //                     Break
-        //
-        //                 Case 419:
-        //                     Router.post(route('tenant.logout'))
-        //
-        //                     Break
-        //
-        //                 Case 403:
-        //                     Toast($t('errors.descriptions.403'))
-        //
-        //                     Break
-        //
-        //                 Case 404:
-        //                     Toast($t('errors.descriptions.404'))
-        //
-        //                     Break
-        //
-        //                 Case 500:
-        //                     Toast($t('errors.descriptions.500'))
-        //
-        //                     Break
-        //             }
-        //         }
-        //     }
-        // }
+        if (import.meta.env.MODE !== 'development') {
+            app.config.errorHandler = (err) => {
+                if (isAxiosError(err)) {
+                    switch (err.response?.status) {
+                        case 401:
+                            toast($t('errors.descriptions.401'))
+
+                            break
+
+                        case 419:
+                            router.post(route('tenant.logout'))
+
+                            break
+
+                        case 403:
+                            toast($t('errors.descriptions.403'))
+
+                            break
+
+                        case 404:
+                            toast($t('errors.descriptions.404'))
+
+                            break
+
+                        case 500:
+                            toast($t('errors.descriptions.500'))
+
+                            break
+                    }
+                }
+            }
+        }
 
         app.mount(el)
 
