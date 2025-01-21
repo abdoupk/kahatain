@@ -78,7 +78,7 @@ class CreateFamilyRequest extends FormRequest
             'sponsor.photo' => 'nullable|string',
             'sponsor.no_remarriage_file' => 'nullable|string',
             'sponsor.birth_certificate_file' => 'nullable|string',
-            'sponsor.ccp' => ['required', 'string', 'regex:/^\d{12}$/', 'unique:App\Models\Orphan,ccp'],
+            'sponsor.ccp' => ['required', 'string', 'regex:/^\d{12}$/', 'unique:sponsors,ccp,NULL,id,deleted_at,NULL'],
             'second_sponsor.first_name' => 'nullable|string',
             'second_sponsor.last_name' => 'nullable|string',
             'second_sponsor.phone_number' => 'nullable|string',

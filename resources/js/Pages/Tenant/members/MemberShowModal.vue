@@ -55,7 +55,7 @@ const membersStore = useMembersStore()
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.created_at') }}</h2>
 
                 <h3 class="mt-1 rtl:font-medium">
-                    {{ membersStore.member.readable_created_at }}
+                    {{ membersStore.member.readable_created_at || '————' }}
                 </h3>
             </div>
             <!-- End: Created At-->
@@ -69,10 +69,10 @@ const membersStore = useMembersStore()
                     :href="route('tenant.members.index') + `?show=${membersStore.member.creator?.id}`"
                     class="mt-1 rtl:font-medium"
                 >
-                    {{ membersStore.member.creator?.name }}
+                    {{ membersStore.member.creator?.name || '————' }}
                 </Link>
 
-                <span v-else class="mt-1 rtl:font-medium"> - </span>
+                <span v-else class="mt-1 rtl:font-medium"> ———— </span>
             </div>
             <!-- End: Creator-->
 
@@ -80,7 +80,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('filters.gender') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ $t(membersStore.member.gender) }}</p>
+                <p class="mt-1 rtl:font-medium">{{ $t(membersStore.member.gender || '————') }}</p>
             </div>
             <!-- End: Gender-->
 
@@ -88,7 +88,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('academic_level') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ $t(membersStore.member.academic_level) }}</p>
+                <p class="mt-1 rtl:font-medium">{{ $t(membersStore.member.academic_level || '————') }}</p>
             </div>
             <!-- End: Gender-->
 
@@ -96,7 +96,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('the_roles') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_roles }}</p>
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_roles || '————' }}</p>
             </div>
             <!-- End: Roles-->
 
@@ -104,7 +104,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('the_committees') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_committees }}</p>
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_committees || '————' }}</p>
             </div>
             <!-- End: Committees-->
 
@@ -112,7 +112,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.qualification') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_competences }}</p>
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.readable_competences || '————' }}</p>
             </div>
             <!-- End: Competences-->
 
@@ -120,7 +120,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.workplace') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ membersStore.member.workplace }}</p>
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.workplace || '————' }}</p>
             </div>
             <!-- End: Workplace-->
 
@@ -128,7 +128,7 @@ const membersStore = useMembersStore()
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.sponsor.function') }}</h2>
 
-                <p class="mt-1 rtl:font-medium">{{ membersStore.member.function }}</p>
+                <p class="mt-1 rtl:font-medium">{{ membersStore.member.function || '————' }}</p>
             </div>
             <!-- End: Function-->
 
@@ -139,7 +139,7 @@ const membersStore = useMembersStore()
                 <Link
                     :href="route('tenant.branches.index') + `?show=${membersStore.member.branch?.id}`"
                     class="mt-1 rtl:font-medium"
-                    >{{ membersStore.member.branch?.name }}
+                    >{{ membersStore.member.branch?.name || '————' }}
                 </Link>
             </div>
             <!-- End: Branch-->
@@ -149,9 +149,9 @@ const membersStore = useMembersStore()
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.zone_id') }}</h2>
 
                 <Link
-                    :href="route('tenant.zones.index') + `?show=${membersStore.member.zone.id}`"
+                    :href="route('tenant.zones.index') + `?show=${membersStore.member.zone?.id}`"
                     class="mt-1 rtl:font-medium"
-                    >{{ membersStore.member.zone.name }}
+                    >{{ membersStore.member.zone?.name || '————' }}
                 </Link>
             </div>
             <!-- End: Zone-->
