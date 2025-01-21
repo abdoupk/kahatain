@@ -245,7 +245,7 @@ onMounted(async () => {
             :academic_level_id_field_name="`orphans.${index}.academic_level_id`"
             :birth_date_field_name="`orphans.${index}.birth_date`"
             :ccp_field_name="`orphans.${index}.ccp`"
-            :form="form"
+            :form
             :institution_field_name="`orphans.${index}.institution_id`"
             :phone_number_field_name="`orphans.${index}.phone_number`"
             :vocational_training_id_field_name="`orphans.${index}.vocational_training_id`"

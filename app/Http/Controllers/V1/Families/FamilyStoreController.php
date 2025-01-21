@@ -43,7 +43,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                         'name' => $request->validated('sponsor.first_name')
                             .'  '.
                             $request->validated('sponsor.last_name'),
-                        'file_number' => Branch::with('city')->find($request->validated('branch_id'))->city->commune_code.'/'.Family::count('*') + 1,
+                        'file_number' => Branch::with('city')->find($request->validated('branch_id'))->city->commune_code.'/'.Family::count() + 1,
                     ]
                 );
 
@@ -129,9 +129,9 @@ class FamilyStoreController extends Controller implements HasMiddleware
      */
     public function storeOrphans(CreateFamilyRequest $request, Model|Family $family, Sponsor $sponsor): void
     {
-        $validatedOrphans = $request->validated('orphans');
+        $target = $request->validated('orphans');
+        $validatedOrphans = data_forget($target, 'orphans.*.vocational_training_id');
         $babiesToCreate = [];
-        ray($validatedOrphans);
 
         $orphans = $family->orphans()->createMany(array_map(static function ($orphan) use ($sponsor) {
             $orphan['sponsor_id'] = $sponsor->id;
