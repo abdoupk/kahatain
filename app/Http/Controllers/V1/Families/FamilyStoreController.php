@@ -131,6 +131,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
     {
         $validatedOrphans = $request->validated('orphans');
         $babiesToCreate = [];
+        ray($validatedOrphans);
 
         $orphans = $family->orphans()->createMany(array_map(static function ($orphan) use ($sponsor) {
             $orphan['sponsor_id'] = $sponsor->id;
