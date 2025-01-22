@@ -18,7 +18,7 @@ class NeedsIndexResource extends JsonResource
             'status' => $this->status,
             'needable' => [
                 'id' => $this->needable_id,
-                'name' => $this->needable->getName(),
+                'name' => $this->needable?->getName(),
                 'type' => $this->needable_type,
             ],
             'note' => $this->note,

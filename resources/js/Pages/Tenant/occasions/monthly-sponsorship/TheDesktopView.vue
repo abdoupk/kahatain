@@ -188,7 +188,7 @@ const emit = defineEmits(['sort'])
 
                     <the-table-td class="text-center">
                         <div class="whitespace-nowrap rtl:font-semibold">
-                            {{ family.sponsorships.basket_from_association ? $t('benefit') : $t('dont_benefit') }}
+                            {{ family.sponsorships.basket_from_association > 0 ? $t('benefit') : $t('dont_benefit') }}
                         </div>
                     </the-table-td>
 

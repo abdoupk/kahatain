@@ -158,7 +158,7 @@ class Orphan extends Model implements HasMedia
                 'income_rate' => (float) $this->family->income_rate,
                 'zone' => [
                     'id' => $this->family->zone_id,
-                    'name' => $this->family->zone->name,
+                    'name' => $this->family->zone?->name,
                 ],
             ],
             'academic_average' => (float) $this->academic_average,

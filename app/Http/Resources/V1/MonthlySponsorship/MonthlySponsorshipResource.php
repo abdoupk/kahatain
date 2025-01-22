@@ -19,8 +19,8 @@ class MonthlySponsorshipResource extends JsonResource
                 'name' => $this->zone?->name,
             ],
             'branch' => [
-                'id' => $this->branch->id,
-                'name' => $this->branch->name,
+                'id' => $this->branch?->id,
+                'name' => $this->branch?->name,
             ],
             'sponsor' => [
                 'id' => $this->sponsor?->id,
@@ -37,7 +37,7 @@ class MonthlySponsorshipResource extends JsonResource
             'sponsorships' => $this->whenLoaded('aid', fn () => [
                 'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
                 'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
-                'basket_from_association' => $this->difference_after_monthly_sponsorship > 0,
+                'basket_from_association' => $this->difference_before_monthly_sponsorship > 0,
                 'amount_from_association' => $this->amount_from_association,
             ]),
         ];
