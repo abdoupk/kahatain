@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class OrphanInfosUpdateRequest extends FormRequest
 {
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'health_status' => __('health_status'),
@@ -36,10 +36,10 @@ class OrphanInfosUpdateRequest extends FormRequest
             'ccp' => 'nullable|string',
             'phone_number' => 'nullable|string',
             'note' => 'nullable',
-            'baby_milk_quantity' => [new updateBabyNeedsRule],
-            'diapers_quantity' => [new updateBabyNeedsRule],
-            'baby_milk_type' => [new updateBabyNeedsRule],
-            'diapers_type' => [new updateBabyNeedsRule],
+            'baby_milk_quantity' => [new UpdateBabyNeedsRule],
+            'diapers_quantity' => [new UpdateBabyNeedsRule],
+            'baby_milk_type' => [new UpdateBabyNeedsRule],
+            'diapers_type' => [new UpdateBabyNeedsRule],
             'institution_id' => 'nullable|uuid',
             'institution_type' => 'nullable|string',
             'speciality_id' => 'nullable|integer',
