@@ -251,16 +251,6 @@ class User extends Authenticatable
         return $this->first_name.' '.$this->last_name;
     }
 
-    public function previews(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Preview::class,
-            'member_preview',
-            'user_id',
-            'preview_id'
-        )->using(MemberPreview::class);
-    }
-
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
