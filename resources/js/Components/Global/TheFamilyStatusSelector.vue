@@ -82,7 +82,7 @@ const familyStatuses = computed(() => {
 })
 
 const handleUpdate = (status: { label: string; value: string }) => {
-    familyStatus.value = status.value
+    familyStatus.value = status?.value
 }
 
 const selectedStatus = ref<string | { label: string; value: string }>('')
