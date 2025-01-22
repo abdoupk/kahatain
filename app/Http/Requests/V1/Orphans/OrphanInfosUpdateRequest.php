@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\V1\Orphans;
 
-use App\Rules\updateBabyNeedsRule;
+use App\Rules\UpdateBabyNeedsRule;
 use App\Rules\UpdateOrphanClothesRule;
 use Illuminate\Foundation\Http\FormRequest;
 
