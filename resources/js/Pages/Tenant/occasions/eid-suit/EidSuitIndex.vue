@@ -195,6 +195,7 @@ const showBulkUpdateModal = () => {
                 <the-table-footer
                     :pagination-data="orphans"
                     :params
+                    class="mt-4"
                     :url="route('tenant.occasions.eid-suit.index')"
                 ></the-table-footer>
             </template>
