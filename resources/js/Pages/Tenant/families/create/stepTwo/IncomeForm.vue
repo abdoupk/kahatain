@@ -64,26 +64,6 @@ const items = ref<Record<keyof IncomesType, boolean>>({
 const toggle = (key: keyof IncomesType) => {
     if (items.value[key]) {
         switch (key) {
-            case 'cnr':
-                createFamilyStore.family.incomes.cnr = null
-
-                break
-
-            case 'cnas':
-                createFamilyStore.family.incomes.cnas = null
-
-                break
-
-            case 'casnos':
-                createFamilyStore.family.incomes.casnos = null
-
-                break
-
-            case 'pension':
-                createFamilyStore.family.incomes.pension = null
-
-                break
-
             case 'other_income':
                 createFamilyStore.family.incomes.other_income = null
 
@@ -113,11 +93,13 @@ const toggle = (key: keyof IncomesType) => {
 onMounted(() => {
     const { cnr, cnas, casnos, pension, other_income, account } = createFamilyStore.family.incomes
 
+    console.log(cnr, cnas, casnos, pension, other_income, account)
+
     items.value = {
-        cnr: !!cnr,
-        cnas: !!cnas,
-        casnos: !!casnos,
-        pension: !!pension,
+        cnr: cnr,
+        cnas: cnas,
+        casnos: casnos,
+        pension: pension,
         other_income: !!other_income,
         ccp_account: Object.values(account.ccp).some((value) => value !== null && value !== 0),
         bank_account: Object.values(account.bank).some((value) => value !== null && value !== 0)
@@ -134,9 +116,9 @@ onMounted(() => {
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     id="cnr"
+                    v-model="createFamilyStore.family.incomes.cnr"
                     :checked="items.cnr"
                     type="checkbox"
-                    @click="toggle('cnr')"
                 ></base-form-switch-input>
 
                 <base-form-switch-label htmlFor="cnr">
@@ -153,9 +135,9 @@ onMounted(() => {
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     id="cnas"
+                    v-model="createFamilyStore.family.incomes.cnas"
                     :checked="items.cnas"
                     type="checkbox"
-                    @click="toggle('cnas')"
                 ></base-form-switch-input>
 
                 <base-form-switch-label htmlFor="cnas">
@@ -172,9 +154,9 @@ onMounted(() => {
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     id="casnos"
+                    v-model="createFamilyStore.family.incomes.casnos"
                     :checked="items.casnos"
                     type="checkbox"
-                    @click="toggle('casnos')"
                 ></base-form-switch-input>
 
                 <base-form-switch-label htmlFor="casnos">
@@ -191,9 +173,9 @@ onMounted(() => {
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     id="pension"
+                    v-model="createFamilyStore.family.incomes.pension"
                     :checked="items.pension"
                     type="checkbox"
-                    @click="toggle('pension')"
                 ></base-form-switch-input>
 
                 <base-form-switch-label htmlFor="pension">
@@ -240,7 +222,7 @@ onMounted(() => {
             </base-input-group>
         </div>
 
-        <base-form-input-error :form field_name="incomes.other_income" class="col-span-12 lg:col-start-5">
+        <base-form-input-error :form class="col-span-12 lg:col-start-5" field_name="incomes.other_income">
         </base-form-input-error>
     </div>
     <!-- End: OTHER -->
@@ -285,7 +267,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error :form field_name="incomes.account.ccp.monthly_income"> </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.ccp.monthly_income"></base-form-input-error>
             </div>
             <!-- End: MONTHLY INCOME -->
 
@@ -311,7 +293,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error :form field_name="incomes.account.ccp.balance"> </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.ccp.balance"></base-form-input-error>
             </div>
             <!-- End: BALANCE -->
 
@@ -387,7 +369,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error :form field_name="incomes.account.bank.monthly_income"> </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.bank.monthly_income"></base-form-input-error>
             </div>
             <!-- End: MONTHLY INCOME -->
 
@@ -413,7 +395,7 @@ onMounted(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error :form field_name="incomes.account.bank.balance"> </base-form-input-error>
+                <base-form-input-error :form field_name="incomes.account.bank.balance"></base-form-input-error>
             </div>
             <!-- End: BALANCE -->
 
@@ -475,9 +457,9 @@ onMounted(() => {
                     :allow-multiple="false"
                     :files="_cnasFile"
                     :is-picture="false"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_cnas')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="createFamilyStore.family.incomes.cnas_file = $event[0]"
-                    :labelIdle="$t('upload-files.labelIdle.sponsor_cnas')"
                 ></base-file-pond>
             </div>
 
@@ -523,9 +505,9 @@ onMounted(() => {
                     :allow-multiple="false"
                     :files="_ccpFile"
                     :is-picture="false"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_ccp')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="createFamilyStore.family.incomes.ccp_file = $event[0]"
-                    :labelIdle="$t('upload-files.labelIdle.sponsor_ccp')"
                 ></base-file-pond>
             </div>
 
@@ -539,9 +521,9 @@ onMounted(() => {
                     :allow-multiple="false"
                     :files="_bankFile"
                     :is-picture="false"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_bank')"
                     accepted-file-types="image/jpeg, image/png, application/pdf"
                     @update:files="createFamilyStore.family.incomes.bank_file = $event[0]"
-                    :labelIdle="$t('upload-files.labelIdle.sponsor_bank')"
                 ></base-file-pond>
             </div>
         </div>

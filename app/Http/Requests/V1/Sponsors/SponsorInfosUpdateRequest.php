@@ -6,19 +6,27 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SponsorInfosUpdateRequest extends FormRequest
 {
+    public function attributes(): array
+    {
+        return [
+            'diploma' => __('diploma'),
+            'health_status' => __('health_status'),
+        ];
+    }
+
     public function rules(): array
     {
         return [
-            'academic_level_id' => 'required|uuid|exists:academic_levels,id',
+            'academic_level_id' => 'nullable|uuid|exists:academic_levels,id',
             'birth_certificate_number' => 'required',
             'birth_date' => 'required',
-            'ccp' => 'required',
-            'diploma' => 'required',
+            'ccp' => ['nullable', 'string', 'regex:/^\d{12}$/'],
+            'diploma' => 'required|string',
             'father_name' => 'required',
             'first_name' => 'required',
             'function' => 'required',
             'gender' => 'required',
-            'health_status' => 'required',
+            'health_status' => 'required|string',
             'last_name' => 'required',
             'mother_name' => 'required',
             'phone_number' => 'required',

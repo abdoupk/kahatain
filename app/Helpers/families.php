@@ -40,18 +40,19 @@ function getFamiliesPosition(): array
 
 function setTotalIncomeAttribute(array $incomes): float
 {
-    ray($incomes);
     $a = array_reduce($incomes, function ($carry, $item) {
-        ray($item);
-
         if (is_array($item)) {
+            $total = 0;
+
             if (isset($item['ccp'])) {
-                return $carry + (float) $item['ccp']['monthly_income'] + (float) $item['ccp']['balance'] + (float) $item['ccp']['performance_grant'] / 3;
+                $total += $carry + (float) $item['ccp']['monthly_income'] + (float) $item['ccp']['balance'] + (float) $item['ccp']['performance_grant'] / 3;
             }
 
             if (isset($item['bank'])) {
-                return $carry + (float) $item['bank']['monthly_income'] + (float) $item['bank']['balance'] + (float) $item['bank']['performance_grant'] / 3;
+                $total += $carry + (float) $item['bank']['monthly_income'] + (float) $item['bank']['balance'] + (float) $item['bank']['performance_grant'] / 3;
             }
+
+            return $total;
         }
 
         return (float) $carry + (float) $item;

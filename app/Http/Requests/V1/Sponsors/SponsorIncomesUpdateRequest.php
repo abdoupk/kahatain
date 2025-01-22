@@ -10,10 +10,10 @@ class SponsorIncomesUpdateRequest extends FormRequest
     {
         return [
             'spouse.income' => 'sometimes|nullable|numeric',
-            'incomes.cnr' => 'nullable|numeric',
-            'incomes.cnas' => 'nullable|numeric',
-            'incomes.casnos' => 'nullable|numeric',
-            'incomes.pension' => 'nullable|numeric',
+            'incomes.cnr' => 'nullable|boolean',
+            'incomes.cnas' => 'nullable|boolean',
+            'incomes.casnos' => 'nullable|boolean',
+            'incomes.pension' => 'nullable|boolean',
             'incomes.other_income' => 'nullable|numeric',
             'incomes.bank_file' => 'nullable|string',
             'incomes.ccp_file' => 'nullable|string',

@@ -72,10 +72,10 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 no_remarriage_file: ''
             },
             incomes: {
-                cnr: 0,
-                cnas: 0,
-                casnos: 0,
-                pension: 0,
+                cnr: false,
+                cnas: false,
+                casnos: false,
+                pension: false,
                 bank_file: '',
                 ccp_file: '',
                 cnr_file: '',
@@ -93,7 +93,7 @@ export const useCreateFamilyStore = defineStore('create-family', {
                         performance_grant: null
                     }
                 },
-                other_income: 0
+                other_income: null
             },
             second_sponsor: {
                 first_name: '',

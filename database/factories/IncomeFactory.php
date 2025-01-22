@@ -12,10 +12,10 @@ class IncomeFactory extends Factory
     public function definition(): array
     {
         $incomes = [
-            'cnr' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'cnas' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'casnos' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'pension' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'cnr' => fake()->boolean(13),
+            'cnas' => fake()->boolean(13),
+            'casnos' => fake()->boolean(13),
+            'pension' => fake()->boolean(13),
             'account' => [
                 'ccp' => [
                     'monthly_income' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),

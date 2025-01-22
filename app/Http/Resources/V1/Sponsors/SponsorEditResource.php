@@ -17,7 +17,7 @@ class SponsorEditResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'phone_number' => $this->formattedPhoneNumber(),
+            'phone_number' => $this->phone_number,
             'sponsor_type' => $this->sponsor_type,
             'birth_date' => $this->birth_date,
             'father_name' => $this->father_name,
