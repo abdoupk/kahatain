@@ -39,19 +39,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['orphan-updated'])
 
-// eslint-disable-next-line array-element-newline
-const inputs = reactive<OrphanUpdateFormType>(
-    // eslint-disable-next-line array-element-newline
-    omit(props.orphan, [
-        'sponsorships',
-        'vocational_training_achievements',
-        'last_academic_year_achievement',
-        'academic_achievements',
-        'college_achievements',
-        'id',
-        'creator'
-    ])
-)
+const inputs = reactive<OrphanUpdateFormType>(omit(props.orphan, ['id', 'creator']))
 
 const form = useForm('put', route('tenant.orphans.infos-update', props.orphan.id), inputs)
 
@@ -216,6 +204,7 @@ onMounted(async () => {
                         v-model:family-status="form.family_status"
                         v-model:gender="form.gender"
                         @update:family-status="form?.validate(`family_status`)"
+                        :allow-empty="true"
                     >
                     </the-family-status-selector>
 

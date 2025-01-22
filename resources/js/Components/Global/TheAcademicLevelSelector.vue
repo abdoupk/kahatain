@@ -32,7 +32,6 @@ watch(
     <base-vue-select
         id="academic_level"
         v-model:value="vueSelectAcademicLevel"
-        :allow-empty="false"
         :options="academicLevels"
         :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('academic_level') })"
         class="h-full w-full"
@@ -40,7 +39,7 @@ watch(
         group-values="levels"
         label="name"
         track-by="id"
-        @update:value="(value) => (academicLevel = value.id)"
+        @update:value="(value) => (academicLevel = value?.id)"
     >
     </base-vue-select>
 </template>

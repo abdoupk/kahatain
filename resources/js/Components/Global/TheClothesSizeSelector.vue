@@ -15,7 +15,11 @@ const selectedSize = ref<ClothesSizesType | string | undefined>('')
 const sizesStore = useSizesStore()
 
 const handleUpdate = (value: Zone) => {
-    size.value = value?.id
+    if (value) {
+        size.value = value.id
+    } else {
+        size.value = null
+    }
 }
 
 onMounted(async () => {

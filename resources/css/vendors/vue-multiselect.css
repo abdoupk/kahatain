@@ -17,6 +17,10 @@
     color: theme('colors.black') !important;
 }
 
+.multiselect__option--selected.multiselect__option--highlight {
+    background: theme('colors.red.500/10') !important;
+}
+
 .multiselect__spinner {
     background: theme('colors.white') !important;
 
@@ -121,6 +125,10 @@
     & .multiselect__option--highlight {
         background-color: theme('colors.primary') !important;
         color: theme('colors.white') !important;
+    }
+
+    .multiselect__option--selected.multiselect__option--highlight {
+        background: theme('colors.red.500/10') !important;
     }
 
     .multiselect__spinner {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\V1\Families;
 
+use App\Rules\StoreBabyNeedsRule;
+use App\Rules\StoreOrphanClothesRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateFamilyRequest extends FormRequest
@@ -38,10 +40,6 @@ class CreateFamilyRequest extends FormRequest
 
     public function rules(): array
     {
-        $baby_milk_and_diapers_required = 'required_with:baby_milk_type|required_without:orphans.*.shoes_size
-,orphans.*.shirt_size,orphans.*.pants_size';
-        $pants_and_shoes_and_shirt_required = 'required_with:orphans.*.shirt_size,orphans.*.pants_size |required_without:orphans.*.baby_milk_quantity,orphans.*.baby_milk_type,orphans.*.diapers_quantity,orphans.*.diapers_type';
-
         return [
             'submitted' => 'boolean',
             'address' => 'required|string',
@@ -117,13 +115,13 @@ class CreateFamilyRequest extends FormRequest
             'report' => 'required|string',
             'branch_id' => 'required|exists:App\Models\Branch,id',
             'orphans.*.income' => 'nullable|numeric',
-            'orphans.*.shoes_size' => $pants_and_shoes_and_shirt_required,
-            'orphans.*.shirt_size' => $pants_and_shoes_and_shirt_required,
-            'orphans.*.pants_size' => $pants_and_shoes_and_shirt_required,
-            'orphans.*.baby_milk_quantity' => $baby_milk_and_diapers_required,
-            'orphans.*.baby_milk_type' => $baby_milk_and_diapers_required,
-            'orphans.*.diapers_quantity' => $baby_milk_and_diapers_required,
-            'orphans.*.diapers_type' => $baby_milk_and_diapers_required,
+            'orphans.*.shoes_size' => [new StoreOrphanClothesRule],
+            'orphans.*.shirt_size' => [new StoreOrphanClothesRule],
+            'orphans.*.pants_size' => [new StoreOrphanClothesRule],
+            'orphans.*.baby_milk_quantity' => [new StoreBabyNeedsRule, 'integer'],
+            'orphans.*.baby_milk_type' => [new StoreBabyNeedsRule],
+            'orphans.*.diapers_quantity' => [new StoreBabyNeedsRule, 'integer'],
+            'orphans.*.diapers_type' => [new StoreBabyNeedsRule],
             'orphans.*.is_unemployed' => 'required|boolean',
             'orphans.*.is_handicapped' => 'required|boolean',
             'orphans.*.photo' => 'nullable|string',

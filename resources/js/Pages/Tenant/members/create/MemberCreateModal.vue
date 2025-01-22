@@ -190,7 +190,8 @@ const modalType = computed(() => {
                         id="email"
                         v-model="form.email"
                         :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.email') })"
-                        class="[&[readonly]]:cursor-default [&[readonly]]:bg-white [&[readonly]]:dark:bg-darkmode-800"
+                        class="placeholder:text-end [&[readonly]]:cursor-default [&[readonly]]:bg-white [&[readonly]]:dark:bg-darkmode-800"
+                        dir="auto"
                         onfocus="this.removeAttribute('readonly')"
                         readonly
                         type="email"
@@ -241,7 +242,8 @@ const modalType = computed(() => {
                             :placeholder="
                                 $t('auth.placeholders.fill', { attribute: $t('validation.attributes.password') })
                             "
-                            class="[&[readonly]]:cursor-default [&[readonly]]:bg-white [&[readonly]]:dark:bg-darkmode-800"
+                            class="placeholder:text-end [&[readonly]]:cursor-default [&[readonly]]:bg-white [&[readonly]]:dark:bg-darkmode-800"
+                            dir="auto"
                             onfocus="this.removeAttribute('readonly')"
                             readonly
                             type="password"
@@ -268,7 +270,8 @@ const modalType = computed(() => {
                                     attribute: $t('validation.attributes.password_confirmation')
                                 })
                             "
-                            class="[&[readonly]]:cursor-default [&[readonly]]:bg-white [&[readonly]]:dark:bg-darkmode-800"
+                            class="placeholder:text-end [&[readonly]]:cursor-default [&[readonly]]:bg-white [&[readonly]]:dark:bg-darkmode-800"
+                            dir="auto"
                             onfocus="this.removeAttribute('readonly')"
                             readonly
                             type="password"
