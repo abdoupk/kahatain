@@ -85,6 +85,8 @@ const toggle = (key: keyof IncomesType) => {
                 break
 
             case 'other_income':
+                createFamilyStore.family.incomes.other_income = null
+
                 break
 
             case 'ccp_account':

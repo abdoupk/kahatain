@@ -23,6 +23,8 @@ class FamilyUpdateHousingController extends Controller implements HasMiddleware
             'value' => $request->input('housing_type.value'),
         ]);
 
+        monthlySponsorship($family);
+
         dispatch(new FamilyUpdatedJob($family, auth()->user()));
 
         return response('', 201);

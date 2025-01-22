@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useCreateFamilyStore } from '@/stores/create-family'
+import { usePage } from '@inertiajs/vue3'
 import { onMounted } from 'vue'
 
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
@@ -10,7 +11,9 @@ import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwit
 const createFamilyStore = useCreateFamilyStore()
 
 onMounted(() => {
-    document.getElementById('television')?.focus()
+    if (usePage().component !== 'Tenant/families/edit/FamilyEditPage') {
+        document.getElementById('television')?.focus()
+    }
 })
 </script>
 

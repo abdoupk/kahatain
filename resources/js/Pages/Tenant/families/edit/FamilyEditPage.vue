@@ -19,7 +19,7 @@ const TheGeneralInformation = defineAsyncComponent(
 )
 
 const TheHousingInformation = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/edit/TheHousingInformation.vue')
+    () => import('@/Pages/Tenant/families/edit/housing/TheHousingInformation.vue')
 )
 
 const TheReport = defineAsyncComponent(() => import('@/Pages/Tenant/families/edit/TheReport.vue'))
