@@ -16,7 +16,7 @@ const emit = defineEmits(['sort'])
 
 <template>
     <div class="@container">
-        <div class="intro-y !z-30 col-span-12 hidden overflow-x-auto @3xl:block">
+        <div class="intro-y !z-30 col-span-12 overflow-x-auto">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
@@ -55,11 +55,11 @@ const emit = defineEmits(['sort'])
                             {{ orphan.orphan.name }}
                         </the-table-td>
 
-                        <the-table-td>
+                        <the-table-td class="text-center">
                             {{ orphan.average ? parseFloat(orphan.average).toFixed(2) : '-' }}
                         </the-table-td>
 
-                        <the-table-td v-for="subject in orphan.subjects" :key="subject.id">
+                        <the-table-td v-for="subject in orphan.subjects" :key="subject.id" class="text-center">
                             {{ subject.grade ? parseFloat(subject.grade).toFixed(2) : '-' }}
                         </the-table-td>
                     </base-tr-table>

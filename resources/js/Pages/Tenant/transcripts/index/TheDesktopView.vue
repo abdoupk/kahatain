@@ -41,11 +41,11 @@ const handleShowSuccessNotification = () => {
 }
 
 const shouldCreateFirstTrimesterTranscript = computed(() => {
-    const isFebToAug = now.month() >= 1 && now.month() <= 7
+    const isJanToAug = now.month() >= 0 && now.month() <= 7
 
     const isNovOrDecPrevYear = now.month() === 10 || now.month() === 11
 
-    return isNovOrDecPrevYear || isFebToAug
+    return isNovOrDecPrevYear || isJanToAug
 })
 
 const shouldCreateSecondTrimesterTranscript = computed(() => {
