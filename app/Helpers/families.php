@@ -40,7 +40,7 @@ function getFamiliesPosition(): array
 
 function setTotalIncomeAttribute(array $incomes): float
 {
-    $a = array_reduce($incomes, function ($carry, $item) {
+    return array_reduce($incomes, function ($carry, $item) {
         if (is_array($item)) {
             $total = 0;
 
@@ -57,8 +57,4 @@ function setTotalIncomeAttribute(array $incomes): float
 
         return (float) $carry + (float) $item;
     }, 0);
-
-    ray($a);
-
-    return $a;
 }
