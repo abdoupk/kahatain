@@ -101,7 +101,8 @@ class ExportDataJob implements ShouldQueue
             __('the_sponsors').'.xlsx' => new SponsorsExport,
             __('the_families').'.xlsx' => new FamiliesExport,
             __('the_schools').'.xlsx' => new SchoolsExport,
-            __('the_lessons').'.xlsx' => new LessonsExport,
+            // TODO add lessons
+            // __('the_lessons').'.xlsx' => new LessonsExport,
             __('the_needs').'.xlsx' => new NeedsExport,
             __('search.babies').'.xlsx' => new BabiesExport,
             __('the_inventory').'.xlsx' => new InventoryExport,
@@ -248,7 +249,7 @@ class ExportDataJob implements ShouldQueue
     private function exportFiles(ZipArchive $zip): void
     {
         Family::with(['sponsor.incomes', 'spouse', 'orphans'])->each(function (Family $family) use ($zip) {
-            $folderName = 'files/'.$family->name;
+            $folderName = __('upload-files.files').'/'.$family->name;
 
             $zip->addEmptyDir($folderName);
 
