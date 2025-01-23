@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\SiteSettings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\SiteSettings\UpdateCalculationWeightsRequest;
+use App\Jobs\V1\SiteSettings\MonthlySponsorshipSettingsUpdatedJob;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
 class UpdateCalculationWeightsController extends Controller implements HasMiddleware
@@ -28,6 +29,8 @@ class UpdateCalculationWeightsController extends Controller implements HasMiddle
         auth()->user()->tenant->update([
             'calculation' => json_encode($data),
         ]);
+
+        dispatch(new MonthlySponsorshipSettingsUpdatedJob(auth()->user()));
 
         return response('', 204);
     }

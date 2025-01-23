@@ -59,7 +59,7 @@ return [
     'branch_president' => ' رئيس الفرع',
     'active' => 'فلاتر (:count)',
     'sponsorships_count' => 'عدد الكفالات',
-    'members_count' => 'عدد الاعضاء',
+    'members_count' => 'عدد الأعضاء',
     'income_rate' => 'معدل الدخل',
     'monthly_sponsorship_rate' => 'نسبة الكفالة الشهرية',
     'basket_from_benefactor' => 'قفة مباشرة من محسن (القيمة)',

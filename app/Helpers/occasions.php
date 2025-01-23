@@ -65,7 +65,7 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePagi
 {
     return search(
         Orphan::getModel(),
-        additional_filters: FILTER_SCHOOL_ENTRY()
+        additional_filters: FILTER_SCHOOL_ENTRY
     )
         ->query(
             fn ($query) => $query
@@ -136,15 +136,6 @@ function listOfBabies(): LengthAwarePaginator
                 )
         )
         ->paginate(perPage: request()?->integer('perPage', 10));
-}
-
-function FILTER_SCHOOL_ENTRY(): string
-{
-    //    $last_academic_year = date('Y') - 1;
-
-    return '';
-
-    //    return "AND academic_achievement.academic_year IS NOT EMPTY AND academic_achievement.academic_year >= $last_academic_year";
 }
 
 function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginator

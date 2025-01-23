@@ -60,7 +60,7 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(): Collec
 {
     return search(
         Orphan::getModel(),
-        FILTER_SCHOOL_ENTRY(),
+        FILTER_SCHOOL_ENTRY,
         10000
     )
         ->query(

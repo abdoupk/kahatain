@@ -9,6 +9,8 @@ const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
 
 const FILTER_STUDENTS = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';
 
+const FILTER_SCHOOL_ENTRY = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';
+
 const FILTER_COLLEGE_STUDENTS = 'AND academic_level.phase_key IN [licence, master, doctorate]';
 
 const FILTER_RAMADAN_BASKET = '';

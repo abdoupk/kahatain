@@ -44,7 +44,7 @@ function validateClothesAttributes($birthDate, $academicLevelId, $familyStatus, 
     if ($birthDate) {
         $age = Carbon::parse($birthDate)->age;
 
-        if ($age > 2 && $age <= 6 && $value === null) {
+        if ($age > 2 && $age <= 5 && $value === null) {
             return true;
         }
     }
