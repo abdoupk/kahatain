@@ -10,7 +10,7 @@ import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.v
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatDate } from '@/utils/helper'
+import { formatDate, hasPermission } from '@/utils/helper'
 
 defineProps<{
     roles: PaginationData<RolesIndexResource>
@@ -95,6 +95,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                     <the-table-td-actions>
                         <div class="flex items-center justify-center">
                             <a
+                                v-if="hasPermission('update_roles')"
                                 class="me-3 flex items-center"
                                 href="javascript:void(0)"
                                 @click="emit('showEditModal', role.uuid)"
@@ -102,7 +103,9 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </a>
+
                             <a
+                                v-if="hasPermission('delete_roles')"
                                 class="flex items-center text-danger"
                                 href="javascript:void(0)"
                                 @click="emit('showDeleteModal', role.uuid)"

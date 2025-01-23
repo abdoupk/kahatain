@@ -101,6 +101,16 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     >
                         <div class="flex items-center justify-center">
                             <a
+                                v-if="hasPermission(['view_item'])"
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click.prevent="emit('showDetailsModal', item.id)"
+                            >
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </a>
+
+                            <a
                                 v-if="hasPermission(['update_item_from_inventory'])"
                                 class="me-3 flex items-center"
                                 href="javascript:void(0)"
@@ -109,6 +119,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </a>
+
                             <a
                                 v-if="hasPermission(['delete_item_from_inventory'])"
                                 class="flex items-center text-danger"

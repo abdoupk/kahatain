@@ -10,7 +10,7 @@ import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.v
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatDate } from '@/utils/helper'
+import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -84,6 +84,17 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     <the-table-td-actions>
                         <div class="flex items-center justify-center">
                             <a
+                                v-if="hasPermission('view_schools')"
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click.prevent="emit('showDetailsModal', school.id)"
+                            >
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </a>
+
+                            <a
+                                v-if="hasPermission('update_schools')"
                                 class="me-3 flex items-center"
                                 href="javascript:void(0)"
                                 @click.prevent="emit('showEditModal', school.id)"
@@ -91,7 +102,9 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                                 <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-pen" />
                                 {{ $t('edit') }}
                             </a>
+
                             <a
+                                v-if="hasPermission('delete_schools')"
                                 class="flex items-center text-danger"
                                 href="javascript:void(0)"
                                 @click="emit('showDeleteModal', school.id)"

@@ -3,7 +3,7 @@ import type { IndexParams, PaginationData, SchoolsIndexResource } from '@/types/
 
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 
-import { formatDate } from '@/utils/helper'
+import { formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -41,12 +41,15 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
                         <a
+                            v-if="hasPermission('update_schools')"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             href="javascript:void(0)"
                             @click.prevent="emit('showEditModal', school.id)"
                             >{{ $t('edit') }}
                         </a>
+
                         <a
+                            v-if="hasPermission('delete_schools')"
                             class="font-semibold text-danger"
                             href="javascript:void(0)"
                             @click="emit('showDeleteModal', school.id)"

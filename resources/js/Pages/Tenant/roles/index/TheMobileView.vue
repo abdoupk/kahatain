@@ -3,7 +3,7 @@ import type { IndexParams, PaginationData, RolesIndexResource } from '@/types/ty
 
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 
-import { formatDate } from '@/utils/helper'
+import { formatDate, hasPermission } from '@/utils/helper'
 
 defineProps<{
     roles: PaginationData<RolesIndexResource>
@@ -51,12 +51,15 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal'])
 
                     <div class="flex w-1/4 items-center justify-end">
                         <a
+                            v-if="hasPermission('update_roles')"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             href="#"
                             @click="emit('showEditModal', role.uuid)"
                             >{{ $t('edit') }}
                         </a>
+
                         <a
+                            v-if="hasPermission('delete_roles')"
                             class="font-semibold text-danger"
                             href="javascript:void(0)"
                             @click="emit('showDeleteModal', role.uuid)"
