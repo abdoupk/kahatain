@@ -17,11 +17,11 @@ return [
         'branches_and_zones_changes_description' => 'تلقى أشعارات عند أنشاء، تعديل او حذف فرع او منطقة.',
         'financial_changes' => 'تغيرات في المالية',
         'financial_changes_description' => 'تلقى أشعارات عند اضافة، تعديل أو حذف معاملة مالية (دخل او مصروف).',
-        'schools_and_lessons_changes' => 'تغيرات في المدارس الخاصة او دروس الدعم ',
+        'schools_and_lessons_changes' => 'تغيرات في مدارس الدعم الخاصة او دروس الدعم ',
         'schools_and_lessons_changes_description' => 'تلقى أشعارات عند أنشاء، تعديل أو حذف مدرسة خاصة او درس من دروس الدعم.',
         'occasions_saves' => 'حفظ او تعديل قائمات المستفيدين',
         'occasions_saves_description' => 'تلقى إشعارات عند حفظ او تعديل قائمة المستفيدين من بدلة العيد، الأضحية، القفة الشهرية، قفة رمضان، الدخول المدرسي او حفاضات و حليب للأطفال.',
         'association_changes' => 'تغيرات في الجمعية',
-        'association_changes_description' => 'تلقى أشعارات عند أنشاء، تعديل أو حذف عضو، دروس الدعم، المدارس الخاصة او الوظائف.',
+        'association_changes_description' => 'تلقى أشعارات عند أنشاء، تعديل أو حذف عضو، دروس الدعم، مدارس الدعم الخاصة او الوظائف.',
     ],
 ];

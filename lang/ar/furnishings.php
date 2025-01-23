@@ -11,6 +11,6 @@ return [
     'cupboard' => 'خزانة الأواني',
     'covers' => 'الأغطية',
     'mattresses' => 'الأفرشة',
-    'other_furnishings' => 'أثاث أحرى',
+    'other_furnishings' => 'أثاث آخر',
 
 ];

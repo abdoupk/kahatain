@@ -12,7 +12,7 @@ return [
     'babies' => 'الرضع',
     'needs' => 'الاحتياجات',
     'previews' => 'التقارير',
-    'schools' => 'المدارس الخاصة',
+    'schools' => 'مدارس الدعم الخاصة',
     'committees' => 'اللجان',
     'benefactors' => 'المحسنين',
 ];
