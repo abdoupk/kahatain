@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\competence;
+use App\Models\Competence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class competenceFactory extends Factory
 {
-    protected $model = competence::class;
+    protected $model = Competence::class;
 
     public function definition(): array
     {

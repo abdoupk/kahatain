@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Branch;
 use App\Models\Committee;
-use App\Models\competence;
+use App\Models\Competence;
 use App\Models\Domain;
 use App\Models\Finance;
 use App\Models\Inventory;
