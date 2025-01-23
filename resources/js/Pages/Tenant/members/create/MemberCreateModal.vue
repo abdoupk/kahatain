@@ -325,13 +325,13 @@ const modalType = computed(() => {
 
                 <!-- Begin: Academic Level-->
                 <div class="col-span-12 sm:col-span-6">
-                    <base-form-label htmlFor="zone">
+                    <base-form-label htmlFor="academic_level">
                         {{ $t('validation.attributes.academic_level_id') }}
                     </base-form-label>
 
                     <div>
                         <the-academic-level-selector
-                            id="zone"
+                            id="academic_level"
                             v-model:academic-level="form.academic_level_id"
                             :academic-levels
                         >
