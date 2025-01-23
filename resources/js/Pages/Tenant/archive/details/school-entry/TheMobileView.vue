@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import type { IndexParams, PaginationData, SchoolEntryOrphansResource } from '@/types/types'
 
+import { Link } from '@inertiajs/vue3'
+
+import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+
+import { hasPermission } from '@/utils/helper'
+
 defineProps<{
     orphans: PaginationData<SchoolEntryOrphansResource>
     params: IndexParams
@@ -12,33 +18,67 @@ defineProps<{
         <div v-for="orphan in orphans.data" :key="orphan.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
             <div class="box p-5">
                 <div class="flex">
-                    <div class="me-3 truncate text-lg font-medium">
-                        {{ orphan.orphan.name }}
-                    </div>
-                    <div
-                        class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
-                    >
-                        {{ orphan.orphan.last_year_average }}
+                    <div class="me-3 truncate ltr:font-medium rtl:text-lg rtl:font-semibold">
+                        <Link
+                            v-if="hasPermission('view_orphans')"
+                            :href="route('tenant.orphans.show', orphan.orphan.id)"
+                        >
+                            {{ orphan.orphan.name }}
+                        </Link>
+
+                        <span v-else>
+                            {{ orphan.orphan.name }}
+                        </span>
                     </div>
                 </div>
-                <div class="mt-6 flex">
-                    <div class="w-3/4">
-                        <p class="truncate">
-                            {{ orphan.sponsor.name }}
 
-                            <span v-if="orphan.sponsor.phone_number" dir="ltr"
-                                >({{ orphan.sponsor.phone_number }})</span
-                            >
-                        </p>
-
-                        <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
-                            {{ orphan.family.address }}
+                <div class="mt-4">
+                    <div class="flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('the_sponsor') }}
                         </div>
-                        <div
-                            class="mt-2 flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
+                        {{ orphan.sponsor.name }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('sponsor_phone_number') }}
+                        </div>
+                        {{ orphan.sponsor.phone_number }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('validation.attributes.address') }}
+                        </div>
+                        {{ orphan.family.address }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('the_zone') }}
+                        </div>
+                        {{ orphan.family?.zone?.name }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('general_average') }}
+                        </div>
+                        {{
+                            orphan.orphan.academic_average
+                                ? parseFloat(orphan.orphan.academic_average).toFixed(2)
+                                : '————'
+                        }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <base-tippy
+                            :content="$t('academic_level')"
+                            class="flex w-fit items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-400/80 dark:bg-darkmode-400"
                         >
                             {{ orphan.orphan.academic_level }} ({{ orphan.orphan.academic_phase }})
-                        </div>
+                        </base-tippy>
                     </div>
                 </div>
             </div>
