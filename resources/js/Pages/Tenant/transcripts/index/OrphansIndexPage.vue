@@ -4,16 +4,17 @@ import type { IndexParams, OrphansTranscriptsIndexResource, PaginationData } fro
 import { orphansFilters } from '@/constants/filters'
 import { transcriptsSorts } from '@/constants/sorts'
 import { useTranscriptsStore } from '@/stores/transcripts'
-import { Head } from '@inertiajs/vue3'
+import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import TranscriptCreateEditModal from '@/Pages/Tenant/transcripts/create/TranscriptCreateEditModal.vue'
 
+import DeleteModal from '@/Components/Global/DeleteModal.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
-import { handleSort, hasPermission } from '@/utils/helper'
+import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/transcripts/index/DataTable.vue'))
@@ -60,6 +61,12 @@ const showEditModal = (transcriptId: string) => {
 
 const createEditModalStatus = ref<boolean>(false)
 
+const deleteModalStatus = ref<boolean>(false)
+
+const selectedTranscriptId = ref<string>('')
+
+const deleteProgress = ref<boolean>(false)
+
 const showCreateModal = async ($event: { trimester: string; orphan: OrphansTranscriptsIndexResource }) => {
     transcriptStore.$reset()
 
@@ -72,6 +79,49 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
     await transcriptStore.getTranscriptSubjects($event.orphan.id)
 
     createEditModalStatus.value = true
+}
+
+const showDeleteModal = (transcriptId: string) => {
+    selectedTranscriptId.value = transcriptId
+
+    deleteModalStatus.value = true
+}
+
+const closeDeleteModal = () => {
+    deleteModalStatus.value = false
+
+    selectedTranscriptId.value = ''
+
+    deleteProgress.value = false
+}
+
+const deleteTranscript = () => {
+    router.delete(route('tenant.transcripts.destroy', selectedTranscriptId.value), {
+        preserveScroll: true,
+        onStart: () => {
+            deleteProgress.value = true
+        },
+        onSuccess: () => {
+            if (props.orphans.meta.last_page < params.value.page) {
+                params.value.page = params.value.page - 1
+            }
+
+            getDataForIndexPages(route('tenant.transcripts.index'), params.value, {
+                onStart: () => {
+                    closeDeleteModal()
+                },
+                onFinish: () => {
+                    showSuccessNotification.value = true
+
+                    setTimeout(() => {
+                        showSuccessNotification.value = false
+                    }, 2000)
+                },
+                preserveScroll: true,
+                preserveState: true
+            })
+        }
+    })
 }
 </script>
 
@@ -102,6 +152,7 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
                     :orphans
                     :params
                     @showCreateModal="showCreateModal"
+                    @showDeleteModal="showDeleteModal"
                     @showEditModal="showEditModal"
                     @sort="sort"
                 ></data-table>
@@ -124,6 +175,13 @@ const showCreateModal = async ($event: { trimester: string; orphan: OrphansTrans
                 :open="showSuccessNotification"
                 :title="$tc('successfully_trashed', 0, { attribute: $t('the_orphan') })"
             ></success-notification>
+
+            <delete-modal
+                :deleteProgress
+                :open="deleteModalStatus"
+                @close="closeDeleteModal"
+                @delete="deleteTranscript"
+            ></delete-modal>
         </div>
 
         <template #fallback>
