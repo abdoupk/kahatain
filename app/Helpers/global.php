@@ -269,11 +269,15 @@ function searchVocationalTrainingSpecialities(): \Illuminate\Support\Collection
     return collect(array_merge($vocationalTrainingSpecialities->toArray(), $universitySpecialities->toArray()));
 }
 
-function formatCurrency(float $amount): false|string
+function formatCurrency(?float $amount): false|string
 {
     $formatter = new NumberFormatter(app()->getLocale().'_DZ', NumberFormatter::CURRENCY);
 
-    return $formatter->formatCurrency($amount, 'DZD');
+    if ($amount) {
+        return $formatter->formatCurrency($amount, 'DZD');
+    }
+
+    return $formatter->formatCurrency(0, 'DZD');
 }
 
 function calculateAge($birthDate): string
