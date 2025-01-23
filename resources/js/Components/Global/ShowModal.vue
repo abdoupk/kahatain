@@ -38,9 +38,9 @@ const emit = defineEmits(['close'])
                                 {{ title }}
                             </h2>
 
-                            <a class="absolute end-0 top-0 me-3 mt-3" href="#" @click="emit('close')">
+                            <span class="absolute end-0 top-0 me-3 mt-3 cursor-pointer" @click.prevent="emit('close')">
                                 <svg-loader class="h-5 w-5 fill-current" name="icon-x-mark"></svg-loader>
-                            </a>
+                            </span>
                         </base-dialog-title>
 
                         <base-dialog-description class="grid grid-cols-12 gap-4 gap-y-3">
