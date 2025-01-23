@@ -40,8 +40,14 @@ defineProps<{ secondSponsor: SecondSponsorType }>()
         </div>
     </div>
 
-    <div v-else class="intro-x col-span-12 flex flex-col items-center justify-center @container 2xl:col-span-6">
-        <no-results-found> {{ $t('second_sponsor.not_found') }}</no-results-found>
+    <div v-else class="intro-y box col-span-12 @container 2xl:col-span-6">
+        <div class="w-full p-5">
+            <div class="intro-x mt-12 flex flex-col items-center justify-center">
+                <no-results-found>
+                    {{ $t('second_sponsor.not_found') }}
+                </no-results-found>
+            </div>
+        </div>
     </div>
     <!-- END: Second Sponsor Information -->
 </template>

@@ -90,7 +90,7 @@ const checkAll = ($event) => {
 
                     <div class="mt-2 flex">
                         <div class="w-28 rtl:!font-semibold">
-                            {{ $t('aggregate_red_meat_benefit') }}
+                            {{ $t('aggregate_zakat_benefit') }}
                         </div>
 
                         {{ formatCurrency(family.aggregate_zakat_benefit) }}

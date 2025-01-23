@@ -100,6 +100,20 @@ const checkAll = ($event) => {
 
                     <div class="mt-2 flex">
                         <div class="w-44 rtl:!font-semibold">
+                            {{ $t('aggregate_red_meat_benefit') }}
+                        </div>
+                        {{ family.aggregate_red_meat_benefit }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-44 rtl:!font-semibold">
+                            {{ $t('aggregate_white_meat_benefit') }}
+                        </div>
+                        {{ family.aggregate_white_meat_benefit }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-44 rtl:!font-semibold">
                             {{ $t('validation.attributes.address') }}
                         </div>
 

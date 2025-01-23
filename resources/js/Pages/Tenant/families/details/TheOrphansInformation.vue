@@ -15,7 +15,11 @@ defineProps<{ orphans: OrphanType[] }>()
     <!-- BEGIN: Orphans Information -->
     <div v-for="orphan in orphans" :key="orphan.id" class="intro-y box col-span-12 @container 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-            <h2 class="me-auto text-xl font-bold">{{ orphan.name }}</h2>
+            <h2 class="me-auto text-xl font-bold">
+                <Link v-if="hasPermission('view_orphans')" :href="route('tenant.orphans.show', orphan.id)">
+                    {{ orphan.name }}
+                </Link>
+            </h2>
 
             <Link v-if="hasPermission('edit_orphans')" :href="route('tenant.orphans.edit', orphan.id)">
                 <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
@@ -49,7 +53,7 @@ defineProps<{ orphans: OrphanType[] }>()
                 </h3>
             </div>
 
-            <div v-if="orphan.family_status" class="col-span-12 @xl:col-span-6">
+            <div v-if="orphan.academic_level" class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('academic_level') }}</h2>
 
                 <h3 class="text-base font-medium">
