@@ -75,6 +75,7 @@ const emit = defineEmits(['change-status'])
 
                         <div class="w-full">
                             <base-form-select
+                                form-select-size="sm"
                                 :value="family.status"
                                 class="ms-4 w-1/2"
                                 @change="

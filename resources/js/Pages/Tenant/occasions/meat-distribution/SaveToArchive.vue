@@ -63,7 +63,7 @@ const handleSave = () => {
 </script>
 
 <template>
-    <div class="me-2">
+    <div class="z-[60] me-2">
         <base-popover v-slot="{ close }" class="inline-block">
             <base-popover-button :as="BaseButton" variant="primary">
                 {{ $t('save') }}
@@ -73,7 +73,7 @@ const handleSave = () => {
 
             <base-popover-panel placement="bottom-start">
                 <form @submit.prevent="showWarningModalStatus = true">
-                    <div class="!w-[450px] p-2">
+                    <div class="z-50 w-[280px] sm:w-[350-px] md:w-[405px]">
                         <div class="w-full">
                             <base-form-label class="!mb-0">
                                 {{ $t('meat_type') }}

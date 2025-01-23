@@ -91,6 +91,7 @@ const emit = defineEmits(['showLocationAddressModal'])
                                 }"
                                 :options="[]"
                                 class="ms-4 w-1/2"
+                                size="sm"
                             ></row-combobox>
                         </div>
                     </div>
@@ -112,6 +113,7 @@ const emit = defineEmits(['showLocationAddressModal'])
                                 }"
                                 :options="[]"
                                 class="ms-4 w-1/2"
+                                size="sm"
                             ></row-combobox>
                         </div>
                     </div>
@@ -147,6 +149,7 @@ const emit = defineEmits(['showLocationAddressModal'])
                                 }"
                                 :options="[]"
                                 class="ms-4 w-1/2"
+                                size="sm"
                             ></row-combobox>
                         </div>
                     </div>
@@ -168,6 +171,7 @@ const emit = defineEmits(['showLocationAddressModal'])
                                 }"
                                 :options="[]"
                                 class="ms-4 w-1/2"
+                                size="sm"
                             ></row-combobox>
                         </div>
                     </div>

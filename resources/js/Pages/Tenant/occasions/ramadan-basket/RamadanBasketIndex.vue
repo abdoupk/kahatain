@@ -156,7 +156,7 @@ const showSettingsModal = () => {
                 <the-table-footer
                     :pagination-data="families"
                     :params
-                    class="mt-4"
+                    class="lg:mt-4"
                     :url="route('tenant.occasions.ramadan-basket.index')"
                 ></the-table-footer>
             </template>

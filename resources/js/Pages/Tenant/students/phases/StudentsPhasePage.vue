@@ -94,7 +94,7 @@ const handleSelectTrimester = (trimester: string) => {
                 <the-table-footer
                     :pagination-data="students"
                     :params
-                    class="mt-4"
+                    class="lg:mt-4"
                     :url="route('tenant.orphans.index')"
                 ></the-table-footer>
             </template>
