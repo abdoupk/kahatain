@@ -19,8 +19,8 @@ const props = defineProps<{
         type: Array
         default: () => []
     }
-    loadOptions: () => {}
-    createOption?: () => {}
+    loadOptions: () => void
+    createOption?: () => void
     size?: 'sm' | 'md'
 }>()
 

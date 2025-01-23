@@ -116,6 +116,7 @@ const handleFocusOut = () => {
             :load-options
             :max-length
             :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
+            :options="[]"
             class="!mt-0 w-32"
             @focusout.prevent="handleFocusOut"
             @update:model-value="handleSubmit"
