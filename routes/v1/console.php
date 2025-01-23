@@ -2,7 +2,8 @@
 
 Schedule::command('calculate:families-income-rate')
     ->name('Calculate families income rate')
-    ->yearlyOn(9, 1, '00:00');
+    ->everyMinute();
+//    ->yearlyOn(9, 1, '00:00');
 
 Schedule::command('calculate:families-income-rate')
     ->name('Calculate families income rate')
