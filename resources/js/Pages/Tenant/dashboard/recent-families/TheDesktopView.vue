@@ -86,7 +86,16 @@ const emit = defineEmits(['deleteFamily'])
                     <the-table-td-actions>
                         <div class="flex items-center justify-center">
                             <Link
-                                v-if="hasPermission('edit_families')"
+                                v-if="hasPermission('view_families')"
+                                :href="route('tenant.families.show', family.id)"
+                                class="me-3 flex items-center"
+                            >
+                                <svg-loader class="me-1 h-5 w-5 fill-current" name="icon-eye" />
+                                {{ $t('show') }}
+                            </Link>
+
+                            <Link
+                                v-if="hasPermission('update_families')"
                                 :href="route('tenant.families.edit', family.id)"
                                 class="me-3 flex items-center"
                             >
@@ -98,9 +107,9 @@ const emit = defineEmits(['deleteFamily'])
                                 v-if="hasPermission('delete_families')"
                                 class="flex items-center text-danger"
                                 href="javascript:void(0)"
-                                @click.prevent="emit('deleteFamily', family.id)"
+                                @click="emit('deleteFamily', family.id)"
                             >
-                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-trash-can"></svg-loader>
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-trash-can" />
                                 {{ $t('delete') }}
                             </a>
                         </div>

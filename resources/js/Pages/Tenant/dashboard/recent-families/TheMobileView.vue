@@ -20,43 +20,75 @@ const emit = defineEmits(['deleteFamily'])
         <div v-for="family in recentFamilies" :key="family.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
             <div class="box p-5">
                 <div class="flex">
-                    <div class="me-3 truncate text-lg font-medium">
+                    <div class="me-3 truncate ltr:font-medium rtl:text-lg rtl:font-semibold">
                         {{ family.name }}
-                    </div>
-
-                    <div
-                        class="ms-auto flex cursor-pointer items-center truncate rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-500 dark:bg-darkmode-400"
-                    >
-                        <base-tippy :content="$t('orphans_count')">
-                            {{ family.orphans_count }}
-                        </base-tippy>
                     </div>
                 </div>
 
-                <div class="mt-6 flex">
-                    <div class="w-3/4">
-                        <p class="truncate">{{ family.address }}</p>
-
-                        <div class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
-                            {{ family.zone?.name }}
+                <div class="mt-4">
+                    <div class="flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('the_sponsor') }}
                         </div>
+                        {{ family.name }}
                     </div>
 
-                    <div class="flex w-1/4 items-center justify-end">
-                        <Link
-                            :href="route('tenant.families.show', family.id)"
-                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
-                            >{{ $t('edit') }}
-                        </Link>
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('orphans_count') }}
+                        </div>
+                        {{ family.orphans_count }}
+                    </div>
 
-                        <a
-                            v-if="hasPermission('delete_families')"
-                            class="font-semibold text-danger"
-                            href="javascript:void(0)"
-                            @click.prevent="emit('deleteFamily', family.id)"
-                        >
-                            {{ $t('delete') }}
-                        </a>
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('validation.attributes.branch_id') }}
+                        </div>
+
+                        <base-tippy :content="family.branch?.name" class="truncate">
+                            {{ family.branch?.name }}
+                        </base-tippy>
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('validation.attributes.address') }}
+                        </div>
+                        {{ family.address }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="w-28 rtl:!font-semibold">
+                            {{ $t('validation.attributes.zone') }}
+                        </div>
+                        {{ family.zone?.name }}
+                    </div>
+
+                    <div class="mt-2 flex">
+                        <div class="ms-auto flex items-center">
+                            <Link
+                                v-if="hasPermission('view_families')"
+                                :href="route('tenant.families.show', family.id)"
+                                class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                                >{{ $t('show') }}
+                            </Link>
+
+                            <Link
+                                v-if="hasPermission('update_families')"
+                                :href="route('tenant.families.show', family.id)"
+                                class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                                >{{ $t('edit') }}
+                            </Link>
+
+                            <a
+                                v-if="hasPermission('delete_families')"
+                                class="font-semibold text-danger"
+                                href="javascript:void(0)"
+                                @click="emit('showDeleteModal', family.id)"
+                            >
+                                {{ $t('delete') }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
