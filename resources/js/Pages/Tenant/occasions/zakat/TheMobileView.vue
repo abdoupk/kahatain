@@ -39,7 +39,7 @@ const checkAll = ($event) => {
 </script>
 
 <template>
-    <base-form-switch class="-mb-2 mt-6 text-lg @3xl:hidden">
+    <base-form-switch class="intro-y -mb-2 mt-6 text-lg @3xl:hidden">
         <base-form-switch-input
             id="check_all"
             :checked="zakatStore.zakat.families.length"

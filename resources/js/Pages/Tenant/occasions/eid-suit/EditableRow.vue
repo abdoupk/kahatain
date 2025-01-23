@@ -7,12 +7,14 @@ import { computed, nextTick, ref } from 'vue'
 import RowCombobox from '@/Pages/Tenant/occasions/eid-suit/RowCombobox.vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 
 const props = defineProps<{
     orphan: EidSuitOrphansResource
     field: 'clothes_shop_phone_number' | 'clothes_shop_name' | 'shoes_shop_name' | 'shoes_shop_phone_number' | 'note'
     loadOptions?: (results: { id: string; name: string }[]) => void
+    view?: 'desktop' | 'mobile'
 }>()
 
 const emit = defineEmits(['showSuccessNotification'])
@@ -104,37 +106,67 @@ const handleFocusOut = () => {
 </script>
 
 <template>
-    <the-table-td v-if="field !== 'note'" class="text-center">
-        <span v-if="!orphan.orphan?.edit[field]" class="block w-32 cursor-pointer truncate" @click="handleSelectCell">
-            {{ orphan.eid_suit[field] ?? '-' }}
-        </span>
-
+    <template v-if="view === 'mobile'">
         <row-combobox
-            v-else
+            v-if="field !== 'note'"
             :id="`${field}_${orphan.orphan.id}`"
             :has-error
             :load-options
             :max-length
             :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
             :options="[]"
-            class="!mt-0 w-32"
+            class="ms-4 w-1/2"
+            size="sm"
             @focusout.prevent="handleFocusOut"
             @update:model-value="handleSubmit"
         ></row-combobox>
-    </the-table-td>
 
-    <the-table-td v-else class="text-center">
-        <span v-if="!orphan.orphan?.edit.note" class="block w-32 cursor-pointer truncate" @click="handleSelectCell">
-            {{ orphan.eid_suit.note ?? '-' }}
-        </span>
-
-        <base-form-input
+        <base-form-text-area
             v-else
             :id="`note_${orphan.orphan.id}`"
             v-model.lazy="orphan.eid_suit.note"
-            class="!mt-0 w-32"
-            @focusout.prevent="handleFocusOut"
+            rows="4"
             @keydown.enter="handleSubmit"
-        ></base-form-input>
-    </the-table-td>
+        ></base-form-text-area>
+    </template>
+
+    <template v-else>
+        <the-table-td v-if="field !== 'note'" class="text-center">
+            <span
+                v-if="!orphan.orphan?.edit[field]"
+                class="block w-32 cursor-pointer truncate"
+                @click="handleSelectCell"
+            >
+                {{ orphan.eid_suit[field] ?? '-' }}
+            </span>
+
+            <row-combobox
+                v-else
+                :id="`${field}_${orphan.orphan.id}`"
+                :has-error
+                :load-options
+                :max-length
+                :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
+                :options="[]"
+                class="!mt-0 w-32"
+                @focusout.prevent="handleFocusOut"
+                @update:model-value="handleSubmit"
+            ></row-combobox>
+        </the-table-td>
+
+        <the-table-td v-else class="text-center">
+            <span v-if="!orphan.orphan?.edit.note" class="block w-32 cursor-pointer truncate" @click="handleSelectCell">
+                {{ orphan.eid_suit.note ?? '-' }}
+            </span>
+
+            <base-form-input
+                v-else
+                :id="`note_${orphan.orphan.id}`"
+                v-model.lazy="orphan.eid_suit.note"
+                class="!mt-0 w-32"
+                @focusout.prevent="handleFocusOut"
+                @keydown.enter="handleSubmit"
+            ></base-form-input>
+        </the-table-td>
+    </template>
 </template>
