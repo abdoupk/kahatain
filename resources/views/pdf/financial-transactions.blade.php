@@ -32,19 +32,19 @@
     <x-slot name="tbody">
         @foreach ($transactions as $transaction)
             <tr>
-                <x-td class="   text-center">
+                <x-td class="text-center">
                     {{ $loop->iteration }}
                 </x-td>
 
-                <x-td class="   text-center">
-                    {{ $transaction->receiver?->getName() }}
+                <x-td class="text-center">
+                    {{ $transaction->receiver?->getName() ?? '————' }}
                 </x-td>
 
-                <x-td class="   text-center">
+                <x-td class="text-center">
                     {{ formatCurrency(abs($transaction->amount)) }}
                 </x-td>
 
-                <x-td class="   text-center">
+                <x-td class="text-center">
                     {{ __($transaction->specification) }}
                 </x-td>
 
@@ -52,18 +52,18 @@
                     {{ $transaction->amount > 0 ? __('income') : __('expense') }}
                 </x-td>
 
-                <x-td class="   text-center">
+                <x-td class="text-center">
                     {{ $transaction->date->translatedFormat('j F Y') }}
                 </x-td>
             </tr>
         @endforeach
 
         <tr>
-            <x-td class="   text-center font-semibold" colspan="2">
+            <x-td class="text-center font-semibold" colspan="2">
                 {{ __('the_total_amount') }}
             </x-td>
 
-            <x-td class="   text-center">
+            <x-td class="text-center">
                 {{ formatCurrency($transactions->sum('amount')) }}
             </x-td>
         </tr>

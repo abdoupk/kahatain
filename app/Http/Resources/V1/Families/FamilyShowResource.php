@@ -18,8 +18,8 @@ class FamilyShowResource extends JsonResource
             'file_number' => $this->file_number,
             'start_date' => $this->start_date,
 
-            'branch' => $this->whenLoaded('branch', fn () => $this->branch->name),
-            'zone' => $this->whenLoaded('zone', fn () => $this->zone->name),
+            'branch' => $this->whenLoaded('branch', fn () => $this->branch?->name),
+            'zone' => $this->whenLoaded('zone', fn () => $this->zone?->name),
 
             'orphans' => OrphanResource::collection($this->whenLoaded('orphans')),
             'spouse' => new SpouseResource($this->whenLoaded('deceased')),

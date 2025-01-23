@@ -77,11 +77,11 @@
                 </x-td>
 
                 <x-td class=" text-center">
-                    {{ $sponsor->health_status }}
+                    {{ $sponsor->health_status  ?? '————' }}
                 </x-td>
 
                 <x-td class=" text-center">
-                    {{ $sponsor->academicLevel?->level }}
+                    {{ $sponsor->academicLevel?->level  ?? '————' }}
                 </x-td>
 
                 <x-td class=" text-center">
@@ -93,11 +93,11 @@
                 </x-td>
 
                 <x-td class=" text-center">
-                    {{ $sponsor->diploma }}
+                    {{ $sponsor->diploma ?? '————' }}
                 </x-td>
 
                 <x-td class=" text-center">
-                    {{ $sponsor->ccp }}
+                    {{ $sponsor->ccp ?? '————' }}
                 </x-td>
 
                 <x-td class=" text-center">

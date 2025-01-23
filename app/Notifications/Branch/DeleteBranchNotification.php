@@ -24,7 +24,7 @@ class DeleteBranchNotification extends Notification implements ShouldQueue
     {
         return [
             'data' => [
-                'name' => $this->branch->name,
+                'name' => $this->branch?->name,
             ],
             'user' => [
                 'id' => $this->user->id,
@@ -41,7 +41,7 @@ class DeleteBranchNotification extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'data' => [
-                'name' => $this->branch->name,
+                'name' => $this->branch?->name,
             ],
             'user' => [
                 'id' => $this->user->id,

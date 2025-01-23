@@ -117,8 +117,8 @@ function generateSchoolTools(): array
     $branchData = $orphans->flatMap(function (Orphan $orphan) {
         return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
             return [
-                'branch_id' => $orphan->family->branch->id ?? null,
-                'branch_name' => $orphan->family->branch->name ?? null,
+                'branch_id' => $orphan->family->branch?->id ?? null,
+                'branch_name' => $orphan->family->branch?->name ?? null,
                 'phase_key' => $orphan->academicLevel->phase_key,
                 'i_id' => $orphan->academicLevel->i_id,
                 'academic_level_id' => $orphan->academicLevel->id,

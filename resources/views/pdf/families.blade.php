@@ -56,8 +56,8 @@
                     {{ $family->sponsor->getName() }}
                 </x-td>
 
-                <x-td>
-                    {{ $family->address }}
+                <x-td class="truncate max-w-28">
+                    {{ $family->address  }}
                 </x-td>
 
                 <x-td class="text-center">
@@ -69,15 +69,15 @@
                 </x-td>
 
                 <x-td class="whitespace-nowrap text-center">
-                    {{ $family->income_rate }}
+                    {{ formatCurrency($family->income_rate) }}
                 </x-td>
 
                 <x-td>
-                    {{ $family->branch?->name }}
+                    {{ $family->branch?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="whitespace-nowrap">
-                    {{ $family->zone?->name }}
+                    {{ $family->zone?->name  ?? '————'}}
                 </x-td>
 
                 <x-td class="text-center">

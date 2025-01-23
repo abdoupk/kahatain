@@ -24,7 +24,7 @@ class DeleteZoneNotification extends Notification implements ShouldQueue
     {
         return [
             'data' => [
-                'name' => $this->zone->name,
+                'name' => $this->zone?->name,
             ],
             'user' => [
                 'id' => $this->user->id,
@@ -38,7 +38,7 @@ class DeleteZoneNotification extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'data' => [
-                'name' => $this->zone->name,
+                'name' => $this->zone?->name,
             ],
             'user' => [
                 'id' => $this->user->id,

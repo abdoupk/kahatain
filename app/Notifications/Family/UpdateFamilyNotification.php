@@ -25,8 +25,8 @@ class UpdateFamilyNotification extends Notification implements ShouldQueue
         return [
             'data' => [
                 'name' => $this->family->name,
-                'zone' => $this->family->zone->name,
-                'branch' => $this->family->branch->name,
+                'zone' => $this->family->zone?->name,
+                'branch' => $this->family->branch?->name,
             ],
             'user' => [
                 'id' => $this->user->id,
@@ -49,8 +49,8 @@ class UpdateFamilyNotification extends Notification implements ShouldQueue
         return new BroadcastMessage([
             'data' => [
                 'name' => $this->family->name,
-                'zone' => $this->family->zone->name,
-                'branch' => $this->family->branch->name,
+                'zone' => $this->family->zone?->name,
+                'branch' => $this->family->branch?->name,
             ],
             'user' => [
                 'id' => $this->user->id,

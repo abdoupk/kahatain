@@ -72,19 +72,19 @@
                 </x-td>
 
                 <x-td class="   text-center ">
-                    {{ $baby->babyMilk?->name }}
+                    {{ $baby?->babyMilk?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="   text-center ">
-                    {{ $baby->baby_milk_quantity }}
+                    {{ $baby->baby_milk_quantity ?? '————' }}
                 </x-td>
 
                 <x-td class="   text-center ">
-                    {{ $baby->diapers?->name }}
+                    {{ $baby?->diapers?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="    text-center">
-                    {{ $baby->diapers_quantity }}
+                    {{ $baby->diapers_quantity ?? '————'}}
                 </x-td>
             </tr>
         @endforeach

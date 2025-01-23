@@ -19,8 +19,8 @@ class RamadanBasketResource extends JsonResource
                 'name' => $this->zone?->name,
             ],
             'branch' => [
-                'id' => $this->branch->id,
-                'name' => $this->branch->name,
+                'id' => $this->branch?->id,
+                'name' => $this->branch?->name,
             ],
             'sponsor' => [
                 'id' => $this->sponsor->id,

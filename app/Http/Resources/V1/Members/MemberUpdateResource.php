@@ -25,12 +25,12 @@ class MemberUpdateResource extends JsonResource
             'committees' => $this->committees,
 
             'zone' => $this->whenLoaded('zone', fn () => [
-                'id' => $this->zone->id,
-                'name' => $this->zone->name,
+                'id' => $this->zone?->id,
+                'name' => $this->zone?->name,
             ]),
             'branch' => $this->whenLoaded('branch', fn () => [
-                'id' => $this->branch->id,
-                'name' => $this->branch->name,
+                'id' => $this->branch?->id,
+                'name' => $this->branch?->name,
             ]),
             'academic_level_id' => $this->academic_level_id,
             'roles' => RoleResource::collection($this->roles),

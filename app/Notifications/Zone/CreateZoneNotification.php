@@ -24,7 +24,7 @@ class CreateZoneNotification extends Notification implements ShouldQueue
     {
         return [
             'data' => [
-                'name' => $this->zone->name,
+                'name' => $this->zone?->name,
             ],
             'user' => [
                 'id' => $this->user->id,
@@ -35,7 +35,7 @@ class CreateZoneNotification extends Notification implements ShouldQueue
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.zones.index'
-                ).'?show='.$this->zone->id,
+                ).'?show='.$this->zone?->id,
             ],
         ];
     }
@@ -44,7 +44,7 @@ class CreateZoneNotification extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'data' => [
-                'name' => $this->zone->name,
+                'name' => $this->zone?->name,
             ],
             'user' => [
                 'id' => $this->user->id,

@@ -30,9 +30,9 @@ class BabiesMilkAndDiapersPerMonthSheet implements FromCollection, WithEvents, W
                         $baby->orphan->getName(),
                         calculateAge($baby->orphan->birth_date),
                         __($baby->orphan->gender),
-                        $baby->babyMilk?->name,
+                        $baby?->babyMilk?->name,
                         $baby->baby_milk_quantity,
-                        $baby->diapers?->name,
+                        $baby?->diapers?->name,
                         $baby->diapers_quantity,
                     ];
                 });

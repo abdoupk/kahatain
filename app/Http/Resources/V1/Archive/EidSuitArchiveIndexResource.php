@@ -20,8 +20,8 @@ class EidSuitArchiveIndexResource extends JsonResource
             ],
             'family' => [
                 'zone' => [
-                    'id' => $this->family?->zone->id,
-                    'name' => $this->family?->zone->name,
+                    'id' => $this->family?->zone?->id,
+                    'name' => $this->family?->zone?->name,
                 ],
                 'address' => $this->family->address,
             ],

@@ -121,11 +121,11 @@
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{ $orphan->eidSuit?->clothes_shop_address ?? '——' }}
+                    {{ $orphan->eidSuit?->clothes_shop_address ?? '————' }}
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{ $orphan->eidSuit?->shoes_shop_name }}
+                    {{ $orphan->eidSuit?->shoes_shop_name ?? '————' }}
 
                     <div class="mt-0.5 text-slate-500">
                         {{ formatPhoneNumber($orphan->eidSuit?->shoes_shop_phone_number) }}
@@ -133,19 +133,19 @@
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{ $orphan->eidSuit?->shoes_shop_address ?? '——' }}
+                    {{ $orphan->eidSuit?->shoes_shop_address ?? '————' }}
                 </x-td>
 
                 <x-td class="py-0.5 text-center truncate">
-                    {{ $orphan->eidSuit?->member->getName() ?? '——' }}
+                    {{ $orphan->eidSuit?->member->getName() ?? '————' }}
                 </x-td>
 
                 <x-td class="py-0.5 truncate max-w-28 text-center">
-                    {{ $orphan->family->branch->name }}
+                    {{ $orphan->family->branch?->name }}
                 </x-td>
 
                 <x-td class="py-0.5 text-center">
-                    {{ $orphan->family->zone->name }}
+                    {{ $orphan->family->zone?->name }}
                 </x-td>
 
                 <x-td class="w-24"></x-td>

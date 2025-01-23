@@ -32,8 +32,8 @@ class EidAlAdhaFamiliesListPerYearSheet implements FromCollection, WithEvents, W
                             $family->sponsor->getName(),
                             $family->sponsor->formattedPhoneNumber(),
                             $family->address,
-                            $family->zone->name,
-                            $family->branch->name,
+                            $family->zone?->name,
+                            $family->branch?->name,
                             formatCurrency($family->total_income ?? 0),
                             $family->income_rate,
                         ];

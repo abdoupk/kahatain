@@ -15,12 +15,12 @@ class MonthlyBasketArchiveIndexResource extends JsonResource
             'id' => $this->id,
             'address' => $this->address,
             'zone' => [
-                'id' => $this->zone->id,
-                'name' => $this->zone->name,
+                'id' => $this->zone?->id,
+                'name' => $this->zone?->name,
             ],
             'branch' => [
-                'id' => $this->branch->id,
-                'name' => $this->branch->name,
+                'id' => $this->branch?->id,
+                'name' => $this->branch?->name,
             ],
             'sponsor' => [
                 'id' => $this->sponsor?->id,

@@ -73,7 +73,7 @@
                 </x-td>
 
                 <x-td class="text-center ">
-                    {{ $orphan->family->zone->name }}
+                    {{ $orphan->family->zone?->name }}
                 </x-td>
 
                 <x-td>

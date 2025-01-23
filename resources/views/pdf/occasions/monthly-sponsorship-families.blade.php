@@ -60,8 +60,8 @@
                     {{ $family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
-                <x-td>
-                    {{ $family->address }}
+                <x-td class="truncate max-w-28">
+                    {{ $family->address  ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
@@ -77,11 +77,11 @@
                 </x-td>
 
                 <x-td class="max-w-28 truncate text-center">
-                    {{ $family->branch?->name }}
+                    {{ $family->branch?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $family->zone?->name }}
+                    {{ $family->zone?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="w-12"></x-td>

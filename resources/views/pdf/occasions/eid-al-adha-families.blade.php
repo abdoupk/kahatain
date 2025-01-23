@@ -52,8 +52,8 @@
                     {{ $family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
-                <x-td>
-                    {{ $family->address }}
+                <x-td class="min-w-36 truncate">
+                    {{ $family->address  ?? '————'}}
                 </x-td>
 
                 <x-td class="text-center">

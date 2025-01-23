@@ -19,8 +19,8 @@ class MonthlyBasketResource extends JsonResource
                 'name' => $this->family->zone?->name,
             ],
             'branch' => [
-                'id' => $this->family->branch->id,
-                'name' => $this->family->branch->name,
+                'id' => $this->family->branch?->id,
+                'name' => $this->family->branch?->name,
             ],
             'sponsor' => [
                 'id' => $this->family->sponsor->id,
