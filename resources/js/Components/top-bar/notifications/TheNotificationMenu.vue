@@ -73,7 +73,9 @@ const markAsRead = (notification: DatabaseNotification) => {
 </script>
 
 <template>
-    <div class="mb-3 font-medium rtl:!text-base rtl:!font-semibold">{{ $t('notifications') }}</div>
+    <div class="mb-3 font-medium rtl:!text-base rtl:!font-semibold">
+        {{ $t('notifications') }}
+    </div>
 
     <div v-if="notificationsStore.notifications?.data?.length">
         <div
