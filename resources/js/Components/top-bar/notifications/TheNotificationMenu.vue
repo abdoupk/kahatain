@@ -73,14 +73,15 @@ const markAsRead = (notification: DatabaseNotification) => {
 </script>
 
 <template>
-    <div class="mb-5 font-medium">{{ $t('notifications') }}</div>
+    <div class="mb-3 font-medium rtl:!text-base rtl:!font-semibold">{{ $t('notifications') }}</div>
 
     <div v-if="notificationsStore.notifications?.data?.length">
         <div
-            v-for="notification in notificationsStore.notifications?.data"
+            v-for="(notification, index) in notificationsStore.notifications?.data"
             :key="notification.id"
             :class="[
-                'relative -mx-2 -my-2 mt-5 flex  cursor-pointer items-center rounded-lg px-2 py-1',
+                'relative -mx-2 -my-2  mt-5 flex  cursor-pointer items-center rounded-lg px-2 py-1',
+                { '!mt-0': index === 0 },
                 { 'bg-slate-100 dark:bg-darkmode-400': !notification.read_at }
             ]"
             @click.prevent="markAsRead(notification)"

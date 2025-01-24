@@ -21,7 +21,7 @@ const handleShowMember = (id: string) => {
 </script>
 
 <template>
-    <div class="ms-2 overflow-hidden">
+    <div class="ms-2 w-full overflow-hidden">
         <div class="flex items-center">
             <a
                 class="me-5 truncate font-medium rtl:font-semibold"
@@ -31,8 +31,8 @@ const handleShowMember = (id: string) => {
                 {{ notification.data.user.name === 'support_team' ? $t('support_team') : notification.data.user.name }}
             </a>
 
-            <div class="ms-auto whitespace-nowrap text-xs text-slate-400">
-                {{ formatDate(notification.data.metadata?.created_at, 'medium') }}
+            <div v-if="notification.data.metadata?.created_at" class="ms-auto whitespace-nowrap text-xs text-slate-400">
+                {{ formatDate(notification.data.metadata.created_at, 'medium') }}
             </div>
         </div>
 
