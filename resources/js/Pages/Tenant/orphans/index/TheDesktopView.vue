@@ -132,14 +132,10 @@ const familyStatusFilter = computed(() => {
                         {{ formatCurrency(orphan.income_rate) }}
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['update_orphans', 'delete_orphans'])">
+                    <the-table-td-actions v-if="hasPermission(['update_orphans', 'view_orphans'])">
                         <div class="flex items-center justify-center">
                             <Link :href="route('tenant.orphans.show', orphan.id)" class="me-3 flex items-center">
-                                <svg-loader
-                                    v-if="hasPermission('show_orphans')"
-                                    class="me-1 h-4 w-4 fill-current"
-                                    name="icon-eye"
-                                />
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
                                 {{ $t('show') }}
                             </Link>
 

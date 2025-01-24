@@ -1,7 +1,8 @@
 @foreach ($data['global'] as $phaseKey => $academicLevels)
     <x-table>
         <x-slot name="title">
-            <h1 class="text-center rtl:text-lg mt-0.5">{{ __('all_school_tools_for_phase', ['phase' => __('phase_' . $phaseKey )]) }}</h1>
+            <h1 class="text-center rtl:text-lg mt-0.5">
+                {{ __('all_school_tools_for_phase', ['phase' => __('phase_' . $phaseKey)]) }}</h1>
         </x-slot>
 
         <x-slot name="thead">
@@ -100,7 +101,9 @@
     @foreach ($branchData['data'] as $phaseKey => $academicLevels)
         <x-table>
             <x-slot name="title">
-                <h1 class="text-center rtl:text-lg mt-0.5">{{ __('all_school_tools_for_branch', ['phase' => __('phase_' . $phaseKey ), 'branch' => $branchData['branch_name']]) }}</h1>
+                <h1 class="text-center rtl:text-lg mt-0.5">
+                    {{ __('all_school_tools_for_branch', ['phase' => __('phase_' . $phaseKey), 'branch' => $branchData['branch_name']]) }}
+                </h1>
             </x-slot>
 
             <x-slot name="thead">

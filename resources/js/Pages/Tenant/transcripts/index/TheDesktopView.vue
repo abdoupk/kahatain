@@ -150,7 +150,11 @@ const shouldCreateThirdTrimesterTranscript = computed(() => {
                     </the-table-td>
 
                     <the-table-td class="max-w-20 truncate text-center">
-                        {{ orphan.academic_average || '————' }}
+                        <span v-if="orphan.academic_average">
+                            {{ orphan.academic_average.toFixed(2) }}
+                        </span>
+
+                        <span v-else> ————</span>
                     </the-table-td>
 
                     <the-table-td class="max-w-20 truncate text-center">

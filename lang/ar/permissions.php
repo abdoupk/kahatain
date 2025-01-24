@@ -3,7 +3,7 @@
 return [
     'name' => 'الصلاحيات',
     'permissions' => 'الصلاحيات',
-    'create' => 'اضافة',
+    'create' => 'إضافة',
     'update' => 'تعديل',
     'delete' => 'حذف',
     'list' => 'عرض :attribute',
@@ -12,7 +12,7 @@ return [
     'restore' => 'استعادة',
     'save' => 'حفظ',
     'destroy' => 'حذف',
-    'add_to_inventory' => 'اضافة للمخزن',
+    'add_to_inventory' => 'إضافة للمخزن',
     'delete_from_inventory' => 'حذف من المخزن',
     'list_items' => 'عرض العناصر',
     'list_students' => 'عرض الأيتام المتمدرسين',
@@ -22,5 +22,6 @@ return [
     'update_settings' => 'تعديل الإعدادات',
     'export_school_supplies' => 'تصدير قائمة الأدوات المدرسية',
     'start_new_academic_year' => 'بدء سنة دراسية جديدة',
-    'add_new_sponsorship' => 'اضافة كفالة جديدة',
+    'add_new_sponsorship' => 'إضافة كفالة جديدة',
+    'view_transcripts_students' => 'عرض كشوف نقاط الأيتام المتمدرسين',
 ];

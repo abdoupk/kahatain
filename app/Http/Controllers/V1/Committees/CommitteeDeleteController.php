@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\Committees;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\V1\Committee\CommitteeTrashedJob;
 use App\Models\Committee;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -12,7 +13,7 @@ class CommitteeDeleteController extends Controller implements HasMiddleware
     {
         $committee->delete();
 
-        //        dispatch(new ZoneTrashedJob($zone, auth()->user()));
+        dispatch(new CommitteeTrashedJob($committee, auth()->user()));
 
         return redirect()->back();
     }

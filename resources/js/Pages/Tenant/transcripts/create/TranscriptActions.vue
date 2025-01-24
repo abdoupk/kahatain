@@ -179,7 +179,7 @@ const handleDeleteTranscript = (transcriptId: string, close) => {
     <!-- Begin: Average-->
     <base-popover v-slot="{ close }" class="!z-50 inline-block text-center">
         <base-popover-button as="a" class="flex content-center items-center whitespace-nowrap">
-            <svg-loader class="me-1 fill-success" name="icon-file-certificate" />
+            <svg-loader class="me-1 h-4 w-4 fill-success" name="icon-file-certificate" />
 
             {{ $t('general_average') }}
         </base-popover-button>

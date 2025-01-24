@@ -18,7 +18,7 @@ class PhaseStudentsIndexResource extends JsonResource
             'academic_level_id' => $this->academic_level_id,
             'orphan' => [
                 'id' => $this->orphan_id,
-                'name' => $this->orphan->getName(),
+                'name' => $this->orphan?->getName(),
             ],
             'subjects' => TranscriptSubjectsResource::collection($this->subjects),
         ];

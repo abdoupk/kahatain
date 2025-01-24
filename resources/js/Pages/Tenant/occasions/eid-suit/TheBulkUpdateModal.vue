@@ -256,5 +256,5 @@ const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), in
         </template>
     </create-edit-modal>
 
-    <success-notification :open="showSuccessNotification" :title="'res'"></success-notification>
+    <success-notification :open="showSuccessNotification" :title="$t('successfully_updated')"></success-notification>
 </template>

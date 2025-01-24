@@ -12,7 +12,7 @@ function getPhaseStudents(string $academic_level_id): LengthAwarePaginator
     return search(Transcript::getModel(),
         "AND academic_level_id = $academic_level_id"
     )
-        ->query(fn ($query) => $query->with(['subjects', 'orphan']))
+        ->query(fn ($query) => $query->whereHas('orphan')->with(['subjects', 'orphan']))
         ->paginate(perPage: request()?->integer('perPage', 10));
 }
 
@@ -43,7 +43,7 @@ function getAcademicLevelsForStudentsIndex(): array
 
 function getTotalStudents()
 {
-    return AcademicLevel::withCount('orphans')
+    return AcademicLevel::whereHas('orphans')->withCount('orphans')
         ->where(function ($query) {
             $query->where('phase_key', 'primary_education')
                 ->orWhere('phase_key', 'middle_education')

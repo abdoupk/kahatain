@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\Students;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\V1\School\DownloadSchoolToolsListJob;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Browsershot\Browsershot;
 
@@ -12,6 +13,8 @@ class DownloadSchoolToolsListController extends Controller implements HasMiddlew
 {
     public function __invoke()
     {
+        dispatch(new DownloadSchoolToolsListJob(auth()->user()));
+
         return pdf()
             ->view('pdf.school-tools', [
                 'data' => generateSchoolTools(),
@@ -29,6 +32,7 @@ class DownloadSchoolToolsListController extends Controller implements HasMiddlew
             })
             ->name(__('school_supplies_list', ['date' => now()->format('Y')]))
             ->download();
+
     }
 
     public static function middleware()

@@ -95,7 +95,7 @@ const modalType = computed(() => {
 })
 
 const checkAll = (model: keyof typeof permissions, checked: boolean) => {
-    const suffix = model === 'students' ? '' : `_${model}`
+    const suffix = model === 'students' || model === 'inventory' ? '' : `_${model}`
 
     permissions[model].forEach((permission: string) => {
         rolesStore.role.permissions[`${permission}${suffix}`] = checked

@@ -160,8 +160,8 @@ const deleteTranscript = () => {
                 <the-table-footer
                     :pagination-data="orphans"
                     :params
-                    class="xl:mt-4"
                     :url="route('tenant.transcripts.index')"
+                    class="md:mt-4"
                 ></the-table-footer>
             </template>
 

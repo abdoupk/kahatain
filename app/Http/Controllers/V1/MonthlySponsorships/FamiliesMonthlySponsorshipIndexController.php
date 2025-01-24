@@ -12,7 +12,7 @@ class FamiliesMonthlySponsorshipIndexController extends Controller implements Ha
 {
     public static function middleware()
     {
-        return ['can:view_monthly_sponsorships'];
+        return ['can:view_occasions'];
     }
 
     public function __invoke()

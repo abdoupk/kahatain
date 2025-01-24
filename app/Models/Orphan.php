@@ -231,9 +231,15 @@ class Orphan extends Model implements HasMedia
 
         $needs = $this->needs();
 
+        $transcripts = $this->transcripts();
+
         $this->babyNeeds()->unsearchable();
 
         $needs->unsearchable();
+
+        $transcripts->unsearchable();
+
+        $transcripts->delete();
 
         $needs->update([
             'deleted_by' => auth()->id(),

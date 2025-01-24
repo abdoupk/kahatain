@@ -126,14 +126,10 @@ const emit = defineEmits(['sort'])
                         {{ formatCurrency(sponsor.income_rate) }}
                     </the-table-td>
 
-                    <the-table-td-actions v-if="hasPermission(['delete_sponsors', 'update_sponsors'])">
+                    <the-table-td-actions v-if="hasPermission(['view_sponsors', 'update_sponsors'])">
                         <div class="flex items-center justify-center">
                             <Link :href="route('tenant.sponsors.show', sponsor.id)" class="me-3 flex items-center">
-                                <svg-loader
-                                    v-if="hasPermission('show_sponsors')"
-                                    class="me-1 h-4 w-4 fill-current"
-                                    name="icon-eye"
-                                />
+                                <svg-loader class="me-1 h-4 w-4 fill-current" name="icon-eye" />
                                 {{ $t('show') }}
                             </Link>
 

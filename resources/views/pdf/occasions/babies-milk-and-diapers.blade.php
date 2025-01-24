@@ -84,7 +84,7 @@
                 </x-td>
 
                 <x-td class="    text-center">
-                    {{ $baby->diapers_quantity ?? '————'}}
+                    {{ $baby->diapers_quantity ?? '————' }}
                 </x-td>
             </tr>
         @endforeach

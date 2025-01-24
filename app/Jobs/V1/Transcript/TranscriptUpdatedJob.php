@@ -2,7 +2,7 @@
 
 namespace App\Jobs\V1\Transcript;
 
-use App\Models\Transcript;
+use App\Models\Orphan;
 use App\Models\User;
 use App\Notifications\Transcript\UpdateTranscriptNotification;
 use Illuminate\Bus\Queueable;
@@ -16,12 +16,10 @@ class TranscriptUpdatedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public Transcript $transcript, public User $user) {}
+    public function __construct(public Orphan $orphan, public string $trimester, public User $user) {}
 
     public function handle(): void
     {
-        $this->transcript->orphan()->searchable();
-
         Notification::send(
             getUsersShouldBeNotified(
                 permissions: ['list_transcripts', 'view_transcripts'],
@@ -29,7 +27,8 @@ class TranscriptUpdatedJob implements ShouldQueue
                 notificationType: 'families_changes'
             ),
             new UpdateTranscriptNotification(
-                transcript: $this->transcript,
+                orphan: $this->orphan,
+                trimester: $this->trimester,
                 user: $this->user
             )
         );

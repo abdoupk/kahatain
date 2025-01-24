@@ -34,7 +34,7 @@ const getContentMessage = (percentage: number) => {
         <base-tab-panel v-for="(phase, key) in phases" :key class="grid grid-cols-12 gap-x-10 gap-y-8">
             <div v-for="level in phase" :key="level" class="col-span-12 sm:col-span-6 md:col-span-4">
                 <Link
-                    v-if="hasPermission('view_students')"
+                    v-if="hasPermission('view_transcripts_students')"
                     :href="
                         route('tenant.students.phase.index', {
                             phase: key.replace('_', '-'),

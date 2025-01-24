@@ -39,7 +39,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
                         <a
-                            v-if="hasPermission(['show_item'])"
+                            v-if="hasPermission(['view_item'])"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             href="javascript:void(0)"
                             @click.prevent="emit('showDetailsModal', item.id)"
@@ -47,7 +47,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </a>
 
                         <a
-                            v-if="hasPermission(['update_item_from_inventory'])"
+                            v-if="hasPermission(['update_inventory'])"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                             href="javascript:void(0)"
                             @click.prevent="emit('showEditModal', item.id)"
@@ -55,7 +55,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </a>
 
                         <a
-                            v-if="hasPermission(['delete_item_from_inventory'])"
+                            v-if="hasPermission(['delete_from_inventory'])"
                             class="font-semibold text-danger"
                             href="javascript:void(0)"
                             @click="emit('showDeleteModal', item.id)"

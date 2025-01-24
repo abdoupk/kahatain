@@ -32,7 +32,7 @@ const handleShowMember = (id: string) => {
             </a>
 
             <div class="ms-auto whitespace-nowrap text-xs text-slate-400">
-                {{ formatDate(notification.data.metadata.created_at, 'medium') }}
+                {{ formatDate(notification.data.metadata?.created_at, 'medium') }}
             </div>
         </div>
 

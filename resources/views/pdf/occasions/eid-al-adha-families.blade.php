@@ -53,7 +53,7 @@
                 </x-td>
 
                 <x-td class="min-w-36 truncate">
-                    {{ $family->address  ?? '————'}}
+                    {{ $family->address ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">

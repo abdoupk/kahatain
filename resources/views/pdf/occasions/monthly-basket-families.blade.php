@@ -57,7 +57,7 @@
                 </x-td>
 
                 <x-td class="truncate max-w-28">
-                    {{ $sponsorship->family->address  ?? '————' }}
+                    {{ $sponsorship->family->address ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">

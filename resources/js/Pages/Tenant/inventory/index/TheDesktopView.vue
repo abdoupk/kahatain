@@ -62,7 +62,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-th>
 
                     <the-table-th
-                        v-if="hasPermission(['delete_item_from_inventory', 'update_item_from_inventory'])"
+                        v-if="hasPermission(['view_item', 'delete_from_inventory', 'update_inventory'])"
                         class="text-center"
                     >
                         {{ $t('actions') }}
@@ -97,7 +97,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-td>
 
                     <the-table-td-actions
-                        v-if="hasPermission(['delete_item_from_inventory', 'update_item_from_inventory'])"
+                        v-if="hasPermission(['delete_from_inventory', 'update_inventory', 'view_item'])"
                     >
                         <div class="flex items-center justify-center">
                             <a
@@ -111,7 +111,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                             </a>
 
                             <a
-                                v-if="hasPermission(['update_item_from_inventory'])"
+                                v-if="hasPermission(['update_inventory'])"
                                 class="me-3 flex items-center"
                                 href="javascript:void(0)"
                                 @click.prevent="emit('showEditModal', item.id)"
@@ -121,7 +121,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                             </a>
 
                             <a
-                                v-if="hasPermission(['delete_item_from_inventory'])"
+                                v-if="hasPermission(['delete_from_inventory'])"
                                 class="flex items-center text-danger"
                                 href="javascript:void(0)"
                                 @click="emit('showDeleteModal', item.id)"

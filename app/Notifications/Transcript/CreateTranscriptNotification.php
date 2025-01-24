@@ -2,7 +2,7 @@
 
 namespace App\Notifications\Transcript;
 
-use App\Models\Transcript;
+use App\Models\Orphan;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,7 +13,7 @@ class CreateTranscriptNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Transcript $transcript, public User $user) {}
+    public function __construct(public Orphan $orphan, public string $trimester, public User $user) {}
 
     public function via(): array
     {
@@ -24,7 +24,8 @@ class CreateTranscriptNotification extends Notification implements ShouldQueue
     {
         return [
             'data' => [
-                'name' => $this->transcript->trimester,
+                'trimester' => __($this->trimester),
+                'orphan' => $this->orphan->getName(),
             ],
             'user' => [
                 'id' => $this->user->id,
@@ -32,11 +33,14 @@ class CreateTranscriptNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
-                'updated_at' => $this->transcript->updated_at,
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
-                    'tenant.transcripts.index'
-                ).'?show='.$this->transcript->id,
+                    'tenant.students.phase.index',
+                    [
+                        'academicLevel' => $this->orphan->academic_level_id,
+                        'phase' => str_replace('_', '-', $this->orphan->academicLevel->phase_key),
+                    ]
+                ),
             ],
         ];
     }
@@ -45,7 +49,8 @@ class CreateTranscriptNotification extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'data' => [
-                'name' => $this->transcript->trimester,
+                'trimester' => __($this->trimester),
+                'orphan' => $this->orphan->getName(),
             ],
             'user' => [
                 'id' => $this->user->id,

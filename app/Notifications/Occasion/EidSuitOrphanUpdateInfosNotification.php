@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Notifications\Occasion;
+
+use App\Models\Orphan;
+use App\Models\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Notification;
+
+class EidSuitOrphanUpdateInfosNotification extends Notification implements ShouldQueue
+{
+    use Queueable;
+
+    public function __construct(public Orphan $orphan, public User $user) {}
+
+    public function via(): array
+    {
+        return ['database', 'broadcast'];
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'data' => [
+                'orphan' => $this->orphan->getName(),
+            ],
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->getName(),
+                'gender' => $this->user->gender,
+            ],
+            'metadata' => [
+                'url' => tenant_route(
+                    $this->user->tenant->domains->first()->domain,
+                    'tenant.occasions.eid-suit.index'
+                ),
+            ],
+        ];
+    }
+
+    public function toBroadcast(): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'data' => [
+                'orphan' => $this->orphan->getName(),
+            ],
+            'user' => [
+                'id' => $this->user->id,
+                'name' => $this->user->getName(),
+                'gender' => $this->user->gender,
+            ],
+        ]);
+    }
+
+    public function databaseType(): string
+    {
+        return 'eid_suit_orphan_update_infos';
+    }
+
+    public function broadcastType(): string
+    {
+        return 'eid_suit_orphan_update_infos';
+    }
+}

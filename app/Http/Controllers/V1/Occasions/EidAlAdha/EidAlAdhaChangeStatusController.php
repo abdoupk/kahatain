@@ -4,9 +4,11 @@ namespace App\Http\Controllers\V1\Occasions\EidAlAdha;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Occasions\FamilyEidAlAdhaUpdateStatusRequest;
+use App\Jobs\V1\Occasion\EidAlAdhaFamiliesStatusUpdatedJob;
 use App\Models\Family;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class EidAlAdhaChangeStatusController extends Controller
+class EidAlAdhaChangeStatusController extends Controller implements HasMiddleware
 {
     public function __invoke(FamilyEidAlAdhaUpdateStatusRequest $request, Family $family)
     {
@@ -17,5 +19,12 @@ class EidAlAdhaChangeStatusController extends Controller
             'year' => now()->year,
             'updated_by' => auth()->id(),
         ]);
+
+        dispatch(new EidAlAdhaFamiliesStatusUpdatedJob($family, $request->validated('status'), auth()->user()));
+    }
+
+    public static function middleware()
+    {
+        // TODO: Implement middleware() method.
     }
 }

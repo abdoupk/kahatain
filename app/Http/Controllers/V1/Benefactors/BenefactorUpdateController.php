@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\Benefactors;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Benefactors\BenefactorUpdateRequest;
+use App\Jobs\V1\Benefactor\BenefactorUpdatedJob;
 use App\Models\Benefactor;
 use App\Models\Family;
 use App\Models\Orphan;
@@ -44,6 +45,8 @@ class BenefactorUpdateController extends Controller implements HasMiddleware
         foreach ($families as $family) {
             monthlySponsorship($family);
         }
+
+        dispatch(new BenefactorUpdatedJob($benefactor, auth()->user()));
 
         return response('', 201);
     }

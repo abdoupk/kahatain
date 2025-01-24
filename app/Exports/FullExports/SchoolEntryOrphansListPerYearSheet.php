@@ -21,10 +21,7 @@ class SchoolEntryOrphansListPerYearSheet implements FromCollection, WithEvents, 
             ->whereYear('created_at', $this->year)
             ->get()->map(function (Archive $archive) {
                 return $archive->listOrphans
-                    ->load(
-                        'lastAcademicYearAchievement',
-                        'academicLevel'
-                    )
+                    ->load('academicLevel')
                     ->map(function (Orphan $orphan) {
                         return [
                             $orphan->sponsor->getName(),
@@ -39,7 +36,7 @@ class SchoolEntryOrphansListPerYearSheet implements FromCollection, WithEvents, 
                             ),
                             __($orphan->gender),
                             $orphan->academicLevel?->level,
-                            $orphan->lastAcademicYearAchievement?->average,
+                            number_format($orphan->academic_average, 2),
                         ];
                     });
             });

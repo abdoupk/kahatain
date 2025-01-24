@@ -57,7 +57,7 @@
                 </x-td>
 
                 <x-td class="truncate max-w-28">
-                    {{ $family->address  }}
+                    {{ $family->address }}
                 </x-td>
 
                 <x-td class="text-center">
@@ -77,7 +77,7 @@
                 </x-td>
 
                 <x-td class="whitespace-nowrap">
-                    {{ $family->zone?->name  ?? '————'}}
+                    {{ $family->zone?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
