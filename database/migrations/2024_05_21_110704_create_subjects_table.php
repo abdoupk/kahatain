@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subjects', function (Blueprint $table) {
-            $table->id()->primary()->index();
+            $table->id();
             $table->string('en_name');
             $table->string('ar_name');
             $table->string('fr_name');

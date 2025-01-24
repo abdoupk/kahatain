@@ -40,6 +40,8 @@ function getFamiliesPosition(): array
 
 function setTotalIncomeAttribute(array $incomes): float
 {
+    $incomes = Arr::only($incomes, ['account', 'other_income']);
+
     return array_reduce($incomes, function ($carry, $item) {
         if (is_array($item)) {
             $total = 0;

@@ -60,6 +60,7 @@ class Income extends Model implements HasMedia
         'other_income',
         'total_income',
         'sponsor_id',
+        'tenant_id',
     ];
 
     public function sponsor(): BelongsTo

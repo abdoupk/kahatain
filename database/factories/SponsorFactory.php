@@ -24,7 +24,7 @@ class SponsorFactory extends Factory
             'father_name' => fake('ar_SA')->name,
             'mother_name' => fake('ar_SA')->name,
             'birth_certificate_number' => fake('ar_SA')->regexify('[0-9]{8}'),
-            'academic_level_id' => AcademicLevel::inRandomOrder()->first()->id,
+            'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
             'function' => fake('ar_SA')->jobTitle,
             'health_status' => fake('ar_SA')->word,
             'diploma' => fake('ar_SA')->word,
