@@ -24,6 +24,13 @@ export const useMenuStore = defineStore('menu', {
                 title: $t('roles')
             },
             {
+                icon: 'icon-users-gear',
+                ignore: !hasPermission('list_members'),
+                title: $t('the_members'),
+                routeName: 'tenant.members.index',
+                url: '/dashboard/members'
+            },
+            {
                 icon: 'icon-branches',
                 ignore: !hasPermission('list_branches'),
                 title: $t('branches'),
@@ -43,13 +50,6 @@ export const useMenuStore = defineStore('menu', {
                 title: $t('the_zones'),
                 routeName: 'tenant.zones.index',
                 url: '/dashboard/zones'
-            },
-            {
-                icon: 'icon-users-gear',
-                ignore: !hasPermission('list_members'),
-                title: $t('the_members'),
-                routeName: 'tenant.members.index',
-                url: '/dashboard/members'
             },
             // eslint-disable-next-line array-element-newline
             hasPermission([
