@@ -526,6 +526,9 @@
     "first_trimester": "الفصل الأول",
     "second_trimester": "الفصل الثاني",
     "third_trimester": "الفصل الثالث",
+    "average_first_trimester": "معدل الفصل الأول",
+    "average_second_trimester": "معدل الفصل الثاني",
+    "average_third_trimester": "معدل الفصل الثالث",
     "the_trimester_average": "المعدل الفصلي",
     "shoes_shop_name": "اسم محل الأحذية",
     "shoes_shop_location": "موقع محل الأحذية",
@@ -592,5 +595,6 @@
     "phase_paramedical": "الشبه الطبي",
     "phase_vocational_training": "التكوين المهني",
     "the_trainees_orphans": "الأيتام المتكونين",
-    "check_all": "تحديد الكل"
+    "check_all": "تحديد الكل",
+    "the_average": "المعدل"
 }

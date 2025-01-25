@@ -43,4 +43,5 @@ return [
     'meat-distribution' => 'توزيع اللحم',
     'college-students' => 'الأيتام الجامعيين',
     'trainees' => 'الأيتام المتكونين',
+    'general-average' => 'المعدل العام',
 ];

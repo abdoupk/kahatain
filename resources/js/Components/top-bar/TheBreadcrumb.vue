@@ -29,7 +29,8 @@ const breadcrumbs = computedEager(() => {
             prevText === 'details' ||
             prevText === 'primary-education' ||
             prevText === 'middle-education' ||
-            prevText === 'secondary-education'
+            prevText === 'secondary-education' ||
+            prevText === 'general-average'
         ) {
             continue
         } else if (prevText === 'students') {
@@ -37,6 +38,12 @@ const breadcrumbs = computedEager(() => {
                 href: '#',
                 active: false,
                 text: $t('breadcrumb.show_students_transcript')
+            })
+        } else if (prevText === 'transcripts') {
+            breadCrumbs.push({
+                href: '#',
+                active: false,
+                text: $t('breadcrumb.general-average')
             })
         } else if (prevText !== 'edit' && prevText !== 'create' && prevText !== 'show') {
             breadCrumbs.push({
