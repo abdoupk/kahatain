@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<div class="flex relative items-center">
+<div class="flex relative items-center !font-roboto">
     @if ($title != '')
         <img src="{{ auth()->user()->tenant->getFirstMediaUrl('logos') ?: public_path('images/logo-black.svg') }}"
              alt="" class="max-w-24 max-h-20 rounded-md">

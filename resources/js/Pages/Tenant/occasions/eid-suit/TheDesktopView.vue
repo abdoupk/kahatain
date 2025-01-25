@@ -3,6 +3,7 @@ import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/type
 
 import { useOrphansStore } from '@/stores/orphans'
 import { Link } from '@inertiajs/vue3'
+import { ref, watch } from 'vue'
 
 import EditableRows from '@/Pages/Tenant/occasions/eid-suit/EditableRows.vue'
 
@@ -14,6 +15,7 @@ import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
+import TheWarningModal from '@/Components/Global/TheWarningModal.vue'
 
 import { formatCurrency } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
@@ -21,9 +23,12 @@ import { $t, $tc } from '@/utils/i18n'
 const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
     params: IndexParams
+    showWarningAlert: boolean
+    notifiableUserName: string
 }>()
 
-const emit = defineEmits(['sort'])
+// eslint-disable-next-line array-element-newline
+const emit = defineEmits(['sort', 'selectOrphan', 'deselectOrphan'])
 
 const orphansStore = useOrphansStore()
 
@@ -43,6 +48,19 @@ const checkAll = ($event) => {
         orphansStore.orphans = orphansStore.orphans.filter((id) => !orphans.includes(id))
     }
 }
+
+const showWarningModal = ref(false)
+
+watch(
+    () => props.showWarningAlert,
+    () => {
+        if (props.showWarningAlert) {
+            showWarningModal.value = true
+
+            console.log('45454')
+        }
+    }
+)
 </script>
 
 <template>
@@ -191,6 +209,8 @@ const checkAll = ($event) => {
                         :orphan
                         @showLocationAddressModal="$emit('showLocationAddressModal', $event)"
                         @showSuccessNotification="$emit('showSuccessNotification')"
+                        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
                     ></editable-rows>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
@@ -220,5 +240,12 @@ const checkAll = ($event) => {
                 </base-tr-table>
             </base-tbody-table>
         </base-table>
+
+        <the-warning-modal
+            :on-progress="false"
+            :open="showWarningModal"
+            @accept="showWarningModal = false"
+            @close="showWarningModal = false"
+        ></the-warning-modal>
     </div>
 </template>

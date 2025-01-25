@@ -153,7 +153,12 @@ const handleDeleteTranscript = (transcriptId: string, close) => {
 
     <!-- Begin: Average-->
     <Link
-        :class="{ 'pointer-events-none opacity-50': !orphan.transcripts.third_trimester }"
+        :class="{
+            'pointer-events-none opacity-50':
+                !orphan.transcripts.third_trimester ||
+                !orphan.transcripts.second_trimester ||
+                !orphan.transcripts.first_trimester
+        }"
         :href="route('tenant.transcripts.general-average', orphan.id)"
         class="flex content-center items-center whitespace-nowrap"
     >

@@ -20,8 +20,8 @@ createServer((page) =>
             return createSSRApp({
                 render: () => h(App, props)
             })
-                .use(createPinia())
                 .use(plugin)
+                .use(createPinia())
                 .use(i18n)
         }
     })

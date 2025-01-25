@@ -3,14 +3,18 @@ import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/type
 
 import { useOrphansStore } from '@/stores/orphans'
 import { Link } from '@inertiajs/vue3'
+import { watch } from 'vue'
 
 import EditableRow from '@/Pages/Tenant/occasions/eid-suit/EditableRow.vue'
 import MapCell from '@/Pages/Tenant/occasions/eid-suit/MapCell.vue'
 
+import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
+import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton.vue'
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatCurrency, hasPermission, loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -18,9 +22,12 @@ import { $t } from '@/utils/i18n'
 const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
     params: IndexParams
+    showWarningAlert: boolean
+    notifiableUserName: string
 }>()
 
-const emit = defineEmits(['showLocationAddressModal', 'showSuccessNotification'])
+// eslint-disable-next-line array-element-newline
+const emit = defineEmits(['showLocationAddressModal', 'showSuccessNotification', 'selectOrphan', 'deselectOrphan'])
 
 const orphansStore = useOrphansStore()
 
@@ -40,6 +47,19 @@ const checkAll = ($event) => {
         orphansStore.orphans = orphansStore.orphans.filter((id) => !orphans.includes(id))
     }
 }
+
+watch(
+    () => props.showWarningAlert,
+    () => {
+        if (props.showWarningAlert) {
+            document.getElementById(useOrphansStore().selectedOrphan)?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'start'
+            })
+        }
+    }
+)
 </script>
 
 <template>
@@ -57,8 +77,36 @@ const checkAll = ($event) => {
     </base-form-switch>
 
     <div class="col-span-12 my-8 grid grid-cols-12 gap-4 @3xl:hidden">
-        <div v-for="orphan in orphans.data" :key="orphan.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
+        <div
+            v-for="orphan in orphans.data"
+            :id="orphan.id"
+            :key="orphan.id"
+            class="intro-y !z-10 col-span-12 @xl:col-span-6"
+        >
             <div class="box px-5 pb-5 pt-3">
+                <div v-if="showWarningAlert && useOrphansStore().selectedOrphan === orphan.id">
+                    <base-alert
+                        v-slot="{ dismiss }"
+                        class="mb-4 dark:border-darkmode-400 dark:bg-darkmode-400"
+                        dismissible
+                        variant="soft-danger"
+                    >
+                        <div class="flex items-center">
+                            <span>
+                                <svg-loader class="me-3 h-6 w-6" name="icon-triangle-exclamation" />
+                            </span>
+
+                            <span class="text-slate-800 dark:text-slate-500">
+                                {{ $t('update_orphan_eid_suit_infos', { name: notifiableUserName }) }}
+                            </span>
+
+                            <the-alert-dismiss-button @click="dismiss">
+                                <svg-loader class="stroke-red-900 dark:!stroke-white" name="icon-x"></svg-loader>
+                            </the-alert-dismiss-button>
+                        </div>
+                    </base-alert>
+                </div>
+
                 <base-form-switch-input
                     v-model="orphansStore.orphans"
                     :value="orphan.id"
@@ -128,6 +176,8 @@ const checkAll = ($event) => {
                                 :orphan
                                 field="clothes_shop_name"
                                 view="mobile"
+                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
                                 @show-success-notification="emit('showSuccessNotification')"
                             ></editable-row>
                         </div>
@@ -144,6 +194,8 @@ const checkAll = ($event) => {
                                 :orphan
                                 field="clothes_shop_phone_number"
                                 view="mobile"
+                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
                                 @show-success-notification="emit('showSuccessNotification')"
                             ></editable-row>
                         </div>
@@ -174,6 +226,8 @@ const checkAll = ($event) => {
                                 :orphan
                                 field="shoes_shop_name"
                                 view="mobile"
+                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
                                 @show-success-notification="emit('showSuccessNotification')"
                             ></editable-row>
                         </div>
@@ -190,6 +244,8 @@ const checkAll = ($event) => {
                                 :orphan
                                 field="shoes_shop_phone_number"
                                 view="mobile"
+                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
                                 @show-success-notification="emit('showSuccessNotification')"
                             ></editable-row>
                         </div>
@@ -218,6 +274,8 @@ const checkAll = ($event) => {
                             :orphan
                             field="note"
                             view="mobile"
+                            @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                            @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
                             @show-success-notification="emit('showSuccessNotification')"
                         ></editable-row>
                     </div>

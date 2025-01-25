@@ -15,7 +15,7 @@ import DeleteModal from '@/Components/Global/DeleteModal.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
-import { $t, $tc } from '@/utils/i18n'
+import { $t } from '@/utils/i18n'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/transcripts/index/DataTable.vue'))
 
@@ -174,7 +174,7 @@ const deleteTranscript = () => {
 
             <success-notification
                 :open="showSuccessNotification"
-                :title="$tc('successfully_trashed', 0, { attribute: $t('the_orphan') })"
+                :title="$t('successfully_force_deleted')"
             ></success-notification>
 
             <delete-modal

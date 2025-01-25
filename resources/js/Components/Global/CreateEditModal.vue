@@ -25,6 +25,7 @@ defineProps<{
     open: boolean
     title: string
     loading: boolean
+    disabled?: boolean
     modalType: 'create' | 'update'
     focusableInput?: HTMLElement
 }>()
@@ -37,7 +38,7 @@ const emit = defineEmits(['close', 'handleSubmit'])
         <base-dialog-panel>
             <suspense suspensible>
                 <template #default>
-                    <form @submit.prevent="emit('handleSubmit')">
+                    <form id="create-edit-modal-form" @submit.prevent="emit('handleSubmit')">
                         <base-dialog-title>
                             <h2 class="me-auto text-base ltr:font-medium rtl:font-semibold">
                                 {{ title }}
@@ -62,7 +63,7 @@ const emit = defineEmits(['close', 'handleSubmit'])
                                 {{ $t('cancel') }}
                             </base-button>
 
-                            <base-button :disabled="loading" class="w-20" type="submit" variant="primary">
+                            <base-button :disabled="loading || disabled" class="w-20" type="submit" variant="primary">
                                 <spinner-button-loader :show="loading"></spinner-button-loader>
 
                                 {{ $t(modalType) }}

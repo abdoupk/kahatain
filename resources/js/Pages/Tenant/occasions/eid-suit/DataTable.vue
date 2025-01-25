@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
+import { useOrphansStore } from '@/stores/orphans'
+import { usePage } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { nextTick, ref } from 'vue'
 
@@ -100,23 +102,47 @@ const handleShowSuccessNotification = () => {
         showSuccessNotification.value = false
     })
 }
+
+const orphansStore = useOrphansStore()
+
+const notifiableUserName = ref('')
+
+const showWarningAlert = ref(false)
+
+window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent', (e) => {
+    const exists = e.ids.includes(orphansStore.selectedOrphan)
+
+    if (exists && usePage().props.auth.user?.id !== e.user?.id) {
+        notifiableUserName.value = e.user?.name
+
+        showWarningAlert.value = true
+    }
+})
 </script>
 
 <template>
     <div class="@container">
         <the-desktop-view
+            :notifiable-user-name
             :orphans
             :params
+            :show-warning-alert
             @showLocationAddressModal="handleShowLocationAddressModal"
             @showSuccessNotification="handleShowSuccessNotification"
             @sort="$emit('sort', $event)"
+            @select-orphan="orphansStore.selectedOrphan = $event"
+            @deselect-orphan="orphansStore.selectedOrphan = ''"
         ></the-desktop-view>
 
         <the-mobile-view
+            :notifiable-user-name
             :orphans
             :params
+            :show-warning-alert
             @showLocationAddressModal="handleShowLocationAddressModal"
             @showSuccessNotification="handleShowSuccessNotification"
+            @select-orphan="orphansStore.selectedOrphan = $event"
+            @deselect-orphan="orphansStore.selectedOrphan = ''"
         ></the-mobile-view>
     </div>
 

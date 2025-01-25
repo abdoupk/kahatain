@@ -12,6 +12,8 @@ import { loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
 defineProps<{
     orphan: EidSuitOrphansResource
 }>()
+
+const emit = defineEmits(['selectOrphan', 'deselectOrphan'])
 </script>
 
 <template>
@@ -20,6 +22,8 @@ defineProps<{
         :orphan
         class="text-center"
         field="clothes_shop_name"
+        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
         @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
@@ -28,6 +32,8 @@ defineProps<{
         :orphan
         class="text-center"
         field="clothes_shop_phone_number"
+        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
         @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
@@ -44,6 +50,8 @@ defineProps<{
         :orphan
         class="text-center"
         field="shoes_shop_name"
+        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
         @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
@@ -52,6 +60,8 @@ defineProps<{
         :orphan
         class="text-center"
         field="shoes_shop_phone_number"
+        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
         @show-success-notification="$emit('showSuccessNotification')"
     ></editable-row>
 
@@ -68,6 +78,8 @@ defineProps<{
     <editable-row
         :orphan
         field="note"
+        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
         @show-success-notification="$emit('showSuccessNotification', $event)"
     ></editable-row>
 </template>

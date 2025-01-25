@@ -17,7 +17,8 @@ const props = defineProps<{
     view?: 'desktop' | 'mobile'
 }>()
 
-const emit = defineEmits(['showSuccessNotification'])
+// eslint-disable-next-line array-element-newline
+const emit = defineEmits(['showSuccessNotification', 'selectOrphan', 'deselectOrphan'])
 
 const orphan = ref(props.orphan)
 
@@ -81,6 +82,8 @@ const validate = computed(() => {
 const handleSelectCell = () => {
     orphan.value.orphan.edit[props.field] = true
 
+    emit('selectOrphan')
+
     nextTick(() => {
         if (props.field === 'note') {
             document.getElementById(`${props.field}_${orphan.value.orphan.id}`)?.focus()
@@ -90,10 +93,10 @@ const handleSelectCell = () => {
 
 const maxLength = computed(() => {
     if (props.field === 'clothes_shop_phone_number' || props.field === 'shoes_shop_phone_number') {
-        return '10'
+        return 10
     }
 
-    return '255'
+    return 255
 })
 
 const handleFocusOut = () => {
@@ -102,6 +105,8 @@ const handleFocusOut = () => {
     }
 
     orphan.value.orphan.edit[props.field] = false
+
+    emit('deselectOrphan')
 }
 </script>
 
@@ -117,6 +122,7 @@ const handleFocusOut = () => {
             :options="[]"
             class="ms-4 w-1/2"
             size="sm"
+            @focusin="emit('selectOrphan')"
             @focusout.prevent="handleFocusOut"
             @update:model-value="handleSubmit"
         ></row-combobox>
@@ -126,7 +132,10 @@ const handleFocusOut = () => {
             :id="`note_${orphan.orphan.id}`"
             v-model.lazy="orphan.eid_suit.note"
             rows="4"
+            @focusin="emit('selectOrphan')"
+            @focusout="emit('deselectOrphan')"
             @keydown.enter="handleSubmit"
+            @focusout.prevent="handleFocusOut"
         ></base-form-text-area>
     </template>
 

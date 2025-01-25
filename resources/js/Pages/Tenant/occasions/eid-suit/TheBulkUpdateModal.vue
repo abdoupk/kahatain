@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { useOrphansStore } from '@/stores/orphans'
-import { router } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { nextTick, ref } from 'vue'
 
 import RowCombobox from '@/Pages/Tenant/occasions/eid-suit/RowCombobox.vue'
 
+import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
+import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
@@ -13,17 +15,20 @@ import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
-defineProps<{
+const props = defineProps<{
     open: boolean
 }>()
 
 const emit = defineEmits(['close'])
 
 const loading = ref(false)
+
+const orphansStore = useOrphansStore()
 
 const inputs = ref({
     clothes_shop_name: '',
@@ -44,7 +49,7 @@ const handleSubmit = () => {
 
     form.setData({
         ...inputs.value,
-        ids: useOrphansStore().orphans,
+        ids: orphansStore.orphans,
         designated_member: inputs.value.designated_member?.id,
         clothes_shop_phone_number: inputs.value.clothes_shop_phone_number.name,
         shoes_shop_phone_number: inputs.value.shoes_shop_phone_number.name,
@@ -90,21 +95,73 @@ const firstInputRef = ref<HTMLElement>()
 
 const showSuccessNotification = ref(false)
 
+const showWarningAlert = ref(false)
+
+const disabled = ref(false)
+
+const userName = ref('')
+
 const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), inputs.value)
+
+window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent', (e) => {
+    const exists = e.ids.some((item) => orphansStore.orphans.includes(item))
+
+    if (exists && props.open && usePage().props.auth.user?.id !== e.user?.id) {
+        userName.value = e.user?.name
+
+        showWarningAlert.value = true
+
+        disabled.value = true
+
+        document.getElementById('create-edit-modal-form')?.scrollIntoView({
+            behavior: 'smooth'
+        })
+    }
+})
 </script>
 
 <template>
     <create-edit-modal
+        :disabled
         :focusable-input="firstInputRef"
         :loading
         :open
         :title="$t('bulk_update')"
         modal-type="update"
         size="lg"
-        @close="emit('close')"
+        @close="
+            () => {
+                emit('close')
+                showWarningAlert = false
+                disabled = false
+            }
+        "
         @handle-submit="handleSubmit"
     >
         <template #description>
+            <div v-if="showWarningAlert" class="col-span-12 w-full">
+                <base-alert
+                    v-slot="{ dismiss }"
+                    class="dark:border-darkmode-400 dark:bg-darkmode-400"
+                    dismissible
+                    variant="soft-danger"
+                >
+                    <div class="flex items-center">
+                        <span>
+                            <svg-loader class="me-3 h-6 w-6" name="icon-triangle-exclamation" />
+                        </span>
+
+                        <span class="text-slate-800 dark:text-slate-500">
+                            {{ $t('bulk_update_warning', { name: userName }) }}
+                        </span>
+
+                        <the-alert-dismiss-button @click="dismiss">
+                            <svg-loader class="stroke-red-900 dark:!stroke-white" name="icon-x"></svg-loader>
+                        </the-alert-dismiss-button>
+                    </div>
+                </base-alert>
+            </div>
+
             <!-- Begin: Designated member  -->
             <div class="col-span-12 sm:col-span-6">
                 <base-form-label htmlFor="designated_member">
@@ -132,11 +189,11 @@ const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), in
                     id="clothes_shop_name"
                     :has-error="false"
                     :load-options="loadShopOwnerNames"
+                    :max-length="255"
                     :model-value="inputs.clothes_shop_name"
                     :options="[]"
                     class="!mt-0"
-                    max-length="255"
-                    @update:model-value="inputs.clothes_shop_name = $event"
+                    @update:model-value="(event) => (inputs.clothes_shop_name = event)"
                 ></row-combobox>
 
                 <base-form-input-error :form field_name="clothes_shop_name"></base-form-input-error>
@@ -153,11 +210,11 @@ const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), in
                     id="clothes_shop_phone_number"
                     :has-error="false"
                     :load-options="loadShopOwnerPhoneNumbers"
+                    :max-length="10"
                     :model-value="inputs.clothes_shop_phone_number"
                     :options="[]"
                     class="!mt-0"
-                    max-length="10"
-                    @update:model-value="inputs.clothes_shop_phone_number = $event"
+                    @update:model-value="(event) => (inputs.clothes_shop_phone_number = event)"
                 ></row-combobox>
 
                 <base-form-input-error :form field_name="clothes_shop_phone_number"></base-form-input-error>
@@ -191,11 +248,11 @@ const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), in
                     id="shoes_shop_name"
                     :has-error="false"
                     :load-options="loadShopOwnerNames"
+                    :max-length="255"
                     :model-value="inputs.shoes_shop_name"
                     :options="[]"
                     class="!mt-0"
-                    max-length="255"
-                    @update:model-value="inputs.shoes_shop_name = $event"
+                    @update:model-value="(event) => (inputs.shoes_shop_name = event)"
                 ></row-combobox>
 
                 <base-form-input-error :form field_name="shoes_shop_name"></base-form-input-error>
@@ -212,11 +269,11 @@ const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), in
                     id="shoes_shop_phone_number"
                     :has-error="false"
                     :load-options="loadShopOwnerPhoneNumbers"
+                    :max-length="10"
                     :model-value="inputs.shoes_shop_phone_number"
                     :options="[]"
                     class="!mt-0"
-                    max-length="10"
-                    @update:model-value="inputs.shoes_shop_phone_number = $event"
+                    @update:model-value="(event) => (inputs.shoes_shop_phone_number = event)"
                 ></row-combobox>
 
                 <base-form-input-error :form field_name="shoes_shop_phone_number"></base-form-input-error>

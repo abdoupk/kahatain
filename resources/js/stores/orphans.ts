@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 
 export const useOrphansStore = defineStore('orphan', {
     state: () => ({
-        orphans: []
+        orphans: [],
+        selectedOrphan: ''
     }),
     actions: {
         async getOrphans() {

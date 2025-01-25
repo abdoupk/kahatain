@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1\Occasions\EidSuit;
 
+use App\Events\EidSuitInfosUpdatedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Occasions\EidSuit\BulkUpdateEidSuitInfosRequest;
 use App\Jobs\V1\Occasion\EidSuitBulkUpdateInfosJob;
@@ -29,6 +30,8 @@ class BulkUpdateEidSuitInfosController extends Controller
 
             $orphan->searchable();
         });
+
+        EidSuitInfosUpdatedEvent::dispatch($request->ids, auth()->user());
 
         dispatch(new EidSuitBulkUpdateInfosJob($request->validated('ids'), auth()->user()));
 
