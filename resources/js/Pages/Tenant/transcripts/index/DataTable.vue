@@ -15,8 +15,6 @@ defineProps<{
 const now = dayjs()
 
 const shouldCreateFirstTrimesterTranscript = computed(() => {
-    return true
-
     const isJanToAug = now.month() >= 0 && now.month() <= 7
 
     const isNovOrDecPrevYear = now.month() === 10 || now.month() === 11
@@ -25,14 +23,10 @@ const shouldCreateFirstTrimesterTranscript = computed(() => {
 })
 
 const shouldCreateSecondTrimesterTranscript = computed(() => {
-    return true
-
-    return now.month() >= 1 && now.month() <= 7
+    return now.month() >= 1 && now.month() <= 9
 })
 
 const shouldCreateThirdTrimesterTranscript = computed(() => {
-    return true
-
     return now.month() >= 4 && now.month() <= 7
 })
 

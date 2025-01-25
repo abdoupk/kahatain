@@ -1,18 +1,13 @@
 <script lang="ts" setup>
 import { OrphansTranscriptsIndexResource } from '@/types/types'
 
-import { router } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseMenu from '@/Components/Base/headless/Menu/BaseMenu.vue'
 import BaseMenuButton from '@/Components/Base/headless/Menu/BaseMenuButton.vue'
 import BaseMenuItem from '@/Components/Base/headless/Menu/BaseMenuItem.vue'
 import BaseMenuItems from '@/Components/Base/headless/Menu/BaseMenuItems.vue'
-import BasePopover from '@/Components/Base/headless/Popover/BasePopover.vue'
-import BasePopoverButton from '@/Components/Base/headless/Popover/BasePopoverButton.vue'
-import BasePopoverPanel from '@/Components/Base/headless/Popover/BasePopoverPanel.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { $t } from '@/utils/i18n'
@@ -26,26 +21,6 @@ defineProps<{
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['showCreateModal', 'showEditModal', 'showDeleteModal', 'showSuccessNotification'])
-
-const generalAverage = ref(null)
-
-const handleSubmitGeneralAverage = (orphanId: string, close) => {
-    router.patch(
-        route('tenant.transcripts.update', orphanId),
-        {
-            general_average: generalAverage.value
-        },
-        {
-            onSuccess: () => {
-                generalAverage.value = null
-
-                emit('showSuccessNotification')
-
-                close()
-            }
-        }
-    )
-}
 
 const handleCreateTranscript = (trimester: string, orphan: OrphansTranscriptsIndexResource, close) => {
     emit('showCreateModal', {
@@ -177,49 +152,14 @@ const handleDeleteTranscript = (transcriptId: string, close) => {
     <!-- End: Delete Transcript-->
 
     <!-- Begin: Average-->
-    <base-popover v-slot="{ close }" class="!z-50 inline-block text-center">
-        <base-popover-button as="a" class="flex content-center items-center whitespace-nowrap">
-            <svg-loader class="me-1 h-4 w-4 fill-success" name="icon-file-certificate" />
+    <Link
+        :class="{ 'pointer-events-none opacity-50': !orphan.transcripts.third_trimester }"
+        :href="route('tenant.transcripts.general-average', orphan.id)"
+        class="flex content-center items-center whitespace-nowrap"
+    >
+        <svg-loader class="me-1 h-4 w-4 fill-success" name="icon-file-certificate" />
 
-            {{ $t('general_average') }}
-        </base-popover-button>
-        <base-popover-panel placement="bottom-end">
-            <div class="p-2">
-                <form @submit.prevent="handleSubmitGeneralAverage(orphan.id, close)">
-                    <div>
-                        <div class="text-start ltr:text-xs rtl:text-sm rtl:font-semibold">
-                            {{ $t('general_average') }}
-                        </div>
-
-                        <base-form-input
-                            v-model="generalAverage"
-                            :placeholder="$t('auth.placeholders.fill', { attribute: $t('general_average') })"
-                            class="mt-2 flex-1"
-                            max="20"
-                            step="0.01"
-                            type="number"
-                        ></base-form-input>
-                    </div>
-
-                    <div class="mt-3 flex items-center">
-                        <base-button
-                            class="ms-auto w-32"
-                            type="button"
-                            variant="secondary"
-                            @click="
-                                () => {
-                                    close()
-                                }
-                            "
-                        >
-                            {{ $t('cancel') }}
-                        </base-button>
-
-                        <base-button class="ms-2 w-32" type="submit" variant="primary"> {{ $t('save') }}</base-button>
-                    </div>
-                </form>
-            </div>
-        </base-popover-panel>
-    </base-popover>
+        {{ $t('general_average') }}
+    </Link>
     <!-- End: Average-->
 </template>
