@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\Schools;
 
 use App\Http\Resources\V1\Members\MemberResource;
+use App\Models\Lesson;
 use App\Models\PrivateSchool;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,11 +18,16 @@ class SchoolShowResource extends JsonResource
             'name' => $this->name,
             'lessons_count' => $this->lessons_count,
             'readable_created_at' => $this->created_at->translatedFormat('j F Y H:i A'),
-            //            'subjects_count' => $this->subjects_count,
+            'quota' => $this->lessons->sum('quota'),
             'creator' => new MemberResource($this->whenLoaded('creator')),
-
-            //            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),
-            //            'subjects' => LessonResource::collection($this->whenLoaded('subjects')),
+            'lessons' => $this->whenLoaded('lessons', function ($lessons) {
+                return $lessons->map(fn (Lesson $lesson) => [
+                    'id' => $lesson->id,
+                    'quota' => $lesson->quota,
+                    'subject' => $lesson->subject->getName(),
+                    'academicLevel' => $lesson->academicLevel->level,
+                ]);
+            }),
         ];
     }
 }

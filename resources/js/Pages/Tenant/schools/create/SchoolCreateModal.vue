@@ -186,13 +186,13 @@ const removeLesson = (index: number) => {
 
             <div class="col-span-12 flex items-center justify-center">
                 <base-button
-                    class="mx-auto mt-3 block w-1/2 border-dashed dark:text-slate-500"
-                    data-test="add_phone_number"
+                    class="mx-auto mt-3 block w-1/2 border-dashed dark:text-slate-300"
+                    data-test="add_lesson"
                     type="button"
                     variant="outline-primary"
                     @click.prevent="addLesson"
                 >
-                    <svg-loader class="inline fill-primary dark:fill-slate-500" name="icon-plus"></svg-loader>
+                    <svg-loader class="inline fill-primary dark:fill-slate-300" name="icon-plus"></svg-loader>
 
                     {{ $t('add lesson') }}
                 </base-button>

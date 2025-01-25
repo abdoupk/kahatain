@@ -72,9 +72,9 @@ const handleSelectTrimester = (trimester: string) => {
     <suspense>
         <div>
             <the-table-header
+                :dont-show-filters="true"
                 :pagination-data="students"
                 :params
-                :dont-show-filters="true"
                 :title="$t('list', { attribute: $t('transcripts') })"
                 :url
                 entries="students"
@@ -91,12 +91,7 @@ const handleSelectTrimester = (trimester: string) => {
             <template v-if="students.data.length > 0">
                 <data-table :params :students @sort="sort"></data-table>
 
-                <the-table-footer
-                    :pagination-data="students"
-                    :params
-                    class="lg:mt-4"
-                    :url="route('tenant.orphans.index')"
-                ></the-table-footer>
+                <the-table-footer :pagination-data="students" :params :url class="lg:mt-4"></the-table-footer>
             </template>
 
             <the-no-results-table v-else></the-no-results-table>

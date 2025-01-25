@@ -19,8 +19,8 @@ class SchoolDetailsController extends Controller implements HasMiddleware
         return response()->json([
             'school' => SchoolShowResource::make(
                 $school->load(
-                    ['creator:id,first_name,last_name']
-                )->loadCount('lessons')
+                    ['creator:id,first_name,last_name', 'lessons.subject', 'lessons.academicLevel']
+                )->loadCount(['lessons', 'subjects'])
             ),
         ]);
     }

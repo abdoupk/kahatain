@@ -8,6 +8,7 @@ interface State {
     school: CreateSchoolForm & {
         id?: string
         lessons_count?: number
+        quota?: number
         readable_created_at?: string
         creator?: {
             id: string

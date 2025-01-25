@@ -34,19 +34,21 @@ class DatabaseSeeder extends Seeder
 
         $this->call(VocationalTrainingSpecialitySeeder::class);
 
-        $this->call(TenantSeeder::class);
-
         $this->call(PermissionSeeder::class);
 
-        $this->call(BenefactorSeeder::class);
+        if (in_array(app()->environment(), ['local', 'staging'])) {
+            $this->call(TenantSeeder::class);
 
-        $this->call(FamilySeeder::class);
+            $this->call(BenefactorSeeder::class);
 
-        $this->call(FurnishingSeeder::class);
+            $this->call(FamilySeeder::class);
 
-        $this->call(PreviewSeeder::class);
+            $this->call(FurnishingSeeder::class);
 
-        $this->call(PrivateSchoolSeeder::class);
+            $this->call(PreviewSeeder::class);
+
+            $this->call(PrivateSchoolSeeder::class);
+        }
 
         Artisan::call('scout:sync-index-settings');
 

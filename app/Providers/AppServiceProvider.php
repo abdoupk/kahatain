@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(! $this->app->isProduction());
 
         Model::handleLazyLoadingViolationUsing(function ($model, $relation): void {
-            if (! $this->app->environment() == 'local') {
+            if (in_array($this->app->environment(), ['local', 'staging'])) {
                 $full_trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, limit: 6);
 
                 $trace = array_pop($full_trace);

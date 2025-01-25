@@ -2,8 +2,7 @@
 import type { IndexParams, OrphansTranscriptsIndexResource, PaginationData } from '@/types/types'
 
 import { Link } from '@inertiajs/vue3'
-import dayjs from 'dayjs'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 import TranscriptActions from '@/Pages/Tenant/transcripts/create/TranscriptActions.vue'
 
@@ -23,12 +22,13 @@ import { $t } from '@/utils/i18n'
 defineProps<{
     orphans: PaginationData<OrphansTranscriptsIndexResource>
     params: IndexParams
+    shouldCreateFirstTrimesterTranscript: boolean
+    shouldCreateSecondTrimesterTranscript: boolean
+    shouldCreateThirdTrimesterTranscript: boolean
 }>()
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showCreateModal', 'showDeleteModal', 'showEditModal'])
-
-const now = dayjs()
 
 const showSuccessNotification = ref(false)
 
@@ -39,22 +39,6 @@ const handleShowSuccessNotification = () => {
         showSuccessNotification.value = false
     }, 500)
 }
-
-const shouldCreateFirstTrimesterTranscript = computed(() => {
-    const isJanToAug = now.month() >= 0 && now.month() <= 7
-
-    const isNovOrDecPrevYear = now.month() === 10 || now.month() === 11
-
-    return isNovOrDecPrevYear || isJanToAug
-})
-
-const shouldCreateSecondTrimesterTranscript = computed(() => {
-    return now.month() >= 1 && now.month() <= 7
-})
-
-const shouldCreateThirdTrimesterTranscript = computed(() => {
-    return now.month() >= 4 && now.month() <= 7
-})
 </script>
 
 <template>

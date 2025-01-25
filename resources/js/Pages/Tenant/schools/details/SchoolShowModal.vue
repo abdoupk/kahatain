@@ -2,6 +2,8 @@
 import { useSchoolsStore } from '@/stores/schools'
 import { Link } from '@inertiajs/vue3'
 
+import TheLessonsTable from '@/Pages/Tenant/schools/details/TheLessonsTable.vue'
+
 import ShowModal from '@/Components/Global/ShowModal.vue'
 
 defineProps<{
@@ -12,7 +14,7 @@ defineProps<{
 // Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
-const needsStore = useSchoolsStore()
+const schoolStore = useSchoolsStore()
 </script>
 
 <template>
@@ -23,43 +25,55 @@ const needsStore = useSchoolsStore()
                 <h2 class="rtl:font-semibold">{{ $t('school_name') }}</h2>
 
                 <h3 class="mt-1 rtl:font-medium">
-                    {{ needsStore.school.name }}
+                    {{ schoolStore.school.name }}
                 </h3>
             </div>
             <!-- End: Name-->
-
-            <!-- Begin: lessons count-->
-            <div class="col-span-6">
-                <h2 class="rtl:font-semibold">{{ $t('lessons_count') }}</h2>
-
-                <h3 class="mt-1 rtl:font-medium">
-                    {{ needsStore.school.lessons_count }}
-                </h3>
-            </div>
-            <!-- End: lessons count-->
 
             <!-- Begin: Created At-->
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.created_at') }}</h2>
 
                 <h3 class="mt-1 rtl:font-medium">
-                    {{ needsStore.school.readable_created_at }}
+                    {{ schoolStore.school.readable_created_at }}
                 </h3>
             </div>
             <!-- End: Created At-->
+
+            <!-- Begin: lessons count-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('lessons_count') }}</h2>
+
+                <h3 class="mt-1 rtl:font-medium">
+                    {{ schoolStore.school.lessons_count }}
+                </h3>
+            </div>
+            <!-- End: lessons count-->
+
+            <!-- Begin: Quota-->
+            <div class="col-span-6">
+                <h2 class="rtl:font-semibold">{{ $t('quota_total') }}</h2>
+
+                <h3 class="mt-1 rtl:font-medium">
+                    {{ schoolStore.school.quota }}
+                </h3>
+            </div>
+            <!-- End: Quota-->
 
             <!-- Begin: Creator-->
             <div class="col-span-6">
                 <h2 class="rtl:font-semibold">{{ $t('created_by') }}</h2>
 
                 <Link
-                    :href="route('tenant.members.index') + `?show=${needsStore.school.creator?.id}`"
+                    :href="route('tenant.members.index') + `?show=${schoolStore.school.creator?.id}`"
                     class="mt-1 rtl:font-medium"
                 >
-                    {{ needsStore.school.creator?.name }}
+                    {{ schoolStore.school.creator?.name }}
                 </Link>
             </div>
             <!-- End: Creator-->
+
+            <the-lessons-table :lessons="schoolStore.school.lessons"></the-lessons-table>
         </template>
     </show-modal>
 </template>

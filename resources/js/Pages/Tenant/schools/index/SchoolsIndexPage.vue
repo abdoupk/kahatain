@@ -14,7 +14,7 @@ import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $tc } from '@/utils/i18n'
 
-const SchoolShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/schools/SchoolShowModal.vue'))
+const SchoolShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/schools/details/SchoolShowModal.vue'))
 
 const SchoolCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/schools/create/SchoolCreateModal.vue'))
 
