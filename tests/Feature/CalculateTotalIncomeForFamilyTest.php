@@ -1,8 +1,10 @@
 <?php
 
+use App\Enums\SponsorType;
 use App\Models\Branch;
 use App\Models\City;
 use App\Models\Family;
+use App\Models\Orphan;
 use App\Models\Sponsor;
 use App\Models\Tenant;
 use App\Models\Zone;
@@ -59,29 +61,46 @@ beforeEach(function () {
         'phone_number' => '0664954817',
         'sponsor_type' => 'widowers_wife',
     ]);
+
+    // suppose orphan is baby when weight is always equal to 1
+    $this->orphan = Orphan::factory()->create([
+        'sponsor_id' => $this->sponsor->id,
+        'family_id' => $this->family->id,
+        'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
+        'tenant_id' => $this->tenant->id,
+        'birth_date' => now()->subDays(80),
+        'income' => 0,
+    ]);
 });
 
-it('correctly calculates total income for sponsor.', function () {
-    $this->sponsor->incomes()->create([
+it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة)', function () {
+    $this->sponsor->update([
+        'sponsor_type' => SponsorType::WIDOWS_HUSBAND,
+        'is_unemployed' => true,
+    ]);
+
+    $this->incomes = $this->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
         'other_income' => 4000,
         'account' => [
             'ccp' => [
-                'monthly_income' => 1200,
-                'balance' => 400,
-                'performance_grant' => 1200,
+                'monthly_income' => null,
+                'balance' => null,
+                'performance_grant' => null,
             ],
             'bank' => [
-                'monthly_income' => 1200,
-                'balance' => 400,
-                'performance_grant' => 1200,
+                'monthly_income' => null,
+                'balance' => null,
+                'performance_grant' => null,
             ],
         ],
+        'total_income' => 4000,
     ]);
 
     monthlySponsorship($this->family);
 
-    expect($this->sponsor->incomes()->first()->total_income)->toBe(8000.0);
-});
+    expect(calculateIncomeRate($this->family))->toBe(15000.0);
 
-it('', function () {});
+    //    expect($this->family->total_income)->toBe(4000.0)
+    //        ->and($this->family->income_rate)->toBe(0.0);
+});

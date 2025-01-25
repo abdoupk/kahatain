@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\SponsorType;
 use App\Models\AcademicLevel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->text('first_name')->nullable();
             $table->text('last_name')->nullable();
             $table->text('phone_number');
-            $table->text('sponsor_type');
+            $table->enum('sponsor_type', array_map(fn ($type) => $type->value, SponsorType::cases()));
             $table->date('birth_date');
             $table->text('father_name')->nullable();
             $table->text('mother_name')->nullable();

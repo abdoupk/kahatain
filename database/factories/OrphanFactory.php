@@ -64,27 +64,27 @@ class OrphanFactory extends Factory
         $institution_type = fake()->randomElement(['school', 'university', 'vocational_training_center']);
 
         if ($institution_type === 'vocational_training_center') {
-            $institution_id = VocationalTrainingCenter::inRandomOrder()->first()->id;
+            $institution_id = VocationalTrainingCenter::inRandomOrder()->first()?->id;
         }
 
         if ($institution_type === 'school') {
-            $institution_id = School::inRandomOrder()->first()->id;
+            $institution_id = School::inRandomOrder()->first()?->id;
         }
 
         if ($institution_type === 'university') {
-            $institution_id = University::inRandomOrder()->first()->id;
+            $institution_id = University::inRandomOrder()->first()?->id;
         }
 
         $speciality_type = null;
         $speciality_id = null;
 
         if ($institution_type === 'university') {
-            $speciality_id = UniversitySpeciality::inRandomOrder()->first()->id;
+            $speciality_id = UniversitySpeciality::inRandomOrder()->first()?->id;
             $speciality_type = 'university_speciality';
         }
 
         if ($institution_type === 'vocational_training_center') {
-            $speciality_id = VocationalTrainingSpeciality::inRandomOrder()->first()->id;
+            $speciality_id = VocationalTrainingSpeciality::inRandomOrder()->first()?->id;
             $speciality_type = 'vocational_training_speciality';
         }
 
@@ -94,7 +94,7 @@ class OrphanFactory extends Factory
             'birth_date' => $birth_date->toDate(),
             'family_status' => $family_status,
             'health_status' => fake('ar_SA')->realText('10'),
-            'academic_level_id' => AcademicLevel::inRandomOrder()->first()->id,
+            'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
             'speciality_id' => $speciality_id,
             'speciality_type' => $speciality_type,
             'shoes_size' => ShoeSize::inRandomOrder()->first()->id,

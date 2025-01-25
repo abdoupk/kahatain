@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\SponsorType;
 use App\Models\AcademicLevel;
 use App\Models\Sponsor;
 use App\Models\User;
@@ -18,8 +19,7 @@ class SponsorFactory extends Factory
             'last_name' => fake('ar_SA')->lastName,
             'deleted_by' => User::inRandomOrder()->first()->id,
             'phone_number' => fake('ar_SA')->regexify('(06|07|05)[0-9]{8}'),
-            'sponsor_type' => fake('ar_SA')->shuffleArray(['widower', 'widow', 'widows_husband', 'widowers_wife',
-                'mother_of_a_supported_childhood', 'other'])[0],
+            'sponsor_type' => fake('ar_SA')->shuffleArray(array_map(fn ($case) => $case->value, SponsorType::cases()))[0],
             'birth_date' => now()->subYears(fake()->numberBetween(25, 60))->toDate(),
             'father_name' => fake('ar_SA')->name,
             'mother_name' => fake('ar_SA')->name,

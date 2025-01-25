@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1\Families;
 
+use App\Enums\SponsorType;
 use App\Rules\StoreBabyNeedsRule;
 use App\Rules\StoreOrphanClothesRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -61,7 +62,7 @@ class CreateFamilyRequest extends FormRequest
             'sponsor.first_name' => 'required|string',
             'sponsor.last_name' => 'required|string',
             'sponsor.phone_number' => ['required', 'string', 'regex:/^(06|07|05)\d{8}$/', 'unique:App\Models\Sponsor,phone_number'],
-            'sponsor.sponsor_type' => 'required|string',
+            'sponsor.sponsor_type' => 'required|in:'.implode(',', array_map(fn ($case) => $case->value, SponsorType::cases())),
             'sponsor.gender' => 'required|in:male,female',
             'sponsor.birth_date' => 'required|string',
             'sponsor.is_unemployed' => 'required|boolean',

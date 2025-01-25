@@ -51,7 +51,7 @@ function calculateContributionsForSponsor(Sponsor $sponsor): float
         'widows_wife' => $sponsorContributions['widows_wife'],
         'mother_of_a_supported_childhood' => $sponsorContributions['mother_of_a_supported_childhood'],
         default => 0
-    } / 100;
+    };
 }
 
 function calculateContributionsForHandicappedOrphan(Orphan $orphan): float
@@ -74,6 +74,7 @@ function calculateContributionsForMaleOrphan(Orphan $orphan, array $calculations
             default => 0
         };
     }
+
     $calculations = $calculations['percentage_of_contribution']['orphans']['male_gt_18'];
 
     return match ($orphan->family_status) {
