@@ -2,6 +2,7 @@
 
 use App\Models\AcademicLevel;
 use App\Models\Orphan;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 function getAcademicLevelsForTraineesIndex(): array
 {
@@ -57,4 +58,9 @@ function getTraineesPerVocationalTrainingCenter(): array
         ->sortByDesc('total')
         ->take(7)
         ->toArray();
+}
+
+function getTraineesStudents(): LengthAwarePaginator
+{
+    return search(Orphan::getModel(), additional_filters: FILTER_TRAINEES_ORPHANS)->query(fn ($query) => $query->with(['institution', 'academicLevel']))->paginate(request()->integer('perPage', 10));
 }

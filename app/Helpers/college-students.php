@@ -58,15 +58,6 @@ function getCollegeStudentsPerUniversity(): array
         ->toArray();
 }
 
-function calculateHighEducationTranscriptsAchievementsPercentage(int $orphansCount, int $transcriptsCount): float
-{
-    $month = now()->month;
-
-    $weight = ($month <= 2) ? 1 : (($month <= 7) ? 2 : 0);
-
-    return $transcriptsCount === 0 ? 0 : number_format(($transcriptsCount / ($orphansCount * $weight)) * 100, 2);
-}
-
 function getCollegeStudents(): LengthAwarePaginator
 {
     return search(Orphan::getModel(), additional_filters: FILTER_COLLEGE_STUDENTS)->query(fn ($query) => $query->with(['institution', 'academicLevel']))->paginate(request()->integer('perPage', 10));

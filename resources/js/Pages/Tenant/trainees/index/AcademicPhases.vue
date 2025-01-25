@@ -34,7 +34,7 @@ defineProps<{
                         <div
                             class="mt-12 flex items-center justify-start text-base/6 text-slate-600 dark:text-slate-300 rtl:!font-semibold"
                         >
-                            {{ $t('total_college_students') }}
+                            {{ $t('total_trainees') }}
                         </div>
 
                         <div class="mb-8 mt-4 flex items-center justify-start">

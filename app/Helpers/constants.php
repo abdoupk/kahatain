@@ -13,6 +13,8 @@ const FILTER_SCHOOL_ENTRY = 'AND academic_level.phase_key IN [primary_education,
 
 const FILTER_COLLEGE_STUDENTS = 'AND academic_level.phase_key IN [licence, master, doctorate]';
 
+const FILTER_TRAINEES_ORPHANS = 'AND academic_level.phase_key IN [paramedical, vocational_training]';
+
 const FILTER_RAMADAN_BASKET = '';
 // 'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
 
