@@ -16,18 +16,15 @@ function monthlySponsorship(Family $family): void
 {
     $family->load(['orphans.tenant', 'orphans.academicLevel', 'aid', 'secondSponsor', 'sponsor.incomes', 'housing', 'tenant']);
 
-    $weights = calculateWeights($family);
+    $calculations = json_decode($family->tenant['calculation'], true);
+    ray($calculations);
+    $weights = calculateWeights($family, $calculations);
 
-    $income_rate = calculateIncomeRate($family);
+    $income_rate = calculateIncomeRate($family, $calculations);
 
     $total_income = calculateTotalIncomes($family);
 
-    $family->update([
-        'total_income' => $total_income,
-        'income_rate' => $income_rate,
-    ]);
-
-    $differenceBeforeSponsorship = calculateDifferenceBeforeMonthlySponsorship($family, $weights);
+    $differenceBeforeSponsorship = calculateDifferenceBeforeMonthlySponsorship($weights, $income_rate, $calculations);
 
     $sponsorshipRate = getPercentageForIncomeRate($family, $differenceBeforeSponsorship) / 100;
 
@@ -35,9 +32,11 @@ function monthlySponsorship(Family $family): void
 
     $differenceAfterSponsorship = calculateDifferenceAfterMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipFromAssociation);
 
-    $differenceForRamadanSponsorship = calculateDifferenceForRamadanSponsorship($family, $weights);
+    $differenceForRamadanSponsorship = calculateDifferenceForRamadanSponsorship($weights, $income_rate, $calculations);
 
     $family->update([
+        'total_income' => $total_income,
+        'income_rate' => $income_rate,
         'monthly_sponsorship_rate' => $sponsorshipRate,
         'difference_before_monthly_sponsorship' => $differenceBeforeSponsorship,
         'amount_from_association' => $sponsorshipFromAssociation,
@@ -53,18 +52,18 @@ function monthlySponsorship(Family $family): void
     $family->sponsor()->searchable();
 }
 
-function calculateDifferenceBeforeMonthlySponsorship(Family $family, float $totalWeights): float
+function calculateDifferenceBeforeMonthlySponsorship(float $totalWeights, float $incomeRate, array $calculation): float
 {
-    $threshold = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['threshold'];
+    $threshold = $calculation['monthly_sponsorship']['threshold'];
 
-    return ($threshold - $family->income_rate) * $totalWeights;
+    return ($threshold - $incomeRate) * $totalWeights;
 }
 
-function calculateDifferenceForRamadanSponsorship(Family $family, float $totalWeights): float
+function calculateDifferenceForRamadanSponsorship(float $totalWeights, float $incomeRate, array $calculation): float
 {
-    $threshold = json_decode($family->tenant['calculation'], true)['ramadan_sponsorship']['threshold'];
+    $threshold = $calculation['ramadan_sponsorship']['threshold'];
 
-    return ($threshold - $family->income_rate) * $totalWeights;
+    return ($threshold - $incomeRate) * $totalWeights;
 }
 
 function calculateAssociationMonthlySponsorship(Family $family, float $differenceBeforeSponsorship, float $sponsorshipRate): float

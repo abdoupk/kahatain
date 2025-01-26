@@ -11,9 +11,9 @@ function calculateTotalIncomes(Family $family): float
         + $family->secondSponsor?->income;
 }
 
-function calculateIncomeRate(Family $family): float
+function calculateIncomeRate(Family $family, array $calculation): float
 {
-    return round(calculateIncomes($family) / calculateWeights($family), 2);
+    return round(calculateIncomes($family) / calculateWeights($family, $calculation), 2);
 }
 
 function calculateIncomes(Family $family)

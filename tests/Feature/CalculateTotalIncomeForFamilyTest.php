@@ -38,6 +38,8 @@ beforeEach(function () {
         ],
     ]);
 
+    $this->calculation = json_decode($this->tenant->calculation, true);
+
     Branch::factory()->count(3)->create([
         'tenant_id' => $this->tenant->id,
         'city_id' => City::inRandomOrder()->first()->id,
@@ -105,12 +107,12 @@ it('correctly calculates total income for family when sponsor is widows husband 
     monthlySponsorship($this->family);
 
     expect($this->family->difference_before_monthly_sponsorship > 0)->toBeTrue()
-        ->and(calculateWeights($this->family))->toBe(2.0)
+        ->and(calculateWeights($this->family, $this->calculation))->toBe(2.0)
         ->and($this->family->total_income)->toBe(4000.0)
         ->and($this->family->income_rate)->toBe(2000.0)
         ->and($this->family->difference_before_monthly_sponsorship)->toBe(8000.0)
-        ->and($this->family->monthly_sponsorship_rate)->toBe(0.45)
         ->and($this->family->amount_from_association)->toBe(-400.0)
+        ->and($this->family->monthly_sponsorship_rate)->toBe(0.45)
         ->and($this->family->difference_after_monthly_sponsorship)->toBe(
             4400.0);
 });
@@ -124,7 +126,8 @@ it('correctly calculates total income for family when sponsor is widows husband 
     $this->incomes = $this->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
         'sponsor_id' => $this->sponsor->id,
-        'other_income' => 0,
+        'other_income' => 4000,
+        'total_income' => 4000,
         'account' => [
             'ccp' => [
                 'monthly_income' => null,
@@ -145,6 +148,13 @@ it('correctly calculates total income for family when sponsor is widows husband 
 
     monthlySponsorship($this->family);
 
-    expect($this->family->total_income)->toBe(15000.0)
-        ->and(expect($this->family->income_rate)->toBe(7500.0));
+    expect($this->family->difference_before_monthly_sponsorship > 0)->toBeFalse()
+        ->and(calculateWeights($this->family, $this->calculation))->toBe(2.0)
+        ->and($this->family->total_income)->toBe(15000.0)
+        ->and($this->family->income_rate)->toBe(7500.0)
+        ->and($this->family->difference_before_monthly_sponsorship)->toBe(-3000.0)
+        ->and($this->family->amount_from_association)->toBe(0.0)
+        ->and($this->family->monthly_sponsorship_rate)->toBe(0.0)
+        ->and($this->family->difference_after_monthly_sponsorship)->toBe(
+            -3000.0);
 });

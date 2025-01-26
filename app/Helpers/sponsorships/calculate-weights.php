@@ -3,9 +3,9 @@
 use App\Models\Family;
 use App\Models\Orphan;
 
-function calculateWeights(Family $family): float
+function calculateWeights(Family $family, array $calculation): float
 {
-    $calculationWeights = json_decode($family->tenant['calculation'], true)['weights']['orphans'];
+    $calculationWeights = $calculation['weights']['orphans'];
 
     return $family->orphans->sum(function (Orphan $orphan) use ($calculationWeights) {
         return calculateOrphanWeights($orphan, $calculationWeights);

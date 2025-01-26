@@ -22,7 +22,7 @@ class FamilyCreatedJob implements ShouldQueue
     {
         $this->family->update([
             'total_income' => calculateTotalIncomes($this->family),
-            'income_rate' => calculateIncomeRate($this->family),
+            'income_rate' => calculateIncomeRate($this->family, json_decode($this->family->load('tenant')->tenant['calculation'], true)),
         ]);
 
         Notification::send(
