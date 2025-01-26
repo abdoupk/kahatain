@@ -87,7 +87,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan below school age during academic season.', function () {
     $this->orphan->update([
@@ -98,7 +98,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan below school age outside academic season.', function () {
     $this->orphan->update([
@@ -109,7 +109,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan in primary school during academic season.', function () {
     $this->orphan->update([
@@ -121,7 +121,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.25);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan in primary school outside academic season.', function () {
     $this->orphan->update([
@@ -133,7 +133,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan in middle school during academic season.', function () {
     $this->orphan->update([
@@ -145,7 +145,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.5);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan in middle school outside academic season.', function () {
     $this->orphan->update([
@@ -157,7 +157,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan in high school during academic season.', function () {
     $this->orphan->update([
@@ -169,7 +169,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.75);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan in high school outside academic season.', function () {
     $this->orphan->update([
@@ -181,7 +181,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan is dismissed during academic season.', function () {
     $this->orphan->update([
@@ -193,7 +193,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan is dismissed outside academic season when family status not selected.', function () {
     $this->orphan->update([
@@ -205,7 +205,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan is dismissed outside academic season when family status selected.', function () {
     $this->orphan->update([
@@ -217,7 +217,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan works during academic season when family status selected.', function () {
     $this->orphan->update([
@@ -229,7 +229,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan works during academic season when family status not selected.', function () {
     $this->orphan->update([
@@ -241,7 +241,7 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and has orphan works outside academic season.', function () {
     $this->orphan->update([
@@ -253,4 +253,4 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');

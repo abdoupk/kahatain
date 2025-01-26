@@ -74,11 +74,12 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and the family has second sponsor lives with the family.', function () {
     $this->orphan->update([
         'academic_level_id' => AcademicLevel::wherePhaseKey('middle_education')->inRandomOrder()->first()->id,
+        'birth_date' => now()->subYears(16),
     ]);
 
     travelTo(Carbon::create(2025, 1, 13));
@@ -92,12 +93,13 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
     $this->family->load(['secondSponsor']);
 
     expect(calculateWeights($this->family, $this->calculation))
-        ->toBe(3.25);
-});
+        ->toBe(3.5);
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and the family has second sponsor outside the family.', function () {
     $this->orphan->update([
         'academic_level_id' => AcademicLevel::wherePhaseKey('primary_education')->inRandomOrder()->first()->id,
+        'birth_date' => now()->subYears(16),
     ]);
 
     travelTo(Carbon::create(2025, 1, 13));
@@ -112,4 +114,4 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.25);
-});
+})->group('weights');

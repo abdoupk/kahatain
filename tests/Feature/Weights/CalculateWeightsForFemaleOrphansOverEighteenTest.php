@@ -70,107 +70,125 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
         'birth_date' => now()->subYears(20),
         'academic_level_id' => AcademicLevel::wherePhaseKey('university')->inRandomOrder()->first()->id,
         'gender' => 'female',
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and college student and complete his studies and family status not selected.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'academic_level_id' => AcademicLevel::wherePhaseKey('university')->whereLevel('متخرج')->first()->id,
         'gender' => 'female',
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and in university and academic level not selected.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::COLLEGE_GIRL->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and works.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::PROFESSIONAL_GIRL->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and in house and without income.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::AT_HOME_WITH_NO_INCOME->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and in house with grant (منحة البطالة).', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::AT_HOME_WITH_INCOME->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and single.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::SINGLE_FEMALE_EMPLOYEE->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and married.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::MARRIED->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(1.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and divorced with family.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::DIVORCED_WITH_FAMILY->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(1.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة) and orphan is female and divorced without family.', function () {
     $this->orphan->update([
         'birth_date' => now()->subYears(20),
         'family_status' => FamilyStatus::DIVORCED_OUTSIDE_FAMILY->value,
         'gender' => 'female',
+        'academic_level_id' => null,
+        'is_handicapped' => false,
     ]);
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(1.0);
-});
+})->group('weights');

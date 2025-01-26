@@ -70,7 +70,7 @@ it('correctly calculates weights for family when sponsor is widow(الأرملة
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widower(الأرمل).', function () {
     $this->family->sponsor->update([
@@ -79,7 +79,7 @@ it('correctly calculates weights for family when sponsor is widower(الأرمل
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(1.75);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widower`s wife( زوجة الأرمل ).', function () {
     $this->family->sponsor->update([
@@ -88,7 +88,7 @@ it('correctly calculates weights for family when sponsor is widower`s wife( زو
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(1.75);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is other( الجد / الجدة / آخر).', function () {
     $this->family->sponsor->update([
@@ -97,7 +97,7 @@ it('correctly calculates weights for family when sponsor is other( الجد / ا
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is mother of a supported childhood (أم طفولة مسعفة).', function () {
     $this->family->sponsor->update([
@@ -106,7 +106,7 @@ it('correctly calculates weights for family when sponsor is mother of a supporte
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(1.75);
-});
+})->group('weights');
 
 it('correctly calculates weights for family when sponsor is widow`s husband (زوج الأرملة).', function () {
     $this->family->sponsor->update([
@@ -115,4 +115,4 @@ it('correctly calculates weights for family when sponsor is widow`s husband (ز�
 
     expect(calculateWeights($this->family, $this->calculation))
         ->toBe(2.0);
-});
+})->group('weights');
