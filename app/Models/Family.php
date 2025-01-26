@@ -131,6 +131,7 @@ class Family extends Model implements HasMedia
         'aggregate_white_meat_benefit',
         'aggregate_red_meat_benefit',
         'deletion_reason',
+        'eid_al_adha_status',
     ];
 
     protected static function boot(): void
@@ -276,6 +277,7 @@ class Family extends Model implements HasMedia
             ],
             'aggregate_white_meat_benefit' => (int) $this->aggregate_white_meat_benefit,
             'aggregate_red_meat_benefit' => (int) $this->aggregate_red_meat_benefit,
+            'eid_al_adha_status' => $this->eid_al_adha_status,
         ];
     }
 

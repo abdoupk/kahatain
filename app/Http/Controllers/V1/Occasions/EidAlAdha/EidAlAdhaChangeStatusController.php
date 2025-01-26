@@ -12,6 +12,10 @@ class EidAlAdhaChangeStatusController extends Controller implements HasMiddlewar
 {
     public function __invoke(FamilyEidAlAdhaUpdateStatusRequest $request, Family $family)
     {
+        $family->update([
+            'eid_al_adha_status' => $request->status,
+        ]);
+
         $family->eidAlAdhas()->updateOrCreate([
             'year' => now()->year,
         ], [

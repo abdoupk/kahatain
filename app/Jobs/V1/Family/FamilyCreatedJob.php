@@ -20,11 +20,6 @@ class FamilyCreatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        $this->family->update([
-            'total_income' => calculateTotalIncomes($this->family),
-            'income_rate' => calculateIncomeRate($this->family, json_decode($this->family->load('tenant')->tenant['calculation'], true)),
-        ]);
-
         Notification::send(
             getUsersShouldBeNotified(
                 permissions: ['view_families'],

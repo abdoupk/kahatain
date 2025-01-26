@@ -30,7 +30,7 @@ class EidAlAdhaResource extends JsonResource
             'orphans_count' => $this->orphans_count,
             'total_income' => $this->total_income,
             'income_rate' => $this->income_rate,
-            'status' => $this->eidAlAdhas->last()?->status ?? '',
+            'status' => $this->eid_al_adha_status,
         ];
     }
 }

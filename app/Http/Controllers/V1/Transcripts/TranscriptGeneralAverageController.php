@@ -23,8 +23,6 @@ class TranscriptGeneralAverageController extends Controller
             abort(404);
         }
 
-        ray($orphan->transcripts);
-
         return Inertia::render('Tenant/transcripts/general-average/TranscriptGeneralAveragePage', [
             'grades' => $orphan->transcripts->map(function (Transcript $transcript) {
                 return $transcript->subjects->map(function (Subject $subject) {

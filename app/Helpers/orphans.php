@@ -52,7 +52,6 @@ function validateClothesAttributes($birthDate, $academicLevelId, $familyStatus, 
     // Condition 3: Academic level is primary, middle, or high school
     if ($academicLevelId) {
         $phaseKey = AcademicLevel::find($academicLevelId)?->phase_key;
-        ray($phaseKey);
 
         if (in_array($phaseKey, ['primary_education', 'middle_education', 'secondary_education'], true) && $value === null) {
             return true;

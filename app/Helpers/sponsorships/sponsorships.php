@@ -1,15 +1,13 @@
 <?php
 
+use App\Enums\SponsorType;
 use App\Models\Family;
 
 function calculateDifferenceAfterMonthlySponsorship(Family $family, float $differenceBeforeSponsorship, float $sponsorshipFromAssociation): float
 {
     $association_basket_value = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'];
-    ray($differenceBeforeSponsorship, $sponsorshipFromAssociation);
-    $a = $differenceBeforeSponsorship - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
-    ray($a);
 
-    return $a;
+    return $differenceBeforeSponsorship - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
 }
 
 function monthlySponsorship(Family $family): void
@@ -17,7 +15,7 @@ function monthlySponsorship(Family $family): void
     $family->load(['orphans.tenant', 'orphans.academicLevel', 'aid', 'secondSponsor', 'sponsor.incomes', 'housing', 'tenant']);
 
     $calculations = json_decode($family->tenant['calculation'], true);
-    ray($calculations);
+
     $weights = calculateWeights($family, $calculations);
 
     $income_rate = calculateIncomeRate($family, $calculations);
@@ -34,6 +32,8 @@ function monthlySponsorship(Family $family): void
 
     $differenceForRamadanSponsorship = calculateDifferenceForRamadanSponsorship($weights, $income_rate, $calculations);
 
+    $individualsCount = calculateNumberOfIndividualsInFamily($family);
+
     $family->update([
         'total_income' => $total_income,
         'income_rate' => $income_rate,
@@ -43,6 +43,7 @@ function monthlySponsorship(Family $family): void
         'difference_after_monthly_sponsorship' => $differenceAfterSponsorship,
         'ramadan_sponsorship_difference' => $differenceForRamadanSponsorship,
         'ramadan_basket_category' => getCategoryForRamadanBasket($family, $differenceForRamadanSponsorship),
+        'eid_al_adha_status' => getStatusForEidAlAdha($individualsCount, $income_rate, $calculations),
     ]);
 
     $family->searchable();
@@ -99,4 +100,38 @@ function getCategoryForRamadanBasket(Family $family, float $differenceForRamadan
     }
 
     return __('no_category_for_ramadan_basket');
+}
+
+function getStatusForEidAlAdha(int $individualsCount, float $incomeRate, $calculation): ?string
+{
+    $sponsorship = $calculation['eid_al_adha_sponsorship'];
+
+    if ($incomeRate > $sponsorship['threshold']) {
+        return 'dont_benefit';
+    }
+
+    if ($incomeRate < $sponsorship['threshold']) {
+        if ($individualsCount <= $sponsorship['categories']['meat']['individuals_count']) {
+            return 'meat';
+        } elseif ($individualsCount > $sponsorship['categories']['benefits']['individuals_count']) {
+            return 'benefit';
+        }
+    }
+
+    return null;
+}
+
+function calculateNumberOfIndividualsInFamily(Family $family): int
+{
+    $total = 0;
+
+    if ($family->sponsor->sponsor_type === SponsorType::WIDOWS_HUSBAND->value) {
+        $total += 2;
+    }
+
+    if ($family->secondSponsor?->with_family) {
+        $total += 1;
+    }
+
+    return $total + 1 + $family->orphans->count();
 }

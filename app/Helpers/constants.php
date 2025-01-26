@@ -187,4 +187,15 @@ const CALCULATION = [
             ],
         ],
     ],
+    'eid_al_adha_sponsorship' => [
+        'threshold' => 10000.00,
+        'categories' => [
+            'meat' => [
+                'individuals_count' => 3,
+            ],
+            'benefits' => [
+                'individuals_count' => 3,
+            ],
+        ],
+    ],
 ];
