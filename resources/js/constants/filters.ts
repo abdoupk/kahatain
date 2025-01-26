@@ -521,6 +521,20 @@ export const schoolEntryFilters: ListBoxFilter[] = [
         operators: filterObjectOperators
     },
     {
+        icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'family.income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
         icon: 'icon-graduation-cap',
         field: 'last_academic_year_achievement.academic_level.id',
         label: 'orphan.academic_level',

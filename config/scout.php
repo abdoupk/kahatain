@@ -195,6 +195,7 @@ return [
                     'academic_average',
                     'speciality.speciality',
                     'family.income_rate',
+                    'sponsor.id',
                 ],
                 'searchableAttributes' => [
                     'name',

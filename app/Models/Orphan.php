@@ -161,6 +161,11 @@ class Orphan extends Model implements HasMedia
                     'name' => $this->family->zone?->name,
                 ],
             ],
+            'sponsor' => [
+                'id' => $this->sponsor_id,
+                'name' => $this->sponsor->getName(),
+                'phone_number' => $this->sponsor?->phone_number,
+            ],
             'academic_average' => (float) $this->academic_average,
             'created_at' => strtotime($this->created_at),
             'updated_at' => strtotime($this->updated_at),
@@ -188,6 +193,7 @@ class Orphan extends Model implements HasMedia
             'pantsSize',
             'family',
             'institution',
+            'sponsor',
         ]);
     }
 
