@@ -5,8 +5,11 @@ use App\Models\Family;
 function calculateDifferenceAfterMonthlySponsorship(Family $family, float $differenceBeforeSponsorship, float $sponsorshipFromAssociation): float
 {
     $association_basket_value = json_decode($family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'];
+    ray($differenceBeforeSponsorship, $sponsorshipFromAssociation);
+    $a = $differenceBeforeSponsorship - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
+    ray($a);
 
-    return $differenceBeforeSponsorship - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
+    return $a;
 }
 
 function monthlySponsorship(Family $family): void
@@ -30,14 +33,14 @@ function monthlySponsorship(Family $family): void
 
     $sponsorshipFromAssociation = calculateAssociationMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
 
-    $differenceAfterSponsorship = calculateDifferenceAfterMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
+    $differenceAfterSponsorship = calculateDifferenceAfterMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipFromAssociation);
 
     $differenceForRamadanSponsorship = calculateDifferenceForRamadanSponsorship($family, $weights);
 
     $family->update([
-        'amount_from_association' => $sponsorshipFromAssociation,
-        'difference_before_monthly_sponsorship' => $differenceBeforeSponsorship,
         'monthly_sponsorship_rate' => $sponsorshipRate,
+        'difference_before_monthly_sponsorship' => $differenceBeforeSponsorship,
+        'amount_from_association' => $sponsorshipFromAssociation,
         'difference_after_monthly_sponsorship' => $differenceAfterSponsorship,
         'ramadan_sponsorship_difference' => $differenceForRamadanSponsorship,
         'ramadan_basket_category' => getCategoryForRamadanBasket($family, $differenceForRamadanSponsorship),

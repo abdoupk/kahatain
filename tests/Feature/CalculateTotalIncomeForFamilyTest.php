@@ -104,16 +104,15 @@ it('correctly calculates total income for family when sponsor is widows husband 
 
     monthlySponsorship($this->family);
 
-    // assert that there family has basket from association
-    expect($this->family->difference_before_monthly_sponsorship > 0)->toBeTrue();
-    //    expect(calculateWeights($this->family))->toBe(2.0)
-    //        ->and($this->family->total_income)->toBe(4000.0)
-    //        ->and($this->family->income_rate)->toBe(2000.0)
-    //        ->and($this->family->difference_before_monthly_sponsorship)->toBe(8000.0);
-    expect($this->family->monthly_sponsorship_rate)->toBe(0.45);
-    expect($this->family->amount_from_association)->toBe(-400.0);
-    expect($this->family->difference_after_monthly_sponsorship)->toBe(
-        3600);
+    expect($this->family->difference_before_monthly_sponsorship > 0)->toBeTrue()
+        ->and(calculateWeights($this->family))->toBe(2.0)
+        ->and($this->family->total_income)->toBe(4000.0)
+        ->and($this->family->income_rate)->toBe(2000.0)
+        ->and($this->family->difference_before_monthly_sponsorship)->toBe(8000.0)
+        ->and($this->family->monthly_sponsorship_rate)->toBe(0.45)
+        ->and($this->family->amount_from_association)->toBe(-400.0)
+        ->and($this->family->difference_after_monthly_sponsorship)->toBe(
+            4400.0);
 });
 
 it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة) and unemployed.', function () {
