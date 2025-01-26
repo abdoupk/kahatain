@@ -59,7 +59,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                     $family->secondSponsor()->create($request->validated('second_sponsor'));
                 }
 
-                $family->deceased()->create(Arr::except($request->validated('spouse'), ['death_certificate_file']));
+                $family->deceased()->createMany(Arr::except($request->validated('spouse'), ['death_certificate_file']));
 
                 addToMediaCollection($family->deceased, $request->validated('spouse.death_certificate_file'), 'death_certificate_files');
 

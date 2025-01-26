@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('last_name')->nullable();
             $table->text('phone_number');
             $table->enum('sponsor_type', array_map(fn ($type) => $type->value, SponsorType::cases()));
+            $table->enum('gender', ['male', 'female']);
             $table->date('birth_date');
             $table->text('father_name')->nullable();
             $table->text('mother_name')->nullable();
@@ -29,7 +30,6 @@ return new class extends Migration
             $table->text('diploma')->nullable();
             $table->boolean('is_unemployed');
             $table->text('ccp')->nullable();
-            $table->text('gender');
             $table->uuid('family_id');
             $table->uuid('tenant_id')->index('idx_sponsors_tenant_id');
             $table->uuid('created_by')->index('idx_sponsors_created_by');

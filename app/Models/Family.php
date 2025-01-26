@@ -356,9 +356,9 @@ class Family extends Model implements HasMedia
         $this->preview()->forceDelete();
     }
 
-    public function deceased(): HasOne
+    public function deceased(): HasMany
     {
-        return $this->hasOne(Spouse::class);
+        return $this->hasMany(Spouse::class);
     }
 
     public function housing(): HasOne
