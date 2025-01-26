@@ -15,27 +15,30 @@ function monthlySponsorship(Family $family): void
 
     $weights = calculateWeights($family);
 
-    $differenceBeforeSponsorship = calculateDifferenceBeforeMonthlySponsorship($family, $weights);
-
-    $sponsorshipRate = getPercentageForIncomeRate($family, $differenceBeforeSponsorship) / 100;
-
-    $differenceAfterSponsorship = calculateDifferenceAfterMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
-
-    $sponsorshipFromAssociation = calculateAssociationMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
-
     $income_rate = calculateIncomeRate($family);
 
     $total_income = calculateTotalIncomes($family);
 
+    $family->update([
+        'total_income' => $total_income,
+        'income_rate' => $income_rate,
+    ]);
+
+    $differenceBeforeSponsorship = calculateDifferenceBeforeMonthlySponsorship($family, $weights);
+
+    $sponsorshipRate = getPercentageForIncomeRate($family, $differenceBeforeSponsorship) / 100;
+
+    $sponsorshipFromAssociation = calculateAssociationMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
+
+    $differenceAfterSponsorship = calculateDifferenceAfterMonthlySponsorship($family, $differenceBeforeSponsorship, $sponsorshipRate);
+
     $differenceForRamadanSponsorship = calculateDifferenceForRamadanSponsorship($family, $weights);
 
     $family->update([
-        'income_rate' => $income_rate,
-        'total_income' => $total_income,
-        'difference_before_monthly_sponsorship' => $differenceBeforeSponsorship,
-        'difference_after_monthly_sponsorship' => $differenceAfterSponsorship,
-        'monthly_sponsorship_rate' => $sponsorshipRate,
         'amount_from_association' => $sponsorshipFromAssociation,
+        'difference_before_monthly_sponsorship' => $differenceBeforeSponsorship,
+        'monthly_sponsorship_rate' => $sponsorshipRate,
+        'difference_after_monthly_sponsorship' => $differenceAfterSponsorship,
         'ramadan_sponsorship_difference' => $differenceForRamadanSponsorship,
         'ramadan_basket_category' => getCategoryForRamadanBasket($family, $differenceForRamadanSponsorship),
     ]);
@@ -44,15 +47,7 @@ function monthlySponsorship(Family $family): void
 
     $family->orphans()->searchable();
 
-    $sponsor = $family->sponsor();
-
-    $sponsorIncomes = $sponsor->with('incomes')->first()->incomes();
-
-    $sponsorIncomes->update([
-        'total_income' => setTotalIncomeAttribute($sponsorIncomes->first()->toArray()),
-    ]);
-
-    $sponsor->searchable();
+    $family->sponsor()->searchable();
 }
 
 function calculateDifferenceBeforeMonthlySponsorship(Family $family, float $totalWeights): float

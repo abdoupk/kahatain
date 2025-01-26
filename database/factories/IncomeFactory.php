@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Income;
+use App\Models\Sponsor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IncomeFactory extends Factory
@@ -33,7 +34,7 @@ class IncomeFactory extends Factory
 
         return [
             ...$incomes,
-            'total_income' => setTotalIncomeAttribute($incomes),
+            'total_income' => setTotalIncomeAttribute($incomes, Sponsor::inRandomOrder()->first()),
             'sponsor_id' => fake()->uuid,
             'tenant_id' => fake()->uuid,
         ];

@@ -52,6 +52,7 @@ beforeEach(function () {
         'branch_id' => Branch::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
         'zone_id' => Zone::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
         'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
+        'amount_from_association' => 0,
     ]);
 
     $this->sponsor = Sponsor::factory()->create([
@@ -73,14 +74,15 @@ beforeEach(function () {
     ]);
 });
 
-it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة)', function () {
+it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة) and employed.', function () {
     $this->sponsor->update([
         'sponsor_type' => SponsorType::WIDOWS_HUSBAND,
-        'is_unemployed' => true,
+        'is_unemployed' => false,
     ]);
 
     $this->incomes = $this->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
+        'sponsor_id' => $this->sponsor->id,
         'other_income' => 4000,
         'account' => [
             'ccp' => [
@@ -94,13 +96,56 @@ it('correctly calculates total income for family when sponsor is widows husband 
                 'performance_grant' => null,
             ],
         ],
-        'total_income' => 4000,
+    ]);
+
+    $this->incomes->update([
+        'total_income' => setTotalIncomeAttribute($this->incomes->toArray(), $this->sponsor),
     ]);
 
     monthlySponsorship($this->family);
 
-    expect(calculateIncomeRate($this->family))->toBe(15000.0);
+    // assert that there family has basket from association
+    expect($this->family->difference_before_monthly_sponsorship > 0)->toBeTrue();
+    //    expect(calculateWeights($this->family))->toBe(2.0)
+    //        ->and($this->family->total_income)->toBe(4000.0)
+    //        ->and($this->family->income_rate)->toBe(2000.0)
+    //        ->and($this->family->difference_before_monthly_sponsorship)->toBe(8000.0);
+    expect($this->family->monthly_sponsorship_rate)->toBe(0.45);
+    expect($this->family->amount_from_association)->toBe(-400.0);
+    expect($this->family->difference_after_monthly_sponsorship)->toBe(
+        3600);
+});
 
-    //    expect($this->family->total_income)->toBe(4000.0)
-    //        ->and($this->family->income_rate)->toBe(0.0);
+it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة) and unemployed.', function () {
+    $this->sponsor->update([
+        'sponsor_type' => SponsorType::WIDOWS_HUSBAND,
+        'is_unemployed' => true,
+    ]);
+
+    $this->incomes = $this->sponsor->incomes()->create([
+        'tenant_id' => $this->tenant->id,
+        'sponsor_id' => $this->sponsor->id,
+        'other_income' => 0,
+        'account' => [
+            'ccp' => [
+                'monthly_income' => null,
+                'balance' => null,
+                'performance_grant' => null,
+            ],
+            'bank' => [
+                'monthly_income' => null,
+                'balance' => null,
+                'performance_grant' => null,
+            ],
+        ],
+    ]);
+
+    $this->incomes->update([
+        'total_income' => setTotalIncomeAttribute($this->incomes->toArray(), $this->sponsor),
+    ]);
+
+    monthlySponsorship($this->family);
+
+    expect($this->family->total_income)->toBe(15000.0)
+        ->and(expect($this->family->income_rate)->toBe(7500.0));
 });

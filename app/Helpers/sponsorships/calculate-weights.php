@@ -20,7 +20,7 @@ function calculateSponsorWeights(Family $family): float
         'other' => $weights['other'],
         'widower' => $weights['widower'],
         'widow' => $weights['widow'],
-        'widows_husband' => 1,
+        'widows_husband' => $weights['widows_husband'] + 1,
         'mother_of_a_supported_childhood' => $weights['mother_of_a_supported_childhood'],
         'widowers_wife' => $weights['widowers_wife'],
     };

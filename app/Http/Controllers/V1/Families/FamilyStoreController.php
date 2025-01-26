@@ -89,7 +89,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                 ['incomes.casnos', 'incomes.ccp', 'incomes.account', 'incomes.cnr',
                     'incomes.cnas', 'incomes.other_income', 'incomes.pension']
             )['incomes'],
-            'total_income' => setTotalIncomeAttribute($request->incomes),
+            'total_income' => setTotalIncomeAttribute($request->incomes, $sponsor),
         ]);
 
         addToMediaCollection($sponsor, $request->validated('sponsor.diploma_file'), 'diploma_files');

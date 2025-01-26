@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Family;
+use App\Models\Sponsor;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -38,20 +39,25 @@ function getFamiliesPosition(): array
         ->get()->toArray();
 }
 
-function setTotalIncomeAttribute(array $incomes): float
+function setTotalIncomeAttribute(array $incomes, Sponsor $sponsor): float
 {
+
+    if ($sponsor->is_unemployed) {
+        return json_decode($sponsor->load('tenant')->tenant['calculation'], true)['monthly_sponsorship']['unemployment_benefit'];
+    }
+
     $incomes = Arr::only($incomes, ['account', 'other_income']);
 
     return array_reduce($incomes, function ($carry, $item) {
         if (is_array($item)) {
-            $total = 0;
+            $total = $carry;
 
             if (isset($item['ccp'])) {
-                $total += $carry + (float) $item['ccp']['monthly_income'] + (float) $item['ccp']['balance'] + (float) $item['ccp']['performance_grant'] / 3;
+                $total += (float) $item['ccp']['monthly_income'] + (float) $item['ccp']['balance'] + (float) $item['ccp']['performance_grant'] / 3;
             }
 
             if (isset($item['bank'])) {
-                $total += $carry + (float) $item['bank']['monthly_income'] + (float) $item['bank']['balance'] + (float) $item['bank']['performance_grant'] / 3;
+                $total += (float) $item['bank']['monthly_income'] + (float) $item['bank']['balance'] + (float) $item['bank']['performance_grant'] / 3;
             }
 
             return $total;

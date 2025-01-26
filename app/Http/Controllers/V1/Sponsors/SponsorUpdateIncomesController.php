@@ -25,7 +25,7 @@ class SponsorUpdateIncomesController extends Controller implements HasMiddleware
     {
         $sponsor->incomes()->update([
             ...$request->only(['incomes.casnos', 'incomes.ccp', 'incomes.cnr', 'incomes.cnas', 'incomes.other_income', 'incomes.pension', 'incomes.account'])['incomes'],
-            'total_income' => setTotalIncomeAttribute($request->incomes),
+            'total_income' => setTotalIncomeAttribute($request->incomes, $sponsor),
         ]);
 
         $income = $sponsor->incomes()->first();
