@@ -86,7 +86,7 @@ class Baby extends Model
 
     public function shouldBeSearchable(): bool
     {
-        return $this->orphan->birth_date->age < 2;
+        return $this->orphan->birth_date->age <= 2;
     }
 
     public function toSearchableArray(): array

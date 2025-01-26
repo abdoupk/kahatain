@@ -23,6 +23,10 @@ const familyStatuses = computed(() => {
                 value: 'professional_boy'
             },
             {
+                label: $t('family_statuses.professional_male'),
+                value: 'professionals'
+            },
+            {
                 label: $t('family_statuses.unemployed'),
                 value: 'unemployed'
             },
@@ -49,6 +53,10 @@ const familyStatuses = computed(() => {
         {
             label: $t('family_statuses.college_girl'),
             value: 'college_girl'
+        },
+        {
+            label: $t('family_statuses.professional_female'),
+            value: 'professionals'
         },
         {
             label: $t('family_statuses.professional_girl'),

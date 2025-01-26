@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 
 import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateModal.vue'
-import MenuLink from '@/Pages/Tenant/orphans/details/MenuLink.vue'
+import MenuLink from '@/Pages/Tenant/orphans/edit/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 

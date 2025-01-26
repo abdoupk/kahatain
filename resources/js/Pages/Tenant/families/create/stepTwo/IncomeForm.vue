@@ -93,8 +93,6 @@ const toggle = (key: keyof IncomesType) => {
 onMounted(() => {
     const { cnr, cnas, casnos, pension, other_income, account } = createFamilyStore.family.incomes
 
-    console.log(cnr, cnas, casnos, pension, other_income, account)
-
     items.value = {
         cnr: cnr,
         cnas: cnas,

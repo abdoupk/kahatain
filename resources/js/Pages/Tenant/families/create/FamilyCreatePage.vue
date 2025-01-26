@@ -131,7 +131,7 @@ const goTo = async (index: number) => {
 }
 
 const submit = () => {
-    createFamilyStore.family.orphans.map((orphan, index) => {
+    createFamilyStore.family.orphans.map((orphan) => {
         orphan.institution_id = orphan.institution_id?.id
     })
 

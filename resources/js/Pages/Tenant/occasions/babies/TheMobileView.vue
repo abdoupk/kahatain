@@ -11,8 +11,6 @@ defineProps<{
     orphans: PaginationData<BabiesMilkAndDiapersResource>
     params: IndexParams
 }>()
-
-const emit = defineEmits(['sort'])
 </script>
 
 <template>

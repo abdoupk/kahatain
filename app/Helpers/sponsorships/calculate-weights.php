@@ -2,6 +2,7 @@
 
 use App\Models\Family;
 use App\Models\Orphan;
+use Carbon\Carbon;
 
 function calculateWeights(Family $family, array $calculation): float
 {
@@ -47,6 +48,10 @@ function calculateWeightForOrphanFemaleOlderThan18(Orphan $orphan, array $weight
 {
     $weights = $weights['female_gt_18'];
 
+    if ($orphan->academicLevel?->phase_key === 'university' && $orphan->academicLevel?->level === 'متخرج') {
+        return $weights['at_home_with_no_income'];
+    }
+
     return match ($orphan->family_status) {
         'college_girl' => $weights['college_girl'],
         'professional_girl' => $weights['professional_girl'],
@@ -56,13 +61,16 @@ function calculateWeightForOrphanFemaleOlderThan18(Orphan $orphan, array $weight
         'married' => $weights['married'],
         'divorced_with_family' => $weights['divorced_with_family'],
         'divorced_outside_family' => $weights['divorced_outside_family'],
-        null => 1,
     };
 }
 
 function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights): float
 {
     $weights = $weights['male_gt_18'];
+
+    if ($orphan->academicLevel?->phase_key === 'university' && $orphan->academicLevel?->level === 'متخرج') {
+        return $weights['unemployed'];
+    }
 
     return match ($orphan->family_status) {
         'college_boy' => $weights['college_boy'],
@@ -72,7 +80,6 @@ function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights)
         'worker_outside_family' => $weights['worker_outside_family'],
         'married_with_family' => $weights['married_with_family'],
         'married_outside_family' => $weights['married_outside_family'],
-        null => 1,
     };
 }
 
@@ -80,8 +87,8 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
 {
     $orphan = $orphan->load('academicLevel');
 
-    if (date('m') <= 9 && date('m') >= 6) {
-        if ($orphan->birth_date->age < 2) {
+    if (Carbon::now()->month <= 9 && Carbon::now()->month >= 6) {
+        if ($orphan->birth_date->age <= 2) {
             return $weights['lt_18']['outside_academic_season']['baby'];
         }
 
@@ -89,23 +96,29 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
             return $weights['lt_18']['outside_academic_season']['below_school_age'];
         }
 
+        if ($orphan->family_status === 'professionals' || $orphan->academicLevel?->phase_key === 'vocational_training' ||
+            $orphan->academicLevel?->phase_key === 'paramedical'
+        ) {
+            return $weights['lt_18']['outside_academic_season']['professionals'];
+        }
+
         if ($orphan->academicLevel?->level === 'مفصول') {
             return $weights['lt_18']['outside_academic_season']['dismissed'];
         }
 
-        if ($orphan->family_status === 'professional_girl' || $orphan->family_status === 'professional_boy') {
-            return $weights['lt_18']['outside_academic_season']['professionals'];
+        if ($orphan->academicLevel?->phase) {
+            return match ($orphan->academicLevel?->phase_key) {
+                'primary_education' => $weights['lt_18']['outside_academic_season']['elementary_school'],
+                'middle_education' => $weights['lt_18']['outside_academic_season']['middle_school'],
+                'secondary_education' => $weights['lt_18']['outside_academic_season']['high_school'],
+                default => 1
+            };
         }
 
-        return match ($orphan->academicLevel?->phase) {
-            'الطور الابتدائي' => $weights['lt_18']['outside_academic_season']['elementary_school'],
-            'الطور المتوسط' => $weights['lt_18']['outside_academic_season']['middle_school'],
-            'الطور الثانوي' => $weights['lt_18']['outside_academic_season']['high_school'],
-            default => 1
-        };
+        return 1;
     }
 
-    if ($orphan->birth_date->age < 2) {
+    if ($orphan->birth_date->age <= 2) {
         return $weights['lt_18']['during_academic_season']['baby'];
     }
 
@@ -113,20 +126,27 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
         return $weights['lt_18']['during_academic_season']['below_school_age'];
     }
 
+    if ($orphan->family_status === 'professionals' ||
+        $orphan->academicLevel?->phase_key === 'vocational_training' ||
+        $orphan->academicLevel?->phase_key === 'paramedical'
+    ) {
+        return $weights['lt_18']['during_academic_season']['professionals'];
+    }
+
     if ($orphan->academicLevel?->level === 'مفصول') {
         return $weights['lt_18']['during_academic_season']['dismissed'];
     }
 
-    if ($orphan->family_status === 'professional_girl' || $orphan->family_status === 'professional_boy') {
-        return $weights['lt_18']['during_academic_season']['professionals'];
+    if ($orphan->academicLevel?->phase) {
+        return match ($orphan->academicLevel?->phase_key) {
+            'primary_education' => $weights['lt_18']['during_academic_season']['elementary_school'],
+            'middle_education' => $weights['lt_18']['during_academic_season']['middle_school'],
+            'secondary_education' => $weights['lt_18']['during_academic_season']['high_school'],
+            default => 1
+        };
     }
 
-    return match ($orphan->academicLevel?->phase) {
-        'الطور الابتدائي' => $weights['lt_18']['during_academic_season']['elementary_school'],
-        'الطور المتوسط' => $weights['lt_18']['during_academic_season']['middle_school'],
-        'الطور الثانوي' => $weights['lt_18']['during_academic_season']['high_school'],
-        default => 1
-    };
+    return 1;
 }
 
 function calculateWeightForSecondSponsor(Family $family): float

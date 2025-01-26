@@ -56,8 +56,6 @@ watch(
     () => {
         if (props.showWarningAlert) {
             showWarningModal.value = true
-
-            console.log('45454')
         }
     }
 )

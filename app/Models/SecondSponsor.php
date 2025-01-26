@@ -66,6 +66,7 @@ class SecondSponsor extends Model
         'income',
         'with_family',
         'family_id',
+        'tenant_id',
     ];
 
     public function getName(): string
