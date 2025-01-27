@@ -1,13 +1,10 @@
 <?php
 
 use App\Enums\SponsorType;
-use App\Models\Branch;
-use App\Models\City;
 use App\Models\Family;
 use App\Models\Orphan;
-use App\Models\Sponsor;
 use App\Models\Tenant;
-use App\Models\Zone;
+use Database\Seeders\AcademicLevelSeeder;
 use Database\Seeders\CitySeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -18,6 +15,8 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     seed(CitySeeder::class);
 
+    seed(AcademicLevelSeeder::class);
+
     $this->tenant = Tenant::factory()->create([
         'infos' => [
             'super_admin' => [
@@ -26,50 +25,23 @@ beforeEach(function () {
                 'password' => 'password',
                 'email' => 'test@example.com',
             ],
-            'domain' => 'foo.'.config('app.domain'),
-            'association' => 'kafil el yatim El-bayadh ',
-            'city_id' => 1144,
-            'city' => [
-                'id' => 1144,
-                'daira_name' => 'البيض',
-                'wilaya_code' => '32',
-                'wilaya_name' => 'البيض',
-            ],
         ],
     ]);
 
     $this->calculation = json_decode($this->tenant->calculation, true);
 
-    Branch::factory()->count(3)->create([
-        'tenant_id' => $this->tenant->id,
-        'city_id' => City::inRandomOrder()->first()->id,
-    ]);
+    $this->family = Family::factory()
+        ->hasSponsor(1, ['tenant_id' => $this->tenant->id, 'sponsor_type' => SponsorType::WIDOWS_HUSBAND, 'is_unemployed' => false])
+        ->hasZone(1, ['tenant_id' => $this->tenant->id])
+        ->hasBranch(1, ['tenant_id' => $this->tenant->id])
+        ->create(['tenant_id' => $this->tenant->id]);
 
-    Zone::factory()->count(3)->create([
-        'tenant_id' => $this->tenant->id,
-    ]);
-
-    $this->family = Family::factory()->create([
-        'tenant_id' => $this->tenant->id,
-        'branch_id' => Branch::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
-        'zone_id' => Zone::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
-        'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
-        'amount_from_association' => 0,
-    ]);
-
-    $this->sponsor = Sponsor::factory()->create([
-        'tenant_id' => $this->tenant->id,
-        'family_id' => $this->family->id,
-        'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
-        'phone_number' => '0664954817',
-        'sponsor_type' => 'widowers_wife',
-    ]);
+    $this->family->load(['sponsor']);
 
     // suppose orphan is baby when weight is always equal to 1
     $this->orphan = Orphan::factory()->create([
-        'sponsor_id' => $this->sponsor->id,
+        'sponsor_id' => $this->family->sponsor->id,
         'family_id' => $this->family->id,
-        'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
         'tenant_id' => $this->tenant->id,
         'birth_date' => now()->subDays(80),
         'income' => 0,
@@ -77,14 +49,8 @@ beforeEach(function () {
 });
 
 it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة) and employed.', function () {
-    $this->sponsor->update([
-        'sponsor_type' => SponsorType::WIDOWS_HUSBAND,
-        'is_unemployed' => false,
-    ]);
-
-    $this->incomes = $this->sponsor->incomes()->create([
+    $this->incomes = $this->family->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
-        'sponsor_id' => $this->sponsor->id,
         'other_income' => 4000,
         'account' => [
             'ccp' => [
@@ -101,7 +67,7 @@ it('correctly calculates total income for family when sponsor is widows husband 
     ]);
 
     $this->incomes->update([
-        'total_income' => setTotalIncomeAttribute($this->incomes->toArray(), $this->sponsor),
+        'total_income' => setTotalIncomeAttribute($this->incomes->toArray(), $this->family->sponsor),
     ]);
 
     monthlySponsorship($this->family);
@@ -115,17 +81,13 @@ it('correctly calculates total income for family when sponsor is widows husband 
         ->and($this->family->monthly_sponsorship_rate)->toBe(0.45)
         ->and($this->family->difference_after_monthly_sponsorship)->toBe(
             4400.0);
-});
+})->group('incomes');
 
 it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة) and unemployed.', function () {
-    $this->sponsor->update([
-        'sponsor_type' => SponsorType::WIDOWS_HUSBAND,
-        'is_unemployed' => true,
-    ]);
+    $this->family->sponsor->update(['is_unemployed' => true]);
 
-    $this->incomes = $this->sponsor->incomes()->create([
+    $this->incomes = $this->family->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
-        'sponsor_id' => $this->sponsor->id,
         'other_income' => 4000,
         'total_income' => 4000,
         'account' => [
@@ -143,7 +105,7 @@ it('correctly calculates total income for family when sponsor is widows husband 
     ]);
 
     $this->incomes->update([
-        'total_income' => setTotalIncomeAttribute($this->incomes->toArray(), $this->sponsor),
+        'total_income' => setTotalIncomeAttribute($this->incomes->toArray(), $this->family->sponsor),
     ]);
 
     monthlySponsorship($this->family);
@@ -157,4 +119,4 @@ it('correctly calculates total income for family when sponsor is widows husband 
         ->and($this->family->monthly_sponsorship_rate)->toBe(0.0)
         ->and($this->family->difference_after_monthly_sponsorship)->toBe(
             -3000.0);
-});
+})->group('incomes');

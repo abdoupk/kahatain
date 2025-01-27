@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\EidAlAdhaStatus;
 use App\Models\Family;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FamilyFactory extends Factory
@@ -28,7 +30,8 @@ class FamilyFactory extends Factory
             'amount_from_association' => fake()->randomFloat(2, 0, 10000),
             'monthly_sponsorship_rate' => fake()->randomFloat(2, 0, 10000),
             'tenant_id' => fake()->uuid,
-            'created_by' => fake()->uuid(),
+            'eid_al_adha_status' => fake()->randomElement(array_map(fn ($type) => $type->value, EidAlAdhaStatus::cases())),
+            'created_by' => User::inRandomOrder()->first()->id,
             'created_at' => now()->subDays(fake()->numberBetween(0, 350)),
             'updated_at' => now()->subDays(fake()->numberBetween(0, 350)),
         ];

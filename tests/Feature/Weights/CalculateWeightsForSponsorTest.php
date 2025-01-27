@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\SponsorType;
-use App\Models\City;
 use App\Models\Family;
 use App\Models\Orphan;
 use App\Models\Tenant;
@@ -26,15 +25,6 @@ beforeEach(function () {
                 'password' => 'password',
                 'email' => 'test@example.com',
             ],
-            'domain' => 'foo.'.config('app.domain'),
-            'association' => 'kafil el yatim El-bayadh ',
-            'city_id' => 1144,
-            'city' => [
-                'id' => 1144,
-                'daira_name' => 'البيض',
-                'wilaya_code' => '32',
-                'wilaya_name' => 'البيض',
-            ],
         ],
     ]);
 
@@ -46,18 +36,14 @@ beforeEach(function () {
             'tenant_id' => $this->tenant->id,
         ])
         ->hasZone(1, ['tenant_id' => $this->tenant->id])
-        ->hasBranch(1, ['tenant_id' => $this->tenant->id, 'city_id' => City::inRandomOrder()->first()->id])
-        ->create([
-            'tenant_id' => $this->tenant->id,
-            'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
-        ]);
+        ->hasBranch(1, ['tenant_id' => $this->tenant->id])
+        ->create(['tenant_id' => $this->tenant->id]);
 
     $this->family->load(['sponsor']);
 
     $this->orphan = Orphan::factory()->create([
         'sponsor_id' => $this->family->sponsor->id,
         'family_id' => $this->family->id,
-        'created_by' => \App\Models\User::inRandomOrder()->whereTenantId($this->tenant->id)->first()->id,
         'tenant_id' => $this->tenant->id,
         'birth_date' => now()->subDays(80),
     ]);

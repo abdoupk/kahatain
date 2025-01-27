@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EidAlAdhaStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -33,7 +34,7 @@ return new class extends Migration
             $table->float('aggregate_zakat_benefit')->default(0);
             $table->mediumInteger('aggregate_white_meat_benefit')->default(0);
             $table->mediumInteger('aggregate_red_meat_benefit')->default(0);
-            $table->enum('eid_al_adha_status', ['benefit', 'benefactor', 'sacrificed', 'meat', 'dont_benefit'])->nullable();
+            $table->enum('eid_al_adha_status', array_map(fn ($type) => $type->value, EidAlAdhaStatus::cases()))->nullable();
             $table->uuid('created_by')->nullable();
             $table->uuid('deleted_by')->nullable();
             $table->timestamps();
