@@ -87,12 +87,12 @@ const CALCULATION = [
     ],
     'percentage_of_contribution' => [
         'sponsor' => [
-            'other' => 100,
-            'widow' => 100,
             'widower' => 100,
-            'mother_of_a_supported_childhood' => 100,
-            'widowers_wife' => 100,
+            'widow' => 100,
             'widows_husband' => 100,
+            'widowers_wife' => 100,
+            'other' => 100,
+            'mother_of_a_supported_childhood' => 100,
         ],
         'orphans' => [
             'male_gt_18' => [
@@ -119,12 +119,12 @@ const CALCULATION = [
     ],
     'unemployed_contribution' => [
         'sponsor' => [
-            'other' => 0.00,
-            'widow' => 0.00,
             'widower' => 0.00,
-            'mother_of_a_supported_childhood' => 0.00,
-            'widowers_wife' => 0.00,
+            'widow' => 0.00,
             'widows_husband' => 15000.00,
+            'widowers_wife' => 0.00,
+            'other' => 0.00,
+            'mother_of_a_supported_childhood' => 0.00,
         ],
         'orphans' => [
             'male_gt_18' => [

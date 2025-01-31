@@ -59,6 +59,7 @@ class OrphanFactory extends Factory
         if ($family_status === 'unemployed') {
             $unemployed = true;
         }
+
         $institution_id = null;
 
         $institution_type = fake()->randomElement(['school', 'university', 'vocational_training_center']);

@@ -61,8 +61,24 @@ class Orphan extends Model implements HasMedia
                 $model->created_by = auth()->id();
             }
 
-            if ($model->is_unemployed) {
-                $model->income = setUnemployedOrphanIncome($model);
+            $model->family_status = setOrphanFamilyStatus($model);
+
+            $model->is_unemployed = setOrphanEmploymentStatus($model);
+
+            if ($model->is_handicapped) {
+                $model->income = setHandicappedOrphanIncome($model);
+            } elseif ($model->birth_date->age > 18) {
+                $model->income = calculateOrphanExactIncome($model);
+            }
+        });
+
+        static::updating(function (self $model): void {
+            $model->family_status = setOrphanFamilyStatus($model);
+
+            $model->is_unemployed = setOrphanEmploymentStatus($model);
+
+            if ($model->is_handicapped) {
+                $model->income = setHandicappedOrphanIncome($model);
             } elseif ($model->birth_date->age > 18) {
                 $model->income = calculateOrphanExactIncome($model);
             }
