@@ -18,11 +18,10 @@ return new class extends Migration
             $table->enum('unit', ['kg', 'liter', 'piece']);
             $table->text('type')->nullable();
             $table->text('note')->nullable();
-            $table->integer('qty_for_family')->nullable();
-            $table->uuid('tenant_id');
-            $table->timestamp('created_at')->nullable();
             $table->uuid('created_by');
             $table->uuid('deleted_by')->nullable();
+            $table->uuid('tenant_id');
+            $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
         });

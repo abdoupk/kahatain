@@ -49,8 +49,12 @@ const emit = defineEmits(['close', 'handleSubmit'])
                             </span>
                         </base-dialog-title>
 
-                        <base-dialog-description class="grid grid-cols-12 gap-4 gap-y-3">
+                        <base-dialog-description v-if="$slots.description" class="grid grid-cols-12 gap-4 gap-y-3">
                             <slot name="description"></slot>
+                        </base-dialog-description>
+
+                        <base-dialog-description>
+                            <slot name="body"></slot>
                         </base-dialog-description>
 
                         <base-dialog-footer class="flex justify-end">
