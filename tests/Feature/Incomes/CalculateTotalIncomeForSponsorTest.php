@@ -30,7 +30,7 @@ beforeEach(function () {
         ->create(['tenant_id' => $this->tenant->id]);
 
     $this->family->load(['sponsor']);
-})->group('incomes');
+});
 
 it('correctly calculates total income for sponsor when other income is not null and account is null when is employed', function () {
     $this->incomes = $this->family->sponsor->incomes()->create([

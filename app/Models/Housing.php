@@ -54,6 +54,7 @@ class Housing extends Model
         'housing_receipt_number',
         'number_of_rooms',
         'other_properties',
+        'tenant_id',
     ];
 
     public function family(): BelongsTo

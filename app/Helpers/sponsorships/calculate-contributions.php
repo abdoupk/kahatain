@@ -12,11 +12,15 @@ function calculateOrphanIncomes(Orphan $orphan): float
 
     $calculation = json_decode($orphan->load('tenant')->tenant['calculation'], true);
 
-    if ($orphan->gender === 'male') {
-        return calculateContributionsForMaleOrphan($orphan, $calculation);
+    if ($orphan->birth_date->age > 18) {
+        if ($orphan->gender === 'male') {
+            return calculateContributionsForMaleOrphan($orphan, $calculation);
+        }
+
+        return calculateContributionsForFemaleOrphan($orphan, $calculation);
     }
 
-    return calculateContributionsForFemaleOrphan($orphan, $calculation);
+    return 0;
 }
 
 function calculateContributionsForSponsor(Sponsor $sponsor): float
@@ -124,11 +128,11 @@ function calculateContributionsForSecondSponsor(Family $family): float
     $percentage_of_contribution = json_decode($family->tenant['calculation'], true)['percentage_of_contribution'];
 
     if (isset($family->secondSponsor)) {
-        return match ($family->secondSponsor?->with_family) {
-            true => $percentage_of_contribution['second_sponsor']['with_family'] * $family->secondSponsor->income,
-            false => $percentage_of_contribution['second_sponsor']['outside_family'] * $family->secondSponsor->income,
-            default => 0
-        } / 100;
+        if ($family->secondSponsor->with_family) {
+            return $percentage_of_contribution['second_sponsor']['with_family'] * $family->secondSponsor->income / 100;
+        } else {
+            return $percentage_of_contribution['second_sponsor']['outside_family'] * $family->secondSponsor->income / 100;
+        }
     }
 
     return 0;

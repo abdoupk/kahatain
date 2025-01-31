@@ -93,6 +93,10 @@ function getCategoryForRamadanBasket(Family $family, float $differenceForRamadan
 {
     $categories = json_decode($family->tenant['calculation'], true)['ramadan_sponsorship']['categories'];
 
+    if ($differenceForRamadanBasketSponsorship < 0) {
+        return __('dont_benefit');
+    }
+
     foreach ($categories as $category) {
         if ($differenceForRamadanBasketSponsorship >= $category['minimum'] && $differenceForRamadanBasketSponsorship < $category['maximum']) {
             return $category['category'];

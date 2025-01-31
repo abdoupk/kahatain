@@ -50,30 +50,11 @@ function calculateOrphanExactIncome(Orphan $orphan): float|int|null
     return $orphan->income;
 }
 
-function setUnemployedOrphanIncome(Orphan $orphan): float
-{
-    $calculation = json_decode($orphan->load(['tenant'])->tenant['calculation'], true);
-
-    $atHomeWithNoIncome = $calculation['unemployed_contribution']['orphans']['female_gt_18']['at_home_with_no_income'];
-
-    $unemployedContribution = $calculation['unemployed_contribution']['orphans']['male_gt_18'];
-
-    if ($orphan->gender === 'male') {
-        $defaultIncome = match ($orphan->family_status) {
-            'professional_boy' => $unemployedContribution['professional_boy'],
-            'unemployed' => $unemployedContribution['unemployed'],
-            'married_with_family' => $unemployedContribution['married_with_family'],
-        };
-    } else {
-        $defaultIncome = $atHomeWithNoIncome;
-    }
-
-    return $orphan->income;
-}
-
 function setHandicappedOrphanIncome(Orphan $orphan): float
 {
     $calculation = json_decode($orphan->load(['tenant'])->tenant['calculation'], true);
+
+    ray($calculation);
 
     return $calculation['handicapped_contribution']['contribution'];
 }

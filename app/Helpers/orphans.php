@@ -62,7 +62,7 @@ function validateClothesAttributes($birthDate, $academicLevelId, $familyStatus, 
     return false;
 }
 
-function setOrphanEmploymentStatus(Orphan $orphan): bool
+function setOrphanEmploymentStatus(Orphan $orphan): ?bool
 {
     if (in_array($orphan->family_status, ['unemployed', 'at_home_with_no_income'])) {
         return true;
@@ -80,6 +80,8 @@ function setOrphanEmploymentStatus(Orphan $orphan): bool
 function setOrphanFamilyStatus(Orphan $orphan): ?string
 {
     if (is_null($orphan->family_status)) {
+        ray($orphan->family_status);
+
         if ($orphan->birth_date->age > 18 && $orphan->academicLevel?->phase_key) {
             if ($orphan->gender === 'male') {
                 return match ($orphan->academicLevel->phase_key) {
