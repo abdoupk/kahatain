@@ -145,3 +145,17 @@ it('correctly calculates total income for family when sponsor is widows husband 
         ->and($this->family->difference_after_monthly_sponsorship)->toBe(
             4400.0);
 })->group('incomes');
+
+it('correctly calculates total income for family when sponsor is widows husband (زوج الأرملة) and employed and the family has benefactor.', function () {
+    monthlySponsorship($this->family);
+
+    expect($this->family->difference_before_monthly_sponsorship > 0)->toBeTrue()
+        ->and(calculateWeights($this->family, $this->calculation))->toBe(2.0)
+        ->and($this->family->total_income)->toBe(4000.0)
+        ->and($this->family->income_rate)->toBe(2000.0)
+        ->and($this->family->difference_before_monthly_sponsorship)->toBe(8000.0)
+        ->and($this->family->amount_from_association)->toBe(-400.0)
+        ->and($this->family->monthly_sponsorship_rate)->toBe(0.45)
+        ->and($this->family->difference_after_monthly_sponsorship)->toBe(
+            4400.0);
+})->group('incomes');
