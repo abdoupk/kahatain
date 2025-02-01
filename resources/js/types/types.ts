@@ -850,7 +850,7 @@ export type CreateFamilyForm = {
     sponsor: SponsorType
     incomes: IncomeType
     second_sponsor: SecondSponsorType
-    spouse: SpouseType
+    deceased: SpouseType[]
     orphans: OrphanType[]
     housing: {
         housing_type: {

@@ -21,6 +21,7 @@ class SpouseFactory extends Factory
             'income' => fake()->randomFloat(),
             'family_id' => fake()->uuid,
             'tenant_id' => fake()->uuid,
+            'type' => fake()->randomElement(['father', 'mother']),
             'created_at' => now(),
             'updated_at' => now(),
         ];

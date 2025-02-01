@@ -283,7 +283,7 @@ onMounted(async () => {
                             attribute: $t('baby_milk_quantity')
                         })
                     "
-                    type="text"
+                    type="number"
                     @change="form?.validate(`orphans.${index}.baby_milk_quantity`)"
                 ></base-form-input>
 
@@ -322,7 +322,7 @@ onMounted(async () => {
                             attribute: $t('diapers_quantity')
                         })
                     "
-                    type="text"
+                    type="number"
                     @change="form?.validate(`orphans.${index}.diapers_quantity`)"
                 ></base-form-input>
 

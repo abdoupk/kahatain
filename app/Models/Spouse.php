@@ -62,6 +62,8 @@ class Spouse extends Model implements HasMedia
         'function',
         'income',
         'family_id',
+        'tenant_id',
+        'type',
     ];
 
     public function getName(): string

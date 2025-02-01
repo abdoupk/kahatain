@@ -32,6 +32,7 @@ return [
     'orphan.academic_level' => 'المستوى الدراسي',
     'income' => 'الدخل',
     'birth_date' => 'تاريخ الميلاد',
+    'death_date' => 'تاريخ الوفاة',
     'children_count' => 'عدد الأطفال',
     'gender' => 'الجنس',
     'function' => 'الوظيفة',

@@ -8,6 +8,7 @@ use App\Jobs\V1\Family\FamilyCreatedJob;
 use App\Models\Branch;
 use App\Models\Family;
 use App\Models\Sponsor;
+use App\Models\Spouse;
 use Arr;
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -59,9 +60,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                     $family->secondSponsor()->create($request->validated('second_sponsor'));
                 }
 
-                $family->deceased()->createMany(Arr::except($request->validated('spouse'), ['death_certificate_file']));
-
-                addToMediaCollection($family->deceased, $request->validated('spouse.death_certificate_file'), 'death_certificate_files');
+                $this->storeDeceased($request, $family);
 
                 $this->storeHousingInformations($family, $request);
 
@@ -189,5 +188,20 @@ class FamilyStoreController extends Controller implements HasMiddleware
         $family->furnishings()->create([
             ...$request->validated('furnishings'),
         ]);
+    }
+
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
+    private function storeDeceased(CreateFamilyRequest $request, Family $family)
+    {
+        $deceased = $family->deceased()->createMany(array_map(function ($item) {
+            return Arr::except($item, ['death_certificate_file']);
+        }, $request->validated('deceased')));
+
+        $deceased->each(function (Spouse $deceased, $index) use ($request) {
+            addToMediaCollection($deceased, $request->validated('deceased')[$index]['death_certificate_file'], 'death_certificate_files', false);
+        });
     }
 }

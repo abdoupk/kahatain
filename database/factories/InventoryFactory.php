@@ -18,7 +18,6 @@ class InventoryFactory extends Factory
             'deleted_by' => fake()->uuid,
             'name' => fake()->name(),
             'type' => fake()->randomElement(['diapers', 'baby_milk', null]),
-            'qty_for_family' => fake()->numberBetween(1, 5),
             'qty' => fake()->numberBetween(1, 1000),
             'unit' => fake()->randomElement(['kg', 'liter', 'piece']),
             'tenant_id' => fake()->words(),

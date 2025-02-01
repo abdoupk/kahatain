@@ -90,6 +90,8 @@ function calculateContributionsForMaleOrphan(Orphan $orphan, array $calculations
         'worker_outside_family' => $calculations['worker_outside_family'] * $orphan->income,
         'married_with_family' => $calculations['married_with_family'] * $orphan->income,
         'married_outside_family' => $calculations['married_outside_family'] * $orphan->income,
+        'professional_boy' => $unemployedContribution['professional_boy'],
+        'unemployed' => $unemployedContribution['unemployed'],
     } / 100;
 }
 

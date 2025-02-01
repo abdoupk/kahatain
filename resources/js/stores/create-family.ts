@@ -104,15 +104,17 @@ export const useCreateFamilyStore = defineStore('create-family', {
                 degree_of_kinship: '',
                 with_family: false
             },
-            spouse: {
-                first_name: '',
-                last_name: '',
-                income: 0,
-                birth_date: '',
-                death_date: '',
-                function: '',
-                death_certificate_file: ''
-            },
+            deceased: [
+                {
+                    first_name: '',
+                    last_name: '',
+                    income: 0,
+                    birth_date: '',
+                    death_date: '',
+                    function: '',
+                    death_certificate_file: ''
+                }
+            ],
             orphans: [
                 {
                     first_name: '',

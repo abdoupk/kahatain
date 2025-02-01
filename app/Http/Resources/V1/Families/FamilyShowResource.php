@@ -22,7 +22,7 @@ class FamilyShowResource extends JsonResource
             'zone' => $this->whenLoaded('zone', fn () => $this->zone?->name),
 
             'orphans' => OrphanResource::collection($this->whenLoaded('orphans')),
-            'spouse' => new SpouseResource($this->whenLoaded('deceased')),
+            'spouse' => SpouseResource::collection($this->whenLoaded('deceased')),
             'sponsor' => new SponsorResource($this->whenLoaded('sponsor')),
             'second_sponsor' => new SecondSponsorResource($this->whenLoaded('secondSponsor')),
 

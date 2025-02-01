@@ -36,7 +36,7 @@ const incomeErrors = computed(() => {
 })
 
 const spouseErrors = computed(() => {
-    return checkErrors('^spouse', props?.form?.errors)
+    return checkErrors('^deceased', props?.form?.errors)
 })
 
 const handleTabChange = (index) => {

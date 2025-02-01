@@ -52,9 +52,5 @@ function calculateOrphanExactIncome(Orphan $orphan): float|int|null
 
 function setHandicappedOrphanIncome(Orphan $orphan): float
 {
-    $calculation = json_decode($orphan->load(['tenant'])->tenant['calculation'], true);
-
-    ray($calculation);
-
-    return $calculation['handicapped_contribution']['contribution'];
+    return json_decode($orphan->load(['tenant'])->tenant['calculation'], true)['handicapped_contribution']['contribution'];
 }

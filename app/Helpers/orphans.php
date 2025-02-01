@@ -80,27 +80,28 @@ function setOrphanEmploymentStatus(Orphan $orphan): ?bool
 function setOrphanFamilyStatus(Orphan $orphan): ?string
 {
     if (is_null($orphan->family_status)) {
-        ray($orphan->family_status);
-
         if ($orphan->birth_date->age > 18 && $orphan->academicLevel?->phase_key) {
             if ($orphan->gender === 'male') {
                 return match ($orphan->academicLevel->phase_key) {
                     'university' => FamilyStatus::UNEMPLOYED->value,
                     'licence', 'master', 'doctorate' => FamilyStatus::COLLEGE_BOY->value,
-                    'paramedical', 'vocational_training' => FamilyStatus::PROFESSIONAL_BOY->value
+                    'paramedical', 'vocational_training' => FamilyStatus::PROFESSIONAL_BOY->value,
+                    default => $orphan->family_status
                 };
             } else {
                 return match ($orphan->academicLevel->phase_key) {
                     'university' => FamilyStatus::AT_HOME_WITH_NO_INCOME->value,
                     'licence', 'master', 'doctorate' => FamilyStatus::COLLEGE_GIRL->value,
-                    'paramedical', 'vocational_training' => FamilyStatus::PROFESSIONAL_GIRL->value
+                    'paramedical', 'vocational_training' => FamilyStatus::PROFESSIONAL_GIRL->value,
+                    default => $orphan->family_status
                 };
             }
         }
 
         if ($orphan->birth_date->age < 18 && $orphan->birth_date->age > 6 && $orphan->academicLevel?->phase_key) {
             return match ($orphan->academicLevel->phase_key) {
-                'paramedical', 'vocational_training' => FamilyStatus::PROFESSIONALS->value
+                'paramedical', 'vocational_training' => FamilyStatus::PROFESSIONALS->value,
+                default => $orphan->family_status
             };
         }
     }
