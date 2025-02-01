@@ -37,6 +37,7 @@ beforeEach(function () {
         'family_id' => $this->family->id,
         'tenant_id' => $this->tenant->id,
         'gender' => 'male',
+        'is_handicapped' => false,
         'sponsor_id' => $this->family->sponsor->id,
     ]);
 })->group('incomes');

@@ -47,6 +47,8 @@ beforeEach(function () {
         'tenant_id' => $this->tenant->id,
         'birth_date' => now()->subDays(80),
         'income' => 0,
+        'is_handicapped' => false,
+        'is_unemployed' => false,
     ]);
 
     $this->incomes = $this->family->sponsor->incomes()->create([

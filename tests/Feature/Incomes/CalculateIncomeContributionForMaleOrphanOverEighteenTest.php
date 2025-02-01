@@ -52,6 +52,7 @@ beforeEach(function () {
         'income' => 1000.0,
         'is_handicapped' => false,
         'gender' => 'male',
+        'is_unemployed' => false,
         'family_status' => null,
     ]);
 

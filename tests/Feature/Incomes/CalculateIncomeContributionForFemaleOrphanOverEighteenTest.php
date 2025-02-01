@@ -53,6 +53,7 @@ beforeEach(function () {
         'is_handicapped' => false,
         'gender' => 'female',
         'family_status' => null,
+        'is_unemployed' => false,
     ]);
 
     $this->family->load(['sponsor.orphans']);

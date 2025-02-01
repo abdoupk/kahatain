@@ -49,6 +49,8 @@ beforeEach(function () {
         'family_id' => $this->family->id,
         'tenant_id' => $this->tenant->id,
         'birth_date' => now()->subDays(80),
+        'is_unemployed' => false,
+        'is_handicapped' => false,
     ]);
 });
 
