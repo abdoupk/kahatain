@@ -30,6 +30,7 @@ export interface SpouseType {
     function: string
     income: string
     files?: UploadedFilesType
+    type: 'father' | 'mother'
 }
 
 interface IncomeType {
@@ -134,7 +135,7 @@ export interface FamilyShowType {
     branch: string
     zone: string
     orphans: OrphanType[]
-    spouse: SpouseType
+    deceased: SpouseType[]
     sponsor: SponsorType
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType
@@ -150,7 +151,7 @@ export interface FamilyEditType {
     start_date: Date
     branch_id: string
     zone_id: string
-    spouse: SpouseType
+    deceased: SpouseType[]
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType
     residence_certificate_file: string | null
@@ -165,7 +166,6 @@ export interface FamilyEditType {
         number_of_rooms: number
         other_properties: string
     }
-    family_sponsorships: FamilySponsorshipType
     preview: PreviewType
     creator: {
         id: string

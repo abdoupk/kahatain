@@ -104,7 +104,7 @@ provide('familyDetailView', { view, updateView })
 
                         <the-spouse-information
                             v-if="view === 'spouse_information'"
-                            :spouse="family.spouse"
+                            :deceased="family.deceased"
                         ></the-spouse-information>
                     </div>
 

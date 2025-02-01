@@ -23,7 +23,7 @@ class FamilyEditResource extends JsonResource
             'location' => $this->location,
             'residence_certificate_file' => $this->getFirstMediaUrl('residence_files'),
 
-            'spouse' => new SpouseResource($this->whenLoaded('deceased')),
+            'deceased' => SpouseResource::collection($this->whenLoaded('deceased')),
 
             'second_sponsor' => new SecondSponsorResource($this->whenLoaded('secondSponsor')),
 

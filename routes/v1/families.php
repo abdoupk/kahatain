@@ -88,7 +88,7 @@ Route::prefix('families')->name('families.')->group(function (): void {
         ->middleware([HandlePrecognitiveRequests::class]);
 
     Route::put(
-        'spouse/{family}',
+        'spouse/{spouse}',
         FamilyUpdateSpouseController::class
     )
         ->name('spouse-update')

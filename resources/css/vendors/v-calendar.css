@@ -6,6 +6,13 @@
     direction: ltr !important;
 }
 
+:dir(rtl) {
+    .vc-arrow,
+    .vc-nav-arrow {
+        transform: rotate(180deg) !important;
+    }
+}
+
 :root,
 .theme_2 {
     .vc-primary {

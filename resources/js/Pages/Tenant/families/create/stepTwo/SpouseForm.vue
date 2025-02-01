@@ -147,6 +147,7 @@ const removeDeceased = (index: number) => {
                     type="text"
                     @change="form?.validate(`deceased.${index}.type`)"
                 >
+                    <option value="">{{ $t('filters.select_an_option') }}</option>
                     <option value="father">{{ $t('father') }}</option>
                     <option value="mother">{{ $t('mother') }}</option>
                 </base-form-select>

@@ -85,10 +85,12 @@ provide('familyEditView', { view, updateView })
                             :sponsorships="{ ...family.family_sponsorships, family_id: family.id }"
                         ></the-family-sponsorship>
 
-                        <the-spouse-information
-                            v-if="view === 'spouse_information'"
-                            :spouse="{ ...family.spouse, family_id: family.id }"
-                        ></the-spouse-information>
+                        <template v-for="spouse in family.deceased" :key="spouse.id">
+                            <the-spouse-information
+                                v-if="view === 'spouse_information'"
+                                :spouse="{ ...spouse, family_id: family.id }"
+                            ></the-spouse-information>
+                        </template>
                     </div>
                 </div>
             </div>

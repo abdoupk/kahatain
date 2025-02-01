@@ -112,7 +112,8 @@ export const useCreateFamilyStore = defineStore('create-family', {
                     birth_date: '',
                     death_date: '',
                     function: '',
-                    death_certificate_file: ''
+                    death_certificate_file: '',
+                    type: ''
                 }
             ],
             orphans: [

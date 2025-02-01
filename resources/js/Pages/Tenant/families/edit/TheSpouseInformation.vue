@@ -21,9 +21,9 @@ import { $t } from '@/utils/i18n'
 const props = defineProps<{ spouse: SpouseType }>()
 
 // eslint-disable-next-line array-element-newline
-const inputs = reactive<FamilyUpdateSpouseFormType>(omit(props.spouse, ['id', 'family_id', 'name']))
+const inputs = reactive<FamilyUpdateSpouseFormType>(omit(props.spouse, ['id', 'family_id', 'name', 'files']))
 
-const form = useForm('put', route('tenant.families.spouse-update', props.spouse.family_id), inputs)
+const form = useForm('put', route('tenant.families.spouse-update', props.spouse.id), inputs)
 
 const deathCertificateFile = ref(props.spouse.death_certificate_file)
 
@@ -47,7 +47,7 @@ const submit = () => {
 
 <template>
     <!-- BEGIN: Spouse Information -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box !z-0 col-span-12 @container 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ spouse.name }}</h2>
         </div>
@@ -73,7 +73,7 @@ const submit = () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"></base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -96,7 +96,7 @@ const submit = () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"></base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -108,7 +108,7 @@ const submit = () => {
 
                     <base-v-calendar id="birth_date" v-model:date="form.birth_date"></base-v-calendar>
 
-                    <base-form-input-error :form field_name="birth_date"> </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_date"></base-form-input-error>
                 </div>
                 <!-- END: Birth Date -->
 
@@ -120,7 +120,7 @@ const submit = () => {
 
                     <base-v-calendar id="death_date" v-model:date="form.death_date"></base-v-calendar>
 
-                    <base-form-input-error :form field_name="death_date"> </base-form-input-error>
+                    <base-form-input-error :form field_name="death_date"></base-form-input-error>
                 </div>
                 <!-- END: Death Date -->
 
@@ -143,7 +143,7 @@ const submit = () => {
                         @change="form?.validate('function')"
                     ></base-form-input>
 
-                    <base-form-input-error :form field_name="function"> </base-form-input-error>
+                    <base-form-input-error :form field_name="function"></base-form-input-error>
                 </div>
                 <!-- END: Function (Job) -->
 
@@ -174,7 +174,7 @@ const submit = () => {
                         </base-input-group-text>
                     </base-input-group>
 
-                    <base-form-input-error :form field_name="income"> </base-form-input-error>
+                    <base-form-input-error :form field_name="income"></base-form-input-error>
                 </div>
                 <!-- END: Income -->
 
@@ -189,8 +189,8 @@ const submit = () => {
                         :allow-multiple="false"
                         :files="deathCertificateFile"
                         :is-picture="false"
-                        accepted-file-types="image/jpeg, image/png, application/pdf"
                         :label-idle="$t('upload-files.labelIdle.spouse_death_certificate')"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
                         @update:files="form.death_certificate_file = $event[0]"
                     ></base-file-pond>
                 </div>

@@ -768,6 +768,7 @@ type SpouseType = {
     function: string
     income: number
     death_certificate_file: string
+    type: 'father' | 'mother'
 }
 
 export type OrphanType = {
