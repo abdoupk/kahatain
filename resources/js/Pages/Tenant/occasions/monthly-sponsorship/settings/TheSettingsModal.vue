@@ -58,12 +58,12 @@ const tabIndex = ref(0)
 
 const form = computed(() => {
     if (tabIndex.value === 0) {
-        return useForm('patch', route('tenant.monthly-sponsorship.update-settings'), {
+        return useForm('patch', route('tenant.occasions.monthly-sponsorship.update-settings'), {
             ...sponsorshipsStore.monthly_sponsorship
         })
     }
 
-    return useForm('patch', route('tenant.monthly-sponsorship.update-monthly-basket'), {
+    return useForm('patch', route('tenant.occasions.monthly-sponsorship.update-monthly-basket'), {
         items: sponsorshipsStore.monthly_basket.data
     })
 })

@@ -74,7 +74,7 @@ const handleSuccess = () => {
 }
 
 const form = computed(() => {
-    return useForm('patch', route('tenant.monthly-sponsorship.update-settings'), {
+    return useForm('patch', route('tenant.occasions.monthly-sponsorship.update-settings'), {
         ...sponsorshipsStore.monthly_sponsorship
     })
 })

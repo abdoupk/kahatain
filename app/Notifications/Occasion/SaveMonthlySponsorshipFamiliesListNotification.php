@@ -35,7 +35,7 @@ class SaveMonthlySponsorshipFamiliesListNotification extends Notification implem
             'metadata' => [
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
-                    'tenant.monthly-sponsorship.index'
+                    'tenant.occasions.monthly-sponsorship.index'
                 ),
             ],
         ];

@@ -77,7 +77,7 @@ sponsorshipsStore.monthly_sponsorship = props.settings
 const sort = (field: string) => handleSort(field, params.value)
 
 const save = () => {
-    getDataForIndexPages(route('tenant.monthly-sponsorship.save-to-archive'), params.value, {
+    getDataForIndexPages(route('tenant.occasions.monthly-sponsorship.save-to-archive'), params.value, {
         onStart: () => {
             loading.value = true
         },
@@ -126,10 +126,10 @@ const showSettingsModal = () => {
                 :params="params"
                 :sortableFields="monthlySponsorshipSorts"
                 :title="$t('list', { attribute: $t('the_families_monthly_basket') })"
-                :url="route('tenant.monthly-sponsorship.index')"
+                :url="route('tenant.occasions.monthly-sponsorship.index')"
                 entries="families"
-                export-pdf-url="tenant.monthly-sponsorship.export.pdf"
-                export-xlsx-url="tenant.monthly-sponsorship.export.xlsx"
+                export-pdf-url="tenant.occasions.monthly-sponsorship.export.pdf"
+                export-xlsx-url="tenant.occasions.monthly-sponsorship.export.xlsx"
                 filterable
                 searchable
                 sortable
@@ -172,7 +172,7 @@ const showSettingsModal = () => {
                 <the-table-footer
                     :pagination-data="families"
                     :params
-                    :url="route('tenant.monthly-sponsorship.index')"
+                    :url="route('tenant.occasions.monthly-sponsorship.index')"
                     class="mt-2"
                 ></the-table-footer>
             </template>

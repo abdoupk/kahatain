@@ -143,7 +143,7 @@ export const useMenuStore = defineStore('menu', {
                         icon: 'icon-money',
                         ignore: !hasPermission('view_occasions'),
                         title: $t('direct_bail'),
-                        routeName: 'tenant.monthly-sponsorship.index',
+                        routeName: 'tenant.occasions.monthly-sponsorship.index',
                         url: '/dashboard/projects/monthly-sponsorship'
                     },
                     {

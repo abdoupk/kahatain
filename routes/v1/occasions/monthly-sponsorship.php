@@ -2,37 +2,55 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipPDFController;
+use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipXlsxController;
+use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexController;
+use App\Http\Controllers\V1\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
 use App\Http\Controllers\V1\MonthlySponsorships\ListItemsOfMonthlyBasketController;
-use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportFamiliesMonthlyBasketPDFController;
-use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportFamiliesMonthlyBasketXlsxController;
-use App\Http\Controllers\V1\Occasions\MonthlyBasket\FamiliesMonthlyBasketIndexController;
-use App\Http\Controllers\V1\Occasions\MonthlyBasket\SaveFamiliesMonthlyBasketToArchiveController;
+use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
+use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlyBasketController;
+use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
 
-Route::prefix('monthly-basket')
-    ->name('monthly-basket.')
+Route::prefix('monthly-sponsorship')
+    ->name('monthly-sponsorship.')
     ->group(function (): void {
         Route::get(
             '',
-            FamiliesMonthlyBasketIndexController::class
+            FamiliesMonthlySponsorshipIndexController::class
         )
             ->name('index');
 
         Route::get(
             'export-pdf',
-            ExportFamiliesMonthlyBasketPDFController::class
+            ExportFamiliesMonthlySponsorshipPDFController::class
         )
             ->name('export.pdf');
 
         Route::get(
             'export-xlsx',
-            ExportFamiliesMonthlyBasketXlsxController::class
+            ExportFamiliesMonthlySponsorshipXlsxController::class
         )
             ->name('export.xlsx');
 
         Route::get(
             'save-to-archive',
-            SaveFamiliesMonthlyBasketToArchiveController::class
+            SaveFamiliesMonthlySponsorshipToArchiveController::class
         )->name('save-to-archive');
+
+        Route::patch(
+            'update-settings',
+            UpdateMonthlySponsorshipSettingsController::class
+        )->name('update-settings');
+
+        Route::patch(
+            'update-monthly-basket',
+            UpdateMonthlyBasketController::class
+        )->name('update-monthly-basket');
+
+        Route::get(
+            'get-settings',
+            GetMonthlySponsorshipSettingsController::class
+        )->name('get-settings');
 
         Route::get(
             'list-items-of-monthly-basket',
