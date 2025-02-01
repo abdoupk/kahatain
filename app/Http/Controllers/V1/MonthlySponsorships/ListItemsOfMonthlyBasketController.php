@@ -10,6 +10,9 @@ class ListItemsOfMonthlyBasketController extends Controller
 {
     public function __invoke()
     {
-        return MonthlyBasketItemsResource::collection(MonthlyBasket::with('inventory:id,name,unit')->paginate(page: request('page', 1)));
+        return MonthlyBasketItemsResource::collection(MonthlyBasket::with(['inventory' => function ($query) {
+            return $query->select(['id', 'unit', 'updated_at', 'name'])->orderBy('updated_at', 'desc');
+        }])
+            ->paginate(page: request('page', 1)));
     }
 }

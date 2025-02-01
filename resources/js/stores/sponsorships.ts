@@ -122,7 +122,7 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
         async getMonthlyBasketItems(page: number) {
             const { data: monthly_basket } = await axios.get(
                 route(
-                    'tenant.occasions.monthly-basket.get-items',
+                    'tenant.occasions.monthly-sponsorship.get-items',
                     { page },
                     {
                         preserveState: false,
