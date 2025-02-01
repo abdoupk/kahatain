@@ -60,7 +60,7 @@ function fetchNeeds(data: object) {
             {{ $t('benefit_needs') }}
         </h3>
 
-        <div v-if="needs.data.length" class="mt-2 overflow-y-hidden">
+        <div v-if="needs.data" class="mt-2 overflow-y-hidden">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
@@ -131,7 +131,7 @@ function fetchNeeds(data: object) {
     </div>
 
     <pagination-data-table
-        v-if="needs.data.length"
+        v-if="needs.data"
         :page="needs.meta.current_page"
         :pages="needs.meta.last_page"
         :per-page="needs.meta.per_page"

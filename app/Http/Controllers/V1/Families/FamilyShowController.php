@@ -110,7 +110,7 @@ class FamilyShowController extends Controller implements HasMiddleware
 
     public function getNeeds(Family $family)
     {
-        $needs = $family->sponsorsNeeds()->paginate(1);
+        $needs = $family->sponsor->needs;
 
         $orphanNeeds = $family->orphans()->with('needs')->get()->flatMap(function ($orphan) {
             return $orphan->needs->map(function ($archive) use ($orphan) {
@@ -121,16 +121,18 @@ class FamilyShowController extends Controller implements HasMiddleware
                 ]);
             });
         });
-        ray($needs);
 
         $allNeeds = $needs->merge($orphanNeeds);
 
         $perPageNeeds = 10;
+
         $currentPageNeeds = request()->integer('needs_page', 1);
 
-        $currentItemsArchives = $allNeeds->slice(($currentPageNeeds - 1) * $perPageNeeds, $perPageNeeds)->all();
+        $currentItemsNeeds = $allNeeds->slice(($currentPageNeeds - 1) * $perPageNeeds, $perPageNeeds)->all();
 
-        $paginatedArchives = new LengthAwarePaginator($currentItemsArchives, $allNeeds->count(), $perPageNeeds, $currentPageNeeds, [
+        ray($currentItemsNeeds);
+
+        $paginatedNeeds = new LengthAwarePaginator($currentItemsNeeds, $allNeeds->count(), $perPageNeeds, $currentPageNeeds, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
             'query' => [
                 'needs_page' => request()->integer('needs_page'),
@@ -138,19 +140,18 @@ class FamilyShowController extends Controller implements HasMiddleware
             ],
         ]);
 
-        $data = $paginatedArchives->toArray();
+        $data = $paginatedNeeds->toArray();
 
         $data['meta'] = [
-            'current_page' => $paginatedArchives->currentPage(),
-            'last_page' => $paginatedArchives->lastPage(),
-            'total' => $paginatedArchives->total(),
-            'per_page' => $paginatedArchives->perPage(),
-            'from' => $paginatedArchives->firstItem(),
-            'to' => $paginatedArchives->lastItem(),
-            'path' => $paginatedArchives->path(),
+            'current_page' => $paginatedNeeds->currentPage(),
+            'last_page' => $paginatedNeeds->lastPage(),
+            'total' => $paginatedNeeds->total(),
+            'per_page' => $paginatedNeeds->perPage(),
+            'from' => $paginatedNeeds->firstItem(),
+            'to' => $paginatedNeeds->lastItem(),
+            'path' => $paginatedNeeds->path(),
         ];
 
         return $data;
-
     }
 }
