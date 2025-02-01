@@ -115,7 +115,7 @@ function fetchNeeds(data: object) {
                                 <svg-loader class="mx-auto block" name="icon-note"></svg-loader>
                             </base-tippy>
 
-                            <span v-else class="mx-auto block text-center">-</span>
+                            <span v-else class="mx-auto block text-center">————</span>
                         </the-table-td>
                     </base-tr-table>
                 </base-tbody-table>

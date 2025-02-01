@@ -15,7 +15,6 @@ class ItemResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'qty' => $this->qty,
-            'qty_for_family' => $this->qty_for_family,
             'unit' => $this->unit,
             'note' => $this->note,
         ];

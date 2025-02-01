@@ -17,7 +17,6 @@ class ItemShowResource extends JsonResource
             'name' => $this->name,
             'qty' => $this->qty,
             'type' => $this->type,
-            'qty_for_family' => $this->qty_for_family,
             'note' => $this->note,
             'readable_created_at' => $this->created_at->translatedFormat('d F Y H:i A'),
             'unit' => $this->unit,

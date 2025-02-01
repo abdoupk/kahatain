@@ -172,34 +172,6 @@ const modalType = computed(() => {
             </div>
             <!-- End: quantity & Unit-->
 
-            <!-- Begin: quantity For each Family-->
-            <div v-if="!['diapers', 'baby_milk'].includes(inventoryStore.item.type)" class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="quantity_for_each_family">
-                    {{ $t('validation.attributes.qty_for_family') }}
-                </base-form-label>
-
-                <base-input-group>
-                    <base-form-input
-                        id="quantity_for_each_family"
-                        v-model="form.qty_for_family"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.qty')
-                            })
-                        "
-                        maxlength="6"
-                        type="text"
-                        @change="form?.validate('qty')"
-                        @keydown="allowOnlyNumbersOnKeyDown"
-                    ></base-form-input>
-                </base-input-group>
-
-                <div v-if="form.errors?.qty_for_family" class="mt-2">
-                    <base-input-error :message="form.errors.qty_for_family"></base-input-error>
-                </div>
-            </div>
-            <!-- End: quantity For each Family-->
-
             <!-- Begin: Note-->
             <div class="col-span-12">
                 <base-form-label for="note">
@@ -218,7 +190,7 @@ const modalType = computed(() => {
                     @change="form?.validate('note')"
                 ></base-form-text-area>
 
-                <base-form-input-error :form field_name="note"> </base-form-input-error>
+                <base-form-input-error :form field_name="note"></base-form-input-error>
             </div>
             <!-- End: Note-->
         </template>

@@ -105,7 +105,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                             <svg-loader class="mx-auto block" name="icon-note"></svg-loader>
                         </base-tippy>
 
-                        <span v-else class="mx-auto block text-center">-</span>
+                        <span v-else class="mx-auto block text-center">————</span>
                     </the-table-td>
 
                     <the-table-td-actions v-if="hasPermission(['delete_needs', 'update_needs', 'view_needs'])">

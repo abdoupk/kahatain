@@ -94,6 +94,8 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         <base-tippy v-if="item.note" :content="item.note" as="div">
                             <svg-loader class="mx-auto block" name="icon-note"></svg-loader>
                         </base-tippy>
+
+                        <span v-else class="mx-auto block text-center">————</span>
                     </the-table-td>
 
                     <the-table-td-actions

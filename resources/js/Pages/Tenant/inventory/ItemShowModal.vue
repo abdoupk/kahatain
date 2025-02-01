@@ -71,14 +71,6 @@ const inventoryStore = useInventoryStore()
             </div>
             <!-- End: Creator-->
 
-            <!-- Begin: Quantity For each Family-->
-            <div v-if="!['diapers', 'baby_milk'].includes(inventoryStore.item.type)" class="col-span-6">
-                <h2 class="rtl:font-semibold">{{ $t('quantity_for_each_family') }}</h2>
-
-                <p class="mt-1 rtl:font-medium">{{ inventoryStore.item.qty_for_family }}</p>
-            </div>
-            <!-- End: Quantity For each Family-->
-
             <!-- Begin: Note-->
             <div class="col-span-12">
                 <h2 class="rtl:font-semibold">{{ $t('validation.attributes.note') }}</h2>
