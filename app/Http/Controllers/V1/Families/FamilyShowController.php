@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\Families;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Families\FamilyShowResource;
+use App\Models\Baby;
 use App\Models\Family;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -30,6 +31,7 @@ class FamilyShowController extends Controller implements HasMiddleware
                 'orphans.babyNeeds.diapers',
                 'orphans.shirtSize',
                 'babies.archives',
+                'babies.orphan',
                 'furnishings',
                 'housing',
                 'sponsor.incomes',
@@ -56,14 +58,25 @@ class FamilyShowController extends Controller implements HasMiddleware
 
     public function getArchives(Family $family)
     {
-        // Combine all archives
         $allArchives = $family->archives->merge(
             $family->orphans->flatMap(function ($orphan) {
-                return $orphan->archives;
+                return $orphan->archives->map(function ($archive) use ($orphan) {
+                    return $archive->forceFill([
+                        'recipient_id' => $orphan->id,
+                        'archiveable_type' => 'orphan',
+                        'recipient_name' => $orphan->getName(),
+                    ]);
+                });
             })
         )->merge(
-            $family->babies->flatMap(function ($baby) {
-                return $baby->archives;
+            $family->babies->flatMap(function (Baby $baby) {
+                return $baby->archives->map(function ($archive) use ($baby) {
+                    return $archive->forceFill([
+                        'recipient_id' => $baby->orphan->id,
+                        'archiveable_type' => 'orphan',
+                        'recipient_name' => $baby->getName(),
+                    ]);
+                });
             })
         );
 
@@ -97,12 +110,18 @@ class FamilyShowController extends Controller implements HasMiddleware
 
     public function getNeeds(Family $family)
     {
-
         $needs = $family->sponsorsNeeds()->paginate(1);
 
         $orphanNeeds = $family->orphans()->with('needs')->get()->flatMap(function ($orphan) {
-            return $orphan->needs;
+            return $orphan->needs->map(function ($archive) use ($orphan) {
+                return $archive->forceFill([
+                    'recipient_id' => $orphan->id,
+                    'needable_type' => 'orphan',
+                    'recipient_name' => $orphan->getName(),
+                ]);
+            });
         });
+        ray($needs);
 
         $allNeeds = $needs->merge($orphanNeeds);
 

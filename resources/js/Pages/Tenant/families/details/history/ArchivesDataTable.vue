@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
@@ -10,7 +10,7 @@ import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import NoResultsFound from '@/Components/Global/NoResultsFound.vue'
 import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
 
-import { formatCurrency, formatDate } from '@/utils/helper'
+import { formatCurrency, formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -82,7 +82,15 @@ function fetchArchives(data: object) {
                         </the-table-td>
 
                         <the-table-td class="text-center">
-                            {{ $t(`the_${archive.pivot.archiveable_type}`) }}
+                            <Link
+                                v-if="hasPermission('view_orphans') && archive.archiveable_type === 'orphan'"
+                                :href="route('tenant.orphans.show', archive.recipient_id)"
+                            >
+                                {{ $t(`the_${archive.pivot.archiveable_type}`) }}
+                                <template v-if="archive?.recipient_name"> ({{ archive.recipient_name }})</template>
+                            </Link>
+
+                            <span v-else> {{ $t(`the_${archive.pivot.archiveable_type}`) }}</span>
                         </the-table-td>
 
                         <the-table-td class="text-center">
