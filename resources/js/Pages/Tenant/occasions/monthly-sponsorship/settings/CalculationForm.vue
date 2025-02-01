@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
+import { Form } from 'laravel-precognition-vue/dist/types'
 import { defineAsyncComponent } from 'vue'
 
 import { $t } from '@/utils/i18n'
 
 defineProps<{
-    form: any
+    form: Form<unknown>
 }>()
 
 const TheSponsorshipRateCategories = defineAsyncComponent(
@@ -32,7 +33,7 @@ const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'
 const sponsorshipsStore = useSponsorshipsStore()
 
 const addInterval = () => {
-    form.value.categories.push({
+    sponsorshipsStore.monthly_sponsorship.categories.push({
         minimum: null,
         maximum: null,
         value: null
@@ -42,7 +43,7 @@ const addInterval = () => {
 const removeInterval = (index: number) => {
     if (index === 0) return
 
-    form.value.categories.splice(index, 1)
+    sponsorshipsStore.monthly_sponsorship.categories.splice(index, 1)
 }
 </script>
 

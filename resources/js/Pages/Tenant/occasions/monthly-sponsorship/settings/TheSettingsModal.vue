@@ -78,8 +78,6 @@ const modalTitle = $t('settings')
 
 const firstInputRef = ref<HTMLElement>()
 
-const modalType = 'update'
-
 const handleTabChange = (index) => {
     tabIndex.value = index
 }
@@ -91,9 +89,9 @@ onUnmounted(() => sponsorshipsStore.$reset())
     <create-edit-modal
         :focusable-input="firstInputRef"
         :loading
-        :modal-type="modalType"
         :open
         :title="modalTitle"
+        modal-type="update"
         size="xl"
         @close="emit('close')"
         @handle-submit="handleSubmit"
@@ -102,10 +100,14 @@ onUnmounted(() => sponsorshipsStore.$reset())
             <base-tab-group @change="handleTabChange">
                 <base-tab-list class="flex" variant="link-tabs">
                     <base-tab>
-                        <base-tab-button as="button" class="w-full" type="button"> Example Tab 1</base-tab-button>
+                        <base-tab-button as="button" class="w-full" type="button">
+                            {{ $t('monthly_sponsorship.settings') }}
+                        </base-tab-button>
                     </base-tab>
                     <base-tab>
-                        <base-tab-button as="button" class="w-full py-2" type="button"> Example Tab 2</base-tab-button>
+                        <base-tab-button as="button" class="w-full py-2" type="button"
+                            >{{ $t('monthly_basket_items') }}
+                        </base-tab-button>
                     </base-tab>
                 </base-tab-list>
 
