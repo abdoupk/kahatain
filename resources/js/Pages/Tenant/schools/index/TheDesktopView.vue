@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import type { IndexParams, PaginationData, SchoolsIndexResource } from '@/types/types'
 
+import print from 'print-js'
+import { ref } from 'vue'
+
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
 import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
@@ -8,9 +11,10 @@ import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
+import SpinnerLoader from '@/Components/Global/SpinnerLoader.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatDate, hasPermission } from '@/utils/helper'
+import { formatDate, formatUrl, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -20,6 +24,25 @@ defineProps<{
 
 // eslint-disable-next-line array-element-newline
 const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetailsModal'])
+
+const printStarting = ref<boolean>(false)
+
+const selectedSchoolId = ref<string>('')
+
+const printPdf = (schoolId: string) => {
+    selectedSchoolId.value = schoolId
+
+    print({
+        printable: formatUrl(route('tenant.schools.export.pdf', schoolId)),
+        type: 'pdf',
+        onLoadingStart: () => {
+            printStarting.value = true
+        },
+        onLoadingEnd: () => {
+            printStarting.value = false
+        }
+    })
+}
 </script>
 
 <template>
@@ -83,6 +106,26 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
 
                     <the-table-td-actions>
                         <div class="flex items-center justify-center">
+                            <a
+                                v-if="hasPermission('print_schools')"
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click.prevent="printPdf(school.id)"
+                            >
+                                <svg-loader
+                                    v-if="!printStarting || school.id !== selectedSchoolId"
+                                    class="me-1 h-4 w-4 fill-current"
+                                    name="icon-print"
+                                ></svg-loader>
+
+                                <spinner-loader
+                                    v-if="printStarting && school.id === selectedSchoolId"
+                                    class="me-1 h-4 w-4"
+                                ></spinner-loader>
+
+                                {{ $t('print') }}
+                            </a>
+
                             <a
                                 v-if="hasPermission('view_schools')"
                                 class="me-3 flex items-center"

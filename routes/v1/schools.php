@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\V1\PrivateSchools\ExportSchoolDetailsPDFController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolDeleteController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolDetailsController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolForceDeleteController;
@@ -75,4 +76,6 @@ Route::prefix('schools')->name('schools.')->group(callback: function (): void {
         'search-universities',
         UniversitiesSearchController::class
     )->name('search-universities');
+
+    Route::get('export-pdf/{school}', ExportSchoolDetailsPDFController::class)->name('export.pdf');
 });

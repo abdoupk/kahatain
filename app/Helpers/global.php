@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @throws Throwable
  * @throws CouldNotTakeBrowsershot
  */
-function saveToPDF(string $directory, string $variableName, callable $function, string|null|Carbon $date = null, string $attribute = '', string $pageType = 'A4'): StreamedResponse
+function saveToPDF(string $directory, string $variableName, callable $function, string|null|Carbon $date = null, string $attribute = '', string $pageType = 'A4', ?bool $landscape = true): StreamedResponse
 {
     $disk = Storage::disk('public');
 
@@ -68,9 +68,13 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
         $browsershot->setNpmBinary(config('app.browsershot.npm_binary'));
     }
 
-    $browsershot->margins(2, 4, 2, 4)
-        ->landscape()
-        ->save($pdfPath);
+    $browsershot->margins(2, 4, 2, 4);
+
+    if ($landscape) {
+        $browsershot->landscape();
+    }
+
+    $browsershot->save($pdfPath);
 
     return $disk->download($pdfFile);
 }

@@ -158,7 +158,11 @@ const showSettingsModal = () => {
                         {{ $t('save') }}
                     </base-button>
 
-                    <base-button class="me-2" @click.prevent="showSettingsModal">
+                    <base-button
+                        v-if="hasPermission(['update_settings', 'update_monthly_basket'])"
+                        class="me-2"
+                        @click.prevent="showSettingsModal"
+                    >
                         <base-tippy :content="$t('settings')">
                             <svg-loader name="icon-gear"></svg-loader>
                         </base-tippy>
