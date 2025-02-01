@@ -49,6 +49,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Archive whereTenantId($value)
  * @method static Builder|Archive whereUpdatedAt($value)
  *
+ * @property array<array-key, mixed>|null $metadata
+ *
+ * @method static Builder<static>|Archive whereMetadata($value)
+ *
  * @mixin Eloquent
  */
 class Archive extends Model

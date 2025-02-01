@@ -21,6 +21,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Archiveable whereArchiveableType($value)
  * @method static Builder|Archiveable whereTenantId($value)
  *
+ * @property-read Tenant $tenant
+ *
  * @mixin Eloquent
  */
 class Archiveable extends Pivot

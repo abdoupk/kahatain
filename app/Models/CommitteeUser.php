@@ -22,6 +22,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|CommitteeUser whereTenantId($value)
  * @method static Builder<static>|CommitteeUser whereUserId($value)
  *
+ * @property-read Tenant $tenant
+ *
  * @mixin Eloquent
  */
 class CommitteeUser extends Pivot

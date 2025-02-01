@@ -52,6 +52,9 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Branch withTrashed()
  * @method static Builder|Branch withoutTrashed()
  *
+ * @property-read Collection<int, User> $members
+ * @property-read int|null $members_count
+ *
  * @mixin Eloquent
  */
 class Branch extends Model

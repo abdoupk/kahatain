@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\InventoryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,6 +53,11 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Inventory whereUpdatedAt($value)
  * @method static Builder|Inventory withTrashed()
  * @method static Builder|Inventory withoutTrashed()
+ *
+ * @property-read Collection<int, MonthlyBasket> $monthlyBasket
+ * @property-read int|null $monthly_basket_count
+ * @property-read Collection<int, RamadanBasket> $ramadanBasket
+ * @property-read int|null $ramadan_basket_count
  *
  * @mixin Eloquent
  */

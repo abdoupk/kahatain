@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
@@ -42,6 +43,9 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Income whereSponsorId($value)
  * @method static Builder|Income whereTenantId($value)
  * @method static Builder|Income whereTotalIncome($value)
+ *
+ * @property-read MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
  *
  * @mixin Eloquent
  */

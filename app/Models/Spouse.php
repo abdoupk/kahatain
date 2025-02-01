@@ -48,6 +48,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ * @property string $type
+ * @property-read Family $family
+ *
+ * @method static Builder<static>|Spouse whereType($value)
  *
  * @mixin Eloquent
  */

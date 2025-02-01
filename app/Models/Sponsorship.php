@@ -54,6 +54,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Sponsorship withTrashed()
  * @method static Builder<static>|Sponsorship withoutTrashed()
  *
+ * @property string|null $until
+ *
+ * @method static Builder<static>|Sponsorship whereUntil($value)
+ *
  * @mixin Eloquent
  */
 class Sponsorship extends Model

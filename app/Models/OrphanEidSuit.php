@@ -2,12 +2,58 @@
 
 namespace App\Models;
 
+use Database\Factories\OrphanEidSuitFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $tenant_id
+ * @property string $orphan_id
+ * @property string|null $note
+ * @property string|null $clothes_shop_name
+ * @property string|null $clothes_shop_phone_number
+ * @property string|null $shoes_shop_name
+ * @property string|null $shoes_shop_phone_number
+ * @property string|null $user_id
+ * @property string|null $shoes_shop_address
+ * @property array<array-key, mixed>|null $shoes_shop_location
+ * @property string|null $clothes_shop_address
+ * @property array<array-key, mixed>|null $clothes_shop_location
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User|null $member
+ * @property-read Orphan|null $orphan
+ * @property-read Tenant|null $tenant
+ *
+ * @method static OrphanEidSuitFactory factory($count = null, $state = [])
+ * @method static Builder<static>|OrphanEidSuit newModelQuery()
+ * @method static Builder<static>|OrphanEidSuit newQuery()
+ * @method static Builder<static>|OrphanEidSuit query()
+ * @method static Builder<static>|OrphanEidSuit whereClothesShopAddress($value)
+ * @method static Builder<static>|OrphanEidSuit whereClothesShopLocation($value)
+ * @method static Builder<static>|OrphanEidSuit whereClothesShopName($value)
+ * @method static Builder<static>|OrphanEidSuit whereClothesShopPhoneNumber($value)
+ * @method static Builder<static>|OrphanEidSuit whereCreatedAt($value)
+ * @method static Builder<static>|OrphanEidSuit whereId($value)
+ * @method static Builder<static>|OrphanEidSuit whereNote($value)
+ * @method static Builder<static>|OrphanEidSuit whereOrphanId($value)
+ * @method static Builder<static>|OrphanEidSuit whereShoesShopAddress($value)
+ * @method static Builder<static>|OrphanEidSuit whereShoesShopLocation($value)
+ * @method static Builder<static>|OrphanEidSuit whereShoesShopName($value)
+ * @method static Builder<static>|OrphanEidSuit whereShoesShopPhoneNumber($value)
+ * @method static Builder<static>|OrphanEidSuit whereTenantId($value)
+ * @method static Builder<static>|OrphanEidSuit whereUpdatedAt($value)
+ * @method static Builder<static>|OrphanEidSuit whereUserId($value)
+ *
+ * @mixin Eloquent
+ */
 class OrphanEidSuit extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids;

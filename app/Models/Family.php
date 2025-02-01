@@ -102,6 +102,25 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Family withTrashed()
  * @method static Builder<static>|Family withoutTrashed()
  *
+ * @property float|null $ramadan_sponsorship_difference
+ * @property string|null $ramadan_basket_category
+ * @property float $aggregate_zakat_benefit
+ * @property int $aggregate_white_meat_benefit
+ * @property int $aggregate_red_meat_benefit
+ * @property string|null $eid_al_adha_status
+ * @property string|null $deletion_reason
+ * @property-read int|null $deceased_count
+ * @property-read Collection<int, FamilyEidAlAdha> $eidAlAdhas
+ * @property-read int|null $eid_al_adhas_count
+ *
+ * @method static Builder<static>|Family whereAggregateRedMeatBenefit($value)
+ * @method static Builder<static>|Family whereAggregateWhiteMeatBenefit($value)
+ * @method static Builder<static>|Family whereAggregateZakatBenefit($value)
+ * @method static Builder<static>|Family whereDeletionReason($value)
+ * @method static Builder<static>|Family whereEidAlAdhaStatus($value)
+ * @method static Builder<static>|Family whereRamadanBasketCategory($value)
+ * @method static Builder<static>|Family whereRamadanSponsorshipDifference($value)
+ *
  * @mixin Eloquent
  */
 class Family extends Model implements HasMedia
@@ -170,9 +189,34 @@ class Family extends Model implements HasMedia
         $this->preview()->unsearchable();
     }
 
+    public function orphans(): HasMany
+    {
+        return $this->hasMany(Orphan::class);
+    }
+
+    public function babies(): HasMany
+    {
+        return $this->hasMany(Baby::class);
+    }
+
+    public function orphansNeeds(): HasManyThrough
+    {
+        return $this->hasManyThrough(Need::class, Orphan::class, 'id', 'needable_id', 'id', 'id');
+    }
+
+    public function sponsorsNeeds(): HasManyThrough
+    {
+        return $this->hasManyThrough(Need::class, Sponsor::class, 'id', 'needable_id', 'id', 'id');
+    }
+
     public function sponsor(): HasOne
     {
         return $this->hasOne(Sponsor::class);
+    }
+
+    public function preview(): HasOne
+    {
+        return $this->hasOne(Preview::class);
     }
 
     public function aid(): MorphMany
@@ -186,16 +230,6 @@ class Family extends Model implements HasMedia
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
-    }
-
-    public function orphansNeeds(): HasManyThrough
-    {
-        return $this->hasManyThrough(Need::class, Orphan::class, 'id', 'needable_id', 'id', 'id');
-    }
-
-    public function sponsorsNeeds(): HasManyThrough
-    {
-        return $this->hasManyThrough(Need::class, Sponsor::class, 'id', 'needable_id', 'id', 'id');
     }
 
     public function zone(): BelongsTo
@@ -319,16 +353,6 @@ class Family extends Model implements HasMedia
         ]);
     }
 
-    public function babies(): HasMany
-    {
-        return $this->hasMany(Baby::class);
-    }
-
-    public function orphans(): HasMany
-    {
-        return $this->hasMany(Orphan::class);
-    }
-
     public function forceDeleteWithRelationships(): void
     {
         $this->forceDelete();
@@ -379,11 +403,6 @@ class Family extends Model implements HasMedia
     public function secondSponsor(): HasOne
     {
         return $this->hasOne(SecondSponsor::class);
-    }
-
-    public function preview(): HasOne
-    {
-        return $this->hasOne(Preview::class);
     }
 
     public function eidAlAdhas(): HasMany

@@ -35,6 +35,10 @@ use Laravel\Scout\Searchable;
  * @method static Builder|City whereWilayaName($value)
  * @method static Builder|City whereWilayaNameAscii($value)
  *
+ * @property string|null $commune_code
+ *
+ * @method static Builder<static>|City whereCommuneCode($value)
+ *
  * @mixin Eloquent
  */
 class City extends Model
