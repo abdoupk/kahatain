@@ -130,8 +130,6 @@ class FamilyShowController extends Controller implements HasMiddleware
 
         $currentItemsNeeds = $allNeeds->slice(($currentPageNeeds - 1) * $perPageNeeds, $perPageNeeds)->all();
 
-        ray($currentItemsNeeds);
-
         $paginatedNeeds = new LengthAwarePaginator($currentItemsNeeds, $allNeeds->count(), $perPageNeeds, $currentPageNeeds, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
             'query' => [

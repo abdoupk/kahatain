@@ -78,7 +78,7 @@ function fetchArchives(data: object) {
                 <base-tbody-table>
                     <base-tr-table v-for="(archive, index) in archives.data" :key="archive.id" class="intro-x">
                         <the-table-td class="w-16">
-                            {{ (archives.meta.from ?? 0) + index }}
+                            {{ Number(index) + 1 }}
                         </the-table-td>
 
                         <the-table-td class="text-center">

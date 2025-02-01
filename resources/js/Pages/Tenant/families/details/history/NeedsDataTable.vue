@@ -89,7 +89,7 @@ function fetchNeeds(data: object) {
                 <base-tbody-table>
                     <base-tr-table v-for="(need, index) in needs.data" :key="need.id" class="intro-x">
                         <the-table-td class="w-16">
-                            {{ (needs.meta.from ?? 0) + index }}
+                            {{ Number(index) + 1 }}
                         </the-table-td>
 
                         <the-table-td class="max-w-40 truncate">
