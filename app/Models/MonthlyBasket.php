@@ -8,24 +8,37 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-class RamadanBasket extends Model
+class MonthlyBasket extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids;
 
     protected $fillable = [
+        'tenant_id',
+        'inventory_id',
+        'created_by',
         'qty_for_family',
         'status',
-        'inventory_id',
-        'tenant_id',
     ];
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 
     public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);
     }
 
-    public function tenant(): BelongsTo
+    public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'status' => 'boolean',
+        ];
     }
 }

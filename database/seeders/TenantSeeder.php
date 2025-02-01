@@ -8,6 +8,8 @@ use App\Models\Competence;
 use App\Models\Domain;
 use App\Models\Finance;
 use App\Models\Inventory;
+use App\Models\MonthlyBasket;
+use App\Models\RamadanBasket;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\Zone;
@@ -99,11 +101,14 @@ class TenantSeeder extends Seeder
                     'zone_id' => $zones->random()?->id,
                 ]);
 
-            Inventory::factory()->count(fake()->numberBetween(10, 25))->create([
-                'tenant_id' => $tenant?->id,
-                'deleted_by' => $tenant->members->random()->first()->id,
-                'created_by' => $tenant->members->random()->first()->id,
-            ]);
+            Inventory::factory()
+                ->has(RamadanBasket::factory()->count(13))
+                ->has(MonthlyBasket::factory()->count(13))
+                ->count(fake()->numberBetween(13, 25))->create([
+                    'tenant_id' => $tenant?->id,
+                    'deleted_by' => $tenant->members->random()->first()->id,
+                    'created_by' => $tenant->members->random()->first()->id,
+                ]);
 
             Finance::factory()->count(fake()->numberBetween(13, 89))->create([
                 'tenant_id' => $tenant->id,

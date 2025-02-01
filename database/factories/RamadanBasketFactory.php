@@ -6,7 +6,6 @@ use App\Models\Inventory;
 use App\Models\RamadanBasket;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 
 class RamadanBasketFactory extends Factory
 {
@@ -15,13 +14,12 @@ class RamadanBasketFactory extends Factory
     public function definition(): array
     {
         return [
-            'qty_for_family' => $this->faker->word(),
-            'status' => $this->faker->word(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-
-            'inventory_id' => Inventory::factory(),
-            'tenant_id' => Tenant::factory(),
+            'qty_for_family' => fake('ar_SA')->numberBetween(1, 5),
+            'status' => fake('ar_SA')->boolean(60),
+            'inventory_id' => Inventory::inRandomOrder()->first()->id,
+            'tenant_id' => Tenant::inRandomOrder()->first()->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

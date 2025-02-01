@@ -8,12 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('ramadan_baskets', function (Blueprint $table) {
+        Schema::create('monthly_baskets', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
             $table->integer('qty_for_family');
             $table->boolean('status');
-            $table->foreignUuid('inventory_id')->constrained('inventories');
             $table->foreignUuid('tenant_id')->constrained('tenants');
+            $table->foreignUuid('inventory_id')->constrained('inventories');
+            $table->foreignUuid('created_by')->constrained('users');
             $table->timestamps();
         });
     }
