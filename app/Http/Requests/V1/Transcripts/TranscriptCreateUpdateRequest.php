@@ -20,7 +20,8 @@ class TranscriptCreateUpdateRequest extends FormRequest
         return [
             'trimester' => 'required|in:first_trimester,second_trimester,third_trimester',
             'subjects.*.id' => 'required|exists:subjects,id',
-            'subjects.*.grade' => 'required_unless:subjects.*.id,26,8,4|nullable|numeric',
+            // 'subjects.*.grade' => 'required_unless:subjects.*.id,26,8,4|nullable|numeric',
+            'subjects.*.grade' => 'nullable|numeric',
             'average' => 'required|numeric',
         ];
     }

@@ -97,13 +97,6 @@ const filterBooleanOperators: Array<ListBoxOperator> = [
 // TODO:add dzd icon add death date spouse
 export const familiesFilters: ListBoxFilter[] = [
     {
-        icon: 'icon-family',
-        field: 'id',
-        label: 'family',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-hands-holding-child',
         field: 'sponsor.id',
         label: 'sponsor',
@@ -139,9 +132,9 @@ export const familiesFilters: ListBoxFilter[] = [
         operators: filterStringOperators
     },
     {
-        icon: 'icon-dollar-sign',
-        field: 'total_income',
-        label: 'total_income',
+        icon: 'icon-hashtag',
+        field: 'income_rate',
+        label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
     },
@@ -251,6 +244,13 @@ export const sponsorsFilters: ListBoxFilter[] = [
 export const orphansFilters: ListBoxFilter[] = [
     {
         icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
         field: 'id',
         label: 'orphan',
         type: 'object',
@@ -337,13 +337,6 @@ export const orphansFilters: ListBoxFilter[] = [
 
 export const eidAlAdhaFilters: ListBoxFilter[] = [
     {
-        icon: 'icon-family',
-        field: 'id',
-        label: 'family',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-hands-holding-child',
         field: 'sponsor.id',
         label: 'sponsor',
@@ -373,28 +366,15 @@ export const eidAlAdhaFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-dollar-sign',
-        field: 'total_income',
-        label: 'total_income',
-        type: 'number',
-        operators: filterNumberOperators
-    },
-    {
-        icon: 'icon-dollar-sign',
         field: 'income_rate',
         label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
     }
+    // TODO add Status
 ]
 
 export const zakatFilters: ListBoxFilter[] = [
-    {
-        icon: 'icon-family',
-        field: 'id',
-        label: 'family',
-        type: 'object',
-        operators: filterObjectOperators
-    },
     {
         icon: 'icon-hands-holding-child',
         field: 'sponsor.id',
@@ -432,13 +412,6 @@ export const zakatFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-dollar-sign',
-        field: 'total_income',
-        label: 'total_income',
-        type: 'number',
-        operators: filterNumberOperators
-    },
-    {
-        icon: 'icon-dollar-sign',
         field: 'income_rate',
         label: 'income_rate',
         type: 'number',
@@ -447,13 +420,6 @@ export const zakatFilters: ListBoxFilter[] = [
 ]
 
 export const meatDistributionFilters: ListBoxFilter[] = [
-    {
-        icon: 'icon-family',
-        field: 'id',
-        label: 'family',
-        type: 'object',
-        operators: filterObjectOperators
-    },
     {
         icon: 'icon-hands-holding-child',
         field: 'sponsor.id',
@@ -498,13 +464,6 @@ export const meatDistributionFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-dollar-sign',
-        field: 'total_income',
-        label: 'total_income',
-        type: 'number',
-        operators: filterNumberOperators
-    },
-    {
-        icon: 'icon-dollar-sign',
         field: 'income_rate',
         label: 'income_rate',
         type: 'number',
@@ -514,7 +473,7 @@ export const meatDistributionFilters: ListBoxFilter[] = [
 
 export const schoolEntryFilters: ListBoxFilter[] = [
     {
-        icon: 'icon-hands-holding-child',
+        icon: 'icon-children',
         field: 'id',
         label: 'orphan',
         type: 'object',
@@ -548,13 +507,7 @@ export const schoolEntryFilters: ListBoxFilter[] = [
         type: 'date',
         operators: filterDateOperators
     },
-    {
-        icon: 'icon-hashtag',
-        field: 'last_academic_year_achievement.average',
-        label: 'general_average',
-        type: 'number',
-        operators: filterNumberOperators
-    },
+    // TODO add General average
     {
         icon: 'icon-stethoscope',
         field: 'health_status',
@@ -574,10 +527,24 @@ export const schoolEntryFilters: ListBoxFilter[] = [
 export const eidSuitsFilters: ListBoxFilter[] = [
     {
         icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
         field: 'id',
         label: 'orphan',
         type: 'object',
         operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'family.income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
     },
     {
         icon: 'icon-calendar',
@@ -618,13 +585,6 @@ export const eidSuitsFilters: ListBoxFilter[] = [
 
 export const ramadanBasketFilters: ListBoxFilter[] = [
     {
-        icon: 'icon-family',
-        field: 'id',
-        label: 'family',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-hands-holding-child',
         field: 'sponsor.id',
         label: 'sponsor',
@@ -653,9 +613,9 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
         operators: filterNumberOperators
     },
     {
-        icon: 'icon-dollar-sign',
-        field: 'total_income',
-        label: 'total_income',
+        icon: 'icon-hashtag',
+        field: 'income_rate',
+        label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
     }
@@ -770,6 +730,14 @@ export const babiesMilkAndDiapersFilters: ListBoxFilter[] = [
         label: 'orphan',
         type: 'object',
         operators: filterObjectOperators
+    },
+    // TODO fix this
+    {
+        icon: 'icon-hashtag',
+        field: 'family.income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
     },
     {
         icon: 'icon-hands-holding-child',
