@@ -48,9 +48,13 @@ const popover = ref({
                         }
                     "
                 >
-                    <svg-loader v-if="$attrs?.mode === 'time'" class="h-4 w-4 fill-current" name="icon-clock" />
+                    <svg-loader
+                        v-if="$attrs?.mode === 'time'"
+                        class="h-4 w-4 fill-current"
+                        name="icon-clock"
+                    ></svg-loader>
 
-                    <svg-loader v-else class="h-4 w-4 fill-current" name="icon-calendar" />
+                    <svg-loader v-else class="h-4 w-4 fill-current" name="icon-calendar"></svg-loader>
                 </div>
 
                 <base-form-input

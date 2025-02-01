@@ -2,11 +2,8 @@
     z-index: 50 !important;
 }
 
-:dir(rtl) {
-    .vc-arrow,
-    .vc-nav-arrow {
-        transform: rotate(180deg) !important;
-    }
+.vc-time-picker {
+    direction: ltr !important;
 }
 
 :root,
