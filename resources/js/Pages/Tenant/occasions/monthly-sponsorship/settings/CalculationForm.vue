@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
-import { useForm } from 'laravel-precognition-vue'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 import { $t } from '@/utils/i18n'
+
+defineProps<{
+    form: any
+}>()
 
 const TheSponsorshipRateCategories = defineAsyncComponent(
     () => import('@/Pages/Tenant/occasions/monthly-sponsorship/settings/TheSponsorshipRateCategories.vue')
@@ -25,11 +28,6 @@ const BaseInputGroupText = defineAsyncComponent(
 
 const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
-const emit = defineEmits(['close', 'success'])
-
-// Initialize a ref for loading state
-const loading = ref(false)
-
 // Get the sponsorships store
 const sponsorshipsStore = useSponsorshipsStore()
 
@@ -46,38 +44,6 @@ const removeInterval = (index: number) => {
 
     form.value.categories.splice(index, 1)
 }
-
-// Function to handle form submission
-const handleSubmit = async () => {
-    loading.value = true
-
-    try {
-        await form.value
-            .submit({
-                onSuccess() {
-                    showSuccessNotification.value = true
-                },
-                onFinish() {
-                    showSuccessNotification.value = false
-                }
-            })
-            .then(handleSuccess)
-    } finally {
-        loading.value = false
-    }
-}
-
-const handleSuccess = () => {
-    sponsorshipsStore.monthly_sponsorship = form.value.data()
-
-    emit('close')
-}
-
-const form = computed(() => {
-    return useForm('patch', route('tenant.occasions.monthly-sponsorship.update-settings'), {
-        ...sponsorshipsStore.monthly_sponsorship
-    })
-})
 </script>
 
 <template>
@@ -91,7 +57,7 @@ const form = computed(() => {
             <base-form-input
                 id="university_scholarship_bachelor"
                 ref="firstInputRef"
-                v-model="form.university_scholarship_bachelor"
+                v-model="sponsorshipsStore.monthly_sponsorship.university_scholarship_bachelor"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('validation.attributes.university_scholarship_bachelor')
@@ -121,7 +87,7 @@ const form = computed(() => {
         <base-input-group>
             <base-form-input
                 id="university_scholarship_master_one"
-                v-model="form.university_scholarship_master_one"
+                v-model="sponsorshipsStore.monthly_sponsorship.university_scholarship_master_one"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('validation.attributes.university_scholarship_master_one')
@@ -151,7 +117,7 @@ const form = computed(() => {
         <base-input-group>
             <base-form-input
                 id="university_scholarship_master_two"
-                v-model="form.university_scholarship_master_two"
+                v-model="sponsorshipsStore.monthly_sponsorship.university_scholarship_master_two"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('validation.attributes.university_scholarship_master_two')
@@ -181,7 +147,7 @@ const form = computed(() => {
         <base-input-group>
             <base-form-input
                 id="university_scholarship_doctorate"
-                v-model="form.university_scholarship_doctorate"
+                v-model="sponsorshipsStore.monthly_sponsorship.university_scholarship_doctorate"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('validation.attributes.university_scholarship_doctorate')
@@ -211,7 +177,7 @@ const form = computed(() => {
         <base-input-group>
             <base-form-input
                 id="unemployment_benefit"
-                v-model="form.unemployment_benefit"
+                v-model="sponsorshipsStore.monthly_sponsorship.unemployment_benefit"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('settings.unemployment_benefit')
@@ -241,7 +207,7 @@ const form = computed(() => {
         <base-input-group>
             <base-form-input
                 id="threshold"
-                v-model="form.threshold"
+                v-model="sponsorshipsStore.monthly_sponsorship.threshold"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('settings.threshold')
@@ -271,7 +237,7 @@ const form = computed(() => {
         <base-input-group>
             <base-form-input
                 id="association_basket_value"
-                v-model="form.association_basket_value"
+                v-model="sponsorshipsStore.monthly_sponsorship.association_basket_value"
                 :placeholder="
                     $t('auth.placeholders.tomselect', {
                         attribute: $t('validation.attributes.association_basket_value')
@@ -294,10 +260,12 @@ const form = computed(() => {
 
     <!-- Begin: Categories for calculation of sponsorship rate-->
     <div class="col-span-12 grid gap-4">
-        <div class="mt-1.5 text-base">{{ $t('settings.categories_for_calculation_of_sponsorship_rate') }}</div>
+        <div class="mt-1.5 text-base">
+            {{ $t('settings.categories_for_calculation_of_sponsorship_rate') }}
+        </div>
 
         <the-sponsorship-rate-categories
-            v-for="(category, index) in form.categories"
+            v-for="(category, index) in sponsorshipsStore.monthly_sponsorship.categories"
             :key="index"
             v-model:maximum="category.maximum"
             v-model:minimum="category.minimum"
