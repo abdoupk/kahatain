@@ -15,9 +15,9 @@ class MonthlyBasket extends Model
     protected $fillable = [
         'tenant_id',
         'inventory_id',
-        'created_by',
         'qty_for_family',
         'status',
+        'tenant_id',
     ];
 
     public function tenant(): BelongsTo
@@ -28,11 +28,6 @@ class MonthlyBasket extends Model
     public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);
-    }
-
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
     }
 
     protected function casts(): array

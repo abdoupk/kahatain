@@ -139,7 +139,7 @@ function goToNext(): void {
             :key="`pagination-page-${page}`"
             :active-color="activeColor"
             :current="modelValue"
-            :page="page"
+            :page
             @update="updatePageHandler"
         />
 

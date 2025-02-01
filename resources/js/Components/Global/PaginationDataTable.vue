@@ -4,7 +4,10 @@ import ThePagination from '@/Components/pagination/ThePagination.vue'
 
 const emit = defineEmits(['changePage'])
 
-defineProps<{ pages: number }>()
+defineProps<{
+    pages: number
+    hidePerPage?: boolean
+}>()
 
 const page = defineModel('page', { default: 1 })
 
@@ -22,7 +25,7 @@ const perPage = defineModel('perPage')
         >
         </the-pagination>
 
-        <base-form-select v-model="perPage" class="!box ms-auto mt-3 w-20 sm:mt-0">
+        <base-form-select v-if="!hidePerPage" v-model="perPage" class="!box ms-auto mt-3 w-20 sm:mt-0">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="35">35</option>

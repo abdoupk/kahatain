@@ -212,6 +212,8 @@
     "filters.receiver": "العضو المستلم",
     "filters.furnishings": "الأثاث",
     "filters.speciality": "التخصص",
+    "filters.aggregate_red_meat_benefit": "عدد الاستفادة من توزيع اللحوم الحمراء",
+    "filters.aggregate_white_meat_benefit": "عدد الاستفادة من توزيع اللحوم البيضاء",
     "furnishings.television": "تلفاز",
     "furnishings.refrigerator": "ثلاجة",
     "furnishings.fireplace": "مدفأة",

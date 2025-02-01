@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\V1\MonthlySponsorships\ListItemsOfMonthlyBasketController;
 use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportFamiliesMonthlyBasketPDFController;
 use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportFamiliesMonthlyBasketXlsxController;
 use App\Http\Controllers\V1\Occasions\MonthlyBasket\FamiliesMonthlyBasketIndexController;
@@ -32,4 +33,9 @@ Route::prefix('monthly-basket')
             'save-to-archive',
             SaveFamiliesMonthlyBasketToArchiveController::class
         )->name('save-to-archive');
+
+        Route::get(
+            'list-items-of-monthly-basket',
+            ListItemsOfMonthlyBasketController::class
+        )->name('get-items');
     });

@@ -102,13 +102,21 @@ class TenantSeeder extends Seeder
                 ]);
 
             Inventory::factory()
-                ->has(RamadanBasket::factory()->count(13))
-                ->has(MonthlyBasket::factory()->count(13))
                 ->count(fake()->numberBetween(13, 25))->create([
                     'tenant_id' => $tenant?->id,
                     'deleted_by' => $tenant->members->random()->first()->id,
                     'created_by' => $tenant->members->random()->first()->id,
                 ]);
+
+            RamadanBasket::factory()->count(fake()->numberBetween(13, 89))->create([
+                'tenant_id' => $tenant->id,
+                'inventory_id' => Inventory::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
+            ]);
+
+            MonthlyBasket::factory()->count(fake()->numberBetween(13, 89))->create([
+                'tenant_id' => $tenant->id,
+                'inventory_id' => Inventory::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
+            ]);
 
             Finance::factory()->count(fake()->numberBetween(13, 89))->create([
                 'tenant_id' => $tenant->id,

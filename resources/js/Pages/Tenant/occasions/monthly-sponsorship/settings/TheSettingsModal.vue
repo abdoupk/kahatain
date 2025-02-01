@@ -1,15 +1,21 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, defineAsyncComponent, onUnmounted, ref } from 'vue'
 
+import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
+import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
+import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
+import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
 import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
 import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
 import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
 import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
+import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
 
+import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const TheSponsorshipRateCategories = defineAsyncComponent(
@@ -40,10 +46,8 @@ defineProps<{
     open: boolean
 }>()
 
-// Get the sponsorships store
 const sponsorshipsStore = useSponsorshipsStore()
 
-// Initialize a ref for loading state
 const loading = ref(false)
 
 const showSuccessNotification = ref(false)
@@ -59,22 +63,19 @@ const form = computed(() => {
         })
     }
 
-    return useForm('patch', route('tenant.monthly-sponsorship.update-settings'), {
-        ...sponsorshipsStore.monthly_sponsorship
+    return useForm('patch', route('tenant.monthly-sponsorship.update-monthly-basket'), {
+        items: sponsorshipsStore.monthly_basket.data
     })
 })
 
-// Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
-// Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
-    sponsorshipsStore.monthly_sponsorship = form.value.data()
+    // SponsorshipsStore.monthly_sponsorship = form.value.data()
 
     emit('close')
 }
 
-// Function to handle form submission
 const handleSubmit = async () => {
     loading.value = true
 
@@ -94,13 +95,10 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the zone id
 const modalTitle = $t('settings')
 
-// Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the zone id
 const modalType = 'update'
 
 const addInterval = () => {
@@ -120,6 +118,8 @@ const removeInterval = (index: number) => {
 const handleTabChange = (index) => {
     tabIndex.value = index
 }
+
+onUnmounted(() => sponsorshipsStore.$reset())
 </script>
 
 <template>
@@ -143,6 +143,7 @@ const handleTabChange = (index) => {
                         <base-tab-button as="button" class="w-full py-2" type="button"> Example Tab 2</base-tab-button>
                     </base-tab>
                 </base-tab-list>
+
                 <base-tab-panels class="mt-5">
                     <base-tab-panel class="grid grid-cols-12 gap-4 gap-y-3">
                         <!-- Begin: University scholarship bachelor-->
@@ -400,7 +401,79 @@ const handleTabChange = (index) => {
                         <!-- End: Categories for calculation of sponsorship rate-->
                     </base-tab-panel>
 
-                    <base-tab-panel></base-tab-panel>
+                    <base-tab-panel>
+                        <div
+                            v-for="(item, index) in sponsorshipsStore.monthly_basket.data"
+                            :key="item.id"
+                            class="intro-y col-span-12 mt-4 grid grid-cols-12 gap-4"
+                        >
+                            <div class="col-span-12 sm:col-span-4">
+                                <base-form-label :for="`name-${index}`">
+                                    {{ $t('item_name') }}
+                                </base-form-label>
+
+                                <base-form-input
+                                    :id="`name-${index}`"
+                                    v-model="item.name"
+                                    :placeholder="
+                                        $t('auth.placeholders.tomselect', {
+                                            attribute: $t('item_name')
+                                        })
+                                    "
+                                    type="text"
+                                ></base-form-input>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-4">
+                                <base-form-label :for="`qty-${index}`">
+                                    {{ $t('validation.attributes.qty_for_family') }}
+                                </base-form-label>
+
+                                <base-input-group>
+                                    <base-form-input
+                                        :id="`qty-${index}`"
+                                        v-model="item.qty_for_family"
+                                        :placeholder="
+                                            $t('auth.placeholders.fill', {
+                                                attribute: $t('validation.attributes.qty')
+                                            })
+                                        "
+                                        maxlength="6"
+                                        type="text"
+                                        @keydown="allowOnlyNumbersOnKeyDown"
+                                    ></base-form-input>
+
+                                    <base-form-select v-model="item.unit" class="!w-28">
+                                        <option value="kg">{{ $t('kg') }}</option>
+                                        <option value="liter">{{ $t('liter') }}</option>
+                                        <option value="piece">{{ $t('piece') }}</option>
+                                    </base-form-select>
+                                </base-input-group>
+                            </div>
+
+                            <div class="col-span-12 sm:col-span-4 lg:mt-6 lg:flex lg:items-center lg:justify-center">
+                                <base-form-switch class="text-lg">
+                                    <base-form-switch-input
+                                        :id="`status-${index}`"
+                                        v-model="item.status"
+                                        type="checkbox"
+                                    ></base-form-switch-input>
+
+                                    <base-form-switch-label :htmlFor="`status-${index}`">
+                                        {{ $t('validation.attributes.the_status') }}
+                                    </base-form-switch-label>
+                                </base-form-switch>
+                            </div>
+                        </div>
+                        <pagination-data-table
+                            :page="sponsorshipsStore.monthly_basket.meta.current_page"
+                            :pages="sponsorshipsStore.monthly_basket.meta.last_page"
+                            :per-page="sponsorshipsStore.monthly_basket.meta.per_page"
+                            class="mt-4"
+                            hide-per-page
+                            @change-page="sponsorshipsStore.getMonthlyBasketItems($event)"
+                        ></pagination-data-table>
+                    </base-tab-panel>
                 </base-tab-panels>
             </base-tab-group>
         </template>

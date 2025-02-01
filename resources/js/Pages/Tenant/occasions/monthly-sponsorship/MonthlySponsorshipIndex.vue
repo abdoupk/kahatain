@@ -108,6 +108,8 @@ const showSettingsModal = () => {
 
     sponsorshipsStore.getMonthlySponsorshipSettings()
 
+    sponsorshipsStore.getMonthlyBasketItems(1)
+
     showSettingsModalStatus.value = true
 }
 </script>
@@ -119,11 +121,10 @@ const showSettingsModal = () => {
         <div>
             <the-table-header
                 :exportable
-                :sortableFields="monthlySponsorshipSorts"
-                sortable
                 :filters="monthlySponsorshipFilters"
                 :pagination-data="families"
                 :params="params"
+                :sortableFields="monthlySponsorshipSorts"
                 :title="$t('list', { attribute: $t('the_families_monthly_basket') })"
                 :url="route('tenant.monthly-sponsorship.index')"
                 entries="families"
@@ -131,6 +132,7 @@ const showSettingsModal = () => {
                 export-xlsx-url="tenant.monthly-sponsorship.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>

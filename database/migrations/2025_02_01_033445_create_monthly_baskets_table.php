@@ -14,7 +14,6 @@ return new class extends Migration
             $table->boolean('status');
             $table->foreignUuid('tenant_id')->constrained('tenants');
             $table->foreignUuid('inventory_id')->constrained('inventories');
-            $table->foreignUuid('created_by')->constrained('users');
             $table->timestamps();
         });
     }

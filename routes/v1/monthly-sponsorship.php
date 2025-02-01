@@ -6,7 +6,9 @@ use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorship
 use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexController;
 use App\Http\Controllers\V1\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
+use App\Http\Controllers\V1\MonthlySponsorships\ListItemsOfMonthlyBasketController;
 use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
+use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlyBasketController;
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
 
 Route::prefix('projects/monthly-sponsorship')
@@ -40,8 +42,18 @@ Route::prefix('projects/monthly-sponsorship')
             UpdateMonthlySponsorshipSettingsController::class
         )->name('update-settings');
 
+        Route::patch(
+            'update-monthly-basket',
+            UpdateMonthlyBasketController::class
+        )->name('update-monthly-basket');
+
         Route::get(
             'get-settings',
             GetMonthlySponsorshipSettingsController::class
         )->name('get-settings');
+
+        Route::get(
+            'list-items-of-monthly-basket',
+            ListItemsOfMonthlyBasketController::class
+        )->name('get-items');
     });

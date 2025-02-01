@@ -1,6 +1,24 @@
-import type { CreateSponsorshipForm } from '@/types/types'
+import type { CreateSponsorshipForm, PaginationData } from '@/types/types'
 
 import { defineStore } from 'pinia'
+
+export type MonthlyBasket = {
+    id: string
+    name: string
+    status: boolean
+    inventory_id: string
+    qty_for_family: number
+    unit: 'kg' | 'piece' | 'liter'
+}
+
+export type RamadanBasket = {
+    id: string
+    name: string
+    status: boolean
+    inventory_id: string
+    qty_for_family: number
+    unit: 'kg' | 'piece' | 'liter'
+}
 
 interface State {
     sponsorship: CreateSponsorshipForm & {
@@ -34,6 +52,8 @@ interface State {
             category: string | null
         }
     }
+    ramadan_basket: PaginationData<RamadanBasket>
+    monthly_basket: PaginationData<MonthlyBasket>
 }
 
 export const useSponsorshipsStore = defineStore('sponsorships', {
@@ -80,7 +100,9 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
                     category: null
                 }
             ]
-        }
+        },
+        ramadan_basket: [],
+        monthly_basket: []
     }),
     actions: {
         async getMonthlySponsorshipSettings() {
@@ -93,6 +115,21 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             const { data: ramadan_sponsorship } = await axios.get(route('tenant.occasions.ramadan-basket.get-settings'))
 
             this.ramadan_sponsorship = ramadan_sponsorship
+        },
+
+        async getMonthlyBasketItems(page: number) {
+            const { data: monthly_basket } = await axios.get(
+                route(
+                    'tenant.occasions.monthly-basket.get-items',
+                    { page },
+                    {
+                        preserveState: false,
+                        preserveScroll: false
+                    }
+                )
+            )
+
+            this.monthly_basket = monthly_basket
         }
     }
 })

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('name');
-            $table->integer('qty');
-            $table->enum('unit', ['kg', 'liter', 'piece']);
+            $table->integer('qty')->nullable();
+            $table->enum('unit', ['kg', 'liter', 'piece'])->nullable();
             $table->text('type')->nullable();
             $table->text('note')->nullable();
             $table->uuid('created_by');
