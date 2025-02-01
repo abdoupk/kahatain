@@ -214,6 +214,8 @@
     "filters.speciality": "التخصص",
     "filters.aggregate_red_meat_benefit": "عدد الاستفادة من توزيع اللحوم الحمراء",
     "filters.aggregate_white_meat_benefit": "عدد الاستفادة من توزيع اللحوم البيضاء",
+    "filters.status": "الحالة",
+    "filters.recipient_type": "نوع المستفيد",
     "furnishings.television": "تلفاز",
     "furnishings.refrigerator": "ثلاجة",
     "furnishings.fireplace": "مدفأة",

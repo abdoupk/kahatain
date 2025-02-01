@@ -17,6 +17,7 @@ class CollegeStudentsIndexResource extends JsonResource
             'phone_number' => formatPhoneNumber($this->phone_number),
             'academicLevel' => $this->academicLevel->level,
             'university' => $this->institution->getName(),
+            'speciality' => $this->speciality?->speciality,
             'ccp' => $this->ccp,
         ];
     }

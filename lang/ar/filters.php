@@ -84,4 +84,6 @@ return [
     'speciality' => 'التخصص',
     'aggregate_red_meat_benefit' => 'عدد الاستفادة من توزيع اللحوم الحمراء',
     'aggregate_white_meat_benefit' => 'عدد الاستفادة من توزيع اللحوم البيضاء',
+    'status' => 'الحالة',
+    'recipient_type' => 'نوع المستفيد',
 ];

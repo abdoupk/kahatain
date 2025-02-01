@@ -108,7 +108,7 @@ class Need extends Model
 
     public function makeSearchableUsing(Collection $models): Collection
     {
-        return $models->load(['needable']);
+        return $models->load(['needable.family.branch', 'needable.family.zone']);
     }
 
     public function toSearchableArray(): array
@@ -122,6 +122,14 @@ class Need extends Model
                 'id' => $this->needable_id,
                 'name' => $this->needable?->getName(),
                 'type' => $this->needable_type,
+            ],
+            'branch' => [
+                'id' => $this->needable->family->branch?->id,
+                'name' => $this->needable->family->branch?->name,
+            ],
+            'zone' => [
+                'id' => $this->needable->family->zone?->id,
+                'name' => $this->needable->family->zone?->name,
             ],
             'note' => $this->note,
             'tenant_id' => $this->tenant_id,

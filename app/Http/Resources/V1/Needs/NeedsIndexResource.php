@@ -16,6 +16,14 @@ class NeedsIndexResource extends JsonResource
             'demand' => $this->demand,
             'subject' => $this->subject,
             'status' => $this->status,
+            'zone' => [
+                'id' => $this->needable->family?->zone?->id,
+                'name' => $this->needable->family?->zone?->name,
+            ],
+            'branch' => [
+                'id' => $this->needable->family?->branch?->id,
+                'name' => $this->needable->family?->branch?->name,
+            ],
             'needable' => [
                 'id' => $this->needable_id,
                 'name' => $this->needable?->getName(),

@@ -298,7 +298,7 @@ class Family extends Model implements HasMedia
             'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,
             'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate,
             'amount_from_association' => $this->amount_from_association,
-            'aggregate_zakat_benefit' => (float) $this->aggregate_zakat_benefit,
+            'aggregate_zakat_benefit' => $this->aggregate_zakat_benefit,
             'basket_from_association' => $this->difference_before_monthly_sponsorship > 0,
             'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
             'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
@@ -309,8 +309,8 @@ class Family extends Model implements HasMedia
                 'lat' => $this->location['lat'],
                 'lng' => $this->location['lng'],
             ],
-            'aggregate_white_meat_benefit' => (int) $this->aggregate_white_meat_benefit,
-            'aggregate_red_meat_benefit' => (int) $this->aggregate_red_meat_benefit,
+            'aggregate_white_meat_benefit' => $this->aggregate_white_meat_benefit,
+            'aggregate_red_meat_benefit' => $this->aggregate_red_meat_benefit,
             'eid_al_adha_status' => $this->eid_al_adha_status,
         ];
     }

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams } from '@/types/types'
 
+import { collegeStudentsFilters } from '@/constants/filters'
 import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
@@ -57,13 +58,14 @@ const sort = (field: string) => handleSort(field, params.value)
         <suspense>
             <div class="col-span-12">
                 <the-table-header
-                    :filters="[]"
+                    :filters="collegeStudentsFilters"
                     :pagination-data="orphans"
                     :params
                     :url="route('tenant.college-students.index')"
                     entries="college_students"
                     export-pdf-url=""
                     export-xlsx-url=""
+                    filterable
                     searchable
                     title=""
                     @change-filters="params.filters = $event"

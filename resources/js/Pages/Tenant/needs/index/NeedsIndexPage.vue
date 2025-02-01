@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, NeedsIndexResource, PaginationData } from '@/types/types'
 
+import { needsFilters } from '@/constants/filters'
 import { needsSorts } from '@/constants/sorts'
 import { useNeedsStore } from '@/stores/needs'
 import { Head, router } from '@inertiajs/vue3'
@@ -157,7 +158,7 @@ watchEffect(async () => {
     <suspense>
         <div>
             <the-table-header
-                :filters="[]"
+                :filters="needsFilters"
                 :pagination-data="needs"
                 :params="params"
                 :sortableFields="needsSorts"
@@ -168,6 +169,7 @@ watchEffect(async () => {
                 export-xlsx-url=""
                 searchable
                 sortable
+                filterable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>

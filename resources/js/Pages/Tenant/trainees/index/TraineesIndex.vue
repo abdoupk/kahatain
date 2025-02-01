@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams } from '@/types/types'
 
+import { traineesOrphansFilters } from '@/constants/filters'
 import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
@@ -57,13 +58,14 @@ defineOptions({
         <suspense>
             <div class="col-span-12">
                 <the-table-header
-                    :filters="[]"
+                    :filters="traineesOrphansFilters"
                     :pagination-data="orphans"
                     :params
                     :url="route('tenant.trainees.index')"
                     entries="orphans"
                     export-pdf-url=""
                     export-xlsx-url=""
+                    filterable
                     searchable
                     title=""
                     @change-filters="params.filters = $event"

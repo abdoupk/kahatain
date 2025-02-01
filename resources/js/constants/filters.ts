@@ -370,8 +370,14 @@ export const eidAlAdhaFilters: ListBoxFilter[] = [
         label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-check-circle',
+        field: 'eid_al_adha_status',
+        label: 'status',
+        type: 'object',
+        operators: filterObjectOperators
     }
-    // TODO add Status
 ]
 
 export const zakatFilters: ListBoxFilter[] = [
@@ -623,13 +629,6 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
 
 export const monthlySponsorshipFilters: ListBoxFilter[] = [
     {
-        icon: 'icon-family',
-        field: 'id',
-        label: 'family',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-hands-holding-child',
         field: 'sponsor.id',
         label: 'sponsor',
@@ -654,13 +653,6 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
         icon: 'icon-children',
         field: 'orphans_count',
         label: 'orphans_count',
-        type: 'number',
-        operators: filterNumberOperators
-    },
-    {
-        icon: 'icon-dollar-sign',
-        field: 'total_income',
-        label: 'total_income',
         type: 'number',
         operators: filterNumberOperators
     },
@@ -722,6 +714,43 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
     }
 ]
 
+export const needsFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'income_rate',
+        label: 'income_rate',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-user',
+        field: 'needable.type',
+        label: 'recipient_type',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-check-circle',
+        field: 'status',
+        label: 'status',
+        type: 'object',
+        operators: filterObjectOperators
+    }
+]
 // Add diapers icon
 export const babiesMilkAndDiapersFilters: ListBoxFilter[] = [
     {
@@ -982,3 +1011,19 @@ export const financialFilters: ListBoxFilter[] = [
         operators: filterDateOperators
     }
 ]
+
+export const collegeStudentsFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-graduation-cap',
+        field: 'speciality.speciality',
+        label: 'speciality',
+        type: 'object',
+        operators: filterObjectOperators
+    }
+]
+
+export const studentsFilters: ListBoxFilter[] = []
+
+export const traineesOrphansFilters: ListBoxFilter[] = []
+
+export const lessonsFilters: ListBoxFilter[] = []

@@ -64,7 +64,7 @@ onMounted(() => {
                 {{ $t('validation.attributes.date') }}
             </base-form-label>
 
-            <base-v-calendar v-model:date="date" dir="ltr" mode="date"></base-v-calendar>
+            <base-v-calendar v-model:date="date" mode="date"></base-v-calendar>
         </div>
 
         <div class="col-span-12 sm:col-span-4">
