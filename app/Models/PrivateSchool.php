@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
@@ -105,6 +106,11 @@ class PrivateSchool extends Model
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'private_school_id', 'id');
+    }
+
+    public function eventsWithOrphans(): HasManyThrough
+    {
+        return $this->hasManyThrough(EventOccurrence::class, Lesson::class, 'private_school_id', 'lesson_id', 'id', 'id')->with('orphans:id,first_name,last_name,sponsor_id', 'orphans.sponsor:id,first_name,last_name,phone_number');
     }
 
     public function creator(): BelongsTo

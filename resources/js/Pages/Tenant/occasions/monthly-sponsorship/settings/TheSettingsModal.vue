@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { useForm } from 'laravel-precognition-vue'
+import print from 'print-js'
 import { computed, defineAsyncComponent, onUnmounted, ref } from 'vue'
 
 import CalculationForm from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/CalculationForm.vue'
@@ -13,7 +14,9 @@ import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
 import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
 import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
 import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
+import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 
+import { formatUrl } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
@@ -83,6 +86,22 @@ const handleTabChange = (index) => {
     tabIndex.value = index
 }
 
+const printStarting = ref<boolean>(false)
+
+const printPdf = () => {
+    print({
+        printable: formatUrl(route('tenant.occasions.monthly-sponsorship.export-monthly-basket-items.pdf')),
+        type: 'pdf',
+        font: 'Roboto',
+        onLoadingStart: () => {
+            printStarting.value = true
+        },
+        onLoadingEnd: () => {
+            printStarting.value = false
+        }
+    })
+}
+
 onUnmounted(() => sponsorshipsStore.$reset())
 </script>
 
@@ -98,6 +117,7 @@ onUnmounted(() => sponsorshipsStore.$reset())
         @handle-submit="handleSubmit"
     >
         <template #body>
+            {{}}
             <base-tab-group @change="handleTabChange">
                 <base-tab-list class="flex" variant="link-tabs">
                     <base-tab>
@@ -125,7 +145,9 @@ onUnmounted(() => sponsorshipsStore.$reset())
         </template>
 
         <template v-if="tabIndex === 1" #extraButtons>
-            <base-button class="me-1 w-20" type="button" variant="soft-primary" @click="emit('close')">
+            <base-button class="me-2 ms-1 w-20" type="button" variant="soft-primary" @click.prevent="printPdf">
+                <spinner-button-loader :show="printStarting"></spinner-button-loader>
+
                 {{ $t('print') }}
             </base-button>
         </template>

@@ -104,7 +104,7 @@ class Inventory extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'qty' => $this->qty,
+            'qty' => $this->qty ?? 0,
             'unit' => $this->unit,
             'note' => $this->note,
             'tenant_id' => $this->tenant_id,
@@ -115,6 +115,11 @@ class Inventory extends Model
             'created_at' => strtotime($this->created_at),
             'type' => $this->type,
         ];
+    }
+
+    public function makeSearchableUsing(Collection $models): Collection
+    {
+        return $models->load(['creator']);
     }
 
     public function creator(): BelongsTo

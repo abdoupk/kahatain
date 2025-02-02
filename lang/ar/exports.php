@@ -9,6 +9,8 @@ return [
     'ramadan_basket_families' => 'قائمة المستفيدين من قفة رمضان لسنة :date',
     'babies_milk_and_diapers' => 'قائمة المستفيدين من الحفاضات وحليب الأطفال لشهر :date',
     'school_entry' => 'قائمة المستفيدين من الحقائب المدرسية لسنة :date',
+    'monthly_basket' => 'قائمة عناصر القفة الشهرية لشهر :date',
+    'private_school' => 'قائمة التلاميذ لمدرسة :attribute',
     'archive' => [
         'eid_al_adha_families' => 'أرشيف المستفيدين من الأضحية لسنة :date',
         'zakat_families' => 'أرشيف المستفيدين من الزكاة بقيمة اجمالية :attribute بتاريخ :date',

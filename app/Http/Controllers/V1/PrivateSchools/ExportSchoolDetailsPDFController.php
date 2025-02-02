@@ -21,7 +21,7 @@ class ExportSchoolDetailsPDFController extends Controller implements HasMiddlewa
      */
     public function __invoke(PrivateSchool $school)
     {
-        return saveToPDF('private-school', 'school',
-            fn () => $school->load(['subjects.academicLevel', 'lessons'])->loadCount(['lessons', 'subjects']), landscape: false);
+        return saveToPDF('private-school', 'private_school',
+            fn () => $school->load(['subjects:subject_id,academic_level_id,private_school_id', 'subjects.subject', 'subjects.academicLevel:id,level', 'eventsWithOrphans']), attribute: $school->name, landscape: false);
     }
 }

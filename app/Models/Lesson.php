@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
@@ -73,6 +74,11 @@ class Lesson extends Model
     public function academicLevel(): BelongsTo
     {
         return $this->belongsTo(AcademicLevel::class, 'academic_level_id', 'id');
+    }
+
+    public function orphans(): HasManyThrough
+    {
+        return $this->hasManyThrough(EventOccurrence::class, Orphan::class, 'lesson_id', 'id', 'id', 'event_id');
     }
 
     public function getName(): string

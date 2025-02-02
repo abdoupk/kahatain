@@ -10,6 +10,7 @@ use App\Http\Controllers\V1\MonthlySponsorships\ListItemsOfMonthlyBasketControll
 use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlyBasketController;
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
+use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportMonthlyBasketItemsPDFController;
 
 Route::prefix('monthly-sponsorship')
     ->name('monthly-sponsorship.')
@@ -25,6 +26,12 @@ Route::prefix('monthly-sponsorship')
             ExportFamiliesMonthlySponsorshipPDFController::class
         )
             ->name('export.pdf');
+
+        Route::get(
+            'export-monthly-basket-items-pdf',
+            ExportMonthlyBasketItemsPDFController::class
+        )
+            ->name('export-monthly-basket-items.pdf');
 
         Route::get(
             'export-xlsx',
