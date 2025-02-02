@@ -51,14 +51,12 @@ class SaveFamiliesMonthlySponsorshipToArchiveController extends Controller imple
     {
         $families_count = $archive->listFamilies()->count();
 
-        DB::update("
+        DB::update('
                 UPDATE inventories
                 SET qty = inventories.qty + (monthly_baskets.qty_for_family * ?)
                 FROM monthly_baskets
                 WHERE inventories.id = monthly_baskets.inventory_id
-                AND inventories.type != 'baby_milk'
-                AND inventories.type != 'diapers'
-                AND monthly_baskets.status = true",
+                AND monthly_baskets.status = true',
             [$families_count]);
     }
 
@@ -78,14 +76,12 @@ class SaveFamiliesMonthlySponsorshipToArchiveController extends Controller imple
     {
         $families_count = $archive->listFamilies()->count();
 
-        DB::update("
+        DB::update('
                 UPDATE inventories
                 SET qty = inventories.qty - (monthly_baskets.qty_for_family * ?)
                 FROM monthly_baskets
                 WHERE inventories.id = monthly_baskets.inventory_id
-                AND inventories.type != 'baby_milk'
-                AND inventories.type != 'diapers'
-                AND monthly_baskets.status = true",
+                AND monthly_baskets.status = true',
             [$families_count]);
     }
 
