@@ -54,7 +54,7 @@ class CreateFamilyRequest extends FormRequest
             'residence_file' => 'nullable|string',
             'location.lat' => 'nullable|numeric',
             'location.lng' => 'nullable|numeric',
-            'zone_id' => 'required|string|exists:App\Models\Zone,id',
+            'zone_id' => 'nullable|string|exists:App\Models\Zone,id',
             'start_date' => 'required|date',
             'orphans.*.first_name' => 'required|string',
             'orphans.*.last_name' => 'required|string',
