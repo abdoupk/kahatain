@@ -63,9 +63,9 @@ return [
     'members_count' => 'عدد الأعضاء',
     'income_rate' => 'معدل الدخل',
     'monthly_sponsorship_rate' => 'نسبة الكفالة الشهرية',
-    'basket_from_benefactor' => 'قفة مباشرة من محسن (القيمة)',
+    'basket_from_benefactor' => 'قفة من محسن (القيمة)',
     'basket_from_association' => 'قفة من الجمعية',
-    'amount_from_benefactor' => 'مبلغ مالي مباشرة من محسن',
+    'amount_from_benefactor' => 'مبلغ مالي من محسن',
     'amount_from_association' => 'مبلغ مالي من الجمعية',
     'difference_before_monthly_sponsorship' => 'الفارق قبل الكفالة الشهرية',
     'difference_after_monthly_sponsorship' => 'الفارق بعد الكفالة الشهرية',
@@ -86,4 +86,6 @@ return [
     'aggregate_white_meat_benefit' => 'عدد الاستفادة من توزيع اللحوم البيضاء',
     'status' => 'الحالة',
     'recipient_type' => 'نوع المستفيد',
+    'difference_before_ramadan_sponsorship' => 'الفارق',
+    'ramadan_basket_category' => 'صنف قفة رمضان',
 ];

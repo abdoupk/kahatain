@@ -624,6 +624,34 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
         label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'amount_from_benefactor',
+        label: 'amount_from_benefactor',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'basket_from_benefactor',
+        label: 'basket_from_benefactor',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-hashtag',
+        field: 'difference_before_ramadan_sponsorship',
+        label: 'difference_before_ramadan_sponsorship',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-grid',
+        field: 'ramadan_basket_category',
+        label: 'ramadan_basket_category',
+        type: 'object',
+        operators: filterObjectOperators
     }
 ]
 
