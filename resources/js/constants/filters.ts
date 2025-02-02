@@ -455,14 +455,14 @@ export const meatDistributionFilters: ListBoxFilter[] = [
         operators: filterNumberOperators
     },
     {
-        icon: 'icon-dollar-sign',
+        icon: 'icon-hashtag',
         field: 'aggregate_red_meat_benefit',
         label: 'aggregate_red_meat_benefit',
         type: 'number',
         operators: filterNumberOperators
     },
     {
-        icon: 'icon-dollar-sign',
+        icon: 'icon-hashtag',
         field: 'aggregate_white_meat_benefit',
         label: 'aggregate_white_meat_benefit',
         type: 'number',
@@ -647,7 +647,7 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-hashtag',
-        field: 'difference_before_ramadan_sponsorship',
+        field: 'ramadan_sponsorship_difference',
         label: 'difference_before_ramadan_sponsorship',
         type: 'number',
         operators: filterNumberOperators

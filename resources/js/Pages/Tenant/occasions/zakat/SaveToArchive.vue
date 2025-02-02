@@ -129,7 +129,12 @@ const handleSelectZakat = ($event) => {
                                 {{ $t('cancel') }}
                             </base-button>
 
-                            <base-button :disabled="loading" class="ms-2 w-32" type="submit" variant="primary">
+                            <base-button
+                                :disabled="loading || !form.zakat_id"
+                                class="ms-2 w-32"
+                                type="submit"
+                                variant="primary"
+                            >
                                 {{ $t('save') }}
                             </base-button>
                         </div>

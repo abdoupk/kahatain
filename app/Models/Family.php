@@ -294,7 +294,7 @@ class Family extends Model implements HasMedia
             'total_income' => $this->total_income,
             'orphans_count' => $this->orphans->count(),
             'income_rate' => $this->income_rate,
-            'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship, 'difference_before_ramadan_sponsorship' => $this->difference_before_ramadan_sponsorship,
+            'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship,
             'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,
             'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate * 100,
             'amount_from_association' => $this->amount_from_association,

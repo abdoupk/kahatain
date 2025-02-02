@@ -412,7 +412,7 @@ return [
                     'housing.number_of_rooms',
                     'furnishings.television.checked', 'furnishings.refrigerator.checked', 'furnishings.fireplace.checked', 'furnishings.washing_machine.checked', 'furnishings.water_heater.checked', 'furnishings.oven.checked', 'furnishings.wardrobe.checked', 'furnishings.cupboard.checked', 'furnishings.covers.checked', 'furnishings.mattresses.checked', 'furnishings.other_furnishings.checked',
                     'eid_al_adha_status',
-                    'difference_before_ramadan_sponsorship',
+                    'ramadan_sponsorship_difference',
                     'ramadan_basket_category',
                 ],
                 'sortableAttributes' => [
