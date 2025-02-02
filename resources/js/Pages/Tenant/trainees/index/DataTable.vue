@@ -69,7 +69,7 @@ const emit = defineEmits(['sort'])
                             <Link
                                 v-if="hasPermission('view_orphans')"
                                 :href="route('tenant.orphans.show', orphan.id)"
-                                class="font-medium"
+                                class="font-medium rtl:!font-semibold"
                             >
                                 {{ orphan.name }}
                             </Link>

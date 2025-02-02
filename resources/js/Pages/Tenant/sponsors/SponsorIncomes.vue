@@ -42,7 +42,7 @@ const incomes = omit(props.sponsor.incomes, [
                         {{ $t('incomes.label.monthly_income') }}
                     </h3>
 
-                    <h4 class="font-medium">
+                    <h4 class="font-medium rtl:!font-semibold">
                         {{ formatCurrency(sponsor.incomes.account.ccp.monthly_income) }}
                     </h4>
                 </div>
@@ -52,7 +52,7 @@ const incomes = omit(props.sponsor.incomes, [
                         {{ $t('incomes.label.balance') }}
                     </h3>
 
-                    <h4 class="font-medium">
+                    <h4 class="font-medium rtl:!font-semibold">
                         {{ formatCurrency(sponsor.incomes.account.ccp.balance) }}
                     </h4>
                 </div>
@@ -62,7 +62,7 @@ const incomes = omit(props.sponsor.incomes, [
                         {{ $t('incomes.label.performance_grant') }}
                     </h3>
 
-                    <h4 class="font-medium">
+                    <h4 class="font-medium rtl:!font-semibold">
                         {{ formatCurrency(sponsor.incomes.account.ccp.performance_grant) }}
                     </h4>
                 </div>
@@ -80,7 +80,7 @@ const incomes = omit(props.sponsor.incomes, [
                         {{ $t('incomes.label.monthly_income') }}
                     </h3>
 
-                    <h4 class="font-medium">
+                    <h4 class="font-medium rtl:!font-semibold">
                         {{ formatCurrency(sponsor.incomes.account.bank.monthly_income) }}
                     </h4>
                 </div>
@@ -90,7 +90,7 @@ const incomes = omit(props.sponsor.incomes, [
                         {{ $t('incomes.label.balance') }}
                     </h3>
 
-                    <h4 class="font-medium">
+                    <h4 class="font-medium rtl:!font-semibold">
                         {{ formatCurrency(sponsor.incomes.account.bank.balance) }}
                     </h4>
                 </div>
@@ -100,7 +100,7 @@ const incomes = omit(props.sponsor.incomes, [
                         {{ $t('incomes.label.performance_grant') }}
                     </h3>
 
-                    <h4 class="font-medium">
+                    <h4 class="font-medium rtl:!font-semibold">
                         {{ formatCurrency(sponsor.incomes.account.bank.performance_grant) }}
                     </h4>
                 </div>

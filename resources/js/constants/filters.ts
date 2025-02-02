@@ -513,7 +513,13 @@ export const schoolEntryFilters: ListBoxFilter[] = [
         type: 'date',
         operators: filterDateOperators
     },
-    // TODO add General average
+    {
+        icon: 'icon-graduation-cap',
+        field: 'academic_average',
+        label: 'academic_average',
+        type: 'number',
+        operators: filterNumberOperators
+    },
     {
         icon: 'icon-stethoscope',
         field: 'health_status',
@@ -1047,11 +1053,76 @@ export const collegeStudentsFilters: ListBoxFilter[] = [
         label: 'speciality',
         type: 'object',
         operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-school-lock',
+        field: 'institution.id',
+        label: 'university',
+        type: 'object',
+        operators: filterObjectOperators
     }
 ]
 
-export const studentsFilters: ListBoxFilter[] = []
+export const studentsFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
+        field: 'id',
+        label: 'orphan',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'address.zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'academic_average',
+        label: 'academic_average',
+        type: 'number',
+        operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'academic_level.id',
+        label: 'orphan.academic_level',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-school-lock',
+        field: 'institution.id',
+        label: 'school',
+        type: 'object',
+        operators: filterObjectOperators
+    }
+]
 
-export const traineesOrphansFilters: ListBoxFilter[] = []
+export const traineesOrphansFilters: ListBoxFilter[] = [
+    {
+        icon: 'icon-school-lock',
+        field: 'institution.id',
+        label: 'institute',
+        type: 'object',
+        operators: filterObjectOperators
+    }
+]
 
 export const lessonsFilters: ListBoxFilter[] = []

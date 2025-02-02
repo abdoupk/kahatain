@@ -94,7 +94,10 @@ const emit = defineEmits(['sort'])
                     </the-table-td>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.orphans.show', orphan.orphan.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.orphans.show', orphan.orphan.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             <base-tippy :content="orphan.orphan.name">
                                 {{ orphan.orphan.name }}
                             </base-tippy>
@@ -125,7 +128,7 @@ const emit = defineEmits(['sort'])
                         <Link
                             v-if="orphan.sponsor.id"
                             :href="route('tenant.sponsors.show', orphan.sponsor.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             <base-tippy :content="orphan.sponsor.name">
                                 {{ orphan.sponsor.name }}

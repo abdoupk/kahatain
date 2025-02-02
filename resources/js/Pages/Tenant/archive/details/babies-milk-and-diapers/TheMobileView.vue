@@ -22,7 +22,7 @@ defineProps<{
                         <Link
                             v-if="orphan.orphan.id"
                             :href="route('tenant.orphans.show', orphan.orphan.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ orphan.orphan.name }}
                         </Link>

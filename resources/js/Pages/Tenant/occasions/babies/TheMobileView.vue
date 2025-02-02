@@ -19,7 +19,10 @@ defineProps<{
             <div class="box p-5">
                 <div class="flex">
                     <div class="me-3 truncate text-lg font-medium">
-                        <Link :href="route('tenant.orphans.show', orphan.orphan.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.orphans.show', orphan.orphan.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ orphan.orphan.name }}
                         </Link>
                     </div>

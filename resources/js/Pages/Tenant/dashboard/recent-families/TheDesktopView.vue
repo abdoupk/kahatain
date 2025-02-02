@@ -58,7 +58,7 @@ const emit = defineEmits(['deleteFamily'])
             <base-tbody-table>
                 <base-tr-table v-for="family in recentFamilies" :key="family.id" class="intro-x">
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <Link :href="route('tenant.families.show', family.id)" class="font-medium">
+                        <Link :href="route('tenant.families.show', family.id)" class="font-medium rtl:!font-semibold">
                             {{ family.name }}
                         </Link>
                     </the-table-td>
@@ -78,7 +78,7 @@ const emit = defineEmits(['deleteFamily'])
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <Link :href="route('tenant.families.show', family.id)" class="font-medium">
+                        <Link :href="route('tenant.families.show', family.id)" class="font-medium rtl:!font-semibold">
                             {{ family.branch.name }}
                         </Link>
                     </the-table-td>

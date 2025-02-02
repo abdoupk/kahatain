@@ -52,7 +52,7 @@ const isCurrentDay = (date: Date | string) => {
 
                             <div class="box zoom-in ms-4 flex-1 px-5 py-3">
                                 <div class="flex items-center">
-                                    <div class="font-medium">
+                                    <div class="font-medium rtl:!font-semibold">
                                         {{
                                             activity.user.name === 'support_team'
                                                 ? $t('support_team')

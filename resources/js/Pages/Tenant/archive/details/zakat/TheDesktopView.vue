@@ -67,7 +67,10 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.sponsors.show', family.sponsor.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.sponsors.show', family.sponsor.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ family.sponsor.name }}
                         </Link>
                     </the-table-td>

@@ -115,7 +115,7 @@ const handleShowSuccessNotification = () => {
                         <Link
                             v-if="hasPermission('view_orphans')"
                             :href="route('tenant.orphans.show', orphan.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ orphan.name }}
                         </Link>
@@ -153,12 +153,12 @@ const handleShowSuccessNotification = () => {
                         <Link
                             v-if="hasPermission('view_sponsors')"
                             :href="route('tenant.sponsors.show', orphan.sponsor.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ orphan.sponsor.name }}
                         </Link>
 
-                        <span v-else class="font-medium">{{ orphan.sponsor.name }}</span>
+                        <span v-else class="font-medium rtl:!font-semibold">{{ orphan.sponsor.name }}</span>
                     </the-table-td>
 
                     <the-table-td class="whitespace-nowrap text-center">

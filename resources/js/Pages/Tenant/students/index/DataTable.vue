@@ -54,6 +54,15 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
+                            :direction="params.directions?.academic_average"
+                            class="text-center"
+                            sortable
+                            @click="emit('sort', 'academic_average')"
+                        >
+                            {{ $t('general_average') }}
+                        </the-table-th>
+
+                        <the-table-th
                             :direction="params.directions && params.directions['sponsor.name']"
                             class="text-center"
                             sortable
@@ -114,6 +123,10 @@ const emit = defineEmits(['sort'])
                             </base-tippy>
 
                             <span v-else> ———— </span>
+                        </the-table-td>
+
+                        <the-table-td class="whitespace-nowrap text-center">
+                            {{ orphan.academic_average }}
                         </the-table-td>
 
                         <the-table-td class="whitespace-nowrap text-center">

@@ -172,7 +172,10 @@ watch(
                     </the-table-td>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.orphans.show', orphan.orphan.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.orphans.show', orphan.orphan.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ orphan.orphan.name }}
                         </Link>
                     </the-table-td>
@@ -212,7 +215,10 @@ watch(
                     ></editable-rows>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.sponsors.show', orphan.sponsor.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.sponsors.show', orphan.sponsor.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             <base-tippy :content="orphan.sponsor.name">
                                 {{ orphan.sponsor.name }}
                             </base-tippy>

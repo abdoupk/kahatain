@@ -85,7 +85,7 @@ const emit = defineEmits(['sort'])
                         <Link
                             v-if="hasPermission('view_sponsors') && family.sponsor?.id"
                             :href="route('tenant.sponsors.show', family.sponsor.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ family.name }}
                         </Link>

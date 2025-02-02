@@ -98,7 +98,11 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <a class="font-medium" href="#" @click.prevent="emit('showDetailsModal', branch.id)">
+                        <a
+                            class="font-medium rtl:!font-semibold"
+                            href="#"
+                            @click.prevent="emit('showDetailsModal', branch.id)"
+                        >
                             <base-tippy :content="branch.name">
                                 {{ branch.name }}
                             </base-tippy>
@@ -106,7 +110,10 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">
-                        <Link :href="route('tenant.families.index', branch.president?.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.families.index', branch.president?.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ branch.president?.name }}
                         </Link>
                     </the-table-td>

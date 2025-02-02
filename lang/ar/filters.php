@@ -88,4 +88,8 @@ return [
     'recipient_type' => 'نوع المستفيد',
     'difference_before_ramadan_sponsorship' => 'الفارق',
     'ramadan_basket_category' => 'صنف قفة رمضان',
+    'academic_average' => 'المعدل العام',
+    'school' => 'المؤسسة التربوية',
+    'university' => 'الجامعة',
+    'institute' => 'المعهد',
 ];

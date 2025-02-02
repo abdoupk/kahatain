@@ -150,12 +150,12 @@ const checkAll = ($event) => {
                         <Link
                             v-if="family.sponsor.id"
                             :href="route('tenant.sponsors.show', family.sponsor.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ family.sponsor.name }}
                         </Link>
 
-                        <p v-else class="font-medium">{{ family.sponsor.name }}</p>
+                        <p v-else class="font-medium rtl:!font-semibold">{{ family.sponsor.name }}</p>
                     </the-table-td>
 
                     <the-table-td class="whitespace-nowrap text-center">

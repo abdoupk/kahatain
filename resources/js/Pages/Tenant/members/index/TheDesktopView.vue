@@ -69,14 +69,14 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
                         <a
                             v-if="hasPermission('view_members')"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                             href="#"
                             @click.prevent="emit('showDetailsModal', member.id)"
                         >
                             {{ member.name }}
                         </a>
 
-                        <a v-else class="font-medium" href="#">
+                        <a v-else class="font-medium rtl:!font-semibold" href="#">
                             {{ member.name }}
                         </a>
                     </the-table-td>

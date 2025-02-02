@@ -57,7 +57,10 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.orphans.show', orphan.orphan.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.orphans.show', orphan.orphan.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ orphan.orphan.name }}
                         </Link>
                     </the-table-td>
@@ -84,7 +87,10 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
-                        <Link :href="route('tenant.sponsors.show', orphan.sponsor.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.sponsors.show', orphan.sponsor.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ orphan.sponsor.name }}
                         </Link>
                     </the-table-td>

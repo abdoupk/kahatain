@@ -157,7 +157,10 @@ const emit = defineEmits(['sort'])
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <Link :href="route('tenant.sponsors.show', family.sponsor.id)" class="font-medium">
+                        <Link
+                            :href="route('tenant.sponsors.show', family.sponsor.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ family.sponsor.name }}
                         </Link>
                     </the-table-td>

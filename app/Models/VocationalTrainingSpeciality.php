@@ -41,7 +41,7 @@ class VocationalTrainingSpeciality extends Model
         return $this->morphMany(Orphan::class, 'speciality');
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->speciality;
     }

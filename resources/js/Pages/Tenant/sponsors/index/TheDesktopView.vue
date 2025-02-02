@@ -92,12 +92,12 @@ const emit = defineEmits(['sort'])
                         <Link
                             v-if="hasPermission('view_sponsors')"
                             :href="route('tenant.sponsors.show', sponsor.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ sponsor.name }}
                         </Link>
 
-                        <span v-else class="font-medium">{{ sponsor.name }}</span>
+                        <span v-else class="font-medium rtl:!font-semibold">{{ sponsor.name }}</span>
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">

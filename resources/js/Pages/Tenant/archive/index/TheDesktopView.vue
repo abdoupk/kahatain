@@ -49,7 +49,7 @@ defineProps<{
                     </the-table-td>
 
                     <the-table-td class="!min-w-44 !max-w-44 truncate">
-                        <Link :href="item.url" class="font-medium">
+                        <Link :href="item.url" class="font-medium rtl:!font-semibold">
                             {{ item.name }}
                         </Link>
                     </the-table-td>
@@ -58,7 +58,7 @@ defineProps<{
                         <Link
                             v-if="item.savedBy.id"
                             :href="route('tenant.members.index') + `?show=${item.savedBy.id}`"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ item.savedBy.name }}
                         </Link>

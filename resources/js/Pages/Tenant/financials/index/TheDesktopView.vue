@@ -97,7 +97,7 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showDetailsModal', 'showEd
                         <Link
                             v-if="finance.receiver"
                             :href="route('tenant.members.index') + `?show=${finance.receiver.id}`"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             {{ finance.receiver.name }}
                         </Link>

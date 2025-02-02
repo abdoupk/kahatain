@@ -53,11 +53,11 @@ const emit = defineEmits(['showDeleteModal', 'restore'])
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <p v-if="item.type === 'finance'" class="font-medium">
+                        <p v-if="item.type === 'finance'" class="font-medium rtl:!font-semibold">
                             {{ $t(item.name) }} ({{ $t(item.type) }})
                         </p>
 
-                        <p v-else class="font-medium">{{ item.name }} ({{ $t(item.type) }})</p>
+                        <p v-else class="font-medium rtl:!font-semibold">{{ item.name }} ({{ $t(item.type) }})</p>
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate text-center">

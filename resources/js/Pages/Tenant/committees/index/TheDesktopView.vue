@@ -74,7 +74,11 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <a class="font-medium" href="#" @click.prevent="emit('showDetailsModal', committee.id)">
+                        <a
+                            class="font-medium rtl:!font-semibold"
+                            href="#"
+                            @click.prevent="emit('showDetailsModal', committee.id)"
+                        >
                             {{ committee.name }}
                         </a>
                     </the-table-td>

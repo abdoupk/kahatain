@@ -70,7 +70,7 @@ defineProps<{
                         <Link
                             v-if="orphan.orphan.id"
                             :href="route('tenant.orphans.show', orphan.orphan.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             <base-tippy :content="orphan.orphan.name">
                                 {{ orphan.orphan.name }}
@@ -102,7 +102,7 @@ defineProps<{
                         <Link
                             v-if="orphan.sponsor.id"
                             :href="route('tenant.sponsors.show', orphan.sponsor.id)"
-                            class="font-medium"
+                            class="font-medium rtl:!font-semibold"
                         >
                             <base-tippy :content="orphan.sponsor.name">
                                 {{ orphan.sponsor.name }}
