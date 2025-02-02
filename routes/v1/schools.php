@@ -13,6 +13,7 @@ use App\Http\Controllers\V1\PrivateSchools\SchoolStoreController;
 use App\Http\Controllers\V1\PrivateSchools\SchoolUpdateController;
 use App\Http\Controllers\V1\Schools\SchoolsSearchController;
 use App\Http\Controllers\V1\Universities\UniversitiesSearchController;
+use App\Http\Controllers\V1\Universities\UniversitySpecialitiesSearchController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::prefix('schools')->name('schools.')->group(callback: function (): void {
@@ -76,6 +77,11 @@ Route::prefix('schools')->name('schools.')->group(callback: function (): void {
         'search-universities',
         UniversitiesSearchController::class
     )->name('search-universities');
+
+    Route::get(
+        'search-university-specialities',
+        UniversitySpecialitiesSearchController::class
+    )->name('search-university-specialities');
 
     Route::get('export-pdf/{school}', ExportSchoolDetailsPDFController::class)->name('export.pdf');
 });

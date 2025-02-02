@@ -46,6 +46,14 @@ const emit = defineEmits(['sort'])
                         </the-table-th>
 
                         <the-table-th
+                            :direction="params.directions && params.directions['speciality.speciality']"
+                            class="text-center"
+                            sortable
+                            @click="emit('sort', 'speciality.speciality')"
+                            >{{ $t('speciality') }}
+                        </the-table-th>
+
+                        <the-table-th
                             :direction="params.directions && params.directions['institution.name']"
                             class="text-center"
                             sortable
@@ -85,6 +93,10 @@ const emit = defineEmits(['sort'])
                                     {{ orphan.academicLevel?.phase }}
                                 </div>
                             </div>
+                        </the-table-td>
+
+                        <the-table-td class="max-w-40 truncate text-center">
+                            {{ orphan.speciality || '————' }}
                         </the-table-td>
 
                         <the-table-td class="max-w-40 truncate text-center">

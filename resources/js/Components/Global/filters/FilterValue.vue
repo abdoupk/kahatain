@@ -7,6 +7,7 @@ import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BranchesFilterDropDown from '@/Components/Global/filters/BranchesFilterDropDown.vue'
 import CitiesFilterDropDown from '@/Components/Global/filters/CitiesFilterDropDown.vue'
 import ClothesSizeFilterDropDown from '@/Components/Global/filters/ClothesSizeFilterDropDown.vue'
+import CollegeAcademicLevelFilterDropDown from '@/Components/Global/filters/CollegeAcademicLevelFilterDropDown.vue'
 import CollegeSpecialityFilterDropDown from '@/Components/Global/filters/CollegeSpecialityFilterDropDown.vue'
 import EidAlAdhaStatusFilterDropDown from '@/Components/Global/filters/EidAlAdhaStatusFilterDropDown.vue'
 import FamiliesFilterDropDown from '@/Components/Global/filters/FamiliesFilterDropDown.vue'
@@ -31,6 +32,7 @@ import SponsorAcademicLevelFilterDropDown from '@/Components/Global/filters/Spon
 import SponsorSponsorShipFilterDropDown from '@/Components/Global/filters/SponsorSponsorShipFilterDropDown.vue'
 import SponsorTypeFilterDropDown from '@/Components/Global/filters/SponsorTypeFilterDropDown.vue'
 import SponsorsFilterDropDown from '@/Components/Global/filters/SponsorsFilterDropDown.vue'
+import TraineeAcademicLevelFilterDropDown from '@/Components/Global/filters/TraineeAcademicLevelFilterDropDown.vue'
 import TraineeSpecialityFilterDropDown from '@/Components/Global/filters/TraineeSpecialityFilterDropDown.vue'
 import UniversityFilterDropDown from '@/Components/Global/filters/UniversityFilterDropDown.vue'
 import ZonesFilterDropDown from '@/Components/Global/filters/ZonesFilterDropDown.vue'
@@ -110,6 +112,18 @@ const value = defineModel<FilterValueType>('value')
                 v-model:value="value"
                 class="text-sm"
             ></orphan-academic-level-filter-drop-down>
+
+            <college-academic-level-filter-drop-down
+                v-else-if="field?.label === 'college_student_academic_level'"
+                v-model:value="value"
+                class="text-sm"
+            ></college-academic-level-filter-drop-down>
+
+            <trainee-academic-level-filter-drop-down
+                v-else-if="field?.label === 'trainee_student_academic_level'"
+                v-model:value="value"
+                class="text-sm"
+            ></trainee-academic-level-filter-drop-down>
 
             <speciality-filter-drop-down
                 v-else-if="field?.label === 'speciality'"

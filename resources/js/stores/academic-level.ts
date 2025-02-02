@@ -65,6 +65,16 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
             return this.academicLevels.filter((academicLevel) => academicLevel.phase_key === 'university')
         },
 
+        async getAcademicLevelsForTraineesForSelect() {
+            if (this.academicLevels.length == 0) {
+                await this.getAcademicLevels()
+            }
+
+            return this.academicLevels.filter((academicLevel) =>
+                ['paramedical', 'vocational_training'].includes(academicLevel.phase_key)
+            )
+        },
+
         async getAcademicLevelsForSponsorsForSelectFilterValue() {
             await this.getAcademicLevels()
 

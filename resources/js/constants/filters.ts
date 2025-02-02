@@ -1048,8 +1048,43 @@ export const financialFilters: ListBoxFilter[] = [
 
 export const collegeStudentsFilters: ListBoxFilter[] = [
     {
+        icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
+        field: 'id',
+        label: 'orphan',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'address.zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
         icon: 'icon-graduation-cap',
-        field: 'speciality.speciality',
+        field: 'academic_level.id',
+        label: 'college_student_academic_level',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'speciality.id',
         label: 'college_speciality',
         type: 'object',
         operators: filterObjectOperators
@@ -1117,9 +1152,44 @@ export const studentsFilters: ListBoxFilter[] = [
 
 export const traineesOrphansFilters: ListBoxFilter[] = [
     {
+        icon: 'icon-hands-holding-child',
+        field: 'sponsor.id',
+        label: 'sponsor',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-children',
+        field: 'id',
+        label: 'orphan',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-branches',
+        field: 'branch.id',
+        label: 'branch',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-map-location-dot',
+        field: 'address.zone.id',
+        label: 'zone',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
         icon: 'icon-school-lock',
         field: 'institution.id',
         label: 'institute',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'academic_level.id',
+        label: 'trainee_student_academic_level',
         type: 'object',
         operators: filterObjectOperators
     },

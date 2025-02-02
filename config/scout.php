@@ -193,10 +193,12 @@ return [
                     'is_handicapped',
                     'academic_average',
                     'speciality.speciality',
+                    'speciality.id',
                     'family.income_rate',
                     'sponsor.id',
                     'family.zone.id',
                     'family.branch.id',
+                    'institution.id',
                 ],
                 'searchableAttributes' => [
                     'name',

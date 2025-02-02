@@ -23,6 +23,8 @@ class SchoolsSearchController extends Collection
                 ) use ($phase, $wilayaCode) {
                     $options['filter'] = "phase_key = $phase AND city.wilaya_code = ".$wilayaCode.' ';
 
+                    $options['limit'] = 30;
+
                     return $meilisearch->search($query, $options);
                 }
             )->query(fn ($query) => $query->with('city'))->get()

@@ -62,5 +62,5 @@ function getTraineesPerVocationalTrainingCenter(): array
 
 function getTraineesStudents(): LengthAwarePaginator
 {
-    return search(Orphan::getModel(), additional_filters: FILTER_TRAINEES_ORPHANS)->query(fn ($query) => $query->with(['institution', 'academicLevel']))->paginate(request()->integer('perPage', 10));
+    return search(Orphan::getModel(), additional_filters: FILTER_TRAINEES_ORPHANS)->query(fn ($query) => $query->with(['institution', 'academicLevel', 'speciality']))->paginate(request()->integer('perPage', 10));
 }

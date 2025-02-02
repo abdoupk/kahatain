@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UniversitySpeciality;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UniversitySpecialitiesIndexController extends Controller
+class UniversitySpecialitiesListController extends Controller
 {
     public function __invoke()
     {

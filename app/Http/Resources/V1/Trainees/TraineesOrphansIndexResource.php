@@ -21,6 +21,7 @@ class TraineesOrphansIndexResource extends JsonResource
                 'level' => $this->academicLevel?->level,
             ],
             'institution' => $this->institution->getName(),
+            'speciality' => $this->speciality?->speciality,
             'ccp' => $this->ccp,
         ];
     }

@@ -31,6 +31,20 @@ export const useVocationalTrainingStore = defineStore('vocational-training', {
             return specialities
         },
 
+        async searchUniversitySpecialities(search: string) {
+            const { data: specialities } = await axios.get(
+                route('tenant.schools.search-university-specialities', { search })
+            )
+
+            return specialities
+        },
+
+        async searchTraineesSpecialities(search: string) {
+            const { data: specialities } = await axios.get(route('tenant.vocational-training.search', { search }))
+
+            return specialities
+        },
+
         async searchVocationalTrainingCenters(search: string) {
             const { data: centers } = await axios.get(
                 route('tenant.vocational-training.search-vocational-training-centers', { search })
