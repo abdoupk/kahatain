@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Jobs\V1\Occasion\MonthlySponsorshipFamiliesListSavedJob;
 use App\Models\Archive;
 use App\Models\Family;
-use App\Models\Inventory;
 use DB;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Throwable;
@@ -52,10 +51,15 @@ class SaveFamiliesMonthlySponsorshipToArchiveController extends Controller imple
     {
         $families_count = $archive->listFamilies()->count();
 
-        Inventory::whereNotNull('qty_for_family')->where('type', '!=', 'baby_milk')
-            ->where('type', '!=', 'diapers')->update([
-                'qty' => Inventory::raw("qty + (qty_for_family * $families_count)"),
-            ]);
+        DB::update("
+                UPDATE inventories
+                SET qty = inventories.qty + (monthly_baskets.qty_for_family * ?)
+                FROM monthly_baskets
+                WHERE inventories.id = monthly_baskets.inventory_id
+                AND inventories.type != 'baby_milk'
+                AND inventories.type != 'diapers'
+                AND monthly_baskets.status = true",
+            [$families_count]);
     }
 
     private function syncFamiliesWithArchive(Archive $archive): void
@@ -74,10 +78,15 @@ class SaveFamiliesMonthlySponsorshipToArchiveController extends Controller imple
     {
         $families_count = $archive->listFamilies()->count();
 
-        Inventory::whereNotNull('qty_for_family')->where('type', '!=', 'baby_milk')
-            ->where('type', '!=', 'diapers')->update([
-                'qty' => Inventory::raw("qty - (qty_for_family * $families_count)"),
-            ]);
+        DB::update("
+                UPDATE inventories
+                SET qty = inventories.qty - (monthly_baskets.qty_for_family * ?)
+                FROM monthly_baskets
+                WHERE inventories.id = monthly_baskets.inventory_id
+                AND inventories.type != 'baby_milk'
+                AND inventories.type != 'diapers'
+                AND monthly_baskets.status = true",
+            [$families_count]);
     }
 
     private function dispatchJob(Archive $archive): void

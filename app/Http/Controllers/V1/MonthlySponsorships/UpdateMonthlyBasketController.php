@@ -11,22 +11,32 @@ class UpdateMonthlyBasketController extends Controller
 {
     public function __invoke(Request $request)
     {
-        MonthlyBasket::whereNotIn('id', collect($request->items)->pluck('id')->toArray())->delete();
+        $inventoryIds = collect($request->items)->pluck('inventory_id')->toArray();
 
-        foreach ($request->items as $item) {
-            $inventory = Inventory::updateOrCreate([
-                'id' => $item['id'],
-            ], [
+        MonthlyBasket::whereNotIn('inventory_id', $inventoryIds)->delete();
+
+        $inventoriesData = collect($request->items)
+            ->map(fn ($item) => [
+                'id' => $item['inventory_id'],
                 'name' => $item['name'],
-                'unit' => $item['unit'],
-            ]);
+                'created_by' => auth()->user()->id,
+                'tenant_id' => auth()->user()->tenant_id,
+            ])
+            ->unique('id')
+            ->values()
+            ->toArray();
 
-            MonthlyBasket::updateOrCreate([
-                'inventory_id' => $inventory->id,
-            ], [
+        Inventory::upsert($inventoriesData, ['id'], ['name', 'created_by', 'tenant_id']);
+
+        $monthlyBasketData = collect($request->items)
+            ->map(fn ($item) => [
+                'inventory_id' => $item['inventory_id'],
                 'qty_for_family' => $item['qty_for_family'],
                 'status' => $item['status'],
-            ]);
-        }
+                'tenant_id' => auth()->user()->tenant_id,
+            ])
+            ->toArray();
+
+        MonthlyBasket::upsert($monthlyBasketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
     }
 }

@@ -71,7 +71,6 @@ class Inventory extends Model
         'unit',
         'note',
         'type',
-        'id',
         'qty_for_family',
         'created_by',
     ];

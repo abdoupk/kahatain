@@ -15,6 +15,8 @@ return new class extends Migration
             $table->foreignUuid('tenant_id')->constrained('tenants');
             $table->foreignUuid('inventory_id')->constrained('inventories');
             $table->timestamps();
+
+            $table->unique(['inventory_id']);
         });
     }
 };

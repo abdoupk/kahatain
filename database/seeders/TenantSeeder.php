@@ -101,21 +101,21 @@ class TenantSeeder extends Seeder
                     'zone_id' => $zones->random()?->id,
                 ]);
 
-            RamadanBasket::factory()
-                ->count(fake()->numberBetween(13, 89))
-                ->for(Inventory::factory()->state([
-                    'tenant_id' => $tenant->id,
-                    'created_by' => $tenant->members->random()->first()->id,
-                ]))
-                ->create(['tenant_id' => $tenant->id]);
+            for ($i = 0; $i < fake()->numberBetween(3, 13); $i++) {
+                RamadanBasket::factory()
+                    ->for(Inventory::factory()->state([
+                        'tenant_id' => $tenant->id,
+                        'created_by' => $tenant->members->random()->first()->id,
+                    ]))
+                    ->create(['tenant_id' => $tenant->id]);
 
-            MonthlyBasket::factory()
-                ->count(fake()->numberBetween(13, 89))
-                ->for(Inventory::factory()->state([
-                    'tenant_id' => $tenant->id,
-                    'created_by' => $tenant->members->random()->first()->id,
-                ]))
-                ->create(['tenant_id' => $tenant->id]);
+                MonthlyBasket::factory()
+                    ->for(Inventory::factory()->state([
+                        'tenant_id' => $tenant->id,
+                        'created_by' => $tenant->members->random()->first()->id,
+                    ]))
+                    ->create(['tenant_id' => $tenant->id]);
+            }
 
             Finance::factory()->count(fake()->numberBetween(13, 89))->create([
                 'tenant_id' => $tenant->id,

@@ -11,7 +11,6 @@ class ItemUpdateRequest extends FormRequest
         return [
             'name' => 'required',
             'qty' => 'required|integer',
-            'qty_for_family' => 'required|integer|lt:qty',
             'note' => 'nullable',
             'unit' => 'required|in:kg,piece,liter',
         ];

@@ -9,11 +9,16 @@ import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vu
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const sponsorshipsStore = useSponsorshipsStore()
+
+const removeMonthlyBasketItem = (id: string) => {
+    sponsorshipsStore.monthly_basket.data.splice(id, 1)
+}
 </script>
 
 <template>
@@ -66,7 +71,7 @@ const sponsorshipsStore = useSponsorshipsStore()
             </base-input-group>
         </div>
 
-        <div class="col-span-12 sm:col-span-4 lg:mt-6 lg:flex lg:items-center lg:justify-center">
+        <div class="col-span-12 sm:col-span-3 lg:mt-6 lg:flex lg:items-center lg:justify-center">
             <base-form-switch class="text-lg">
                 <base-form-switch-input
                     :id="`status-${index}`"
@@ -78,6 +83,12 @@ const sponsorshipsStore = useSponsorshipsStore()
                     {{ $t('validation.attributes.the_status') }}
                 </base-form-switch-label>
             </base-form-switch>
+        </div>
+
+        <div class="col-span-12 sm:col-span-1 lg:mt-6 lg:flex lg:items-center lg:justify-center">
+            <span class="cursor-pointer" @click="removeMonthlyBasketItem(item.id)">
+                <svg-loader class="fill-danger" name="icon-trash-can"></svg-loader>
+            </span>
         </div>
     </div>
 
