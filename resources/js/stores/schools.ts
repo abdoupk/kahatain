@@ -31,7 +31,9 @@ export const useSchoolsStore = defineStore('schools', {
                 {
                     quota: null,
                     academic_level_id: null,
-                    subject_id: null
+                    subject_id: null,
+                    start_date: new Date(),
+                    end_date: new Date()
                 }
             ]
         },

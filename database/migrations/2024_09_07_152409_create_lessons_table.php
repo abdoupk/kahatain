@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignIdFor(AcademicLevel::class);
             $table->uuid('private_school_id');
             $table->integer('quota');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->uuid('tenant_id');
             $table->timestamps();
             $table->softDeletes();

@@ -111,7 +111,7 @@
     "exports.babies_milk_and_diapers": "قائمة المستفيدين من الحفاضات وحليب الأطفال لشهر :date",
     "exports.school_entry": "قائمة المستفيدين من الحقائب المدرسية لسنة :date",
     "exports.monthly_basket": "قائمة عناصر القفة الشهرية لشهر :date",
-    "exports.private_school": "قائمة التلاميذ ل:attribute",
+    "exports.private_school": "قائمة التلاميذ لمدرسة :attribute",
     "exports.archive.eid_al_adha_families": "أرشيف المستفيدين من الأضحية لسنة :date",
     "exports.archive.zakat_families": "أرشيف المستفيدين من الزكاة بقيمة اجمالية :attribute بتاريخ :date",
     "exports.archive.eid_suit": "أرشيف المستفيدين من بدلة العيد لسنة :date",

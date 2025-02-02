@@ -58,6 +58,8 @@ class Lesson extends Model
         'subject_id',
         'academic_level_id',
         'quota',
+        'start_date',
+        'end_date',
         'id',
     ];
 

@@ -14,6 +14,8 @@ export interface AddSchoolLessonType {
     academic_level_id: number | null
     quota: number | null
     subject_id: number | null
+    start_date: string
+    end_date: string
 }
 
 export type EventType = {

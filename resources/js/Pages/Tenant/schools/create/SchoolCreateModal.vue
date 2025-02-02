@@ -109,7 +109,9 @@ const addLesson = () => {
     form.value.lessons.push({
         academic_level_id: null,
         quota: null,
-        subject_id: null
+        subject_id: null,
+        start_date: new Date(),
+        end_date: new Date()
     })
 }
 
@@ -170,7 +172,9 @@ const removeLesson = (index: number) => {
                 v-for="(lesson, index) in form.lessons"
                 :key="index"
                 v-model:academic-level="lesson.academic_level_id"
+                v-model:endDate="lesson.end_date"
                 v-model:quota="lesson.quota"
+                v-model:startDate="lesson.start_date"
                 v-model:subject="lesson.subject_id"
                 :form
                 :index
