@@ -62,6 +62,23 @@ const slideUp = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) =
     }, duration)
 }
 
+function generateUUID() {
+    const bytes = new Uint8Array(16)
+    crypto.getRandomValues(bytes)
+
+    // Set UUID version (4) in the 7th byte
+    bytes[6] = (bytes[6] & 0x0f) | 0x40
+
+    // Set UUID variant (RFC 4122) in the 9th byte
+    bytes[8] = (bytes[8] & 0x3f) | 0x80
+
+    return [...bytes]
+        .map((b, i) =>
+            [4, 6, 8, 10].includes(i) ? `-${b.toString(16).padStart(2, '0')}` : b.toString(16).padStart(2, '0')
+        )
+        .join('')
+}
+
 const setSlideProperties = (el: HTMLElement) => {
     el.style.overflow = 'hidden'
 
@@ -595,6 +612,7 @@ export {
     removeEmptyKeys,
     getLeafletMapConfig,
     groupRecentActivitiesByDate,
+    generateUUID,
     loadShopOwnerNames,
     loadShopOwnerPhoneNumbers,
     hasPermission,

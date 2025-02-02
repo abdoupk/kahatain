@@ -12,7 +12,7 @@ import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwit
 import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
+import { allowOnlyNumbersOnKeyDown, generateUUID } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 const sponsorshipsStore = useSponsorshipsStore()
@@ -25,7 +25,9 @@ const addMonthlyBasketItem = () => {
     sponsorshipsStore.monthly_basket.data.push({
         name: null,
         qty_for_family: null,
-        unit: 'kg'
+        unit: 'kg',
+        status: true,
+        inventory_id: generateUUID()
     })
 }
 </script>
