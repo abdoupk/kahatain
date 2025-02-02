@@ -130,7 +130,7 @@ const value = defineModel<FilterValueType>('value')
             ></trainee-speciality-filter-drop-down>
 
             <eid-al-adha-status-filter-drop-down
-                v-else-if="field?.label === 'eid_al_adha_status'"
+                v-else-if="field?.field === 'eid_al_adha_status'"
                 v-model:value="value"
                 class="text-sm"
             ></eid-al-adha-status-filter-drop-down>
