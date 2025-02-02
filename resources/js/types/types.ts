@@ -906,6 +906,11 @@ export interface NeedsIndexResource {
         id: string
         type: string
         name: string
+        family: {
+            zone: Zone
+            branch: Branch
+            address: string
+        }
     }
     note: string
     created_at: string | Date

@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { IndexParams, NeedsIndexResource, PaginationData } from '@/types/types'
 
+import { Link } from '@inertiajs/vue3'
+
 import NeedStatus from '@/Pages/Tenant/needs/index/NeedStatus.vue'
 
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
@@ -41,6 +43,22 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         {{ $t('the_requester') }}
                     </the-table-th>
 
+                    <the-table-th
+                        :direction="params.directions && params.directions['zone.name']"
+                        class="text-start"
+                        sortable
+                        @click="emit('sort', 'zone.name')"
+                        >{{ $t('validation.attributes.address') }}
+                    </the-table-th>
+
+                    <the-table-th
+                        :direction="params.directions && params.directions['branch.name']"
+                        class="text-start"
+                        sortable
+                        @click="emit('sort', 'branch.name')"
+                        >{{ $t('the_branch') }}
+                    </the-table-th>
+
                     <the-table-th class="text-start">{{ $t('validation.attributes.subject') }}</the-table-th>
 
                     <the-table-th class="text-center">
@@ -76,13 +94,49 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                     </the-table-td>
 
                     <the-table-td class="!min-w-40 !max-w-40 truncate">
-                        <p class="font-medium">
+                        <Link
+                            v-if="need.needable.type == 'sponsor'"
+                            :href="route('tenant.sponsors.show', need.needable.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
                             {{ need.needable.name }}
-                        </p>
+                        </Link>
+
+                        <Link
+                            v-else
+                            :href="route('tenant.orphans.show', need.needable.id)"
+                            class="font-medium rtl:!font-semibold"
+                        >
+                            {{ need.needable.name }}
+                        </Link>
 
                         <p class="mt-0.5 block whitespace-nowrap text-xs text-slate-500">
                             {{ $t(`needs.${need.needable.type}`) }}
                         </p>
+                    </the-table-td>
+
+                    <the-table-td class="max-w-40 truncate">
+                        <base-tippy :content="need.needable.family.address">
+                            {{ need.needable.family.address }}
+                        </base-tippy>
+
+                        <Link
+                            :href="route('tenant.zones.index') + `?show=${need.needable.family.zone?.id}`"
+                            class="mt-0.5 block whitespace-nowrap text-xs text-slate-500"
+                        >
+                            {{ need.needable.family.zone?.name }}
+                        </Link>
+                    </the-table-td>
+
+                    <the-table-td class="max-w-40 truncate">
+                        <Link
+                            :href="route('tenant.branches.index') + `?show=${need.needable.branch?.id}`"
+                            class="mt-0.5 block truncate whitespace-nowrap"
+                        >
+                            <base-tippy :content="need.needable.family.branch?.name">
+                                {{ need.needable.family.branch?.name }}
+                            </base-tippy>
+                        </Link>
                     </the-table-td>
 
                     <the-table-td class="max-w-40 truncate">

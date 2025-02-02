@@ -501,6 +501,8 @@ return [
                     'needable.type',
                     'status',
                     'created_at',
+                    'branch.name',
+                    'zone.name',
                 ],
             ],
             'finances' => [

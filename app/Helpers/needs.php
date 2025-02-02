@@ -7,7 +7,7 @@ function getNeeds(): LengthAwarePaginator
 {
     return search(Need::getModel())
         ->query(fn ($query) => $query
-            ->with(['needable']))
+            ->with(['needable.family:id,zone_id,branch_id,address', 'needable.family.zone:id,name', 'needable.family.branch:id,name']))
         ->paginate(perPage: request()?->input('perPage', 10));
 }
 
