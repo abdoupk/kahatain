@@ -34,7 +34,7 @@ class CreateFamilyNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
-                'created_at' => $this->family->created_at,
+                'processed_at' => $this->family->created_at,
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.families.show',

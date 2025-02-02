@@ -32,6 +32,7 @@ class UpdateCommitteeNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.committees.index'

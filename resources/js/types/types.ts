@@ -1002,7 +1002,7 @@ export interface DatabaseNotification {
             name: string
         }
         metadata: {
-            created_at: string
+            processed_at: string
             url: string
             [key: string]: string
         }

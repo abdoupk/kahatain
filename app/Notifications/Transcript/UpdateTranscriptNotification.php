@@ -33,7 +33,7 @@ class UpdateTranscriptNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
-                'updated_at' => now(),
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.students.phase.index',

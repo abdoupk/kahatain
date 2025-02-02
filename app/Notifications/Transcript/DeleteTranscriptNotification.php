@@ -32,7 +32,9 @@ class DeleteTranscriptNotification extends Notification implements ShouldQueue
                 'name' => $this->user->getName(),
                 'gender' => $this->user->gender,
             ],
-            'metadata' => [],
+            'metadata' => [
+                'processed_at' => now(),
+            ],
         ];
     }
 

@@ -38,6 +38,7 @@ class CreateBenefactorSponsorshipNotification extends Notification implements Sh
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.benefactors.index'

@@ -45,6 +45,9 @@ class DeleteInventoryItemNotification extends Notification implements ShouldQueu
                 'name' => $this->user->getName(),
                 'gender' => $this->user->gender,
             ],
+            'metadata' => [
+                'processed_at' => now(),
+            ],
         ]);
     }
 

@@ -32,7 +32,7 @@ class DeleteBranchNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
-                'deleted_at' => $this->branch->deleted_at,
+                'processed_at' => now(),
             ],
         ];
     }

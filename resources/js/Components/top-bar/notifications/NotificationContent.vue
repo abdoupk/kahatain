@@ -31,8 +31,11 @@ const handleShowMember = (id: string) => {
                 {{ notification.data.user.name === 'support_team' ? $t('support_team') : notification.data.user.name }}
             </a>
 
-            <div v-if="notification.data.metadata?.created_at" class="ms-auto whitespace-nowrap text-xs text-slate-400">
-                {{ formatDate(notification.data.metadata.created_at, 'medium') }}
+            <div
+                v-if="notification.data.metadata?.processed_at"
+                class="ms-auto whitespace-nowrap text-xs text-slate-400"
+            >
+                {{ formatDate(notification.data.metadata.processed_at, 'medium') }}
             </div>
         </div>
 

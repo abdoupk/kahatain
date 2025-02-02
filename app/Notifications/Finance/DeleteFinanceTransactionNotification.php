@@ -31,6 +31,9 @@ class DeleteFinanceTransactionNotification extends Notification implements Shoul
                 'name' => $this->user->getName(),
                 'gender' => $this->user->gender,
             ],
+            'metadata' => [
+                'processed_at' => now(),
+            ],
         ];
     }
 

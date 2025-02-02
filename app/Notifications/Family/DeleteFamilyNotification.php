@@ -34,7 +34,7 @@ class DeleteFamilyNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
-                'deleted_at' => $this->family->deleted_at,
+                'processed_at' => now(),
             ],
         ];
     }

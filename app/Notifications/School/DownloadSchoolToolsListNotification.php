@@ -29,6 +29,7 @@ class DownloadSchoolToolsListNotification extends Notification implements Should
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.students.index'

@@ -29,6 +29,7 @@ class EidSuitOrphansResetInfosNotification extends Notification implements Shoul
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.occasions.eid-suit.index'
