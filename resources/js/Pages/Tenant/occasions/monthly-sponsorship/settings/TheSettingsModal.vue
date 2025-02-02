@@ -6,6 +6,7 @@ import { computed, defineAsyncComponent, onUnmounted, ref } from 'vue'
 import CalculationForm from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/CalculationForm.vue'
 import MonthlyBasketItemsForm from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/MonthlyBasketItemsForm.vue'
 
+import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
 import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
 import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
@@ -121,6 +122,12 @@ onUnmounted(() => sponsorshipsStore.$reset())
                     </base-tab-panel>
                 </base-tab-panels>
             </base-tab-group>
+        </template>
+
+        <template v-if="tabIndex === 1" #extraButtons>
+            <base-button class="me-1 w-20" type="button" variant="soft-primary" @click="emit('close')">
+                {{ $t('print') }}
+            </base-button>
         </template>
     </create-edit-modal>
 

@@ -67,6 +67,8 @@ const emit = defineEmits(['close', 'handleSubmit'])
                                 {{ $t('cancel') }}
                             </base-button>
 
+                            <slot name="extraButtons"></slot>
+
                             <base-button :disabled="loading || disabled" class="w-20" type="submit" variant="primary">
                                 <spinner-button-loader :show="loading"></spinner-button-loader>
 
