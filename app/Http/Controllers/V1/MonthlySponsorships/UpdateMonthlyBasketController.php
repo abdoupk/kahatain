@@ -19,6 +19,7 @@ class UpdateMonthlyBasketController extends Controller
             ->map(fn ($item) => [
                 'id' => $item['inventory_id'],
                 'name' => $item['name'],
+                'unit' => $item['unit'],
                 'created_by' => auth()->user()->id,
                 'tenant_id' => auth()->user()->tenant_id,
             ])
@@ -26,7 +27,7 @@ class UpdateMonthlyBasketController extends Controller
             ->values()
             ->toArray();
 
-        Inventory::upsert($inventoriesData, ['id'], ['name', 'created_by', 'tenant_id']);
+        Inventory::upsert($inventoriesData, ['id'], ['name', 'unit', 'created_by', 'tenant_id']);
 
         $monthlyBasketData = collect($request->items)
             ->map(fn ($item) => [

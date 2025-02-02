@@ -33,7 +33,7 @@ const addMonthlyBasketItem = () => {
 </script>
 
 <template>
-    <div class="">
+    <div>
         <div
             v-for="(item, index) in sponsorshipsStore.monthly_basket.data"
             :key="item.id"
@@ -83,7 +83,7 @@ const addMonthlyBasketItem = () => {
                 </base-input-group>
             </div>
 
-            <div class="col-span-12 sm:col-span-3 lg:mt-6 lg:flex lg:items-center lg:justify-center">
+            <div class="col-span-12 flex sm:col-span-4 lg:mt-6 lg:items-center lg:justify-center">
                 <base-form-switch class="text-lg">
                     <base-form-switch-input
                         :id="`status-${index}`"
@@ -95,10 +95,8 @@ const addMonthlyBasketItem = () => {
                         {{ $t('validation.attributes.the_status') }}
                     </base-form-switch-label>
                 </base-form-switch>
-            </div>
 
-            <div class="col-span-12 sm:col-span-1 lg:mt-6 lg:flex lg:items-center lg:justify-center">
-                <span class="cursor-pointer" @click="removeMonthlyBasketItem(item.id)">
+                <span class="ms-20 cursor-pointer" @click="removeMonthlyBasketItem(item.id)">
                     <svg-loader class="fill-danger" name="icon-trash-can"></svg-loader>
                 </span>
             </div>
