@@ -132,6 +132,14 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             )
 
             this.monthly_basket = monthly_basket
+        },
+
+        async getRamadanBasketCategories() {
+            const { data: ramadan_categories } = await axios.get(
+                route('tenant.occasions.ramadan-basket.get-categories')
+            )
+
+            return ramadan_categories
         }
     }
 })

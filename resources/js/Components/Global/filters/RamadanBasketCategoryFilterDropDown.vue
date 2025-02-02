@@ -1,30 +1,36 @@
 <script lang="ts" setup>
-import { useVocationalTrainingStore } from '@/stores/voacational-training'
+import type { FilterValueType } from '@/types/types'
 
-import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
+import { useSponsorshipsStore } from '@/stores/sponsorships'
+import { onMounted, ref } from 'vue'
 
-const value = defineModel<{ id: string; name: string }>('value', {
+import FilterValueDropDown from '@/Components/Global/filters/FilterValueDropDown.vue'
+
+import { $t } from '@/utils/i18n'
+
+const value = defineModel<FilterValueType>('value', {
     default: {
         id: '',
-        name: ''
+        name: $t('filters.select_an_option')
     }
 })
 
-const vocationalTrainingStore = useVocationalTrainingStore()
+const sponsorshipsStore = useSponsorshipsStore()
 
-function loadVocationalTrainingSpecialities(
-    query: string,
-    setOptions: (results: { id: string; name: string }[]) => void
-) {
-    vocationalTrainingStore.searchSpecialities(query).then((results) => {
-        setOptions(results)
+const data = ref([])
+
+onMounted(async () => {
+    await sponsorshipsStore.getRamadanBasketCategories().then((res) => {
+        data.value.push({
+            id: $t('dont_benefit'),
+            name: $t('dont_benefit')
+        })
+
+        data.value.push(...res.categories.map((name) => ({ id: name, name })))
     })
-}
+})
 </script>
 
 <template>
-    <filter-person-drop-down
-        v-model="value"
-        :load-options="loadVocationalTrainingSpecialities"
-    ></filter-person-drop-down>
+    <filter-value-drop-down v-model="value" :data></filter-value-drop-down>
 </template>

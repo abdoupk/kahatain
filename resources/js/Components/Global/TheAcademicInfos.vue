@@ -169,7 +169,7 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
 
         <!-- Begin: Institution-->
         <div v-if="phase !== 'other'" class="col-span-12 sm:col-span-6">
-            <base-form-label :for="institution_field_name">
+            <base-form-label v-if="phase !== 'paramedical'" :for="institution_field_name">
                 {{ institutionName }}
             </base-form-label>
 
@@ -192,7 +192,7 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
             ></the-institution-selector>
 
             <the-institution-selector
-                v-else
+                v-else-if="['primary_education', 'secondary_education', 'middle_education'].includes(phase)"
                 :id="institution_field_name"
                 v-model:value="institution"
                 :load-options="loadSchools"

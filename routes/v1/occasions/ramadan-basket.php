@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\V1\Occasions\RamadanBasket\ExportFamiliesRamadanBasketPDFController;
 use App\Http\Controllers\V1\Occasions\RamadanBasket\ExportFamiliesRamadanBasketXlsxController;
+use App\Http\Controllers\V1\Occasions\RamadanBasket\GetRamadanBasketCategoriesController;
 use App\Http\Controllers\V1\Occasions\RamadanBasket\GetRamadanSponsorshipSettingsController;
 use App\Http\Controllers\V1\Occasions\RamadanBasket\RamadanBasketIndexController;
 use App\Http\Controllers\V1\Occasions\RamadanBasket\SaveFamiliesRamadanBasketToArchiveController;
@@ -39,6 +40,11 @@ Route::prefix('ramadan-basket')
             'get-settings',
             GetRamadanSponsorshipSettingsController::class
         )->name('get-settings');
+
+        Route::get(
+            'get-categories',
+            GetRamadanBasketCategoriesController::class
+        )->name('get-categories');
 
         Route::patch(
             'update-settings',

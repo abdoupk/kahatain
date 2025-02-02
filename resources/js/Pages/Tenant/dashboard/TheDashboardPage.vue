@@ -16,6 +16,7 @@ import {
     RecentTransactionsType
 } from '@/types/dashboard'
 
+import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent } from 'vue'
 
@@ -84,6 +85,8 @@ defineProps<{
     familiesByBranch: FamiliesByBranchType
     familiesForMap: FamiliesForMapType[]
 }>()
+
+useSponsorshipsStore().getRamadanBasketCategories()
 </script>
 
 <template>
