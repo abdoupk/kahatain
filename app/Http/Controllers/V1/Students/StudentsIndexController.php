@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\Students;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\Students\StudentsIndexResource;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Response;
 
@@ -15,6 +16,8 @@ class StudentsIndexController extends Controller implements HasMiddleware
             'totalStudents' => fn () => getTotalStudents(),
             'studentsPerPhase' => fn () => getStudentsPerPhase(),
             'studentsPerSchool' => fn () => getStudentsPerSchool(),
+            'orphans' => fn () => StudentsIndexResource::collection(getStudents()),
+            'params' => getParams(),
         ]);
     }
 

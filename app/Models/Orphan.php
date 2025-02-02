@@ -278,6 +278,10 @@ class Orphan extends Model implements HasMedia
                     'id' => $this->family->zone_id,
                     'name' => $this->family->zone?->name,
                 ],
+                'branch' => [
+                    'id' => $this->family->branch_id,
+                    'name' => $this->family->branch?->name,
+                ],
             ],
             'sponsor' => [
                 'id' => $this->sponsor_id,
@@ -309,7 +313,8 @@ class Orphan extends Model implements HasMedia
             'shoesSize',
             'shirtSize',
             'pantsSize',
-            'family',
+            'family.zone',
+            'family.branch',
             'institution',
             'sponsor',
         ]);

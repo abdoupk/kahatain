@@ -62,3 +62,12 @@ function getCollegeStudents(): LengthAwarePaginator
 {
     return search(Orphan::getModel(), additional_filters: FILTER_COLLEGE_STUDENTS)->query(fn ($query) => $query->with(['institution', 'academicLevel', 'speciality']))->paginate(request()->integer('perPage', 10));
 }
+
+function getStudents(): LengthAwarePaginator
+{
+    return search(Orphan::getModel(), additional_filters: FILTER_STUDENTS)->query(fn ($query) => $query->with([
+        'institution', 'academicLevel',
+        'family:id,zone_id,address,branch_id',
+        'sponsor:id,first_name,last_name,phone_number',
+        'family.zone:id,name', 'family.branch:id,name']))->paginate(request()->integer('perPage', 10));
+}

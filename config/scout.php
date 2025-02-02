@@ -195,6 +195,8 @@ return [
                     'speciality.speciality',
                     'family.income_rate',
                     'sponsor.id',
+                    'family.zone.id',
+                    'family.branch.id',
                 ],
                 'searchableAttributes' => [
                     'name',
@@ -241,6 +243,7 @@ return [
                     'sponsor.name',
                     'family.income_rate',
                     'family.zone.name',
+                    'family.branch.name',
                     'created_at',
                     'updated_at',
                     'academic_average',
