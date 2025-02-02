@@ -7,23 +7,32 @@ import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BranchesFilterDropDown from '@/Components/Global/filters/BranchesFilterDropDown.vue'
 import CitiesFilterDropDown from '@/Components/Global/filters/CitiesFilterDropDown.vue'
 import ClothesSizeFilterDropDown from '@/Components/Global/filters/ClothesSizeFilterDropDown.vue'
+import CollegeSpecialityFilterDropDown from '@/Components/Global/filters/CollegeSpecialityFilterDropDown.vue'
+import EidAlAdhaStatusFilterDropDown from '@/Components/Global/filters/EidAlAdhaStatusFilterDropDown.vue'
 import FamiliesFilterDropDown from '@/Components/Global/filters/FamiliesFilterDropDown.vue'
 import FamilySponsorShipFilterDropDown from '@/Components/Global/filters/FamilySponsorShipFilterDropDown.vue'
 import FinanceSpecificationFilterDropDown from '@/Components/Global/filters/FinanceSpecificationFilterDropDown.vue'
 import FinanceTypeFilterDropDown from '@/Components/Global/filters/FinanceTypeFilterDropDown.vue'
 import FurnishingsFilterDropDown from '@/Components/Global/filters/FurnishingsFilterDropDown.vue'
 import GenderTypeFilterDropDown from '@/Components/Global/filters/GenderTypeFilterDropDown.vue'
+import InstituteFilterDropDown from '@/Components/Global/filters/InstituteFilterDropDown.vue'
 import MemberAcademicLevelFilterDropDown from '@/Components/Global/filters/MemberAcademicLevelFilterDropDown.vue'
 import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
+import NeedStatusFilterDropDown from '@/Components/Global/filters/NeedStatusFilterDropDown.vue'
+import NeedableTypeFilterDropDown from '@/Components/Global/filters/NeedableTypeFilterDropDown.vue'
 import OrphanAcademicLevelFilterDropDown from '@/Components/Global/filters/OrphanAcademicLevelFilterDropDown.vue'
 import OrphanSponsorShipFilterDropDown from '@/Components/Global/filters/OrphanSponsorShipFilterDropDown.vue'
 import OrphansFilterDropDown from '@/Components/Global/filters/OrphansFilterDropDown.vue'
+import RamadanBasketCategoryFilterDropDown from '@/Components/Global/filters/RamadanBasketCategoryFilterDropDown.vue'
+import SchoolFilterDropDown from '@/Components/Global/filters/SchoolFilterDropDown.vue'
 import ShoesSizeFilterDropDown from '@/Components/Global/filters/ShoesSizeFilterDropDown.vue'
 import SpecialityFilterDropDown from '@/Components/Global/filters/SpecialityFilterDropDown.vue'
 import SponsorAcademicLevelFilterDropDown from '@/Components/Global/filters/SponsorAcademicLevelFilterDropDown.vue'
 import SponsorSponsorShipFilterDropDown from '@/Components/Global/filters/SponsorSponsorShipFilterDropDown.vue'
 import SponsorTypeFilterDropDown from '@/Components/Global/filters/SponsorTypeFilterDropDown.vue'
 import SponsorsFilterDropDown from '@/Components/Global/filters/SponsorsFilterDropDown.vue'
+import TraineeSpecialityFilterDropDown from '@/Components/Global/filters/TraineeSpecialityFilterDropDown.vue'
+import UniversityFilterDropDown from '@/Components/Global/filters/UniversityFilterDropDown.vue'
 import ZonesFilterDropDown from '@/Components/Global/filters/ZonesFilterDropDown.vue'
 
 defineProps<{ field?: ListBoxFilter }>()
@@ -107,6 +116,60 @@ const value = defineModel<FilterValueType>('value')
                 v-model:value="value"
                 class="text-sm"
             ></speciality-filter-drop-down>
+
+            <college-speciality-filter-drop-down
+                v-else-if="field?.label === 'college_speciality'"
+                v-model:value="value"
+                class="text-sm"
+            ></college-speciality-filter-drop-down>
+
+            <trainee-speciality-filter-drop-down
+                v-else-if="field?.label === 'trainee_speciality'"
+                v-model:value="value"
+                class="text-sm"
+            ></trainee-speciality-filter-drop-down>
+
+            <eid-al-adha-status-filter-drop-down
+                v-else-if="field?.label === 'eid_al_adha_status'"
+                v-model:value="value"
+                class="text-sm"
+            ></eid-al-adha-status-filter-drop-down>
+
+            <need-status-filter-drop-down
+                v-else-if="field?.field === 'status' && field?.label !== 'eid_al_adha_status'"
+                v-model:value="value"
+                class="text-sm"
+            ></need-status-filter-drop-down>
+
+            <needable-type-filter-drop-down
+                v-else-if="field?.label === 'recipient_type'"
+                v-model:value="value"
+                class="text-sm"
+            ></needable-type-filter-drop-down>
+
+            <ramadan-basket-category-filter-drop-down
+                v-else-if="field?.label === 'ramadan_basket_category'"
+                v-model:value="value"
+                class="text-sm"
+            ></ramadan-basket-category-filter-drop-down>
+
+            <institute-filter-drop-down
+                v-else-if="field?.label === 'institute'"
+                v-model:value="value"
+                class="text-sm"
+            ></institute-filter-drop-down>
+
+            <university-filter-drop-down
+                v-else-if="field?.label === 'university'"
+                v-model:value="value"
+                class="text-sm"
+            ></university-filter-drop-down>
+
+            <school-filter-drop-down
+                v-else-if="field?.label === 'school'"
+                v-model:value="value"
+                class="text-sm"
+            ></school-filter-drop-down>
 
             <member-academic-level-filter-drop-down
                 v-else-if="field?.label === 'member_academic_level' || field?.label === 'member.academic_level'"

@@ -10,6 +10,6 @@ class CitySearchController extends Controller
 {
     public function __invoke()
     {
-        return CitySearchResource::collection(search(City::getModel(), limit: 100)->get());
+        return CitySearchResource::collection(City::search(request()->string('search'))->get());
     }
 }

@@ -122,6 +122,7 @@ class Need extends Model
                 'id' => $this->needable_id,
                 'name' => $this->needable?->getName(),
                 'type' => $this->needable_type,
+                'income_rate' => (float) $this->needable->family->income_rate,
             ],
             'branch' => [
                 'id' => $this->needable->family->branch?->id,

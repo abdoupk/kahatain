@@ -62,6 +62,8 @@ const handleFilter = (filters: IndexParams['filters']) => {
     if (!isEmpty(formatFilters(filters))) {
         params.value.filters = filters
 
+        params.value.page = 1
+
         handleExport(params.value)
 
         emit('changeFilters', filters)

@@ -765,7 +765,7 @@ export const needsFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-hashtag',
-        field: 'income_rate',
+        field: 'needable.income_rate',
         label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
@@ -1050,7 +1050,7 @@ export const collegeStudentsFilters: ListBoxFilter[] = [
     {
         icon: 'icon-graduation-cap',
         field: 'speciality.speciality',
-        label: 'speciality',
+        label: 'college_speciality',
         type: 'object',
         operators: filterObjectOperators
     },
@@ -1120,6 +1120,13 @@ export const traineesOrphansFilters: ListBoxFilter[] = [
         icon: 'icon-school-lock',
         field: 'institution.id',
         label: 'institute',
+        type: 'object',
+        operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-graduation-cap',
+        field: 'speciality.speciality',
+        label: 'trainee_speciality',
         type: 'object',
         operators: filterObjectOperators
     }

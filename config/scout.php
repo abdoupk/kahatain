@@ -485,6 +485,7 @@ return [
                     'id',
                     'needable.name',
                     'needable.type',
+                    'needable.income_rate',
                     'status',
                     'tenant_id',
                     'branch.id',
