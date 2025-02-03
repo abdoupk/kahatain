@@ -78,8 +78,6 @@ const handleSubmit = async () => {
     }
 }
 
-const modalTitle = $t('settings')
-
 const firstInputRef = ref<HTMLElement>()
 
 const handleTabChange = (index) => {
@@ -110,14 +108,13 @@ onUnmounted(() => sponsorshipsStore.$reset())
         :focusable-input="firstInputRef"
         :loading
         :open
-        :title="modalTitle"
+        :title="$t('settings')"
         modal-type="update"
         size="xl"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
         <template #body>
-            {{}}
             <base-tab-group @change="handleTabChange">
                 <base-tab-list class="flex" variant="link-tabs">
                     <base-tab>

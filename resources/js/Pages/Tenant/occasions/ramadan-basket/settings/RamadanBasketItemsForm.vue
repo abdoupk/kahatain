@@ -24,12 +24,12 @@ defineProps<{
 
 const sponsorshipsStore = useSponsorshipsStore()
 
-const removeMonthlyBasketItem = (id: string) => {
-    sponsorshipsStore.monthly_basket.data = sponsorshipsStore.monthly_basket.data.filter((item) => item.id !== id)
+const removeRamadanBasketItem = (id: string) => {
+    sponsorshipsStore.ramadan_basket.data = sponsorshipsStore.ramadan_basket.data.filter((item) => item.id !== id)
 }
 
-const addMonthlyBasketItem = () => {
-    sponsorshipsStore.monthly_basket.data.push({
+const addRamadanBasketItem = () => {
+    sponsorshipsStore.ramadan_basket.data.push({
         name: null,
         qty_for_family: null,
         unit: 'kg',
@@ -39,10 +39,10 @@ const addMonthlyBasketItem = () => {
 }
 
 const handleUpdateModelValue = (index: number, data: { name: string; id: string }) => {
-    if (!sponsorshipsStore.monthly_basket.data.some((item) => item.inventory_id === data.id)) {
-        sponsorshipsStore.monthly_basket.data[index].name = data.name
+    if (!sponsorshipsStore.ramadan_basket.data.some((item) => item.inventory_id === data.id)) {
+        sponsorshipsStore.ramadan_basket.data[index].name = data.name
 
-        sponsorshipsStore.monthly_basket.data[index].inventory_id = data.id
+        sponsorshipsStore.ramadan_basket.data[index].inventory_id = data.id
     }
 }
 </script>
@@ -50,7 +50,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
 <template>
     <div>
         <div
-            v-for="(item, index) in sponsorshipsStore.monthly_basket.data"
+            v-for="(item, index) in sponsorshipsStore.ramadan_basket.data"
             :key="item.id"
             class="intro-y col-span-12 mt-4 grid grid-cols-12 gap-4"
         >
@@ -115,7 +115,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
                     <base-form-input-error :field_name="`items.${index}.status`" :form></base-form-input-error>
                 </base-form-switch>
 
-                <span class="ms-20 cursor-pointer" @click="removeMonthlyBasketItem(item.id)">
+                <span class="ms-20 cursor-pointer" @click="removeRamadanBasketItem(item.id)">
                     <svg-loader class="fill-danger" name="icon-trash-can"></svg-loader>
                 </span>
             </div>
@@ -125,7 +125,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
             class="mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"
             type="button"
             variant="outline-primary"
-            @click="addMonthlyBasketItem"
+            @click="addRamadanBasketItem"
         >
             <svg-loader class="inline fill-primary dark:fill-slate-500" name="icon-plus"></svg-loader>
 
@@ -134,11 +134,11 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
     </div>
 
     <pagination-data-table
-        :page="sponsorshipsStore.monthly_basket.meta.current_page"
-        :pages="sponsorshipsStore.monthly_basket.meta.last_page"
-        :per-page="sponsorshipsStore.monthly_basket.meta.per_page"
+        :page="sponsorshipsStore.ramadan_basket.meta.current_page"
+        :pages="sponsorshipsStore.ramadan_basket.meta.last_page"
+        :per-page="sponsorshipsStore.ramadan_basket.meta.per_page"
         class="mt-4"
         hide-per-page
-        @change-page="sponsorshipsStore.getMonthlyBasketItems($event)"
+        @change-page="sponsorshipsStore.getRamadanBasketItems($event)"
     ></pagination-data-table>
 </template>

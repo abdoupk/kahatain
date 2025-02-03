@@ -111,6 +111,7 @@
     "exports.babies_milk_and_diapers": "قائمة المستفيدين من الحفاضات وحليب الأطفال لشهر :date",
     "exports.school_entry": "قائمة المستفيدين من الحقائب المدرسية لسنة :date",
     "exports.monthly_basket": "قائمة عناصر القفة الشهرية لشهر :date",
+    "exports.ramadan_basket": "قائمة عناصر قفة رمضان لعام :date",
     "exports.private_school": "قائمة التلاميذ لمدرسة :attribute",
     "exports.archive.eid_al_adha_families": "أرشيف المستفيدين من الأضحية لسنة :date",
     "exports.archive.zakat_families": "أرشيف المستفيدين من الزكاة بقيمة اجمالية :attribute بتاريخ :date",
@@ -1513,6 +1514,7 @@
     "check_all": "تحديد الكل",
     "the_average": "المعدل",
     "monthly_basket_items": "عناصر القفة الشهرية",
+    "ramadan_basket_items": "عناصر قفة رمضان",
     "monthly_sponsorship.settings": "إعدادات الكفالة الشهرية",
     "the_ramadan_baskets": "قفة رمضان"
 }

@@ -1,20 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\V1\MonthlySponsorships;
+namespace App\Http\Controllers\V1\Occasions\RamadanBasket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\MonthlySponsorship\UpdateMonthlyBasketRequest;
-use App\Jobs\V1\Occasion\MonthlyBasketItemsUpdatedJob;
+use App\Jobs\V1\Occasion\RamadanBasketItemsUpdatedJob;
 use App\Models\Inventory;
-use App\Models\MonthlyBasket;
+use App\Models\RamadanBasket;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UpdateMonthlyBasketController extends Controller
+class UpdateRamadanBasketItemsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        // TODO: Implement middleware() method.
+    }
+
     public function __invoke(UpdateMonthlyBasketRequest $request)
     {
         $inventoryIds = collect($request->validated('items'))->pluck('inventory_id')->toArray();
 
-        MonthlyBasket::whereNotIn('inventory_id', $inventoryIds)->delete();
+        RamadanBasket::whereNotIn('inventory_id', $inventoryIds)->delete();
 
         $inventoriesData = collect($request->validated('items'))
             ->map(fn ($item) => [
@@ -39,8 +45,8 @@ class UpdateMonthlyBasketController extends Controller
             ])
             ->toArray();
 
-        MonthlyBasket::upsert($monthlyBasketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
+        RamadanBasket::upsert($monthlyBasketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
 
-        dispatch(new MonthlyBasketItemsUpdatedJob(auth()->user()));
+        dispatch(new RamadanBasketItemsUpdatedJob(auth()->user()));
     }
 }

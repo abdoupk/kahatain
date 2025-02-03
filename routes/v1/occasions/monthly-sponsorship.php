@@ -8,7 +8,7 @@ use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexC
 use App\Http\Controllers\V1\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
 use App\Http\Controllers\V1\MonthlySponsorships\ListItemsOfMonthlyBasketController;
 use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
-use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlyBasketController;
+use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlyBasketItemsController;
 use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
 use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportMonthlyBasketItemsPDFController;
 
@@ -51,7 +51,7 @@ Route::prefix('monthly-sponsorship')
 
         Route::patch(
             'update-monthly-basket',
-            UpdateMonthlyBasketController::class
+            UpdateMonthlyBasketItemsController::class
         )->name('update-monthly-basket');
 
         Route::get(

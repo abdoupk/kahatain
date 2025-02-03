@@ -94,6 +94,8 @@ const showSettingsModal = () => {
 
     sponsorshipsStore.getRamadanSponsorshipSettings()
 
+    sponsorshipsStore.getRamadanBasketItems(1)
+
     showSettingsModalStatus.value = true
 }
 </script>

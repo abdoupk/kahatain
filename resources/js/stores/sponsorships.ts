@@ -50,7 +50,7 @@ interface State {
             minimum: number | null
             maximum: number | null
             category: string | null
-        }
+        }[]
     }
     ramadan_basket: PaginationData<RamadanBasket>
     monthly_basket: PaginationData<MonthlyBasket>
@@ -132,6 +132,21 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             )
 
             this.monthly_basket = monthly_basket
+        },
+
+        async getRamadanBasketItems(page: number) {
+            const { data: ramadan_basket } = await axios.get(
+                route(
+                    'tenant.occasions.ramadan-basket.get-items',
+                    { page },
+                    {
+                        preserveState: false,
+                        preserveScroll: false
+                    }
+                )
+            )
+
+            this.ramadan_basket = ramadan_basket
         },
 
         async getRamadanBasketCategories() {

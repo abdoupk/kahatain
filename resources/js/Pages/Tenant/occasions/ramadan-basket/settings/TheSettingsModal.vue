@@ -1,33 +1,27 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import print from 'print-js'
+import { computed, defineAsyncComponent, onUnmounted, ref } from 'vue'
 
+import CalculationForm from '@/Pages/Tenant/occasions/ramadan-basket/settings/CalculationForm.vue'
+import RamadanBasketItemsForm from '@/Pages/Tenant/occasions/ramadan-basket/settings/RamadanBasketItemsForm.vue'
+
+import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
+import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
+import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
+import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
+import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
+import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
+import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
+
+import { formatUrl } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
-
-const TheRamadanBasketCategories = defineAsyncComponent(
-    () => import('@/Pages/Tenant/occasions/ramadan-basket/settings/TheRamadanBasketCategories.vue')
-)
-
-const BaseButton = defineAsyncComponent(() => import('@/Components/Base/button/BaseButton.vue'))
-
-const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
-
-const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
-
-const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
-
-const BaseInputGroup = defineAsyncComponent(() => import('@/Components/Base/form/InputGroup/BaseInputGroup.vue'))
-
-const BaseInputGroupText = defineAsyncComponent(
-    () => import('@/Components/Base/form/InputGroup/BaseInputGroupText.vue')
-)
 
 const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
 
 const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
-
-const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 defineProps<{
     open: boolean
@@ -36,30 +30,33 @@ defineProps<{
 // Get the sponsorships store
 const sponsorshipsStore = useSponsorshipsStore()
 
+const tabIndex = ref(0)
+
+const form = computed(() => {
+    if (tabIndex.value === 0) {
+        return useForm('patch', route('tenant.occasions.ramadan-basket.update-settings'), {
+            ...sponsorshipsStore.ramadan_sponsorship
+        })
+    }
+
+    return useForm('patch', route('tenant.occasions.ramadan-basket.update-ramadan-basket-items'), {
+        items: sponsorshipsStore.ramadan_basket.data
+    })
+})
+
 // Initialize a ref for loading state
 const loading = ref(false)
 
 const showSuccessNotification = ref(false)
 
-const notificationTitle = $t('successfully_updated')
-
-const form = computed(() => {
-    return useForm('patch', route('tenant.occasions.ramadan-basket.update-settings'), {
-        ...sponsorshipsStore.ramadan_sponsorship
-    })
-})
-
-// Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
-// Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
     sponsorshipsStore.ramadan_sponsorship = form.value.data()
 
     emit('close')
 }
 
-// Function to handle form submission
 const handleSubmit = async () => {
     loading.value = true
 
@@ -79,103 +76,77 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the zone id
-const modalTitle = $t('settings')
-
-// Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the zone id
-const modalType = 'update'
+const handleTabChange = (index) => {
+    tabIndex.value = index
+}
 
-const addInterval = () => {
-    form.value.categories.push({
-        minimum: null,
-        maximum: null,
-        category: null
+const printStarting = ref<boolean>(false)
+
+const printPdf = () => {
+    print({
+        printable: formatUrl(route('tenant.occasions.ramadan-basket.export-monthly-basket-items.pdf')),
+        type: 'pdf',
+        font: 'Roboto',
+        onLoadingStart: () => {
+            printStarting.value = true
+        },
+        onLoadingEnd: () => {
+            printStarting.value = false
+        }
     })
 }
 
-const removeInterval = (index: number) => {
-    if (index === 0) return
-
-    form.value.categories.splice(index, 1)
-}
+onUnmounted(() => sponsorshipsStore.$reset())
 </script>
 
 <template>
     <create-edit-modal
         :focusable-input="firstInputRef"
         :loading
-        :modal-type="modalType"
         :open
-        :title="modalTitle"
+        :title="$t('settings')"
+        modal-type="update"
         size="xl"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
-        <template #description>
-            <!-- Begin: Threshold-->
-            <div class="col-span-12 sm:col-span-4">
-                <base-form-label htmlFor="threshold">
-                    {{ $t('settings.threshold') }}
-                </base-form-label>
+        <template #body>
+            <base-tab-group @change="handleTabChange">
+                <base-tab-list class="flex" variant="link-tabs">
+                    <base-tab>
+                        <base-tab-button as="button" class="w-full" type="button">
+                            {{ $t('monthly_sponsorship.settings') }}
+                        </base-tab-button>
+                    </base-tab>
+                    <base-tab>
+                        <base-tab-button as="button" class="w-full py-2" type="button"
+                            >{{ $t('ramadan_basket_items') }}
+                        </base-tab-button>
+                    </base-tab>
+                </base-tab-list>
 
-                <base-input-group>
-                    <base-form-input
-                        id="threshold"
-                        v-model="form.threshold"
-                        :placeholder="
-                            $t('auth.placeholders.tomselect', {
-                                attribute: $t('settings.threshold')
-                            })
-                        "
-                        type="number"
-                        @change="form.validate('threshold')"
-                    ></base-form-input>
+                <base-tab-panels class="mt-5">
+                    <base-tab-panel class="grid grid-cols-12 gap-4 gap-y-3">
+                        <calculation-form :form></calculation-form>
+                    </base-tab-panel>
 
-                    <base-input-group-text>
-                        {{ $t('DA') }}
-                    </base-input-group-text>
-                </base-input-group>
+                    <base-tab-panel>
+                        <ramadan-basket-items-form :form></ramadan-basket-items-form>
+                    </base-tab-panel>
+                </base-tab-panels>
+            </base-tab-group>
+        </template>
 
-                <div v-if="form.errors?.threshold" class="mt-2">
-                    <base-input-error :message="form.errors.threshold"></base-input-error>
-                </div>
-            </div>
-            <!-- End: Threshold-->
+        <template v-if="tabIndex === 1" #extraButtons>
+            <base-button class="me-2 ms-1 w-20" type="button" variant="soft-primary" @click.prevent="printPdf">
+                <spinner-button-loader :show="printStarting"></spinner-button-loader>
 
-            <!-- Begin: Categories for calculation of sponsorship rate-->
-            <div class="col-span-12 grid gap-4">
-                <div class="mt-1.5 text-base">{{ $t('settings.categories_for_categorise_ramadan_baskets') }}</div>
-
-                <the-ramadan-basket-categories
-                    v-for="(category, index) in form.categories"
-                    :key="index"
-                    v-model:category="category.category"
-                    v-model:maximum="category.maximum"
-                    v-model:minimum="category.minimum"
-                    :form
-                    :index
-                    @remove-interval="removeInterval(index)"
-                ></the-ramadan-basket-categories>
-            </div>
-
-            <div class="col-span-12 flex items-center justify-center">
-                <base-button
-                    class="mx-auto mt-3 block w-1/2 border-dashed dark:text-slate-500"
-                    type="button"
-                    variant="outline-primary"
-                    @click.prevent="addInterval"
-                >
-                    <svg-loader class="inline fill-primary dark:fill-slate-500" name="icon-plus"></svg-loader>
-
-                    {{ $t('add_category') }}
-                </base-button>
-            </div>
-            <!-- End: Categories for calculation of sponsorship rate-->
+                {{ $t('print') }}
+            </base-button>
         </template>
     </create-edit-modal>
 
-    <success-notification :open="showSuccessNotification" :title="notificationTitle"></success-notification>
+    <success-notification :open="showSuccessNotification" :title="$t('successfully_updated')"></success-notification>
 </template>
