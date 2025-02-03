@@ -125,13 +125,6 @@ export const familiesFilters: ListBoxFilter[] = [
         operators: filterNumberOperators
     },
     {
-        icon: 'icon-briefcase',
-        field: 'spouse.function',
-        label: 'spouse.function',
-        type: 'string',
-        operators: filterStringOperators
-    },
-    {
         icon: 'icon-hashtag',
         field: 'income_rate',
         label: 'income_rate',
@@ -159,6 +152,13 @@ export const familiesFilters: ListBoxFilter[] = [
         type: 'object',
         operators: filterObjectOperators
     }
+    // {
+    //     Icon: 'icon-briefcase',
+    //     Field: 'spouse.function',
+    //     Label: 'spouse.function',
+    //     Type: 'string',
+    //     Operators: filterStringOperators
+    // },
 ]
 
 export const sponsorsFilters: ListBoxFilter[] = [
