@@ -20,7 +20,6 @@ class MonthlyBasketItemsUpdatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        ray('hay');
         Inventory::chunk(200, function ($models) {
             $models->searchable();
         });

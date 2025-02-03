@@ -4,8 +4,10 @@
 
 use App\Models\Baby;
 use App\Models\Family;
+use App\Models\Inventory;
 use App\Models\Orphan;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 
 function listOfFamiliesBenefitingFromTheEidAlAdhaSponsorship(): LengthAwarePaginator
 {
@@ -151,4 +153,36 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginat
                 ]
             )->withCount('orphans'))
         ->paginate(perPage: request()?->integer('perPage', 10));
+}
+
+function updateBasketItems(array $items, Builder $basket): void
+{
+    $inventoryIds = collect($items)->pluck('inventory_id')->toArray();
+
+    $basket->whereNotIn('inventory_id', $inventoryIds)->delete();
+
+    $inventoriesData = collect($items)
+        ->map(fn ($item) => [
+            'id' => $item['inventory_id'],
+            'name' => $item['name'],
+            'unit' => $item['unit'],
+            'created_by' => auth()->user()->id,
+            'tenant_id' => auth()->user()->tenant_id,
+        ])
+        ->unique('id')
+        ->values()
+        ->toArray();
+
+    Inventory::upsert($inventoriesData, ['id'], ['name', 'unit', 'created_by', 'tenant_id']);
+
+    $basketData = collect($items)
+        ->map(fn ($item) => [
+            'inventory_id' => $item['inventory_id'],
+            'qty_for_family' => $item['qty_for_family'],
+            'status' => $item['status'],
+            'tenant_id' => auth()->user()->tenant_id,
+        ])
+        ->toArray();
+
+    $basket->upsert($basketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
 }
