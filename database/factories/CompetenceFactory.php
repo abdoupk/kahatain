@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Competence;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class competenceFactory extends Factory
+class CompetenceFactory extends Factory
 {
     protected $model = Competence::class;
 
