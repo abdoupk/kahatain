@@ -86,6 +86,16 @@ export const useSchoolsStore = defineStore('schools', {
             return schools
         },
 
+        async searchAllPhasesSchools(search: string) {
+            const { data: schools } = await axios.get(
+                route('tenant.schools.search-all-phases-schools', {
+                    search
+                })
+            )
+
+            return schools
+        },
+
         async searchUniversities(search: string) {
             const { data: universities } = await axios.get(route('tenant.schools.search-universities', { search }))
 
