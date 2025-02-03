@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 
-import { omit } from '@/utils/helper'
+import { omit, setDateToCurrentTime } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 const BaseFormSwitch = defineAsyncComponent(() => import('@/Components/Base/form/form-switch/BaseFormSwitch.vue'))
@@ -145,6 +145,10 @@ const handleUpdateSubject = (subjectId: number) => {
 
     form.value.academic_level_id = schoolInfo?.academic_level_id
 
+    form.value.start_date = schoolInfo?.start_date || setDateToCurrentTime(props.date).toDate()
+
+    form.value.end_date = schoolInfo?.end_date || setDateToCurrentTime(props.date).toDate()
+
     form.value.validate('subject_id')
 }
 
@@ -184,21 +188,6 @@ const quota = ref<number>()
                 </div>
             </div>
             <!-- End: Title-->
-
-            <!-- Begin: Date Options-->
-            <date-selector
-                v-model:disabled="lessonsStore.lesson.update_this_and_all_coming"
-                v-model:end-date="form.end_date"
-                v-model:frequency="form.frequency"
-                v-model:interval="form.interval"
-                v-model:start-date="form.start_date"
-                v-model:until="form.until"
-                :date
-                :form
-                @update:frequency="form.validate('frequency')"
-                @update:interval="form.validate('interval')"
-            ></date-selector>
-            <!-- End: Date Options-->
 
             <!-- Begin: School-->
             <div class="col-span-12 sm:col-span-6">
@@ -269,6 +258,21 @@ const quota = ref<number>()
                 </div>
             </div>
             <!-- End: Orphans-->
+
+            <!-- Begin: Date Options-->
+            <date-selector
+                v-model:disabled="lessonsStore.lesson.update_this_and_all_coming"
+                v-model:end-date="form.end_date"
+                v-model:frequency="form.frequency"
+                v-model:interval="form.interval"
+                v-model:start-date="form.start_date"
+                v-model:until="form.until"
+                :date
+                :form
+                @update:frequency="form.validate('frequency')"
+                @update:interval="form.validate('interval')"
+            ></date-selector>
+            <!-- End: Date Options-->
 
             <!-- Begin: Color-->
             <div class="col-span-12 mt-0">
