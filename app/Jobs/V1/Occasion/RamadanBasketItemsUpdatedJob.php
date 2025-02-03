@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Jobs\V1\SiteSettings;
+namespace App\Jobs\V1\Occasion;
 
+use App\Models\Inventory;
 use App\Models\User;
-use App\Notifications\Occasion\MonthlySponsorshipSettingsUpdatedNotification;
+use App\Notifications\Occasion\RamadanBasketItemsUpdatedNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Notification;
 
-class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
+class RamadanBasketItemsUpdatedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,17 +20,17 @@ class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        $this->user->load('tenant.families')->tenant->families->each(function ($family) {
-            monthlySponsorship($family);
+        Inventory::chunk(200, function ($models) {
+            $models->searchable();
         });
 
         Notification::send(
             getUsersShouldBeNotified(
-                permissions: ['update_settings_monthly_sponsorships'],
+                permissions: ['update_ramadan_basket'],
                 userToExclude: $this->user,
                 notificationType: 'association_changes'
             ),
-            new MonthlySponsorshipSettingsUpdatedNotification(
+            new RamadanBasketItemsUpdatedNotification(
                 user: $this->user
             )
         );

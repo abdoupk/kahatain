@@ -294,7 +294,8 @@ export const permissions = {
     students: ['list_students', 'start_new_academic_year', 'export_school_supplies', 'view_transcripts_students'],
     college_students: ['list'],
     trainees_orphans: ['list'],
-    monthly_sponsorships: ['update_settings', 'update_monthly_basket']
+    monthly_sponsorships: ['update_settings', 'update_monthly_basket'],
+    ramadan_baskets: ['update_settings', 'update_ramadan_basket']
 }
 
 const monthAbbreviationsFrench = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']

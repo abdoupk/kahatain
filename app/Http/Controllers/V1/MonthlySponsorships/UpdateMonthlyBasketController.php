@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\MonthlySponsorships;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\MonthlySponsorship\UpdateMonthlyBasketRequest;
+use App\Jobs\V1\Occasion\MonthlyBasketItemsUpdatedJob;
 use App\Models\Inventory;
 use App\Models\MonthlyBasket;
 
@@ -39,5 +40,7 @@ class UpdateMonthlyBasketController extends Controller
             ->toArray();
 
         MonthlyBasket::upsert($monthlyBasketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
+
+        dispatch(new MonthlyBasketItemsUpdatedJob(auth()->user()));
     }
 }

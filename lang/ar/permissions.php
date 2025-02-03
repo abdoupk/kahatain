@@ -24,4 +24,7 @@ return [
     'start_new_academic_year' => 'بدء سنة دراسية جديدة',
     'add_new_sponsorship' => 'إضافة كفالة جديدة',
     'view_transcripts_students' => 'عرض كشوف نقاط الأيتام المتمدرسين',
+    'update_monthly_basket' => 'تعديل عناصر القفة الشهرية',
+    'update_ramadan_basket' => 'تعديل عناصر قفة رمضان',
+    'print' => 'طباعة',
 ];

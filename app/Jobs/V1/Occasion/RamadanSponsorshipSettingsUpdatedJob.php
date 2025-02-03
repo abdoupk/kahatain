@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Jobs\V1\SiteSettings;
+namespace App\Jobs\V1\Occasion;
 
+use App\Models\Family;
 use App\Models\User;
-use App\Notifications\Occasion\MonthlySponsorshipSettingsUpdatedNotification;
+use App\Notifications\Occasion\RamadanSponsorshipSettingsUpdatedNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Notification;
 
-class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
+class RamadanSponsorshipSettingsUpdatedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,7 +20,7 @@ class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        $this->user->load('tenant.families')->tenant->families->each(function ($family) {
+        $this->user->load('tenant.families')->tenant->families->each(function (Family $family) {
             monthlySponsorship($family);
         });
 
@@ -29,7 +30,7 @@ class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
                 userToExclude: $this->user,
                 notificationType: 'association_changes'
             ),
-            new MonthlySponsorshipSettingsUpdatedNotification(
+            new RamadanSponsorshipSettingsUpdatedNotification(
                 user: $this->user
             )
         );

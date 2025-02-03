@@ -394,6 +394,10 @@
     "notifications.need.created": "{0} قامت بإضافة احتياج خاص ب :name. |{1} قام بإضافة احتياج خاص ب :name.",
     "notifications.need.updated": "{0} قامت بتحديث الاحتياج الخاص ب :name. |{1} قام بتحديث الاحتياج الخاص ب :name.",
     "notifications.need.deleted": "{0} قامت بحذف الاحتياج الخاص ب :name. |{1} قام بحذف الاحتياج الخاص ب :name.",
+    "notifications.monthly_basket_updated": "{0} قامت بتعديل بيانات القفة الشهرية. |{1} قام بتعديل بيانات القفة الشهرية.",
+    "notifications.ramadan_basket_updated": "{0} قامت بتعديل بيانات القفة الشهرية. |{1} قام بتعديل بيانات القفة الشهرية.",
+    "notifications.monthly_sponsorships_settings_updated": "{0} قامت بتعديل بيانات القفة الشهرية. |{1} قام بتعديل بيانات القفة الشهرية.",
+    "notifications.ramadan_sponsorships_settings_updated": "{0} قامت بتعديل بيانات القفة الشهرية. |{1} قام بتعديل بيانات القفة الشهرية.",
     "notifications.eid_suit_orphans_list.saved": "{0} قامت بحفظ قائمة الأيتام المستفيدين من بدلة العيد. |{1} قام بحفظ قائمة الأيتام المستفيدين من بدلة العيد.",
     "notifications.eid_al_adha_families_list.saved": "{0} قامت بحفظ قائمة العائلات المستفيدة من الأضحية. |{1} قام بحفظ قائمة العائلات المستفيدة من الأضحية.",
     "notifications.babies_milk_and_diapers_list.saved": "{0} قامت بحفظ قائمة العائلات المستفيدة من الحفاضات و حليب الأطفال. |{1} قام بحفظ قائمة العائلات المستفيدة من الحفاضات و حليب الأطفال.",
@@ -445,6 +449,9 @@
     "permissions.start_new_academic_year": "بدء سنة دراسية جديدة",
     "permissions.add_new_sponsorship": "إضافة كفالة جديدة",
     "permissions.view_transcripts_students": "عرض كشوف نقاط الأيتام المتمدرسين",
+    "permissions.update_monthly_basket": "تعديل عناصر القفة الشهرية",
+    "permissions.update_ramadan_basket": "تعديل عناصر قفة رمضان",
+    "permissions.print": "طباعة",
     "placeholders.fill_interval": " عدد الوحدات الزمنية (على سبيل المثال، الأيام والأسابيع والشهور) بين كل تكرار",
     "profile.profile_information": "معلومات الملف الشخصي",
     "profile.profile_information_hint": "تحرير المعلومات الشخصية للمستخدم",
@@ -1426,7 +1433,7 @@
     "the_category": "التصنيف",
     "ramadan_basket_category": "صنف قفة رمضان",
     "add_category": "إضافة تصنيف",
-    "the_monthly_sponsorships": "الكفالات الشهرية",
+    "the_monthly_sponsorships": "الكفالة الشهرية",
     "the_file": "الملف",
     "no_category_for_ramadan_basket": "لا يوجد تصنيف.",
     "unsaved_changes_warning": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد المغادرة؟",
@@ -1506,5 +1513,6 @@
     "check_all": "تحديد الكل",
     "the_average": "المعدل",
     "monthly_basket_items": "عناصر القفة الشهرية",
-    "monthly_sponsorship.settings": "إعدادات الكفالة الشهرية"
+    "monthly_sponsorship.settings": "إعدادات الكفالة الشهرية",
+    "the_ramadan_baskets": "قفة رمضان"
 }

@@ -29,7 +29,7 @@ class PermissionSeeder extends Seeder
             'benefactors' => ['create', 'delete', 'list', 'update', 'view', 'add_new_sponsorship'],
             'sponsorships' => ['create'],
             'monthly_sponsorships' => ['update_settings', 'update_monthly_basket'],
-            'ramadan_sponsorships' => ['update_settings', 'update_ramadan_basket'],
+            'ramadan_baskets' => ['update_settings', 'update_ramadan_basket'],
             'archive' => ['export', 'list', 'view'],
             'trash' => ['destroy', 'list', 'restore'],
             'occasions' => ['save', 'view', 'export'],
