@@ -88,7 +88,7 @@ defineProps<{
 
 <template>
     <Head :title="$t('home')" />
-
+    <div class="mt-8">5</div>
     <suspense>
         <div>
             <!--Begin: General Reports-->

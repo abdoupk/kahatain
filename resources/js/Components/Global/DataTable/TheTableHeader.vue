@@ -69,6 +69,10 @@ const handleFilter = (filters: IndexParams['filters']) => {
         emit('changeFilters', filters)
 
         getData()
+    } else {
+        params.value.filters = []
+
+        getData()
     }
 }
 
