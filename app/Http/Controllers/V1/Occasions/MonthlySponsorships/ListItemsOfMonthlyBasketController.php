@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\MonthlySponsorships;
+namespace App\Http\Controllers\V1\Occasions\MonthlySponsorships;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\MonthlySponsorship\MonthlyBasketItemsResource;

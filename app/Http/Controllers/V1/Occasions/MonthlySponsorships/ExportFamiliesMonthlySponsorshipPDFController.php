@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Occasions\MonthlyBasket;
+namespace App\Http\Controllers\V1\Occasions\MonthlySponsorships;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -8,7 +8,7 @@ use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
-class ExportFamiliesMonthlyBasketPDFController extends Controller implements HasMiddleware
+class ExportFamiliesMonthlySponsorshipPDFController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
@@ -21,8 +21,8 @@ class ExportFamiliesMonthlyBasketPDFController extends Controller implements Has
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/monthly-basket-families', 'sponsorships', function () {
-            return listOfFamiliesBenefitingFromTheMonthlyBasketForExport();
+        return saveToPDF('occasions/monthly-sponsorship-families', 'families', function () {
+            return listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport();
         }, now()->translatedFormat('F Y'));
     }
 }

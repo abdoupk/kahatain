@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipPDFController;
-use App\Http\Controllers\V1\MonthlySponsorships\ExportFamiliesMonthlySponsorshipXlsxController;
-use App\Http\Controllers\V1\MonthlySponsorships\FamiliesMonthlySponsorshipIndexController;
-use App\Http\Controllers\V1\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
-use App\Http\Controllers\V1\MonthlySponsorships\ListItemsOfMonthlyBasketController;
-use App\Http\Controllers\V1\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
-use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlyBasketItemsController;
-use App\Http\Controllers\V1\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
-use App\Http\Controllers\V1\Occasions\MonthlyBasket\ExportMonthlyBasketItemsPDFController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\ExportFamiliesMonthlySponsorshipPDFController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\ExportFamiliesMonthlySponsorshipXlsxController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\ExportMonthlyBasketItemsPDFController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\FamiliesMonthlySponsorshipIndexController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\GetMonthlySponsorshipSettingsController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\ListItemsOfMonthlyBasketController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\SaveFamiliesMonthlySponsorshipToArchiveController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\UpdateMonthlyBasketItemsController;
+use App\Http\Controllers\V1\Occasions\MonthlySponsorships\UpdateMonthlySponsorshipSettingsController;
 
 Route::prefix('monthly-sponsorship')
     ->name('monthly-sponsorship.')

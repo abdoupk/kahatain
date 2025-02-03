@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\V1\Occasions\MonthlyBasket;
+namespace App\Http\Controllers\V1\Occasions\MonthlySponsorships;
 
-use App\Exports\FamiliesMonthlyBasketIndexExport;
+use App\Exports\FamiliesMonthlySponsorshipIndexExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Maatwebsite\Excel\Facades\Excel;
 
-class ExportFamiliesMonthlyBasketXlsxController extends Controller implements HasMiddleware
+class ExportFamiliesMonthlySponsorshipXlsxController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
@@ -17,9 +17,9 @@ class ExportFamiliesMonthlyBasketXlsxController extends Controller implements Ha
     public function __invoke()
     {
         return Excel::download(
-            new FamiliesMonthlyBasketIndexExport,
+            new FamiliesMonthlySponsorshipIndexExport,
             __(
-                'exports.monthly_basket',
+                'exports.monthly_sponsorship_families',
                 ['date' => now()->translatedFormat('F Y')]
             ).'.xlsx'
         );
