@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\V1\MonthlySponsorships;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\MonthlySponsorship\UpdateMonthlyBasketRequest;
 use App\Models\Inventory;
 use App\Models\MonthlyBasket;
-use Illuminate\Http\Request;
 
 class UpdateMonthlyBasketController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(UpdateMonthlyBasketRequest $request)
     {
-        $inventoryIds = collect($request->items)->pluck('inventory_id')->toArray();
+        $inventoryIds = collect($request->validated('items'))->pluck('inventory_id')->toArray();
 
         MonthlyBasket::whereNotIn('inventory_id', $inventoryIds)->delete();
 
-        $inventoriesData = collect($request->items)
+        $inventoriesData = collect($request->validated('items'))
             ->map(fn ($item) => [
                 'id' => $item['inventory_id'],
                 'name' => $item['name'],
@@ -29,7 +29,7 @@ class UpdateMonthlyBasketController extends Controller
 
         Inventory::upsert($inventoriesData, ['id'], ['name', 'unit', 'created_by', 'tenant_id']);
 
-        $monthlyBasketData = collect($request->items)
+        $monthlyBasketData = collect($request->validated('items'))
             ->map(fn ($item) => [
                 'inventory_id' => $item['inventory_id'],
                 'qty_for_family' => $item['qty_for_family'],

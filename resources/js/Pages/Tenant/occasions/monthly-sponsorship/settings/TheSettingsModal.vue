@@ -138,7 +138,7 @@ onUnmounted(() => sponsorshipsStore.$reset())
                     </base-tab-panel>
 
                     <base-tab-panel>
-                        <monthly-basket-items-form></monthly-basket-items-form>
+                        <monthly-basket-items-form :form></monthly-basket-items-form>
                     </base-tab-panel>
                 </base-tab-panels>
             </base-tab-group>

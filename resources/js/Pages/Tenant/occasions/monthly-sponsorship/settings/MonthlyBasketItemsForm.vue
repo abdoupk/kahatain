@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { useSponsorshipsStore } from '@/stores/sponsorships'
+import { Form } from 'laravel-precognition-vue/dist/types'
+
+import InventoryItemCombobox from '@/Pages/Tenant/occasions/monthly-sponsorship/settings/InventoryItemCombobox.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
@@ -12,13 +16,17 @@ import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwit
 import PaginationDataTable from '@/Components/Global/PaginationDataTable.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { allowOnlyNumbersOnKeyDown, generateUUID } from '@/utils/helper'
+import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+defineProps<{
+    form: Form<unknown>
+}>()
 
 const sponsorshipsStore = useSponsorshipsStore()
 
 const removeMonthlyBasketItem = (id: string) => {
-    sponsorshipsStore.monthly_basket.data.splice(id, 1)
+    sponsorshipsStore.monthly_basket.data = sponsorshipsStore.monthly_basket.data.filter((item) => item.id !== id)
 }
 
 const addMonthlyBasketItem = () => {
@@ -27,8 +35,16 @@ const addMonthlyBasketItem = () => {
         qty_for_family: null,
         unit: 'kg',
         status: true,
-        inventory_id: generateUUID()
+        inventory_id: null
     })
+}
+
+const handleUpdateModelValue = (index: number, data: { name: string; id: string }) => {
+    if (!sponsorshipsStore.monthly_basket.data.some((item) => item.inventory_id === data.id)) {
+        sponsorshipsStore.monthly_basket.data[index].name = data.name
+
+        sponsorshipsStore.monthly_basket.data[index].inventory_id = data.id
+    }
 }
 </script>
 
@@ -44,16 +60,16 @@ const addMonthlyBasketItem = () => {
                     {{ $t('item_name') }}
                 </base-form-label>
 
-                <base-form-input
+                <inventory-item-combobox
                     :id="`name-${index}`"
-                    v-model="item.name"
-                    :placeholder="
-                        $t('auth.placeholders.tomselect', {
-                            attribute: $t('item_name')
-                        })
-                    "
-                    type="text"
-                ></base-form-input>
+                    :model-value="{
+                        name: item.name,
+                        inventory_id: item.inventory_id
+                    }"
+                    @update:model-value="handleUpdateModelValue(index, $event)"
+                ></inventory-item-combobox>
+
+                <base-form-input-error :field_name="`items.${index}.name`" :form></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-4">
@@ -81,6 +97,8 @@ const addMonthlyBasketItem = () => {
                         <option value="piece">{{ $t('piece') }}</option>
                     </base-form-select>
                 </base-input-group>
+
+                <base-form-input-error :field_name="`items.${index}.qty_for_family`" :form></base-form-input-error>
             </div>
 
             <div class="col-span-12 flex sm:col-span-4 lg:mt-6 lg:items-center lg:justify-center">
@@ -94,6 +112,8 @@ const addMonthlyBasketItem = () => {
                     <base-form-switch-label :htmlFor="`status-${index}`">
                         {{ $t('validation.attributes.the_status') }}
                     </base-form-switch-label>
+
+                    <base-form-input-error :field_name="`items.${index}.status`" :form></base-form-input-error>
                 </base-form-switch>
 
                 <span class="ms-20 cursor-pointer" @click="removeMonthlyBasketItem(item.id)">
