@@ -71,7 +71,7 @@ provide<ProvideSlideover>('slideover', {
         <headless-dialog
             :as
             :class="computedClass"
-            class="dialog"
+            class="dialog pb-safe-bottom"
             v-bind="omit(attrs, ['onClose'])"
             @close="
                 (value) => {

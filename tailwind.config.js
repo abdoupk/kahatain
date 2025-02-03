@@ -142,6 +142,18 @@ export default {
             gridTemplateColumns: {
                 // Simple 13 column grid
                 13: 'repeat(13, minmax(0, 1fr))'
+            },
+            padding: {
+                'safe-top': 'env(safe-area-inset-top)',
+                'safe-right': 'env(safe-area-inset-right)',
+                'safe-bottom': 'env(safe-area-inset-bottom)',
+                'safe-left': 'env(safe-area-inset-left)'
+            },
+            margin: {
+                'safe-top': 'env(safe-area-inset-top)',
+                'safe-right': 'env(safe-area-inset-right)',
+                'safe-bottom': 'env(safe-area-inset-bottom)',
+                'safe-left': 'env(safe-area-inset-left)'
             }
         }
     },

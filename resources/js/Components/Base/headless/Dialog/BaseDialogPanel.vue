@@ -4,6 +4,7 @@ import type { ProvideDialog } from './BaseDialog.vue'
 import type { ExtractProps } from '@/types/utils'
 
 import { DialogPanel as HeadlessDialogPanel, TransitionChild } from '@headlessui/vue'
+import { useWindowSize } from '@vueuse/core'
 import { twMerge } from 'tailwind-merge'
 import { computed, inject } from 'vue'
 
@@ -23,6 +24,8 @@ const dialog = inject<ProvideDialog>('dialog')
 
 const attrs = useComputedAttrs()
 
+const { width } = useWindowSize()
+
 const computedClass = computed(() =>
     twMerge([
         'w-[90%] mx-auto bg-white relative rounded-md shadow-md transition-transform dark:bg-darkmode-600',
@@ -30,7 +33,7 @@ const computedClass = computed(() =>
         dialog?.size == 'sm' && 'sm:w-[300px]',
         dialog?.size == 'lg' && 'sm:w-[600px]',
         dialog?.size == 'xl' && 'sm:w-[600px] lg:w-[900px]',
-        dialog?.zoom.value && 'scale-105',
+        dialog?.zoom.value && width.value < 768 && 'scale-105',
         typeof attrs.class === 'string' && attrs.class
     ])
 )

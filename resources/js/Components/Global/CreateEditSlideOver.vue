@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useWindowSize } from '@vueuse/core'
 import { defineAsyncComponent } from 'vue'
 
 import { $t } from '@/utils/i18n'
@@ -35,11 +36,13 @@ defineProps<{
     focusableInput?: HTMLElement
 }>()
 
+const { width } = useWindowSize()
+
 const emit = defineEmits(['close', 'handleSubmit'])
 </script>
 
 <template>
-    <base-slideover :initialFocus="focusableInput" :open @close="emit('close')">
+    <base-slideover :initialFocus="focusableInput" :open :staticBackdrop="width < 768" @close="emit('close')">
         <base-slideover-panel class="overflow-y-auto">
             <suspense suspensible>
                 <template #default>
@@ -54,7 +57,7 @@ const emit = defineEmits(['close', 'handleSubmit'])
                             <slot name="description"></slot>
                         </base-slideover-description>
 
-                        <base-slideover-footer class="flex justify-end">
+                        <base-slideover-footer class="pb-safe-bottom flex justify-end lg:pb-0">
                             <base-button
                                 class="me-1 w-20"
                                 type="button"

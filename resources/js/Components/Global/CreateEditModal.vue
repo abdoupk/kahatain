@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useWindowSize } from '@vueuse/core'
 import { defineAsyncComponent } from 'vue'
 
 import TheModalLoader from '@/Components/Global/TheModalLoader.vue'
@@ -30,11 +31,13 @@ defineProps<{
     focusableInput?: HTMLElement
 }>()
 
+const { width } = useWindowSize()
+
 const emit = defineEmits(['close', 'handleSubmit'])
 </script>
 
 <template>
-    <base-dialog :initialFocus="focusableInput" :open @close="emit('close')">
+    <base-dialog :initialFocus="focusableInput" :open :staticBackdrop="width < 768" @close="emit('close')">
         <base-dialog-panel>
             <suspense suspensible>
                 <template #default>

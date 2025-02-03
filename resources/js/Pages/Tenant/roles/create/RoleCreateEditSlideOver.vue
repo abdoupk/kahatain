@@ -203,7 +203,7 @@ watch(
                         ></base-form-check-input>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+                    <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
                         <div v-for="permission in permissionMaps" :key="permission">
                             <base-form-switch>
                                 <base-form-switch-input
@@ -230,7 +230,7 @@ watch(
                                     @update:model-value="handleCheckboxUpdate(permission, key, $event)"
                                 ></base-form-switch-input>
 
-                                <base-form-switch-label :for="`${permission}_${key}`" class="whitespace-nowrap">
+                                <base-form-switch-label :for="`${permission}_${key}`" class="truncate">
                                     <template v-if="permission === 'list'">
                                         {{
                                             $t('permissions.list', {
