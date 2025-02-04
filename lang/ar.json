@@ -233,6 +233,7 @@
     "in_progress": "قيد التنفيذ",
     "completed": "تمت العملية",
     "the_needs": "الاحتياجات",
+    "the_need": "الاحتياج",
     "needs": "احتياجات",
     "add_filter": "إضافة فلتر",
     "delete_filter": "حذف الفلتر",
