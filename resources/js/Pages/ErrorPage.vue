@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const title = computed(() => {
     if (props.tenantDontFound) {
-        return $t('errors.titles.404')
+        return $t('errors.titles.400')
     }
 
     return {
@@ -25,6 +25,10 @@ const title = computed(() => {
 })
 
 const description = computed(() => {
+    if (props.tenantDontFound) {
+        return $t('errors.descriptions.400')
+    }
+
     return {
         503: $t('errors.descriptions.503'),
         500: $t('errors.descriptions.500'),
