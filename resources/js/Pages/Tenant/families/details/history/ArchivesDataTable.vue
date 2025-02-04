@@ -55,7 +55,7 @@ function fetchArchives(data: object) {
             {{ $t('benefit_archive') }}
         </h3>
 
-        <div v-if="archives.data" class="mt-2 overflow-y-hidden">
+        <div v-if="Object.keys(archives.data).length > 0" class="mt-2 overflow-y-hidden">
             <base-table class="mt-2 border-separate border-spacing-y-[10px]">
                 <base-thead-table>
                     <base-tr-table>
@@ -117,7 +117,7 @@ function fetchArchives(data: object) {
         </div>
 
         <pagination-data-table
-            v-if="archives.data"
+            v-if="Object.keys(archives.data).length > 0"
             :page="archives.meta.current_page"
             :pages="archives.meta.last_page"
             :per-page="archives.meta.per_page"

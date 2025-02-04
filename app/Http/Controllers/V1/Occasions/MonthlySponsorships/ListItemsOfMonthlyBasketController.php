@@ -13,7 +13,7 @@ class ListItemsOfMonthlyBasketController extends Controller implements HasMiddle
     {
         return MonthlyBasketItemsResource::collection(
             MonthlyBasket::with('inventory')
-                ->paginate(page: request('page', 1))
+                ->paginate(perPage: 10, page: request('page', 1))
         );
     }
 

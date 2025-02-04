@@ -25,6 +25,16 @@ defineProps<{
 const sponsorshipsStore = useSponsorshipsStore()
 
 const removeRamadanBasketItem = (id: string) => {
+    if (!sponsorshipsStore.ramadan_basket?.deleted_items) {
+        sponsorshipsStore.ramadan_basket.deleted_items = []
+    }
+
+    if (sponsorshipsStore.ramadan_basket.deleted_items.includes(id)) {
+        return
+    }
+
+    sponsorshipsStore.ramadan_basket.deleted_items.push(id)
+
     sponsorshipsStore.ramadan_basket.data = sponsorshipsStore.ramadan_basket.data.filter((item) => item.id !== id)
 }
 
@@ -122,7 +132,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
         </div>
 
         <base-button
-            class="mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"
+            class="intro-y mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"
             type="button"
             variant="outline-primary"
             @click="addRamadanBasketItem"
@@ -134,6 +144,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
     </div>
 
     <pagination-data-table
+        v-if="true"
         :page="sponsorshipsStore.ramadan_basket.meta.current_page"
         :pages="sponsorshipsStore.ramadan_basket.meta.last_page"
         :per-page="sponsorshipsStore.ramadan_basket.meta.per_page"

@@ -11,7 +11,7 @@ class UpdateMonthlyBasketItemsController extends Controller
 {
     public function __invoke(UpdateMonthlyBasketRequest $request)
     {
-        updateBasketItems($request->items, MonthlyBasket::query());
+        updateBasketItems($request->items, $request->deleted_items, MonthlyBasket::query());
 
         dispatch(new MonthlyBasketItemsUpdatedJob(auth()->user()));
     }

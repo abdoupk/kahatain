@@ -155,34 +155,36 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginat
         ->paginate(perPage: request()?->integer('perPage', 10));
 }
 
-function updateBasketItems(array $items, Builder $basket): void
+function updateBasketItems(?array $items, ?array $deletedItems, Builder $basket): void
 {
-    $inventoryIds = collect($items)->pluck('inventory_id')->toArray();
+    if (! is_null($deletedItems) && count($deletedItems) > 0) {
+        $basket->whereIn('id', $deletedItems)->delete();
+    }
 
-    $basket->whereNotIn('inventory_id', $inventoryIds)->delete();
+    if (! is_null($items) && count($items) > 0) {
+        $inventoriesData = collect($items)
+            ->map(fn ($item) => [
+                'id' => $item['inventory_id'],
+                'name' => $item['name'],
+                'unit' => $item['unit'],
+                'created_by' => auth()->user()->id,
+                'tenant_id' => auth()->user()->tenant_id,
+            ])
+            ->unique('id')
+            ->values()
+            ->toArray();
 
-    $inventoriesData = collect($items)
-        ->map(fn ($item) => [
-            'id' => $item['inventory_id'],
-            'name' => $item['name'],
-            'unit' => $item['unit'],
-            'created_by' => auth()->user()->id,
-            'tenant_id' => auth()->user()->tenant_id,
-        ])
-        ->unique('id')
-        ->values()
-        ->toArray();
+        Inventory::upsert($inventoriesData, ['id'], ['name', 'unit', 'created_by', 'tenant_id']);
 
-    Inventory::upsert($inventoriesData, ['id'], ['name', 'unit', 'created_by', 'tenant_id']);
+        $basketData = collect($items)
+            ->map(fn ($item) => [
+                'inventory_id' => $item['inventory_id'],
+                'qty_for_family' => $item['qty_for_family'],
+                'status' => $item['status'],
+                'tenant_id' => auth()->user()->tenant_id,
+            ])
+            ->toArray();
 
-    $basketData = collect($items)
-        ->map(fn ($item) => [
-            'inventory_id' => $item['inventory_id'],
-            'qty_for_family' => $item['qty_for_family'],
-            'status' => $item['status'],
-            'tenant_id' => auth()->user()->tenant_id,
-        ])
-        ->toArray();
-
-    $basket->upsert($basketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
+        $basket->upsert($basketData, ['inventory_id'], ['qty_for_family', 'status', 'tenant_id']);
+    }
 }

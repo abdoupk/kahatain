@@ -17,7 +17,7 @@ class UpdateRamadanBasketItemsController extends Controller implements HasMiddle
 
     public function __invoke(UpdateRamadanBasketRequest $request)
     {
-        updateBasketItems($request->items, RamadanBasket::query());
+        updateBasketItems($request->items, $request->deleted_items, RamadanBasket::query());
 
         dispatch(new RamadanBasketItemsUpdatedJob(auth()->user()));
     }

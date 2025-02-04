@@ -18,7 +18,8 @@ class UpdateMonthlyBasketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'items' => 'required|array',
+            'items' => 'nullable|array',
+            'deleted_items' => 'nullable|array',
             'items.*.inventory_id' => 'required|uuid',
             'items.*.name' => 'required|string|max:255',
             'items.*.qty_for_family' => 'required|integer',

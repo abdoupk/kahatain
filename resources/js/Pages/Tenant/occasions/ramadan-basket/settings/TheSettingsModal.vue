@@ -40,7 +40,8 @@ const form = computed(() => {
     }
 
     return useForm('patch', route('tenant.occasions.ramadan-basket.update-ramadan-basket-items'), {
-        items: sponsorshipsStore.ramadan_basket.data
+        items: sponsorshipsStore.ramadan_basket.data,
+        deleted_items: sponsorshipsStore.ramadan_basket?.deleted_items
     })
 })
 
@@ -140,7 +141,13 @@ onUnmounted(() => sponsorshipsStore.$reset())
         </template>
 
         <template v-if="tabIndex === 1" #extraButtons>
-            <base-button class="me-2 ms-1 w-20" type="button" variant="soft-primary" @click.prevent="printPdf">
+            <base-button
+                v-if="sponsorshipsStore.ramadan_basket.data?.length"
+                class="me-2 ms-1 w-20"
+                type="button"
+                variant="soft-primary"
+                @click.prevent="printPdf"
+            >
                 <spinner-button-loader :show="printStarting"></spinner-button-loader>
 
                 {{ $t('print') }}

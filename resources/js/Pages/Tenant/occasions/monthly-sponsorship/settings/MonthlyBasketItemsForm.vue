@@ -25,6 +25,16 @@ defineProps<{
 const sponsorshipsStore = useSponsorshipsStore()
 
 const removeMonthlyBasketItem = (id: string) => {
+    if (!sponsorshipsStore.monthly_basket?.deleted_items) {
+        sponsorshipsStore.monthly_basket.deleted_items = []
+    }
+
+    if (sponsorshipsStore.monthly_basket.deleted_items.includes(id)) {
+        return
+    }
+
+    sponsorshipsStore.monthly_basket.deleted_items.push(id)
+
     sponsorshipsStore.monthly_basket.data = sponsorshipsStore.monthly_basket.data.filter((item) => item.id !== id)
 }
 
@@ -122,7 +132,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
         </div>
 
         <base-button
-            class="mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"
+            class="intro-y mx-auto mt-4 block w-1/2 border-dashed dark:text-slate-500"
             type="button"
             variant="outline-primary"
             @click="addMonthlyBasketItem"
