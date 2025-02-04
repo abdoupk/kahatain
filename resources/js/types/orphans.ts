@@ -1,5 +1,3 @@
-import type { OrphanSponsorshipType } from '@/types/families'
-
 export interface OrphanShowType {
     id: string
     name: string
@@ -15,11 +13,15 @@ export interface OrphanShowType {
     note: string
     gender: string
     income: number | null
+    income_rate: number | null
+    is_handicapped: boolean
+    is_unemployed: boolean
+    phone_number: string
+    ccp: string
     creator: {
         id: string
         name: string
     }
-    sponsorships: OrphanSponsorshipType
     baby_needs: {
         baby_milk_type: string
         baby_milk_quantity: number

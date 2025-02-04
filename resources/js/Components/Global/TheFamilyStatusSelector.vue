@@ -23,6 +23,8 @@ const handleUpdate = (status: { label: string; value: string }) => {
 const selectedStatus = ref<string | { label: string; value: string }>('')
 
 onMounted(() => {
+    familyStatuses.value = getFamilyStatuses()
+
     if (familyStatus.value) {
         let label
 

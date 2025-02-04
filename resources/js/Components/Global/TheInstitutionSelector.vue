@@ -2,7 +2,6 @@
 import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
 
 defineProps<{
-    phaseKey: 'primary_education' | 'middle_education' | 'secondary_education'
     loadOptions: (query: string, setOptions: (results: { id: string; name: string }[]) => void) => void
 }>()
 

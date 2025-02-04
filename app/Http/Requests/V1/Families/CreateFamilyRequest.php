@@ -145,8 +145,27 @@ class CreateFamilyRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
-        $this->merge(array_map(function ($value) {
-            return $value === null ? false : ($value === '' ? true : $value);
-        }, $this->only(['sponsor_sponsorship', 'family_sponsorship'])));
+        if ($this->has('sponsor.ccp') && strlen($this->get('sponsor')['ccp']) >= 10) {
+            $this->merge([
+                'sponsor' => [
+                    ...$this->get('sponsor'),
+                    'ccp' => str_pad($this->get('sponsor.ccp'), 12, '0', STR_PAD_LEFT),
+                ],
+            ]);
+        }
+
+        if ($this->has('orphans')) {
+            $orphans = $this->input('orphans');
+
+            $modifiedCcp = array_map(function ($orphan) {
+                if (isset($orphan['ccp']) && strlen($orphan['ccp']) >= 10) {
+                    $orphan['ccp'] = str_pad($orphan['ccp'], 12, '0', STR_PAD_LEFT);
+                }
+
+                return $orphan;
+            }, $orphans);
+
+            $this->merge(['orphans' => $modifiedCcp]);
+        }
     }
 }

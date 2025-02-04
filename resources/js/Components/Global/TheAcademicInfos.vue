@@ -41,6 +41,15 @@ const specialityId = defineModel('specialityId', { default: null })
 
 const isAcademic = computed(() => {
     return (
+        phase.value === 'university' ||
+        phase.value === 'master' ||
+        phase.value === 'doctorate' ||
+        phase.value === 'license'
+    )
+})
+
+const shouldShowCcpAndPhoneNumber = computed(() => {
+    return (
         // eslint-disable-next-line array-element-newline
         isOlderThan(props.birthDate, 18) && ['university', 'paramedical', 'vocational_training'].includes(phase.value)
     )
@@ -181,7 +190,6 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
                 :id="institution_field_name"
                 v-model:value="institution"
                 :load-options="loadUniversities"
-                :phase-key="phase"
                 class="!mt-0"
             ></the-institution-selector>
 
@@ -190,7 +198,6 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
                 :id="institution_field_name"
                 v-model:value="institution"
                 :load-options="loadVocationalTrainingCenters"
-                :phase-key="phase"
                 class="!mt-0"
             ></the-institution-selector>
 
@@ -233,7 +240,7 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
     <!-- End: Vocational Training-->
 
     <!-- Begin: if orphan is academic -->
-    <template v-if="isAcademic">
+    <template v-if="shouldShowCcpAndPhoneNumber">
         <!-- Begin: CCp-->
         <div class="col-span-12 sm:col-span-6">
             <base-form-label :for="ccp_field_name">

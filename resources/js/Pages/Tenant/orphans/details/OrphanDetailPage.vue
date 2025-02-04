@@ -67,6 +67,8 @@ defineProps<{
 
                                     <h3 class="text-base font-medium">
                                         {{ orphan.health_status }}
+
+                                        <span v-if="orphan.is_handicapped"> ({{ $t('handicapped') }})</span>
                                     </h3>
                                 </div>
 
@@ -82,7 +84,7 @@ defineProps<{
                                     <h2 class="text-lg font-semibold">{{ $t('academic_level') }}</h2>
 
                                     <h3 class="text-base font-medium">
-                                        {{ orphan.academic_level }}
+                                        {{ orphan.academic_level || '————' }}
                                     </h3>
                                 </div>
 
@@ -90,7 +92,7 @@ defineProps<{
                                     <h2 class="text-lg font-semibold">{{ $t('validation.attributes.institution') }}</h2>
 
                                     <h3 class="text-base font-medium">
-                                        {{ orphan.institution }}
+                                        {{ orphan.institution || '————' }}
                                     </h3>
                                 </div>
 
@@ -98,7 +100,7 @@ defineProps<{
                                     <h2 class="text-lg font-semibold">{{ $t('speciality') }}</h2>
 
                                     <h3 class="text-base font-medium">
-                                        {{ orphan.speciality }}
+                                        {{ orphan.speciality || '————' }}
                                     </h3>
                                 </div>
 
@@ -115,7 +117,7 @@ defineProps<{
                                         <h2 class="text-lg font-semibold">{{ $t('pants_size') }}</h2>
 
                                         <h3 class="text-base font-medium">
-                                            {{ orphan.pants_size }}
+                                            {{ orphan.pants_size || '————' }}
                                         </h3>
                                     </div>
 
@@ -123,7 +125,7 @@ defineProps<{
                                         <h2 class="text-lg font-semibold">{{ $t('shirt_size') }}</h2>
 
                                         <h3 class="text-base font-medium">
-                                            {{ orphan.shirt_size }}
+                                            {{ orphan.shirt_size || '————' }}
                                         </h3>
                                     </div>
 
@@ -131,7 +133,7 @@ defineProps<{
                                         <h2 class="text-lg font-semibold">{{ $t('shoes_size') }}</h2>
 
                                         <h3 class="text-base font-medium">
-                                            {{ orphan.shoes_size }}
+                                            {{ orphan.shoes_size || '————' }}
                                         </h3>
                                     </div>
                                 </template>
@@ -170,11 +172,56 @@ defineProps<{
                                     </div>
                                 </template>
 
-                                <div v-if="orphan.note" class="col-span-12 sm:col-span-6">
+                                <div
+                                    v-if="orphan.phone_number || isOlderThan(orphan.birth_date, 18)"
+                                    class="col-span-12 sm:col-span-6"
+                                >
+                                    <h2 class="text-lg font-semibold">
+                                        {{ $t('validation.attributes.phone_number') }}
+                                    </h2>
+
+                                    <h3 class="text-base font-medium">
+                                        {{ orphan.phone_number || '————' }}
+                                    </h3>
+                                </div>
+
+                                <div
+                                    v-if="orphan.ccp || isOlderThan(orphan.birth_date, 18)"
+                                    class="col-span-12 sm:col-span-6"
+                                >
+                                    <h2 class="text-lg font-semibold">{{ $t('ccp') }}</h2>
+
+                                    <h3 class="text-base font-medium">
+                                        {{ orphan.ccp || '————' }}
+                                    </h3>
+                                </div>
+
+                                <div v-if="isOlderThan(orphan.birth_date, 18)" class="col-span-12 sm:col-span-6">
+                                    <h2 class="text-lg font-semibold">
+                                        {{ $t('unemployed') }}
+                                    </h2>
+
+                                    <h3 class="text-base font-medium">
+                                        {{ orphan.is_unemployed ? $t('yes') : $t('no') || '————' }}
+                                    </h3>
+                                </div>
+
+                                <div
+                                    v-if="orphan.income || isOlderThan(orphan.birth_date, 18)"
+                                    class="col-span-12 sm:col-span-6"
+                                >
                                     <h2 class="text-lg font-semibold">{{ $t('the_income') }}</h2>
 
                                     <h3 class="text-base font-medium">
                                         {{ formatCurrency(orphan.income) }}
+                                    </h3>
+                                </div>
+
+                                <div class="col-span-12 sm:col-span-6">
+                                    <h2 class="text-lg font-semibold">{{ $t('income_rate') }}</h2>
+
+                                    <h3 class="text-base font-medium">
+                                        {{ formatCurrency(orphan.income_rate) }}
                                     </h3>
                                 </div>
 
