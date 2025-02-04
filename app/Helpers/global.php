@@ -408,7 +408,7 @@ function mergePdf(Family|Tenant|Orphan|Sponsor|Spouse|Income $model): void
     }
 }
 
-function getImageData(Income|Family|Sponsor $model, string $collection): array
+function getImageData(Income|Family|Sponsor|Spouse $model, string $collection): array
 {
     [$width, $height] = getimagesize($model->getFirstMediaPath($collection));
 

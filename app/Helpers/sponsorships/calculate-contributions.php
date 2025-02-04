@@ -91,7 +91,7 @@ function calculateContributionsForMaleOrphan(Orphan $orphan, array $calculations
         'married_with_family' => $calculations['married_with_family'] * $orphan->income,
         'married_outside_family' => $calculations['married_outside_family'] * $orphan->income,
         'professional_boy' => $unemployedContribution['professional_boy'],
-        'unemployed' => $unemployedContribution['unemployed'],
+        default => $unemployedContribution['unemployed']
     } / 100;
 }
 
@@ -118,7 +118,7 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
             'married' => $calculations['married'] * $orphan->income,
             'divorced_with_family' => $calculations['divorced_with_family'] * $orphan->income,
             'divorced_outside_family' => $calculations['divorced_outside_family'] * $orphan->income,
-            default => 0
+            default => $atHomeWithNoIncome
         } / 100;
     }
 

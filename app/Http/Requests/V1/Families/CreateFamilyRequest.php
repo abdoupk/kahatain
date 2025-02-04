@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1\Families;
 
+use App\Enums\FamilyStatus;
 use App\Enums\SponsorType;
 use App\Rules\StoreBabyNeedsRule;
 use App\Rules\StoreOrphanClothesRule;
@@ -59,7 +60,7 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.first_name' => 'required|string',
             'orphans.*.last_name' => 'required|string',
             'orphans.*.birth_date' => 'required|date',
-            'orphans.*.family_status' => 'nullable|string',
+            'orphans.*.family_status' => 'nullable|in:'.implode(',', array_map(fn ($case) => $case->value, FamilyStatus::cases())),
             'orphans.*.health_status' => 'nullable|string',
             'orphans.*.academic_level_id' => 'nullable|uuid|exists:academic_levels,id',
             'orphans.*.gender' => 'required|in:male,female',

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
+import { isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const familyStatus = defineModel<string>('familyStatus')
@@ -11,7 +12,63 @@ const gender = defineModel<'male' | 'female'>('gender', {
     default: 'male'
 })
 
-const familyStatuses = computed(() => {
+const birthDate = defineModel('birthDate')
+
+const familyStatuses = ref([])
+
+const handleUpdate = (status: { label: string; value: string }) => {
+    familyStatus.value = status?.value
+}
+
+const selectedStatus = ref<string | { label: string; value: string }>('')
+
+onMounted(() => {
+    if (familyStatus.value) {
+        let label
+
+        if (familyStatus.value === 'professionals') {
+            label =
+                gender.value === 'male'
+                    ? $t('family_statuses.professional_male')
+                    : $t('family_statuses.professional_girl')
+        } else {
+            label = $t(`family_statuses.${familyStatus.value}`)
+        }
+
+        selectedStatus.value = {
+            label: label,
+            value: familyStatus.value
+        }
+    }
+})
+
+const getFamilyStatuses = () => {
+    if (!isOlderThan(birthDate.value, 18)) {
+        if (gender.value === 'male') {
+            return [
+                {
+                    label: $t('family_statuses.professional_male'),
+                    value: 'professionals'
+                },
+                {
+                    label: $t('settings.dismissed'),
+                    value: 'dismissed'
+                }
+            ]
+        }
+
+        return [
+            {
+                label: $t('family_statuses.professional_girl'),
+                value: 'professionals'
+            },
+            {
+                label: $t('settings.dismissed'),
+                value: 'dismissed'
+            }
+        ]
+    }
+
     if (gender.value === 'male') {
         return [
             {
@@ -21,10 +78,6 @@ const familyStatuses = computed(() => {
             {
                 label: $t('family_statuses.professional_boy'),
                 value: 'professional_boy'
-            },
-            {
-                label: $t('family_statuses.professional_male'),
-                value: 'professionals'
             },
             {
                 label: $t('family_statuses.unemployed'),
@@ -55,10 +108,6 @@ const familyStatuses = computed(() => {
             value: 'college_girl'
         },
         {
-            label: $t('family_statuses.professional_female'),
-            value: 'professionals'
-        },
-        {
             label: $t('family_statuses.professional_girl'),
             value: 'professional_girl'
         },
@@ -87,22 +136,18 @@ const familyStatuses = computed(() => {
             value: 'divorced_with_family'
         }
     ]
-})
-
-const handleUpdate = (status: { label: string; value: string }) => {
-    familyStatus.value = status?.value
 }
 
-const selectedStatus = ref<string | { label: string; value: string }>('')
+watch(
+    () => [birthDate.value, gender.value],
+    () => {
+        selectedStatus.value = ''
 
-onMounted(() => {
-    if (familyStatus.value) {
-        selectedStatus.value = {
-            label: $t(`family_statuses.${familyStatus.value}`),
-            value: familyStatus.value
-        }
+        familyStatus.value = ''
+
+        familyStatuses.value = getFamilyStatuses()
     }
-})
+)
 </script>
 
 <template>

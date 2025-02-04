@@ -4,7 +4,7 @@ import { Head, router } from '@inertiajs/vue3'
 import type { CreateFamilyForm, InspectorsMembersType } from '@/types/types'
 
 import { useForm } from 'laravel-precognition-vue'
-import { defineAsyncComponent, nextTick, ref, watch } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 import { createFamilyStepsTitles } from '@/utils/constants'
@@ -162,31 +162,31 @@ watch(() => createFamilyStore.family, (value) => {
     form.setData(value)
 }, { deep: true })
 
-// onMounted(() => {
-//     router.on('before', (event: Event) => {
-//         if (event.detail.visit.url.pathname === '/dashboard/families/create') {
-//             return true
-//         }
-//
-//         if (createFamilyStore.creating_completed) {
-//             return true
-//         } else if (createFamilyStore.is_dirty) {
-//             if (!confirm($t('unsaved_changes_warning'))) {
-//                 event.preventDefault()
-//
-//                 return false
-//             } else {
-//                 return true
-//             }
-//         }
-//     })
-// })
-//
-// onUnmounted(() => {
-//     createFamilyStore.$reset()
-//
-//     createFamilyStore.is_dirty = false
-// })
+onMounted(() => {
+    router.on('before', (event: Event) => {
+        if (event.detail.visit.url.pathname === '/dashboard/families/create') {
+            return true
+        }
+
+        if (createFamilyStore.creating_completed) {
+            return true
+        } else if (createFamilyStore.is_dirty) {
+            if (!confirm($t('unsaved_changes_warning'))) {
+                event.preventDefault()
+
+                return false
+            } else {
+                return true
+            }
+        }
+    })
+})
+
+onUnmounted(() => {
+    createFamilyStore.$reset()
+
+    createFamilyStore.is_dirty = false
+})
 </script>
 
 <template>

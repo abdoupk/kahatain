@@ -226,6 +226,7 @@ onMounted(async () => {
                     v-model:family-status="createFamilyStore.family.orphans[index].family_status"
                     v-model:gender="createFamilyStore.family.orphans[index].gender"
                     @update:family-status="form?.validate(`orphans.${index}.family_status`)"
+                    v-model:birth-date="createFamilyStore.family.orphans[index].birth_date"
                 ></the-family-status-selector>
             </div>
 

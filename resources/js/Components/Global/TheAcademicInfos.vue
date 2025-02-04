@@ -40,7 +40,10 @@ const specialityType = defineModel('specialityType', { default: null })
 const specialityId = defineModel('specialityId', { default: null })
 
 const isAcademic = computed(() => {
-    return phase.value === 'university'
+    return (
+        // eslint-disable-next-line array-element-newline
+        isOlderThan(props.birthDate, 18) && ['university', 'paramedical', 'vocational_training'].includes(phase.value)
+    )
 })
 
 const academicLevel = defineModel('academicLevel', { default: '' })
@@ -168,8 +171,8 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
         <!-- End: Academic Level-->
 
         <!-- Begin: Institution-->
-        <div v-if="phase !== 'other'" class="col-span-12 sm:col-span-6">
-            <base-form-label v-if="phase !== 'paramedical'" :for="institution_field_name">
+        <div v-if="phase && phase !== 'other' && phase !== 'paramedical'" class="col-span-12 sm:col-span-6">
+            <base-form-label :for="institution_field_name">
                 {{ institutionName }}
             </base-form-label>
 

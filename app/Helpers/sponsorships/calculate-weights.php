@@ -61,6 +61,7 @@ function calculateWeightForOrphanFemaleOlderThan18(Orphan $orphan, array $weight
         'married' => $weights['married'],
         'divorced_with_family' => $weights['divorced_with_family'],
         'divorced_outside_family' => $weights['divorced_outside_family'],
+        default => 1
     };
 }
 
@@ -80,6 +81,7 @@ function calculateWeightForOrphanMaleOlderThan18(Orphan $orphan, array $weights)
         'worker_outside_family' => $weights['worker_outside_family'],
         'married_with_family' => $weights['married_with_family'],
         'married_outside_family' => $weights['married_outside_family'],
+        default => 1
     };
 }
 
@@ -146,7 +148,11 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
         };
     }
 
-    return 1;
+    return match ($orphan->family_status) {
+        'dismissed' => $weights['lt_18']['during_academic_season']['dismissed'],
+        'professionals' => $weights['lt_18']['during_academic_season']['professionals'],
+        default => 1
+    };
 }
 
 function calculateWeightForSecondSponsor(Family $family): float

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('name')->index('idx_families_name');
-            $table->uuid('zone_id')->index('idx_families_zone_id');
+            $table->uuid('zone_id')->index('idx_families_zone_id')->nullable();
             $table->uuid('branch_id')->nullable();
             $table->text('address');
             $table->json('location')->nullable();

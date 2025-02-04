@@ -68,7 +68,7 @@ const isShouldHasIncome = computed(() => {
     )
         return false
 
-    return !form.is_handicapped && !form.is_unemployed
+    return !form.is_handicapped
 })
 
 const isShouldHasUnemploymentBenefit = computed(() => {
@@ -181,6 +181,31 @@ onMounted(async () => {
                 </div>
                 <!-- END: Last Name -->
 
+                <!-- BEGIN: Gender -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="gender">
+                        {{ $t('validation.attributes.gender') }}
+                    </base-form-label>
+
+                    <base-form-select
+                        id="gender"
+                        v-model="form.gender"
+                        :placeholder="
+                            $t('auth.placeholders.fill', {
+                                attribute: $t('validation.attributes.gender')
+                            })
+                        "
+                        data-test="orphan_gender"
+                        @change="form?.validate('gender')"
+                    >
+                        <option value="male">{{ $t('male') }}</option>
+                        <option value="female">{{ $t('female') }}</option>
+                    </base-form-select>
+
+                    <base-form-input-error :form field_name="gender"></base-form-input-error>
+                </div>
+                <!-- END: Gender -->
+
                 <!-- BEGIN: BirthDate -->
                 <div class="col-span-12 @xl:col-span-6">
                     <base-form-label for="birth_date">
@@ -201,10 +226,11 @@ onMounted(async () => {
 
                     <the-family-status-selector
                         id="family_status"
+                        v-model:birth-date="form.birth_date"
                         v-model:family-status="form.family_status"
                         v-model:gender="form.gender"
-                        @update:family-status="form?.validate(`family_status`)"
                         :allow-empty="true"
+                        @update:family-status="form?.validate(`family_status`)"
                     >
                     </the-family-status-selector>
 
@@ -232,31 +258,6 @@ onMounted(async () => {
                     @update:institution="form.institution_id = $event.id"
                 ></the-academic-infos>
                 <!-- END: Academic Level -->
-
-                <!-- BEGIN: Gender -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="gender">
-                        {{ $t('validation.attributes.gender') }}
-                    </base-form-label>
-
-                    <base-form-select
-                        id="gender"
-                        v-model="form.gender"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.gender')
-                            })
-                        "
-                        data-test="orphan_gender"
-                        @change="form?.validate('gender')"
-                    >
-                        <option value="male">{{ $t('male') }}</option>
-                        <option value="female">{{ $t('female') }}</option>
-                    </base-form-select>
-
-                    <base-form-input-error :form field_name="gender"></base-form-input-error>
-                </div>
-                <!-- END: Gender -->
 
                 <template v-if="isOlderThan(form.birth_date, 2)">
                     <!-- BEGIN: Pants Size -->
@@ -431,7 +432,7 @@ onMounted(async () => {
                 </div>
 
                 <!-- Begin: Income-->
-                <div v-if="isShouldHasIncome" class="col-span-12 sm:col-span-6">
+                <div v-if="isShouldHasIncome && !form.is_unemployed" class="col-span-12 sm:col-span-6">
                     <base-form-label for="income">
                         {{ $t('validation.attributes.income') }}
                     </base-form-label>
