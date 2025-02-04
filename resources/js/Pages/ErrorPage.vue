@@ -12,6 +12,10 @@ const props = defineProps<{
 }>()
 
 const title = computed(() => {
+    if (props.tenantDontFound) {
+        return $t('errors.titles.404')
+    }
+
     return {
         503: $t('errors.titles.503'),
         500: $t('errors.titles.500'),
@@ -29,16 +33,7 @@ const description = computed(() => {
     }[props.status]
 })
 
-function getUrlWithoutSubdomain() {
-    const url = new URL(window.location.href)
-
-    const hostnameParts = url.hostname.split('.')
-
-    // Get the last two parts of the hostname
-    const domain = hostnameParts.slice(-2).join('.')
-
-    return `${url.protocol}//${domain}`
-}
+const appUrl = import.meta.env.VITE_APP_URL
 </script>
 
 <template>
@@ -65,7 +60,7 @@ function getUrlWithoutSubdomain() {
 
                     <base-button
                         :as="tenantDontFound ? 'a' : Link"
-                        :href="!tenantDontFound ? '/' : getUrlWithoutSubdomain()"
+                        :href="!tenantDontFound ? '/' : appUrl"
                         class="intro-x mt-10 border-white px-4 py-3 text-white dark:border-darkmode-400 dark:text-slate-200"
                     >
                         {{ $t('errors.back to home') }}
