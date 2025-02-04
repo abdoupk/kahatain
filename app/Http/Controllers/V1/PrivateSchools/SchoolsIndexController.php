@@ -18,9 +18,11 @@ class SchoolsIndexController extends Controller implements HasMiddleware
 
     public function __invoke()
     {
+        ray(getSchools());
+
         return Inertia::render('Tenant/schools/index/SchoolsIndexPage', [
-            'schools' => SchoolsIndexResource::collection(getSchools()),
-            'subjects' => SubjectResource::collection(Subject::all()),
+            'schools' => fn () => SchoolsIndexResource::collection(getSchools()),
+            'subjects' => fn () => SubjectResource::collection(Subject::all()),
             'params' => getParams(),
         ]);
     }

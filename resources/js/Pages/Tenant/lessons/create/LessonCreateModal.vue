@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 
-import { omit, setDateToCurrentTime } from '@/utils/helper'
+import { omit, setDateToCurrentTime, setTimeFromDate } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 const BaseFormSwitch = defineAsyncComponent(() => import('@/Components/Base/form/form-switch/BaseFormSwitch.vue'))
@@ -145,9 +145,10 @@ const handleUpdateSubject = (subjectId: number) => {
 
     form.value.academic_level_id = schoolInfo?.academic_level_id
 
-    form.value.start_date = schoolInfo?.start_date || setDateToCurrentTime(props.date).toDate()
+    form.value.start_date =
+        setTimeFromDate(props.date, schoolInfo?.start_date) || setDateToCurrentTime(props.date).toDate()
 
-    form.value.end_date = schoolInfo?.end_date || setDateToCurrentTime(props.date).toDate()
+    form.value.end_date = setTimeFromDate(props.date, schoolInfo?.end_date) || setDateToCurrentTime(props.date).toDate()
 
     form.value.validate('subject_id')
 }

@@ -21,7 +21,7 @@ use Recurr\Transformer\ArrayTransformer;
 function getSchools(): LengthAwarePaginator
 {
     return search(PrivateSchool::getModel())
-        ->query(fn ($query) => $query->with('lessons'))
+        ->query(fn ($query) => $query->with('lessons')->withCount('eventsWithOrphans'))
         ->paginate(perPage: request()->integer('perPage', 10));
 }
 

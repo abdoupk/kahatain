@@ -341,6 +341,20 @@ function setDateToCurrentTime(value: string | Date) {
         .add(currentTime.valueOf() - currentTime.startOf('day').valueOf(), 'millisecond')
 }
 
+function setTimeFromDate(dateStr: string | Date, dateAndTimeStr: string | Date) {
+    // Parse the input strings into Day.js objects
+    const date = dayjs(dateStr)
+    const dateAndTime = dayjs(dateAndTimeStr)
+
+    // Update the time of 'date' to match 'dateAndTime'
+    return date
+        .set('hour', dateAndTime.hour())
+        .set('minute', dateAndTime.minute())
+        .set('second', dateAndTime.second())
+        .set('millisecond', dateAndTime.millisecond())
+        .toDate()
+}
+
 function getAcademicLevelFromId(id, academicLevels) {
     if (!id) return ''
     else {
@@ -653,5 +667,6 @@ export {
     formatParams,
     formatDateAndTimeShort,
     setFontSizeClass,
-    downloadFile
+    downloadFile,
+    setTimeFromDate
 }

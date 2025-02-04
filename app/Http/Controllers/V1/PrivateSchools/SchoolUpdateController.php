@@ -21,6 +21,8 @@ class SchoolUpdateController extends Controller implements HasMiddleware
 
         $school->lessons()->forceDelete();
 
+        // TODO fix this to sync with events
+
         collect($request->lessons)->each(function ($lesson) use ($school): void {
             $school->lessons()->create($lesson);
         });

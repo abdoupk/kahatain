@@ -112,6 +112,7 @@ const printPdf = (schoolId: string) => {
                         <div class="flex items-center justify-center">
                             <a
                                 v-if="hasPermission('print_schools')"
+                                :class="{ 'pointer-events-none opacity-70': !school.should_print }"
                                 class="me-3 flex items-center"
                                 href="javascript:void(0)"
                                 @click.prevent="printPdf(school.id)"

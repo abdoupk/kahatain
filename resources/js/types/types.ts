@@ -997,6 +997,7 @@ export interface SchoolsIndexResource {
     name: string
     quota?: number
     created_at: Date | string
+    should_print?: boolean
 }
 
 export interface DatabaseNotification {
