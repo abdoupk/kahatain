@@ -29,6 +29,7 @@ defineProps<{
     eventInfo: EventApi | null
 }>()
 
+// eslint-disable-next-line array-element-newline
 const emit = defineEmits(['close', 'delete', 'edit'])
 
 const lessonsStore = useLessonsStore()
@@ -46,30 +47,53 @@ const lessonsStore = useLessonsStore()
 
                         <div class="p-5">
                             <div class="grid grid-cols-12 gap-4">
-                                <h1 class="col-span-3">{{ $t('date_and_time') }}</h1>
+                                <h1 class="col-span-3 rtl:!font-semibold">
+                                    {{ $t('date_and_time') }}
+                                </h1>
 
-                                <p class="col-span-9">{{ lessonsStore.lesson?.formated_date }}</p>
+                                <p class="col-span-9">
+                                    {{ lessonsStore.lesson?.formated_date }}
+                                </p>
                             </div>
 
                             <div class="mt-4 grid grid-cols-12 gap-4">
-                                <h1 class="col-span-3">{{ $t('quota_total') }}</h1>
-                                <p class="col-span-9">{{ lessonsStore.lesson.lesson?.quota }}</p>
+                                <h1 class="col-span-3 rtl:!font-semibold">
+                                    {{ $t('quota_total') }}
+                                </h1>
+
+                                <p class="col-span-9">
+                                    {{ lessonsStore.lesson.lesson?.quota }}
+                                </p>
                             </div>
 
                             <div class="mt-4 grid grid-cols-12 gap-4">
-                                <h1 class="col-span-3">{{ $t('school_name') }}</h1>
-                                <p class="col-span-9">{{ lessonsStore.lesson?.school?.name }}</p>
+                                <h1 class="col-span-3 rtl:!font-semibold">
+                                    {{ $t('school_name') }}
+                                </h1>
+
+                                <p class="col-span-9">
+                                    {{ lessonsStore.lesson?.school?.name }}
+                                </p>
                             </div>
 
                             <div class="mt-4 grid grid-cols-12 gap-4">
-                                <h1 class="col-span-3">{{ $t('the_subject') }}</h1>
+                                <h1 class="col-span-3 rtl:!font-semibold">
+                                    {{ $t('the_subject') }}
+                                </h1>
 
-                                <p class="col-span-9">{{ lessonsStore.lesson?.subject?.name }}</p>
+                                <p class="col-span-9">
+                                    {{ lessonsStore.lesson?.subject?.name }}
+                                </p>
                             </div>
 
                             <div class="mt-4 grid grid-cols-12 gap-4">
-                                <h1 class="col-span-3">{{ $t('academic_level') }}</h1>
-                                <p class="col-span-9">{{ lessonsStore.lesson?.academic_level?.name }}</p>
+                                <h1 class="col-span-3 rtl:!font-semibold">
+                                    {{ $t('academic_level') }}
+                                </h1>
+
+                                <p class="col-span-9">
+                                    {{ lessonsStore.lesson?.academic_level?.name }}
+                                </p>
                             </div>
                         </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Lesson;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('event_occurrence_orphan', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('event_occurrence_id');
-            $table->uuid('lesson_id');
+            $table->foreignIdFor(Lesson::class, 'lesson_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->uuid('orphan_id');
             $table->uuid('tenant_id');
             $table->timestamps();

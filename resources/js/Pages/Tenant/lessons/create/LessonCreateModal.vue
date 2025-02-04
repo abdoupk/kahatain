@@ -145,10 +145,13 @@ const handleUpdateSubject = (subjectId: number) => {
 
     form.value.academic_level_id = schoolInfo?.academic_level_id
 
-    form.value.start_date =
-        setTimeFromDate(props.date, schoolInfo?.start_date) || setDateToCurrentTime(props.date).toDate()
+    form.value.start_date = schoolInfo?.start_date
+        ? setTimeFromDate(props.date, schoolInfo?.start_date)
+        : setDateToCurrentTime(props.date).toDate()
 
-    form.value.end_date = setTimeFromDate(props.date, schoolInfo?.end_date) || setDateToCurrentTime(props.date).toDate()
+    form.value.end_date = schoolInfo?.end_date
+        ? setTimeFromDate(props.date, schoolInfo?.end_date)
+        : setDateToCurrentTime(props.date).toDate()
 
     form.value.validate('subject_id')
 }

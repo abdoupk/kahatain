@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Lesson;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->uuid('lesson_id');
+            $table->ForeignIdFor(Lesson::class, 'lesson_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->uuid('event_id');
             $table->uuid('tenant_id');
             $table->timestamps();
