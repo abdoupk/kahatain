@@ -39,7 +39,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
 
             return this.academicLevels.filter((academicLevel) =>
                 // eslint-disable-next-line array-element-newline
-                ['الطور الابتدائي', 'الطور الثانوي', 'الطور المتوسط'].includes(academicLevel.phase)
+                ['primary_education', 'middle_education', 'secondary_education'].includes(academicLevel.phase_key)
             )
         },
 

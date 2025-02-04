@@ -15,7 +15,7 @@ const vueSelectAcademicLevel = ref('')
 
 const academicLevel = defineModel('academicLevel')
 
-onMounted(() => {
+onMounted(async () => {
     vueSelectAcademicLevel.value = getAcademicLevelFromId(academicLevel.value, props.academicLevels)
 })
 

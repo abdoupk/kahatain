@@ -33,7 +33,9 @@ watch(
     }
 )
 
-onMounted(() => {
+onMounted(async () => {
+    await subjectsStore.getSubjects()
+
     if (subject.value) {
         selectedSubject.value = subjectsStore.findSubjectById(subject.value)
     }
