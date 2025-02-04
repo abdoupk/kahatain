@@ -45,6 +45,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Transcript whereTrimester($value)
  * @method static Builder<static>|Transcript whereUpdatedAt($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Transcript extends Model

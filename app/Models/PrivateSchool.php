@@ -47,6 +47,10 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|PrivateSchool withTrashed()
  * @method static Builder|PrivateSchool withoutTrashed()
  *
+ * @property-read Collection<int, \App\Models\EventOccurrence> $eventsWithOrphans
+ * @property-read int|null $events_with_orphans_count
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class PrivateSchool extends Model

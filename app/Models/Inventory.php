@@ -58,6 +58,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $monthly_basket_count
  * @property-read Collection<int, RamadanBasket> $ramadanBasket
  * @property-read int|null $ramadan_basket_count
+ * @property-read \App\Models\TFactory|null $use_factory
  *
  * @mixin Eloquent
  */

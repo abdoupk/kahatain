@@ -30,6 +30,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Competence whereTenantId($value)
  * @method static Builder<static>|Competence whereUpdatedAt($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Competence extends Model

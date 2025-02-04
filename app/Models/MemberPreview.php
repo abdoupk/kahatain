@@ -26,6 +26,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|MemberPreview whereTenantId($value)
  * @method static Builder|MemberPreview whereUserId($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class MemberPreview extends Pivot

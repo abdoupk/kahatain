@@ -46,6 +46,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ * @property-read \App\Models\TFactory|null $use_factory
  *
  * @mixin Eloquent
  */

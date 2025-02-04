@@ -5,6 +5,7 @@ import { Head, Link } from '@inertiajs/vue3'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import TheAvatar from '@/Components/Global/TheAvatar.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
@@ -39,7 +40,23 @@ defineProps<{
                             <div
                                 class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3"
                             >
-                                <h2 class="me-auto text-xl font-bold">{{ orphan.name }}</h2>
+                                <!--                                <h2 class="me-auto text-xl font-bold">{{ orphan.name }}</h2>-->
+
+                                <div class="image-fit h-12 w-12">
+                                    <img v-if="orphan.photo" :src="orphan.photo" alt="" class="rounded-full" />
+                                    <the-avatar v-else :gender="orphan.gender" :name></the-avatar>
+                                </div>
+
+                                <div class="me-auto ms-4">
+                                    <div class="text-base font-bold">{{ orphan.name }}</div>
+
+                                    <Link
+                                        :href="route('tenant.members.index') + '?show=' + orphan.creator?.id"
+                                        class="text-xs font-semibold text-slate-500"
+                                    >
+                                        {{ orphan.creator?.name }}
+                                    </Link>
+                                </div>
 
                                 <Link
                                     v-if="hasPermission('edit_orphans')"

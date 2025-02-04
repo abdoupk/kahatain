@@ -52,6 +52,7 @@ use Stancl\Tenancy\Database\TenantCollection;
  * @property-read int|null $media_count
  * @property-read Collection<int, Zone> $zones
  * @property-read int|null $zones_count
+ * @property-read \App\Models\TFactory|null $use_factory
  *
  * @mixin Eloquent
  */

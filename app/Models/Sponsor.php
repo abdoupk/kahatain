@@ -89,6 +89,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Sponsor withTrashed()
  * @method static Builder<static>|Sponsor withoutTrashed()
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Sponsor extends Model implements HasMedia

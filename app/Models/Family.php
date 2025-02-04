@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\FamilyFactory;
 use DB;
 use Eloquent;
+use Faker\Factory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -31,7 +32,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property string $zone_id
  * @property string|null $branch_id
  * @property string $address
- * @property array|null $location
+ * @property array<array-key, mixed>|null $location
  * @property string|null $file_number
  * @property Carbon|null $start_date
  * @property float|null $income_rate
@@ -40,12 +41,18 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property float|null $difference_after_monthly_sponsorship
  * @property float|null $monthly_sponsorship_rate
  * @property float|null $amount_from_association
- * @property float|null $difference_before_ramadan_sponsorship
+ * @property float|null $ramadan_sponsorship_difference
+ * @property string|null $ramadan_basket_category
  * @property string $tenant_id
+ * @property float $aggregate_zakat_benefit
+ * @property int $aggregate_white_meat_benefit
+ * @property int $aggregate_red_meat_benefit
+ * @property string|null $eid_al_adha_status
  * @property string|null $created_by
  * @property string|null $deleted_by
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $deletion_reason
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, Sponsorship> $aid
  * @property-read int|null $aid_count
@@ -55,8 +62,12 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @property-read int|null $babies_count
  * @property-read Branch|null $branch
  * @property-read User|null $creator
- * @property-read Spouse|null $deceased
+ * @property-read Collection<int, Spouse> $deceased
+ * @property-read int|null $deceased_count
+ * @property-read Collection<int, FamilyEidAlAdha> $eidAlAdhas
+ * @property-read int|null $eid_al_adhas_count
  * @property-read Furnishing|null $furnishings
+ * @property-read Factory|null $use_factory
  * @property-read Housing|null $housing
  * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
@@ -79,21 +90,27 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Family onlyTrashed()
  * @method static Builder<static>|Family query()
  * @method static Builder<static>|Family whereAddress($value)
+ * @method static Builder<static>|Family whereAggregateRedMeatBenefit($value)
+ * @method static Builder<static>|Family whereAggregateWhiteMeatBenefit($value)
+ * @method static Builder<static>|Family whereAggregateZakatBenefit($value)
  * @method static Builder<static>|Family whereAmountFromAssociation($value)
  * @method static Builder<static>|Family whereBranchId($value)
  * @method static Builder<static>|Family whereCreatedAt($value)
  * @method static Builder<static>|Family whereCreatedBy($value)
  * @method static Builder<static>|Family whereDeletedAt($value)
  * @method static Builder<static>|Family whereDeletedBy($value)
+ * @method static Builder<static>|Family whereDeletionReason($value)
  * @method static Builder<static>|Family whereDifferenceAfterMonthlySponsorship($value)
  * @method static Builder<static>|Family whereDifferenceBeforeMonthlySponsorship($value)
- * @method static Builder<static>|Family whereDifferenceBeforeRamadanSponsorship($value)
+ * @method static Builder<static>|Family whereEidAlAdhaStatus($value)
  * @method static Builder<static>|Family whereFileNumber($value)
  * @method static Builder<static>|Family whereId($value)
  * @method static Builder<static>|Family whereIncomeRate($value)
  * @method static Builder<static>|Family whereLocation($value)
  * @method static Builder<static>|Family whereMonthlySponsorshipRate($value)
  * @method static Builder<static>|Family whereName($value)
+ * @method static Builder<static>|Family whereRamadanBasketCategory($value)
+ * @method static Builder<static>|Family whereRamadanSponsorshipDifference($value)
  * @method static Builder<static>|Family whereStartDate($value)
  * @method static Builder<static>|Family whereTenantId($value)
  * @method static Builder<static>|Family whereTotalIncome($value)
@@ -101,25 +118,6 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Family whereZoneId($value)
  * @method static Builder<static>|Family withTrashed()
  * @method static Builder<static>|Family withoutTrashed()
- *
- * @property float|null $ramadan_sponsorship_difference
- * @property string|null $ramadan_basket_category
- * @property float $aggregate_zakat_benefit
- * @property int $aggregate_white_meat_benefit
- * @property int $aggregate_red_meat_benefit
- * @property string|null $eid_al_adha_status
- * @property string|null $deletion_reason
- * @property-read int|null $deceased_count
- * @property-read Collection<int, FamilyEidAlAdha> $eidAlAdhas
- * @property-read int|null $eid_al_adhas_count
- *
- * @method static Builder<static>|Family whereAggregateRedMeatBenefit($value)
- * @method static Builder<static>|Family whereAggregateWhiteMeatBenefit($value)
- * @method static Builder<static>|Family whereAggregateZakatBenefit($value)
- * @method static Builder<static>|Family whereDeletionReason($value)
- * @method static Builder<static>|Family whereEidAlAdhaStatus($value)
- * @method static Builder<static>|Family whereRamadanBasketCategory($value)
- * @method static Builder<static>|Family whereRamadanSponsorshipDifference($value)
  *
  * @mixin Eloquent
  */

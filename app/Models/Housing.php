@@ -41,6 +41,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Housing whereUpdatedAt($value)
  * @method static Builder|Housing whereValue($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Housing extends Model

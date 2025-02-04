@@ -18,7 +18,13 @@ defineProps<{ sponsor: SponsorType }>()
     <!-- BEGIN: Sponsor Information -->
     <div class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-            <h2 class="me-2 text-xl font-bold">{{ sponsor.name }}</h2>
+            <h2 class="me-2 text-xl font-bold">
+                <Link v-if="hasPermission('view_sponsors')" :href="route('tenant.sponsors.show', sponsor.id)">
+                    {{ sponsor.name }}
+                </Link>
+
+                <span v-else>{{ sponsor.name }}</span>
+            </h2>
 
             <Link
                 v-if="hasPermission('edit_sponsors')"

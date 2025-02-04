@@ -54,6 +54,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @property-read Collection<int, User> $members
  * @property-read int|null $members_count
+ * @property-read \App\Models\TFactory|null $use_factory
  *
  * @mixin Eloquent
  */

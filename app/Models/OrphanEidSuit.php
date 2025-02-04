@@ -52,6 +52,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|OrphanEidSuit whereUpdatedAt($value)
  * @method static Builder<static>|OrphanEidSuit whereUserId($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class OrphanEidSuit extends Model

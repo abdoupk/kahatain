@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\ColorScheme;
+use App\Enums\FontSize;
+use App\Enums\Layout;
+use App\Enums\Theme;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -105,6 +109,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|User whereLocation($value)
  * @method static Builder<static>|User whereWorkplace($value)
  *
+ * @property-read TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class User extends Authenticatable
@@ -154,12 +160,12 @@ class User extends Authenticatable
 
         static::created(static function (User $user): void {
             $user->settings()->create([
-                'theme' => 'enigma',
-                'color_scheme' => 'theme_1',
-                'layout' => 'side_menu',
+                'theme' => Theme::ENIGMA->value,
+                'color_scheme' => ColorScheme::THEME_1->value,
+                'layout' => Layout::TOP_MENU->value,
                 'appearance' => 'light',
                 'locale' => 'ar',
-                'font_size' => 'font_size_base',
+                'font_size' => FontSize::FONT_SIZE_BASE->value,
                 'tenant_id' => $user->tenant_id,
                 'notifications' => [
                     'families_changes' => true,

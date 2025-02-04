@@ -53,6 +53,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Furnishing whereWashingMachine($value)
  * @method static Builder|Furnishing whereWaterHeater($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Furnishing extends Model

@@ -118,6 +118,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|Orphan withTrashed()
  * @method static Builder<static>|Orphan withoutTrashed()
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Orphan extends Model implements HasMedia

@@ -53,6 +53,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @method static Builder<static>|Archive whereMetadata($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Archive extends Model

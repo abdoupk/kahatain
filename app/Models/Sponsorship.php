@@ -58,6 +58,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @method static Builder<static>|Sponsorship whereUntil($value)
  *
+ * @property-read TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Sponsorship extends Model

@@ -51,6 +51,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  *
  * @method static Builder<static>|SecondSponsor whereWithFamily($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class SecondSponsor extends Model

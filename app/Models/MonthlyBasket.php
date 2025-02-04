@@ -35,6 +35,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder<static>|MonthlyBasket whereTenantId($value)
  * @method static Builder<static>|MonthlyBasket whereUpdatedAt($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class MonthlyBasket extends Model

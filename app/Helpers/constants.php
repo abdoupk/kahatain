@@ -2,11 +2,6 @@
 
 const LIMIT = 5000;
 
-const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
-    'eid_el_adha', 'eid_el_fitr', 'zakat_el_fitr', 'zakat', 'other', 'school_entry', 'analysis',
-    'therapy', 'ramadan_basket',
-];
-
 const FILTER_STUDENTS = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';
 
 const FILTER_SCHOOL_ENTRY = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';

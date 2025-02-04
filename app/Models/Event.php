@@ -66,6 +66,8 @@ use Str;
  * @method static Builder|Event withTrashed()
  * @method static Builder|Event withoutTrashed()
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Event extends Model

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EidAlAdhaStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('family_eid_al_adhas', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->enum('status', ['sacrificed', 'benefit', 'dont_benefit', 'meat', 'benefactor'])->nullable();
+            $table->enum('status', array_map(fn ($type) => $type->value, EidAlAdhaStatus::cases()))->nullable();
             $table->foreignUuid('family_id')->constrained('families');
             $table->foreignUuid('updated_by')->constrained('users');
             $table->foreignUuid('tenant_id')->constrained('tenants');

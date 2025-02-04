@@ -28,6 +28,8 @@ use Stancl\Tenancy\Database\Models\Domain as ModelsDomain;
  * @method static Builder|Domain whereTenantId($value)
  * @method static Builder|Domain whereUpdatedAt($value)
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Domain extends ModelsDomain

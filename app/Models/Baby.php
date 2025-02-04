@@ -54,6 +54,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Baby withTrashed()
  * @method static Builder|Baby withoutTrashed()
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class Baby extends Model

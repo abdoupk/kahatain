@@ -9,6 +9,7 @@ import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateM
 import MenuLink from '@/Pages/Tenant/orphans/edit/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import TheAvatar from '@/Components/Global/TheAvatar.vue'
 
 const props = defineProps<{ orphan: OrphanUpdateFormType }>()
 
@@ -36,6 +37,22 @@ const showNeedCreateModal = () => {
     <div class="col-span-12 flex flex-col-reverse lg:col-span-4 lg:block 2xl:col-span-3">
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
+                <div class="image-fit h-12 w-12">
+                    <img v-if="orphan.photo" :src="orphan.photo" alt="" class="rounded-full" />
+                    <the-avatar v-else :gender="orphan.gender" :name></the-avatar>
+                </div>
+
+                <div class="me-auto ms-4">
+                    <div class="text-base font-bold">{{ name }}</div>
+
+                    <Link
+                        :href="route('tenant.members.index') + '?show=' + orphan.creator?.id"
+                        class="font-semibold text-slate-500"
+                    >
+                        {{ orphan.creator?.name }}
+                    </Link>
+                </div>
+
                 <div class="me-auto ms-4">
                     <div class="text-base font-bold">{{ name }}</div>
 

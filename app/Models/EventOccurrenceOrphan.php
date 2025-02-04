@@ -39,6 +39,8 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|EventOccurrenceOrphan withTrashed()
  * @method static Builder|EventOccurrenceOrphan withoutTrashed()
  *
+ * @property-read \App\Models\TFactory|null $use_factory
+ *
  * @mixin Eloquent
  */
 class EventOccurrenceOrphan extends Pivot

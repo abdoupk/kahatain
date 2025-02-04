@@ -42,9 +42,11 @@ class FamilyShowController extends Controller implements HasMiddleware
                 'preview.inspectors',
                 'deceased.media',
                 'media',
+                'aid.recipientable',
+                'aid.benefactor',
                 'archives',
             ]
-        );
+        )->loadCount('orphans');
 
         return Inertia::render(
             'Tenant/families/details/FamilyDetailPage',

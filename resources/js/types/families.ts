@@ -141,6 +141,20 @@ export interface FamilyShowType {
     furnishings: FurnishingType
     housing: HousingType
     preview: PreviewType
+    total_income: number
+    amount_from_association: number
+    difference_after_monthly_sponsorship: number
+    ramadan_sponsorship_difference: number
+    monthly_sponsorship_rate: number
+    aggregate_red_meat_benefit: number
+    aggregate_white_meat_benefit: number
+    income_rate: number
+    ramadan_basket_category: string
+    location: {
+        lat: number
+        lng: number
+    }
+    orphan_count: number
 }
 
 export interface FamilyEditType {

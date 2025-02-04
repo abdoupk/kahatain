@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DonationSpecification;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('date');
             $table->uuid('tenant_id');
-            $table->enum('specification', DONATION_SPECIFICATION);
+            $table->enum('specification', array_map(fn ($type) => $type->value, DonationSpecification::cases()));
             $table->timestamps();
             $table->softDeletes();
             $table->uuid('created_by');

@@ -46,6 +46,15 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
  * @method static Builder|Lesson withTrashed()
  * @method static Builder|Lesson withoutTrashed()
  *
+ * @property string|null $start_date
+ * @property string|null $end_date
+ * @property-read \App\Models\TFactory|null $use_factory
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EventOccurrence> $orphans
+ * @property-read int|null $orphans_count
+ *
+ * @method static Builder<static>|Lesson whereEndDate($value)
+ * @method static Builder<static>|Lesson whereStartDate($value)
+ *
  * @mixin Eloquent
  */
 class Lesson extends Model
