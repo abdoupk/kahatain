@@ -170,151 +170,153 @@ const quota = ref<number>()
         @close="handleCloseModal"
         @handle-submit="handleSubmit"
     >
-        <template #description>
-            <!-- Begin: Title-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="title">
-                    {{ $t('validation.attributes.title') }}
-                </base-form-label>
+        <template #body>
+            <div class="grid grid-cols-12 gap-4 gap-y-3">
+                <!-- Begin: Title-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="title">
+                        {{ $t('validation.attributes.title') }}
+                    </base-form-label>
 
-                <base-form-input
-                    id="title"
-                    ref="firstInputRef"
-                    v-model="form.title"
-                    :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.title') })"
-                    type="text"
-                    @change="form.validate('title')"
-                />
-
-                <div v-if="form.errors?.title" class="mt-2">
-                    <base-input-error :message="form.errors.title"></base-input-error>
-                </div>
-            </div>
-            <!-- End: Title-->
-
-            <!-- Begin: School-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="school">
-                    {{ $t('the_school') }}
-                </base-form-label>
-
-                <div>
-                    <the-school-selector
-                        id="school"
-                        v-model:school="form.school_id"
+                    <base-form-input
+                        id="title"
+                        ref="firstInputRef"
+                        v-model="form.title"
                         :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                        @update:school="handleUpdateSchool"
-                    ></the-school-selector>
+                        :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.title') })"
+                        type="text"
+                        @change="form.validate('title')"
+                    />
+
+                    <div v-if="form.errors?.title" class="mt-2">
+                        <base-input-error :message="form.errors.title"></base-input-error>
+                    </div>
                 </div>
+                <!-- End: Title-->
 
-                <div v-if="form.errors?.school_id" class="mt-2">
-                    <base-input-error :message="form.errors.school_id"></base-input-error>
+                <!-- Begin: School-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="school">
+                        {{ $t('the_school') }}
+                    </base-form-label>
+
+                    <div>
+                        <the-school-selector
+                            id="school"
+                            v-model:school="form.school_id"
+                            :disabled="!lessonsStore.lesson.update_this_and_all_coming"
+                            @update:school="handleUpdateSchool"
+                        ></the-school-selector>
+                    </div>
+
+                    <div v-if="form.errors?.school_id" class="mt-2">
+                        <base-input-error :message="form.errors.school_id"></base-input-error>
+                    </div>
                 </div>
-            </div>
-            <!-- End: School-->
+                <!-- End: School-->
 
-            <!-- Begin: Subject-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="subject">
-                    {{ $t('the_subject') }}
-                </base-form-label>
+                <!-- Begin: Subject-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="subject">
+                        {{ $t('the_subject') }}
+                    </base-form-label>
 
-                <div>
-                    <the-subject-selector
-                        id="subject"
-                        v-model:subject="form.subject_id"
+                    <div>
+                        <the-subject-selector
+                            id="subject"
+                            v-model:subject="form.subject_id"
+                            :disabled="!lessonsStore.lesson.update_this_and_all_coming"
+                            :subjects="subjects"
+                            @update:subject="handleUpdateSubject"
+                        ></the-subject-selector>
+                    </div>
+
+                    <div v-if="form.errors.subject_id" class="mt-2">
+                        <base-input-error :message="form.errors.subject_id"></base-input-error>
+                    </div>
+                </div>
+                <!-- End: Subject-->
+
+                <!-- Begin: Orphans-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="orphans">
+                        {{ $t('the_orphans') }}
+                    </base-form-label>
+
+                    <div>
+                        <!-- @vue-ignore -->
+                        <orphans-selector
+                            :academic_level_id="form.academic_level_id"
+                            :disabled="!lessonsStore.lesson.update_this_and_all_coming"
+                            :orphans="form.orphans"
+                            :quota="quota"
+                            @update:selected-orphans="
+                                (value) => {
+                                    form.orphans = value.map((orphan) => orphan.id)
+                                }
+                            "
+                        ></orphans-selector>
+                    </div>
+
+                    <div v-if="form.errors?.orphans" class="mt-2">
+                        <base-input-error :message="form.errors.orphans"></base-input-error>
+                    </div>
+                </div>
+                <!-- End: Orphans-->
+
+                <!-- Begin: Date Options-->
+                <date-selector
+                    v-model:disabled="lessonsStore.lesson.update_this_and_all_coming"
+                    v-model:end-date="form.end_date"
+                    v-model:frequency="form.frequency"
+                    v-model:interval="form.interval"
+                    v-model:start-date="form.start_date"
+                    v-model:until="form.until"
+                    :date
+                    :form
+                    @update:frequency="form.validate('frequency')"
+                    @update:interval="form.validate('interval')"
+                ></date-selector>
+                <!-- End: Date Options-->
+
+                <!-- Begin: Color-->
+                <div class="col-span-12 mt-0">
+                    <base-form-label htmlFor="color">
+                        {{ $t('validation.attributes.color') }}
+                    </base-form-label>
+
+                    <color-selector
                         :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                        :subjects="subjects"
-                        @update:subject="handleUpdateSubject"
-                    ></the-subject-selector>
-                </div>
-
-                <div v-if="form.errors.subject_id" class="mt-2">
-                    <base-input-error :message="form.errors.subject_id"></base-input-error>
-                </div>
-            </div>
-            <!-- End: Subject-->
-
-            <!-- Begin: Orphans-->
-            <div class="col-span-12 sm:col-span-6">
-                <base-form-label htmlFor="orphans">
-                    {{ $t('the_orphans') }}
-                </base-form-label>
-
-                <div>
-                    <!-- @vue-ignore -->
-                    <orphans-selector
-                        :academic_level_id="form.academic_level_id"
-                        :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                        :orphans="form.orphans"
-                        :quota="quota"
-                        @update:selected-orphans="
+                        :model-value="form.color"
+                        class="col-span-12"
+                        @update:model-value="
                             (value) => {
-                                form.orphans = value.map((orphan) => orphan.id)
+                                form.color = value
+
+                                form.validate('color')
                             }
                         "
-                    ></orphans-selector>
+                    ></color-selector>
+
+                    <div v-if="form.errors?.color" class="mt-2">
+                        <base-input-error :message="form.errors.color"></base-input-error>
+                    </div>
                 </div>
+                <!-- End: Color-->
 
-                <div v-if="form.errors?.orphans" class="mt-2">
-                    <base-input-error :message="form.errors.orphans"></base-input-error>
+                <div v-if="lessonsStore.lesson.id" class="col-span-12 mt-2">
+                    <base-form-switch class="text-sm">
+                        <base-form-switch-input
+                            id="selectThisAndAllComingLessons"
+                            v-model="lessonsStore.lesson.update_this_and_all_coming"
+                            type="checkbox"
+                        ></base-form-switch-input>
+
+                        <base-form-switch-label htmlFor="selectThisAndAllComingLessons">
+                            {{ $t('lessons.update_this_and_all_coming') }}
+                        </base-form-switch-label>
+                    </base-form-switch>
                 </div>
-            </div>
-            <!-- End: Orphans-->
-
-            <!-- Begin: Date Options-->
-            <date-selector
-                v-model:disabled="lessonsStore.lesson.update_this_and_all_coming"
-                v-model:end-date="form.end_date"
-                v-model:frequency="form.frequency"
-                v-model:interval="form.interval"
-                v-model:start-date="form.start_date"
-                v-model:until="form.until"
-                :date
-                :form
-                @update:frequency="form.validate('frequency')"
-                @update:interval="form.validate('interval')"
-            ></date-selector>
-            <!-- End: Date Options-->
-
-            <!-- Begin: Color-->
-            <div class="col-span-12 mt-0">
-                <base-form-label htmlFor="color">
-                    {{ $t('validation.attributes.color') }}
-                </base-form-label>
-
-                <color-selector
-                    :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                    :model-value="form.color"
-                    class="col-span-12"
-                    @update:model-value="
-                        (value) => {
-                            form.color = value
-
-                            form.validate('color')
-                        }
-                    "
-                ></color-selector>
-
-                <div v-if="form.errors?.color" class="mt-2">
-                    <base-input-error :message="form.errors.color"></base-input-error>
-                </div>
-            </div>
-            <!-- End: Color-->
-
-            <div v-if="lessonsStore.lesson.id" class="col-span-12 mt-2">
-                <base-form-switch class="text-sm">
-                    <base-form-switch-input
-                        id="selectThisAndAllComingLessons"
-                        v-model="lessonsStore.lesson.update_this_and_all_coming"
-                        type="checkbox"
-                    ></base-form-switch-input>
-
-                    <base-form-switch-label htmlFor="selectThisAndAllComingLessons">
-                        {{ $t('lessons.update_this_and_all_coming') }}
-                    </base-form-switch-label>
-                </base-form-switch>
             </div>
         </template>
     </create-edit-modal>
