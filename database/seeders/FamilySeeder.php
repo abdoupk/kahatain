@@ -27,7 +27,7 @@ class FamilySeeder extends Seeder
              * @throws JsonException
              */
             function (Tenant $tenant) {
-                for ($i = 0; $i < 34; $i++) {
+                for ($i = 0; $i < 10; $i++) {
                     $sponsor_first_name = fake('ar_SA')->firstName();
                     $sponsor_last_name = fake('ar_SA')->lastName();
                     $family = Family::factory()

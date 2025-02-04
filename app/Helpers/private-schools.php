@@ -123,7 +123,7 @@ function generateOccurrences(Event $event, string $lesson_id, array $orphans): v
     $rule->setEndDate($event->end_date);
     $rule->setFreq(Str::upper($frequency));
     $rule->setInterval($interval);
-    $rule->setUntil(Carbon::parse($event->until));
+    $rule->setUntil($event->until ? Carbon::parse($event->until) : Carbon::create(now()->year, 7, 5));
     $rule->setWeekStart('SU');
 
     $transformer = new ArrayTransformer;

@@ -94,7 +94,6 @@ const filterBooleanOperators: Array<ListBoxOperator> = [
     }
 ]
 
-// TODO:add dzd icon add death date spouse
 export const familiesFilters: ListBoxFilter[] = [
     {
         icon: 'icon-hands-holding-child',

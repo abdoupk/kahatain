@@ -33,8 +33,6 @@ const props = defineProps<{
 
 const createFamilyStore = useCreateFamilyStore()
 
-// TODO: fix this when add new orphan change focus
-
 const isStillBaby = computed(() => {
     return (
         createFamilyStore.family.orphans[props.index].birth_date &&
