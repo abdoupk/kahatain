@@ -3,7 +3,7 @@ import type { CreateFamilyForm } from '@/types/types'
 
 import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
-import { onMounted } from 'vue'
+import { nextTick, onMounted } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
@@ -24,7 +24,7 @@ const createFamilyStore = useCreateFamilyStore()
 const _deathCertificateFiles = props.form?.deceased.map((deceased) => deceased.death_certificate_file)
 
 onMounted(() => {
-    document.getElementById('first_name')?.focus()
+    document.getElementById('first_name_0')?.focus()
 })
 
 const addDeceased = () => {
@@ -36,6 +36,10 @@ const addDeceased = () => {
         income: '',
         function: '',
         death_date: null
+    })
+
+    nextTick(() => {
+        document.getElementById(`first_name_${createFamilyStore.family.deceased.length - 1}`)?.focus()
     })
 }
 

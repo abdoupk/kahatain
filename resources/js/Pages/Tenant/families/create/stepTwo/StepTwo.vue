@@ -66,7 +66,8 @@ const handleTabChange = (index) => {
                         ></svg-loader>
                     </base-tab-button>
                 </base-tab>
-                <base-tab>
+
+                <base-tab :disabled="createFamilyStore.family.sponsor.is_unemployed">
                     <base-tab-button as="button" class="w-full py-2" type="button">
                         {{ $t('income information') }}
 

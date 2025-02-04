@@ -435,7 +435,7 @@ onMounted(async () => {
                         :files="_diplomaFile"
                         :is-picture="false"
                         accepted-file-types="image/jpeg, image/png, application/pdf"
-                        :idle-label="$t('upload-files.labelIdle.sponsor_diploma')"
+                        :label-idle="$t('upload-files.labelIdle.sponsor_diploma')"
                         @update:files="createFamilyStore.family.sponsor.diploma_file = $event[0]"
                     ></base-file-pond>
                 </div>
@@ -449,7 +449,7 @@ onMounted(async () => {
                         id="no_remarriage_file"
                         :allow-multiple="false"
                         :files="_noRemarriageFile"
-                        :idle-label="$t('upload-files.labelIdle.sponsor_no_remarriage')"
+                        :label-idle="$t('upload-files.labelIdle.sponsor_no_remarriage')"
                         :is-picture="false"
                         accepted-file-types="image/jpeg, image/png, application/pdf"
                         @update:files="createFamilyStore.family.sponsor.no_remarriage_file = $event[0]"

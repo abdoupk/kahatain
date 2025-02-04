@@ -4,10 +4,22 @@ use App\Models\Orphan;
 
 function getOrphansByFamilyStatus(): array
 {
-    $orphans = Orphan::select('family_status', DB::raw('count(*) as total'))->where('family_status', '!=', null)->groupBy('family_status')->get();
+    $orphans = Orphan::select(
+        DB::raw("
+        CASE
+            WHEN gender = 'male' AND family_status IN ('professionals', 'professional_boy') THEN 'professional_boy'
+            WHEN gender = 'female' AND family_status IN ('professionals', 'professional_girl') THEN 'professional_girl'
+            ELSE family_status
+        END AS group_label
+    "),
+        DB::raw('COUNT(*) as total')
+    )
+        ->whereNotNull('family_status')
+        ->groupBy('group_label')
+        ->get();
 
     return [
-        'labels' => $orphans->pluck('family_status')->map(function (string $familyStatus) {
+        'labels' => $orphans->pluck('group_label')->map(function (string $familyStatus) {
             return __('family_statuses.'.$familyStatus);
         })->toArray(),
         'data' => $orphans->pluck('total')->toArray(),

@@ -66,7 +66,9 @@ provide('familyDetailView', { view, updateView })
     <suspense>
         <div>
             <div class="intro-y mt-8 flex items-center">
-                <h2 class="me-auto text-lg font-medium ltr:capitalize">{{ $t('family details') }}</h2>
+                <h2 class="me-auto text-lg font-medium ltr:capitalize">
+                    {{ $t('family details') }}
+                </h2>
             </div>
 
             <div class="mt-5 grid grid-cols-12 gap-6">
