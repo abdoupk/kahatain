@@ -8,6 +8,7 @@ import { computed, defineAsyncComponent, ref } from 'vue'
 
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 
+import { generateUUID } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 const TheSubjectAndQuota = defineAsyncComponent(() => import('@/Pages/Tenant/schools/create/TheSubjectAndQuota.vue'))
@@ -45,7 +46,10 @@ const notificationTitle = computed(() => {
 
 const form = computed(() => {
     if (schoolsStore.school.id) {
-        return useForm('put', route('tenant.schools.update', schoolsStore.school.id), { ...schoolsStore.school })
+        return useForm('put', route('tenant.schools.update', schoolsStore.school.id), {
+            ...schoolsStore.school,
+            deleted_lessons: []
+        })
     }
 
     return useForm('post', route('tenant.schools.store'), { ...schoolsStore.school })
@@ -107,6 +111,7 @@ const modalType = computed(() => {
 
 const addLesson = () => {
     form.value.lessons.push({
+        id: generateUUID(),
         academic_level_id: null,
         quota: null,
         subject_id: null,
@@ -116,19 +121,7 @@ const addLesson = () => {
 }
 
 const removeLesson = (index: number) => {
-    if (form.value.lessons.length === 1 && index === 0) {
-        form.value.lessons = [
-            {
-                academic_level_id: null,
-                quota: null,
-                subject_id: null
-            }
-        ]
-
-        form.value.validate()
-
-        return
-    }
+    form.value.deleted_lessons.push(form.value.lessons[index].id)
 
     form.value.lessons.splice(index, 1)
 }
@@ -170,7 +163,7 @@ const removeLesson = (index: number) => {
             <!-- @vue-ignore -->
             <the-subject-and-quota
                 v-for="(lesson, index) in form.lessons"
-                :key="index"
+                :key="lesson.id"
                 v-model:academic-level="lesson.academic_level_id"
                 v-model:endDate="lesson.end_date"
                 v-model:quota="lesson.quota"

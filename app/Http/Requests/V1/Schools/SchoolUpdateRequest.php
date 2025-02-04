@@ -27,6 +27,7 @@ class SchoolUpdateRequest extends FormRequest
             'lessons.*.start_date' => 'required|date',
             'lessons.*.end_date' => 'required|date',
             'lessons.*.academic_level_id' => 'required|uuid|exists:academic_levels,id',
+            'deleted_lessons.*' => 'nullable|uuid',
         ];
     }
 

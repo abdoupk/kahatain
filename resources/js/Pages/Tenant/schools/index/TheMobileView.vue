@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import type { IndexParams, PaginationData, SchoolsIndexResource } from '@/types/types'
 
+import { route } from 'ziggy-js'
+
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 
 import { formatDate, hasPermission } from '@/utils/helper'
@@ -40,6 +42,15 @@ const emit = defineEmits(['sort', 'showDeleteModal', 'showEditModal', 'showDetai
                         </div>
                     </div>
                     <div class="flex w-1/4 items-center justify-end">
+                        <a
+                            v-if="hasPermission('print_schools')"
+                            :class="{ 'pointer-events-none opacity-50': !school.should_print }"
+                            :href="route('tenant.schools.export.pdf', school.id)"
+                            class="me-2 font-semibold text-slate-500 dark:text-slate-400"
+                        >
+                            {{ $t('print') }}
+                        </a>
+
                         <a
                             v-if="hasPermission('view_schools')"
                             class="me-2 font-semibold text-slate-500 dark:text-slate-400"

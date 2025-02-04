@@ -16,6 +16,7 @@ export interface AddSchoolLessonType {
     subject_id: number | null
     start_date: string
     end_date: string
+    id?: string
 }
 
 export type EventType = {
