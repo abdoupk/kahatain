@@ -8,6 +8,7 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
     status: number
+    tenantDontFound?: boolean
 }>()
 
 const title = computed(() => {
@@ -27,6 +28,17 @@ const description = computed(() => {
         403: $t('errors.descriptions.403')
     }[props.status]
 })
+
+function getUrlWithoutSubdomain() {
+    const url = new URL(window.location.href)
+
+    const hostnameParts = url.hostname.split('.')
+
+    // Get the last two parts of the hostname
+    const domain = hostnameParts.slice(-2).join('.')
+
+    return `${url.protocol}//${domain}`
+}
 </script>
 
 <template>
@@ -52,9 +64,9 @@ const description = computed(() => {
                     </div>
 
                     <base-button
-                        :as="Link"
+                        :as="tenantDontFound ? 'a' : Link"
+                        :href="!tenantDontFound ? '/' : getUrlWithoutSubdomain()"
                         class="intro-x mt-10 border-white px-4 py-3 text-white dark:border-darkmode-400 dark:text-slate-200"
-                        href="/"
                     >
                         {{ $t('errors.back to home') }}
                     </base-button>
