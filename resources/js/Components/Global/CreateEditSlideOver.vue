@@ -57,7 +57,7 @@ const emit = defineEmits(['close', 'handleSubmit'])
                             <slot name="description"></slot>
                         </base-slideover-description>
 
-                        <base-slideover-footer class="flex justify-end pb-32 lg:pb-0">
+                        <base-slideover-footer class="flex justify-end pb-24 lg:pb-0">
                             <base-button
                                 class="me-1 w-20"
                                 type="button"
