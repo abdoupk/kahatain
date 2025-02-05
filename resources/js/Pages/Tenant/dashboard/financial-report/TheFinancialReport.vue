@@ -45,7 +45,7 @@ const handleChange = (specification: string) => {
             </div>
 
             <div class="intro-y box mt-12 p-5 sm:mt-5">
-                <div v-if="sumObjectValues(financialReports.incomes) || sumObjectValues(financialReports.expenses)">
+                <div>
                     <div class="flex flex-col md:flex-row md:items-center">
                         <div class="flex">
                             <div>
@@ -79,12 +79,12 @@ const handleChange = (specification: string) => {
                         </div>
                     </div>
 
-                    <div>
-                        <ReportLineChart :financialReports :height="275" class="-mb-6 mt-6" />
+                    <div v-if="sumObjectValues(financialReports.incomes) || sumObjectValues(financialReports.expenses)">
+                        <report-line-chart :financialReports :height="275" class="-mb-6 mt-6"></report-line-chart>
                     </div>
-                </div>
 
-                <the-no-data-chart v-else class="h-[347px]"></the-no-data-chart>
+                    <the-no-data-chart v-else class="h-[300px]"></the-no-data-chart>
+                </div>
             </div>
         </div>
     </suspense>
