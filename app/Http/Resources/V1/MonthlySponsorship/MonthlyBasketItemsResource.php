@@ -13,11 +13,11 @@ class MonthlyBasketItemsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->inventory->name,
+            'name' => $this->inventory?->name,
             'qty_for_family' => $this->qty_for_family,
             'status' => $this->status,
             'inventory_id' => $this->inventory_id,
-            'unit' => $this->inventory->unit,
+            'unit' => $this->inventory?->unit,
         ];
     }
 }

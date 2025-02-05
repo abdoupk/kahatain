@@ -928,6 +928,8 @@
     "Dashboard": "لوحة التحكم",
     "Delete Account": "حذف الحساب",
     "Do you really want to delete this record?": "هل أنت متأكد من رغبتك في حذف هذا السجل؟",
+    "Do you really want to delete this inventory item?": "هل أنت متأكد من رغبتك في حذف هذا العنصر؟",
+    "will bee remove related items in the monthly basket and ramadan basket.": "سيتم كذلك حذف العناصر المرتبطة بالقفة الشهرية وقفة رمضان.",
     "Email Password Reset Link": "رابط إعادة تعيين كلمة مرور عبر البريد الإلكتروني",
     "Email": "البريد الإلكتروني",
     "Ensure your account is using a long, random password to stay secure.": "تأكد من أن حسابك يستخدم كلمة مرور طويلة وعشوائية للبقاء آمنًا.",

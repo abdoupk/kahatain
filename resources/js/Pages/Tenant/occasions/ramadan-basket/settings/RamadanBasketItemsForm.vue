@@ -144,7 +144,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
     </div>
 
     <pagination-data-table
-        v-if="true"
+        v-if="Object.keys(sponsorshipsStore.ramadan_sponsorship).length > 0"
         :page="sponsorshipsStore.ramadan_basket.meta.current_page"
         :pages="sponsorshipsStore.ramadan_basket.meta.last_page"
         :per-page="sponsorshipsStore.ramadan_basket.meta.per_page"

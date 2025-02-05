@@ -89,7 +89,7 @@ const closeDeleteModal = () => {
 const sort = (field: string) => handleSort(field, params.value)
 
 const deleteItem = () => {
-    router.delete(route('tenant.inventory.destroy', selectedItemId.value), {
+    router.delete(route('tenant.items.destroy', selectedItemId.value), {
         preserveScroll: true,
         onStart: () => {
             deleteProgress.value = true
@@ -99,7 +99,7 @@ const deleteItem = () => {
                 params.value.page = params.value.page - 1
             }
 
-            getDataForIndexPages(route('tenant.financial.index'), params.value, {
+            getDataForIndexPages(route('tenant.inventory.index'), params.value, {
                 onStart: () => {
                     closeDeleteModal()
                 },
@@ -237,12 +237,14 @@ watchEffect(async () => {
 
             <the-no-results-table v-else></the-no-results-table>
 
-            <delete-modal
-                :deleteProgress
-                :open="deleteModalStatus"
-                @close="closeDeleteModal"
-                @delete="deleteItem"
-            ></delete-modal>
+            <delete-modal :deleteProgress :open="deleteModalStatus" @close="closeDeleteModal" @delete="deleteItem">
+                {{ $t('Do you really want to delete this inventory item?') }}
+                <br />
+
+                {{ $t('will bee remove related items in the monthly basket and ramadan basket.') }}
+
+                {{ $t('This process cannot be undone.') }}
+            </delete-modal>
 
             <item-create-edit-modal
                 :open="createUpdateModalStatus"

@@ -3,6 +3,8 @@
 namespace App\Jobs\V1\Inventory;
 
 use App\Models\Inventory;
+use App\Models\MonthlyBasket;
+use App\Models\RamadanBasket;
 use App\Models\User;
 use App\Notifications\Inventory\DeleteInventoryItemNotification;
 use Illuminate\Bus\Queueable;
@@ -20,6 +22,10 @@ class InventoryItemTrashedJob implements ShouldQueue
 
     public function handle(): void
     {
+        MonthlyBasket::where('inventory_id', $this->item->id)->forceDelete();
+
+        RamadanBasket::where('inventory_id', $this->item->id)->forceDelete();
+
         Notification::send(
             getUsersShouldBeNotified(
                 permissions: ['list_trash'],

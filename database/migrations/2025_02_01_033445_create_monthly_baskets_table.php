@@ -13,7 +13,7 @@ return new class extends Migration
             $table->integer('qty_for_family');
             $table->boolean('status');
             $table->foreignUuid('tenant_id')->constrained('tenants');
-            $table->foreignUuid('inventory_id')->constrained('inventories');
+            $table->foreignUuid('inventory_id')->constrained('inventories')->onDelete('cascade')->cascadeOnUpdate();
             $table->timestamps();
 
             $table->unique(['inventory_id']);

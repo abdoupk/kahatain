@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
             $table->integer('qty_for_family');
             $table->boolean('status');
-            $table->foreignUuid('inventory_id')->constrained('inventories');
+            $table->foreignUuid('inventory_id')->constrained('inventories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('tenant_id')->constrained('tenants');
             $table->timestamps();
 

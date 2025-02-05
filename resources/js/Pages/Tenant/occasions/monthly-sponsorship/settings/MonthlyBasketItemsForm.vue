@@ -39,7 +39,7 @@ const removeMonthlyBasketItem = (id: string) => {
 }
 
 const addMonthlyBasketItem = () => {
-    sponsorshipsStore.monthly_basket.data.push({
+    sponsorshipsStore.monthly_basket?.data.push({
         name: null,
         qty_for_family: null,
         unit: 'kg',
@@ -144,6 +144,7 @@ const handleUpdateModelValue = (index: number, data: { name: string; id: string 
     </div>
 
     <pagination-data-table
+        v-if="Object.keys(sponsorshipsStore.monthly_basket).length > 0"
         :page="sponsorshipsStore.monthly_basket.meta.current_page"
         :pages="sponsorshipsStore.monthly_basket.meta.last_page"
         :per-page="sponsorshipsStore.monthly_basket.meta.per_page"
