@@ -2,60 +2,15 @@
 
 namespace App\Models;
 
-use Database\Factories\FinanceFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property float $amount
- * @property string|null $description
- * @property Carbon $date
- * @property string $tenant_id
- * @property string $specification
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property string $created_by
- * @property string $received_by
- * @property string|null $deleted_by
- * @property-read User $creator
- * @property-read User $receiver
- * @property-read Tenant $tenant
- *
- * @method static FinanceFactory factory($count = null, $state = [])
- * @method static Builder|Finance newModelQuery()
- * @method static Builder|Finance newQuery()
- * @method static Builder|Finance onlyTrashed()
- * @method static Builder|Finance query()
- * @method static Builder|Finance whereAmount($value)
- * @method static Builder|Finance whereCreatedAt($value)
- * @method static Builder|Finance whereCreatedBy($value)
- * @method static Builder|Finance whereDate($value)
- * @method static Builder|Finance whereDeletedAt($value)
- * @method static Builder|Finance whereDeletedBy($value)
- * @method static Builder|Finance whereDescription($value)
- * @method static Builder|Finance whereId($value)
- * @method static Builder|Finance whereReceivedBy($value)
- * @method static Builder|Finance whereSpecification($value)
- * @method static Builder|Finance whereTenantId($value)
- * @method static Builder|Finance whereUpdatedAt($value)
- * @method static Builder|Finance withTrashed()
- * @method static Builder|Finance withoutTrashed()
- *
- * @property-read \App\Models\TFactory|null $use_factory
- *
- * @mixin Eloquent
- */
 class Finance extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;

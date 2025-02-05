@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\SponsorFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,85 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property string|null $first_name
- * @property string|null $last_name
- * @property string $phone_number
- * @property string $sponsor_type
- * @property Carbon $birth_date
- * @property string|null $father_name
- * @property string|null $mother_name
- * @property string|null $birth_certificate_number
- * @property int|null $academic_level_id
- * @property string|null $function
- * @property string|null $health_status
- * @property string|null $diploma
- * @property bool $is_unemployed
- * @property string|null $ccp
- * @property string $gender
- * @property string $family_id
- * @property string $tenant_id
- * @property string $created_by
- * @property string|null $deleted_by
- * @property Carbon|null $deleted_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read AcademicLevel|null $academicLevel
- * @property-read User $creator
- * @property-read Family $family
- * @property-read Income|null $incomes
- * @property-read MediaCollection<int, Media> $media
- * @property-read int|null $media_count
- * @property-read Collection<int, Need> $needs
- * @property-read int|null $needs_count
- * @property-read Collection<int, Orphan> $orphans
- * @property-read int|null $orphans_count
- * @property-read Tenant $tenant
- *
- * @method static SponsorFactory factory($count = null, $state = [])
- * @method static Builder<static>|Sponsor newModelQuery()
- * @method static Builder<static>|Sponsor newQuery()
- * @method static Builder<static>|Sponsor onlyTrashed()
- * @method static Builder<static>|Sponsor query()
- * @method static Builder<static>|Sponsor whereAcademicLevelId($value)
- * @method static Builder<static>|Sponsor whereBirthCertificateNumber($value)
- * @method static Builder<static>|Sponsor whereBirthDate($value)
- * @method static Builder<static>|Sponsor whereCcp($value)
- * @method static Builder<static>|Sponsor whereCreatedAt($value)
- * @method static Builder<static>|Sponsor whereCreatedBy($value)
- * @method static Builder<static>|Sponsor whereDeletedAt($value)
- * @method static Builder<static>|Sponsor whereDeletedBy($value)
- * @method static Builder<static>|Sponsor whereDiploma($value)
- * @method static Builder<static>|Sponsor whereFamilyId($value)
- * @method static Builder<static>|Sponsor whereFatherName($value)
- * @method static Builder<static>|Sponsor whereFirstName($value)
- * @method static Builder<static>|Sponsor whereFunction($value)
- * @method static Builder<static>|Sponsor whereGender($value)
- * @method static Builder<static>|Sponsor whereHealthStatus($value)
- * @method static Builder<static>|Sponsor whereId($value)
- * @method static Builder<static>|Sponsor whereIsUnemployed($value)
- * @method static Builder<static>|Sponsor whereLastName($value)
- * @method static Builder<static>|Sponsor whereMotherName($value)
- * @method static Builder<static>|Sponsor wherePhoneNumber($value)
- * @method static Builder<static>|Sponsor whereSponsorType($value)
- * @method static Builder<static>|Sponsor whereTenantId($value)
- * @method static Builder<static>|Sponsor whereUpdatedAt($value)
- * @method static Builder<static>|Sponsor withTrashed()
- * @method static Builder<static>|Sponsor withoutTrashed()
- *
- * @property-read \App\Models\TFactory|null $use_factory
- *
- * @mixin Eloquent
- */
 class Sponsor extends Model implements HasMedia
 {
     use BelongsToTenant, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;

@@ -2,53 +2,15 @@
 
 namespace App\Models;
 
-use Database\Factories\TranscriptFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property string $trimester
- * @property string $orphan_id
- * @property string $tenant_id
- * @property string $academic_level_id
- * @property float $average
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read AcademicLevel|null $academicLevel
- * @property-read Orphan|null $orphan
- * @property-read SubjectTranscript|null $pivot
- * @property-read Collection<int, Subject> $subjects
- * @property-read int|null $subjects_count
- * @property-read Tenant|null $tenant
- *
- * @method static TranscriptFactory factory($count = null, $state = [])
- * @method static Builder<static>|Transcript newModelQuery()
- * @method static Builder<static>|Transcript newQuery()
- * @method static Builder<static>|Transcript query()
- * @method static Builder<static>|Transcript whereAcademicLevelId($value)
- * @method static Builder<static>|Transcript whereAverage($value)
- * @method static Builder<static>|Transcript whereCreatedAt($value)
- * @method static Builder<static>|Transcript whereId($value)
- * @method static Builder<static>|Transcript whereOrphanId($value)
- * @method static Builder<static>|Transcript whereTenantId($value)
- * @method static Builder<static>|Transcript whereTrimester($value)
- * @method static Builder<static>|Transcript whereUpdatedAt($value)
- *
- * @property-read \App\Models\TFactory|null $use_factory
- *
- * @mixin Eloquent
- */
 class Transcript extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable;

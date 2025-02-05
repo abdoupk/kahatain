@@ -6,9 +6,6 @@ use App\Enums\ColorScheme;
 use App\Enums\FontSize;
 use App\Enums\Layout;
 use App\Enums\Theme;
-use Database\Factories\UserFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,111 +14,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property string $first_name
- * @property string $last_name
- * @property string|null $phone
- * @property string|null $address
- * @property string|null $zone_id
- * @property string|null $branch_id
- * @property string $email
- * @property string|null $gender
- * @property string|null $qualification
- * @property Carbon|null $email_verified_at
- * @property mixed $password
- * @property string|null $remember_token
- * @property string $tenant_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property string|null $deleted_by
- * @property-read Branch|null $branch
- * @property-read User|null $creator
- * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
- * @property-read Collection<int, Permission> $permissions
- * @property-read int|null $permissions_count
- * @property-read MemberPreview $pivot
- * @property-read Collection<int, Preview> $previews
- * @property-read int|null $previews_count
- * @property-read Collection<int, Role> $roles
- * @property-read int|null $roles_count
- * @property-read Settings|null $settings
- * @property-read Tenant $tenant
- * @property-read Collection<int, PersonalAccessToken> $tokens
- * @property-read int|null $tokens_count
- * @property-read Zone|null $zone
- *
- * @method static UserFactory factory($count = null, $state = [])
- * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
- * @method static Builder|User onlyTrashed()
- * @method static Builder|User permission($permissions, $without = false)
- * @method static Builder|User query()
- * @method static Builder|User role($roles, $guard = null, $without = false)
- * @method static Builder|User whereAddress($value)
- * @method static Builder|User whereBranchId($value)
- * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereDeletedAt($value)
- * @method static Builder|User whereDeletedBy($value)
- * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereEmailVerifiedAt($value)
- * @method static Builder|User whereFirstName($value)
- * @method static Builder|User whereGender($value)
- * @method static Builder|User whereId($value)
- * @method static Builder|User whereLastName($value)
- * @method static Builder|User wherePassword($value)
- * @method static Builder|User wherePhone($value)
- * @method static Builder|User whereQualification($value)
- * @method static Builder|User whereRememberToken($value)
- * @method static Builder|User whereTenantId($value)
- * @method static Builder|User whereUpdatedAt($value)
- * @method static Builder|User whereZoneId($value)
- * @method static Builder|User withTrashed()
- * @method static Builder|User withoutPermission($permissions)
- * @method static Builder|User withoutRole($roles, $guard = null)
- * @method static Builder|User withoutTrashed()
- *
- * @property array|null $location
- * @property string|null $workplace
- * @property string|null $function
- * @property int|null $academic_level_id
- * @property string|null $created_by
- * @property-read AcademicLevel|null $academicLevel
- * @property-read Collection<int, Committee> $committees
- * @property-read int|null $committees_count
- * @property-read Collection<int, competence> $competences
- * @property-read int|null $competences_count
- *
- * @method static Builder<static>|User whereAcademicLevelId($value)
- * @method static Builder<static>|User whereCreatedBy($value)
- * @method static Builder<static>|User whereFunction($value)
- * @method static Builder<static>|User whereLocation($value)
- * @method static Builder<static>|User whereWorkplace($value)
- *
- * @property-read TFactory|null $use_factory
- *
- * @mixin Eloquent
- */
 class User extends Authenticatable
 {
     use BelongsToTenant, HasApiTokens, HasFactory, HasRoles, HasUuids, Notifiable, Searchable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'first_name',
         'last_name',
@@ -144,11 +46,6 @@ class User extends Authenticatable
         'function',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -280,11 +177,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Committee::class)->using(CommitteeUser::class);
     }
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
