@@ -135,7 +135,7 @@ function handleUpdateModelValue(selected) {
                                 }"
                                 class="relative cursor-default select-none py-2 pl-10 pr-4"
                             >
-                                Create "{{ queryOption.name }}"
+                                {{ $t('create') }} "{{ queryOption.name }}"
                             </li>
                         </ComboboxOption>
                         <combobox-option

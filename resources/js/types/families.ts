@@ -148,6 +148,11 @@ export interface FamilyShowType {
     monthly_sponsorship_rate: number
     aggregate_red_meat_benefit: number
     aggregate_white_meat_benefit: number
+    aggregate_zakat_benefit: number
+    difference_before_monthly_sponsorship: number
+    basket_from_association: boolean
+    basket_from_benefactor: number
+    amount_from_benefactor: number
     income_rate: number
     ramadan_basket_category: string
     location: {
