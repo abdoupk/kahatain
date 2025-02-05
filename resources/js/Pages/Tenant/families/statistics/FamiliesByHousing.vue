@@ -24,7 +24,7 @@ const datasets = [
 <template>
     <suspense v-if="datasets[0].data.length" suspensible>
         <div class="flex items-center justify-center">
-            <base-radar-chart :datasets :height="400" :labels="familiesHousing.labels" :width="400"></base-radar-chart>
+            <base-radar-chart :datasets :height="300" :labels="familiesHousing.labels" :width="300"></base-radar-chart>
         </div>
     </suspense>
 

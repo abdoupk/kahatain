@@ -162,7 +162,7 @@ class User extends Authenticatable
             $user->settings()->create([
                 'theme' => Theme::ENIGMA->value,
                 'color_scheme' => ColorScheme::THEME_1->value,
-                'layout' => Layout::TOP_MENU->value,
+                'layout' => Layout::SIDE_MENU->value,
                 'appearance' => 'light',
                 'locale' => 'ar',
                 'font_size' => FontSize::FONT_SIZE_BASE->value,

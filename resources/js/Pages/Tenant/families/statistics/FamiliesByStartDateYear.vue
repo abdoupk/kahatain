@@ -25,10 +25,10 @@ defineProps<{
                     label: $t('families_count')
                 }
             ]"
-            :height="300"
+            :height="270"
             :labels="abbreviationMonths[getLocale()]"
         ></families-by-start-date-this-year-chart>
     </suspense>
 
-    <the-no-data-chart v-else></the-no-data-chart>
+    <the-no-data-chart v-else class="!min-h-[270px]"></the-no-data-chart>
 </template>
