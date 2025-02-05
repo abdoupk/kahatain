@@ -58,6 +58,7 @@
         "pestphp/pest-plugin-laravel": "^2.4",
         "pestphp/pest-plugin-stressless": "^2.2",
         "psalm/plugin-laravel": "^2.11",
+        "rector/rector": "^1.2",
         "spatie/laravel-ignition": "^2.6",
         "spatie/laravel-ray": "^1.36",
         "spatie/pest-plugin-route-testing": "^1.0",
