@@ -108,7 +108,7 @@ defineProps<{
             <!--End: Financial Reports-->
 
             <!--Begin: Recent Families-->
-            <suspense v-if="hasPermission('list_families')" suspensible>
+            <suspense v-if="hasPermission('list_families') && recentFamilies.length" suspensible>
                 <the-recent-families :recentFamilies></the-recent-families>
             </suspense>
             <!--End: Recent Families-->
