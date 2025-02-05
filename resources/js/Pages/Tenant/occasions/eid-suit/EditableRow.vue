@@ -121,6 +121,7 @@ const handleFocusOut = () => {
             :model-value="{ id: orphan.eid_suit[field] ?? '', name: orphan.eid_suit[field] ?? '' }"
             :options="[]"
             class="ms-4 w-1/2"
+            :class="$attrs.class"
             size="sm"
             @focusin="emit('selectOrphan')"
             @focusout.prevent="handleFocusOut"

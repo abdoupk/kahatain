@@ -17,7 +17,7 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatCurrency, hasPermission, loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
-import { $t } from '@/utils/i18n'
+import { $t, $tc } from '@/utils/i18n'
 
 const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
@@ -136,149 +136,242 @@ watch(
                     </base-tippy>
                 </div>
 
-                <div class="mt-4">
-                    <div class="flex">
-                        <div class="w-28 rtl:!font-semibold">
+                <div class="mt-4 grid grid-cols-12 gap-4">
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('the_sponsor') }}
                         </div>
-                        {{ orphan.sponsor.name }}
+
+                        <div class="col-span-7">
+                            <Link
+                                v-if="hasPermission('view_sponsors')"
+                                :href="route('tenant.sponsors.show', orphan.sponsor.id)"
+                            >
+                                {{ orphan.sponsor.name }}
+                            </Link>
+
+                            <span v-else>
+                                {{ orphan.sponsor.name }}
+                            </span>
+                        </div>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="w-28 rtl:!font-semibold">
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('sponsor_phone_number') }}
                         </div>
-                        {{ orphan.sponsor.phone_number }}
+
+                        <p class="col-span-7">
+                            {{ orphan.sponsor.phone_number }}
+                        </p>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="w-28 rtl:!font-semibold">
-                            {{ $t('validation.attributes.address') }}
-                        </div>
-                        {{ orphan.family.address }}
-                    </div>
-
-                    <div class="mt-2 flex">
-                        <div class="w-28 rtl:!font-semibold">
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('the_zone') }}
                         </div>
-                        {{ orphan.family?.zone?.name }}
+
+                        <p class="col-span-7">
+                            {{ orphan.family?.zone?.name || '————' }}
+                        </p>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="mt-4 w-28 rtl:!font-semibold">
-                            {{ $t('clothes_shop_name') }}
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
+                            {{ $t('age') }}
                         </div>
 
-                        <div class="w-full">
-                            <editable-row
-                                :load-options="loadShopOwnerNames"
-                                :orphan
-                                field="clothes_shop_name"
-                                view="mobile"
-                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                @show-success-notification="emit('showSuccessNotification')"
-                            ></editable-row>
-                        </div>
+                        <p class="col-span-7">
+                            {{ $tc('age_years', orphan.orphan.age, { count: String(orphan.orphan.age) }) }}
+                        </p>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="mt-4 w-28 rtl:!font-semibold">
-                            {{ $t('clothes_shop_phone_number') }}
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
+                            {{ $t('pants_size') }}
                         </div>
 
-                        <div class="mt-2 w-full">
-                            <editable-row
-                                :load-options="loadShopOwnerPhoneNumbers"
-                                :orphan
-                                field="clothes_shop_phone_number"
-                                view="mobile"
-                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                @show-success-notification="emit('showSuccessNotification')"
-                            ></editable-row>
-                        </div>
+                        <p class="col-span-7">
+                            {{ orphan.orphan.pants_size || '————' }}
+                        </p>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="mt-4 w-28 rtl:!font-semibold">
-                            {{ $t('clothes_shop_location') }}
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
+                            {{ $t('shirt_size') }}
                         </div>
 
-                        <div class="mt-2 w-fit">
-                            <map-cell
-                                :orphan
-                                shop-type="clothes"
-                                @show-location-address-modal="emit('showLocationAddressModal', $event)"
-                            ></map-cell>
-                        </div>
+                        <p class="col-span-7">
+                            {{ orphan.orphan.shirt_size || '————' }}
+                        </p>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="mt-4 w-28 rtl:!font-semibold">
-                            {{ $t('shoes_shop_name') }}
+                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
+                            {{ $t('shoes_size') }}
                         </div>
 
-                        <div class="w-full">
-                            <editable-row
-                                :load-options="loadShopOwnerNames"
-                                :orphan
-                                field="shoes_shop_name"
-                                view="mobile"
-                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                @show-success-notification="emit('showSuccessNotification')"
-                            ></editable-row>
-                        </div>
+                        <p class="col-span-7">
+                            {{ orphan.orphan.shoes_size || '————' }}
+                        </p>
                     </div>
 
-                    <div class="mt-2 flex">
-                        <div class="mt-4 w-28 rtl:!font-semibold">
-                            {{ $t('shoes_shop_phone_number') }}
+                    <!--                    <button v-if="orphan.orphan.edit" @click.prevent="orphan.orphan.edit = !orphan.orphan.edit">-->
+                    <!--                        {{ $t('edit') }}-->
+                    <!--                    </button>-->
+
+                    <template v-if="true">
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 rtl:!font-semibold">
+                                {{ $t('clothes_shop_location') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <map-cell
+                                    :orphan
+                                    class="!block"
+                                    shop-type="clothes"
+                                    @show-location-address-modal="emit('showLocationAddressModal', $event)"
+                                ></map-cell>
+                            </p>
                         </div>
 
-                        <div class="w-full">
-                            <editable-row
-                                :load-options="loadShopOwnerPhoneNumbers"
-                                :orphan
-                                field="shoes_shop_phone_number"
-                                view="mobile"
-                                @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                @show-success-notification="emit('showSuccessNotification')"
-                            ></editable-row>
-                        </div>
-                    </div>
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 rtl:!font-semibold">
+                                {{ $t('shoes_shop_location') }}
+                            </div>
 
-                    <div class="mt-2 flex">
-                        <div class="mt-4 w-28 rtl:!font-semibold">
-                            {{ $t('shoes_shop_location') }}
+                            <p class="col-span-7">
+                                <map-cell
+                                    :orphan
+                                    class="!block"
+                                    shop-type="shoes"
+                                    @show-location-address-modal="emit('showLocationAddressModal', $event)"
+                                ></map-cell>
+                            </p>
                         </div>
 
-                        <div class="mt-2 w-fit">
-                            <map-cell
-                                :orphan
-                                shop-type="shoes"
-                                @show-location-address-modal="emit('showLocationAddressModal', $event)"
-                            ></map-cell>
-                        </div>
-                    </div>
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('clothes_shop_name') }}
+                            </div>
 
-                    <div class="mt-4">
-                        <div class="mb-2 rtl:!font-semibold">
-                            {{ $t('notes') }}
+                            <p class="col-span-7">
+                                <editable-row
+                                    :load-options="loadShopOwnerNames"
+                                    :orphan
+                                    class="!ms-0 !mt-0 w-full"
+                                    field="clothes_shop_name"
+                                    view="mobile"
+                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
+                                    @show-success-notification="emit('showSuccessNotification')"
+                                ></editable-row>
+                            </p>
                         </div>
 
-                        <editable-row
-                            :orphan
-                            field="note"
-                            view="mobile"
-                            @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                            @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                            @show-success-notification="emit('showSuccessNotification')"
-                        ></editable-row>
-                    </div>
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('clothes_shop_phone_number') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <editable-row
+                                    :load-options="loadShopOwnerPhoneNumbers"
+                                    :orphan
+                                    class="!ms-0 !mt-0 w-full"
+                                    field="clothes_shop_phone_number"
+                                    view="mobile"
+                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
+                                    @show-success-notification="emit('showSuccessNotification')"
+                                ></editable-row>
+                            </p>
+                        </div>
+
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('shoes_shop_name') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <editable-row
+                                    :load-options="loadShopOwnerNames"
+                                    :orphan
+                                    class="!ms-0 !mt-0 w-full"
+                                    field="shoes_shop_name"
+                                    view="mobile"
+                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
+                                    @show-success-notification="emit('showSuccessNotification')"
+                                ></editable-row>
+                            </p>
+                        </div>
+
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('shoes_shop_phone_number') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <editable-row
+                                    :load-options="loadShopOwnerPhoneNumbers"
+                                    :orphan
+                                    class="!ms-0 !mt-0 w-full"
+                                    field="shoes_shop_phone_number"
+                                    view="mobile"
+                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
+                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
+                                    @show-success-notification="emit('showSuccessNotification')"
+                                ></editable-row>
+                            </p>
+                        </div>
+
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('pants_completed') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <base-form-switch>
+                                    <base-form-switch-input
+                                        v-model="orphan.eid_suit.pants_completed"
+                                        type="checkbox"
+                                    ></base-form-switch-input>
+                                </base-form-switch>
+                            </p>
+                        </div>
+
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('shirt_completed') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <base-form-switch>
+                                    <base-form-switch-input
+                                        v-model="orphan.eid_suit.shirt_completed"
+                                        type="checkbox"
+                                    ></base-form-switch-input>
+                                </base-form-switch>
+                            </p>
+                        </div>
+
+                        <div class="col-span-12 grid grid-cols-12 gap-2">
+                            <div class="col-span-5 mt-1 rtl:!font-semibold">
+                                {{ $t('shoes_completed') }}
+                            </div>
+
+                            <p class="col-span-7">
+                                <base-form-switch>
+                                    <base-form-switch-input
+                                        v-model="orphan.eid_suit.shoes_completed"
+                                        type="checkbox"
+                                    ></base-form-switch-input>
+                                </base-form-switch>
+                            </p>
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
