@@ -31,6 +31,6 @@ class SponsorIncomesUpdateRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge(array_map(fn($value) => $value ?? false, $this->all()));
+        $this->merge(array_map(fn ($value) => $value ?? false, $this->all()));
     }
 }

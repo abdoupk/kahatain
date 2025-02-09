@@ -150,11 +150,11 @@ function generateFormatedConditions(): array
 
     if ($filters !== []) {
         /** @phpstan-ignore-next-line */
-        return array_map(static fn(array $condition) => [
+        return array_map(static fn (array $condition) => [
             $condition['field'],
             $condition['operator'],
-            str_contains((string)$condition['value'], ' ')
-                ? '"' . $condition['value'] . '"'
+            str_contains((string) $condition['value'], ' ')
+                ? '"'.$condition['value'].'"'
                 : $condition['value'],
         ], $filters);
     }
@@ -170,7 +170,7 @@ function generateFilterConditions(?string $additional_filters = ''): string
         return 'tenant_id = '.tenant('id').' '.$additional_filters;
     }
 
-    return implode(' AND ', array_map(static fn($condition) => implode(' ', $condition), $filters)) . ' ' . $additional_filters;
+    return implode(' AND ', array_map(static fn ($condition) => implode(' ', $condition), $filters)).' '.$additional_filters;
 }
 
 function generateFormattedSort(): array
@@ -201,7 +201,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
         $additional_filters .= ' AND __soft_deleted = 0';
     }
 
-    $query = trim((string)request()->input('search', '')) ?? '';
+    $query = trim((string) request()->input('search', '')) ?? '';
 
     $meilisearchOptions = [
         'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
@@ -244,20 +244,20 @@ function formatedVocationalTrainingSpecialities(): array
 
 function searchVocationalTrainingSpecialities(): \Illuminate\Support\Collection
 {
-    $vocationalTrainingSpecialities = VocationalTrainingSpeciality::search(trim((string)request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+    $vocationalTrainingSpecialities = VocationalTrainingSpeciality::search(trim((string) request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
         $options['limit'] = 100;
 
         return $meilisearch->search($query, $options);
-    })->get()->map(fn($vocationalTrainingSpeciality) => [
+    })->get()->map(fn ($vocationalTrainingSpeciality) => [
         'name' => $vocationalTrainingSpeciality->speciality,
         'id' => $vocationalTrainingSpeciality->speciality,
     ]);
 
-    $universitySpecialities = UniversitySpeciality::search(trim((string)request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+    $universitySpecialities = UniversitySpeciality::search(trim((string) request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
         $options['limit'] = 100;
 
         return $meilisearch->search($query, $options);
-    })->get()->map(fn($universitySpeciality) => [
+    })->get()->map(fn ($universitySpeciality) => [
         'name' => $universitySpeciality->speciality,
         'id' => $universitySpeciality->speciality,
     ]);
@@ -298,10 +298,10 @@ function calculateAge($birthDate): string
 
 function formatPhoneNumber($phone): string
 {
-    return substr((string)$phone, 0, 4) . '-' .
-        substr((string)$phone, 4, 2) . '-' .
-        substr((string)$phone, 6, 2) . '-' .
-        substr((string)$phone, 8, 2);
+    return substr((string) $phone, 0, 4).'-'.
+        substr((string) $phone, 4, 2).'-'.
+        substr((string) $phone, 6, 2).'-'.
+        substr((string) $phone, 8, 2);
 }
 
 function getUsersShouldBeNotified(
@@ -314,7 +314,7 @@ function getUsersShouldBeNotified(
     return User::with(['roles.permissions'])
         ->whereHas(
             'settings',
-            fn($query) => $query->where("notifications->$notificationType", true)
+            fn ($query) => $query->where("notifications->$notificationType", true)
         )
         ->where(function ($query) use ($permissions): void {
             $query->whereHas('roles', function ($query): void {
@@ -338,7 +338,7 @@ function getFileNameFromTemporaryPath($url): string
     if ($url === '' || $url === null) {
         return '';
     }
-    $path = parse_url((string)$url, PHP_URL_PATH);
+    $path = parse_url((string) $url, PHP_URL_PATH);
 
     return substr($path, strpos($path, 'tmp/'));
 }

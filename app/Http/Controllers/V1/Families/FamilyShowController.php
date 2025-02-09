@@ -61,13 +61,13 @@ class FamilyShowController extends Controller implements HasMiddleware
     public function getArchives(Family $family)
     {
         $allArchives = $family->archives->merge(
-            $family->orphans->flatMap(fn($orphan) => $orphan->archives->map(fn($archive) => $archive->forceFill([
+            $family->orphans->flatMap(fn ($orphan) => $orphan->archives->map(fn ($archive) => $archive->forceFill([
                 'recipient_id' => $orphan->id,
                 'archiveable_type' => 'orphan',
                 'recipient_name' => $orphan->getName(),
             ])))
         )->merge(
-            $family->babies->flatMap(fn(Baby $baby) => $baby->archives->map(fn($archive) => $archive->forceFill([
+            $family->babies->flatMap(fn (Baby $baby) => $baby->archives->map(fn ($archive) => $archive->forceFill([
                 'recipient_id' => $baby->orphan->id,
                 'archiveable_type' => 'orphan',
                 'recipient_name' => $baby->getName(),
@@ -106,7 +106,7 @@ class FamilyShowController extends Controller implements HasMiddleware
     {
         $needs = $family->sponsor->needs;
 
-        $orphanNeeds = $family->orphans()->with('needs')->get()->flatMap(fn($orphan) => $orphan->needs->map(fn($archive) => $archive->forceFill([
+        $orphanNeeds = $family->orphans()->with('needs')->get()->flatMap(fn ($orphan) => $orphan->needs->map(fn ($archive) => $archive->forceFill([
             'recipient_id' => $orphan->id,
             'needable_type' => 'orphan',
             'recipient_name' => $orphan->getName(),

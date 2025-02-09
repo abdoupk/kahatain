@@ -19,7 +19,7 @@ class StoreBabyNeedsRule implements ValidationRule
                 $fail(__('validation.required', ['attribute' => __($attribute)], app()->getLocale()));
             }
 
-            if (($attribute === 'baby_milk_quantity' || $attribute === 'diapers_quantity') && !is_int($value)) {
+            if (($attribute === 'baby_milk_quantity' || $attribute === 'diapers_quantity') && ! is_int($value)) {
                 $fail(__('validation.integer', ['attribute' => __($attribute)], app()->getLocale()));
             }
         }

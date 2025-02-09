@@ -137,7 +137,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
             unset($orphan['photo']);
 
-            return array_filter($orphan, fn($key) => !in_array($key, [
+            return array_filter($orphan, fn ($key) => ! in_array($key, [
                 'baby_milk_quantity',
                 'baby_milk_type',
                 'diapers_quantity',
@@ -179,7 +179,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
      */
     private function storeDeceased(CreateFamilyRequest $request, Family $family)
     {
-        $deceased = $family->deceased()->createMany(array_map(fn($item) => Arr::except($item, ['death_certificate_file']), $request->validated('deceased')));
+        $deceased = $family->deceased()->createMany(array_map(fn ($item) => Arr::except($item, ['death_certificate_file']), $request->validated('deceased')));
 
         $deceased->each(function (Spouse $deceased, $index) use ($request): void {
             addToMediaCollection($deceased, $request->validated('deceased')[$index]['death_certificate_file'], 'death_certificate_files', false);

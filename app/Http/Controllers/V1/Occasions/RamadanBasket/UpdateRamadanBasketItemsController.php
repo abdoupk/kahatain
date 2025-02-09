@@ -12,7 +12,7 @@ class UpdateRamadanBasketItemsController extends Controller implements HasMiddle
 {
     public static function middleware()
     {
-        // TODO: Implement middleware() method.
+        return ['can:update_ramadan_basket_ramadan_baskets'];
     }
 
     public function __invoke(UpdateRamadanBasketRequest $request)

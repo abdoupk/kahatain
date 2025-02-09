@@ -21,6 +21,6 @@ class ExportFamiliesZakatPDFController extends Controller implements HasMiddlewa
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/zakat-families', 'families', fn() => listOfFamiliesBenefitingFromTheZakatForExport(), now()->translatedFormat('j' . __('glue') . 'F Y'));
+        return saveToPDF('occasions/zakat-families', 'families', fn () => listOfFamiliesBenefitingFromTheZakatForExport(), now()->translatedFormat('j'.__('glue').'F Y'));
     }
 }

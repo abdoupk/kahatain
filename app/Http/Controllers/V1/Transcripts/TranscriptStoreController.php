@@ -20,7 +20,7 @@ class TranscriptStoreController extends Controller
         ]);
 
         $transcript->subjects()->sync(
-            collect($request->subjects)->mapWithKeys(fn($subject) => [$subject['id'] => ['grade' => $subject['grade'] ?? 0]])->toArray()
+            collect($request->subjects)->mapWithKeys(fn ($subject) => [$subject['id'] => ['grade' => $subject['grade'] ?? 0]])->toArray()
         );
 
         $orphan = $transcript->orphan();

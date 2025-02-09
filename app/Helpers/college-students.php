@@ -11,7 +11,7 @@ function getAcademicLevelsForCollegeStudentsIndex(): array
             $query->whereIn('phase_key', ['master', 'licence', 'doctorate']);
         })
         ->get()
-        ->mapToGroups(fn(AcademicLevel $academicLevel) => [$academicLevel->phase_key => [
+        ->mapToGroups(fn (AcademicLevel $academicLevel) => [$academicLevel->phase_key => [
             'level' => $academicLevel->level,
             'id' => $academicLevel->id,
             'orphans_count' => $academicLevel->orphans_count,

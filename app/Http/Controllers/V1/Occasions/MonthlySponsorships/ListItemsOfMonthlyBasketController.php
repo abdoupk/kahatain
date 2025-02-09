@@ -11,7 +11,7 @@ class ListItemsOfMonthlyBasketController extends Controller implements HasMiddle
 {
     public static function middleware()
     {
-        // TODO: Implement middleware() method.
+        return ['can:update_monthly_basket_monthly_sponsorships'];
     }
 
     public function __invoke()

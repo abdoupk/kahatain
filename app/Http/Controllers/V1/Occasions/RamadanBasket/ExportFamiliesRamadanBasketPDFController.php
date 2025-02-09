@@ -20,6 +20,6 @@ class ExportFamiliesRamadanBasketPDFController extends Controller
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/ramadan-basket-families', 'families', fn() => listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(), now()->year);
+        return saveToPDF('occasions/ramadan-basket-families', 'families', fn () => listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(), now()->year);
     }
 }

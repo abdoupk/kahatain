@@ -65,7 +65,7 @@ class SaveFamiliesMonthlySponsorshipToArchiveController extends Controller imple
         $archive->families()
             ->syncWithPivotValues(
                 listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport()
-                    ->map(fn(Family $family) => $family->id),
+                    ->map(fn (Family $family) => $family->id),
                 ['tenant_id' => tenant('id')]
             );
     }

@@ -21,6 +21,6 @@ class ExportFamiliesMonthlySponsorshipPDFController extends Controller implement
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/monthly-sponsorship-families', 'families', fn() => listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(), now()->translatedFormat('F Y'));
+        return saveToPDF('occasions/monthly-sponsorship-families', 'families', fn () => listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(), now()->translatedFormat('F Y'));
     }
 }

@@ -22,6 +22,6 @@ class ExportArchiveBabiesMilkAndDiapersPDFController extends Controller implemen
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('babies-milk-and-diapers', fn() => getBabiesForExport(), $archive->created_at->translatedFormat('F Y'), 'babies');
+        return saveArchiveToPDF('babies-milk-and-diapers', fn () => getBabiesForExport(), $archive->created_at->translatedFormat('F Y'), 'babies');
     }
 }

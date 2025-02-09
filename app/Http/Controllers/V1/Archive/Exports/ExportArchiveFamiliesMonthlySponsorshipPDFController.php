@@ -22,6 +22,6 @@ class ExportArchiveFamiliesMonthlySponsorshipPDFController extends Controller im
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('monthly-sponsorship-families', fn() => listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(), $archive->created_at->translatedFormat('F Y'), 'families');
+        return saveArchiveToPDF('monthly-sponsorship-families', fn () => listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(), $archive->created_at->translatedFormat('F Y'), 'families');
     }
 }

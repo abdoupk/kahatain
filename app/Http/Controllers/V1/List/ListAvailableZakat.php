@@ -15,17 +15,17 @@ class ListAvailableZakat extends Controller
             ->whereNotIn('id', function ($query): void {
                 $query->select('zakat_id')->from('family_zakats');
             })->latest('created_at')
-            ->get()->map(fn(Finance $finance) => [
+            ->get()->map(fn (Finance $finance) => [
                 'id' => $finance->id,
                 'amount' => $finance->amount,
                 'name' => formatCurrency($finance->amount)
-                    . ' ('
-                    . $finance->date->translatedFormat('j')
-                    . __('glue')
-                    . $finance->date->translatedFormat('F Y')
-                    . ' - '
-                    . $finance->receiver->getName()
-                    . ')',
+                    .' ('
+                    .$finance->date->translatedFormat('j')
+                    .__('glue')
+                    .$finance->date->translatedFormat('F Y')
+                    .' - '
+                    .$finance->receiver->getName()
+                    .')',
             ]);
     }
 }

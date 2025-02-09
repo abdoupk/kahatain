@@ -33,7 +33,7 @@ function getLessons(): Collection
         },
         ])
         ->get()
-        ->map(fn($event) => $event->occurrences->map(fn($occurrence) => [
+        ->map(fn ($event) => $event->occurrences->map(fn ($occurrence) => [
             'id' => $occurrence->id,
             'title' => $event->title,
             'color' => $event->color,
@@ -86,7 +86,7 @@ function formatDateFromTo($dateFrom, $dateTo): string
  */
 function generateOccurrences(Event $event, string $lesson_id, array $orphans): void
 {
-    $formatted = array_map(fn($orphan) => [
+    $formatted = array_map(fn ($orphan) => [
         'orphan_id' => $orphan,
         'lesson_id' => $lesson_id,
     ], $orphans);

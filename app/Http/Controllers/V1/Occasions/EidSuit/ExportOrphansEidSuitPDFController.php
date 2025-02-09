@@ -21,6 +21,6 @@ class ExportOrphansEidSuitPDFController extends Controller implements HasMiddlew
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/eid-suit', 'orphans', fn() => listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(), now()->year, pageType: 'A3');
+        return saveToPDF('occasions/eid-suit', 'orphans', fn () => listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(), now()->year, pageType: 'A3');
     }
 }

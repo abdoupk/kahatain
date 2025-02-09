@@ -10,7 +10,7 @@ class UniversitySpecialitiesListController extends Controller
 {
     public function __invoke()
     {
-        return response()->json(JsonResource::collection(UniversitySpeciality::all()->map(fn(UniversitySpeciality $universitySpeciality) => [
+        return response()->json(JsonResource::collection(UniversitySpeciality::all()->map(fn (UniversitySpeciality $universitySpeciality) => [
             'id' => $universitySpeciality->id,
             'name' => $universitySpeciality->speciality,
         ])

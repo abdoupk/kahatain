@@ -21,6 +21,6 @@ class ExportBabiesPDFController extends Controller implements HasMiddleware
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/babies-milk-and-diapers', 'babies', fn() => getBabiesForExport(), now()->translatedFormat('F Y'));
+        return saveToPDF('occasions/babies-milk-and-diapers', 'babies', fn () => getBabiesForExport(), now()->translatedFormat('F Y'));
     }
 }

@@ -30,9 +30,9 @@ class GenerateLocalesCommand extends Command
             ));
 
             $php_files_collection = collect(File::allFiles(base_path('lang/'.$lang->value)))
-                ->flatMap(fn($file) => Arr::dot(
+                ->flatMap(fn ($file) => Arr::dot(
                     File::getRequire($file->getRealPath()),
-                    $file->getBasename('.' . $file->getExtension()) . '.'
+                    $file->getBasename('.'.$file->getExtension()).'.'
                 ));
 
             $full_data = $php_files_collection->merge($json_file_collection);

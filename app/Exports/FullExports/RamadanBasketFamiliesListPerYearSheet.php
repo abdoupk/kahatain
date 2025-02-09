@@ -20,13 +20,13 @@ class RamadanBasketFamiliesListPerYearSheet implements FromCollection, WithEvent
         return Archive::whereOccasion('ramadan_basket')
             ->whereYear('created_at', $this->year)
             ->get()
-            ->map(fn(Archive $archive) => $archive->listFamilies
+            ->map(fn (Archive $archive) => $archive->listFamilies
                 ->load(
                     'branch:id,name',
                     'zone:id,name',
                     'sponsor:id,family_id,first_name,last_name,phone_number'
                 )
-                ->map(fn(Family $family) => [
+                ->map(fn (Family $family) => [
                     $family->sponsor->getName(),
                     $family->sponsor->formattedPhoneNumber(),
                     $family->address,

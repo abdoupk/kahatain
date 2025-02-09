@@ -338,8 +338,8 @@ class ExportDataJob implements ShouldQueue
             $orphanPhoto = $orphan->getFirstMedia('photos');
 
             if ($orphanPhoto instanceof Media) {
-                $zip->addFile($orphanPhoto->getPath(), "$folderName/" . __('the_photos') . "/{$orphan->getName()}" .
-                    '.' . $orphanPhoto->extension);
+                $zip->addFile($orphanPhoto->getPath(), "$folderName/".__('the_photos')."/{$orphan->getName()}".
+                    '.'.$orphanPhoto->extension);
             }
         });
     }

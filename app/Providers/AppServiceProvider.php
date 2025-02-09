@@ -82,7 +82,7 @@ class AppServiceProvider extends ServiceProvider
                 '.'.config('tenancy.central_domains')[0];
         });
 
-        Gate::before(static fn($user) => $user->hasRole('super_admin') ? true : null);
+        Gate::before(static fn ($user) => $user->hasRole('super_admin') ? true : null);
 
         Model::preventLazyLoading(! $this->app->isProduction());
 

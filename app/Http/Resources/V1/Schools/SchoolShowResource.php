@@ -20,7 +20,7 @@ class SchoolShowResource extends JsonResource
             'readable_created_at' => $this->created_at->translatedFormat('j F Y H:i A'),
             'quota' => $this->lessons->sum('quota'),
             'creator' => new MemberResource($this->whenLoaded('creator')),
-            'lessons' => $this->whenLoaded('lessons', fn($lessons) => $lessons->map(fn(Lesson $lesson) => [
+            'lessons' => $this->whenLoaded('lessons', fn ($lessons) => $lessons->map(fn (Lesson $lesson) => [
                 'id' => $lesson->id,
                 'quota' => $lesson->quota,
                 'subject' => $lesson->subject->getName(),

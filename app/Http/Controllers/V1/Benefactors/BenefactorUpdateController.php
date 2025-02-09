@@ -33,7 +33,7 @@ class BenefactorUpdateController extends Controller implements HasMiddleware
 
         $sponsorships = Sponsorship::with('recipientable')->whereIn('id', $toDelete);
 
-        $families = $sponsorships->get()->flatMap(fn(Sponsorship $sponsorship) => $sponsorship->recipientable_type === 'orphan'
+        $families = $sponsorships->get()->flatMap(fn (Sponsorship $sponsorship) => $sponsorship->recipientable_type === 'orphan'
             ? optional(Orphan::find($sponsorship->recipientable_id))->family
             : Family::find($sponsorship->recipientable_id))->filter()->unique();
 

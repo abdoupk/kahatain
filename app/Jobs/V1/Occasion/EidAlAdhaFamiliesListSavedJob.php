@@ -29,7 +29,7 @@ class EidAlAdhaFamiliesListSavedJob implements ShouldQueue
         DB::transaction(function (): void {
             FamilyEidAlAdha::where('year', $this->archive->updated_at->year)->delete();
 
-            $data = $this->archive->families->map(fn($family) => [
+            $data = $this->archive->families->map(fn ($family) => [
                 'family_id' => $family->id,
                 'year' => $this->archive->updated_at->year,
                 'status' => $family->eid_al_adha_status,

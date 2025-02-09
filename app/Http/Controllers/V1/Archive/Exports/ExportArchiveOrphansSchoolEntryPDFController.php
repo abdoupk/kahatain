@@ -22,6 +22,6 @@ class ExportArchiveOrphansSchoolEntryPDFController extends Controller implements
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('school-entry', fn() => listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(), $archive->created_at->year, 'orphans');
+        return saveArchiveToPDF('school-entry', fn () => listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(), $archive->created_at->year, 'orphans');
     }
 }

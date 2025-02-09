@@ -22,7 +22,7 @@ class BabiesMilkAndDiapersPerMonthSheet implements FromCollection, WithEvents, W
             ->whereOccasion('babies_milk_and_diapers')
             ->whereYear('created_at', $this->year)
             ->whereMonth('created_at', $this->month)
-            ->get()->map(fn(Archive $archive) => $archive->listBabies->map(fn(Baby $baby) => [
+            ->get()->map(fn (Archive $archive) => $archive->listBabies->map(fn (Baby $baby) => [
                 $baby->orphan->sponsor->getName(),
                 $baby->orphan->sponsor->formattedPhoneNumber(),
                 $baby->orphan->getName(),

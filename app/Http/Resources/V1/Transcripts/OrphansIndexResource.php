@@ -16,7 +16,7 @@ class OrphansIndexResource extends JsonResource
             'name' => $this->getName(),
             'birth_date' => $this->birth_date,
             'institution' => InstitutionResource::make($this->institution),
-            'sponsor' => $this->whenLoaded('sponsor', fn() => [
+            'sponsor' => $this->whenLoaded('sponsor', fn () => [
                 'id' => $this->sponsor->id,
                 'name' => $this->sponsor->getName(),
                 'phone_number' => $this->sponsor->formattedPhoneNumber(),
@@ -28,7 +28,7 @@ class OrphansIndexResource extends JsonResource
                 'phase_key' => $this->academicLevel?->phase_key,
             ],
             'academic_average' => (float) $this->academic_average,
-            'transcripts' => $this->whenLoaded('transcripts', fn() => [
+            'transcripts' => $this->whenLoaded('transcripts', fn () => [
                 'first_trimester' => $this->transcripts->where('trimester', 'first_trimester')->first(),
                 'second_trimester' => $this->transcripts->where('trimester', 'second_trimester')->first(),
                 'third_trimester' => $this->transcripts->where('trimester', 'third_trimester')->first(),

@@ -22,6 +22,6 @@ class ExportArchiveFamiliesRamadanBasketPDFController extends Controller impleme
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('ramadan-basket-families', fn() => listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(), $archive->created_at->year);
+        return saveArchiveToPDF('ramadan-basket-families', fn () => listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(), $archive->created_at->year);
     }
 }

@@ -10,7 +10,7 @@ function calculateOrphanIncomes(Orphan $orphan): float
         return calculateContributionsForHandicappedOrphan($orphan);
     }
 
-    $calculation = json_decode((string)$orphan->load('tenant')->tenant['calculation'], true);
+    $calculation = json_decode((string) $orphan->load('tenant')->tenant['calculation'], true);
 
     if ($orphan->birth_date->age > 18) {
         if ($orphan->gender === 'male') {
@@ -25,7 +25,7 @@ function calculateOrphanIncomes(Orphan $orphan): float
 
 function calculateContributionsForSponsor(Sponsor $sponsor): float
 {
-    $calculation = json_decode((string)$sponsor->tenant['calculation'], true);
+    $calculation = json_decode((string) $sponsor->tenant['calculation'], true);
 
     $sponsorPercentages = $calculation['percentage_of_contribution']['sponsor'];
 
@@ -61,7 +61,7 @@ function calculateContributionsForSponsor(Sponsor $sponsor): float
 function calculateContributionsForHandicappedOrphan(Orphan $orphan): float
 {
     return json_decode(
-        (string)$orphan->tenant['calculation'],
+        (string) $orphan->tenant['calculation'],
         true
     )['handicapped_contribution']['contribution'];
 }
@@ -127,9 +127,9 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
 
 function calculateContributionsForSecondSponsor(Family $family): float
 {
-    $percentage_of_contribution = json_decode((string)$family->tenant['calculation'], true)['percentage_of_contribution'];
+    $percentage_of_contribution = json_decode((string) $family->tenant['calculation'], true)['percentage_of_contribution'];
 
-    if (!property_exists($family, 'secondSponsor') || $family->secondSponsor === null) {
+    if (! property_exists($family, 'secondSponsor') || $family->secondSponsor === null) {
         return 0;
     }
 

@@ -26,7 +26,7 @@ class SaveOrphansSchoolEntryToArchiveController extends Controller implements Ha
         $archive->orphans()
             ->syncWithPivotValues(
                 listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport()
-                    ->map(fn(Orphan $orphan) => $orphan->id),
+                    ->map(fn (Orphan $orphan) => $orphan->id),
                 ['tenant_id' => tenant('id')]
             );
 

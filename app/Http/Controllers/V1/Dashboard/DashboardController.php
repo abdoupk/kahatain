@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
     private function getRecentActivities()
     {
-        return auth()->user()->notifications->take(4)->map(fn($notification) => [
+        return auth()->user()->notifications->take(4)->map(fn ($notification) => [
             'id' => $notification->id,
             'user' => [
                 'id' => $notification->data['user']['id'],
@@ -44,7 +44,7 @@ class DashboardController extends Controller
             'formatted_date' => $notification->created_at->translatedFormat('H:i A'),
             'date' => $notification->created_at,
             'message' => trans_choice(
-                'notifications.' . $notification->type,
+                'notifications.'.$notification->type,
                 $notification->data['user']['gender'] === 'male' ? 1 : 0,
                 $notification->data['data']
             ),
@@ -59,7 +59,7 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get()
-            ->map(fn(Finance $finance) => [
+            ->map(fn (Finance $finance) => [
                 'id' => $finance->id,
                 'amount' => $finance->amount,
                 'receiver' => [
@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ->whereMonth('start_date', '=', date('m'))
             ->take(3)
             ->get()
-            ->map(fn(EventOccurrence $eventOccurrence) => [
+            ->map(fn (EventOccurrence $eventOccurrence) => [
                 'id' => $eventOccurrence->id,
                 'title' => $eventOccurrence->event->title,
                 'date' => $eventOccurrence->start_date,
@@ -92,7 +92,7 @@ class DashboardController extends Controller
             ->latest()
             ->take(4)
             ->get()
-            ->map(fn(Family $family) => [
+            ->map(fn (Family $family) => [
                 'id' => $family->id,
                 'name' => $family->name,
                 'address' => $family->address,
@@ -116,7 +116,7 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get()
-            ->map(fn(Need $need) => [
+            ->map(fn (Need $need) => [
                 'id' => $need->id,
                 'status' => $need->status,
                 'subject' => $need->subject,

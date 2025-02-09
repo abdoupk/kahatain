@@ -8,12 +8,12 @@ function calculateWeights(Family $family, array $calculation): float
 {
     $calculationWeights = $calculation['weights']['orphans'];
 
-    return $family->orphans->sum(fn(Orphan $orphan) => calculateOrphanWeights($orphan, $calculationWeights)) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
+    return $family->orphans->sum(fn (Orphan $orphan) => calculateOrphanWeights($orphan, $calculationWeights)) + calculateSponsorWeights($family) + calculateWeightForSecondSponsor($family);
 }
 
 function calculateSponsorWeights(Family $family): float
 {
-    $weights = json_decode((string)$family->tenant['calculation'], true)['weights']['sponsor'];
+    $weights = json_decode((string) $family->tenant['calculation'], true)['weights']['sponsor'];
 
     return match ($family->sponsor->sponsor_type) {
         'other' => $weights['other'],
@@ -32,7 +32,7 @@ function calculateOrphanWeights(Orphan $orphan, array $orphanWeights): float
     }
 
     if ($orphan->is_handicapped) {
-        return json_decode((string)$orphan->tenant['calculation'], true)['weights']['handicapped'];
+        return json_decode((string) $orphan->tenant['calculation'], true)['weights']['handicapped'];
     }
 
     if ($orphan->gender === 'male') {
@@ -155,7 +155,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
 
 function calculateWeightForSecondSponsor(Family $family): float
 {
-    $weights = json_decode((string)$family->tenant['calculation'], true)['weights']['second_sponsor'];
+    $weights = json_decode((string) $family->tenant['calculation'], true)['weights']['second_sponsor'];
 
     if ($family->secondSponsor?->with_family) {
         return $weights['with_family'];

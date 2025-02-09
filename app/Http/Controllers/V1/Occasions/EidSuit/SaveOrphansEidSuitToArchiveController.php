@@ -26,7 +26,7 @@ class SaveOrphansEidSuitToArchiveController extends Controller implements HasMid
         $archive->orphans()
             ->syncWithPivotValues(
                 listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport()
-                    ->map(fn(Orphan $orphan) => $orphan->id),
+                    ->map(fn (Orphan $orphan) => $orphan->id),
                 ['tenant_id' => tenant('id')]
             );
 

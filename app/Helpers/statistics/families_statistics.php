@@ -71,7 +71,7 @@ function getFamiliesHousingTypes(): array
     $orphans = Housing::select('name', DB::raw('count(*) as total'))->groupBy('name')->get();
 
     return [
-        'labels' => $orphans->pluck('name')->map(fn(string $familyStatus) => __('housing.label.' . $familyStatus))->toArray(),
+        'labels' => $orphans->pluck('name')->map(fn (string $familyStatus) => __('housing.label.'.$familyStatus))->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];
 }

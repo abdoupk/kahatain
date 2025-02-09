@@ -19,7 +19,7 @@ function getOrphansByFamilyStatus(): array
         ->get();
 
     return [
-        'labels' => $orphans->pluck('group_label')->map(fn(string $familyStatus) => __('family_statuses.' . $familyStatus))->toArray(),
+        'labels' => $orphans->pluck('group_label')->map(fn (string $familyStatus) => __('family_statuses.'.$familyStatus))->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];
 }
@@ -35,7 +35,7 @@ function getOrphansByAcademicLevel(): array
         ->groupBy('academic_level_id')
         ->get();
 
-    $result = $orphans->groupBy(fn($orphan) => $orphan->academicLevel?->phase)->map(fn($group) => [
+    $result = $orphans->groupBy(fn ($orphan) => $orphan->academicLevel?->phase)->map(fn ($group) => [
         'total' => $group->first()->total,
         'phase' => $group->first()->academicLevel?->phase,
     ])->values()->toArray();
@@ -64,7 +64,7 @@ function getOrphansByAge(): array
         ->get();
 
     return [
-        'age' => array_reverse($orphans->pluck('age')->map(fn(int $age) => trans_choice('age_years', $age, ['value' => $age]))->toArray()),
+        'age' => array_reverse($orphans->pluck('age')->map(fn (int $age) => trans_choice('age_years', $age, ['value' => $age]))->toArray()),
         'data' => array_reverse($orphans->pluck('count')->toArray()),
     ];
 }

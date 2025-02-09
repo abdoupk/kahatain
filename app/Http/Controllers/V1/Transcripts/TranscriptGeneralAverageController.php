@@ -25,7 +25,7 @@ class TranscriptGeneralAverageController extends Controller
         }
 
         return Inertia::render('Tenant/transcripts/general-average/TranscriptGeneralAveragePage', [
-            'grades' => $orphan->transcripts->map(fn(Transcript $transcript) => $transcript->subjects->map(fn(Subject $subject) => [
+            'grades' => $orphan->transcripts->map(fn (Transcript $transcript) => $transcript->subjects->map(fn (Subject $subject) => [
                 'name' => $subject->getName(),
                 'grade' => number_format($subject->pivot->grade, 2),
             ])),

@@ -5,7 +5,7 @@ use App\Models\Family;
 
 function calculateDifferenceAfterMonthlySponsorship(Family $family, float $differenceBeforeSponsorship, float $sponsorshipFromAssociation): float
 {
-    $association_basket_value = json_decode((string)$family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'];
+    $association_basket_value = json_decode((string) $family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'];
 
     return $differenceBeforeSponsorship - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $association_basket_value) - ($sponsorshipFromAssociation + $family->aid->sum('amount'));
 }
@@ -14,7 +14,7 @@ function monthlySponsorship(Family $family): void
 {
     $family->load(['orphans.tenant', 'orphans.academicLevel', 'aid', 'secondSponsor', 'sponsor.incomes', 'housing', 'tenant']);
 
-    $calculations = json_decode((string)$family->tenant['calculation'], true);
+    $calculations = json_decode((string) $family->tenant['calculation'], true);
 
     $weights = calculateWeights($family, $calculations);
 
@@ -69,7 +69,7 @@ function calculateDifferenceForRamadanSponsorship(float $totalWeights, float $in
 
 function calculateAssociationMonthlySponsorship(Family $family, float $differenceBeforeSponsorship, float $sponsorshipRate): float
 {
-    $associationBasketValue = json_decode((string)$family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'] ?? 0;
+    $associationBasketValue = json_decode((string) $family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'] ?? 0;
 
     return ($differenceBeforeSponsorship * $sponsorshipRate)
         - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $associationBasketValue)
@@ -78,7 +78,7 @@ function calculateAssociationMonthlySponsorship(Family $family, float $differenc
 
 function getPercentageForIncomeRate(Family $family, float $differenceBeforeSponsorship): float
 {
-    $categories = json_decode((string)$family->tenant['calculation'], true)['monthly_sponsorship']['categories'];
+    $categories = json_decode((string) $family->tenant['calculation'], true)['monthly_sponsorship']['categories'];
 
     foreach ($categories as $category) {
         if ($differenceBeforeSponsorship >= $category['minimum'] && $differenceBeforeSponsorship < $category['maximum']) {
@@ -91,7 +91,7 @@ function getPercentageForIncomeRate(Family $family, float $differenceBeforeSpons
 
 function getCategoryForRamadanBasket(Family $family, float $differenceForRamadanBasketSponsorship): string
 {
-    $categories = json_decode((string)$family->tenant['calculation'], true)['ramadan_sponsorship']['categories'];
+    $categories = json_decode((string) $family->tenant['calculation'], true)['ramadan_sponsorship']['categories'];
 
     if ($differenceForRamadanBasketSponsorship < 0) {
         return __('dont_benefit');

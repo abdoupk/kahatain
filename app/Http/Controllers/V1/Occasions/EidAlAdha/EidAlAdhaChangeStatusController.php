@@ -12,7 +12,7 @@ class EidAlAdhaChangeStatusController extends Controller implements HasMiddlewar
 {
     public static function middleware()
     {
-        // TODO: Implement middleware() method.
+        return ['can:save_occasions'];
     }
 
     public function __invoke(FamilyEidAlAdhaUpdateStatusRequest $request, Family $family)

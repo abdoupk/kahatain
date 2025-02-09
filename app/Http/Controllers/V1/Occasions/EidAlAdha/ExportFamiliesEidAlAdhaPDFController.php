@@ -21,6 +21,6 @@ class ExportFamiliesEidAlAdhaPDFController extends Controller implements HasMidd
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/eid-al-adha-families', 'families', fn() => listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport(), now()->year);
+        return saveToPDF('occasions/eid-al-adha-families', 'families', fn () => listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport(), now()->year);
     }
 }

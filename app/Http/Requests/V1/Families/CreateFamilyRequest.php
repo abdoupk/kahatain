@@ -145,11 +145,11 @@ class CreateFamilyRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
-        if ($this->has('sponsor.ccp') && strlen((string)$this->get('sponsor')['ccp']) >= 10) {
+        if ($this->has('sponsor.ccp') && strlen((string) $this->get('sponsor')['ccp']) >= 10) {
             $this->merge([
                 'sponsor' => [
                     ...$this->get('sponsor'),
-                    'ccp' => str_pad((string)$this->get('sponsor.ccp'), 12, '0', STR_PAD_LEFT),
+                    'ccp' => str_pad((string) $this->get('sponsor.ccp'), 12, '0', STR_PAD_LEFT),
                 ],
             ]);
         }
@@ -158,8 +158,8 @@ class CreateFamilyRequest extends FormRequest
             $orphans = $this->input('orphans');
 
             $modifiedCcp = array_map(function ($orphan) {
-                if (isset($orphan['ccp']) && strlen((string)$orphan['ccp']) >= 10) {
-                    $orphan['ccp'] = str_pad((string)$orphan['ccp'], 12, '0', STR_PAD_LEFT);
+                if (isset($orphan['ccp']) && strlen((string) $orphan['ccp']) >= 10) {
+                    $orphan['ccp'] = str_pad((string) $orphan['ccp'], 12, '0', STR_PAD_LEFT);
                 }
 
                 return $orphan;

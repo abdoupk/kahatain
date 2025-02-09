@@ -26,7 +26,7 @@ class AcademicLevel extends Model
     public function subjects(): Collection
     {
         return Subject::whereIn('id', $this->subject_ids)
-            ->get()->map(fn(Subject $subject) => [
+            ->get()->map(fn (Subject $subject) => [
                 'id' => $subject->id,
                 'name' => $subject->getName(),
             ]);

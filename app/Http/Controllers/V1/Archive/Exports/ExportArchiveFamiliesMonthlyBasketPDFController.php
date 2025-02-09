@@ -22,6 +22,6 @@ class ExportArchiveFamiliesMonthlyBasketPDFController extends Controller impleme
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('monthly-basket-families', fn() => listOfFamiliesBenefitingFromTheMonthlyBasketForExport(), $archive->created_at->translatedFormat('F Y'));
+        return saveArchiveToPDF('monthly-basket-families', fn () => listOfFamiliesBenefitingFromTheMonthlyBasketForExport(), $archive->created_at->translatedFormat('F Y'));
     }
 }

@@ -21,6 +21,6 @@ class ExportOrphansPDFController extends Controller implements HasMiddleware
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('orphans', 'orphans', fn() => getOrphansForExport());
+        return saveToPDF('orphans', 'orphans', fn () => getOrphansForExport());
     }
 }

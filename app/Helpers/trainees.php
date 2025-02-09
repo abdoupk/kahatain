@@ -12,7 +12,7 @@ function getAcademicLevelsForTraineesIndex(): array
                 ->orWhere('phase_key', 'vocational_training');
         })
         ->get()
-        ->mapToGroups(fn(AcademicLevel $academicLevel) => [$academicLevel->phase_key => [
+        ->mapToGroups(fn (AcademicLevel $academicLevel) => [$academicLevel->phase_key => [
             'level' => $academicLevel->level,
             'id' => $academicLevel->id,
             'orphans_count' => $academicLevel->orphans_count,
