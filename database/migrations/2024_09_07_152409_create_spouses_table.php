@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Family;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +22,8 @@ return new class extends Migration
             $table->text('function')->nullable()->index('idx_spouses_function');
             $table->float('income')->nullable()->index('idx_spouses_income');
             $table->enum('type', ['mother', 'father']);
-            $table->uuid('family_id')->index('idx_spouses_family_id');
-            $table->uuid('tenant_id')->index('idx_spouses_tenant_id');
+            $table->foreignIdFor(Family::class)->index('idx_spouses_family_id');
+            $table->foreignIdFor(Tenant::class)->index('idx_spouses_tenant_id');
             $table->timestamps();
 
             $table->index(['id'], 'idx_spouses_id');

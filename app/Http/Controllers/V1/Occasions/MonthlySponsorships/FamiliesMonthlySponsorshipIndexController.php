@@ -7,6 +7,7 @@ use App\Http\Resources\V1\MonthlySponsorship\MonthlySponsorshipResource;
 use App\Models\Archive;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class FamiliesMonthlySponsorshipIndexController extends Controller implements HasMiddleware
 {
@@ -15,7 +16,7 @@ class FamiliesMonthlySponsorshipIndexController extends Controller implements Ha
         return ['can:view_occasions'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/occasions/monthly-sponsorship/MonthlySponsorshipIndex', [
             'families' => MonthlySponsorshipResource::collection(listOfFamiliesBenefitingFromTheMonthlySponsorship()),

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\DonationSpecification;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,13 +18,13 @@ return new class extends Migration
             $table->float('amount');
             $table->text('description')->nullable();
             $table->timestamp('date');
-            $table->uuid('tenant_id');
+            $table->foreignIdFor(Tenant::class);
             $table->enum('specification', array_map(fn ($type) => $type->value, DonationSpecification::cases()));
             $table->timestamps();
             $table->softDeletes();
-            $table->uuid('created_by');
-            $table->uuid('received_by')->nullable();
-            $table->uuid('deleted_by')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'created_by');
+            $table->foreignIdFor(\App\Models\User::class, 'received_by')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();
 
             $table->index(['id'], 'idx_finances_id');
         });

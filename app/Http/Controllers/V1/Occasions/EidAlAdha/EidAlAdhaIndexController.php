@@ -7,6 +7,7 @@ use App\Http\Resources\V1\Occasions\EidAlAdhaResource;
 use App\Models\Archive;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class EidAlAdhaIndexController extends Controller implements HasMiddleware
 {
@@ -15,7 +16,7 @@ class EidAlAdhaIndexController extends Controller implements HasMiddleware
         return ['can:view_occasions'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/occasions/eid-al-adha/EidAlAdhaIndex', [
             'families' => EidAlAdhaResource::collection(listOfFamiliesBenefitingFromTheEidAlAdhaSponsorship()),

@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\AcademicLevel;
+use App\Models\PrivateSchool;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,11 +18,11 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->integer('subject_id');
             $table->foreignIdFor(AcademicLevel::class);
-            $table->uuid('private_school_id');
+            $table->foreignIdFor(PrivateSchool::class, 'private_school_id');
             $table->integer('quota');
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->uuid('tenant_id');
+            $table->foreignIdFor(Tenant::class);
             $table->timestamps();
             $table->softDeletes();
         });

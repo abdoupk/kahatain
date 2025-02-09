@@ -8,6 +8,7 @@ use App\Http\Resources\V1\Schools\SchoolsIndexResource;
 use App\Models\Subject;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SchoolsIndexController extends Controller implements HasMiddleware
 {
@@ -16,7 +17,7 @@ class SchoolsIndexController extends Controller implements HasMiddleware
         return ['can:list_schools'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/schools/index/SchoolsIndexPage', [
             'schools' => fn () => SchoolsIndexResource::collection(getSchools()),

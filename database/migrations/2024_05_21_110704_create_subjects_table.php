@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('en_name');
-            $table->string('ar_name');
-            $table->string('fr_name');
+            $table->string('en_name')->index();
+            $table->string('ar_name')->index();
+            $table->string('fr_name')->index();
         });
     }
 

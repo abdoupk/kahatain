@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Lessons\SchoolsResource;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class LessonsIndexController extends Controller implements HasMiddleware
 {
@@ -14,7 +15,7 @@ class LessonsIndexController extends Controller implements HasMiddleware
         return ['can:list_lessons'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/lessons/index/LessonsIndexPage', [
             'schools' => SchoolsResource::collection(getSchoolsForAddLesson()),

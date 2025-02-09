@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\EventOccurrence;
 use App\Models\Lesson;
+use App\Models\Orphan;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +17,10 @@ return new class extends Migration
     {
         Schema::create('event_occurrence_orphan', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('event_occurrence_id');
+            $table->foreignIdFor(EventOccurrence::class, 'event_occurrence_id');
             $table->foreignIdFor(Lesson::class, 'lesson_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->uuid('orphan_id');
-            $table->uuid('tenant_id');
+            $table->foreignIdFor(Orphan::class);
+            $table->foreignIdFor(Tenant::class);
             $table->timestamps();
             $table->softDeletes();
         });

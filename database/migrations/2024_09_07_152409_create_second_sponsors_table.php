@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Family;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,8 +21,8 @@ return new class extends Migration
             $table->text('phone_number')->nullable()->index('idx_second_sponsors_phone_number');
             $table->text('address')->nullable()->index('idx_second_sponsors_address');
             $table->float('income')->nullable()->index('idx_second_sponsors_income');
-            $table->uuid('family_id')->nullable()->index('idx_second_sponsors_family_id');
-            $table->uuid('tenant_id')->index('idx_second_sponsors_tenant_id');
+            $table->foreignIdFor(Family::class)->nullable()->index('idx_second_sponsors_family_id');
+            $table->foreignIdFor(Tenant::class)->index('idx_second_sponsors_tenant_id');
             $table->boolean('with_family')->default(false);
             $table->softDeletes();
             $table->timestamps();

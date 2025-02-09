@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Sponsor;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +22,8 @@ return new class extends Migration
             $table->json('account');
             $table->float('other_income')->nullable();
             $table->float('total_income')->nullable();
-            $table->uuid('sponsor_id');
-            $table->uuid('tenant_id');
+            $table->foreignIdFor(Sponsor::class);
+            $table->foreignIdFor(Tenant::class);
 
             $table->index(['id'], 'idx_incomes_id');
         });

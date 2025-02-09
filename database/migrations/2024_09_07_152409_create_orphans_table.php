@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\AcademicLevel;
+use App\Models\Family;
+use App\Models\Sponsor;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -36,11 +39,11 @@ return new class extends Migration
             $table->integer('speciality_id')->nullable();
             $table->string('speciality_type')->nullable();
             $table->text('note')->nullable()->index('idx_orphans_note');
-            $table->uuid('tenant_id')->index('idx_orphans_tenant_id');
-            $table->uuid('family_id')->index('idx_orphans_family_id');
-            $table->uuid('sponsor_id');
-            $table->uuid('created_by')->index('idx_orphans_created_by');
-            $table->uuid('deleted_by')->nullable()->index('idx_orphans_deleted_by');
+            $table->foreignIdFor(Tenant::class)->index('idx_orphans_tenant_id');
+            $table->foreignIdFor(Family::class)->index('idx_orphans_family_id');
+            $table->foreignIdFor(Sponsor::class);
+            $table->foreignIdFor(\App\Models\User::class, 'created_by')->index('idx_orphans_created_by');
+            $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable()->index('idx_orphans_deleted_by');
             $table->timestamps();
             $table->softDeletes();
 

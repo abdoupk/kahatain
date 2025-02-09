@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\Inventory\ItemsIndexResource;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class InventoryIndexController extends Controller implements HasMiddleware
 {
@@ -14,7 +15,7 @@ class InventoryIndexController extends Controller implements HasMiddleware
         return ['can:list_items'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/inventory/index/InventoryIndexPage', [
             'items' => ItemsIndexResource::collection(getInventoryItems()),

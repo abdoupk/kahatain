@@ -7,6 +7,7 @@ use App\Http\Resources\V1\Occasions\BabyMilkAndDiapersResource;
 use App\Models\Archive;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class BabyMilkAndDiapersIndexController extends Controller implements HasMiddleware
 {
@@ -15,7 +16,7 @@ class BabyMilkAndDiapersIndexController extends Controller implements HasMiddlew
         return ['can:view_occasions'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/occasions/babies/BabyMilkAndDiapersIndex', [
             'orphans' => BabyMilkAndDiapersResource::collection(listOfBabies()),

@@ -127,7 +127,7 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "phpstan": [
-            "./vendor/bin/phpstan analyse ./app --memory-limit=2G --level=9"
+            "./vendor/bin/phpstan analyse ./app --memory-limit=2G --level=max   "
         ],
         "pint": [
             "./vendor/bin/pint --config ./pint.json"

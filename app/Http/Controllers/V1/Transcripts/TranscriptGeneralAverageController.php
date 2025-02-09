@@ -7,10 +7,11 @@ use App\Models\Orphan;
 use App\Models\Subject;
 use App\Models\Transcript;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class TranscriptGeneralAverageController extends Controller
 {
-    public function __invoke(Orphan $orphan)
+    public function __invoke(Orphan $orphan): Response
     {
         $orphan->load([
             'transcripts' => function ($query) {

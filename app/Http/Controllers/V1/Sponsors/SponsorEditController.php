@@ -7,6 +7,7 @@ use App\Http\Resources\V1\Sponsors\SponsorEditResource;
 use App\Models\Sponsor;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SponsorEditController extends Controller implements HasMiddleware
 {
@@ -15,7 +16,7 @@ class SponsorEditController extends Controller implements HasMiddleware
         return ['can:update_sponsors'];
     }
 
-    public function __invoke(Sponsor $sponsor)
+    public function __invoke(Sponsor $sponsor): Response
     {
         return Inertia::render('Tenant/sponsors/edit/SponsorEditPage', [
             'sponsor' => new SponsorEditResource($sponsor->load('creator', 'incomes', 'academicLevel', 'media')),

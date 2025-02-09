@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cities', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id')->primary()->index();
             $table->string('commune_name')->index('idx_cities_commune_name');
             $table->string('commune_name_ascii');
             $table->string('daira_name')->index('idx_cities_daira_name');

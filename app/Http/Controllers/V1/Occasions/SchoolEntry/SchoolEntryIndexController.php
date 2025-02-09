@@ -7,6 +7,7 @@ use App\Http\Resources\V1\Occasions\SchoolEntryResource;
 use App\Models\Archive;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SchoolEntryIndexController extends Controller implements HasMiddleware
 {
@@ -15,7 +16,7 @@ class SchoolEntryIndexController extends Controller implements HasMiddleware
         return ['can:view_occasions'];
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/occasions/school-entry/SchoolEntryIndex', [
             'orphans' => SchoolEntryResource::collection(listOfOrphansBenefitingFromTheSchoolEntrySponsorship()),

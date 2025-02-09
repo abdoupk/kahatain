@@ -2,6 +2,8 @@
 
 use App\Enums\SponsorType;
 use App\Models\AcademicLevel;
+use App\Models\Family;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,10 +32,10 @@ return new class extends Migration
             $table->text('diploma')->nullable();
             $table->boolean('is_unemployed');
             $table->text('ccp')->nullable();
-            $table->uuid('family_id');
-            $table->uuid('tenant_id')->index('idx_sponsors_tenant_id');
-            $table->uuid('created_by')->index('idx_sponsors_created_by');
-            $table->uuid('deleted_by')->nullable()->index('idx_sponsors_deleted_by');
+            $table->foreignIdFor(Family::class);
+            $table->foreignIdFor(Tenant::class)->index('idx_sponsors_tenant_id');
+            $table->foreignIdFor(\App\Models\User::class, 'created_by')->index('idx_sponsors_created_by');
+            $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable()->index('idx_sponsors_deleted_by');
             $table->softDeletes();
             $table->timestamps();
         });
