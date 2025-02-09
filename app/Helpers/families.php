@@ -11,7 +11,7 @@ function getFamilies(): LengthAwarePaginator
         ->query(fn ($query) => $query->with(['zone:id,name', 'sponsor:id,first_name,last_name,family_id'])
             ->withCount('orphans')
         )
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function getFamiliesForExport(): Collection
@@ -42,7 +42,7 @@ function getFamiliesPosition(): array
 function setTotalIncomeAttribute(array $incomes, Sponsor $sponsor): float
 {
     if ($sponsor->is_unemployed) {
-        return json_decode((string)$sponsor->load('tenant')->tenant['calculation'], true)['monthly_sponsorship']['unemployment_benefit'];
+        return json_decode((string) $sponsor->load('tenant')->tenant['calculation'], true)['monthly_sponsorship']['unemployment_benefit'];
     }
 
     $incomes = Arr::only($incomes, ['account', 'other_income']);

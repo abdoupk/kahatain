@@ -9,5 +9,5 @@ function getArchives(): LengthAwarePaginator
         ->query(fn ($query) => $query->with(
             ['savedBy:id,first_name,last_name']
         )->withCount(['families', 'babies', 'orphans']))
-        ->paginate(perPage: (int) request()?->input('perPage', 10));
+        ->paginate(perPage: (int) request()->input('perPage', 10));
 }

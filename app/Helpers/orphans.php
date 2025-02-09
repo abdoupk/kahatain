@@ -13,7 +13,7 @@ function getOrphans(): LengthAwarePaginator
 {
     return search(Orphan::getModel())
         ->query(fn ($query) => $query->with(['academicLevel', 'family:id,income_rate', 'pantsSize', 'shoesSize', 'shirtSize', 'babyNeeds.babyMilk', 'babyNeeds.diapers']))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function searchOrphans(): Collection

@@ -8,7 +8,7 @@ function getBenefactors(): LengthAwarePaginator
 {
     return search(Benefactor::getModel())
         ->query(fn ($query) => $query->withCount(['sponsorships']))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function searchBenefactors(): Collection

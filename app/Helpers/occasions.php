@@ -20,7 +20,7 @@ function listOfFamiliesBenefitingFromTheEidAlAdhaSponsorship(): LengthAwarePagin
                 'eidAlAdhas:status,year,family_id',
             ])
             ->withCount('orphans'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfFamiliesBenefitingFromTheZakatSponsorship(): LengthAwarePaginator
@@ -33,7 +33,7 @@ function listOfFamiliesBenefitingFromTheZakatSponsorship(): LengthAwarePaginator
                 'branch:id,name',
             ])
             ->withCount('orphans'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfFamiliesBenefitingFromTheMeatDistributionSponsorship(): LengthAwarePaginator
@@ -46,7 +46,7 @@ function listOfFamiliesBenefitingFromTheMeatDistributionSponsorship(): LengthAwa
                 'branch:id,name',
             ])
             ->withCount('orphans'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfFamiliesBenefitingFromTheMonthlyBasket(): LengthAwarePaginator
@@ -60,7 +60,7 @@ function listOfFamiliesBenefitingFromTheMonthlyBasket(): LengthAwarePaginator
                     'branch:id,name',
                 ]
             )->withCount('orphans'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePaginator
@@ -80,7 +80,7 @@ function listOfOrphansBenefitingFromTheSchoolEntrySponsorship(): LengthAwarePagi
                     ]
                 )
         )
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfFamiliesBenefitingFromTheRamadanBasketSponsorship(): LengthAwarePaginator
@@ -97,7 +97,7 @@ function listOfFamiliesBenefitingFromTheRamadanBasketSponsorship(): LengthAwareP
                 'aid',
             ])
             ->withCount('orphans'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfOrphansBenefitingFromTheEidSuitSponsorship(): LengthAwarePaginator
@@ -118,7 +118,7 @@ function listOfOrphansBenefitingFromTheEidSuitSponsorship(): LengthAwarePaginato
                     'shirtSize',
                 ])
         )
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfBabies(): LengthAwarePaginator
@@ -137,7 +137,7 @@ function listOfBabies(): LengthAwarePaginator
                     ]
                 )
         )
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginator
@@ -152,23 +152,23 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginat
                     'aid',
                 ]
             )->withCount('orphans'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function updateBasketItems(?array $items, ?array $deletedItems, Builder $basket): void
 {
-    if (!is_null($deletedItems) && $deletedItems !== []) {
+    if (! is_null($deletedItems) && $deletedItems !== []) {
         $basket->whereIn('id', $deletedItems)->delete();
     }
 
-    if (!is_null($items) && $items !== []) {
+    if (! is_null($items) && $items !== []) {
         $inventoriesData = collect($items)
             ->map(fn ($item) => [
                 'id' => $item['inventory_id'],
                 'name' => $item['name'],
                 'unit' => $item['unit'],
-                'created_by' => auth()->user()->id,
-                'tenant_id' => auth()->user()->tenant_id,
+                'created_by' => auth()->user()?->id,
+                'tenant_id' => auth()->user()?->tenant_id,
             ])
             ->unique('id')
             ->values()
@@ -181,7 +181,7 @@ function updateBasketItems(?array $items, ?array $deletedItems, Builder $basket)
                 'inventory_id' => $item['inventory_id'],
                 'qty_for_family' => $item['qty_for_family'],
                 'status' => $item['status'],
-                'tenant_id' => auth()->user()->tenant_id,
+                'tenant_id' => auth()->user()?->tenant_id,
             ])
             ->toArray();
 

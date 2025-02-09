@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 function getSponsors(): LengthAwarePaginator
 {
     return search(Sponsor::getModel())
-        ->query(fn ($query) => $query->with(['academicLevel', 'family:id,income_rate']))->paginate(perPage: request()?->integer('perPage', 10));
+        ->query(fn ($query) => $query->with(['academicLevel', 'family:id,income_rate']))->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function searchSponsors(): Collection
