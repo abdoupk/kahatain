@@ -39,9 +39,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (TenantCouldNotBeIdentifiedException $e, Request $request) {
-            return Inertia::render('ErrorPage', ['status' => 404, 'tenantDontFound' => true])
+            return Inertia::render('ErrorPage', ['status' => 400, 'tenantDontFound' => true])
                 ->toResponse($request)
-                ->setStatusCode(404);
+                ->setStatusCode(400);
         });
 
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
