@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('housings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('name')->index('idx_housings_name');
-            $table->text('value')->nullable();
-            $table->text('housing_receipt_number')->nullable();
+            $table->string('name')->index('idx_housings_name');
+            $table->string('value')->nullable();
+            $table->string('housing_receipt_number')->nullable();
             $table->integer('number_of_rooms')->nullable();
             $table->text('other_properties')->nullable();
             $table->foreignIdFor(Family::class);

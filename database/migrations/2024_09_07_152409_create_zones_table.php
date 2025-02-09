@@ -14,9 +14,8 @@ return new class extends Migration
     {
         Schema::create('zones', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('name');
+            $table->string('name');
             $table->text('description');
-            //            $table->geometry('geom')->nullable();
             $table->json('geom')->nullable();
             $table->foreignIdFor(Tenant::class);
             $table->timestamps();

@@ -17,17 +17,16 @@ return new class extends Migration
     {
         Schema::create('orphans', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('first_name');
-            $table->text('last_name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->date('birth_date')->index('idx_orphans_birth_date');
-            $table->text('family_status')->nullable()->index('idx_orphans_family_status');
-            $table->text('health_status')->nullable()->index('idx_orphans_health_status');
+            $table->string('family_status')->nullable()->index('idx_orphans_family_status');
+            $table->string('health_status')->nullable()->index('idx_orphans_health_status');
             $table->foreignIdFor(AcademicLevel::class)->nullable()->index('idx_orphans_academic_level');
-            //            $table->integer('vocational_training_id')->nullable();
-            $table->text('shoes_size')->nullable()->index('idx_orphans_shoes_size');
-            $table->text('pants_size')->nullable()->index('idx_orphans_pants_size');
-            $table->text('shirt_size')->nullable()->index('idx_orphans_shirt_size');
-            $table->text('gender');
+            $table->string('shoes_size')->nullable()->index('idx_orphans_shoes_size');
+            $table->string('pants_size')->nullable()->index('idx_orphans_pants_size');
+            $table->string('shirt_size')->nullable()->index('idx_orphans_shirt_size');
+            $table->string('gender');
             $table->float('income')->nullable();
             $table->boolean('is_handicapped');
             $table->boolean('is_unemployed');

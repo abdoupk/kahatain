@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('spouses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('first_name');
-            $table->text('last_name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->date('birth_date')->index('idx_spouses_birth_date');
             $table->date('death_date')->index('idx_spouses_death_date');
-            $table->text('function')->nullable()->index('idx_spouses_function');
+            $table->string('function')->nullable()->index('idx_spouses_function');
             $table->float('income')->nullable()->index('idx_spouses_income');
             $table->enum('type', ['mother', 'father']);
             $table->foreignIdFor(Family::class)->index('idx_spouses_family_id');

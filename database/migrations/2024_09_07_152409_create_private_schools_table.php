@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('private_schools', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('name');
+            $table->string('name');
             $table->foreignIdFor(Tenant::class);
             $table->softDeletes();
             $table->timestamps();

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignIdFor(Tenant::class);
             $table->foreignIdFor(\App\Models\User::class, 'saved_by');
-            $table->text('occasion');
+            $table->string('occasion');
             $table->json('metadata')->nullable();
             $table->timestamps();
         });

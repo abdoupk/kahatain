@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('name');
+            $table->string('name');
             $table->foreignIdFor(Tenant::class, 'tenant_id');
             $table->integer('city_id');
             $table->foreignIdFor(\App\Models\User::class, 'president_id');

@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('needs', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('demand');
-            $table->text('subject');
-            $table->text('status');
-            $table->text('needable_type');
+            $table->string('subject');
+            $table->string('status');
+            $table->string('needable_type');
             $table->uuid('needable_id');
             $table->foreignIdFor(Tenant::class);
             $table->text('note')->nullable();

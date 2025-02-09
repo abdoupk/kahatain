@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Family;
 use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->text('report');
             $table->date('preview_date');
-            $table->text('family_id');
+            $table->foreignIdFor(Family::class);
             $table->foreignIdFor(Tenant::class);
             $table->softDeletes();
             $table->timestamps();

@@ -19,10 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(Lesson::class, 'lesson_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->text('frequency')->nullable();
+            $table->string('frequency')->nullable();
             $table->integer('interval')->nullable();
             $table->date('until')->nullable();
-            $table->text('color')->nullable();
+            $table->string('color')->nullable();
             $table->foreignIdFor(Tenant::class);
             $table->softDeletes();
             $table->timestamps();

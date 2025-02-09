@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignIdFor(\App\Models\User::class)->index('idx_settings_user_id');
-            $table->text('locale');
+            $table->string('locale');
             $table->enum('theme', array_map(fn ($type) => $type->value, Theme::cases()));
             $table->enum('color_scheme', array_map(fn ($type) => $type->value, ColorScheme::cases()));
             $table->enum('layout', array_map(fn ($type) => $type->value, Layout::cases()));

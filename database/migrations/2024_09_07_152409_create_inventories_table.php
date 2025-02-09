@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('name');
             $table->integer('qty')->default(0)->nullable();
             $table->enum('unit', ['kg', 'liter', 'piece'])->nullable();
-            $table->text('type')->nullable();
+            $table->string('type')->nullable();
             $table->text('note')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'created_by');
             $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();

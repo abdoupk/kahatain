@@ -17,21 +17,21 @@ return new class extends Migration
     {
         Schema::create('users', static function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->text('first_name')->nullable(false);
-            $table->text('last_name')->nullable(false);
-            $table->text('phone')->nullable();
-            $table->text('address')->nullable();
+            $table->string('first_name')->nullable(false);
+            $table->string('last_name')->nullable(false);
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->json('location')->nullable();
-            $table->text('workplace')->nullable();
-            $table->text('function')->nullable();
+            $table->string('workplace')->nullable();
+            $table->string('function')->nullable();
             $table->foreignIdFor(Zone::class)->nullable();
             $table->foreignIdFor(Branch::class)->nullable();
             $table->text('email')->nullable(false);
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->text('qualification')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->text('password')->nullable(false);
-            $table->text('remember_token')->nullable();
+            $table->string('password')->nullable(false);
+            $table->string('remember_token')->nullable();
             $table->foreignIdFor(Tenant::class)->references('id')->on('tenants')->onDelete('cascade');
             $table->foreignIdFor(AcademicLevel::class)->nullable();
             $table->timestamp('created_at')->nullable();
