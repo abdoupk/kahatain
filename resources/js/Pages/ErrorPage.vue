@@ -36,8 +36,6 @@ const description = computed(() => {
         403: $t('errors.descriptions.403')
     }[props.status]
 })
-
-const appUrl = 'https://kahatain-dz.com'
 </script>
 
 <template>
@@ -64,7 +62,7 @@ const appUrl = 'https://kahatain-dz.com'
 
                     <base-button
                         :as="tenantDontFound ? 'a' : Link"
-                        :href="!tenantDontFound ? '/' : appUrl"
+                        :href="tenantDontFound ? 'https://kahatain-dz.com' : '/'"
                         class="intro-x mt-10 border-white px-4 py-3 text-white dark:border-darkmode-400 dark:text-slate-200"
                     >
                         {{ $t('errors.back to home') }}
