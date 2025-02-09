@@ -4,7 +4,6 @@ use App\Http\Middleware\TeamsPermissionMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Foundation\Http\Middleware\InvokeDeferredCallbacks;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
@@ -34,8 +33,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
-            InvokeDeferredCallbacks::class,
-            Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
             TeamsPermissionMiddleware::class,
             App\Http\Middleware\HandleInertiaRequests::class,
         ]);

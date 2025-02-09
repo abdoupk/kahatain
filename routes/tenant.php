@@ -26,25 +26,10 @@ Route::middleware([
             Route::post(
                 'login',
                 [AuthenticatedSessionController::class, 'store']
-            );
-        });
-
-        Route::middleware('guest')->group(function (): void {
-            Route::post(
-                'login',
-                [AuthenticatedSessionController::class, 'store']
             )->name('login');
         });
 
         Route::middleware('auth')->group(function (): void {
-            // TODO: remove this
-            Route::get('/test', function () {
-                return view('pdf.school-tools', [
-                    'title' => 'School tools',
-                    'data' => generateSchoolTools(),
-                ]);
-            })->name('test');
-
             require __DIR__.'/v1/archive.php';
 
             require __DIR__.'/v1/benefactors.php';
