@@ -37,7 +37,7 @@ const description = computed(() => {
     }[props.status]
 })
 
-const appUrl = import.meta.env.VITE_APP_URL
+const appUrl = 'https://kahatain-dz.com'
 </script>
 
 <template>
