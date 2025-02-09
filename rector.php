@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\Exception\Configuration\InvalidConfigurationException;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\Strict\Rector\If_\BooleanInIfConditionRuleFixerRector;
+use Rector\Strict\Rector\Ternary\BooleanInTernaryOperatorRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
 
 try {
@@ -25,6 +27,8 @@ try {
         ->withRules([
             AddReturnTypeDeclarationRector::class,
             AddOverrideAttributeToOverriddenMethodsRector::class,
+            BooleanInIfConditionRuleFixerRector::class,
+            BooleanInTernaryOperatorRuleFixerRector::class,
         ])
         ->withPreparedSets(
             deadCode: true,
