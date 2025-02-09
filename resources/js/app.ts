@@ -6,10 +6,9 @@ import { isAxiosError } from 'axios'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { createPinia } from 'pinia'
 import { type DefineComponent, createApp, h } from 'vue'
-import { toast } from 'vue-sonner'
 import { ZiggyVue } from 'ziggy-js'
 
-import i18n from '@/utils/i18n'
+import i18n, { $t } from '@/utils/i18n'
 import { usePersistStore } from '@/utils/pinia'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
@@ -30,8 +29,10 @@ createInertiaApp({
             .use(i18n)
 
         if (import.meta.env.MODE !== 'development') {
-            app.config.errorHandler = (err) => {
+            app.config.errorHandler = async (err) => {
                 if (isAxiosError(err)) {
+                    const { toast } = await import('vue-sonner')
+
                     switch (err.response?.status) {
                         case 401:
                             toast($t('errors.descriptions.401'))
