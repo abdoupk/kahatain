@@ -7,23 +7,21 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 function getAcademicLevelsForCollegeStudentsIndex(): array
 {
     return AcademicLevel::withCount('orphans')
-        ->where(function ($query) {
+        ->where(function ($query): void {
             $query->whereIn('phase_key', ['master', 'licence', 'doctorate']);
         })
         ->get()
-        ->mapToGroups(function (AcademicLevel $academicLevel) {
-            return [$academicLevel->phase_key => [
-                'level' => $academicLevel->level,
-                'id' => $academicLevel->id,
-                'orphans_count' => $academicLevel->orphans_count,
-            ]];
-        })->toArray();
+        ->mapToGroups(fn(AcademicLevel $academicLevel) => [$academicLevel->phase_key => [
+            'level' => $academicLevel->level,
+            'id' => $academicLevel->id,
+            'orphans_count' => $academicLevel->orphans_count,
+        ]])->toArray();
 }
 
 function getTotalCollegeStudents()
 {
     return AcademicLevel::withCount('orphans')
-        ->where(function ($query) {
+        ->where(function ($query): void {
             $query->whereIn('phase_key', ['master', 'licence', 'doctorate']);
         })
         ->get()
@@ -32,7 +30,7 @@ function getTotalCollegeStudents()
 
 function getCollegeStudentsPerPhase(): array
 {
-    return Orphan::whereHas('academicLevel', function ($query) {
+    return Orphan::whereHas('academicLevel', function ($query): void {
         $query->whereIn('phase_key', ['master', 'licence', 'doctorate']);
     })
         ->join('academic_levels', 'orphans.academic_level_id', '=', 'academic_levels.id')
@@ -44,9 +42,9 @@ function getCollegeStudentsPerPhase(): array
 
 function getCollegeStudentsPerUniversity(): array
 {
-    return Orphan::whereHas('academicLevel', function ($query) {
+    return Orphan::whereHas('academicLevel', function ($query): void {
         $query->whereIn('phase_key', ['master', 'licence', 'doctorate']);
-    })->whereHas('institution', function ($query) {
+    })->whereHas('institution', function ($query): void {
         $query->where('institution_type', 'university');
     })
         ->join('universities', 'orphans.institution_id', '=', 'universities.id')

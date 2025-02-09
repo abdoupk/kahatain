@@ -102,13 +102,13 @@ class FetchVocationalTrainingCentersCommand extends Command
                         Log::error($response->getBody()->getContents());
                     }
 
-                    sleep(rand(1, 5));
-                } catch (Exception $exception) {
+                    sleep(random_int(1, 5));
+                } catch (Exception) {
                     continue;
                 }
             }
 
-            sleep(rand(1, 5));
+            sleep(random_int(1, 5));
         }
     }
 }

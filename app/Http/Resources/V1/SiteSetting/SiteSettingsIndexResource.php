@@ -19,7 +19,7 @@ class SiteSettingsIndexResource extends JsonResource
             'association' => $this->infos['association'],
             'city' => CityResource::make($city),
             'city_id' => $this->infos['city_id'] ?? null,
-            'domain' => explode('.', $this->infos['domain'])[0],
+            'domain' => explode('.', (string)$this->infos['domain'])[0],
             'super_admin' => [
                 'id' => $this->infos['super_admin']['id'],
             ],

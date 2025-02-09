@@ -13,6 +13,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BenefactorUpdateController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_benefactors'];
+    }
+
     public function __invoke(BenefactorUpdateRequest $request, Benefactor $benefactor)
     {
         $benefactor->update($request->except(['sponsorships', 'id']));
@@ -22,17 +27,15 @@ class BenefactorUpdateController extends Controller implements HasMiddleware
 
         $toDelete = array_diff($currentSponsorshipIds, $newSponsorshipIds);
 
-        if (empty($toDelete)) {
+        if ($toDelete === []) {
             return response('', 204);
         }
 
         $sponsorships = Sponsorship::with('recipientable')->whereIn('id', $toDelete);
 
-        $families = $sponsorships->get()->flatMap(function (Sponsorship $sponsorship) {
-            return $sponsorship->recipientable_type === 'orphan'
-                ? optional(Orphan::find($sponsorship->recipientable_id))->family
-                : Family::find($sponsorship->recipientable_id);
-        })->filter()->unique();
+        $families = $sponsorships->get()->flatMap(fn(Sponsorship $sponsorship) => $sponsorship->recipientable_type === 'orphan'
+            ? optional(Orphan::find($sponsorship->recipientable_id))->family
+            : Family::find($sponsorship->recipientable_id))->filter()->unique();
 
         $sponsorshipToDelete = $benefactor->sponsorships()->whereIn('id', $toDelete);
 
@@ -49,10 +52,5 @@ class BenefactorUpdateController extends Controller implements HasMiddleware
         dispatch(new BenefactorUpdatedJob($benefactor, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_benefactors'];
     }
 }

@@ -21,8 +21,6 @@ class ExportSponsorsPDFController extends Controller implements HasMiddleware
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('sponsors', 'sponsors', function () {
-            return getSponsorsForExport();
-        });
+        return saveToPDF('sponsors', 'sponsors', fn() => getSponsorsForExport());
     }
 }

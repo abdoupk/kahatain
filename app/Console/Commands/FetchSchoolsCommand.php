@@ -22,7 +22,7 @@ class FetchSchoolsCommand extends Command
 
         $cookies = 'SERVER_USED=57731568e0e119e5; ci_session=6f135ii9i4fonad37pp6vs9hl6i67bck; csrf_cookie_name=478c19336088fda157fa78c8a1da03ea';
 
-        City::chunk(100, function ($cities) use ($client, $cookies) {
+        City::chunk(100, function ($cities) use ($client, $cookies): void {
             foreach ($cities as $city) {
                 for ($i = 1; $i <= 3; $i++) {
                     $formData = [
@@ -39,8 +39,9 @@ class FetchSchoolsCommand extends Command
 
                     if ($response->getStatusCode() === 200) {
                         $data = json_decode($response->getBody(), true);
+                        $counter = count($data);
 
-                        for ($index = 0; $index < count($data); $index++) {
+                        for ($index = 0; $index < $counter; $index++) {
                             if (count($data) > 1) {
                                 if ($index === 0) {
                                     continue;

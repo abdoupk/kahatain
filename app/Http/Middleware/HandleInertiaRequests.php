@@ -23,11 +23,9 @@ class HandleInertiaRequests extends Middleware
                 'lng' => $this->getCoordinates()?->longitude ?? null,
             ] ?? null,
             'language' => auth()->user()?->settings?->locale ?? null,
-            'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy)->toArray(), [
-                    'location' => $request->url(),
-                ]);
-            },
+            'ziggy' => fn() => array_merge((new Ziggy)->toArray(), [
+                'location' => $request->url(),
+            ]),
         ]);
     }
 

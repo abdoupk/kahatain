@@ -28,9 +28,7 @@ class Transcript extends Model
         return [
             'trimester' => $this->trimester,
             'average' => $this->average,
-            'first_trimester' => $this->subjects()->get()->mapWithKeys(function ($subject, $index) {
-                return ['grade_'.$index => (float) $subject->pivot->grade];
-            })->toArray(),
+            'first_trimester' => $this->subjects()->get()->mapWithKeys(fn($subject, $index) => ['grade_' . $index => (float)$subject->pivot->grade])->toArray(),
             'orphan_id' => $this->orphan_id,
             'academic_level_id' => $this->academic_level_id,
             'tenant_id' => $this->tenant_id,

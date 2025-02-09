@@ -7,9 +7,7 @@ function getSponsorsBySponsorType(): array
     $sponsors = Sponsor::select('sponsor_type', DB::raw('count(*) as total'))->groupBy('sponsor_type')->get();
 
     return [
-        'labels' => $sponsors->pluck('sponsor_type')->map(function (string $sponsor_type) {
-            return __('sponsor_types.'.$sponsor_type);
-        })->toArray(),
+        'labels' => $sponsors->pluck('sponsor_type')->map(fn(string $sponsor_type) => __('sponsor_types.' . $sponsor_type))->toArray(),
         'data' => $sponsors->pluck('total')->toArray(),
     ];
 }
@@ -20,14 +18,10 @@ function getSponsorsByAcademicLevel(): array
         ->groupBy('academic_level_id')
         ->get();
 
-    $result = $sponsors->groupBy(function ($orphan) {
-        return $orphan->academicLevel?->phase;
-    })->map(function ($group) {
-        return [
-            'total' => $group->count(),
-            'phase' => $group->first()->academicLevel?->phase,
-        ];
-    })->values()->toArray();
+    $result = $sponsors->groupBy(fn($orphan) => $orphan->academicLevel?->phase)->map(fn($group) => [
+        'total' => $group->count(),
+        'phase' => $group->first()->academicLevel?->phase,
+    ])->values()->toArray();
 
     return [
         'labels' => array_column($result, 'phase'),

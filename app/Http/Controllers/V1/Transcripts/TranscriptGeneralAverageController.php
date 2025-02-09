@@ -14,7 +14,7 @@ class TranscriptGeneralAverageController extends Controller
     public function __invoke(Orphan $orphan): Response
     {
         $orphan->load([
-            'transcripts' => function ($query) {
+            'transcripts' => function ($query): void {
                 $query->orderBy('created_at', 'asc');
             },
             'transcripts.subjects',
@@ -25,14 +25,10 @@ class TranscriptGeneralAverageController extends Controller
         }
 
         return Inertia::render('Tenant/transcripts/general-average/TranscriptGeneralAveragePage', [
-            'grades' => $orphan->transcripts->map(function (Transcript $transcript) {
-                return $transcript->subjects->map(function (Subject $subject) {
-                    return [
-                        'name' => $subject->getName(),
-                        'grade' => number_format($subject->pivot->grade, 2),
-                    ];
-                });
-            }),
+            'grades' => $orphan->transcripts->map(fn(Transcript $transcript) => $transcript->subjects->map(fn(Subject $subject) => [
+                'name' => $subject->getName(),
+                'grade' => number_format($subject->pivot->grade, 2),
+            ])),
             'averages' => $orphan->transcripts->map(fn ($transcript) => number_format($transcript->average, 2)),
         ]);
     }

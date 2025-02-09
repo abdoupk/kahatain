@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CommitteeDetailsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_committees'];
+    }
+
     public function __invoke(Committee $committee): JsonResponse
     {
         return response()->json([
@@ -17,10 +22,5 @@ class CommitteeDetailsController extends Controller implements HasMiddleware
                 ['creator:id,first_name,last_name']
             )->loadCount(['members'])),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_committees'];
     }
 }

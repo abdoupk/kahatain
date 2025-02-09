@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BenefactorDestroyController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:delete_benefactors'];
+    }
+
     public function __invoke(Benefactor $benefactor)
     {
         $benefactor->delete();
@@ -16,10 +21,5 @@ class BenefactorDestroyController extends Controller implements HasMiddleware
         dispatch(new BenefactorTrashedJob($benefactor, auth()->user()));
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:delete_benefactors'];
     }
 }

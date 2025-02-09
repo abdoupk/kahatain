@@ -19,27 +19,23 @@ class SchoolEntryOrphansListPerYearSheet implements FromCollection, WithEvents, 
     {
         return Archive::whereOccasion('school_entry')
             ->whereYear('created_at', $this->year)
-            ->get()->map(function (Archive $archive) {
-                return $archive->listOrphans
-                    ->load('academicLevel')
-                    ->map(function (Orphan $orphan) {
-                        return [
-                            $orphan->sponsor->getName(),
-                            $orphan->sponsor->formattedPhoneNumber(),
-                            $orphan->getName(),
-                            trans_choice(
-                                'age_years',
-                                $orphan->birth_date->age,
-                                [
-                                    'count' => $orphan->birth_date->age,
-                                ]
-                            ),
-                            __($orphan->gender),
-                            $orphan->academicLevel?->level,
-                            number_format($orphan->academic_average, 2),
-                        ];
-                    });
-            });
+            ->get()->map(fn(Archive $archive) => $archive->listOrphans
+                ->load('academicLevel')
+                ->map(fn(Orphan $orphan) => [
+                    $orphan->sponsor->getName(),
+                    $orphan->sponsor->formattedPhoneNumber(),
+                    $orphan->getName(),
+                    trans_choice(
+                        'age_years',
+                        $orphan->birth_date->age,
+                        [
+                            'count' => $orphan->birth_date->age,
+                        ]
+                    ),
+                    __($orphan->gender),
+                    $orphan->academicLevel?->level,
+                    number_format($orphan->academic_average, 2),
+                ]));
     }
 
     public function title(): string

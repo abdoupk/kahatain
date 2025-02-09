@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class EidAlAdhaChangeStatusController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        // TODO: Implement middleware() method.
+    }
+
     public function __invoke(FamilyEidAlAdhaUpdateStatusRequest $request, Family $family)
     {
         $family->update([
@@ -25,10 +30,5 @@ class EidAlAdhaChangeStatusController extends Controller implements HasMiddlewar
         ]);
 
         dispatch(new EidAlAdhaFamiliesStatusUpdatedJob($family, $request->validated('status'), auth()->user()));
-    }
-
-    public static function middleware()
-    {
-        // TODO: Implement middleware() method.
     }
 }

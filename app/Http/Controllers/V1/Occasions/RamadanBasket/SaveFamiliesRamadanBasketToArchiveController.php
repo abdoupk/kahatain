@@ -65,9 +65,7 @@ class SaveFamiliesRamadanBasketToArchiveController extends Controller
         $archive->families()
             ->syncWithPivotValues(
                 listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport()
-                    ->map(function (Family $family) {
-                        return $family->id;
-                    }),
+                    ->map(fn(Family $family) => $family->id),
                 ['tenant_id' => tenant('id')]
             );
     }

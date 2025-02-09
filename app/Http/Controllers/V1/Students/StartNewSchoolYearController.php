@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class StartNewSchoolYearController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:start_new_academic_year'];
+    }
+
     public function __invoke()
     {
         DB::table('transcripts')->truncate();
@@ -16,10 +21,5 @@ class StartNewSchoolYearController extends Controller implements HasMiddleware
         dispatch(new StartNewSchoolYearJob(auth()->user()));
 
         return response('', 200);
-    }
-
-    public static function middleware()
-    {
-        return ['can:start_new_academic_year'];
     }
 }

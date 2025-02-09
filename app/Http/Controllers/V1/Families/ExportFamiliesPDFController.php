@@ -21,8 +21,6 @@ class ExportFamiliesPDFController extends Controller implements HasMiddleware
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('families', 'families', function () {
-            return getFamiliesForExport();
-        });
+        return saveToPDF('families', 'families', fn() => getFamiliesForExport());
     }
 }

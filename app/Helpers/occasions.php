@@ -157,11 +157,11 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorship(): LengthAwarePaginat
 
 function updateBasketItems(?array $items, ?array $deletedItems, Builder $basket): void
 {
-    if (! is_null($deletedItems) && count($deletedItems) > 0) {
+    if (!is_null($deletedItems) && $deletedItems !== []) {
         $basket->whereIn('id', $deletedItems)->delete();
     }
 
-    if (! is_null($items) && count($items) > 0) {
+    if (!is_null($items) && $items !== []) {
         $inventoriesData = collect($items)
             ->map(fn ($item) => [
                 'id' => $item['inventory_id'],

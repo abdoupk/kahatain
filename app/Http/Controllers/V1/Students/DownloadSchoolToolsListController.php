@@ -11,6 +11,11 @@ use function Spatie\LaravelPdf\Support\pdf;
 
 class DownloadSchoolToolsListController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_school_supplies'];
+    }
+
     public function __invoke()
     {
         dispatch(new DownloadSchoolToolsListJob(auth()->user()));
@@ -20,7 +25,7 @@ class DownloadSchoolToolsListController extends Controller implements HasMiddlew
                 'data' => generateSchoolTools(),
             ])
             ->landscape()
-            ->withBrowsershot(function (Browsershot $browsershot) {
+            ->withBrowsershot(function (Browsershot $browsershot): void {
                 $browsershot
                     ->margins(2, 4, 2, 4)
                     ->format('A3');
@@ -33,10 +38,5 @@ class DownloadSchoolToolsListController extends Controller implements HasMiddlew
             ->name(__('school_supplies_list', ['date' => now()->format('Y')]))
             ->download();
 
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_school_supplies'];
     }
 }

@@ -19,7 +19,7 @@ class MonthlySponsorshipSettingsUpdatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        $this->user->load('tenant.families')->tenant->families->each(function ($family) {
+        $this->user->load('tenant.families')->tenant->families->each(function ($family): void {
             monthlySponsorship($family);
         });
 

@@ -9,6 +9,11 @@ use Inertia\Response;
 
 class CollegeStudentsIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_college_students'];
+    }
+
     public function __invoke(): Response
     {
         return inertia('Tenant/college-students/index/CollegeStudentsIndex', [
@@ -19,10 +24,5 @@ class CollegeStudentsIndexController extends Controller implements HasMiddleware
             'collegeStudentsPerPhase' => fn () => getCollegeStudentsPerPhase(),
             'studentsPerUniversity' => fn () => getCollegeStudentsPerUniversity(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_college_students'];
     }
 }

@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BenefactorStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:create_benefactors'];
+    }
+
     public function __invoke(BenefactorCreateRequest $request)
     {
         $benefactor = Benefactor::create($request->validated());
@@ -17,10 +22,5 @@ class BenefactorStoreController extends Controller implements HasMiddleware
         dispatch(new BenefactorCreatedJob($benefactor, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:create_benefactors'];
     }
 }

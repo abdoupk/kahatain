@@ -36,15 +36,13 @@ function getStatisticsForEidAlAdha(): array
         )
         ->groupByRaw('archives.id, EXTRACT(YEAR FROM archives.created_at)')
         ->get()
-        ->map(function ($archive) {
-            return [
-                'sacrificed' => $archive->sacrificed_count,
-                'benefit' => $archive->benefit_count,
-                'dont_benefit' => $archive->dont_benefit_count,
-                'meat' => $archive->meat_count,
-                'benefactor' => $archive->benefactor_count,
-            ];
-        })->toArray();
+        ->map(fn($archive) => [
+            'sacrificed' => $archive->sacrificed_count,
+            'benefit' => $archive->benefit_count,
+            'dont_benefit' => $archive->dont_benefit_count,
+            'meat' => $archive->meat_count,
+            'benefactor' => $archive->benefactor_count,
+        ])->toArray();
 }
 
 function getStatisticsForSchoolEntry(): array
@@ -83,9 +81,7 @@ function getStatisticsForRamadanBasket(): array
         )
         ->groupBy('year', 'families.ramadan_basket_category')
         ->get()
-        ->groupBy('year')->map(function ($yearGroup) {
-            return $yearGroup->pluck('count', 'ramadan_basket_category');
-        })->toArray();
+        ->groupBy('year')->map(fn($yearGroup) => $yearGroup->pluck('count', 'ramadan_basket_category'))->toArray();
 }
 
 function getStatisticsForMeatDistribution(): array

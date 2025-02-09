@@ -9,6 +9,11 @@ use Inertia\Response;
 
 class TraineesIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:list_trainees_orphans'];
+    }
+
     public function __invoke(): Response
     {
         return inertia('Tenant/trainees/index/TraineesIndex', [
@@ -19,10 +24,5 @@ class TraineesIndexController extends Controller implements HasMiddleware
             'params' => getParams(),
             'orphans' => fn () => TraineesOrphansIndexResource::collection(getTraineesStudents()),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:list_trainees_orphans'];
     }
 }

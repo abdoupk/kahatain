@@ -10,16 +10,16 @@ use Inertia\Response;
 
 class BenefactorIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return ['can:list_benefactors'];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/benefactors/index/BenefactorsIndexPage', [
             'benefactors' => BenefactorsIndexResource::collection(getBenefactors()),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware(): array
-    {
-        return ['can:list_benefactors'];
     }
 }

@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CommitteeUpdateController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_committees'];
+    }
+
     public function __invoke(CommitteeUpdateRequest $request, Committee $committee)
     {
         $committee->update($request->validated());
@@ -17,10 +22,5 @@ class CommitteeUpdateController extends Controller implements HasMiddleware
         dispatch(new CommitteeUpdatedJob($committee, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_committees'];
     }
 }

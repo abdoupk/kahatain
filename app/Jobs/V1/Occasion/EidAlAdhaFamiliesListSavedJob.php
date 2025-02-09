@@ -26,18 +26,16 @@ class EidAlAdhaFamiliesListSavedJob implements ShouldQueue
      */
     public function handle(): void
     {
-        DB::transaction(function () {
+        DB::transaction(function (): void {
             FamilyEidAlAdha::where('year', $this->archive->updated_at->year)->delete();
 
-            $data = $this->archive->families->map(function ($family) {
-                return [
-                    'family_id' => $family->id,
-                    'year' => $this->archive->updated_at->year,
-                    'status' => $family->eid_al_adha_status,
-                    'updated_by' => $this->user->id,
-                    'tenant_id' => $this->user->tenant_id,
-                ];
-            })->toArray();
+            $data = $this->archive->families->map(fn($family) => [
+                'family_id' => $family->id,
+                'year' => $this->archive->updated_at->year,
+                'status' => $family->eid_al_adha_status,
+                'updated_by' => $this->user->id,
+                'tenant_id' => $this->user->tenant_id,
+            ])->toArray();
 
             FamilyEidAlAdha::insert($data);
         });

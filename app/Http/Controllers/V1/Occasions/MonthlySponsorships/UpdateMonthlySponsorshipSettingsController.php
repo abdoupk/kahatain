@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class UpdateMonthlySponsorshipSettingsController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:update_settings_monthly_sponsorships'];
+    }
+
     public function __invoke(UpdateMonthlySponsorshipSettingsRequest $request)
     {
         $data = json_decode(auth()->user()->tenant->calculation, true);
@@ -20,10 +25,5 @@ class UpdateMonthlySponsorshipSettingsController extends Controller implements H
         dispatch(new MonthlySponsorshipSettingsUpdatedJob(auth()->user()));
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:update_settings_monthly_sponsorships'];
     }
 }

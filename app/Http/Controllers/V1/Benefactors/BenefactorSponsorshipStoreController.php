@@ -11,6 +11,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class BenefactorSponsorshipStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:add_new_sponsorship_benefactors'];
+    }
+
     public function __invoke(MonthlySponsorshipCreateRequest $request)
     {
         $sponsorship = Sponsorship::create([
@@ -26,10 +31,5 @@ class BenefactorSponsorshipStoreController extends Controller implements HasMidd
         dispatch(new BenefactorSponsorshipCreatedJob($benefactor->first(), $sponsorship, auth()->user()));
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:add_new_sponsorship_benefactors'];
     }
 }

@@ -21,8 +21,6 @@ class ExportArchiveOrphansEidSuitPDFController extends Controller
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('eid-suit', function () {
-            return listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport();
-        }, $archive->created_at->year, 'orphans');
+        return saveArchiveToPDF('eid-suit', fn() => listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(), $archive->created_at->year, 'orphans');
     }
 }

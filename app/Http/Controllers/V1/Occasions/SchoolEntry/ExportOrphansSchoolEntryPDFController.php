@@ -21,8 +21,6 @@ class ExportOrphansSchoolEntryPDFController extends Controller implements HasMid
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/school-entry', 'orphans', function () {
-            return listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport();
-        }, now()->year);
+        return saveToPDF('occasions/school-entry', 'orphans', fn() => listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(), now()->year);
     }
 }

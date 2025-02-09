@@ -26,12 +26,10 @@ class AcademicLevel extends Model
     public function subjects(): Collection
     {
         return Subject::whereIn('id', $this->subject_ids)
-            ->get()->map(function (Subject $subject) {
-                return [
-                    'id' => $subject->id,
-                    'name' => $subject->getName(),
-                ];
-            });
+            ->get()->map(fn(Subject $subject) => [
+                'id' => $subject->id,
+                'name' => $subject->getName(),
+            ]);
     }
 
     public function orphans(): HasMany

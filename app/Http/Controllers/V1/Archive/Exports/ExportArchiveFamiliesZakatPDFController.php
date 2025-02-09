@@ -23,8 +23,6 @@ class ExportArchiveFamiliesZakatPDFController extends Controller implements HasM
     public function __invoke(Archive $archive): StreamedResponse
     {
         // TODO fix the attribute display issue corrupted file name
-        return saveArchiveToPDF('zakat-families', function () {
-            return listOfFamiliesBenefitingFromTheZakatForExport();
-        }, $archive->created_at->translatedFormat('j'.__('glue').'F Y'), attribute: formatCurrency($archive->metadata['amount']));
+        return saveArchiveToPDF('zakat-families', fn() => listOfFamiliesBenefitingFromTheZakatForExport(), $archive->created_at->translatedFormat('j' . __('glue') . 'F Y'), attribute: formatCurrency($archive->metadata['amount']));
     }
 }

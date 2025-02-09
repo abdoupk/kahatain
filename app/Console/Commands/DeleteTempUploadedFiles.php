@@ -13,7 +13,7 @@ final class DeleteTempUploadedFiles extends Command
 
     public function handle(): void
     {
-        Tenant::select('id')->each(function (Tenant $tenant) {
+        Tenant::select('id')->each(function (Tenant $tenant): void {
             tenancy()->initialize($tenant);
 
             $tempPath = storage_path().'/app/tmp';

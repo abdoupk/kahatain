@@ -61,25 +61,17 @@ class FamilyShowController extends Controller implements HasMiddleware
     public function getArchives(Family $family)
     {
         $allArchives = $family->archives->merge(
-            $family->orphans->flatMap(function ($orphan) {
-                return $orphan->archives->map(function ($archive) use ($orphan) {
-                    return $archive->forceFill([
-                        'recipient_id' => $orphan->id,
-                        'archiveable_type' => 'orphan',
-                        'recipient_name' => $orphan->getName(),
-                    ]);
-                });
-            })
+            $family->orphans->flatMap(fn($orphan) => $orphan->archives->map(fn($archive) => $archive->forceFill([
+                'recipient_id' => $orphan->id,
+                'archiveable_type' => 'orphan',
+                'recipient_name' => $orphan->getName(),
+            ])))
         )->merge(
-            $family->babies->flatMap(function (Baby $baby) {
-                return $baby->archives->map(function ($archive) use ($baby) {
-                    return $archive->forceFill([
-                        'recipient_id' => $baby->orphan->id,
-                        'archiveable_type' => 'orphan',
-                        'recipient_name' => $baby->getName(),
-                    ]);
-                });
-            })
+            $family->babies->flatMap(fn(Baby $baby) => $baby->archives->map(fn($archive) => $archive->forceFill([
+                'recipient_id' => $baby->orphan->id,
+                'archiveable_type' => 'orphan',
+                'recipient_name' => $baby->getName(),
+            ])))
         );
 
         $perPageArchives = 10;
@@ -114,15 +106,11 @@ class FamilyShowController extends Controller implements HasMiddleware
     {
         $needs = $family->sponsor->needs;
 
-        $orphanNeeds = $family->orphans()->with('needs')->get()->flatMap(function ($orphan) {
-            return $orphan->needs->map(function ($archive) use ($orphan) {
-                return $archive->forceFill([
-                    'recipient_id' => $orphan->id,
-                    'needable_type' => 'orphan',
-                    'recipient_name' => $orphan->getName(),
-                ]);
-            });
-        });
+        $orphanNeeds = $family->orphans()->with('needs')->get()->flatMap(fn($orphan) => $orphan->needs->map(fn($archive) => $archive->forceFill([
+            'recipient_id' => $orphan->id,
+            'needable_type' => 'orphan',
+            'recipient_name' => $orphan->getName(),
+        ])));
 
         $allNeeds = $needs->merge($orphanNeeds);
 

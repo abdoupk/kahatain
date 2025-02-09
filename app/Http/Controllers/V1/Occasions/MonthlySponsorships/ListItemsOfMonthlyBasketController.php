@@ -9,16 +9,16 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ListItemsOfMonthlyBasketController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        // TODO: Implement middleware() method.
+    }
+
     public function __invoke()
     {
         return MonthlyBasketItemsResource::collection(
             MonthlyBasket::with('inventory')
                 ->paginate(perPage: 10, page: request('page', 1))
         );
-    }
-
-    public static function middleware()
-    {
-        // TODO: Implement middleware() method.
     }
 }

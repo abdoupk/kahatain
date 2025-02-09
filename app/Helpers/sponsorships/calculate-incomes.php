@@ -18,9 +18,7 @@ function calculateIncomeRate(Family $family, float $weights): float
 
 function calculateIncomes(Family $family)
 {
-    return $family->orphans->sum(function (Orphan $orphan) {
-        return calculateOrphanIncomes($orphan);
-    }) +
+    return $family->orphans->sum(fn(Orphan $orphan) => calculateOrphanIncomes($orphan)) +
         (calculateContributionsForSponsor($family->sponsor) - getTenantPrice($family))
         + calculateContributionsForSecondSponsor($family);
 }
@@ -32,7 +30,7 @@ function getTenantPrice(Family $family): float
 
 function calculateOrphanExactIncome(Orphan $orphan): float|int|null
 {
-    $monthlySponsorship = json_decode($orphan->load(['academicLevel', 'tenant'])->tenant['calculation'], true)['monthly_sponsorship'];
+    $monthlySponsorship = json_decode((string)$orphan->load(['academicLevel', 'tenant'])->tenant['calculation'], true)['monthly_sponsorship'];
 
     $scholarshipMap = [
         'ليسانس' => $monthlySponsorship['university_scholarship_bachelor'],
@@ -52,5 +50,5 @@ function calculateOrphanExactIncome(Orphan $orphan): float|int|null
 
 function setHandicappedOrphanIncome(Orphan $orphan): float
 {
-    return json_decode($orphan->load(['tenant'])->tenant['calculation'], true)['handicapped_contribution']['contribution'];
+    return json_decode((string)$orphan->load(['tenant'])->tenant['calculation'], true)['handicapped_contribution']['contribution'];
 }

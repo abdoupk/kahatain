@@ -14,11 +14,9 @@ class SearchVocationalTrainingCentersController extends Controller
             $options['filter'] = 'wilaya_code = '.tenant('infos')['city']['wilaya_code'].' ';
 
             return $meilisearch->search($query, $options);
-        })->get()->map(function (VocationalTrainingCenter $vocationalTrainingCenter) {
-            return [
-                'id' => $vocationalTrainingCenter->id,
-                'name' => $vocationalTrainingCenter->getName(),
-            ];
-        }));
+        })->get()->map(fn(VocationalTrainingCenter $vocationalTrainingCenter) => [
+            'id' => $vocationalTrainingCenter->id,
+            'name' => $vocationalTrainingCenter->getName(),
+        ]));
     }
 }

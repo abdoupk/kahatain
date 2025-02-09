@@ -12,7 +12,7 @@ class BulkUpdateEidSuitInfosController extends Controller
 {
     public function __invoke(BulkUpdateEidSuitInfosRequest $request)
     {
-        Orphan::whereIn('id', $request->ids)->each(function (Orphan $orphan) use ($request) {
+        Orphan::whereIn('id', $request->ids)->each(function (Orphan $orphan) use ($request): void {
             $orphan->eidSuit()->updateOrCreate(
                 ['orphan_id' => $orphan->id],
                 [

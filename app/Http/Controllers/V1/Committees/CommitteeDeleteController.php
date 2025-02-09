@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CommitteeDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:delete_committees'];
+    }
+
     public function __invoke(Committee $committee)
     {
         $committee->delete();
@@ -16,10 +21,5 @@ class CommitteeDeleteController extends Controller implements HasMiddleware
         dispatch(new CommitteeTrashedJob($committee, auth()->user()));
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:delete_committees'];
     }
 }

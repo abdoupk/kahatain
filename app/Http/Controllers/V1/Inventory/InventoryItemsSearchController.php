@@ -9,11 +9,9 @@ class InventoryItemsSearchController extends Controller
 {
     public function __invoke()
     {
-        return search(Inventory::getModel())->get()->map(function (Inventory $item) {
-            return [
-                'id' => $item->id,
-                'name' => $item->name,
-            ];
-        });
+        return search(Inventory::getModel())->get()->map(fn(Inventory $item) => [
+            'id' => $item->id,
+            'name' => $item->name,
+        ]);
     }
 }

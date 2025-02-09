@@ -20,25 +20,21 @@ class EidAlAdhaFamiliesListPerYearSheet implements FromCollection, WithEvents, W
         return Archive::whereOccasion('eid_al_adha')
             ->whereYear('created_at', $this->year)
             ->get()
-            ->map(function (Archive $archive) {
-                return $archive->listFamilies
-                    ->load(
-                        'branch:id,name',
-                        'zone:id,name',
-                        'sponsor:id,family_id,first_name,last_name,phone_number'
-                    )
-                    ->map(function (Family $family) {
-                        return [
-                            $family->sponsor->getName(),
-                            $family->sponsor->formattedPhoneNumber(),
-                            $family->address,
-                            $family->zone?->name,
-                            $family->branch?->name,
-                            formatCurrency($family->total_income ?? 0),
-                            $family->income_rate,
-                        ];
-                    });
-            });
+            ->map(fn(Archive $archive) => $archive->listFamilies
+                ->load(
+                    'branch:id,name',
+                    'zone:id,name',
+                    'sponsor:id,family_id,first_name,last_name,phone_number'
+                )
+                ->map(fn(Family $family) => [
+                    $family->sponsor->getName(),
+                    $family->sponsor->formattedPhoneNumber(),
+                    $family->address,
+                    $family->zone?->name,
+                    $family->branch?->name,
+                    formatCurrency($family->total_income ?? 0),
+                    $family->income_rate,
+                ]));
     }
 
     public function title(): string

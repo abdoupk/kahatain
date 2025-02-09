@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CommitteeShowController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_committees'];
+    }
+
     public function __invoke(Committee $committee): JsonResponse
     {
         return response()->json([
             'committee' => $committee,
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_committees'];
     }
 }

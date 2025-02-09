@@ -20,7 +20,7 @@ class RamadanBasketItemsUpdatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        Inventory::chunk(200, function ($models) {
+        Inventory::chunk(200, function ($models): void {
             $models->searchable();
         });
 

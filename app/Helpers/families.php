@@ -42,7 +42,7 @@ function getFamiliesPosition(): array
 function setTotalIncomeAttribute(array $incomes, Sponsor $sponsor): float
 {
     if ($sponsor->is_unemployed) {
-        return json_decode($sponsor->load('tenant')->tenant['calculation'], true)['monthly_sponsorship']['unemployment_benefit'];
+        return json_decode((string)$sponsor->load('tenant')->tenant['calculation'], true)['monthly_sponsorship']['unemployment_benefit'];
     }
 
     $incomes = Arr::only($incomes, ['account', 'other_income']);

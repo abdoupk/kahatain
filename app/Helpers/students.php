@@ -20,31 +20,29 @@ function getAcademicLevelsForStudentsIndex(): array
 {
     return AcademicLevel::withCount('orphans')
         ->with('transcripts')
-        ->where(function ($query) {
+        ->where(function ($query): void {
             $query->where('phase_key', 'primary_education')
                 ->orWhere('phase_key', 'middle_education')
                 ->orWhere('phase_key', 'secondary_education');
         })
         ->get()
-        ->mapToGroups(function (AcademicLevel $academicLevel) {
-            return [$academicLevel->phase_key => [
-                'level' => $academicLevel->level,
-                'id' => $academicLevel->id,
-                'orphans_count' => $academicLevel->orphans_count,
-                'transcripts' => [
-                    'first_trimester_transcripts_count' => $academicLevel->transcripts->where('trimester', 'first_trimester')->count(),
-                    'second_trimester_transcripts_count' => $academicLevel->transcripts->where('trimester', 'second_trimester')->count(),
-                    'third_trimester_transcripts_count' => $academicLevel->transcripts->where('trimester', 'third_trimester')->count(),
-                ],
-                'achievement_percentage' => calculateAchievementsPercentage($academicLevel->orphans_count, $academicLevel->transcripts->count()),
-            ]];
-        })->toArray();
+        ->mapToGroups(fn(AcademicLevel $academicLevel) => [$academicLevel->phase_key => [
+            'level' => $academicLevel->level,
+            'id' => $academicLevel->id,
+            'orphans_count' => $academicLevel->orphans_count,
+            'transcripts' => [
+                'first_trimester_transcripts_count' => $academicLevel->transcripts->where('trimester', 'first_trimester')->count(),
+                'second_trimester_transcripts_count' => $academicLevel->transcripts->where('trimester', 'second_trimester')->count(),
+                'third_trimester_transcripts_count' => $academicLevel->transcripts->where('trimester', 'third_trimester')->count(),
+            ],
+            'achievement_percentage' => calculateAchievementsPercentage($academicLevel->orphans_count, $academicLevel->transcripts->count()),
+        ]])->toArray();
 }
 
 function getTotalStudents()
 {
     return AcademicLevel::whereHas('orphans')->withCount('orphans')
-        ->where(function ($query) {
+        ->where(function ($query): void {
             $query->where('phase_key', 'primary_education')
                 ->orWhere('phase_key', 'middle_education')
                 ->orWhere('phase_key', 'secondary_education');
@@ -55,7 +53,7 @@ function getTotalStudents()
 
 function getStudentsPerPhase(): array
 {
-    return Orphan::whereHas('academicLevel', function ($query) {
+    return Orphan::whereHas('academicLevel', function ($query): void {
         $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
     })
         ->join('academic_levels', 'orphans.academic_level_id', '=', 'academic_levels.id')
@@ -77,79 +75,65 @@ function calculateAchievementsPercentage(int $orphansCount, int $transcriptsCoun
 function generateSchoolTools(): array
 {
     // Fetch orphans with their academic level, tools, and branch details
-    $orphans = Orphan::whereHas('academicLevel.AcademicLevelSchoolTools.schoolTool', function ($query) {
+    $orphans = Orphan::whereHas('academicLevel.AcademicLevelSchoolTools.schoolTool', function ($query): void {
         $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
     })
         ->whereTenantId(tenant('id'))
         ->with([
-            'academicLevel' => function ($query) {
+            'academicLevel' => function ($query): void {
                 $query->select('id', 'level', 'phase_key', 'i_id'); // Include i_id for sorting
             },
-            'academicLevel.AcademicLevelSchoolTools' => function ($query) {
+            'academicLevel.AcademicLevelSchoolTools' => function ($query): void {
                 $query->select('id', 'academic_level_id', 'school_tool_id', 'qty')
                     ->with('schoolTool:id,name');
             },
-            'family.branch' => function ($query) {
+            'family.branch' => function ($query): void {
                 $query->select('id', 'name'); // Include branch details
             },
         ])
         ->get();
 
     // Group data globally by phase
-    $globalData = $orphans->flatMap(function (Orphan $orphan) {
-        return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
-            return [
-                'phase_key' => $orphan->academicLevel->phase_key,
-                'i_id' => $orphan->academicLevel->i_id,
-                'academic_level_id' => $orphan->academicLevel->id,
-                'academic_level' => renameAcademicLevel($orphan->academicLevel->level),
-                'gender' => $orphan->gender,
-                'school_tool_id' => $tool->school_tool_id,
-                'school_tool_name' => $tool->schoolTool->name,
-                'qty' => $tool->qty,
-            ];
-        });
-    })
+    $globalData = $orphans->flatMap(fn(Orphan $orphan) => $orphan->academicLevel->AcademicLevelSchoolTools->map(fn(AcademicLevelSchoolTool $tool) => [
+        'phase_key' => $orphan->academicLevel->phase_key,
+        'i_id' => $orphan->academicLevel->i_id,
+        'academic_level_id' => $orphan->academicLevel->id,
+        'academic_level' => renameAcademicLevel($orphan->academicLevel->level),
+        'gender' => $orphan->gender,
+        'school_tool_id' => $tool->school_tool_id,
+        'school_tool_name' => $tool->schoolTool->name,
+        'qty' => $tool->qty,
+    ]))
         ->groupBy('phase_key') // Group by phase_key
         ->map(fn (Collection $phaseData) => formatData($phaseData));
 
     // Group data by branches
-    $branchData = $orphans->flatMap(function (Orphan $orphan) {
-        return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
-            return [
-                'branch_id' => $orphan->family->branch?->id ?? null,
-                'branch_name' => $orphan->family->branch?->name ?? null,
-                'phase_key' => $orphan->academicLevel->phase_key,
-                'i_id' => $orphan->academicLevel->i_id,
-                'academic_level_id' => $orphan->academicLevel->id,
-                'academic_level' => renameAcademicLevel($orphan->academicLevel->level),
-                'gender' => $orphan->gender,
-                'school_tool_id' => $tool->school_tool_id,
-                'school_tool_name' => $tool->schoolTool->name,
-                'qty' => $tool->qty,
-            ];
-        });
-    })
+    $branchData = $orphans->flatMap(fn(Orphan $orphan) => $orphan->academicLevel->AcademicLevelSchoolTools->map(fn(AcademicLevelSchoolTool $tool) => [
+        'branch_id' => $orphan->family->branch?->id ?? null,
+        'branch_name' => $orphan->family->branch?->name ?? null,
+        'phase_key' => $orphan->academicLevel->phase_key,
+        'i_id' => $orphan->academicLevel->i_id,
+        'academic_level_id' => $orphan->academicLevel->id,
+        'academic_level' => renameAcademicLevel($orphan->academicLevel->level),
+        'gender' => $orphan->gender,
+        'school_tool_id' => $tool->school_tool_id,
+        'school_tool_name' => $tool->schoolTool->name,
+        'qty' => $tool->qty,
+    ]))
         ->groupBy('branch_id') // Group by branch ID
-        ->map(function (Collection $branchData, $branchId) {
-            return [
-                'branch_name' => $branchData->first()['branch_name'],
-                'data' => $branchData
-                    ->groupBy('phase_key') // Group by phase_key within each branch
-                    ->map(fn (Collection $phaseData) => formatData($phaseData)),
-            ];
-        });
+        ->map(fn(Collection $branchData, $branchId) => [
+            'branch_name' => $branchData->first()['branch_name'],
+            'data' => $branchData
+                ->groupBy('phase_key') // Group by phase_key within each branch
+                ->map(fn(Collection $phaseData) => formatData($phaseData)),
+        ]);
 
     // Aggregate tool totals (male, female, total) across all levels and branches
-    $toolsData = $orphans->flatMap(function (Orphan $orphan) {
-        return $orphan->academicLevel->AcademicLevelSchoolTools->map(function (AcademicLevelSchoolTool $tool) use ($orphan) {
-            return [
-                'school_tool_name' => $tool->schoolTool->name,
-                'gender' => $orphan->gender,
-                'qty' => $tool->qty,
-            ];
-        });
-    })
+    $toolsData = $orphans->flatMap(fn(Orphan $orphan) => $orphan->academicLevel->AcademicLevelSchoolTools->map(fn(AcademicLevelSchoolTool $tool) => [
+        'school_tool_name' => $tool->schoolTool->name,
+        'gender' => $orphan->gender,
+        'qty' => $tool->qty,
+    ]))
         ->groupBy('school_tool_name')
         ->map(function (Collection $toolData) {
             $maleTotal = $toolData->where('gender', 'male')->sum('qty');
@@ -222,9 +206,9 @@ function renameAcademicLevel($levelName): string
 
 function getStudentsPerSchool(): array
 {
-    return Orphan::whereHas('academicLevel', function ($query) {
+    return Orphan::whereHas('academicLevel', function ($query): void {
         $query->whereIn('phase_key', ['primary_education', 'middle_education', 'secondary_education']);
-    })->whereHas('institution', function ($query) {
+    })->whereHas('institution', function ($query): void {
         $query->where('institution_type', 'school');
     })
         ->join('schools', 'orphans.institution_id', '=', 'schools.id')

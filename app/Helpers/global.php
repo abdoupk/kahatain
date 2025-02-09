@@ -70,7 +70,7 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
 
     $browsershot->margins(2, 4, 2, 4);
 
-    if ($landscape) {
+    if ($landscape === true) {
         $browsershot->landscape();
     }
 
@@ -148,17 +148,15 @@ function generateFormatedConditions(): array
 {
     $filters = (array) request()->input('filters', []);
 
-    if ($filters) {
+    if ($filters !== []) {
         /** @phpstan-ignore-next-line */
-        return array_map(static function (array $condition) {
-            return [
-                $condition['field'],
-                $condition['operator'],
-                str_contains($condition['value'], ' ')
-                    ? '"'.$condition['value'].'"'
-                    : $condition['value'],
-            ];
-        }, $filters);
+        return array_map(static fn(array $condition) => [
+            $condition['field'],
+            $condition['operator'],
+            str_contains((string)$condition['value'], ' ')
+                ? '"' . $condition['value'] . '"'
+                : $condition['value'],
+        ], $filters);
     }
 
     return [];
@@ -168,20 +166,18 @@ function generateFilterConditions(?string $additional_filters = ''): string
 {
     $filters = array_merge(generateFormatedConditions());
 
-    if (! $filters) {
+    if ($filters === []) {
         return 'tenant_id = '.tenant('id').' '.$additional_filters;
     }
 
-    return implode(' AND ', array_map(static function ($condition) {
-        return implode(' ', $condition);
-    }, $filters)).' '.$additional_filters;
+    return implode(' AND ', array_map(static fn($condition) => implode(' ', $condition), $filters)) . ' ' . $additional_filters;
 }
 
 function generateFormattedSort(): array
 {
     $directions = (array) request()->input('directions', []);
 
-    if ($directions) {
+    if ($directions !== []) {
         /** @phpstan-ignore-next-line */
         return array_map(static function (string $value, string $key) {
             if ($key === 'birth_date' || $key === 'orphan.birth_date') {
@@ -197,7 +193,7 @@ function generateFormattedSort(): array
 
 function search(Model $model, ?string $additional_filters = '', ?int $limit = null): Builder
 {
-    if (! $limit) {
+    if ($limit === null || $limit === 0) {
         $limit = request()->integer('perPage', 10);
     }
 
@@ -205,7 +201,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
         $additional_filters .= ' AND __soft_deleted = 0';
     }
 
-    $query = trim(request()->input('search', '')) ?? '';
+    $query = trim((string)request()->input('search', '')) ?? '';
 
     $meilisearchOptions = [
         'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
@@ -248,27 +244,23 @@ function formatedVocationalTrainingSpecialities(): array
 
 function searchVocationalTrainingSpecialities(): \Illuminate\Support\Collection
 {
-    $vocationalTrainingSpecialities = VocationalTrainingSpeciality::search(trim(request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+    $vocationalTrainingSpecialities = VocationalTrainingSpeciality::search(trim((string)request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
         $options['limit'] = 100;
 
         return $meilisearch->search($query, $options);
-    })->get()->map(function ($vocationalTrainingSpeciality) {
-        return [
-            'name' => $vocationalTrainingSpeciality->speciality,
-            'id' => $vocationalTrainingSpeciality->speciality,
-        ];
-    });
+    })->get()->map(fn($vocationalTrainingSpeciality) => [
+        'name' => $vocationalTrainingSpeciality->speciality,
+        'id' => $vocationalTrainingSpeciality->speciality,
+    ]);
 
-    $universitySpecialities = UniversitySpeciality::search(trim(request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+    $universitySpecialities = UniversitySpeciality::search(trim((string)request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
         $options['limit'] = 100;
 
         return $meilisearch->search($query, $options);
-    })->get()->map(function ($universitySpeciality) {
-        return [
-            'name' => $universitySpeciality->speciality,
-            'id' => $universitySpeciality->speciality,
-        ];
-    });
+    })->get()->map(fn($universitySpeciality) => [
+        'name' => $universitySpeciality->speciality,
+        'id' => $universitySpeciality->speciality,
+    ]);
 
     return collect(array_merge($vocationalTrainingSpecialities->toArray(), $universitySpecialities->toArray()));
 }
@@ -306,10 +298,10 @@ function calculateAge($birthDate): string
 
 function formatPhoneNumber($phone): string
 {
-    return substr($phone, 0, 4).'-'.
-        substr($phone, 4, 2).'-'.
-        substr($phone, 6, 2).'-'.
-        substr($phone, 8, 2);
+    return substr((string)$phone, 0, 4) . '-' .
+        substr((string)$phone, 4, 2) . '-' .
+        substr((string)$phone, 6, 2) . '-' .
+        substr((string)$phone, 8, 2);
 }
 
 function getUsersShouldBeNotified(
@@ -322,9 +314,7 @@ function getUsersShouldBeNotified(
     return User::with(['roles.permissions'])
         ->whereHas(
             'settings',
-            function ($query) use ($notificationType) {
-                return $query->where("notifications->$notificationType", true);
-            }
+            fn($query) => $query->where("notifications->$notificationType", true)
         )
         ->where(function ($query) use ($permissions): void {
             $query->whereHas('roles', function ($query): void {
@@ -348,7 +338,7 @@ function getFileNameFromTemporaryPath($url): string
     if ($url === '' || $url === null) {
         return '';
     }
-    $path = parse_url($url, PHP_URL_PATH);
+    $path = parse_url((string)$url, PHP_URL_PATH);
 
     return substr($path, strpos($path, 'tmp/'));
 }
@@ -359,7 +349,7 @@ function getFileNameFromTemporaryPath($url): string
  */
 function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model, string|array|null $files, string $collectionName, ?bool $clearCollection = true): void
 {
-    if ($clearCollection) {
+    if ($clearCollection === true) {
         $model->clearMediaCollection($collectionName);
     }
 
@@ -393,13 +383,13 @@ function mergePdf(Family|Tenant|Orphan|Sponsor|Spouse|Income $model): void
 
     $model->clearMediaCollection('merged_files');
 
-    $model->getMedia('*')->each(function (Media $media) use (&$pdfFiles) {
+    $model->getMedia('*')->each(function (Media $media) use (&$pdfFiles): void {
         if ($media->type === 'pdf') {
             $pdfFiles[] = $media->getPath();
         }
     });
 
-    if (count($pdfFiles) > 0) {
+    if ($pdfFiles !== []) {
         $fileName = Str::random(20).'.pdf';
 
         (new PdfMerger)->merge($pdfFiles, storage_path($fileName));

@@ -26,9 +26,7 @@ class SaveFamiliesEidAlAdhaToArchiveController extends Controller implements Has
         $archive->families()
             ->syncWithPivotValues(
                 listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport()
-                    ->map(function (Family $family) {
-                        return $family->id;
-                    }),
+                    ->map(fn(Family $family) => $family->id),
                 ['tenant_id' => tenant('id')]
             );
 

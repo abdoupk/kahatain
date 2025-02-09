@@ -15,7 +15,7 @@ class CleanCompletedBenefactorSponsorshipsCommand extends Command
     {
         Sponsorship::with('recipientable')
             ->where('until', '<=', now())
-            ->each((function (Sponsorship $sponsorship) {
+            ->each((function (Sponsorship $sponsorship): void {
                 $sponsorship->delete();
 
                 if ($sponsorship->recipientable_type === 'family') {

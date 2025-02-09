@@ -10,6 +10,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class CommitteeStoreController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:create_committees'];
+    }
+
     public function __invoke(CommitteeCreateRequest $request)
     {
         $committee = Committee::create($request->validated());
@@ -17,10 +22,5 @@ class CommitteeStoreController extends Controller implements HasMiddleware
         dispatch(new CommitteeCreatedJob($committee, auth()->user()));
 
         return response('', 201);
-    }
-
-    public static function middleware()
-    {
-        return ['can:create_committees'];
     }
 }

@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class PhaseStudentsIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_transcripts_students'];
+    }
+
     public function __invoke(string $phase, AcademicLevel $academicLevel)
     {
         if (! in_array($phase, ['primary-education', 'middle-education', 'secondary-education'])) {
@@ -19,10 +24,5 @@ class PhaseStudentsIndexController extends Controller implements HasMiddleware
             'students' => PhaseStudentsIndexResource::collection(getPhaseStudents($academicLevel->id)),
             'params' => getParams(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_transcripts_students'];
     }
 }

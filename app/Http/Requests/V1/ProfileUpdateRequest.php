@@ -14,7 +14,7 @@ class ProfileUpdateRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required', 'string', 'lowercase', 'email', 'max:255',
-                Rule::unique('users')->where(function ($query) {
+                Rule::unique('users')->where(function ($query): void {
                     $query->where('tenant_id', tenant('id'));
                 })->ignore(auth()->id()),
             ],
@@ -24,7 +24,7 @@ class ProfileUpdateRequest extends FormRequest
                 'required',
                 'string',
                 'regex:/^(06|07|05)\d{8}$/',
-                Rule::unique('users')->where(function ($query) {
+                Rule::unique('users')->where(function ($query): void {
                     $query->where('tenant_id', tenant('id'));
                 })->ignore(auth()->id()),
             ],

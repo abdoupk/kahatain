@@ -12,12 +12,17 @@ use Throwable;
 
 class SaveFamiliesMeatDistributionToArchiveController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:save_occasions'];
+    }
+
     /**
      * @throws Throwable
      */
     public function __invoke(saveMeatDistributionToArchiveRequest $request)
     {
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request): void {
             $colum = ($request->meat_type === 'red_meat') ? 'aggregate_red_meat_benefit' : 'aggregate_white_meat_benefit';
 
             DB::table('families')
@@ -39,10 +44,5 @@ class SaveFamiliesMeatDistributionToArchiveController extends Controller impleme
         });
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:save_occasions'];
     }
 }

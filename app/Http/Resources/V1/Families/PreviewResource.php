@@ -15,14 +15,10 @@ class PreviewResource extends JsonResource
             'id' => $this->id,
             'report' => $this->report,
             'preview_date' => $this->preview_date,
-            'inspectors' => $this->whenLoaded('inspectors', function () {
-                return $this->inspectors->map(function ($user) {
-                    return [
-                        'id' => $user->id,
-                        'name' => $user->getName(),
-                    ];
-                })->toArray();
-            }),
+            'inspectors' => $this->whenLoaded('inspectors', fn() => $this->inspectors->map(fn($user) => [
+                'id' => $user->id,
+                'name' => $user->getName(),
+            ])->toArray()),
         ];
     }
 }

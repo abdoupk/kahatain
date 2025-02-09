@@ -34,6 +34,7 @@ use Illuminate\Queue\SerializesModels;
 use Maatwebsite\Excel\Facades\Excel;
 use Notification;
 use PhpOffice\PhpSpreadsheet\Exception;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Storage;
 use ZipArchive;
 
@@ -248,14 +249,14 @@ class ExportDataJob implements ShouldQueue
 
     private function exportFiles(ZipArchive $zip): void
     {
-        Family::with(['sponsor.incomes', 'spouse', 'orphans'])->each(function (Family $family) use ($zip) {
+        Family::with(['sponsor.incomes', 'spouse', 'orphans'])->each(function (Family $family) use ($zip): void {
             $folderName = __('upload-files.files').'/'.$family->name;
 
             $zip->addEmptyDir($folderName);
 
             $residenceFile = $family->getFirstMedia('residence_files');
 
-            if ($residenceFile) {
+            if ($residenceFile instanceof Media) {
                 $zip->addFile($residenceFile->getPath(), "$folderName/".__('upload-files.labels.residence_certificate').'.'.$residenceFile->extension);
             }
 
@@ -266,23 +267,6 @@ class ExportDataJob implements ShouldQueue
             $this->generateOrphanFiles($family, $zip, $folderName);
 
             $this->generateDeathCertificateFiles($family, $zip, $folderName);
-        });
-    }
-
-    private function cleanup(): void
-    {
-        // TODO cleanup folders and files except exported_data.zip
-    }
-
-    private function generateOrphanFiles(Family $family, ZipArchive $zip, string $folderName): void
-    {
-        $family->orphans->each(function (Orphan $orphan) use ($zip, $folderName) {
-            $orphanPhoto = $orphan->getFirstMedia('photos');
-
-            if ($orphanPhoto) {
-                $zip->addFile($orphanPhoto->getPath(), "$folderName/".__('the_photos')."/{$orphan->getName()}".
-                    '.'.$orphanPhoto->extension);
-            }
         });
     }
 
@@ -348,6 +332,18 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    private function generateOrphanFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $family->orphans->each(function (Orphan $orphan) use ($zip, $folderName): void {
+            $orphanPhoto = $orphan->getFirstMedia('photos');
+
+            if ($orphanPhoto instanceof Media) {
+                $zip->addFile($orphanPhoto->getPath(), "$folderName/" . __('the_photos') . "/{$orphan->getName()}" .
+                    '.' . $orphanPhoto->extension);
+            }
+        });
+    }
+
     private function generateDeathCertificateFiles(Family $family, ZipArchive $zip, string $folderName): void
     {
         $deathCertificateFile = $family->spouse->getFirstMedia('death_certificate_files');
@@ -355,5 +351,10 @@ class ExportDataJob implements ShouldQueue
         if ($deathCertificateFile) {
             $zip->addFile($deathCertificateFile->getPath(), "$folderName/".__('upload-files.labels.death_certificate').'.'.$deathCertificateFile->extension);
         }
+    }
+
+    private function cleanup(): void
+    {
+        // TODO cleanup folders and files except exported_data.zip
     }
 }

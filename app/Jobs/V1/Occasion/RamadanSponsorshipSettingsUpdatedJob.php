@@ -20,7 +20,7 @@ class RamadanSponsorshipSettingsUpdatedJob implements ShouldQueue
 
     public function handle(): void
     {
-        $this->user->load('tenant.families')->tenant->families->each(function (Family $family) {
+        $this->user->load('tenant.families')->tenant->families->each(function (Family $family): void {
             monthlySponsorship($family);
         });
 

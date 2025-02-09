@@ -16,6 +16,11 @@ use Throwable;
 
 class SaveFamiliesZakatToArchiveController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:save_occasions'];
+    }
+
     /**
      * @throws Throwable
      */
@@ -23,7 +28,7 @@ class SaveFamiliesZakatToArchiveController extends Controller implements HasMidd
     {
         $amount = (float) $request->amount / count($request->families);
 
-        DB::transaction(function () use ($request, $amount) {
+        DB::transaction(function () use ($request, $amount): void {
             Finance::create([
                 'specification' => 'zakat',
                 'date' => now(),
@@ -68,10 +73,5 @@ class SaveFamiliesZakatToArchiveController extends Controller implements HasMidd
         });
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:save_occasions'];
     }
 }
