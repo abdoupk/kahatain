@@ -9,15 +9,15 @@
         </x-th>
 
         <x-th class="text-center">
-            <span> {{__('item_name')}}</span>
+            <span> {{ __('item_name') }}</span>
         </x-th>
 
         <x-th class="text-center">
-            <span> {{__('validation.attributes.qty')}}</span>
+            <span> {{ __('validation.attributes.qty') }}</span>
         </x-th>
 
         <x-th class="text-center">
-            <span> {{__('validation.attributes.qty_for_family')}}</span>
+            <span> {{ __('validation.attributes.qty_for_family') }}</span>
         </x-th>
     </x-slot>
 

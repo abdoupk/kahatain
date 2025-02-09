@@ -13,29 +13,29 @@
         </x-th>
 
         <x-th class="text-center">
-            <span> {{__('first_and_last_name')}}</span>
+            <span> {{ __('first_and_last_name') }}</span>
         </x-th>
 
         <x-th class="text-center">
-            <span> {{__('academic_level')}}</span>
+            <span> {{ __('academic_level') }}</span>
         </x-th>
 
         <x-th class="text-center">
-            <span>{{__('the_subject')}}</span>
+            <span>{{ __('the_subject') }}</span>
         </x-th>
 
         <x-th class="text-center">
-            <span>{{__('the_sponsor')}}</span>
+            <span>{{ __('the_sponsor') }}</span>
         </x-th>
 
         <x-th class="text-center">
-            <span>{{__('sponsor_phone_number')}}</span>
+            <span>{{ __('sponsor_phone_number') }}</span>
         </x-th>
     </x-slot>
 
     <x-slot name="tbody">
-        @foreach($private_school->eventsWithOrphans as  $key => $value)
-            @foreach($value->orphans as $orphan)
+        @foreach ($private_school->eventsWithOrphans as $key => $value)
+            @foreach ($value->orphans as $orphan)
                 @php
                     $counter++;
                 @endphp
