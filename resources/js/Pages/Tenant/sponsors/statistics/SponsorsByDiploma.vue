@@ -14,7 +14,11 @@ defineProps<{
 
 <template>
     <suspense v-if="sponsorsByDiploma.data.length" suspensible>
-        <base-donut-chart :chart-data="sponsorsByDiploma.data" :labels="sponsorsByDiploma.labels"></base-donut-chart>
+        <base-donut-chart
+            :chart-data="sponsorsByDiploma.data"
+            :labels="sponsorsByDiploma.labels"
+            hide-legend
+        ></base-donut-chart>
     </suspense>
 
     <the-no-data-chart v-else></the-no-data-chart>

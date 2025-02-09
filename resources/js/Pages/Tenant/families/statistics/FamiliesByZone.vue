@@ -14,7 +14,7 @@ defineProps<{
 
 <template>
     <suspense v-if="familiesByZone.data?.length" suspensible>
-        <base-pie-chart :chart-data="familiesByZone.data" :labels="familiesByZone.labels"></base-pie-chart>
+        <base-pie-chart :chart-data="familiesByZone.data" :labels="familiesByZone.labels" hide-legend></base-pie-chart>
     </suspense>
 
     <the-no-data-chart v-else></the-no-data-chart>

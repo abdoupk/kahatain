@@ -14,7 +14,11 @@ defineProps<{
 
 <template>
     <suspense v-if="orphansByZone.data.length" suspensible>
-        <base-polar-bar-chart :chart-data="orphansByZone.data" :labels="orphansByZone.labels"></base-polar-bar-chart>
+        <base-polar-bar-chart
+            :chart-data="orphansByZone.data"
+            :labels="orphansByZone.labels"
+            hide-legend
+        ></base-polar-bar-chart>
     </suspense>
 
     <the-no-data-chart v-else></the-no-data-chart>

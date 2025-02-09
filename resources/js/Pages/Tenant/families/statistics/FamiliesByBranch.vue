@@ -14,7 +14,11 @@ defineProps<{
 
 <template>
     <suspense v-if="familiesByBranch.data.length" suspensible>
-        <base-pie-chart :chart-data="familiesByBranch.data" :labels="familiesByBranch.labels"></base-pie-chart>
+        <base-pie-chart
+            :chart-data="familiesByBranch.data"
+            :labels="familiesByBranch.labels"
+            hide-legend
+        ></base-pie-chart>
     </suspense>
 
     <the-no-data-chart v-else></the-no-data-chart>
