@@ -49,7 +49,7 @@ return new class extends Migration
 
         Schema::create('sessions', static function (Blueprint $table) {
             $table->text('id')->primary();
-            $table->foreignUuid('user_id')->nullable()->index();
+            $table->foreignIdFor(\App\Models\User::class)->nullable()->index();
             $table->text('ip_address')->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Inventory;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +14,8 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
             $table->integer('qty_for_family');
             $table->boolean('status');
-            $table->foreignUuid('inventory_id')->constrained('inventories')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignUuid('tenant_id')->constrained('tenants');
+            $table->foreignIdFor(Inventory::class)->constrained('inventories')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(Tenant::class)->constrained('tenants');
             $table->timestamps();
 
             $table->unique(['inventory_id']);
