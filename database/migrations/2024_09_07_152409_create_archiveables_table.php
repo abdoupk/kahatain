@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('archiveables', function (Blueprint $table) {
-            $table->uuid('archive_id')->primary()->index();
+            $table->uuid('archive_id');
             $table->uuid('archiveable_id');
             $table->string('archiveable_type');
             $table->foreignIdFor(Tenant::class);
