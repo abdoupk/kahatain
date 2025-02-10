@@ -74,7 +74,7 @@ class PrivateSchool extends Model
 
     public function eventsWithOrphans(): HasManyThrough
     {
-        return $this->hasManyThrough(EventOccurrence::class, Lesson::class, 'private_school_id', 'lesson_id', 'id', 'id')->with('orphans:id,first_name,last_name,sponsor_id', 'orphans.sponsor:id,first_name,last_name,phone_number');
+        return $this->hasManyThrough(EventOccurrence::class, Lesson::class, 'private_school_id', 'lesson_id', 'id', 'id')->with('orphans:id,first_name,last_name,sponsor_id', 'orphans.sponsor:id,first_name,last_name,phone_number')->distinct('event_id');
     }
 
     public function creator(): BelongsTo
