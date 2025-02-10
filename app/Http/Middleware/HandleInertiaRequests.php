@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\City;
 use Arr;
+use Cache;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -64,8 +65,10 @@ class HandleInertiaRequests extends Middleware
             return null;
         }
 
-        return City::whereId($city_id)
-            ->select(['latitude', 'longitude'])
-            ->first();
+        return Cache::rememberForever(
+            'city-coordinates-'.$city_id,
+            fn () => City::whereId($city_id)
+                ->select(['latitude', 'longitude'])
+                ->first());
     }
 }
