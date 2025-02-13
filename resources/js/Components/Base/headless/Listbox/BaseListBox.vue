@@ -5,6 +5,8 @@ import { computed } from 'vue'
 
 import SvgLoader from '@/Components/SvgLoader.vue'
 
+import { $t } from '@/utils/i18n'
+
 type Props<T> = {
     modelValue: T extends true ? unknown[] : unknown
     options: Record<string, unknown>[]
@@ -15,20 +17,20 @@ type Props<T> = {
     optionClass?: (active: boolean, selected: boolean) => string
     valueKey?: string
     labelKey?: string
-    groupLabel?: string // New prop for group label
-    groupValues?: string // New prop for group values
+    groupLabel?: string
+    groupValues?: string
 }
 
 const props = withDefaults(defineProps<Props<boolean>>(), {
     multiple: false,
-    placeholder: 'Select an option',
+    placeholder: $t('filters.select_an_option'),
     buttonClass: '',
     optionsClass: '',
     optionClass: undefined,
     valueKey: 'value',
     labelKey: 'label',
-    groupLabel: '', // Default to no grouping
-    groupValues: '' // Default to no grouping
+    groupLabel: '',
+    groupValues: ''
 })
 
 const emit = defineEmits<{

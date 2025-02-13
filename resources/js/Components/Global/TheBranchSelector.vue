@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useBranchesStore } from '@/stores/branches'
+import { onMounted } from 'vue'
 
 import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
@@ -8,6 +9,10 @@ import { $t } from '@/utils/i18n'
 const branch = defineModel<string>('branch', { default: '' })
 
 const branchesStore = useBranchesStore()
+
+onMounted(async () => {
+    await branchesStore.getBranches()
+})
 </script>
 
 <template>

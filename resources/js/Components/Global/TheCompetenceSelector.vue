@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue'
 
 import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
 
+import { generateUUID } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const competences = defineModel('competences')
@@ -21,21 +22,19 @@ onMounted(async () => {
 const addCompetence = (newTag: string) => {
     const tag = {
         name: newTag,
-        id: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
+        id: generateUUID()
     }
 
     options.value.push(tag)
 
     competences.value.push(tag)
-
-    // HandleUpdate(tag)
 }
 </script>
 
 <template>
     <base-vue-select
-        v-model="competences"
         id="competences"
+        v-model="competences"
         :options="options"
         :placeholder="$t('search_or_add_a_competence')"
         :tag-placeholder="$t('add_this_competence')"

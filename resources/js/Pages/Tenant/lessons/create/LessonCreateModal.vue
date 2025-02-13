@@ -45,10 +45,8 @@ const props = defineProps<{
     date: string | Date
 }>()
 
-// Get the lessons store
 const lessonsStore = useLessonsStore()
 
-// Initialize a ref for loading state
 const loading = ref(false)
 
 const subjects = ref<SubjectType[]>([])
@@ -58,8 +56,12 @@ const form = computed(() => {
         return useForm(
             'put',
             route('tenant.lessons.update', lessonsStore.lesson.id),
-            // eslint-disable-next-line array-element-newline
-            omit(lessonsStore.lesson, ['subject', 'lesson', 'formated_date', 'school'])
+
+            {
+                // eslint-disable-next-line array-element-newline
+                ...omit(lessonsStore.lesson, ['subject', 'lesson', 'formated_date', 'school', 'orphans']),
+                orphans: lessonsStore.lesson.orphans?.map((orphan) => orphan.id)
+            }
         )
     }
 
@@ -70,10 +72,8 @@ const form = computed(() => {
     )
 })
 
-// Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
-// Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
     setTimeout(() => {
         router.get(
@@ -89,7 +89,6 @@ const handleSuccess = () => {
     emit('close')
 }
 
-// Function to handle form submission
 const handleSubmit = async () => {
     loading.value = true
 
@@ -104,7 +103,6 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the lesson id
 const modalTitle = computed(() => {
     return lessonsStore.lesson.id
         ? $t('modal_update_title', { attribute: $t('the_lesson') })
@@ -115,10 +113,8 @@ const date = computed(() => {
     return lessonsStore.lesson.id ? form.value.start_date : props.date
 })
 
-// Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the lesson id
 const modalType = computed(() => {
     return lessonsStore.lesson.id ? 'update' : 'create'
 })
@@ -127,17 +123,17 @@ const handleCloseModal = () => {
     emit('close')
 
     form.value.reset()
-    // TODO: Find a way to reset the vue select schools
 }
 
+// TODO show academic level when update
 const handleUpdateSchool = (schoolId: string) => {
     const schoolSubjects = useSchoolsStore().findSchoolById(schoolId)?.subjects
 
     subjects.value = []
 
-    form.value.subject_id = ''
+    form.value.orphans = []
 
-    if (schoolSubjects) subjects.value = schoolSubjects
+    subjects.value = schoolSubjects
 
     form.value.validate('school_id')
 }
@@ -241,20 +237,12 @@ const quota = ref<number>()
                         {{ $t('the_orphans') }}
                     </base-form-label>
 
-                    <div>
-                        <!-- @vue-ignore -->
-                        <orphans-selector
-                            :academic_level_id="form.academic_level_id"
-                            :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                            :orphans="form.orphans"
-                            :quota="quota"
-                            @update:selected-orphans="
-                                (value) => {
-                                    form.orphans = value.map((orphan) => orphan.id)
-                                }
-                            "
-                        ></orphans-selector>
-                    </div>
+                    <orphans-selector
+                        v-model:orphans="form.orphans"
+                        :academic_level_id="form.academic_level_id"
+                        :disabled="!lessonsStore.lesson.update_this_and_all_coming"
+                        :quota="quota"
+                    ></orphans-selector>
 
                     <base-form-input-error :form field_name="orphans"></base-form-input-error>
                 </div>

@@ -1,72 +1,48 @@
 <script lang="ts" setup>
-import type { OrphanType } from '@/types/families'
-
 import { useLessonsStore } from '@/stores/lessons'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
-
-const loadingSearchOrphans = ref(false)
 
 const lessonsStore = useLessonsStore()
 
 const props = defineProps<{
     academic_level_id: number
     quota: number
-    orphans: OrphanType[]
 }>()
 
-const orphans = ref(props.orphans)
+const orphans = defineModel('orphans')
 
-const selectedOrphans = defineModel('selectedOrphans')
+const searchedOrphans = ref([])
 
-const limitText = (count: string) => {
-    return $t('vue_select_limit_text', { count })
-}
-
-const asyncFind = (search: string) => {
-    loadingSearchOrphans.value = true
-
-    lessonsStore
-        .getOrphans(search, props.academic_level_id)
-        .then((res) => {
-            orphans.value = res.data
-        })
-        .finally(() => (loadingSearchOrphans.value = false))
-}
-
-onMounted(() => {
-    if (orphans.value) {
-        selectedOrphans.value = orphans.value
-    }
+onMounted(async () => {
+    await lessonsStore.getOrphans('', props.academic_level_id).then((res) => {
+        searchedOrphans.value = res.data
+    })
 })
+
+watch(
+    () => props.academic_level_id,
+    async (value) => {
+        await lessonsStore.getOrphans('', value).then((res) => {
+            orphans.value = []
+
+            searchedOrphans.value = res.data
+        })
+    }
+)
 </script>
 
 <template>
-    <base-vue-select
-        id="orphans"
-        v-model:value="selectedOrphans"
-        :allow-empty="true"
-        :clear-on-select="false"
-        :close-on-select="false"
-        :hide-selected="true"
-        :internal-search="false"
-        :limitText="limitText"
-        :loading="loadingSearchOrphans"
-        :max="quota"
-        :options="orphans"
+    <base-list-box
+        v-model="orphans"
+        :model-value="orphans"
+        :options="searchedOrphans"
         :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('the_orphans') })"
-        :searchable="true"
-        :show-no-results="true"
-        class="h-full w-full"
-        label="name"
-        limit="3"
+        label-key="name"
         multiple
-        open-direction="bottom"
-        track-by="id"
-        @search-change="asyncFind"
-    >
-    </base-vue-select>
+        value-key="id"
+    ></base-list-box>
 </template>

@@ -2,11 +2,19 @@
 
 namespace App\Http\Requests\V1\Lessons;
 
+use App\Models\Event;
 use Illuminate\Foundation\Http\FormRequest;
 
 /* @mixin Event */
 class LessonUpdateRequest extends FormRequest
 {
+    public function attributes(): array
+    {
+        return [
+            'orphans' => __('the_orphans'),
+        ];
+    }
+
     public function rules(): array
     {
         return [
@@ -15,6 +23,7 @@ class LessonUpdateRequest extends FormRequest
             'end_date' => 'required|date',
             'color' => 'required|hex_color',
             'until' => 'nullable|date',
+            'orphans' => 'array|min:1',
             'orphans.*' => 'required|exists:App\Models\Orphan,id',
             'school_id' => 'required|exists:App\Models\PrivateSchool,id',
             'subject_id' => 'required|integer',
