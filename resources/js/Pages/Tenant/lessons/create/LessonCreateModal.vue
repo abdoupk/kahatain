@@ -32,7 +32,7 @@ const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/
 
 const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
 
-const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
+const BaseFormInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInputError.vue'))
 
 const CreateEditModal = defineAsyncComponent(() => import('@/Components/Global/CreateEditModal.vue'))
 
@@ -133,6 +133,10 @@ const handleCloseModal = () => {
 const handleUpdateSchool = (schoolId: string) => {
     const schoolSubjects = useSchoolsStore().findSchoolById(schoolId)?.subjects
 
+    subjects.value = []
+
+    form.value.subject_id = ''
+
     if (schoolSubjects) subjects.value = schoolSubjects
 
     form.value.validate('school_id')
@@ -188,9 +192,7 @@ const quota = ref<number>()
                         @change="form.validate('title')"
                     />
 
-                    <div v-if="form.errors?.title" class="mt-2">
-                        <base-input-error :message="form.errors.title"></base-input-error>
-                    </div>
+                    <base-form-input-error :form field_name="title"></base-form-input-error>
                 </div>
                 <!-- End: Title-->
 
@@ -209,9 +211,7 @@ const quota = ref<number>()
                         ></the-school-selector>
                     </div>
 
-                    <div v-if="form.errors?.school_id" class="mt-2">
-                        <base-input-error :message="form.errors.school_id"></base-input-error>
-                    </div>
+                    <base-form-input-error :form field_name="school_id"></base-form-input-error>
                 </div>
                 <!-- End: School-->
 
@@ -231,9 +231,7 @@ const quota = ref<number>()
                         ></the-subject-selector>
                     </div>
 
-                    <div v-if="form.errors.subject_id" class="mt-2">
-                        <base-input-error :message="form.errors.subject_id"></base-input-error>
-                    </div>
+                    <base-form-input-error :form field_name="subject_id"></base-form-input-error>
                 </div>
                 <!-- End: Subject-->
 
@@ -258,9 +256,7 @@ const quota = ref<number>()
                         ></orphans-selector>
                     </div>
 
-                    <div v-if="form.errors?.orphans" class="mt-2">
-                        <base-input-error :message="form.errors.orphans"></base-input-error>
-                    </div>
+                    <base-form-input-error :form field_name="orphans"></base-form-input-error>
                 </div>
                 <!-- End: Orphans-->
 
@@ -298,9 +294,7 @@ const quota = ref<number>()
                         "
                     ></color-selector>
 
-                    <div v-if="form.errors?.color" class="mt-2">
-                        <base-input-error :message="form.errors.color"></base-input-error>
-                    </div>
+                    <base-form-input-error :form field_name="color"></base-form-input-error>
                 </div>
                 <!-- End: Color-->
 

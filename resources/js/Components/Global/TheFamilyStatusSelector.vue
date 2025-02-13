@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
@@ -16,32 +16,8 @@ const birthDate = defineModel('birthDate')
 
 const familyStatuses = ref([])
 
-const handleUpdate = (status: { label: string; value: string }) => {
-    familyStatus.value = status?.value
-}
-
-const selectedStatus = ref<string | { label: string; value: string }>('')
-
 onMounted(() => {
     familyStatuses.value = getFamilyStatuses()
-
-    if (familyStatus.value) {
-        let label
-
-        if (familyStatus.value === 'professionals') {
-            label =
-                gender.value === 'male'
-                    ? $t('family_statuses.professional_male')
-                    : $t('family_statuses.professional_girl')
-        } else {
-            label = $t(`family_statuses.${familyStatus.value}`)
-        }
-
-        selectedStatus.value = {
-            label: label,
-            value: familyStatus.value
-        }
-    }
 })
 
 const getFamilyStatuses = () => {
@@ -143,8 +119,6 @@ const getFamilyStatuses = () => {
 watch(
     () => [birthDate.value, gender.value],
     () => {
-        selectedStatus.value = ''
-
         familyStatus.value = ''
 
         familyStatuses.value = getFamilyStatuses()
@@ -153,13 +127,10 @@ watch(
 </script>
 
 <template>
-    <!--  @vue-ignore  -->
-    <base-vue-select
-        v-model:value="selectedStatus"
+    <base-list-box
+        v-model="familyStatus"
+        :model-value="familyStatus"
         :options="familyStatuses"
         :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('family_status') })"
-        label="label"
-        track_by="value"
-        @update:value="handleUpdate"
-    ></base-vue-select>
+    ></base-list-box>
 </template>

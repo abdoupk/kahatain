@@ -5,7 +5,7 @@ import { useCityStore } from '@/stores/city'
 import { onMounted, ref, watch } from 'vue'
 
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 const props = defineProps<{
     city: CityType
@@ -23,20 +23,16 @@ onMounted(async () => {
     if (props.city) {
         await cityStore.fetchDairas(props.city.wilaya_code)
 
-        cityStore.getDaira(props.city.daira_name)
+        cityStore.getDairaByName(props.city.daira_name)
 
-        selectedDaira.value = cityStore.daira
+        selectedDaira.value = cityStore.daira?.id
     }
 })
 
 const handleChange = async () => {
-    cityStore.getDaira(selectedDaira.value?.daira_name)
-
-    selectedDaira.value = cityStore.daira
+    cityStore.getDairaById(selectedDaira.value)
 
     await cityStore.fetchCommunes(cityStore.daira?.daira_name, cityStore.wilaya?.wilaya_code)
-
-    daira.value = selectedDaira.value
 
     emit('update:modelValue', selectedDaira.value)
 }
@@ -55,19 +51,15 @@ watch(
             {{ $t('daira') }}
         </base-form-label>
 
-        <div>
-            <!-- @vue-ignore -->
-            <base-vue-select
-                id="dairas"
-                v-model:value="selectedDaira"
-                :options="cityStore.dairas"
-                :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('daira') })"
-                class="h-full w-full"
-                label="daira_name"
-                track-by="id"
-                @update:value="handleChange"
-            >
-            </base-vue-select>
-        </div>
+        <base-list-box
+            id="dairas"
+            v-model="selectedDaira"
+            :model-value="selectedDaira"
+            :options="cityStore.dairas"
+            :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('daira') })"
+            label-key="daira_name"
+            value-key="id"
+            @update:model-value="handleChange"
+        ></base-list-box>
     </div>
 </template>

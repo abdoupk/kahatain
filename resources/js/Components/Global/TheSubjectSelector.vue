@@ -4,11 +4,9 @@ import type { SubjectType } from '@/types/types'
 import { useSubjectsStore } from '@/stores/subjects'
 import { onMounted, ref, watch } from 'vue'
 
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 const subject = defineModel<number | undefined>('subject')
-
-const selectedSubject = ref<SubjectType | number | string | undefined>()
 
 const subjectsStore = useSubjectsStore()
 
@@ -17,12 +15,6 @@ const props = defineProps<{
 }>()
 
 const subjects = ref(props.subjects)
-
-const handleUpdate = (value: SubjectType) => {
-    subject.value = value?.id
-
-    selectedSubject.value = value
-}
 
 watch(
     () => props.subjects,
@@ -35,21 +27,16 @@ watch(
 
 onMounted(async () => {
     await subjectsStore.getSubjects()
-
-    if (subject.value) {
-        selectedSubject.value = subjectsStore.findSubjectById(subject.value)
-    }
 })
 </script>
 
 <template>
-    <!--  @vue-ignore  -->
-    <base-vue-select
-        v-model:value="selectedSubject"
+    <base-list-box
+        v-model="subject"
+        :model-value="subject"
         :options="subjects"
         :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('the_subject') })"
-        label="name"
-        track-by="id"
-        @update:value="handleUpdate"
-    ></base-vue-select>
+        label-key="name"
+        value-key="id"
+    ></base-list-box>
 </template>

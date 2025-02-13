@@ -219,7 +219,7 @@ onMounted(async () => {
                 <!-- END: BirthDate -->
 
                 <!-- BEGIN: Family Status -->
-                <div class="col-span-12 @xl:col-span-6">
+                <div v-if="isOlderThan(form.birth_date, 18)" class="col-span-12 @xl:col-span-6">
                     <base-form-label for="family_status">
                         {{ $t('family_status') }}
                     </base-form-label>

@@ -4,30 +4,15 @@ import SponsorSelector from '@/Pages/Tenant/needs/create/SponsorSelector.vue'
 
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
-const needableType = defineModel('needableType', { default: 'orphan' })
+const needableType = defineModel('needableType', { default: '' })
 
 const needable = defineModel('needable', { default: '' })
 
 defineProps<{ errorMessage?: string | string[] }>()
-
-const needableTypes = [
-    {
-        label: 'the_orphan',
-        value: 'orphan'
-    },
-    {
-        label: 'the_sponsor',
-        value: 'sponsor'
-    }
-]
-
-const needableTypesLabels = ({ label }: { label: string }) => {
-    return $t(label)
-}
 </script>
 
 <template>
@@ -37,26 +22,14 @@ const needableTypesLabels = ({ label }: { label: string }) => {
                 {{ $t('needable_type') }}
             </base-form-label>
 
-            <div>
-                <!-- @vue-ignore -->
-                <base-vue-select
-                    id="needable_type"
-                    :custom-label="needableTypesLabels"
-                    :options="needableTypes"
-                    :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('needable_type') })"
-                    class="h-full w-full"
-                    label="label"
-                    track_by="value"
-                    @update:value="
-                        (type) => {
-                            needableType = type.value
-
-                            needable = ''
-                        }
-                    "
-                >
-                </base-vue-select>
-            </div>
+            <base-list-box
+                v-model="needableType"
+                :options="[
+                    { value: 'orphan', label: $t('the_orphan') },
+                    { value: 'sponsor', label: $t('the_sponsor') }
+                ]"
+                :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('needable_type') })"
+            />
         </div>
 
         <div>

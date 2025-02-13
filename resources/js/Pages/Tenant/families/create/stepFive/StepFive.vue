@@ -9,7 +9,7 @@ import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseClassicEditor from '@/Components/Base/editor/BaseClassicEditor.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
@@ -55,26 +55,17 @@ onMounted(async () => {
                     {{ $t('inspectors_members') }}
                 </base-form-label>
 
-                <div>
-                    <base-vue-select
-                        v-model="vueSelectInspectorsMembers"
-                        :options="members ?? []"
-                        :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('inspectors_members') })"
-                        label="name"
-                        multiple
-                        track-by="name"
-                        @update:value="
-                            (value) => {
-                                // @ts-ignore
-                                createFamilyStore.family.inspectors_members = value.map((member) => member.id)
+                <base-list-box
+                    v-model="createFamilyStore.family.inspectors_members"
+                    :model-value="createFamilyStore.family.inspectors_members"
+                    :options="members"
+                    :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('inspectors_members') })"
+                    label-key="name"
+                    multiple
+                    value-key="id"
+                ></base-list-box>
 
-                                form?.validate('inspectors_members')
-                            }
-                        "
-                    ></base-vue-select>
-                </div>
-
-                <base-form-input-error :form field_name="inspectors_members"> </base-form-input-error>
+                <base-form-input-error :form field_name="inspectors_members"></base-form-input-error>
             </div>
 
             <div class="col-span-12 sm:col-span-4">
@@ -87,7 +78,7 @@ onMounted(async () => {
                     v-model:date="createFamilyStore.family.preview_date"
                 ></base-v-calendar>
 
-                <base-form-input-error :form field_name="preview_date"> </base-form-input-error>
+                <base-form-input-error :form field_name="preview_date"></base-form-input-error>
             </div>
         </div>
 

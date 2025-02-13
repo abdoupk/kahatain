@@ -27,6 +27,7 @@ const inputs = reactive<FamilyUpdateFormType>(
         'furnishings',
         'second_sponsor',
         'preview',
+        'deceased',
         'name',
         'creator',
         'spouse'
@@ -70,7 +71,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div class="grid grid-cols-12 gap-4 p-5">
-                <!-- BEGIN: Branch -->
+                <!-- BEGIN: Zone -->
                 <div class="col-span-12 @xl:col-span-6">
                     <base-form-label for="zone_id">
                         {{ $t('validation.attributes.zone_id') }}
@@ -84,7 +85,7 @@ const submit = () => {
 
                     <base-form-input-error :form field_name="zone_id"></base-form-input-error>
                 </div>
-                <!-- END: Branch -->
+                <!-- END: Zone -->
 
                 <!-- BEGIN: Zone -->
                 <div class="col-span-12 @xl:col-span-6">

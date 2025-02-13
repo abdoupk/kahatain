@@ -11,6 +11,8 @@ import type {
     ThemesType
 } from '@/types/types'
 
+import { $t } from '@/utils/i18n'
+
 export const placementClasses: Record<IPlacement['placement'], string> = {
     'top-start': 'start-0 bottom-[100%]',
     top: 'start-[50%] translate-x-[-50%] bottom-[100%]',
@@ -210,62 +212,62 @@ export const createFamilyStepFiveErrorProps = ['report', 'preview_date', 'inspec
 
 export const needStatuses = [
     {
-        label: 'pending',
+        label: $t('pending'),
         value: 'pending'
     },
     {
-        label: 'in_progress',
+        label: $t('in_progress'),
         value: 'in_progress'
     },
     {
-        label: 'completed',
+        label: $t('completed'),
         value: 'completed'
     },
     {
-        label: 'rejected',
+        label: $t('rejected'),
         value: 'rejected'
     }
 ]
 
 export const financialTransactionSpecifications = [
     {
-        label: 'drilling_wells',
+        label: $t('drilling_wells'),
         value: 'drilling_wells'
     },
     {
-        label: 'monthly_sponsorship',
+        label: $t('monthly_sponsorship'),
         value: 'monthly_sponsorship'
     },
     {
-        label: 'eid_el_adha',
+        label: $t('eid_el_adha'),
         value: 'eid_el_adha'
     },
     {
-        label: 'zakat_el_fitr',
+        label: $t('zakat_el_fitr'),
         value: 'zakat_el_fitr'
     },
     {
-        label: 'school_entry',
+        label: $t('school_entry'),
         value: 'school_entry'
     },
     {
-        label: 'analysis',
+        label: $t('analysis'),
         value: 'analysis'
     },
     {
-        label: 'zakat',
+        label: $t('zakat'),
         value: 'zakat'
     },
     {
-        label: 'therapy',
+        label: $t('therapy'),
         value: 'therapy'
     },
     {
-        label: 'ramadan_basket',
+        label: $t('ramadan_basket'),
         value: 'ramadan_basket'
     },
     {
-        label: 'other',
+        label: $t('other'),
         value: 'other'
     }
 ]

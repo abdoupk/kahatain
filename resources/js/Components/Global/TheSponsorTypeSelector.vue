@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
@@ -32,32 +30,14 @@ const sponsorTypes = [
     }
 ]
 
-const handleUpdate = (sponsorType: { label: string; value: string }) => {
-    type.value = sponsorType.value
-}
-
 const type = defineModel<string>('type')
-
-const selectedType = ref<string | { label: string; value: string }>('')
-
-onMounted(() => {
-    if (type.value) {
-        selectedType.value = {
-            value: type.value,
-            label: $t(`sponsor_types.${type.value}`)
-        }
-    }
-})
 </script>
 
 <template>
-    <!--  @vue-ignore  -->
-    <base-vue-select
-        v-model:value="selectedType"
+    <base-list-box
+        v-model="type"
+        :model-value="type"
         :options="sponsorTypes"
         :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('filters.sponsor_type') })"
-        label="label"
-        track_by="value"
-        @update:value="handleUpdate"
-    ></base-vue-select>
+    ></base-list-box>
 </template>

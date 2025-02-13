@@ -81,8 +81,8 @@ onMounted(async () => {
                     id="photo"
                     :allow-multiple="false"
                     :files="_photo"
-                    is-picture
                     :labelIdle="$t('upload-files.labelIdle.sponsor_photo')"
+                    is-picture
                     @update:files="form.photo = $event[0]"
                 ></base-file-pond>
             </div>
@@ -254,10 +254,10 @@ onMounted(async () => {
                             })
                         "
                         data-test="sponsor_ccp"
-                        type="text"
-                        @keydown="allowOnlyNumbersOnKeyDown"
                         maxlength="12"
+                        type="text"
                         @change="form?.validate('ccp')"
+                        @keydown="allowOnlyNumbersOnKeyDown"
                     ></base-form-input>
 
                     <base-form-input-error :form field_name="ccp"></base-form-input-error>
@@ -382,9 +382,9 @@ onMounted(async () => {
                                 :allow-multiple="false"
                                 :files="_birthCertificateFile"
                                 :is-picture="false"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_birth_certificate')"
                                 accepted-file-types="image/jpeg, image/png, application/pdf"
                                 @update:files="form.birth_certificate_file = $event[0]"
-                                :label-idle="$t('upload-files.labelIdle.sponsor_birth_certificate')"
                             ></base-file-pond>
                         </div>
 
@@ -398,8 +398,8 @@ onMounted(async () => {
                                 :allow-multiple="false"
                                 :files="_diplomaFile"
                                 :is-picture="false"
-                                accepted-file-types="image/jpeg, image/png, application/pdf"
                                 :label-idle="$t('upload-files.labelIdle.sponsor_diploma')"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
                                 @update:files="form.diploma_file = $event[0]"
                             ></base-file-pond>
                         </div>

@@ -393,7 +393,6 @@ const modalType = computed(() => {
                     <div>
                         <the-role-selector
                             id="roles"
-                            v-model:formatted-roles="form.formatted_roles"
                             v-model:roles="form.roles"
                             @update:roles="form.validate('roles')"
                         ></the-role-selector>

@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { useVocationalTrainingStore } from '@/stores/voacational-training'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
-
-import { getVocationalTrainingSpecialityFromId } from '@/utils/helper'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 const vocationalTraining = defineModel('vocationalTraining')
 
@@ -18,37 +16,19 @@ onMounted(async () => {
     await vocationalTrainingStore.getVocationalTrainingSpecialities()
 
     specialities.value = vocationalTrainingStore.vocationalTrainingSpecialities
-
-    vueSelectVocationalTraining.value = getVocationalTrainingSpecialityFromId(
-        vocationalTraining.value,
-        specialities.value
-    )
 })
-
-watch(
-    () => [vocationalTraining.value],
-    (value) => {
-        vueSelectVocationalTraining.value = getVocationalTrainingSpecialityFromId(value[0], specialities.value)
-    }
-)
 </script>
 
 <template>
-    <div>
-        <!-- @vue-ignore -->
-        <base-vue-select
-            id="vocational_training"
-            v-model:value="vueSelectVocationalTraining"
-            :allow-empty="false"
-            :options="specialities"
-            :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('speciality') })"
-            class="h-full w-full"
-            group-label="division"
-            group-values="specialities"
-            label="name"
-            track-by="id"
-            @update:value="(value) => (vocationalTraining = value.id)"
-        >
-        </base-vue-select>
-    </div>
+    <base-list-box
+        id="vocational_training"
+        v-model="vocationalTraining"
+        :model-value="vocationalTraining"
+        :options="specialities"
+        :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('academic_level') })"
+        group-label="division"
+        group-values="specialities"
+        label-key="name"
+        value-key="id"
+    ></base-list-box>
 </template>

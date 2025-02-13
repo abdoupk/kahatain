@@ -40,7 +40,7 @@ export const useMembersStore = defineStore('members', {
             zone_id: '',
             qualification: '',
             gender: 'male',
-            roles: [''],
+            roles: [],
             branch_id: '',
             password: '',
             password_confirmation: '',

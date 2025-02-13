@@ -5,7 +5,7 @@ import { useCityStore } from '@/stores/city'
 import { onMounted, ref } from 'vue'
 
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { isEmpty } from '@/utils/helper'
 
@@ -22,15 +22,15 @@ const emit = defineEmits(['update:modelValue'])
 onMounted(async () => {
     await cityStore.fetchWilayas()
 
-    if (!isEmpty(props.city)) selectedWilaya.value = props.city
+    if (!isEmpty(props.city)) selectedWilaya.value = props.city?.wilaya_code
 })
 
 const handleChange = async () => {
     cityStore.communes = []
 
-    await cityStore.fetchDairas(selectedWilaya.value?.wilaya_code)
+    await cityStore.fetchDairas(selectedWilaya.value)
 
-    cityStore.getWilaya(selectedWilaya.value?.wilaya_code)
+    cityStore.getWilaya(selectedWilaya.value)
 
     emit('update:modelValue')
 }
@@ -42,19 +42,15 @@ const handleChange = async () => {
             {{ $t('wilaya') }}
         </base-form-label>
 
-        <div>
-            <!-- @vue-ignore -->
-            <base-vue-select
-                id="wilayas"
-                v-model:value="selectedWilaya"
-                :options="cityStore.wilayas"
-                :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('wilaya') })"
-                class="h-full w-full"
-                label="wilaya_name"
-                track-by="wilaya_code"
-                @update:value="handleChange"
-            >
-            </base-vue-select>
-        </div>
+        <base-list-box
+            id="wilayas"
+            v-model="selectedWilaya"
+            :model-value="selectedWilaya"
+            :options="cityStore.wilayas"
+            :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('wilaya') })"
+            label-key="wilaya_name"
+            value-key="wilaya_code"
+            @update:model-value="handleChange"
+        ></base-list-box>
     </div>
 </template>

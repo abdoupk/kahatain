@@ -1,45 +1,25 @@
 <script lang="ts" setup>
 import type { AcademicLevelType } from '@/types/lessons'
 
-import { onMounted, ref, watch } from 'vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
-
-import { getAcademicLevelFromId } from '@/utils/helper'
-
-const props = defineProps<{
+defineProps<{
     academicLevels: AcademicLevelType[]
 }>()
 
-const vueSelectAcademicLevel = ref('')
-
 const academicLevel = defineModel('academicLevel')
-
-onMounted(async () => {
-    vueSelectAcademicLevel.value = getAcademicLevelFromId(academicLevel.value, props.academicLevels)
-})
-
-watch(
-    () => [academicLevel.value, props.academicLevels],
-    () => {
-        vueSelectAcademicLevel.value = getAcademicLevelFromId(academicLevel.value, props.academicLevels)
-    }
-)
 </script>
 
 <template>
-    <!-- @vue-ignore -->
-    <base-vue-select
+    <base-list-box
         id="academic_level"
-        v-model:value="vueSelectAcademicLevel"
+        v-model="academicLevel"
+        :model-value="academicLevel"
         :options="academicLevels"
         :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('academic_level') })"
-        class="h-full w-full"
         group-label="phase"
         group-values="levels"
-        label="name"
-        track-by="id"
-        @update:value="(value) => (academicLevel = value?.id)"
-    >
-    </base-vue-select>
+        label-key="name"
+        value-key="id"
+    ></base-list-box>
 </template>

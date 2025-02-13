@@ -64,7 +64,7 @@ const submit = () => {
     <!-- BEGIN: Register Form -->
     <form class="my-10 flex h-full py-5 xl:my-0 xl:h-auto xl:py-0" @submit.prevent="submit">
         <div
-            class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:ms-20 xl:w-auto xl:bg-transparent xl:p-0 xl:shadow-none"
+            class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:ms-20 xl:w-[439px] xl:bg-transparent xl:p-0 xl:shadow-none"
         >
             <h2 class="intro-x text-center text-2xl font-bold xl:text-start xl:text-3xl">
                 {{ $t('the_register') }}
@@ -177,7 +177,7 @@ const submit = () => {
                     v-model:city-id="form.city_id"
                     :error-message="form.errors.city_id"
                     city=""
-                    class="intro-x !xl:w-[420px] !z-[60] mt-4 w-full"
+                    class="intro-x !z-[60] mt-4 w-full"
                 ></the-city-selector>
             </div>
 
