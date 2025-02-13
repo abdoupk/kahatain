@@ -56,7 +56,7 @@ const emit = defineEmits(['close', 'handleSubmit'])
                             <slot name="description"></slot>
                         </base-dialog-description>
 
-                        <base-dialog-description>
+                        <base-dialog-description v-else>
                             <slot name="body"></slot>
                         </base-dialog-description>
 

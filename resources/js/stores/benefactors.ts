@@ -65,6 +65,8 @@ export const useBenefactorsStore = defineStore('benefactors', {
             const { data: benefactors } = await axios.get(route('tenant.benefactors.search', { search }))
 
             this.benefactors = benefactors
+
+            return benefactors
         }
     }
 })

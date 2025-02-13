@@ -47,11 +47,11 @@ watch(
 
                 if (
                     props.modelValue &&
-                    !options.value.some((o) => {
+                    !options.value?.some((o) => {
                         return o.value === props.modelValue?.value
                     })
                 ) {
-                    options.value.unshift(props.modelValue)
+                    options.value?.unshift(props.modelValue)
                 }
 
                 isLoading.value = false
@@ -64,7 +64,7 @@ watch(
 let filteredOptions = computed(() =>
     query.value === ''
         ? options.value
-        : options.value.filter((option) =>
+        : options.value?.filter((option) =>
               option.name?.toLowerCase().replace(/\s+/g, '').includes(query.value?.toLowerCase().replace(/\s+/g, ''))
           )
 )
@@ -87,7 +87,7 @@ function handleUpdateModelValue(selected) {
 
         <base-combobox-options :options="filteredOptions">
             <div
-                v-if="filteredOptions.length === 0 && !isLoading && !queryOption && !props.createOption"
+                v-if="filteredOptions?.length === 0 && !isLoading && !queryOption && !props.createOption"
                 class="relative cursor-default select-none px-4 py-2 text-gray-700"
             >
                 {{ $t('No results found.') }}

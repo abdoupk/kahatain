@@ -1,59 +1,24 @@
 <script lang="ts" setup>
 import { useBenefactorsStore } from '@/stores/benefactors'
-import type { BenefactorType } from '@/types'
-import { defineAsyncComponent, onMounted, ref } from 'vue'
 
-import { $t } from '@/utils/i18n'
+import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
 
-const BaseVueSelect = defineAsyncComponent(() => import('@/Components/Base/vue-select/BaseVueSelect.vue'))
-
-const props = defineProps<{
-    benefactor: string
-}>()
-
-const benefactor = ref(props.benefactor)
-
-const selectedBenefactor = defineModel('selectedBenefactor', { default: '' })
-
-const loadingSearchBenefactor = ref(false)
-
-const benefactorsStore = useBenefactorsStore()
-
-const benefactors = ref<BenefactorType[]>([])
-
-const asyncFind = (search: string) => {
-    loadingSearchBenefactor.value = true
-
-    benefactorsStore.searchBenefactors(search).finally(() => (loadingSearchBenefactor.value = false))
-}
-
-onMounted(() => {
-    if (benefactors.value) {
-        selectedBenefactor.value = benefactor.value
+const value = defineModel<{ id: string; name: string }>('value', {
+    default: {
+        id: '',
+        name: ''
     }
-
-    selectedBenefactor.value = ''
 })
+
+function loadBenefactors(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    useBenefactorsStore()
+        .searchBenefactors(query)
+        .then((results) => {
+            setOptions(results)
+        })
+}
 </script>
 
 <template>
-    <base-vue-select
-        id="benefactor"
-        v-model:value="selectedBenefactor"
-        :allow-empty="false"
-        :clear-on-select="false"
-        :hide-selected="true"
-        :internal-search="false"
-        :loading="loadingSearchBenefactor"
-        :options="benefactorsStore.benefactors"
-        :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('the_benefactors') })"
-        :searchable="true"
-        :show-no-results="true"
-        class="h-full w-full"
-        label="name"
-        open-direction="bottom"
-        track-by="id"
-        @search-change="asyncFind"
-    >
-    </base-vue-select>
+    <filter-person-drop-down v-model="value" :load-options="loadBenefactors" class="mt-0"></filter-person-drop-down>
 </template>

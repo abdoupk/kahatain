@@ -4,10 +4,10 @@ import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 
-import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
-
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+const BaseVCalendar = defineAsyncComponent(() => import('@/Components/Base/VCalendar/BaseVCalendar.vue'))
 
 const TheBenefactorSelector = defineAsyncComponent(
     () => import('@/Pages/Tenant/benefactors/create/TheBenefactorSelector.vue')
@@ -135,11 +135,7 @@ const modalType = computed(() => {
                 <the-recipientable
                     v-model:recipient-type="form.recipientable_type"
                     :error-message="form.errors.recipientable_id"
-                    @update:recipient="
-                        (value) => {
-                            form.recipientable_id = value.id
-                        }
-                    "
+                    @update:recipient="form.recipientable_id = $event?.id"
                 ></the-recipientable>
             </div>
             <!--End: Recipient Type-->
@@ -150,13 +146,7 @@ const modalType = computed(() => {
                     {{ $t('the_benefactor') }}
                 </base-form-label>
 
-                <div>
-                    <the-benefactor-selector
-                        v-model:benefactor="form.benefactor"
-                        :benefactor="form.benefactor.id"
-                        @update:selected-benefactor="(benefactor) => (form.benefactor = benefactor)"
-                    ></the-benefactor-selector>
-                </div>
+                <the-benefactor-selector v-model="form.benefactor"></the-benefactor-selector>
 
                 <base-form-input-error :form field_name="benefactor.id"></base-form-input-error>
             </div>
@@ -241,9 +231,9 @@ const modalType = computed(() => {
             <!--Begin: The shop-->
             <div
                 v-if="form.sponsorship_type === 'monthly_basket'"
-                class="col-span-12 mt-8 grid grid-cols-12 gap-4 gap-y-3"
+                class="col-span-12 mt-4 grid grid-cols-12 gap-4 gap-y-3"
             >
-                <h3 class="col-span-12 text-base rtl:font-semibold">
+                <h3 class="col-span-12 text-lg rtl:font-semibold">
                     {{ $t('shop_information') }}
                 </h3>
 

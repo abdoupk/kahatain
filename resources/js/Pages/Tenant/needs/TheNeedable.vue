@@ -29,6 +29,7 @@ defineProps<{ errorMessage?: string | string[] }>()
                     { value: 'sponsor', label: $t('the_sponsor') }
                 ]"
                 :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('needable_type') })"
+                @update:model-value="needable = ''"
             />
         </div>
 
@@ -36,17 +37,9 @@ defineProps<{ errorMessage?: string | string[] }>()
             <base-form-label for="needable">{{ $t('the_requester') }}</base-form-label>
 
             <div>
-                <orphan-selector
-                    v-if="needableType === 'orphan'"
-                    v-model:orphan="needable"
-                    @update:selected-orphan="(orphan) => (needable = orphan)"
-                ></orphan-selector>
+                <orphan-selector v-if="needableType === 'orphan'" v-model:orphan="needable"></orphan-selector>
 
-                <sponsor-selector
-                    v-else
-                    v-model:sponsor="needable"
-                    @update:selected-sponsor="(sponsor) => (needable = sponsor)"
-                ></sponsor-selector>
+                <sponsor-selector v-else v-model:sponsor="needable"></sponsor-selector>
             </div>
 
             <base-input-error v-if="errorMessage">
