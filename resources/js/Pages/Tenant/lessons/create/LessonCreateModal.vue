@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { SubjectType } from '@/types/lessons'
 import type { CreateLessonForm } from '@/types/types'
 
 import { useLessonsStore } from '@/stores/lessons'
@@ -49,8 +48,6 @@ const lessonsStore = useLessonsStore()
 
 const loading = ref(false)
 
-const subjects = ref<SubjectType[]>([])
-
 const form = computed(() => {
     if (lessonsStore.lesson.id) {
         return useForm(
@@ -68,7 +65,8 @@ const form = computed(() => {
     return useForm<CreateLessonForm>(
         'post',
         route('tenant.lessons.store'),
-        omit(lessonsStore.lesson, ['id', 'update_this_and_all_coming'])
+        // eslint-disable-next-line array-element-newline
+        omit(lessonsStore.lesson, ['id', 'update_this_and_all_coming', 'school'])
     )
 })
 
@@ -123,17 +121,18 @@ const handleCloseModal = () => {
     emit('close')
 
     form.value.reset()
+
+    lessonsStore.$reset()
 }
 
-// TODO show academic level when update
 const handleUpdateSchool = (schoolId: string) => {
     const schoolSubjects = useSchoolsStore().findSchoolById(schoolId)?.subjects
 
-    subjects.value = []
+    lessonsStore.lesson.school.subjects = []
 
     form.value.orphans = []
 
-    subjects.value = schoolSubjects
+    lessonsStore.lesson.school.subjects = schoolSubjects
 
     form.value.validate('school_id')
 }
@@ -217,15 +216,13 @@ const quota = ref<number>()
                         {{ $t('the_subject') }}
                     </base-form-label>
 
-                    <div>
-                        <the-subject-selector
-                            id="subject"
-                            v-model:subject="form.subject_id"
-                            :disabled="!lessonsStore.lesson.update_this_and_all_coming"
-                            :subjects="subjects"
-                            @update:subject="handleUpdateSubject"
-                        ></the-subject-selector>
-                    </div>
+                    <the-subject-selector
+                        id="subject"
+                        v-model:subject="form.subject_id"
+                        :disabled="!lessonsStore.lesson.update_this_and_all_coming"
+                        :subjects="lessonsStore.lesson.school?.subjects ?? []"
+                        @update:subject="handleUpdateSubject"
+                    ></the-subject-selector>
 
                     <base-form-input-error :form field_name="subject_id"></base-form-input-error>
                 </div>

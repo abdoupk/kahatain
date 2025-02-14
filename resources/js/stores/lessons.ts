@@ -13,6 +13,10 @@ interface State {
         school?: {
             id: string
             name: string
+            subjects?: {
+                id: number
+                name: string
+            }[]
         }
         academic_level?: {
             id: string
@@ -33,6 +37,7 @@ export const useLessonsStore = defineStore('lessons', {
         lesson: {
             orphans: [],
             id: '',
+            school: [],
             subject_id: null,
             academic_level_id: null,
             school_id: '',
