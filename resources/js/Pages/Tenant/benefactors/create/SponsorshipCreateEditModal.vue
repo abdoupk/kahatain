@@ -133,22 +133,22 @@ const modalType = computed(() => {
             <!--Begin: Recipient Type-->
             <div class="col-span-12">
                 <the-recipientable
+                    v-model:recipient="form.recipientable_id"
                     v-model:recipient-type="form.recipientable_type"
                     :error-message="form.errors.recipientable_id"
-                    @update:recipient="form.recipientable_id = $event?.id"
                 ></the-recipientable>
             </div>
             <!--End: Recipient Type-->
 
             <!--Begin: The Benefactor-->
-            <div class="col-span-12 sm:col-span-6">
+            <div class="col-span-6 sm:col-span-6">
                 <base-form-label for="benefactor">
                     {{ $t('the_benefactor') }}
                 </base-form-label>
 
                 <the-benefactor-selector v-model="form.benefactor"></the-benefactor-selector>
 
-                <base-form-input-error :form field_name="benefactor.id"></base-form-input-error>
+                <base-form-input-error :form field_name="benefactor"></base-form-input-error>
             </div>
             <!--Begin: The Benefactor-->
 
@@ -190,7 +190,7 @@ const modalType = computed(() => {
             <!--End: Sponsorship Type-->
 
             <!--Begin: The amount-->
-            <div class="col-span-12 sm:col-span-6">
+            <div class="z-[2] col-span-12 sm:col-span-6">
                 <base-form-label for="amount">
                     {{ $t('the_amount') }}
                 </base-form-label>

@@ -64,10 +64,7 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             sponsorship_type: '',
             recipientable_type: 'family',
             recipientable_id: '',
-            benefactor: {
-                id: '',
-                name: ''
-            },
+            benefactor: '',
             shop: {
                 name: '',
                 phone: '',

@@ -366,10 +366,7 @@ export interface CreateSponsorshipForm {
     sponsorship_type: string
     recipientable_type: 'orphan' | 'family'
     recipientable_id: string
-    benefactor: {
-        id: string
-        name: string
-    }
+    benefactor: string
     shop: {
         name: string
         phone: string

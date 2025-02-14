@@ -393,13 +393,10 @@ function handleFilterValue(filter: ListBoxFilter, value): string {
         if (value.value !== '') return true
 
         return ''
-    } else if (filter.field === 'family_sponsorships' || filter.field === 'sponsorships') {
-        if (value.value !== '') return true
-
-        return ''
     } else if (filter.type === 'object') {
         if (value?.id !== undefined) return value.id
-        else return value.value
+        else if (value?.value !== undefined) return value.value
+        return value
     } else if (filter.type === 'number') {
         if (typeof value === 'object') return ''
     } else if (filter.field === 'roles' || filter.field === 'committees' || filter.field === 'competences') {

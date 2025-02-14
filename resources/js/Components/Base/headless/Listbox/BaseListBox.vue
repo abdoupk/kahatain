@@ -150,6 +150,7 @@ const groupedOptions = computed(() => {
 
                     <template v-else>
                         <span
+                            class="block truncate"
                             :class="{
                                 'text-slate-400/90 dark:text-slate-500/80': !displayValue
                             }"

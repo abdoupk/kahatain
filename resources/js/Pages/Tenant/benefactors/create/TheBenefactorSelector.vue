@@ -1,14 +1,9 @@
 <script lang="ts" setup>
 import { useBenefactorsStore } from '@/stores/benefactors'
 
-import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 
-const value = defineModel<{ id: string; name: string }>('value', {
-    default: {
-        id: '',
-        name: ''
-    }
-})
+const value = defineModel('value')
 
 function loadBenefactors(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
     useBenefactorsStore()
@@ -20,5 +15,12 @@ function loadBenefactors(query: string, setOptions: (results: { id: string; name
 </script>
 
 <template>
-    <filter-person-drop-down v-model="value" :load-options="loadBenefactors" class="mt-0"></filter-person-drop-down>
+    <base-combobox
+        v-model="value"
+        :load-options="loadBenefactors"
+        :options="[]"
+        class="mt-0"
+        label-key="name"
+        value-key="id"
+    ></base-combobox>
 </template>

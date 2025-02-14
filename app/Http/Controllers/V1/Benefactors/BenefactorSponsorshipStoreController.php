@@ -20,11 +20,11 @@ class BenefactorSponsorshipStoreController extends Controller implements HasMidd
     {
         $sponsorship = Sponsorship::create([
             ...$request->except('benefactor', 'shop'),
-            'benefactor_id' => $request->validated('benefactor.id'),
+            'benefactor_id' => $request->validated('benefactor'),
             'shop' => $request->sponsorship_type === 'monthly_basket' ? $request->validated('shop') : null,
         ]);
 
-        $benefactor = Benefactor::whereId($request->validated('benefactor.id'));
+        $benefactor = Benefactor::whereId($request->validated('benefactor'));
 
         $benefactor->searchable();
 

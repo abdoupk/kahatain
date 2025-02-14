@@ -1,14 +1,9 @@
 <script lang="ts" setup>
 import { useVocationalTrainingStore } from '@/stores/voacational-training'
 
-import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 
-const value = defineModel<{ id: string; name: string }>('value', {
-    default: {
-        id: '',
-        name: ''
-    }
-})
+const value = defineModel('value')
 
 const vocationalTrainingStore = useVocationalTrainingStore()
 
@@ -20,5 +15,11 @@ function loadInstitutes(query: string, setOptions: (results: { id: string; name:
 </script>
 
 <template>
-    <filter-person-drop-down v-model="value" :load-options="loadInstitutes"></filter-person-drop-down>
+    <base-combobox
+        v-model="value"
+        :load-options="loadInstitutes"
+        :options="[]"
+        label-key="name"
+        value-key="id"
+    ></base-combobox>
 </template>

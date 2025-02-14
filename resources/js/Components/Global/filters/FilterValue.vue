@@ -11,7 +11,6 @@ import CollegeAcademicLevelFilterDropDown from '@/Components/Global/filters/Coll
 import CollegeSpecialityFilterDropDown from '@/Components/Global/filters/CollegeSpecialityFilterDropDown.vue'
 import EidAlAdhaStatusFilterDropDown from '@/Components/Global/filters/EidAlAdhaStatusFilterDropDown.vue'
 import FamiliesFilterDropDown from '@/Components/Global/filters/FamiliesFilterDropDown.vue'
-import FamilySponsorShipFilterDropDown from '@/Components/Global/filters/FamilySponsorShipFilterDropDown.vue'
 import FinanceSpecificationFilterDropDown from '@/Components/Global/filters/FinanceSpecificationFilterDropDown.vue'
 import FinanceTypeFilterDropDown from '@/Components/Global/filters/FinanceTypeFilterDropDown.vue'
 import FurnishingsFilterDropDown from '@/Components/Global/filters/FurnishingsFilterDropDown.vue'
@@ -22,14 +21,12 @@ import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDrop
 import NeedStatusFilterDropDown from '@/Components/Global/filters/NeedStatusFilterDropDown.vue'
 import NeedableTypeFilterDropDown from '@/Components/Global/filters/NeedableTypeFilterDropDown.vue'
 import OrphanAcademicLevelFilterDropDown from '@/Components/Global/filters/OrphanAcademicLevelFilterDropDown.vue'
-import OrphanSponsorShipFilterDropDown from '@/Components/Global/filters/OrphanSponsorShipFilterDropDown.vue'
 import OrphansFilterDropDown from '@/Components/Global/filters/OrphansFilterDropDown.vue'
 import RamadanBasketCategoryFilterDropDown from '@/Components/Global/filters/RamadanBasketCategoryFilterDropDown.vue'
 import SchoolFilterDropDown from '@/Components/Global/filters/SchoolFilterDropDown.vue'
 import ShoesSizeFilterDropDown from '@/Components/Global/filters/ShoesSizeFilterDropDown.vue'
 import SpecialityFilterDropDown from '@/Components/Global/filters/SpecialityFilterDropDown.vue'
 import SponsorAcademicLevelFilterDropDown from '@/Components/Global/filters/SponsorAcademicLevelFilterDropDown.vue'
-import SponsorSponsorShipFilterDropDown from '@/Components/Global/filters/SponsorSponsorShipFilterDropDown.vue'
 import SponsorTypeFilterDropDown from '@/Components/Global/filters/SponsorTypeFilterDropDown.vue'
 import SponsorsFilterDropDown from '@/Components/Global/filters/SponsorsFilterDropDown.vue'
 import TraineeAcademicLevelFilterDropDown from '@/Components/Global/filters/TraineeAcademicLevelFilterDropDown.vue'
@@ -190,24 +187,6 @@ const value = defineModel<FilterValueType>('value')
                 v-model:value="value"
                 class="text-sm"
             ></member-academic-level-filter-drop-down>
-
-            <family-sponsor-ship-filter-drop-down
-                v-if="field?.label === 'family_sponsorships'"
-                v-model:value="value"
-                class="text-sm"
-            ></family-sponsor-ship-filter-drop-down>
-
-            <sponsor-sponsor-ship-filter-drop-down
-                v-if="field?.label === 'sponsor_sponsorships'"
-                v-model:value="value"
-                class="text-sm"
-            ></sponsor-sponsor-ship-filter-drop-down>
-
-            <orphan-sponsor-ship-filter-drop-down
-                v-if="field?.label === 'orphan_sponsorships'"
-                v-model:value="value"
-                class="text-sm"
-            ></orphan-sponsor-ship-filter-drop-down>
 
             <sponsor-type-filter-drop-down
                 v-if="field?.label === 'sponsor_type'"

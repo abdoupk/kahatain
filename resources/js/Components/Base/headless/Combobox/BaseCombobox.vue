@@ -130,80 +130,86 @@ const handleDisplayValue = (option) => {
             <combobox-button class="absolute inset-y-0 end-0 flex items-center pe-2">
                 <svg-loader aria-hidden="true" class="h-5 w-5 text-gray-400" name="icon-angles-up-down"></svg-loader>
             </combobox-button>
-        </div>
-        <transition
-            leave-active-class="transition ease-in duration-100"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
-            <combobox-options
-                :class="{ 'py-1': filteredOptions?.length && createOption > 0 }"
-                class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-darkmode-800 sm:text-sm"
+
+            <transition
+                leave-active-class="transition ease-in duration-100"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
             >
-                <div
-                    v-if="isLoading"
-                    class="flex cursor-default select-none items-center justify-center px-4 py-2 text-gray-700"
+                <combobox-options
+                    :class="{ 'py-1': filteredOptions?.length && createOption > 0 }"
+                    class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-darkmode-800 sm:text-sm"
                 >
-                    <spinner-loader class="h-4 w-4"></spinner-loader>
-                </div>
-
-                <template v-if="!isLoading">
-                    <combobox-option
-                        v-if="queryOption && createOption && !filteredOptions?.length"
-                        v-slot="{ active }"
-                        :value="queryOption"
-                        as="template"
+                    <div
+                        v-if="isLoading"
+                        class="flex cursor-default select-none items-center justify-center px-4 py-2 text-gray-700"
                     >
-                        <li
-                            :class="{
-                                'bg-primary text-white': active,
-                                'text-gray-900': !active
-                            }"
-                            class="relative cursor-default select-none py-2 pe-4 ps-10"
-                        >
-                            {{ $t('create') }} "{{ queryOption[labelKey] }}"
-                        </li>
-                    </combobox-option>
+                        <spinner-loader class="h-4 w-4"></spinner-loader>
+                    </div>
 
-                    <combobox-option
-                        v-for="option in filteredOptions"
-                        :key="option[valueKey]"
-                        v-slot="{ selected, active }"
-                        :value="option[valueKey]"
-                        as="template"
-                    >
-                        <li
-                            :class="[
-                                active ? 'bg-primary text-white' : 'text-gray-900 dark:text-slate-300',
-                                'relative cursor-default select-none py-2 pe-9 ps-3'
-                            ]"
+                    <template v-if="!isLoading">
+                        <combobox-option
+                            v-if="queryOption && createOption && !filteredOptions?.length"
+                            v-slot="{ active }"
+                            :value="queryOption"
+                            as="template"
                         >
-                            <div class="flex items-center">
-                                <span
-                                    :class="[selected ? 'font-semibold' : 'font-normal', 'ms-3 block truncate text-sm']"
-                                >
-                                    {{ option[labelKey] }}
-                                </span>
-                            </div>
+                            <li
+                                :class="{
+                                    'bg-primary text-white': active,
+                                    'text-gray-900': !active
+                                }"
+                                class="relative cursor-default select-none py-2 pe-4 ps-10"
+                            >
+                                {{ $t('create') }} "{{ queryOption[labelKey] }}"
+                            </li>
+                        </combobox-option>
 
-                            <span
-                                v-if="isSelected(option[valueKey])"
+                        <combobox-option
+                            v-for="option in filteredOptions"
+                            :key="option[valueKey]"
+                            v-slot="{ selected, active }"
+                            :value="option[valueKey]"
+                            as="template"
+                        >
+                            <li
                                 :class="[
-                                    active ? 'text-white' : 'text-primary',
-                                    'absolute inset-y-0 end-0 flex items-center pe-4'
+                                    active ? 'bg-primary text-white' : 'text-gray-900 dark:text-slate-300',
+                                    'relative cursor-default select-none py-2 pe-9 ps-3'
                                 ]"
                             >
-                                <svg-loader
-                                    :class="[active || isSelected(option[valueKey]) ? 'fill-white' : 'fill-primary']"
-                                    aria-hidden="true"
-                                    class="h-5 w-5"
-                                    name="icon-check"
-                                ></svg-loader>
-                            </span>
-                        </li>
-                    </combobox-option>
-                </template>
-            </combobox-options>
-        </transition>
+                                <div class="flex items-center">
+                                    <span
+                                        :class="[
+                                            selected ? 'font-semibold' : 'font-normal',
+                                            'ms-3 block truncate text-sm'
+                                        ]"
+                                    >
+                                        {{ option[labelKey] }}
+                                    </span>
+                                </div>
+
+                                <span
+                                    v-if="isSelected(option[valueKey])"
+                                    :class="[
+                                        active ? 'text-white' : 'text-primary',
+                                        'absolute inset-y-0 end-0 flex items-center pe-4'
+                                    ]"
+                                >
+                                    <svg-loader
+                                        :class="[
+                                            active || isSelected(option[valueKey]) ? 'fill-white' : 'fill-primary'
+                                        ]"
+                                        aria-hidden="true"
+                                        class="h-5 w-5"
+                                        name="icon-check"
+                                    ></svg-loader>
+                                </span>
+                            </li>
+                        </combobox-option>
+                    </template>
+                </combobox-options>
+            </transition>
+        </div>
     </headless-combobox>
 </template>

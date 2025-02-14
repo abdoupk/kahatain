@@ -1,14 +1,9 @@
 <script lang="ts" setup>
 import { useSchoolsStore } from '@/stores/schools'
 
-import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 
-const value = defineModel<{ id: string; name: string }>('value', {
-    default: {
-        id: '',
-        name: ''
-    }
-})
+const value = defineModel('value')
 
 const schoolsStore = useSchoolsStore()
 
@@ -20,5 +15,11 @@ function loadSchools(query: string, setOptions: (results: { id: string; name: st
 </script>
 
 <template>
-    <filter-person-drop-down v-model="value" :load-options="loadSchools"></filter-person-drop-down>
+    <base-combobox
+        v-model="value"
+        :load-options="loadSchools"
+        :options="[]"
+        label-key="name"
+        value-key="id"
+    ></base-combobox>
 </template>
