@@ -134,7 +134,9 @@ const modalType = computed(() => {
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <base-slideover-description class="grid grid-cols-12 gap-4 gap-y-3 overflow-hidden p-0 px-1 pb-5">
+            <base-slideover-description
+                class="scrollbar-hidden grid grid-cols-12 gap-4 gap-y-3 overflow-auto p-0 px-1 pb-5"
+            >
                 <!-- Begin: First name-->
                 <div class="col-span-12 sm:col-span-6">
                     <base-form-label htmlFor="first_name">
@@ -404,6 +406,22 @@ const modalType = computed(() => {
                 </div>
                 <!-- End: roles-->
 
+                <!-- Begin: Committee-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label htmlFor="committees">
+                        {{ $t('the_committees') }}
+                    </base-form-label>
+
+                    <div>
+                        <the-committee-selector v-model:committees="form.committees"></the-committee-selector>
+                    </div>
+
+                    <div v-if="form.errors?.committees" class="mt-2">
+                        <base-input-error :message="form.errors.committees"></base-input-error>
+                    </div>
+                </div>
+                <!-- End: Committee-->
+
                 <!-- Begin: address-->
                 <div class="col-span-12 sm:col-span-6">
                     <base-form-label htmlFor="address">
@@ -465,22 +483,6 @@ const modalType = computed(() => {
                     </div>
                 </div>
                 <!-- End: Work place-->
-
-                <!-- Begin: Committee-->
-                <div class="col-span-12 sm:col-span-6">
-                    <base-form-label htmlFor="committees">
-                        {{ $t('the_committees') }}
-                    </base-form-label>
-
-                    <div>
-                        <the-committee-selector v-model:committees="form.committees"></the-committee-selector>
-                    </div>
-
-                    <div v-if="form.errors?.committees" class="mt-2">
-                        <base-input-error :message="form.errors.committees"></base-input-error>
-                    </div>
-                </div>
-                <!-- End: Committee-->
             </base-slideover-description>
         </template>
     </create-edit-slide-over>
