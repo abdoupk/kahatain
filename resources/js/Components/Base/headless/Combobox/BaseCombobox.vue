@@ -22,7 +22,7 @@ interface ComboboxProps<T> extends /* @vue-ignore */ ExtractProps<typeof Headles
     placeholder?: string
     valueKey?: string
     labelKey?: string
-    loadOptions: () => void
+    loadOptions?: () => void
     createOption?: boolean
 }
 
@@ -69,7 +69,7 @@ const options = ref(props.options)
 watch(
     query,
     (q) => {
-        if (props.loadOptions) {
+        if (props?.loadOptions) {
             isLoading.value = true
 
             props.loadOptions(q, (results) => {

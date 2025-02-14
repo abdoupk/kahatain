@@ -313,11 +313,11 @@ const modalType = computed(() => {
                 <div class="col-span-12 sm:col-span-6">
                     <base-form-label htmlFor="competences">
                         {{ $t('validation.attributes.qualification') }}
+
+                        <span v-if="form.competences?.length"> ({{ form.competences?.length }})</span>
                     </base-form-label>
 
-                    <div>
-                        <the-competence-selector v-model:competences="form.competences"></the-competence-selector>
-                    </div>
+                    <the-competence-selector v-model:competences="form.competences"></the-competence-selector>
 
                     <div v-if="form.errors?.qualification" class="mt-2">
                         <base-input-error :message="form.errors.qualification"></base-input-error>

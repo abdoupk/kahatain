@@ -163,6 +163,8 @@ const submit = () => {
                 <div class="col-span-12 sm:col-span-6">
                     <base-form-label htmlFor="qualification">
                         {{ $t('validation.attributes.qualification') }}
+
+                        <span v-if="form.competences?.length"> ({{ form.competences?.length }})</span>
                     </base-form-label>
 
                     <the-competence-selector v-model:competences="form.competences"></the-competence-selector>
