@@ -16,21 +16,17 @@ import {
     RecentTransactionsType
 } from '@/types/dashboard'
 
-import { useSponsorsStore } from '@/stores/sponsors'
 import { Head } from '@inertiajs/vue3'
-import { defineAsyncComponent, ref } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import TheFamiliesDistribution from '@/Pages/Tenant/dashboard/families-distribution/TheFamiliesDistribution.vue'
 
-import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
-
-const a = ref('9e2d991c-d28b-494d-a88a-c1f9047b6cd1')
 
 const TheGeneralReports = defineAsyncComponent(
     () => import('@/Pages/Tenant/dashboard/general-reports/TheGeneralReports.vue')
@@ -88,14 +84,6 @@ defineProps<{
     familiesByBranch: FamiliesByBranchType
     familiesForMap: FamiliesForMapType[]
 }>()
-
-function loadSponsors(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
-    useSponsorsStore()
-        .searchSponsors(query)
-        .then((results) => {
-            setOptions(results)
-        })
-}
 </script>
 
 <template>
@@ -177,14 +165,4 @@ function loadSponsors(query: string, setOptions: (results: { id: string; name: s
             <the-content-loader class="!mt-24"></the-content-loader>
         </template>
     </suspense>
-    {{ a }}
-    <base-combobox
-        v-model="a"
-        :load-options="loadSponsors"
-        :model-value="a"
-        :options="[]"
-        create-option
-        label-key="name"
-        value-key="id"
-    ></base-combobox>
 </template>
