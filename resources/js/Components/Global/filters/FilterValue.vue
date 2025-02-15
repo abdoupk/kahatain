@@ -202,7 +202,7 @@ const value = defineModel<FilterValueType>('value')
 
             <furnishings-filter-drop-down
                 v-if="field?.label === 'furnishings'"
-                v-model:value="value"
+                v-model="value"
                 class="text-sm"
             ></furnishings-filter-drop-down>
 

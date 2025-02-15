@@ -1,36 +1,17 @@
 <script lang="ts" setup>
-/* eslint-disable array-element-newline */
-import { watch } from 'vue'
-
-import FilterValueLabelDropDown from '@/Components/Global/filters/FilterValueLabelDropDown.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
 const data = [
+    // eslint-disable-next-line array-element-newline
     { value: 'income', label: $t('income') },
     { value: 'expense', label: $t('expense') }
 ]
 
-const value = defineModel<string | { value: string; label: string }>('value', {
-    default: {
-        value: '',
-        label: $t('filters.select_an_option')
-    }
-})
-
-watch(
-    () => value.value,
-    (newValue) => {
-        if (newValue?.id === '')
-            value.value = {
-                value: '',
-                label: $t('filters.select_an_option')
-            }
-    },
-    { immediate: true }
-)
+const value = defineModel('value')
 </script>
 
 <template>
-    <filter-value-label-drop-down v-model:value="value" :data></filter-value-label-drop-down>
+    <base-list-box v-model="value" :options="data" class="mt-2"></base-list-box>
 </template>

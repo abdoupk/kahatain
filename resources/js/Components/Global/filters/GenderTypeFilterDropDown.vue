@@ -1,20 +1,12 @@
 <script lang="ts" setup>
-import type { FilterValueSponsorshipType } from '@/types/types'
-
 import { ref } from 'vue'
 
-import FilterSponsorShipDropDown from '@/Components/Global/filters/FilterValueLabelDropDown.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
-const value = defineModel<FilterValueSponsorshipType>('value', {
-    default: {
-        value: '',
-        label: $t('filters.select_an_option')
-    }
-})
+const value = defineModel('value')
 
-// TODO change to ارمل ....
 const data = ref([
     {
         label: $t('male'),
@@ -28,5 +20,5 @@ const data = ref([
 </script>
 
 <template>
-    <filter-sponsor-ship-drop-down v-model:value="value" :data></filter-sponsor-ship-drop-down>
+    <base-list-box v-model="value" :options="data" class="mt-2"></base-list-box>
 </template>

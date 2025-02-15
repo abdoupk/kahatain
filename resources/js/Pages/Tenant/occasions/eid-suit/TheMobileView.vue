@@ -13,6 +13,7 @@ import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
@@ -257,16 +258,26 @@ watch(
                             </div>
 
                             <p class="col-span-7">
-                                <editable-row
+                                <base-combobox
+                                    id="clothes_shop_name"
+                                    v-model="orphan.clothes_shop_name"
                                     :load-options="loadShopOwnerNames"
-                                    :orphan
-                                    class="!ms-0 !mt-0 w-full"
-                                    field="clothes_shop_name"
-                                    view="mobile"
-                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                    @show-success-notification="emit('showSuccessNotification')"
-                                ></editable-row>
+                                    :options="[]"
+                                    class="mt-0"
+                                    create-option
+                                    label-key="name"
+                                    value-key="id"
+                                    @focusin="
+                                        () => {
+                                            console.error('44444444')
+                                        }
+                                    "
+                                    @focusout="
+                                        () => {
+                                            console.error('45454')
+                                        }
+                                    "
+                                ></base-combobox>
                             </p>
                         </div>
 

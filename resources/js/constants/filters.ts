@@ -204,13 +204,6 @@ export const sponsorsFilters: ListBoxFilter[] = [
         operators: filterDateOperators
     },
     {
-        icon: 'icon-handshake-angle',
-        field: 'sponsorships',
-        label: 'sponsor_sponsorships',
-        type: 'object',
-        operators: filterObjectOperators
-    },
-    {
         icon: 'icon-stethoscope',
         field: 'health_status',
         label: 'health_status',

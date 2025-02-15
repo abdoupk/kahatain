@@ -156,10 +156,9 @@ const handleDisplayValue = (option) => {
                         >
                             <li
                                 :class="{
-                                    'bg-primary text-white': active,
-                                    'text-gray-900': !active
+                                    'bg-primary': active
                                 }"
-                                class="relative cursor-default select-none py-2 pe-4 ps-10"
+                                class="relative cursor-default select-none py-2 pe-4 ps-10 text-white"
                             >
                                 {{ $t('create') }} "{{ queryOption[labelKey] }}"
                             </li>

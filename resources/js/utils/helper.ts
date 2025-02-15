@@ -28,7 +28,8 @@ const toRaw = (obj: object) => {
 }
 
 // noinspection JSUnusedLocalSymbols
-const slideUp = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {}) => {
+const slideUp = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {
+}) => {
     el.style.transitionProperty = 'height, margin, padding'
 
     el.style.transitionDuration = duration + 'ms'
@@ -94,7 +95,8 @@ const setSlideProperties = (el: HTMLElement) => {
 }
 
 // noinspection JSUnusedLocalSymbols
-const slideDown = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {}) => {
+const slideDown = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) => {
+}) => {
     el.style.removeProperty('display')
 
     let display = window.getComputedStyle(el).display
@@ -308,7 +310,7 @@ const handleSponsorship = (sponsorshipValue: string) => {
 }
 
 const handleFurnishings = (sponsorshipValue) => {
-    let text = ''
+    let text: string
     if (sponsorshipValue.checked) {
         text = $t('yes')
     } else {
@@ -320,13 +322,6 @@ const handleFurnishings = (sponsorshipValue) => {
     }
 
     return text
-}
-
-const groupByKey = (arr, key) => {
-    return arr.reduce((acc, current) => {
-        ;(acc[current[key]] = acc[current[key]] || []).push(current)
-        return acc
-    }, {})
 }
 
 const formatNumber = (value: number) => {
@@ -355,31 +350,6 @@ function setTimeFromDate(dateStr: string | Date, dateAndTimeStr: string | Date) 
         .toDate()
 }
 
-function getAcademicLevelFromId(id, academicLevels) {
-    if (!id) return ''
-    else {
-        return academicLevels.reduce((acc, curr) => {
-            const level = curr.levels.find((level) => level.id === id)
-
-            if (level) acc = level
-
-            return acc
-        }, {})
-    }
-}
-
-function getVocationalTrainingSpecialityFromId(id, specialities) {
-    if (!id) return ''
-    else {
-        return specialities.reduce((acc, curr) => {
-            const speciality = curr.specialities.find((speciality) => Number(speciality.id) === id)
-            if (speciality) acc = speciality
-
-            return acc
-        }, {})
-    }
-}
-
 function handleFilterValue(filter: ListBoxFilter, value): string {
     if (filter.field === 'furnishings') {
         return true
@@ -406,18 +376,10 @@ function handleFilterValue(filter: ListBoxFilter, value): string {
 }
 
 const handleFilterName = (field: ListBoxFilter, value: { value: string } | string): string => {
-    const isSponsorship = ['family_sponsorships', 'sponsor_sponsorships'].includes(field.label)
-
-    const isOrphanSponsorship = field.label === 'orphan_sponsorships'
-
     if (field.field === 'sponsorship' && typeof value !== 'string') {
         return `${value.value}`
-    } else if (isSponsorship && typeof value !== 'string') {
-        return `${field.label}.${value.value}`
-    } else if (isOrphanSponsorship && typeof value !== 'string') {
-        return `${field.field}.${value.value}`
     } else if (field.field === 'furnishings') {
-        if (value?.value) return `${field.label}.${value.value}.checked`
+        if (typeof value === 'string') return `${field.label}.${value}.checked`
         return ''
     } else {
         return field.field || field
@@ -451,7 +413,7 @@ const formatFilters = (filters) => {
                 }
             })
             .filter((filter) => filter?.operator && filter.operator !== '')
-            .filter((filter) => filter?.value !== undefined && filter.value !== '')
+            .filter((filter) => filter?.value !== null && filter?.value !== undefined && filter.value !== '')
             .filter((filter) => filter?.field)
     }
 }
@@ -591,15 +553,6 @@ const groupRecentActivitiesByDate = (activities) => {
     }, {})
 }
 
-function removeEmptyKeys(obj) {
-    Object.keys(obj).forEach((key) => {
-        if (obj[key] === null || obj[key] === '') {
-            delete obj[key]
-        }
-    })
-    return obj
-}
-
 function loadShopOwnerNames(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
     searchShopOwnerName(query).then((results) => {
         setOptions(results)
@@ -637,12 +590,9 @@ export {
     handleFilterValue,
     formatDate,
     formatUrl,
-    getAcademicLevelFromId,
-    getVocationalTrainingSpecialityFromId,
     setDateToCurrentTime,
     formatNumber,
     isAssociationNameLatin,
-    groupByKey,
     handleSponsorship,
     handleFurnishings,
     formatCurrency,

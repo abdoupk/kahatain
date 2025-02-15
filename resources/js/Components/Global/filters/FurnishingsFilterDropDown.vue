@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { watch } from 'vue'
-
-import FilterValueLabelDropDown from '@/Components/Global/filters/FilterValueLabelDropDown.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
@@ -18,26 +16,9 @@ const data = [
     { value: 'mattresses', label: $t('furnishings.mattresses') }
 ]
 
-const value = defineModel<string | { value: string; label: string }>('value', {
-    default: {
-        id: '',
-        name: $t('filters.select_an_option')
-    }
-})
-
-watch(
-    () => value.value,
-    (newValue) => {
-        if (newValue?.id === '')
-            value.value = {
-                value: '',
-                label: $t('filters.select_an_option')
-            }
-    },
-    { immediate: true }
-)
+const value = defineModel('value')
 </script>
 
 <template>
-    <filter-value-label-drop-down v-model:value="value" :data></filter-value-label-drop-down>
+    <base-list-box v-model="value" :options="data" class="mt-2"></base-list-box>
 </template>
