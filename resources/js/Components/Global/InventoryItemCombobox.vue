@@ -76,7 +76,9 @@ const filteredOptions = computed(() =>
 const emit = defineEmits(['update:modelValue'])
 
 function handleUpdateModelValue(selected) {
-    emit('update:modelValue', selected)
+    const newValue = selected?.id === props.modelValue?.id ? null : selected
+
+    emit('update:modelValue', newValue)
 }
 </script>
 
@@ -130,7 +132,7 @@ function handleUpdateModelValue(selected) {
                         >
                             <li
                                 :class="{
-                                    'bg-teal-600 text-white': active,
+                                    'bg-primary text-white': active,
                                     'text-gray-900': !active
                                 }"
                                 class="relative cursor-default select-none py-2 pl-10 pr-4"
