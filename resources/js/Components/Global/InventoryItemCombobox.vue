@@ -76,9 +76,7 @@ const filteredOptions = computed(() =>
 const emit = defineEmits(['update:modelValue'])
 
 function handleUpdateModelValue(selected) {
-    const newValue = selected?.id === props.modelValue?.id ? null : selected
-
-    emit('update:modelValue', newValue)
+    emit('update:modelValue', selected)
 }
 </script>
 
