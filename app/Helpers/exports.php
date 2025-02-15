@@ -90,21 +90,6 @@ function listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport(): Collect
         ->get();
 }
 
-function listOfFamiliesBenefitingFromTheMonthlyBasketForExport(): Collection
-{
-    return search(Family::getModel())
-        ->query(fn ($query) => $query
-            ->with(
-                [
-                    'sponsor:id,first_name,last_name,family_id,phone_number',
-                    'zone:id,name',
-                    'branch:id,name',
-                ]
-            )
-            ->withCount('orphans'))
-        ->get();
-}
-
 function listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(): Collection
 {
     return search(Family::getModel(), limit: LIMIT)
@@ -114,10 +99,9 @@ function listOfFamiliesBenefitingFromTheMonthlySponsorshipForExport(): Collectio
                     'sponsor:id,first_name,last_name,family_id,phone_number',
                     'zone:id,name',
                     'branch:id,name',
+                    'aid',
                 ]
-            )
-            ->withCount('orphans'))
-        ->get();
+            ))->get();
 }
 
 function listOfFamiliesBenefitingFromTheZakatForExport(): Collection

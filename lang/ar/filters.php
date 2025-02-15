@@ -69,6 +69,7 @@ return [
     'basket_from_association' => 'قفة من الجمعية',
     'amount_from_benefactor' => 'مبلغ مالي من محسن',
     'amount_from_association' => 'مبلغ مالي من الجمعية',
+    'monthly_sponsorship' => 'المنحة الشهرية',
     'difference_before_monthly_sponsorship' => 'الفارق قبل الكفالة الشهرية',
     'difference_after_monthly_sponsorship' => 'الفارق بعد الكفالة الشهرية',
     'member_academic_level' => 'المستوى الدراسي',

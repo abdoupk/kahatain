@@ -16,8 +16,6 @@ use App\Http\Controllers\V1\Archive\Exports\ExportArchiveBabiesMilkAndDiapersPDF
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveBabiesMilkAndDiapersXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesEidAlAdhaPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesEidAlAdhaXlsxController;
-use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlyBasketPDFController;
-use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlyBasketXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketPDFController;
@@ -94,16 +92,6 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
             'eid-al-adha/export-xlsx/{archive}',
             ExportArchiveFamiliesEidAlAdhaXlsxController::class
         )->name('eid-al-adha.xlsx');
-
-        Route::get(
-            'monthly-basket/export-pdf/{archive}',
-            ExportArchiveFamiliesMonthlyBasketPDFController::class
-        )->name('monthly-basket.pdf');
-
-        Route::get(
-            'monthly-basket/export-xlsx/{archive}',
-            ExportArchiveFamiliesMonthlyBasketXlsxController::class
-        )->name('monthly-basket.xlsx');
 
         Route::get(
             'ramadan-basket/export-pdf/{archive}',
