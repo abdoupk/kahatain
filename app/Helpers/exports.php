@@ -51,9 +51,8 @@ function listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(): Col
                 'sponsor:id,first_name,last_name,family_id,phone_number',
                 'zone:id,name',
                 'branch:id,name',
-            ])
-            ->withCount('orphans'))
-        ->get();
+                'aid',
+            ]))->get();
 }
 
 function listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(): Collection

@@ -17,18 +17,6 @@
         </x-th>
 
         <x-th>
-            {{ __('validation.attributes.address') }}
-        </x-th>
-
-        <x-th>
-            {{ __('orphans_count') }}
-        </x-th>
-
-        <x-th>
-            {{ __('incomes.label.total_income') }}
-        </x-th>
-
-        <x-th>
             {{ __('income_rate') }}
         </x-th>
 
@@ -38,6 +26,22 @@
 
         <x-th>
             {{ __('the_zone') }}
+        </x-th>
+
+        <x-th>
+            {{ __('filters.amount_from_benefactor') }}
+        </x-th>
+
+        <x-th>
+            {{ __('filters.basket_from_benefactor') }}
+        </x-th>
+
+        <x-th>
+            {{ __('monthly_sponsorship.difference') }}
+        </x-th>
+
+        <x-th>
+            {{ __('ramadan_basket_category') }}
         </x-th>
     </x-slot>
 
@@ -56,18 +60,6 @@
                     {{ $family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
-                <x-td class="truncate max-w-28">
-                    {{ $family->address ?? '————' }}
-                </x-td>
-
-                <x-td class="text-center">
-                    {{ $family->orphans_count }}
-                </x-td>
-
-                <x-td class="text-center">
-                    {{ formatCurrency($family->total_income) }}
-                </x-td>
-
                 <x-td class="text-center">
                     {{ formatCurrency($family->income_rate) }}
                 </x-td>
@@ -78,6 +70,22 @@
 
                 <x-td class="text-center">
                     {{ $family->zone?->name ?? '————' }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount')) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount')) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->ramadan_sponsorship_difference) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ $family->ramadan_basket_category ?? '————'  }}
                 </x-td>
             </tr>
         @endforeach

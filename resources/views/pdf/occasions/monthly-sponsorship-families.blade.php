@@ -73,11 +73,11 @@
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ formatCurrency($family->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount')) }}
+                    {{ formatCurrency($family->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount')) }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ formatCurrency($family->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount')) }}
+                    {{ formatCurrency($family->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount')) }}
                 </x-td>
 
                 <x-td class="text-center">
