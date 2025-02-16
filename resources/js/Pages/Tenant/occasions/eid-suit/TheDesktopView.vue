@@ -5,8 +5,6 @@ import { useOrphansStore } from '@/stores/orphans'
 import { Link } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 
-import EditableRows from '@/Pages/Tenant/occasions/eid-suit/EditableRows.vue'
-
 import BaseFormCheckInput from '@/Components/Base/form/form-check/BaseFormCheckInput.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
@@ -14,8 +12,10 @@ import BaseTheadTable from '@/Components/Base/table/BaseTheadTable.vue'
 import BaseTrTable from '@/Components/Base/table/BaseTrTable.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
+import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import TheWarningModal from '@/Components/Global/TheWarningModal.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatCurrency } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
@@ -62,7 +62,7 @@ watch(
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden overflow-y-hidden overflow-x-scroll @3xl:block">
+    <div class="intro-y !z-30 col-span-12 hidden @3xl:block">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -128,22 +128,6 @@ watch(
                         {{ $t('income_rate') }}
                     </the-table-th>
 
-                    <the-table-th>{{ $t('clothes_shop_name') }}</the-table-th>
-
-                    <the-table-th>{{ $t('clothes_shop_phone_number') }}</the-table-th>
-
-                    <the-table-th>{{ $t('clothes_shop_location') }}</the-table-th>
-
-                    <the-table-th>{{ $t('shoes_shop_name') }}</the-table-th>
-
-                    <the-table-th>{{ $t('shoes_shop_phone_number') }}</the-table-th>
-
-                    <the-table-th>{{ $t('shoes_shop_location') }}</the-table-th>
-
-                    <the-table-th>{{ $t('designated_member') }}</the-table-th>
-
-                    <the-table-th>{{ $t('validation.attributes.note') }}</the-table-th>
-
                     <the-table-th
                         :direction="params.directions && params.directions['sponsor.name']"
                         class="text-start"
@@ -157,7 +141,13 @@ watch(
                         {{ $t('validation.attributes.sponsor.phone_number') }}
                     </the-table-th>
 
-                    <the-table-th class="text-start">{{ $t('validation.attributes.address') }}</the-table-th>
+                    <the-table-th class="text-start">
+                        {{ $t('validation.attributes.address') }}
+                    </the-table-th>
+
+                    <the-table-th class="text-center">
+                        {{ $t('actions') }}
+                    </the-table-th>
                 </base-tr-table>
             </base-thead-table>
 
@@ -206,14 +196,6 @@ watch(
                         </div>
                     </the-table-td>
 
-                    <editable-rows
-                        :orphan
-                        @showLocationAddressModal="$emit('showLocationAddressModal', $event)"
-                        @showSuccessNotification="$emit('showSuccessNotification')"
-                        @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                        @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                    ></editable-rows>
-
                     <the-table-td class="!min-w-24 !max-w-24 truncate">
                         <Link
                             :href="route('tenant.sponsors.show', orphan.sponsor.id)"
@@ -241,6 +223,22 @@ watch(
                             {{ orphan.family.zone?.name }}
                         </Link>
                     </the-table-td>
+
+                    <the-table-td-actions class="w-fit text-center">
+                        <div class="flex items-center justify-center">
+                            <a class="me-3 flex items-center" href="javascript:void(0)" @click.prevent="">
+                                <svg-loader class="me-2 h-4 w-4" name="icon-eye"></svg-loader>
+
+                                {{ $t('show') }}
+                            </a>
+
+                            <a class="flex items-center" href="javascript:void(0)" @click.prevent="">
+                                <svg-loader class="me-2 h-4 w-4" name="icon-pen"></svg-loader>
+
+                                {{ $t('edit') }}
+                            </a>
+                        </div>
+                    </the-table-td-actions>
                 </base-tr-table>
             </base-tbody-table>
         </base-table>

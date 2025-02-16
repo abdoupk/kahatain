@@ -457,9 +457,9 @@ const constructTitle = (hit: Hit, indexUid: string) => {
 export const searchShopOwnerName = async (query: string) => {
     const results = await client.index('orphans').search(query, {
         q: query,
-        limit: 5,
+        limit: 20,
         sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_name != NULL AND eid_suit.shoes_shop_name != NULL`,
         attributesToRetrieve: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name'],
         attributesToSearchOn: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name']
     })
@@ -470,16 +470,16 @@ export const searchShopOwnerName = async (query: string) => {
                 .flatMap((result) =>
                     [
                         result.eid_suit.clothes_shop_name && {
-                            id: result.eid_suit.clothes_shop_name.replaceAll(' ', '_'),
-                            name: result.eid_suit.clothes_shop_name
+                            value: result.eid_suit.clothes_shop_name.replaceAll(' ', '_'),
+                            label: result.eid_suit.clothes_shop_name
                         },
                         result.eid_suit.shoes_shop_name && {
-                            id: result.eid_suit.shoes_shop_name.replaceAll(' ', '_'),
-                            name: result.eid_suit.shoes_shop_name
+                            value: result.eid_suit.shoes_shop_name.replaceAll(' ', '_'),
+                            label: result.eid_suit.shoes_shop_name
                         }
                     ].filter(Boolean)
                 )
-                .map((item) => [item.id, item]) // Use `id` as the unique key
+                .map((item) => [item.value, item]) // Use `id` as the unique key
         ).values()
     ]
 }
@@ -487,7 +487,7 @@ export const searchShopOwnerName = async (query: string) => {
 export const searchShopOwnerPhoneNumber = async (query: string) => {
     const results = await client.index('orphans').search(query, {
         q: query,
-        limit: 5,
+        limit: 20,
         sort: ['updated_at:desc'],
         filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
         attributesToRetrieve: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number'],
@@ -500,16 +500,16 @@ export const searchShopOwnerPhoneNumber = async (query: string) => {
                 .flatMap((result) =>
                     [
                         result.eid_suit.clothes_shop_phone_number && {
-                            id: result.eid_suit.clothes_shop_phone_number,
-                            name: result.eid_suit.clothes_shop_phone_number
+                            value: result.eid_suit.clothes_shop_phone_number,
+                            label: result.eid_suit.clothes_shop_phone_number
                         },
                         result.eid_suit.shoes_shop_phone_number && {
-                            id: result.eid_suit.shoes_shop_phone_number,
-                            name: result.eid_suit.shoes_shop_phone_number
+                            value: result.eid_suit.shoes_shop_phone_number,
+                            label: result.eid_suit.shoes_shop_phone_number
                         }
                     ].filter(Boolean)
                 )
-                .map((item) => [item.id, item]) // Map `id` to the item
+                .map((item) => [item.value, item])
         ).values()
     ]
 }
@@ -517,7 +517,7 @@ export const searchShopOwnerPhoneNumber = async (query: string) => {
 export const searchShopOwnerAddress = async (query: string) => {
     const results = await client.index('orphans').search(query, {
         q: query,
-        limit: 5,
+        limit: 20,
         sort: ['updated_at:desc'],
         filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
         attributesToRetrieve: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address'],
@@ -530,16 +530,16 @@ export const searchShopOwnerAddress = async (query: string) => {
                 .flatMap((result) =>
                     [
                         result.eid_suit.clothes_shop_address && {
-                            id: result.eid_suit.clothes_shop_address,
-                            name: result.eid_suit.clothes_shop_address
+                            value: result.eid_suit.clothes_shop_address.replaceAll(' ', '_'),
+                            label: result.eid_suit.clothes_shop_address
                         },
                         result.eid_suit.shoes_shop_address && {
-                            id: result.eid_suit.shoes_shop_address,
-                            name: result.eid_suit.shoes_shop_address
+                            value: result.eid_suit.shoes_shop_address.replaceAll(' ', '_'),
+                            label: result.eid_suit.shoes_shop_address
                         }
                     ].filter(Boolean)
                 )
-                .map((item) => [item.id, item]) // Map `id` to the item
+                .map((item) => [item.value, item])
         ).values()
     ]
 }

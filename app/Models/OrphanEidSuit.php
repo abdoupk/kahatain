@@ -22,7 +22,7 @@ class OrphanEidSuit extends Model
         'clothes_shop_address',
         'shoes_shop_location',
         'clothes_shop_location',
-        'clothes_completed',
+        'shirt_completed',
         'shoes_completed',
         'pants_completed',
         'orphan_id',

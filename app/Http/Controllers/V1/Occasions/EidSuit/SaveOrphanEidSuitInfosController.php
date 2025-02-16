@@ -14,7 +14,10 @@ class SaveOrphanEidSuitInfosController extends Controller
     {
         $orphan->eidSuit()->updateOrCreate(
             ['orphan_id' => $orphan->id],
-            $request->validated()
+            [
+                'orphan_id' => $orphan->id,
+                ...$request->validated(),
+            ]
         );
 
         $orphan->searchable();

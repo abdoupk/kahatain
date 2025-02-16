@@ -32,10 +32,6 @@ const props = withDefaults(defineProps<ComboboxProps<boolean>>(), {
     labelKey: 'label'
 })
 
-defineOptions({
-    inheritAttrs: false
-})
-
 const attrs = useAttrs()
 
 const emit = defineEmits(['update:modelValue'])

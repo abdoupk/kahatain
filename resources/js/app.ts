@@ -63,10 +63,10 @@ createInertiaApp({
             }
         }
 
-        app.mount(el)
-
         // @ts-expect-error
         delete el.dataset.page
+
+        app.mount(el)
     },
     progress: {
         color: '#4B5563'

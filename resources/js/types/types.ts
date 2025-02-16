@@ -627,31 +627,22 @@ export interface EidSuitOrphansResource {
         pants_size: string
         shirt_size: string
         age: number
-        edit?: {
-            shoes_shop_name: boolean
-            shoes_shop_phone_number: boolean
-            clothes_shop_name: boolean
-            clothes_shop_phone_number: boolean
-            note: boolean
-            member: boolean
-        }
     }
     eid_suit: {
-        id: string | null
         shoes_shop_name: string | null
         shoes_shop_phone_number: string | null
         clothes_shop_name: string | null
         clothes_shop_phone_number: string | null
         note: string | null
-        member?: {
-            id: string | null
-            name: string | null
-        }
+        user_id: string
         clothes_shop_address: string
         clothes_shop_location: string
         shoes_shop_address: string
         shoes_shop_location: string
-    } | null
+        shirt_completed: boolean
+        shoes_completed: boolean
+        pants_completed: boolean
+    }
 }
 
 export interface InventoryIndexResource {
@@ -978,10 +969,6 @@ export interface ListBoxOperator {
 
 export type FilterValueType = string | { id: string; name: string }
 
-export type FilterValueSponsorshipType = string | { label: string; value: string }
-
-export type ClothesSizesType = { id: number; label: string }[]
-
 export type SubjectType = { id: number; name: string }
 
 export type CreateSchoolForm = {
@@ -1074,16 +1061,6 @@ export type ArchiveOccasionType = {
     created_at: string | Date
     id: string
     date?: number | string
-}
-
-export type Diaper = {
-    id: string
-    name: string
-}
-
-export type BabyMilk = {
-    id: string
-    name: string
 }
 
 export type SiteSettingsType = {

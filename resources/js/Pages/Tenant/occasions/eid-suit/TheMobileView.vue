@@ -3,9 +3,9 @@ import type { EidSuitOrphansResource, IndexParams, PaginationData } from '@/type
 
 import { useOrphansStore } from '@/stores/orphans'
 import { Link } from '@inertiajs/vue3'
+import { useForm } from 'laravel-precognition-vue'
 import { watch } from 'vue'
 
-import EditableRow from '@/Pages/Tenant/occasions/eid-suit/EditableRow.vue'
 import MapCell from '@/Pages/Tenant/occasions/eid-suit/MapCell.vue'
 
 import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
@@ -15,6 +15,7 @@ import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwit
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
+import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatCurrency, hasPermission, loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
@@ -36,15 +37,12 @@ const checkAll = ($event) => {
     const orphans = props.orphans.data.map((orphan) => orphan.id)
 
     if ($event.target.checked) {
-        // If checked, add all orphans to selectedFamilies
         if (orphansStore.orphans.length) {
-            // Avoid duplication by filtering out existing ones
             orphansStore.orphans = [...new Set([...orphansStore.orphans, ...orphans])]
         } else {
             orphansStore.orphans = orphans
         }
     } else {
-        // If unchecked, remove the current orphans from selectedFamilies
         orphansStore.orphans = orphansStore.orphans.filter((id) => !orphans.includes(id))
     }
 }
@@ -61,6 +59,22 @@ watch(
         }
     }
 )
+
+const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
+    let value
+
+    if (orphan.eid_suit[property]?.missing) {
+        value = orphan.eid_suit[property].value
+    } else value = orphan.eid_suit[property]
+
+    useForm('patch', route('tenant.occasions.eid-suit.save-infos', orphan.orphan.id), {
+        [property]: value
+    }).submit({
+        onSuccess() {
+            emit('showSuccessNotification')
+        }
+    })
+}
 </script>
 
 <template>
@@ -138,7 +152,7 @@ watch(
                 </div>
 
                 <div class="mt-4 grid grid-cols-12 gap-4">
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('the_sponsor') }}
                         </div>
@@ -157,7 +171,7 @@ watch(
                         </div>
                     </div>
 
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('sponsor_phone_number') }}
                         </div>
@@ -167,7 +181,7 @@ watch(
                         </p>
                     </div>
 
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('the_zone') }}
                         </div>
@@ -177,7 +191,7 @@ watch(
                         </p>
                     </div>
 
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('age') }}
                         </div>
@@ -187,7 +201,7 @@ watch(
                         </p>
                     </div>
 
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('pants_size') }}
                         </div>
@@ -197,7 +211,7 @@ watch(
                         </p>
                     </div>
 
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('shirt_size') }}
                         </div>
@@ -207,7 +221,7 @@ watch(
                         </p>
                     </div>
 
-                    <div class="col-span-12 grid grid-cols-12 gap-2">
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 rtl:!font-semibold">
                             {{ $t('shoes_size') }}
                         </div>
@@ -217,172 +231,190 @@ watch(
                         </p>
                     </div>
 
-                    <!--                    <button v-if="orphan.orphan.edit" @click.prevent="orphan.orphan.edit = !orphan.orphan.edit">-->
-                    <!--                        {{ $t('edit') }}-->
-                    <!--                    </button>-->
-
-                    <template v-if="true">
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 rtl:!font-semibold">
-                                {{ $t('clothes_shop_location') }}
-                            </div>
-
-                            <p class="col-span-7">
-                                <map-cell
-                                    :orphan
-                                    class="!block"
-                                    shop-type="clothes"
-                                    @show-location-address-modal="emit('showLocationAddressModal', $event)"
-                                ></map-cell>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
+                            {{ $t('clothes_shop_location') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 rtl:!font-semibold">
-                                {{ $t('shoes_shop_location') }}
-                            </div>
+                        <p class="col-span-7">
+                            <map-cell
+                                :orphan
+                                class="!block"
+                                shop-type="clothes"
+                                @show-location-address-modal="emit('showLocationAddressModal', $event)"
+                            ></map-cell>
+                        </p>
+                    </div>
 
-                            <p class="col-span-7">
-                                <map-cell
-                                    :orphan
-                                    class="!block"
-                                    shop-type="shoes"
-                                    @show-location-address-modal="emit('showLocationAddressModal', $event)"
-                                ></map-cell>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 rtl:!font-semibold">
+                            {{ $t('shoes_shop_location') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('clothes_shop_name') }}
-                            </div>
+                        <p class="col-span-7">
+                            <map-cell
+                                :orphan
+                                class="!block"
+                                shop-type="shoes"
+                                @show-location-address-modal="emit('showLocationAddressModal', $event)"
+                            ></map-cell>
+                        </p>
+                    </div>
 
-                            <p class="col-span-7">
-                                <base-combobox
-                                    id="clothes_shop_name"
-                                    v-model="orphan.clothes_shop_name"
-                                    :load-options="loadShopOwnerNames"
-                                    :options="[]"
-                                    class="mt-0"
-                                    create-option
-                                    label-key="name"
-                                    value-key="id"
-                                    @focusin="
-                                        () => {
-                                            console.error('44444444')
-                                        }
-                                    "
-                                    @focusout="
-                                        () => {
-                                            console.error('45454')
-                                        }
-                                    "
-                                ></base-combobox>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('designated_member') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('clothes_shop_phone_number') }}
-                            </div>
+                        <members-filter-drop-down
+                            v-model="orphan.eid_suit.user_id"
+                            :disabled="orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id"
+                            class="col-span-7"
+                            @focusin="orphan.eid_suit.selected = true"
+                            @focusout="orphan.eid_suit.selected = false"
+                            @update:model-value="handleUpdate(orphan, 'user_id')"
+                        >
+                        </members-filter-drop-down>
+                    </div>
 
-                            <p class="col-span-7">
-                                <editable-row
-                                    :load-options="loadShopOwnerPhoneNumbers"
-                                    :orphan
-                                    class="!ms-0 !mt-0 w-full"
-                                    field="clothes_shop_phone_number"
-                                    view="mobile"
-                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                    @show-success-notification="emit('showSuccessNotification')"
-                                ></editable-row>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('clothes_shop_name') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('shoes_shop_name') }}
-                            </div>
+                        <base-combobox
+                            id="clothes_shop_name"
+                            v-model="orphan.eid_suit.clothes_shop_name"
+                            :disabled="orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id"
+                            :load-options="loadShopOwnerNames"
+                            :options="[]"
+                            class="col-span-7 mt-0"
+                            create-option
+                            @focusin="orphan.eid_suit.selected = true"
+                            @focusout="orphan.eid_suit.selected = false"
+                            @update:model-value="handleUpdate(orphan, 'clothes_shop_name')"
+                        ></base-combobox>
+                    </div>
 
-                            <p class="col-span-7">
-                                <editable-row
-                                    :load-options="loadShopOwnerNames"
-                                    :orphan
-                                    class="!ms-0 !mt-0 w-full"
-                                    field="shoes_shop_name"
-                                    view="mobile"
-                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                    @show-success-notification="emit('showSuccessNotification')"
-                                ></editable-row>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('clothes_shop_phone_number') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('shoes_shop_phone_number') }}
-                            </div>
+                        <base-combobox
+                            id="clothes_shop_phone_number"
+                            v-model="orphan.eid_suit.clothes_shop_phone_number"
+                            :disabled="orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id"
+                            :load-options="loadShopOwnerPhoneNumbers"
+                            :options="[]"
+                            class="col-span-7 mt-0"
+                            create-option
+                            @focusin="orphan.eid_suit.selected = true"
+                            @focusout="orphan.eid_suit.selected = false"
+                            @update:model-value="handleUpdate(orphan, 'clothes_shop_phone_number')"
+                        ></base-combobox>
+                    </div>
 
-                            <p class="col-span-7">
-                                <editable-row
-                                    :load-options="loadShopOwnerPhoneNumbers"
-                                    :orphan
-                                    class="!ms-0 !mt-0 w-full"
-                                    field="shoes_shop_phone_number"
-                                    view="mobile"
-                                    @select-orphan="emit('selectOrphan', orphan.orphan.id)"
-                                    @deselect-orphan="emit('deselectOrphan', orphan.orphan.id)"
-                                    @show-success-notification="emit('showSuccessNotification')"
-                                ></editable-row>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('shoes_shop_name') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('pants_completed') }}
-                            </div>
+                        <base-combobox
+                            id="shoes_shop_name"
+                            v-model="orphan.eid_suit.shoes_shop_name"
+                            :disabled="orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id"
+                            :load-options="loadShopOwnerNames"
+                            :options="[]"
+                            class="col-span-7 mt-0"
+                            create-option
+                            @focusin="orphan.eid_suit.selected = true"
+                            @focusout="orphan.eid_suit.selected = false"
+                            @update:model-value="handleUpdate(orphan, 'shoes_shop_name')"
+                        ></base-combobox>
+                    </div>
 
-                            <p class="col-span-7">
-                                <base-form-switch>
-                                    <base-form-switch-input
-                                        v-model="orphan.eid_suit.pants_completed"
-                                        type="checkbox"
-                                    ></base-form-switch-input>
-                                </base-form-switch>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('shoes_shop_phone_number') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('shirt_completed') }}
-                            </div>
+                        <base-combobox
+                            id="shoes_shop_phone_number"
+                            v-model="orphan.eid_suit.shoes_shop_phone_number"
+                            :disabled="orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id"
+                            :load-options="loadShopOwnerPhoneNumbers"
+                            :options="[]"
+                            class="col-span-7 mt-0"
+                            create-option
+                            @focusin="orphan.eid_suit.selected = true"
+                            @focusout="orphan.eid_suit.selected = false"
+                            @update:model-value="handleUpdate(orphan, 'shoes_shop_phone_number')"
+                        ></base-combobox>
+                    </div>
 
-                            <p class="col-span-7">
-                                <base-form-switch>
-                                    <base-form-switch-input
-                                        v-model="orphan.eid_suit.shirt_completed"
-                                        type="checkbox"
-                                    ></base-form-switch-input>
-                                </base-form-switch>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('pants_completed') }}
                         </div>
 
-                        <div class="col-span-12 grid grid-cols-12 gap-2">
-                            <div class="col-span-5 mt-1 rtl:!font-semibold">
-                                {{ $t('shoes_completed') }}
-                            </div>
+                        <base-form-switch class="col-span-7">
+                            <base-form-switch-input
+                                v-model="orphan.eid_suit.pants_completed"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                type="checkbox"
+                                @focusin="orphan.eid_suit.selected = true"
+                                @focusout="orphan.eid_suit.selected = false"
+                                @mouseenter="orphan.eid_suit.selected = true"
+                                @mouseleave="orphan.eid_suit.selected = false"
+                                @update:model-value="handleUpdate(orphan, 'pants_completed')"
+                            ></base-form-switch-input>
+                        </base-form-switch>
+                    </div>
 
-                            <p class="col-span-7">
-                                <base-form-switch>
-                                    <base-form-switch-input
-                                        v-model="orphan.eid_suit.shoes_completed"
-                                        type="checkbox"
-                                    ></base-form-switch-input>
-                                </base-form-switch>
-                            </p>
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('shirt_completed') }}
                         </div>
-                    </template>
+
+                        <base-form-switch class="col-span-7">
+                            <base-form-switch-input
+                                v-model="orphan.eid_suit.shirt_completed"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                type="checkbox"
+                                @focusin="orphan.eid_suit.selected = true"
+                                @focusout="orphan.eid_suit.selected = false"
+                                @mouseenter="orphan.eid_suit.selected = true"
+                                @mouseleave="orphan.eid_suit.selected = false"
+                                @update:model-value="handleUpdate(orphan, 'shirt_completed')"
+                            ></base-form-switch-input>
+                        </base-form-switch>
+                    </div>
+
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('shoes_completed') }}
+                        </div>
+
+                        <base-form-switch class="col-span-7">
+                            <base-form-switch-input
+                                v-model="orphan.eid_suit.shoes_completed"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                type="checkbox"
+                                @focusin="orphan.eid_suit.selected = true"
+                                @focusout="orphan.eid_suit.selected = false"
+                                @mouseenter="orphan.eid_suit.selected = true"
+                                @mouseleave="orphan.eid_suit.selected = false"
+                                @update:model-value="handleUpdate(orphan, 'shoes_completed')"
+                            ></base-form-switch-input>
+                        </base-form-switch>
+                    </div>
                 </div>
             </div>
         </div>

@@ -204,6 +204,7 @@
     "filters.basket_from_association": "قفة من الجمعية",
     "filters.amount_from_benefactor": "مبلغ مالي من محسن",
     "filters.amount_from_association": "مبلغ مالي من الجمعية",
+    "filters.monthly_sponsorship": "المنحة الشهرية",
     "filters.difference_before_monthly_sponsorship": "الفارق قبل الكفالة الشهرية",
     "filters.difference_after_monthly_sponsorship": "الفارق بعد الكفالة الشهرية",
     "filters.member_academic_level": "المستوى الدراسي",

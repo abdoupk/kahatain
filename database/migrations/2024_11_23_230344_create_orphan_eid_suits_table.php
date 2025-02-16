@@ -24,7 +24,7 @@ return new class extends Migration
             $table->json('shoes_shop_location')->nullable();
             $table->string('clothes_shop_address')->nullable();
             $table->json('clothes_shop_location')->nullable();
-            $table->boolean('clothes_completed')->nullable();
+            $table->boolean('shirt_completed')->nullable();
             $table->boolean('shoes_completed')->nullable();
             $table->boolean('pants_completed')->nullable();
             $table->timestamps();

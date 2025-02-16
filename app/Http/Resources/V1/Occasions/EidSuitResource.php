@@ -47,10 +47,10 @@ class EidSuitResource extends JsonResource
                 'clothes_shop_address' => $this->eidSuit?->clothes_shop_address,
                 'clothes_shop_location' => $this->eidSuit?->clothes_shop_location,
                 'note' => $this->eidSuit?->note,
-                'member' => [
-                    'id' => $this->eidSuit?->member?->id ?? '',
-                    'name' => $this->eidSuit?->member?->getName() ?? '',
-                ],
+                'user_id' => $this->eidSuit?->user_id,
+                'shirt_completed' => $this->eidSuit?->shirt_completed,
+                'shoes_completed' => $this->eidSuit?->shoes_completed,
+                'pants_completed' => $this->eidSuit?->pants_completed,
             ],
         ];
     }

@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import { useOrphansStore } from '@/stores/orphans'
-import { router, usePage } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { nextTick, ref } from 'vue'
-
-import RowCombobox from '@/Pages/Tenant/occasions/eid-suit/RowCombobox.vue'
 
 import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
 import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
@@ -35,54 +34,44 @@ const inputs = ref({
     clothes_shop_phone_number: '',
     clothes_shop_address: '',
     clothes_shop_location: null,
-    shoes_shop_name: '',
-    shoes_shop_phone_number: '',
     shoes_shop_address: '',
     shoes_shop_location: null,
-    designated_member: null,
+    shoes_shop_name: '',
+    shoes_shop_phone_number: '',
     note: '',
-    ids: []
+    ids: [],
+    designated_member: ''
 })
+
+const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), inputs.value)
 
 const handleSubmit = () => {
     loading.value = true
 
     form.setData({
-        ...inputs.value,
+        ...form.data(),
         ids: orphansStore.orphans,
-        designated_member: inputs.value.designated_member?.id,
-        clothes_shop_phone_number: inputs.value.clothes_shop_phone_number.name,
-        shoes_shop_phone_number: inputs.value.shoes_shop_phone_number.name,
-        clothes_shop_name: inputs.value.clothes_shop_name.name,
-        shoes_shop_name: inputs.value.shoes_shop_name.name
+        shoes_shop_name: inputs.value.shoes_shop_name?.name,
+        clothes_shop_name: inputs.value.clothes_shop_name?.name,
+        shoes_shop_phone_number: inputs.value.shoes_shop_phone_number?.value,
+        clothes_shop_phone_number: inputs.value.clothes_shop_phone_number?.value
     })
 
     form.submit({
         onSuccess() {
             showSuccessNotification.value = true
 
-            router.get(
-                route('tenant.occasions.eid-suit.index'),
-                {},
-                {
-                    preserveScroll: true,
-                    preserveState: false,
-                    only: ['orphans'],
-                    onFinish: () => {
-                        showSuccessNotification.value = false
+            setTimeout(() => {
+                emit('close')
+            }, 300)
 
-                        nextTick(() => {
-                            showSuccessNotification.value = false
+            nextTick(() => {
+                showSuccessNotification.value = false
 
-                            useOrphansStore().orphans = []
+                useOrphansStore().orphans = []
 
-                            setTimeout(() => {
-                                emit('close')
-                            }, 300)
-                        })
-                    }
-                }
-            )
+                form.reset()
+            })
         },
 
         onFinish() {
@@ -100,8 +89,6 @@ const showWarningAlert = ref(false)
 const disabled = ref(false)
 
 const userName = ref('')
-
-const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), inputs.value)
 
 window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent', (e) => {
     const exists = e.ids.some((item) => orphansStore.orphans.includes(item))
@@ -170,9 +157,8 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
 
                 <members-filter-drop-down
                     id="designated_member"
-                    :value="inputs.designated_member"
+                    v-model="form.designated_member"
                     class="!mt-0"
-                    @update:value="inputs.designated_member = $event"
                 ></members-filter-drop-down>
 
                 <base-form-input-error :form field_name="designated_member"></base-form-input-error>
@@ -185,16 +171,16 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     {{ $t('clothes_shop_name') }}
                 </base-form-label>
 
-                <row-combobox
+                <base-combobox
                     id="clothes_shop_name"
-                    :has-error="false"
+                    v-model="inputs.clothes_shop_name"
                     :load-options="loadShopOwnerNames"
-                    :max-length="255"
-                    :model-value="inputs.clothes_shop_name"
                     :options="[]"
-                    class="!mt-0"
-                    @update:model-value="(event) => (inputs.clothes_shop_name = event)"
-                ></row-combobox>
+                    class="mt-0"
+                    create-option
+                    label-key="name"
+                    value-key="id"
+                ></base-combobox>
 
                 <base-form-input-error :form field_name="clothes_shop_name"></base-form-input-error>
             </div>
@@ -206,16 +192,16 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     {{ $t('clothes_shop_phone_number') }}
                 </base-form-label>
 
-                <row-combobox
+                <base-combobox
                     id="clothes_shop_phone_number"
-                    :has-error="false"
+                    v-model="inputs.clothes_shop_phone_number"
                     :load-options="loadShopOwnerPhoneNumbers"
-                    :max-length="10"
-                    :model-value="inputs.clothes_shop_phone_number"
                     :options="[]"
-                    class="!mt-0"
-                    @update:model-value="(event) => (inputs.clothes_shop_phone_number = event)"
-                ></row-combobox>
+                    class="mt-0"
+                    create-option
+                    label-key="label"
+                    value-key="value"
+                ></base-combobox>
 
                 <base-form-input-error :form field_name="clothes_shop_phone_number"></base-form-input-error>
             </div>
@@ -228,8 +214,8 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                 </base-form-label>
 
                 <the-address-field
-                    v-model:address="inputs.clothes_shop_address"
-                    v-model:location="inputs.clothes_shop_location"
+                    v-model:address="form.clothes_shop_address"
+                    v-model:location="form.clothes_shop_location"
                     :select_location_label="$t('select_location')"
                     class="!mt-0"
                 ></the-address-field>
@@ -244,16 +230,16 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     {{ $t('shoes_shop_name') }}
                 </base-form-label>
 
-                <row-combobox
+                <base-combobox
                     id="shoes_shop_name"
-                    :has-error="false"
+                    v-model="inputs.shoes_shop_name"
                     :load-options="loadShopOwnerNames"
-                    :max-length="255"
-                    :model-value="inputs.shoes_shop_name"
                     :options="[]"
-                    class="!mt-0"
-                    @update:model-value="(event) => (inputs.shoes_shop_name = event)"
-                ></row-combobox>
+                    class="mt-0"
+                    create-option
+                    label-key="name"
+                    value-key="id"
+                ></base-combobox>
 
                 <base-form-input-error :form field_name="shoes_shop_name"></base-form-input-error>
             </div>
@@ -265,16 +251,16 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     {{ $t('shoes_shop_phone_number') }}
                 </base-form-label>
 
-                <row-combobox
+                <base-combobox
                     id="shoes_shop_phone_number"
-                    :has-error="false"
+                    v-model="inputs.shoes_shop_phone_number"
                     :load-options="loadShopOwnerPhoneNumbers"
-                    :max-length="10"
-                    :model-value="inputs.shoes_shop_phone_number"
                     :options="[]"
-                    class="!mt-0"
-                    @update:model-value="(event) => (inputs.shoes_shop_phone_number = event)"
-                ></row-combobox>
+                    class="mt-0"
+                    create-option
+                    label-key="label"
+                    value-key="value"
+                ></base-combobox>
 
                 <base-form-input-error :form field_name="shoes_shop_phone_number"></base-form-input-error>
             </div>
@@ -287,8 +273,8 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                 </base-form-label>
 
                 <the-address-field
-                    v-model:address="inputs.shoes_shop_address"
-                    v-model:location="inputs.shoes_shop_location"
+                    v-model:address="form.shoes_shop_address"
+                    v-model:location="form.shoes_shop_location"
                     :select_location_label="$t('select_location')"
                 ></the-address-field>
 
@@ -303,7 +289,7 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
 
                 <base-form-text-area
                     id="note"
-                    v-model="inputs.note"
+                    v-model="form.note"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('notes') })"
                     rows="4"
                 ></base-form-text-area>
