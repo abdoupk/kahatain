@@ -18,7 +18,6 @@ use App\Models\User;
 use App\Models\VocationalTrainingCenter;
 use App\Models\VocationalTrainingSpeciality;
 use Carbon\Carbon;
-use Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -81,8 +80,6 @@ class AppServiceProvider extends ServiceProvider
             return trim((string) $domain, '-').
                 '.'.config('tenancy.central_domains')[0];
         });
-
-        Gate::before(static fn ($user) => $user->hasRole('super_admin') ? true : null);
 
         Model::preventLazyLoading(! $this->app->isProduction());
 
