@@ -489,7 +489,7 @@ export const searchShopOwnerPhoneNumber = async (query: string) => {
         q: query,
         limit: 20,
         sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_phone_number != NULL AND eid_suit.shoes_shop_phone_number != NULL`,
         attributesToRetrieve: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number'],
         attributesToSearchOn: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number']
     })
@@ -519,7 +519,7 @@ export const searchShopOwnerAddress = async (query: string) => {
         q: query,
         limit: 20,
         sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0`,
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_address != NULL AND eid_suit.shoes_shop_address != NULL`,
         attributesToRetrieve: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address'],
         attributesToSearchOn: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address']
     })
