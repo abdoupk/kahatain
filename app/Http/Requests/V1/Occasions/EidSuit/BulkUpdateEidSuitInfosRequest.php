@@ -35,7 +35,7 @@ class BulkUpdateEidSuitInfosRequest extends FormRequest
             'shoes_shop_location' => 'nullable|array',
             'clothes_shop_location' => 'nullable|array',
             'shoes_shop_phone_number' => ['nullable', 'regex:/^(06|07|05)\d{8}$/'],
-            'designated_member' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'note' => 'nullable|string|max:255',
         ];
     }

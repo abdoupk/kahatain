@@ -24,7 +24,7 @@ class BulkUpdateEidSuitInfosController extends Controller
                     'clothes_shop_address' => $request->clothes_shop_address,
                     'clothes_shop_location' => $request->clothes_shop_location,
                     'clothes_shop_phone_number' => $request->clothes_shop_phone_number,
-                    'user_id' => $request->designated_member,
+                    'user_id' => $request->user_id,
                 ],
             );
 
