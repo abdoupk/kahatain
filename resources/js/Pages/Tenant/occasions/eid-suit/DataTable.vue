@@ -22,6 +22,8 @@ const props = defineProps<{
     params: IndexParams
 }>()
 
+const emit = defineEmits(['showEditModal', 'showDetailsModal'])
+
 const showMapModalStatus = ref(false)
 
 const selectedOrphan = ref<{
@@ -132,6 +134,8 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
             @sort="$emit('sort', $event)"
             @select-orphan="orphansStore.selectedOrphan = $event"
             @deselect-orphan="orphansStore.selectedOrphan = ''"
+            @show-details-modal="emit('showDetailsModal', $event)"
+            @show-edit-modal="emit('showEditModal', $event)"
         ></the-desktop-view>
 
         <the-mobile-view

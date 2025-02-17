@@ -2,7 +2,7 @@
 import { useOrphansStore } from '@/stores/orphans'
 import { usePage } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 
 import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
 import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton.vue'
@@ -21,6 +21,7 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
     open: boolean
+    orphanId: string
 }>()
 
 const emit = defineEmits(['close'])
@@ -40,24 +41,31 @@ const inputs = ref({
     shoes_shop_phone_number: '',
     note: '',
     ids: [],
-    designated_member: ''
+    user_id: ''
 })
 
-const form = useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), inputs.value)
+const form = computed(() => {
+    if (props.orphanId) {
+        return useForm('patch', route('tenant.occasions.eid-suit.save-infos', props.orphanId), inputs.value)
+    }
+
+    return useForm('patch', route('tenant.occasions.eid-suit.bulk-update'), inputs.value)
+})
 
 const handleSubmit = () => {
     loading.value = true
 
-    form.setData({
-        ...form.data(),
-        ids: orphansStore.orphans,
-        shoes_shop_name: inputs.value.shoes_shop_name?.name,
-        clothes_shop_name: inputs.value.clothes_shop_name?.name,
-        shoes_shop_phone_number: inputs.value.shoes_shop_phone_number?.value,
-        clothes_shop_phone_number: inputs.value.clothes_shop_phone_number?.value
+    form.value.setData({
+        ...form.value.data(),
+        ids: props.orphanId ? undefined : orphansStore.orphans,
+        shoes_shop_name: inputs.value.shoes_shop_name?.name || inputs.value.shoes_shop_name,
+        clothes_shop_name: inputs.value.clothes_shop_name?.name || inputs.value.clothes_shop_name,
+        shoes_shop_phone_number: inputs.value.shoes_shop_phone_number?.value || inputs.value.shoes_shop_phone_number,
+        clothes_shop_phone_number:
+            inputs.value.clothes_shop_phone_number?.value || inputs.value.clothes_shop_phone_number
     })
 
-    form.submit({
+    form.value.submit({
         onSuccess() {
             showSuccessNotification.value = true
 
@@ -70,7 +78,7 @@ const handleSubmit = () => {
 
                 useOrphansStore().orphans = []
 
-                form.reset()
+                form.value.reset()
             })
         },
 
@@ -105,6 +113,28 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
         })
     }
 })
+
+watch(
+    () => props.orphanId,
+    async (value) => {
+        if (value) {
+            const a = await useOrphansStore().getEidSuitInfos(value)
+
+            inputs.value = {
+                clothes_shop_name: a.eid_suit.clothes_shop_name,
+                clothes_shop_address: a.eid_suit.clothes_shop_address,
+                clothes_shop_location: a.eid_suit.clothes_shop_location,
+                clothes_shop_phone_number: a.eid_suit.clothes_shop_phone_number,
+                shoes_shop_name: a.eid_suit.shoes_shop_name,
+                shoes_shop_address: a.eid_suit.shoes_shop_address,
+                shoes_shop_location: a.eid_suit.shoes_shop_location,
+                shoes_shop_phone_number: a.eid_suit.shoes_shop_phone_number,
+                note: a.eid_suit.note,
+                user_id: a.eid_suit.user_id
+            }
+        }
+    }
+)
 </script>
 
 <template>
@@ -157,11 +187,11 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
 
                 <members-filter-drop-down
                     id="designated_member"
-                    v-model="form.designated_member"
+                    v-model="form.user_id"
                     class="!mt-0"
                 ></members-filter-drop-down>
 
-                <base-form-input-error :form field_name="designated_member"></base-form-input-error>
+                <base-form-input-error :form field_name="user_id"></base-form-input-error>
             </div>
             <!-- End: Designated member  -->
 
@@ -178,8 +208,6 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     :options="[]"
                     class="mt-0"
                     create-option
-                    label-key="name"
-                    value-key="id"
                 ></base-combobox>
 
                 <base-form-input-error :form field_name="clothes_shop_name"></base-form-input-error>
@@ -199,8 +227,6 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     :options="[]"
                     class="mt-0"
                     create-option
-                    label-key="label"
-                    value-key="value"
                 ></base-combobox>
 
                 <base-form-input-error :form field_name="clothes_shop_phone_number"></base-form-input-error>
@@ -237,8 +263,6 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     :options="[]"
                     class="mt-0"
                     create-option
-                    label-key="name"
-                    value-key="id"
                 ></base-combobox>
 
                 <base-form-input-error :form field_name="shoes_shop_name"></base-form-input-error>
@@ -258,8 +282,6 @@ window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent',
                     :options="[]"
                     class="mt-0"
                     create-option
-                    label-key="label"
-                    value-key="value"
                 ></base-combobox>
 
                 <base-form-input-error :form field_name="shoes_shop_phone_number"></base-form-input-error>

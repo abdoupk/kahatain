@@ -28,7 +28,7 @@ const props = defineProps<{
 }>()
 
 // eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'selectOrphan', 'deselectOrphan'])
+const emit = defineEmits(['sort', 'showEditModal', 'showDetailsModal', 'selectOrphan', 'deselectOrphan'])
 
 const orphansStore = useOrphansStore()
 
@@ -62,7 +62,7 @@ watch(
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden @3xl:block">
+    <div class="intro-y !z-30 col-span-12 hidden overflow-x-auto @3xl:block">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -226,13 +226,21 @@ watch(
 
                     <the-table-td-actions class="w-fit text-center">
                         <div class="flex items-center justify-center">
-                            <a class="me-3 flex items-center" href="javascript:void(0)" @click.prevent="">
+                            <a
+                                class="me-3 flex items-center"
+                                href="javascript:void(0)"
+                                @click.prevent="emit('showDetailsModal', orphan.orphan.id)"
+                            >
                                 <svg-loader class="me-2 h-4 w-4" name="icon-eye"></svg-loader>
 
                                 {{ $t('show') }}
                             </a>
 
-                            <a class="flex items-center" href="javascript:void(0)" @click.prevent="">
+                            <a
+                                class="flex items-center"
+                                href="javascript:void(0)"
+                                @click.prevent="emit('showEditModal', orphan.orphan.id)"
+                            >
                                 <svg-loader class="me-2 h-4 w-4" name="icon-pen"></svg-loader>
 
                                 {{ $t('edit') }}

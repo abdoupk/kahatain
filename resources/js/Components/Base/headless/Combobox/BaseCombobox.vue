@@ -91,7 +91,10 @@ let filteredOptions = computed(() =>
     query.value === ''
         ? options.value
         : options.value?.filter((option) =>
-              option.name?.toLowerCase().replace(/\s+/g, '').includes(query.value?.toLowerCase().replace(/\s+/g, ''))
+              option[props.labelKey]
+                  ?.toLowerCase()
+                  .replace(/\s+/g, '')
+                  .includes(query.value?.toLowerCase().replace(/\s+/g, ''))
           )
 )
 
@@ -168,6 +171,7 @@ const handleDisplayValue = (option) => {
                             as="template"
                         >
                             <li
+                                v-if="option[valueKey]"
                                 :class="[
                                     active ? 'bg-primary text-white' : 'text-gray-900 dark:text-slate-300',
                                     'relative cursor-default select-none py-2 pe-9 ps-3'

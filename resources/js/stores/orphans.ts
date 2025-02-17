@@ -17,6 +17,12 @@ export const useOrphansStore = defineStore('orphan', {
             const { data: orphans } = await axios.get(route('tenant.orphans.search', { search }))
 
             return orphans
+        },
+
+        async getEidSuitInfos(id: string) {
+            const { data: data } = await axios.get(route('tenant.occasions.eid-suit.show', id))
+
+            return data
         }
     }
 })

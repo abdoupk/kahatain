@@ -199,6 +199,12 @@ return [
                     'family.zone.id',
                     'family.branch.id',
                     'institution.id',
+                    'eid_suit.clothes_shop_phone_number',
+                    'eid_suit.shoes_shop_phone_number',
+                    'eid_suit.shoes_shop_address',
+                    'eid_suit.clothes_shop_address',
+                    'eid_suit.shoes_shop_name',
+                    'eid_suit.clothes_shop_name',
                 ],
                 'searchableAttributes' => [
                     'name',

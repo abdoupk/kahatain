@@ -10,7 +10,8 @@ import { defineAsyncComponent, nextTick, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
-import TheBulkUpdateModal from '@/Pages/Tenant/occasions/eid-suit/TheBulkUpdateModal.vue'
+import InfosEditModal from '@/Pages/Tenant/occasions/eid-suit/InfosEditModal.vue'
+import InfosShowModal from '@/Pages/Tenant/occasions/eid-suit/InfosShowModal.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
@@ -63,7 +64,11 @@ const handleReset = () => {
 
 const showWarningModalStatus = ref(false)
 
-const showBulkUpdateModalStatus = ref(false)
+const showEditModalStatus = ref(false)
+
+const selectedOrphan = ref(null)
+
+const showDetailsModalStatus = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
 
@@ -120,7 +125,23 @@ const handleSave = () => {
 }
 
 const showBulkUpdateModal = () => {
-    showBulkUpdateModalStatus.value = true
+    showEditModalStatus.value = true
+}
+
+const showEditModal = (id: string) => {
+    showEditModalStatus.value = true
+
+    selectedOrphan.value = id
+}
+
+const closeEditModal = () => {
+    selectedOrphan.value = null
+
+    showEditModalStatus.value = false
+}
+
+const showDetailsModal = (id: string) => {
+    showDetailsModalStatus.value = true
 }
 </script>
 
@@ -190,7 +211,13 @@ const showBulkUpdateModal = () => {
             </the-table-header>
 
             <template v-if="orphans.data.length > 0">
-                <data-table :orphans :params @sort="sort"></data-table>
+                <data-table
+                    :orphans
+                    :params
+                    @sort="sort"
+                    @show-edit-modal="showEditModal"
+                    @show-details-modal="showDetailsModal"
+                ></data-table>
 
                 <the-table-footer
                     :pagination-data="orphans"
@@ -220,11 +247,13 @@ const showBulkUpdateModal = () => {
                 {{ $t('reset_eid_suit_data') }}
             </the-warning-modal>
 
-            <the-bulk-update-modal
-                :loading="true"
-                :open="showBulkUpdateModalStatus"
-                @close="showBulkUpdateModalStatus = false"
-            ></the-bulk-update-modal>
+            <infos-show-modal :open="showDetailsModalStatus" @close="showDetailsModalStatus = false"></infos-show-modal>
+
+            <infos-edit-modal
+                :open="showEditModalStatus"
+                :orphan-id="selectedOrphan"
+                @close="closeEditModal"
+            ></infos-edit-modal>
         </div>
 
         <template #fallback>
