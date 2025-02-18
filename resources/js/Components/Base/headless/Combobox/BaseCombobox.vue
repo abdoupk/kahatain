@@ -1,16 +1,11 @@
 <script lang="ts" setup>
 import type { ExtractProps } from '@/types/utils'
 
-import {
-    ComboboxButton,
-    ComboboxInput,
-    ComboboxOption,
-    ComboboxOptions,
-    Combobox as HeadlessCombobox
-} from '@headlessui/vue'
+import { ComboboxButton, ComboboxOption, ComboboxOptions, Combobox as HeadlessCombobox } from '@headlessui/vue'
 import { twMerge } from 'tailwind-merge'
 import { computed, ref, useAttrs, watch } from 'vue'
 
+import BaseComboboxInput from '@/Components/Base/headless/Combobox/BaseComboboxInput.vue'
 import SpinnerLoader from '@/Components/Global/SpinnerLoader.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
@@ -114,17 +109,12 @@ const handleDisplayValue = (option) => {
 <template>
     <headless-combobox :model-value="modelValue" @update:model-value="handleSelection">
         <div :class="twMerge(['relative mt-2', attrs.class])">
-            <combobox-input
-                :class="
-                    twMerge([
-                        'w-full rounded-md border-slate-200 text-sm shadow-sm transition duration-200 ease-in-out placeholder:text-slate-400/90 focus:border-primary focus:border-opacity-40 focus:ring-4 focus:ring-primary focus:ring-opacity-20 dark:border-transparent dark:bg-darkmode-800 dark:placeholder:text-slate-500/80 dark:focus:ring-slate-700 dark:focus:ring-opacity-50'
-                    ])
-                "
+            <base-combobox-input
                 :displayValue="handleDisplayValue"
-                :placeholder="$t('Search...')"
                 v-bind="attrs.attrs"
+                :placeholder
                 @change="query = $event.target.value"
-            ></combobox-input>
+            ></base-combobox-input>
 
             <combobox-button class="absolute inset-y-0 end-0 flex items-center pe-2">
                 <svg-loader aria-hidden="true" class="h-5 w-5 text-gray-400" name="icon-angles-up-down"></svg-loader>

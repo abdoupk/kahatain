@@ -22,7 +22,7 @@ class MemberUpdateRequest extends FormRequest
             'qualification' => 'nullable|string',
             'address' => 'required|string',
             'competences' => 'nullable|array',
-            'competences.*.id' => 'nullable|exists:competences,id',
+            'competences.*.id' => 'nullable|uuid',
             'committees' => 'nullable|array',
             'committees.*.id' => 'nullable|exists:committees,id',
             'workplace' => 'nullable|string',
