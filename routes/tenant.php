@@ -7,8 +7,14 @@ use App\Http\Controllers\V1\CitySearchController;
 use App\Http\Controllers\V1\Trash\TrashIndexController;
 use App\Http\Controllers\V1\UploadFileController;
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-Route::withoutMiddleware('api')->group(function (): void {
+Route::middleware([
+    'web',
+    InitializeTenancyByDomain::class,
+    PreventAccessFromCentralDomains::class,
+])->group(function (): void {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login')
         ->middleware('guest');
