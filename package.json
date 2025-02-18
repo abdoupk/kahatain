@@ -119,7 +119,6 @@
         "toastify-js": "^1.12.0",
         "v-calendar": "^3.1.2",
         "vue-filepond": "^7.0.4",
-        "vue-multiselect": "^3.2.0",
         "vue-sonner": "^1.3.0"
     },
     "nyc": {
