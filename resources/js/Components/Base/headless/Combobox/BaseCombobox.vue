@@ -97,7 +97,7 @@ const handleDisplayValue = (option) => {
     if (option?.missing) {
         return option[props.labelKey]
     } else if (option) {
-        const foundOption = filteredOptions.value.find((o) => option === o[props.valueKey])
+        const foundOption = filteredOptions.value?.find((o) => option === o[props.valueKey])
 
         return foundOption ? foundOption[props.labelKey] || '' : ''
     }

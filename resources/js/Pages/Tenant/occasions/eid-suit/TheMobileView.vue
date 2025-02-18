@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { watch } from 'vue'
 
-import MapCell from '@/Pages/Tenant/occasions/eid-suit/MapCell.vue'
+import ShopAddressField from '@/Pages/Tenant/occasions/eid-suit/ShopAddressField.vue'
 
 import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
 import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton.vue'
@@ -232,33 +232,43 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                     </div>
 
                     <div class="col-span-12 grid grid-cols-12 items-center gap-2">
-                        <div class="col-span-5 rtl:!font-semibold">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
                             {{ $t('clothes_shop_location') }}
                         </div>
 
-                        <p class="col-span-7">
-                            <map-cell
-                                :orphan
-                                class="!block"
-                                shop-type="clothes"
-                                @show-location-address-modal="emit('showLocationAddressModal', $event)"
-                            ></map-cell>
-                        </p>
+                        <div class="col-span-7">
+                            <shop-address-field
+                                v-model:address="orphan.eid_suit.clothes_shop_address"
+                                v-model:location="orphan.eid_suit.clothes_shop_location"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                select_location_label="select_location"
+                                @update:address="handleUpdate(orphan, 'clothes_shop_address')"
+                                @update:location="handleUpdate(orphan, 'clothes_shop_location')"
+                            >
+                            </shop-address-field>
+                        </div>
                     </div>
 
                     <div class="col-span-12 grid grid-cols-12 items-center gap-2">
-                        <div class="col-span-5 rtl:!font-semibold">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
                             {{ $t('shoes_shop_location') }}
                         </div>
 
-                        <p class="col-span-7">
-                            <map-cell
-                                :orphan
-                                class="!block"
-                                shop-type="shoes"
-                                @show-location-address-modal="emit('showLocationAddressModal', $event)"
-                            ></map-cell>
-                        </p>
+                        <div class="col-span-7">
+                            <shop-address-field
+                                v-model:address="orphan.eid_suit.shoes_shop_address"
+                                v-model:location="orphan.eid_suit.shoes_shop_location"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                select_location_label="select_location"
+                                @update:address="handleUpdate(orphan, 'shoes_shop_address')"
+                                @update:location="handleUpdate(orphan, 'shoes_shop_location')"
+                            >
+                            </shop-address-field>
+                        </div>
                     </div>
 
                     <div class="col-span-12 grid grid-cols-12 items-center gap-2">

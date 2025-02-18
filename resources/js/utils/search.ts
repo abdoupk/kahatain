@@ -167,7 +167,7 @@ export const search = async (q: string) => {
                 attributesToSearchOn: ['report', 'inspectors', 'family.name']
             },
             {
-                indexUid: 'schools',
+                indexUid: 'private_schools',
                 q,
                 limit: 5,
                 sort: ['created_at:desc'],
@@ -233,7 +233,7 @@ function constructLink(hit: Hit, indexUid: string) {
         case 'inventory':
             return route('tenant.inventory.index', { show: hit.id })
 
-        case 'schools':
+        case 'private_schools':
             return route('tenant.schools.index', { show: hit.id })
 
         case 'zones':
@@ -306,7 +306,7 @@ const constructIcon = (indexUid: string): { icon: SVGType; color: string } => {
                 color: 'bg-[#FF9800]/20 text-[#FF9800]'
             }
 
-        case 'schools':
+        case 'private_schools':
             return {
                 icon: 'icon-school-lock',
                 color: 'bg-[#FF69B4]/20 text-[#FF69B4]'
@@ -379,7 +379,7 @@ const constructHint = (hit: Hit, indexUid: string) => {
         case 'inventory':
             return formatNumber(hit.qty) + '(' + $t(hit.unit) + ')'
 
-        case 'schools':
+        case 'private_schools':
             return $tc('number_of_places', hit.quota, { value: hit.quota })
 
         case 'zones':
@@ -428,7 +428,7 @@ const constructTitle = (hit: Hit, indexUid: string) => {
         case 'inventory':
             return hit.name
 
-        case 'schools':
+        case 'private_schools':
             return hit.name
 
         case 'zones':
@@ -459,7 +459,7 @@ export const searchShopOwnerName = async (query: string) => {
         q: query,
         limit: 20,
         sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_name != "NULL" AND eid_suit.shoes_shop_name != "NULL"`,
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_name != null AND eid_suit.shoes_shop_name != null`,
         attributesToRetrieve: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name'],
         attributesToSearchOn: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name']
     })
@@ -489,7 +489,7 @@ export const searchShopOwnerPhoneNumber = async (query: string) => {
         q: query,
         limit: 20,
         sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_phone_number != "NULL" AND eid_suit.shoes_shop_phone_number != "NULL"`,
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_phone_number != null AND eid_suit.shoes_shop_phone_number != null`,
         attributesToRetrieve: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number'],
         attributesToSearchOn: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number']
     })
@@ -519,7 +519,7 @@ export const searchShopOwnerAddress = async (query: string) => {
         q: query,
         limit: 20,
         sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_address != "NULL" AND eid_suit.shoes_shop_address != "NULL"`,
+        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_address != null AND eid_suit.shoes_shop_address != null`,
         attributesToRetrieve: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address'],
         attributesToSearchOn: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address']
     })

@@ -6,6 +6,10 @@ import { $t } from '@/utils/i18n'
 import { useComputedAttrs } from '@/utils/useComputedAttrs'
 
 const attrs = useComputedAttrs()
+
+defineProps<{
+    placeholder?: string
+}>()
 </script>
 
 <template>
@@ -17,6 +21,6 @@ const attrs = useComputedAttrs()
             ])
         "
         v-bind="attrs.attrs"
-        :placeholder="$t('Search...')"
+        :placeholder="placeholder ? $t(placeholder) : $t('Search...')"
     ></combobox-input>
 </template>
