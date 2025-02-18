@@ -1,17 +1,21 @@
 <script lang="ts" setup>
 import type { IndexParams, ListBoxFilter, PaginationData } from '@/types/types'
 
-import { ref, watch } from 'vue'
-
-import AdvancedFilter from '@/Pages/Tenant/families/index/AdvancedFilter.vue'
-
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
-import ExportMenu from '@/Components/Global/ExportMenu.vue'
-import TheMobileSorting from '@/Components/Global/TheMobileSorting.vue'
-import SvgLoader from '@/Components/SvgLoader.vue'
+import { useWindowSize } from '@vueuse/core'
+import { defineAsyncComponent, ref, watch } from 'vue'
 
 import { debounce, formatFilters, formatParams, getDataForIndexPages, isEmpty } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
+
+const AdvancedFilter = defineAsyncComponent(() => import('@/Pages/Tenant/families/index/AdvancedFilter.vue'))
+
+const BaseFormInput = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInput.vue'))
+
+const ExportMenu = defineAsyncComponent(() => import('@/Components/Global/ExportMenu.vue'))
+
+const TheMobileSorting = defineAsyncComponent(() => import('@/Components/Global/TheMobileSorting.vue'))
+
+const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'))
 
 const props = defineProps<{
     url: string
@@ -36,6 +40,8 @@ const props = defineProps<{
 const params = ref(props.params)
 
 const search = ref(params.value.search)
+
+const { width } = useWindowSize()
 
 const emit = defineEmits(['changeFilters'])
 
@@ -117,23 +123,27 @@ const handleSort = ({ field, direction }) => {
         <div class="intro-y col-span-12 mt-2 flex flex-wrap items-center sm:flex-nowrap">
             <slot name="ExtraButtons"></slot>
 
-            <export-menu v-if="exportable" :exportPdfUrl :exportXlsxUrl :params></export-menu>
+            <suspense v-if="exportable" suspensible>
+                <export-menu :exportPdfUrl :exportXlsxUrl :params></export-menu>
+            </suspense>
 
-            <advanced-filter
-                v-if="filterable"
-                :filters
-                class="ms-2 hidden @[33rem]:block"
-                placement="bottom-start"
-                @update:value="handleFilter"
-                @reset-filter="handleFilterReset"
-            ></advanced-filter>
+            <suspense v-if="filterable" suspensible>
+                <advanced-filter
+                    :filters
+                    class="ms-2 hidden @[33rem]:block"
+                    placement="bottom-start"
+                    @update:value="handleFilter"
+                    @reset-filter="handleFilterReset"
+                ></advanced-filter>
+            </suspense>
 
-            <the-mobile-sorting
-                v-if="sortable"
-                :sortable-fields
-                class="ms-2 hidden @[33rem]:block @3xl:hidden"
-                @sort="handleSort"
-            ></the-mobile-sorting>
+            <suspense v-if="sortable && width <= 768" suspensible>
+                <the-mobile-sorting
+                    :sortable-fields
+                    class="ms-2 hidden @[33rem]:block @3xl:hidden"
+                    @sort="handleSort"
+                ></the-mobile-sorting>
+            </suspense>
 
             <slot name="ExtraFilters"></slot>
 
@@ -164,33 +174,37 @@ const handleSort = ({ field, direction }) => {
             </div>
 
             <div class="mt-3 flex w-full sm:ms-auto sm:mt-0 sm:w-auto md:ms-0">
-                <advanced-filter
-                    v-if="filterable"
-                    :filters
-                    class="me-2 @[33rem]:hidden"
-                    placement="bottom-start"
-                    @update:value="handleFilter"
-                    @reset-filter="handleFilterReset"
-                ></advanced-filter>
+                <suspense v-if="filterable" suspensible>
+                    <advanced-filter
+                        :filters
+                        class="me-2 @[33rem]:hidden"
+                        placement="bottom-start"
+                        @update:value="handleFilter"
+                        @reset-filter="handleFilterReset"
+                    ></advanced-filter>
+                </suspense>
 
-                <the-mobile-sorting
-                    v-if="sortable"
-                    :sortable-fields
-                    class="@[33rem]:hidden"
-                    @sort="handleSort"
-                ></the-mobile-sorting>
+                <suspense v-if="sortable && width <= 768" suspensible>
+                    <the-mobile-sorting
+                        :sortable-fields
+                        class="@[33rem]:hidden"
+                        @sort="handleSort"
+                    ></the-mobile-sorting>
+                </suspense>
 
-                <div v-if="searchable" class="relative w-full text-slate-500 md:w-56">
-                    <base-form-input
-                        v-model="search"
-                        :placeholder="$t('Search...')"
-                        autofocus
-                        class="!box w-full pe-10 md:w-56"
-                        type="text"
-                    />
+                <suspense v-if="searchable" suspensible>
+                    <div class="relative w-full text-slate-500 md:w-56">
+                        <base-form-input
+                            v-model="search"
+                            :placeholder="$t('Search...')"
+                            autofocus
+                            class="!box w-full pe-10 md:w-56"
+                            type="text"
+                        />
 
-                    <svg-loader class="absolute inset-y-0 end-0 my-auto me-3 h-4 w-4" name="icon-search" />
-                </div>
+                        <svg-loader class="absolute inset-y-0 end-0 my-auto me-3 h-4 w-4" name="icon-search" />
+                    </div>
+                </suspense>
             </div>
         </div>
     </div>

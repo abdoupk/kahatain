@@ -148,8 +148,8 @@
         background-color: transparent !important;
         text-transform: capitalize !important;
         padding: 0.4em 0.65em !important;
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity,
-        box-shadow, transform, filter, backdrop-filter;
+        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform,
+        filter, backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 200ms;
         box-shadow: theme('boxShadow.sm');

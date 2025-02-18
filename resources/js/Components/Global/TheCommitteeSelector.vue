@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useCommitteesStore } from '@/stores/committees'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
 import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
@@ -9,8 +9,6 @@ import { $t } from '@/utils/i18n'
 const committees = defineModel('committees')
 
 const committeesStore = useCommitteesStore()
-
-const options = ref([])
 
 onMounted(async () => {
     await committeesStore.getCommittees()

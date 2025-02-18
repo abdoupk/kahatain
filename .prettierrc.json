@@ -17,19 +17,7 @@
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true,
     "plugins": [
-        "@shufo/prettier-plugin-blade",
         "@trivago/prettier-plugin-sort-imports",
         "prettier-plugin-tailwindcss"
-    ],
-    "overrides": [
-        {
-            "files": [
-                "*.blade.php"
-            ],
-            "options": {
-                "parser": "blade",
-                "tabWidth": 4
-            }
-        }
     ]
 }

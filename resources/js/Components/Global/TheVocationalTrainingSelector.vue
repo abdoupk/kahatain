@@ -8,7 +8,6 @@ const vocationalTraining = defineModel('vocationalTraining')
 
 const vocationalTrainingStore = useVocationalTrainingStore()
 
-const vueSelectVocationalTraining = ref('')
 
 const specialities = ref([])
 

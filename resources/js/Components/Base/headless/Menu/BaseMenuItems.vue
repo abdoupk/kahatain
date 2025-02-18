@@ -34,8 +34,7 @@ const attrs = useComputedAttrs()
 
 const computedClass = computed(() =>
     twMerge([
-        'p-2 shadow-[0px_3px_10px_#00000017] bg-white border-transparent rounded-md dark:bg-darkmode-600 dark:border-transparent',
-        typeof attrs.class === 'string' && attrs.class
+        'p-2 shadow-[0px_3px_10px_#00000017] bg-white border-transparent rounded-md dark:bg-darkmode-600 dark:border-transparent', typeof attrs.class === 'string' && attrs.class
     ])
 )
 </script>

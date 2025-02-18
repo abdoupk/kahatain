@@ -89,8 +89,6 @@ export const useCityStore = defineStore('city', {
             this.daira = this.dairas.find((daira) => daira.daira_name == daira_name)
 
             this.wilaya.wilaya_code = this.daira?.wilaya_code
-
-            console.error(this.wilaya.wilaya_code)
         },
 
         getDairaById(id: number | undefined) {
