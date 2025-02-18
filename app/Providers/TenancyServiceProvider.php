@@ -60,7 +60,7 @@ class TenancyServiceProvider extends ServiceProvider
 
             Events\TenancyEnded::class => [
                 Listeners\RevertToCentralContext::class,
-                function (Events\TenancyEnded $event): void {
+                function (): void {
                     $permissionRegistrar = app(PermissionRegistrar::class);
                     $permissionRegistrar->cacheKey = 'spatie.permission.cache';
                 },
