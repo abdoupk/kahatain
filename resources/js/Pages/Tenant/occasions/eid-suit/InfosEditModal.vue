@@ -4,6 +4,8 @@ import { usePage } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
 import { computed, nextTick, ref, watch } from 'vue'
 
+import ShopAddressField from '@/Pages/Tenant/occasions/eid-suit/ShopAddressField.vue'
+
 import BaseAlert from '@/Components/Base/Alert/BaseAlert.vue'
 import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
@@ -12,12 +14,11 @@ import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import TheAddressField from '@/Components/Global/TheAddressField/TheAddressField.vue'
 import MembersFilterDropDown from '@/Components/Global/filters/MembersFilterDropDown.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { loadShopOwnerNames, loadShopOwnerPhoneNumbers } from '@/utils/helper'
-import { $t } from '@/utils/i18n'
+import { $t, $tc } from '@/utils/i18n'
 
 const props = defineProps<{
     open: boolean
@@ -58,11 +59,24 @@ const handleSubmit = () => {
     form.value.setData({
         ...form.value.data(),
         ids: props.orphanId ? undefined : orphansStore.selectedOrphans,
-        shoes_shop_name: inputs.value.shoes_shop_name?.name || inputs.value.shoes_shop_name,
-        clothes_shop_name: inputs.value.clothes_shop_name?.name || inputs.value.clothes_shop_name,
-        shoes_shop_phone_number: inputs.value.shoes_shop_phone_number?.value || inputs.value.shoes_shop_phone_number,
-        clothes_shop_phone_number:
-            inputs.value.clothes_shop_phone_number?.value || inputs.value.clothes_shop_phone_number
+        shoes_shop_name: inputs.value.shoes_shop_name?.missing
+            ? inputs.value.shoes_shop_name?.label
+            : inputs.value.shoes_shop_name,
+        clothes_shop_name: inputs.value.clothes_shop_name?.missing
+            ? inputs.value.clothes_shop_name?.label
+            : inputs.value.clothes_shop_name,
+        shoes_shop_phone_number: inputs.value.shoes_shop_phone_number?.missing
+            ? inputs.value.shoes_shop_phone_number?.value
+            : inputs.value.shoes_shop_phone_number,
+        clothes_shop_phone_number: inputs.value.clothes_shop_phone_number?.missing
+            ? inputs.value.clothes_shop_phone_number?.value
+            : inputs.value.clothes_shop_phone_number,
+        clothes_shop_address: inputs.value.clothes_shop_address?.missing
+            ? inputs.value.clothes_shop_address?.value
+            : inputs.value.clothes_shop_address,
+        shoes_shop_address: inputs.value.shoes_shop_address?.missing
+            ? inputs.value.shoes_shop_address?.value
+            : inputs.value.shoes_shop_address
     })
 
     form.value.submit({
@@ -96,13 +110,17 @@ const showWarningAlert = ref(false)
 
 const disabled = ref(false)
 
-const userName = ref('')
+const notifiable = ref({})
+
+const orphansUpdatedCount = ref(0)
 
 window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent', (e) => {
     const exists = e.ids.some((item) => orphansStore.selectedOrphans.includes(item))
 
     if (exists && props.open && usePage().props.auth.user?.id !== e.user?.id) {
-        userName.value = e.user?.name
+        notifiable.value = e.user
+
+        orphansUpdatedCount.value = e.ids.length
 
         showWarningAlert.value = true
 
@@ -168,16 +186,42 @@ watch(
                             <svg-loader class="me-3 h-6 w-6" name="icon-triangle-exclamation" />
                         </span>
 
-                        <span v-if="orphansStore.selectedOrphans.length > 1" class="text-slate-800 dark:text-slate-500">
-                            {{ $t('bulk_update_warning', { name: userName }) }}
+                        <span
+                            v-if="orphansStore.selectedOrphans.length === 1 && orphansUpdatedCount > 1"
+                            class="text-slate-800 dark:text-slate-500"
+                        >
+                            {{
+                                $tc(
+                                    'bulk_update_orphans_eid_suit_infos_warning_single',
+                                    notifiable.gender === 'male' ? 1 : 0,
+                                    { user_name: notifiable.name }
+                                )
+                            }}
                         </span>
 
                         <span
-                            v-if="orphansStore.selectedOrphans.length === 1"
+                            v-else-if="orphansStore.selectedOrphans.length > 1 && orphansUpdatedCount > 1"
                             class="text-slate-800 dark:text-slate-500"
                         >
-                            {{ $t('update_orphan_eid_suit_infos', { name: userName }) }}
+                            {{
+                                $tc(
+                                    'bulk_update_orphans_eid_suit_infos_warning_multiple',
+                                    notifiable.gender === 'male' ? 1 : 0,
+                                    { name: notifiable.name }
+                                )
+                            }}
                         </span>
+
+                        <!--                        <span-->
+                        <!--                            v-else-if="orphansStore.selectedOrphans.length === 1"-->
+                        <!--                            class="text-slate-800 dark:text-slate-500"-->
+                        <!--                        >-->
+                        <!--                            {{-->
+                        <!--                                $tc('update_orphan_eid_suit_infos', notifiable.gender === 'male' ? 1 : 0, {-->
+                        <!--                                    name: notifiable.name-->
+                        <!--                                })-->
+                        <!--                            }}-->
+                        <!--                        </span>-->
 
                         <the-alert-dismiss-button @click="dismiss">
                             <svg-loader class="stroke-red-900 dark:!stroke-white" name="icon-x"></svg-loader>
@@ -194,7 +238,7 @@ watch(
 
                 <members-filter-drop-down
                     id="designated_member"
-                    v-model="form.user_id"
+                    v-model="inputs.user_id"
                     class="!mt-0"
                 ></members-filter-drop-down>
 
@@ -212,7 +256,12 @@ watch(
                     id="clothes_shop_name"
                     v-model="inputs.clothes_shop_name"
                     :load-options="loadShopOwnerNames"
-                    :options="[]"
+                    :options="[
+                        {
+                            value: useOrphansStore().eidSuitInfos.clothes_shop_name?.replaceAll(' ', '_'),
+                            label: useOrphansStore().eidSuitInfos.clothes_shop_name
+                        }
+                    ]"
                     class="mt-0"
                     create-option
                 ></base-combobox>
@@ -246,12 +295,12 @@ watch(
                     {{ $t('clothes_shop_location') }}
                 </base-form-label>
 
-                <the-address-field
-                    v-model:address="form.clothes_shop_address"
-                    v-model:location="form.clothes_shop_location"
+                <shop-address-field
+                    v-model:address="inputs.clothes_shop_address"
+                    v-model:location="inputs.clothes_shop_location"
                     :select_location_label="$t('select_location')"
-                    class="!mt-0"
-                ></the-address-field>
+                >
+                </shop-address-field>
 
                 <base-form-input-error :form field_name="clothes_shop_address"></base-form-input-error>
             </div>
@@ -301,11 +350,14 @@ watch(
                     {{ $t('shoes_shop_location') }}
                 </base-form-label>
 
-                <the-address-field
-                    v-model:address="form.shoes_shop_address"
-                    v-model:location="form.shoes_shop_location"
-                    :select_location_label="$t('select_location')"
-                ></the-address-field>
+                <div class="w-full">
+                    <shop-address-field
+                        v-model:address="inputs.shoes_shop_address"
+                        v-model:location="inputs.shoes_shop_location"
+                        :select_location_label="$t('select_location')"
+                    >
+                    </shop-address-field>
+                </div>
 
                 <base-form-input-error :form field_name="shoes_shop_address"></base-form-input-error>
             </div>
@@ -318,7 +370,7 @@ watch(
 
                 <base-form-text-area
                     id="note"
-                    v-model="form.note"
+                    v-model="inputs.note"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('notes') })"
                     rows="4"
                 ></base-form-text-area>

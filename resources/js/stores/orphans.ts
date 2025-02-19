@@ -5,7 +5,8 @@ export const useOrphansStore = defineStore('orphan', {
     state: () => ({
         orphans: [],
         selectedOrphan: '',
-        selectedOrphans: []
+        selectedOrphans: [],
+        eidSuitInfos: {}
     }),
     actions: {
         async getOrphans() {
@@ -22,6 +23,8 @@ export const useOrphansStore = defineStore('orphan', {
 
         async getEidSuitInfos(id: string) {
             const { data: data } = await axios.get(route('tenant.occasions.eid-suit.show', id))
+
+            this.eidSuitInfos = data.eid_suit
 
             return data
         }

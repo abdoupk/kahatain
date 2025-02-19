@@ -13,9 +13,9 @@ defineProps<{
     select_location_label: string
 }>()
 
-const address = defineModel('address')
+const address = defineModel('address', { default: '' })
 
-const location = defineModel('location')
+const location = defineModel('location', { default: null })
 
 const showMapModalStatus = ref(false)
 
@@ -27,13 +27,14 @@ const showMapModal = () => {
 <template>
     <div class="flex w-full items-center">
         <base-combobox
+            class="w-full"
             v-model="address"
             :load-options="loadShopOwnerAddresses"
             :options="[]"
             create-option
         ></base-combobox>
 
-        <base-tippy :content="$t(select_location_label)" class="ms-2 mt-2">
+        <base-tippy :content="$t(select_location_label)" class="ms-2 mt-3">
             <button type="button" @click.prevent="showMapModal">
                 <svg-loader class="h-6 w-6" name="icon-location"></svg-loader>
             </button>

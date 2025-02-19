@@ -25,7 +25,7 @@ const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
     params: IndexParams
     showWarningAlert: boolean
-    notifiable: string
+    notifiable: object
 }>()
 
 // eslint-disable-next-line array-element-newline
@@ -96,6 +96,7 @@ const selectOrphan = (orphan: EidSuitOrphansResource) => {
 
 const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
     // Orphan.eid_suit.selected = false
+    //
     // OrphansStore.selectedOrphans.splice(orphansStore.selectedOrphans.indexOf(orphan.id), 1)
 }
 </script>
@@ -135,7 +136,12 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                             </span>
 
                             <span class="text-slate-800 dark:text-slate-500">
-                                {{ $t('update_orphan_eid_suit_infos', { name: notifiable?.name }) }}
+                                {{
+                                    $tc('update_orphan_eid_suit_infos', notifiable?.gender === 'male' ? 1 : 0, {
+                                        user_name: notifiable?.name,
+                                        orphan_name: orphan.orphan.name
+                                    })
+                                }}
                             </span>
 
                             <the-alert-dismiss-button @click="dismiss">
@@ -146,7 +152,15 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                 </div>
 
                 <base-form-switch-input
-                    v-model="orphansStore.selectedOrphans"
+                    @update:model-value="
+                        ($event) => {
+                            if ($event) {
+                                selectOrphan(orphan)
+                            } else {
+                                deSelectOrphan(orphan)
+                            }
+                        }
+                    "
                     :value="orphan.id"
                     class="mb-2"
                     type="checkbox"
@@ -266,7 +280,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                                 :disabled="
                                     orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
                                 "
-                                select_location_label="select_location"
+                                :select_location_label="$t('select_location')"
                                 @update:address="handleUpdate(orphan, 'clothes_shop_address')"
                                 @update:location="handleUpdate(orphan, 'clothes_shop_location')"
                             >
@@ -286,7 +300,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                                 :disabled="
                                     orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
                                 "
-                                select_location_label="select_location"
+                                :select_location_label="$t('select_location')"
                                 @update:address="handleUpdate(orphan, 'shoes_shop_address')"
                                 @update:location="handleUpdate(orphan, 'shoes_shop_location')"
                             >

@@ -611,5 +611,8 @@
     "the_ramadan_baskets": "قفة رمضان",
     "pants_completed": "السروال",
     "shirt_completed": "القميص",
-    "shoes_completed": "الأحذية"
+    "shoes_completed": "الأحذية",
+    "update_orphan_eid_suit_infos": "{0} :user_name F update :orphan_name infos|{1} :user_name M update :orphan_name infos",
+    "bulk_update_orphans_eid_suit_infos_warning_single": "{0} :user_name F update infos for this orphan |{1} :user_name M update infos for this orphan",
+    "bulk_update_orphans_eid_suit_infos_warning_multiple": "{0} :user_name F update infos for  orphans includes what you want to update |{1} :user_name M update for  orphans includes what you want to update"
 }

@@ -24,6 +24,7 @@ class EidSuitInfosUpdatedEvent implements ShouldBroadcastNow
                 'name' => $this->user->getName(),
                 'gender' => $this->user->gender,
             ],
+            'orphans_count' => count($this->ids),
         ];
     }
 

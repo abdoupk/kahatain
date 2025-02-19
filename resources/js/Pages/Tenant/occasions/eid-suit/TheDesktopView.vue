@@ -48,13 +48,13 @@ const checkAll = ($event) => {
         // If checked, add all orphans to selectedFamilies
         if (orphansStore.orphans.length) {
             // Avoid duplication by filtering out existing ones
-            orphansStore.orphans = [...new Set([...orphansStore.orphans, ...orphans])]
+            orphansStore.selectedOrphans = [...new Set([...orphansStore.selectedOrphans, ...orphans])]
         } else {
-            orphansStore.orphans = orphans
+            orphansStore.selectedOrphans = orphans
         }
     } else {
         // If unchecked, remove the current orphans from selectedFamilies
-        orphansStore.orphans = orphansStore.orphans.filter((id) => !orphans.includes(id))
+        orphansStore.orphans = orphansStore.selectedOrphans.filter((id) => !orphans.includes(id))
     }
 }
 
@@ -97,7 +97,7 @@ watch(
                 <base-tr-table>
                     <the-table-th class="text-start">
                         <base-form-check-input
-                            :checked="orphansStore.orphans.length"
+                            :checked="orphansStore.selectedOrphans.length"
                             type="checkbox"
                             @change="checkAll"
                         ></base-form-check-input>
@@ -184,7 +184,7 @@ watch(
                 <base-tr-table v-for="orphan in orphans.data" :key="orphan.id" class="intro-x">
                     <the-table-td class="w-16">
                         <base-form-check-input
-                            v-model="orphansStore.orphans"
+                            v-model="orphansStore.selectedOrphans"
                             :value="orphan.id"
                             type="checkbox"
                         ></base-form-check-input>

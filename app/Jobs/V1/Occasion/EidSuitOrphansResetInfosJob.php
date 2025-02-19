@@ -2,6 +2,7 @@
 
 namespace App\Jobs\V1\Occasion;
 
+use App\Models\Family;
 use App\Models\User;
 use App\Notifications\Occasion\EidSuitOrphansResetInfosNotification;
 use Illuminate\Bus\Queueable;
@@ -19,6 +20,10 @@ class EidSuitOrphansResetInfosJob implements ShouldQueue
 
     public function handle(): void
     {
+        $this->user->load('tenant')->tenant->families()->each(function (Family $family) {
+            $family->load('orphans')->orphans->searchable();
+        });
+
         Notification::send(
             getUsersShouldBeNotified(
                 permissions: ['view_occasions'],
