@@ -193,7 +193,7 @@ const handleSort = ({ field, direction }) => {
                 </suspense>
 
                 <suspense v-if="searchable" suspensible>
-                    <div class="relative w-full text-slate-500 md:w-56">
+                    <div class="relative ms-auto w-full text-slate-500 md:min-w-56">
                         <base-form-input
                             v-model="search"
                             :placeholder="$t('Search...')"

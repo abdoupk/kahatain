@@ -455,91 +455,97 @@ const constructTitle = (hit: Hit, indexUid: string) => {
 }
 
 export const searchShopOwnerName = async (query: string) => {
-    const results = await client.index('orphans').search(query, {
-        q: query,
-        limit: 20,
-        sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_name != null AND eid_suit.shoes_shop_name != null`,
-        attributesToRetrieve: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name'],
-        attributesToSearchOn: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name']
-    })
+    if (query.length >= 1) {
+        const results = await client.index('orphans').search(query, {
+            q: query,
+            limit: 20,
+            sort: ['updated_at:desc'],
+            filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_name != null AND eid_suit.shoes_shop_name != null`,
+            attributesToRetrieve: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name'],
+            attributesToSearchOn: ['eid_suit.clothes_shop_name', 'eid_suit.shoes_shop_name']
+        })
 
-    return [
-        ...new Map(
-            results.hits
-                .flatMap((result) =>
-                    [
-                        result.eid_suit.clothes_shop_name && {
-                            value: result.eid_suit.clothes_shop_name.replaceAll(' ', '_'),
-                            label: result.eid_suit.clothes_shop_name
-                        },
-                        result.eid_suit.shoes_shop_name && {
-                            value: result.eid_suit.shoes_shop_name.replaceAll(' ', '_'),
-                            label: result.eid_suit.shoes_shop_name
-                        }
-                    ].filter(Boolean)
-                )
-                .map((item) => [item.value, item]) // Use `id` as the unique key
-        ).values()
-    ]
+        return [
+            ...new Map(
+                results.hits
+                    .flatMap((result) =>
+                        [
+                            result.eid_suit.clothes_shop_name && {
+                                value: result.eid_suit.clothes_shop_name.replaceAll(' ', '_'),
+                                label: result.eid_suit.clothes_shop_name
+                            },
+                            result.eid_suit.shoes_shop_name && {
+                                value: result.eid_suit.shoes_shop_name.replaceAll(' ', '_'),
+                                label: result.eid_suit.shoes_shop_name
+                            }
+                        ].filter(Boolean)
+                    )
+                    .map((item) => [item.value, item]) // Use `id` as the unique key
+            ).values()
+        ]
+    }
 }
 
 export const searchShopOwnerPhoneNumber = async (query: string) => {
-    const results = await client.index('orphans').search(query, {
-        q: query,
-        limit: 20,
-        sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_phone_number != null AND eid_suit.shoes_shop_phone_number != null`,
-        attributesToRetrieve: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number'],
-        attributesToSearchOn: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number']
-    })
+    if (query.length >= 1) {
+        const results = await client.index('orphans').search(query, {
+            q: query,
+            limit: 20,
+            sort: ['updated_at:desc'],
+            filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_phone_number != null AND eid_suit.shoes_shop_phone_number != null`,
+            attributesToRetrieve: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number'],
+            attributesToSearchOn: ['eid_suit.clothes_shop_phone_number', 'eid_suit.shoes_shop_phone_number']
+        })
 
-    return [
-        ...new Map(
-            results.hits
-                .flatMap((result) =>
-                    [
-                        result.eid_suit.clothes_shop_phone_number && {
-                            value: result.eid_suit.clothes_shop_phone_number,
-                            label: result.eid_suit.clothes_shop_phone_number
-                        },
-                        result.eid_suit.shoes_shop_phone_number && {
-                            value: result.eid_suit.shoes_shop_phone_number,
-                            label: result.eid_suit.shoes_shop_phone_number
-                        }
-                    ].filter(Boolean)
-                )
-                .map((item) => [item.value, item])
-        ).values()
-    ]
+        return [
+            ...new Map(
+                results.hits
+                    .flatMap((result) =>
+                        [
+                            result.eid_suit.clothes_shop_phone_number && {
+                                value: result.eid_suit.clothes_shop_phone_number,
+                                label: result.eid_suit.clothes_shop_phone_number
+                            },
+                            result.eid_suit.shoes_shop_phone_number && {
+                                value: result.eid_suit.shoes_shop_phone_number,
+                                label: result.eid_suit.shoes_shop_phone_number
+                            }
+                        ].filter(Boolean)
+                    )
+                    .map((item) => [item.value, item])
+            ).values()
+        ]
+    }
 }
 
 export const searchShopOwnerAddress = async (query: string) => {
-    const results = await client.index('orphans').search(query, {
-        q: query,
-        limit: 20,
-        sort: ['updated_at:desc'],
-        filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_address != null AND eid_suit.shoes_shop_address != null`,
-        attributesToRetrieve: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address'],
-        attributesToSearchOn: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address']
-    })
+    if (query.length >= 1) {
+        const results = await client.index('orphans').search(query, {
+            q: query,
+            limit: 20,
+            sort: ['updated_at:desc'],
+            filter: `tenant_id = ${usePage().props.auth.user.tenant_id} AND __soft_deleted = 0 AND eid_suit.clothes_shop_address != null AND eid_suit.shoes_shop_address != null`,
+            attributesToRetrieve: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address'],
+            attributesToSearchOn: ['eid_suit.clothes_shop_address', 'eid_suit.shoes_shop_address']
+        })
 
-    return [
-        ...new Map(
-            results.hits
-                .flatMap((result) =>
-                    [
-                        result.eid_suit.clothes_shop_address && {
-                            value: result.eid_suit.clothes_shop_address.replaceAll(' ', '_'),
-                            label: result.eid_suit.clothes_shop_address
-                        },
-                        result.eid_suit.shoes_shop_address && {
-                            value: result.eid_suit.shoes_shop_address.replaceAll(' ', '_'),
-                            label: result.eid_suit.shoes_shop_address
-                        }
-                    ].filter(Boolean)
-                )
-                .map((item) => [item.value, item])
-        ).values()
-    ]
+        return [
+            ...new Map(
+                results.hits
+                    .flatMap((result) =>
+                        [
+                            result.eid_suit.clothes_shop_address && {
+                                value: result.eid_suit.clothes_shop_address.replaceAll(' ', '_'),
+                                label: result.eid_suit.clothes_shop_address
+                            },
+                            result.eid_suit.shoes_shop_address && {
+                                value: result.eid_suit.shoes_shop_address.replaceAll(' ', '_'),
+                                label: result.eid_suit.shoes_shop_address
+                            }
+                        ].filter(Boolean)
+                    )
+                    .map((item) => [item.value, item])
+            ).values()
+        ]
+    }
 }

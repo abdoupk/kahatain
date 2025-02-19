@@ -5,6 +5,9 @@ import { useOrphansStore } from '@/stores/orphans'
 import { Link } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 
+import InfosEditModal from '@/Pages/Tenant/occasions/eid-suit/InfosEditModal.vue'
+import InfosShowModal from '@/Pages/Tenant/occasions/eid-suit/InfosShowModal.vue'
+
 import BaseFormCheckInput from '@/Components/Base/form/form-check/BaseFormCheckInput.vue'
 import BaseTable from '@/Components/Base/table/BaseTable.vue'
 import BaseTbodyTable from '@/Components/Base/table/BaseTbodyTable.vue'
@@ -14,7 +17,6 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
-import TheWarningModal from '@/Components/Global/TheWarningModal.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
 import { formatCurrency } from '@/utils/helper'
@@ -24,13 +26,20 @@ const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
     params: IndexParams
     showWarningAlert: boolean
-    notifiableUserName: string
+    notifiable: object
 }>()
 
-// eslint-disable-next-line array-element-newline
-const emit = defineEmits(['sort', 'showEditModal', 'showDetailsModal', 'selectOrphan', 'deselectOrphan'])
+const emit = defineEmits(['sort'])
 
 const orphansStore = useOrphansStore()
+
+const showWarningModal = ref(false)
+
+const showEditModalStatus = ref(false)
+
+const selectedOrphan = ref(null)
+
+const showDetailsModalStatus = ref(false)
 
 const checkAll = ($event) => {
     const orphans = props.orphans.data.map((orphan) => orphan.id)
@@ -49,7 +58,27 @@ const checkAll = ($event) => {
     }
 }
 
-const showWarningModal = ref(false)
+const showEditModal = (id: string) => {
+    showEditModalStatus.value = true
+
+    selectedOrphan.value = id
+
+    useOrphansStore().selectedOrphans.push(id)
+}
+
+const closeEditModal = () => {
+    selectedOrphan.value = null
+
+    useOrphansStore().selectedOrphans.splice(useOrphansStore().selectedOrphans.indexOf(selectedOrphan.value), 1)
+
+    showEditModalStatus.value = false
+}
+
+const showDetailsModal = async (id: string) => {
+    showDetailsModalStatus.value = true
+
+    await useOrphansStore().getEidSuitInfos(id)
+}
 
 watch(
     () => props.showWarningAlert,
@@ -229,7 +258,7 @@ watch(
                             <a
                                 class="me-3 flex items-center"
                                 href="javascript:void(0)"
-                                @click.prevent="emit('showDetailsModal', orphan.orphan.id)"
+                                @click.prevent="showDetailsModal(orphan.orphan.id)"
                             >
                                 <svg-loader class="me-2 h-4 w-4" name="icon-eye"></svg-loader>
 
@@ -239,7 +268,7 @@ watch(
                             <a
                                 class="flex items-center"
                                 href="javascript:void(0)"
-                                @click.prevent="emit('showEditModal', orphan.orphan.id)"
+                                @click.prevent="showEditModal(orphan.orphan.id)"
                             >
                                 <svg-loader class="me-2 h-4 w-4" name="icon-pen"></svg-loader>
 
@@ -251,11 +280,12 @@ watch(
             </base-tbody-table>
         </base-table>
 
-        <the-warning-modal
-            :on-progress="false"
-            :open="showWarningModal"
-            @accept="showWarningModal = false"
-            @close="showWarningModal = false"
-        ></the-warning-modal>
+        <infos-show-modal :open="showDetailsModalStatus" @close="showDetailsModalStatus = false"></infos-show-modal>
+
+        <infos-edit-modal
+            :open="showEditModalStatus"
+            :orphan-id="selectedOrphan"
+            @close="closeEditModal"
+        ></infos-edit-modal>
     </div>
 </template>

@@ -25,7 +25,7 @@ const props = defineProps<{
     orphans: PaginationData<EidSuitOrphansResource>
     params: IndexParams
     showWarningAlert: boolean
-    notifiableUserName: string
+    notifiable: string
 }>()
 
 // eslint-disable-next-line array-element-newline
@@ -37,13 +37,13 @@ const checkAll = ($event) => {
     const orphans = props.orphans.data.map((orphan) => orphan.id)
 
     if ($event.target.checked) {
-        if (orphansStore.orphans.length) {
-            orphansStore.orphans = [...new Set([...orphansStore.orphans, ...orphans])]
+        if (orphansStore.selectedOrphans.length) {
+            orphansStore.selectedOrphans = [...new Set([...orphansStore.selectedOrphans, ...orphans])]
         } else {
-            orphansStore.orphans = orphans
+            orphansStore.selectedOrphans = orphans
         }
     } else {
-        orphansStore.orphans = orphansStore.orphans.filter((id) => !orphans.includes(id))
+        orphansStore.selectedOrphans = orphansStore.selectedOrphans.filter((id) => !orphans.includes(id))
     }
 }
 
@@ -51,11 +51,23 @@ watch(
     () => props.showWarningAlert,
     () => {
         if (props.showWarningAlert) {
-            document.getElementById(useOrphansStore().selectedOrphan)?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'start'
-            })
+            if (orphansStore.selectedOrphans.length > 0) {
+                document.getElementById(useOrphansStore().selectedOrphans[0])?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'start'
+                })
+            }
+
+            if (orphansStore.selectedOrphans.length > 1) {
+                orphansStore.selectedOrphans.forEach((selectedId) => {
+                    const orphan = props.orphans.data.find((orphan) => orphan.id === selectedId)
+
+                    if (orphan) {
+                        orphan.eid_suit.user_id = props.notifiable?.id
+                    }
+                })
+            }
         }
     }
 )
@@ -75,13 +87,24 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
         }
     })
 }
+
+const selectOrphan = (orphan: EidSuitOrphansResource) => {
+    orphan.eid_suit.selected = true
+
+    orphansStore.selectedOrphans.push(orphan.id)
+}
+
+const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
+    // Orphan.eid_suit.selected = false
+    // OrphansStore.selectedOrphans.splice(orphansStore.selectedOrphans.indexOf(orphan.id), 1)
+}
 </script>
 
 <template>
     <base-form-switch class="intro-y -mb-2 mt-6 text-lg @3xl:hidden">
         <base-form-switch-input
             id="check_all"
-            :checked="orphansStore.orphans.length"
+            :checked="orphansStore.selectedOrphans.length"
             type="checkbox"
             @change="checkAll"
         ></base-form-switch-input>
@@ -99,7 +122,7 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
             class="intro-y !z-10 col-span-12 @xl:col-span-6"
         >
             <div class="box px-5 pb-5 pt-3">
-                <div v-if="showWarningAlert && useOrphansStore().selectedOrphan === orphan.id">
+                <div v-if="showWarningAlert && orphan.eid_suit.selected">
                     <base-alert
                         v-slot="{ dismiss }"
                         class="mb-4 dark:border-darkmode-400 dark:bg-darkmode-400"
@@ -112,7 +135,7 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                             </span>
 
                             <span class="text-slate-800 dark:text-slate-500">
-                                {{ $t('update_orphan_eid_suit_infos', { name: notifiableUserName }) }}
+                                {{ $t('update_orphan_eid_suit_infos', { name: notifiable?.name }) }}
                             </span>
 
                             <the-alert-dismiss-button @click="dismiss">
@@ -123,7 +146,7 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                 </div>
 
                 <base-form-switch-input
-                    v-model="orphansStore.orphans"
+                    v-model="orphansStore.selectedOrphans"
                     :value="orphan.id"
                     class="mb-2"
                     type="checkbox"
@@ -280,8 +303,8 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                             v-model="orphan.eid_suit.user_id"
                             :disabled="orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id"
                             class="col-span-7"
-                            @focusin="orphan.eid_suit.selected = true"
-                            @focusout="orphan.eid_suit.selected = false"
+                            @focusin="selectOrphan(orphan)"
+                            @focusout="deSelectOrphan(orphan)"
                             @update:model-value="handleUpdate(orphan, 'user_id')"
                         >
                         </members-filter-drop-down>
@@ -300,8 +323,8 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                             :options="[]"
                             class="col-span-7 mt-0"
                             create-option
-                            @focusin="orphan.eid_suit.selected = true"
-                            @focusout="orphan.eid_suit.selected = false"
+                            @focusin="selectOrphan(orphan)"
+                            @focusout="deSelectOrphan(orphan)"
                             @update:model-value="handleUpdate(orphan, 'clothes_shop_name')"
                         ></base-combobox>
                     </div>
@@ -319,8 +342,8 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                             :options="[]"
                             class="col-span-7 mt-0"
                             create-option
-                            @focusin="orphan.eid_suit.selected = true"
-                            @focusout="orphan.eid_suit.selected = false"
+                            @focusin="selectOrphan(orphan)"
+                            @focusout="deSelectOrphan(orphan)"
                             @update:model-value="handleUpdate(orphan, 'clothes_shop_phone_number')"
                         ></base-combobox>
                     </div>
@@ -338,8 +361,8 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                             :options="[]"
                             class="col-span-7 mt-0"
                             create-option
-                            @focusin="orphan.eid_suit.selected = true"
-                            @focusout="orphan.eid_suit.selected = false"
+                            @focusin="selectOrphan(orphan)"
+                            @focusout="deSelectOrphan(orphan)"
                             @update:model-value="handleUpdate(orphan, 'shoes_shop_name')"
                         ></base-combobox>
                     </div>
@@ -357,8 +380,8 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                             :options="[]"
                             class="col-span-7 mt-0"
                             create-option
-                            @focusin="orphan.eid_suit.selected = true"
-                            @focusout="orphan.eid_suit.selected = false"
+                            @focusin="selectOrphan(orphan)"
+                            @focusout="deSelectOrphan(orphan)"
                             @update:model-value="handleUpdate(orphan, 'shoes_shop_phone_number')"
                         ></base-combobox>
                     </div>
@@ -375,10 +398,10 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                                     orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
                                 "
                                 type="checkbox"
-                                @focusin="orphan.eid_suit.selected = true"
-                                @focusout="orphan.eid_suit.selected = false"
-                                @mouseenter="orphan.eid_suit.selected = true"
-                                @mouseleave="orphan.eid_suit.selected = false"
+                                @focusin="selectOrphan(orphan)"
+                                @focusout="deSelectOrphan(orphan)"
+                                @mouseenter="selectOrphan(orphan)"
+                                @mouseleave="deSelectOrphan(orphan)"
                                 @update:model-value="handleUpdate(orphan, 'pants_completed')"
                             ></base-form-switch-input>
                         </base-form-switch>
@@ -396,10 +419,10 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                                     orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
                                 "
                                 type="checkbox"
-                                @focusin="orphan.eid_suit.selected = true"
-                                @focusout="orphan.eid_suit.selected = false"
-                                @mouseenter="orphan.eid_suit.selected = true"
-                                @mouseleave="orphan.eid_suit.selected = false"
+                                @focusin="selectOrphan(orphan)"
+                                @focusout="deSelectOrphan(orphan)"
+                                @mouseenter="selectOrphan(orphan)"
+                                @mouseleave="deSelectOrphan(orphan)"
                                 @update:model-value="handleUpdate(orphan, 'shirt_completed')"
                             ></base-form-switch-input>
                         </base-form-switch>
@@ -417,10 +440,10 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
                                     orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
                                 "
                                 type="checkbox"
-                                @focusin="orphan.eid_suit.selected = true"
-                                @focusout="orphan.eid_suit.selected = false"
-                                @mouseenter="orphan.eid_suit.selected = true"
-                                @mouseleave="orphan.eid_suit.selected = false"
+                                @focusin="selectOrphan(orphan)"
+                                @focusout="deSelectOrphan(orphan)"
+                                @mouseenter="selectOrphan(orphan)"
+                                @mouseleave="deSelectOrphan(orphan)"
                                 @update:model-value="handleUpdate(orphan, 'shoes_completed')"
                             ></base-form-switch-input>
                         </base-form-switch>

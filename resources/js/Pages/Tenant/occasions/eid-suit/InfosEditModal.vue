@@ -57,7 +57,7 @@ const handleSubmit = () => {
 
     form.value.setData({
         ...form.value.data(),
-        ids: props.orphanId ? undefined : orphansStore.orphans,
+        ids: props.orphanId ? undefined : orphansStore.selectedOrphans,
         shoes_shop_name: inputs.value.shoes_shop_name?.name || inputs.value.shoes_shop_name,
         clothes_shop_name: inputs.value.clothes_shop_name?.name || inputs.value.clothes_shop_name,
         shoes_shop_phone_number: inputs.value.shoes_shop_phone_number?.value || inputs.value.shoes_shop_phone_number,
@@ -99,7 +99,7 @@ const disabled = ref(false)
 const userName = ref('')
 
 window.Echo.channel('eid-suit-infos-updated').listen('EidSuitInfosUpdatedEvent', (e) => {
-    const exists = e.ids.some((item) => orphansStore.orphans.includes(item))
+    const exists = e.ids.some((item) => orphansStore.selectedOrphans.includes(item))
 
     if (exists && props.open && usePage().props.auth.user?.id !== e.user?.id) {
         userName.value = e.user?.name
@@ -168,8 +168,15 @@ watch(
                             <svg-loader class="me-3 h-6 w-6" name="icon-triangle-exclamation" />
                         </span>
 
-                        <span class="text-slate-800 dark:text-slate-500">
+                        <span v-if="orphansStore.selectedOrphans.length > 1" class="text-slate-800 dark:text-slate-500">
                             {{ $t('bulk_update_warning', { name: userName }) }}
+                        </span>
+
+                        <span
+                            v-if="orphansStore.selectedOrphans.length === 1"
+                            class="text-slate-800 dark:text-slate-500"
+                        >
+                            {{ $t('update_orphan_eid_suit_infos', { name: userName }) }}
                         </span>
 
                         <the-alert-dismiss-button @click="dismiss">

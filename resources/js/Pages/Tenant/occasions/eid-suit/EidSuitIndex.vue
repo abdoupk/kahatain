@@ -11,7 +11,6 @@ import { defineAsyncComponent, nextTick, ref } from 'vue'
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import InfosEditModal from '@/Pages/Tenant/occasions/eid-suit/InfosEditModal.vue'
-import InfosShowModal from '@/Pages/Tenant/occasions/eid-suit/InfosShowModal.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
@@ -65,10 +64,6 @@ const handleReset = () => {
 const showWarningModalStatus = ref(false)
 
 const showEditModalStatus = ref(false)
-
-const selectedOrphan = ref(null)
-
-const showDetailsModalStatus = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
 
@@ -127,22 +122,6 @@ const handleSave = () => {
 const showBulkUpdateModal = () => {
     showEditModalStatus.value = true
 }
-
-const showEditModal = (id: string) => {
-    showEditModalStatus.value = true
-
-    selectedOrphan.value = id
-}
-
-const closeEditModal = () => {
-    selectedOrphan.value = null
-
-    showEditModalStatus.value = false
-}
-
-const showDetailsModal = (id: string) => {
-    showDetailsModalStatus.value = true
-}
 </script>
 
 <template>
@@ -190,7 +169,7 @@ const showDetailsModal = (id: string) => {
                     </base-button>
 
                     <base-button
-                        v-if="useOrphansStore().orphans.length"
+                        v-if="useOrphansStore().selectedOrphans.length"
                         :disabled="loading"
                         class="me-2"
                         variant="outline-success"
@@ -211,13 +190,7 @@ const showDetailsModal = (id: string) => {
             </the-table-header>
 
             <template v-if="orphans.data.length > 0">
-                <data-table
-                    :orphans
-                    :params
-                    @sort="sort"
-                    @show-edit-modal="showEditModal"
-                    @show-details-modal="showDetailsModal"
-                ></data-table>
+                <data-table :orphans :params @sort="sort"></data-table>
 
                 <the-table-footer
                     :pagination-data="orphans"
@@ -247,12 +220,10 @@ const showDetailsModal = (id: string) => {
                 {{ $t('reset_eid_suit_data') }}
             </the-warning-modal>
 
-            <infos-show-modal :open="showDetailsModalStatus" @close="showDetailsModalStatus = false"></infos-show-modal>
-
             <infos-edit-modal
                 :open="showEditModalStatus"
-                :orphan-id="selectedOrphan"
-                @close="closeEditModal"
+                :orphan-id="null"
+                @close="showEditModalStatus = false"
             ></infos-edit-modal>
         </div>
 

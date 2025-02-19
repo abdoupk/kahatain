@@ -22,6 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
             Route::middleware('web')->group(base_path('routes/tenant.php'));
 
+            Route::get('test', fn () => 'test');
+
             Route::middleware('guest')->group(base_path('routes/v1/registration.php'));
 
             Route::middleware('api')->group(base_path('routes/v1/api.php'));
