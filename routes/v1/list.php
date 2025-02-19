@@ -15,6 +15,9 @@ use App\Http\Controllers\V1\List\ListMembersController;
 use App\Http\Controllers\V1\List\ListRolesController;
 use App\Http\Controllers\V1\List\ListSchoolsController;
 use App\Http\Controllers\V1\List\ListShoesSizesController;
+use App\Http\Controllers\V1\List\ListShopAdressesController;
+use App\Http\Controllers\V1\List\ListShopNamesController;
+use App\Http\Controllers\V1\List\ListShopPhoneNumbersController;
 use App\Http\Controllers\V1\List\ListSubjectsController;
 use App\Http\Controllers\V1\Universities\UniversitySpecialitiesListController;
 use App\Http\Controllers\V1\VocationalTraining\VocationalTrainingIndexController;
@@ -106,4 +109,16 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'available-zakats',
         ListAvailableZakat::class
     )->name('available-zakats');
+
+    Route::get('list-shop-names',
+        ListShopNamesController::class
+    )->name('list-shop-names');
+
+    Route::get('list-shop-adresses',
+        ListShopAdressesController::class
+    )->name('list-shop-adresses');
+
+    Route::get('list-shop-phone-numbers',
+        ListShopPhoneNumbersController::class
+    )->name('list-shop-phone-numbers');
 });

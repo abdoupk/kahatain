@@ -3,10 +3,12 @@ import type { ArchiveOccasionType, EidSuitOrphansResource, IndexParams, Paginati
 
 import { eidSuitsFilters } from '@/constants/filters'
 import { eidSuitSorts } from '@/constants/sorts'
+import { useEidSuitsStore } from '@/stores/eid-suits'
+import { useMembersStore } from '@/stores/members'
 import { useOrphansStore } from '@/stores/orphans'
 import { useSettingsStore } from '@/stores/settings'
 import { Head, router } from '@inertiajs/vue3'
-import { defineAsyncComponent, nextTick, ref } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -56,6 +58,8 @@ const loading = ref(false)
 const loadingReset = ref(false)
 
 const showWarningModalStatusForReset = ref(false)
+
+const eidSuitsStore = useEidSuitsStore()
 
 const handleReset = () => {
     showWarningModalStatusForReset.value = true
@@ -122,6 +126,15 @@ const handleSave = () => {
 const showBulkUpdateModal = () => {
     showEditModalStatus.value = true
 }
+
+onMounted(async () => {
+    await Promise.all([
+        eidSuitsStore.getShopNames(),
+        eidSuitsStore.getShopAddresses(),
+        eidSuitsStore.getShopPhoneNumbers(),
+        useMembersStore().getMembers()
+    ])
+})
 </script>
 
 <template>

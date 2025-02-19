@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useEidSuitsStore } from '@/stores/eid-suits'
 import { useOrphansStore } from '@/stores/orphans'
 import { usePage } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
@@ -44,6 +45,8 @@ const inputs = ref({
     ids: [],
     user_id: ''
 })
+
+const eidSuitsStore = useEidSuitsStore()
 
 const form = computed(() => {
     if (props.orphanId) {
@@ -256,12 +259,7 @@ watch(
                     id="clothes_shop_name"
                     v-model="inputs.clothes_shop_name"
                     :load-options="loadShopOwnerNames"
-                    :options="[
-                        {
-                            value: useOrphansStore().eidSuitInfos.clothes_shop_name?.replaceAll(' ', '_'),
-                            label: useOrphansStore().eidSuitInfos.clothes_shop_name
-                        }
-                    ]"
+                    :options="eidSuitsStore.shopNames"
                     class="mt-0"
                     create-option
                 ></base-combobox>
@@ -280,7 +278,7 @@ watch(
                     id="clothes_shop_phone_number"
                     v-model="inputs.clothes_shop_phone_number"
                     :load-options="loadShopOwnerPhoneNumbers"
-                    :options="[]"
+                    :options="eidSuitsStore.shopPhoneNumbers"
                     class="mt-0"
                     create-option
                 ></base-combobox>
@@ -316,7 +314,7 @@ watch(
                     id="shoes_shop_name"
                     v-model="inputs.shoes_shop_name"
                     :load-options="loadShopOwnerNames"
-                    :options="[]"
+                    :options="eidSuitsStore.shopNames"
                     class="mt-0"
                     create-option
                 ></base-combobox>
@@ -335,7 +333,7 @@ watch(
                     id="shoes_shop_phone_number"
                     v-model="inputs.shoes_shop_phone_number"
                     :load-options="loadShopOwnerPhoneNumbers"
-                    :options="[]"
+                    :options="eidSuitsStore.shopPhoneNumbers"
                     class="mt-0"
                     create-option
                 ></base-combobox>

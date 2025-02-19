@@ -60,7 +60,7 @@ const options = ref(props.options)
 watch(
     query,
     (q) => {
-        if (props?.loadOptions) {
+        if (props?.loadOptions && q) {
             isLoading.value = true
 
             props.loadOptions(q, (results) => {
@@ -141,7 +141,7 @@ const handleDisplayValue = (option) => {
                             v-if="queryOption && createOption && !filteredOptions?.length"
                             v-slot="{ active }"
                             :value="queryOption"
-                            as="template"
+                            as="div"
                         >
                             <li
                                 :class="{
@@ -158,7 +158,7 @@ const handleDisplayValue = (option) => {
                             :key="option[valueKey]"
                             v-slot="{ selected, active }"
                             :value="option[valueKey]"
-                            as="template"
+                            as="div"
                         >
                             <li
                                 v-if="option[valueKey]"

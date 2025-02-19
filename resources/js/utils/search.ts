@@ -471,11 +471,11 @@ export const searchShopOwnerName = async (query: string) => {
                     .flatMap((result) =>
                         [
                             result.eid_suit.clothes_shop_name && {
-                                value: result.eid_suit.clothes_shop_name.replaceAll(' ', '_'),
+                                value: result.eid_suit.clothes_shop_name.toLowerCase().replaceAll(' ', '_'),
                                 label: result.eid_suit.clothes_shop_name
                             },
                             result.eid_suit.shoes_shop_name && {
-                                value: result.eid_suit.shoes_shop_name.replaceAll(' ', '_'),
+                                value: result.eid_suit.shoes_shop_name.toLowerCase().replaceAll(' ', '_'),
                                 label: result.eid_suit.shoes_shop_name
                             }
                         ].filter(Boolean)
@@ -535,11 +535,11 @@ export const searchShopOwnerAddress = async (query: string) => {
                     .flatMap((result) =>
                         [
                             result.eid_suit.clothes_shop_address && {
-                                value: result.eid_suit.clothes_shop_address.replaceAll(' ', '_'),
+                                value: result.eid_suit.clothes_shop_address.tolowerCase().replaceAll(' ', '_'),
                                 label: result.eid_suit.clothes_shop_address
                             },
                             result.eid_suit.shoes_shop_address && {
-                                value: result.eid_suit.shoes_shop_address.replaceAll(' ', '_'),
+                                value: result.eid_suit.shoes_shop_address.tolowerCase().replaceAll(' ', '_'),
                                 label: result.eid_suit.shoes_shop_address
                             }
                         ].filter(Boolean)

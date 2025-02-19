@@ -18,7 +18,7 @@ function loadMembers(query: string, setOptions: (results: { id: string; name: st
     <base-combobox
         v-model="value"
         :load-options="loadMembers"
-        :options="[]"
+        :options="useMembersStore().members"
         class="mt-0"
         label-key="name"
         value-key="id"
