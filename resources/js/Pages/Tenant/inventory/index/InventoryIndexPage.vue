@@ -191,7 +191,11 @@ watchEffect(async () => {
             >
                 <template #ExtraButtons>
                     <base-tippy v-if="hasPermission('add_to_inventory')" :content="$t('add_new_item')">
-                        <base-button class="me-2 shadow-md" variant="primary" @click.prevent="showCreateModal">
+                        <base-button
+                            class="me-2 whitespace-nowrap shadow-md"
+                            variant="primary"
+                            @click.prevent="showCreateModal"
+                        >
                             <svg-loader name="icon-plus"></svg-loader>
                         </base-button>
                     </base-tippy>

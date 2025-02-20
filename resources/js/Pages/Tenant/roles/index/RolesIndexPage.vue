@@ -141,7 +141,11 @@ const showEditModal = async (roleId: string) => {
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
-                    <base-button class="me-2 shadow-md" variant="primary" @click.prevent="showCreateModal">
+                    <base-button
+                        class="me-2 whitespace-nowrap shadow-md"
+                        variant="primary"
+                        @click.prevent="showCreateModal"
+                    >
                         {{ $tc('add new', 1, { attribute: $t('role') }) }}
                     </base-button>
                 </template>

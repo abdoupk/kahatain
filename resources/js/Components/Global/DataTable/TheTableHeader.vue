@@ -149,7 +149,7 @@ const handleSort = ({ field, direction }) => {
 
             <div
                 v-if="params.filters?.length && !dontShowFilters"
-                class="ms-2 rounded-full bg-primary/20 px-2 py-1 text-primary dark:bg-darkmode-100/20 dark:text-slate-400"
+                class="ms-2 mt-1.5 w-fit rounded-full bg-primary/20 px-2 py-1 text-primary dark:bg-darkmode-100/20 dark:text-slate-400"
             >
                 <span> {{ $t('filters.active', { count: String(params.filters.length) }) }}</span>
 

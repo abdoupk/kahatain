@@ -137,10 +137,13 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
 
                             <span class="text-slate-800 dark:text-slate-500">
                                 {{
-                                    $tc('update_orphan_eid_suit_infos', notifiable?.gender === 'male' ? 1 : 0, {
-                                        user_name: notifiable?.name,
-                                        orphan_name: orphan.orphan.name
-                                    })
+                                    $tc(
+                                        'bulk_update_orphans_eid_suit_infos_warning_single',
+                                        notifiable?.gender === 'male' ? 1 : 0,
+                                        {
+                                            user_name: notifiable?.name
+                                        }
+                                    )
                                 }}
                             </span>
 

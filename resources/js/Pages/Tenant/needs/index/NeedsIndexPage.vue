@@ -175,7 +175,7 @@ watchEffect(async () => {
                 <template #ExtraButtons>
                     <base-button
                         v-if="hasPermission('create_needs')"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="showCreateModal"
                     >

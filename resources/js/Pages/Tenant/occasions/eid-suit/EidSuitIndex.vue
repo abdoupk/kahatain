@@ -174,7 +174,7 @@ onMounted(async () => {
                     <base-button
                         v-if="hasPermission('save_occasions')"
                         :disabled="loading"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="handleSave"
                     >
@@ -184,7 +184,7 @@ onMounted(async () => {
                     <base-button
                         v-if="useOrphansStore().selectedOrphans.length"
                         :disabled="loading"
-                        class="me-2"
+                        class="me-2 whitespace-nowrap"
                         variant="outline-success"
                         @click.prevent="showBulkUpdateModal"
                     >

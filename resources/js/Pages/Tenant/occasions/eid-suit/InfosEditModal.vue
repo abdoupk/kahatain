@@ -215,17 +215,6 @@ watch(
                             }}
                         </span>
 
-                        <!--                        <span-->
-                        <!--                            v-else-if="orphansStore.selectedOrphans.length === 1"-->
-                        <!--                            class="text-slate-800 dark:text-slate-500"-->
-                        <!--                        >-->
-                        <!--                            {{-->
-                        <!--                                $tc('update_orphan_eid_suit_infos', notifiable.gender === 'male' ? 1 : 0, {-->
-                        <!--                                    name: notifiable.name-->
-                        <!--                                })-->
-                        <!--                            }}-->
-                        <!--                        </span>-->
-
                         <the-alert-dismiss-button @click="dismiss">
                             <svg-loader class="stroke-red-900 dark:!stroke-white" name="icon-x"></svg-loader>
                         </the-alert-dismiss-button>
