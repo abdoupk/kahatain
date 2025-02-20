@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\SponsorshipsHelper;
 use App\Models\Family;
 use App\Models\Orphan;
 use App\Models\Tenant;
@@ -43,17 +44,17 @@ beforeEach(function () {
 })->group('incomes');
 
 it('correctly calculates income contribution for male orphan under 18', function () {
-    expect(calculateOrphanIncomes($this->orphan))->toBe(0.0);
+    expect(SponsorshipsHelper::calculateOrphanIncomes($this->orphan))->toBe(0.0);
 })->group('incomes');
 
 it('correctly calculates income contribution for female orphan under 18', function () {
     $this->orphan->update(['gender' => 'female']);
 
-    expect(calculateOrphanIncomes($this->orphan))->toBe(0.0);
+    expect(SponsorshipsHelper::calculateOrphanIncomes($this->orphan))->toBe(0.0);
 })->group('incomes');
 
 it('correctly calculates income contribution for handicapped orphan under 18', function () {
     $this->orphan->update(['is_handicapped' => true]);
 
-    expect(calculateOrphanIncomes($this->orphan))->toBe(10000.0);
+    expect(SponsorshipsHelper::calculateOrphanIncomes($this->orphan))->toBe(10000.0);
 })->group('incomes');

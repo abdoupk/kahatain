@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\SponsorType;
+use App\Helpers\SponsorshipsHelper;
 use App\Models\Family;
 use App\Models\Orphan;
 use App\Models\Tenant;
@@ -79,5 +80,5 @@ it('calculate income contribution for family handicapped orphan.', function () {
 
     $this->family->load(['sponsor.orphans']);
 
-    expect(calculateOrphanIncomes($this->family->sponsor->orphans->first()))->toBe(10000.0);
+    expect(SponsorshipsHelper::calculateOrphanIncomes($this->family->sponsor->orphans->first()))->toBe(10000.0);
 })->group('incomes');
