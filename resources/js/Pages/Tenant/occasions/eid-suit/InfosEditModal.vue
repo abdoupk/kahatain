@@ -210,7 +210,7 @@ watch(
                                 $tc(
                                     'bulk_update_orphans_eid_suit_infos_warning_multiple',
                                     notifiable.gender === 'male' ? 1 : 0,
-                                    { name: notifiable.name }
+                                    { user_name: notifiable.name }
                                 )
                             }}
                         </span>
