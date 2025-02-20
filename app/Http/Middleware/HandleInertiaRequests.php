@@ -16,14 +16,14 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $this->getAuthData(),
-                'settings' => auth()->user()?->settings,
+                'settings' => auth()->user()?->load('settings')->settings,
             ],
             'association' => tenant('infos')['association'] ?? null,
             'association_coordinates' => [
                 'lat' => $this->getCoordinates()?->latitude ?? null,
                 'lng' => $this->getCoordinates()?->longitude ?? null,
             ] ?? null,
-            'language' => auth()->user()?->settings?->locale ?? null,
+            'language' => 'ar',
             'ziggy' => fn () => array_merge((new Ziggy)->toArray(), [
                 'location' => $request->url(),
             ]),
