@@ -122,11 +122,7 @@ const ZonesFilterDropDown = defineAsyncComponent(() => import('@/Components/Glob
 
 <template>
     <suspense v-if="field?.label === 'family'">
-        <families-filter-drop-down
-
-            v-model:value="value"
-            class="text-sm"
-        ></families-filter-drop-down>
+        <families-filter-drop-down v-model:value="value" class="text-sm"></families-filter-drop-down>
 
         <template #fallback>
             <div class="flex h-full items-center justify-center">
@@ -136,11 +132,7 @@ const ZonesFilterDropDown = defineAsyncComponent(() => import('@/Components/Glob
     </suspense>
 
     <suspense v-else-if="field?.label === 'sponsor'">
-        <sponsors-filter-drop-down
-
-            v-model:value="value"
-            class="text-sm"
-        ></sponsors-filter-drop-down>
+        <sponsors-filter-drop-down v-model:value="value" class="text-sm"></sponsors-filter-drop-down>
 
         <template #fallback>
             <div class="flex h-full items-center justify-center">
@@ -150,11 +142,7 @@ const ZonesFilterDropDown = defineAsyncComponent(() => import('@/Components/Glob
     </suspense>
 
     <suspense v-else-if="field?.label === 'location'">
-        <cities-filter-drop-down
-
-            v-model:value="value"
-            class="text-sm"
-        ></cities-filter-drop-down>
+        <cities-filter-drop-down v-model:value="value" class="text-sm"></cities-filter-drop-down>
 
         <template #fallback>
             <div class="flex h-full items-center justify-center">
@@ -164,12 +152,9 @@ const ZonesFilterDropDown = defineAsyncComponent(() => import('@/Components/Glob
     </suspense>
 
     <suspense
-        v-else-if="field?.label === 'branch_president' || field?.label === 'creator' || field?.label === 'receiver'">
-        <members-filter-drop-down
-
-            v-model:value="value"
-            class="text-sm"
-        ></members-filter-drop-down>
+        v-else-if="field?.label === 'branch_president' || field?.label === 'creator' || field?.label === 'receiver'"
+    >
+        <members-filter-drop-down v-model:value="value" class="text-sm"></members-filter-drop-down>
 
         <template #fallback>
             <div class="flex h-full items-center justify-center">
@@ -179,11 +164,7 @@ const ZonesFilterDropDown = defineAsyncComponent(() => import('@/Components/Glob
     </suspense>
 
     <suspense v-else-if="field?.label === 'orphan'">
-        <orphans-filter-drop-down
-
-            v-model:value="value"
-            class="text-sm"
-        ></orphans-filter-drop-down>
+        <orphans-filter-drop-down v-model:value="value" class="text-sm"></orphans-filter-drop-down>
 
         <template #fallback>
             <div class="flex h-full items-center justify-center">

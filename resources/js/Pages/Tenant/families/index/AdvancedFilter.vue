@@ -171,8 +171,8 @@ const handleFieldChange = (index: number) => {
                         ></svg-loader>
 
                         <span class="ms-1 font-medium text-slate-500 group-hover:text-red-500 dark:text-slate-300">{{
-                                $t('delete_filter')
-                            }}</span>
+                            $t('delete_filter')
+                        }}</span>
                     </a>
                 </div>
             </base-popover-panel>

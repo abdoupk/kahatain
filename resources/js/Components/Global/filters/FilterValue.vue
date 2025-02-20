@@ -5,7 +5,7 @@ import { defineAsyncComponent } from 'vue'
 
 import SpinnerLoader from '@/Components/Global/SpinnerLoader.vue'
 
-const ObjectFilters = defineAsyncComponent(() => import    ( '@/Components/Global/filters/ObjectFilters.vue'))
+const ObjectFilters = defineAsyncComponent(() => import('@/Components/Global/filters/ObjectFilters.vue'))
 
 const BaseVCalendar = defineAsyncComponent(() => import('@/Components/Base/VCalendar/BaseVCalendar.vue'))
 
