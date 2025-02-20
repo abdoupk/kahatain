@@ -8,6 +8,20 @@ use Illuminate\Foundation\Http\FormRequest;
 /* @mixin OrphanEidSuit */
 class SaveOrphanEidSuitInfosRequest extends FormRequest
 {
+    public function attributes(): array
+    {
+        return [
+            'user_id' => __('designated_member'),
+            'clothes_shop_name' => __('clothes_shop_name'),
+            'clothes_shop_address' => __('clothes_shop_address'),
+            'shoes_shop_name' => __('shoes_shop_name'),
+            'shoes_shop_address' => __('shoes_shop_address'),
+            'shoes_shop_phone_number' => __('shoes_shop_phone_number'),
+            'clothes_shop_phone_number' => __('clothes_shop_phone_number'),
+            'note' => __('notes'),
+        ];
+    }
+
     public function rules(): array
     {
         return [
@@ -20,7 +34,7 @@ class SaveOrphanEidSuitInfosRequest extends FormRequest
             'shoes_shop_location' => 'sometimes|nullable|array',
             'clothes_shop_location' => 'sometimes|nullable|array',
             'note' => 'sometimes|nullable|string|max:255',
-            'user_id' => 'sometimes',
+            'user_id' => 'required|uuid|exists:users,id',
             'shirt_completed' => 'sometimes|nullable|boolean',
             'shoes_completed' => 'sometimes|nullable|boolean',
             'pants_completed' => 'sometimes|nullable|boolean',

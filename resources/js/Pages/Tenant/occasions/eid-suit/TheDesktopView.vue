@@ -46,7 +46,7 @@ const checkAll = ($event) => {
 
     if ($event.target.checked) {
         // If checked, add all orphans to selectedFamilies
-        if (orphansStore.orphans.length) {
+        if (orphansStore.selectedOrphans.length) {
             // Avoid duplication by filtering out existing ones
             orphansStore.selectedOrphans = [...new Set([...orphansStore.selectedOrphans, ...orphans])]
         } else {
@@ -54,7 +54,7 @@ const checkAll = ($event) => {
         }
     } else {
         // If unchecked, remove the current orphans from selectedFamilies
-        orphansStore.orphans = orphansStore.selectedOrphans.filter((id) => !orphans.includes(id))
+        orphansStore.selectedOrphans = orphansStore.selectedOrphans.filter((id) => !orphans.includes(id))
     }
 }
 
@@ -190,12 +190,18 @@ watch(
                         ></base-form-check-input>
                     </the-table-td>
 
-                    <the-table-td class="!min-w-24 !max-w-24 truncate">
+                    <the-table-td class="">
                         <Link
                             :href="route('tenant.orphans.show', orphan.orphan.id)"
-                            class="font-medium rtl:!font-semibold"
+                            class="whitespace-nowrap font-medium rtl:!font-semibold"
                         >
                             {{ orphan.orphan.name }}
+
+                            <svg-loader
+                                v-if="orphan.eid_suit.completed"
+                                class="mb-0.5 ms-1 inline-block h-4 w-4 fill-success"
+                                name="icon-check-circle"
+                            ></svg-loader>
                         </Link>
                     </the-table-td>
 

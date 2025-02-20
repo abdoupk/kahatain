@@ -642,6 +642,7 @@ export interface EidSuitOrphansResource {
         shirt_completed: boolean
         shoes_completed: boolean
         pants_completed: boolean
+        completed: boolean
     }
 }
 

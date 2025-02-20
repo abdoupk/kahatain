@@ -21,9 +21,8 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ secondSponsor: SecondSponsorType }>()
 
-const inputs = reactive<FamilyUpdateSecondSponsorFormType>(omit(props.secondSponsor, ['id',
-    'family_id',
-    'name']))
+// eslint-disable-next-line array-element-newline
+const inputs = reactive<FamilyUpdateSecondSponsorFormType>(omit(props.secondSponsor, ['id', 'family_id', 'name']))
 
 const form = useForm('put', route('tenant.families.second-sponsor-update', props.secondSponsor.family_id), inputs)
 
@@ -216,6 +215,7 @@ const submit = () => {
                             type="checkbox"
                             v-model="form.with_family"
                         ></base-form-switch-input>
+
                         <base-form-switch-label htmlFor="with_family">
                             {{ $t('housing.label.with_family') }}
                         </base-form-switch-label>

@@ -72,7 +72,7 @@ watch(
     }
 )
 
-const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
+const handleUpdate = (orphan: EidSuitOrphansResource, property, user_id: string) => {
     let value
 
     if (orphan.eid_suit[property]?.missing) {
@@ -80,10 +80,22 @@ const handleUpdate = (orphan: EidSuitOrphansResource, property) => {
     } else value = orphan.eid_suit[property]
 
     useForm('patch', route('tenant.occasions.eid-suit.save-infos', orphan.orphan.id), {
-        [property]: value
+        [property]: value,
+        user_id
     }).submit({
         onSuccess() {
+            orphan.error_message = null
+
             emit('showSuccessNotification')
+        },
+        onValidationError(error) {
+            orphan.error_message = error.data.message
+
+            orphan.eid_suit[property] = null
+
+            document.getElementById(orphan.orphan.id)?.scrollIntoView({
+                behavior: 'smooth'
+            })
         }
     })
 }
@@ -95,9 +107,9 @@ const selectOrphan = (orphan: EidSuitOrphansResource) => {
 }
 
 const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
-    // Orphan.eid_suit.selected = false
-    //
-    // OrphansStore.selectedOrphans.splice(orphansStore.selectedOrphans.indexOf(orphan.id), 1)
+    orphan.eid_suit.selected = false
+
+    orphansStore.selectedOrphans.splice(orphansStore.selectedOrphans.indexOf(orphan.id), 1)
 }
 </script>
 
@@ -123,7 +135,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
             class="intro-y !z-10 col-span-12 @xl:col-span-6"
         >
             <div class="box px-5 pb-5 pt-3">
-                <div v-if="showWarningAlert && orphan.eid_suit.selected">
+                <div v-if="(showWarningAlert && orphan.eid_suit.selected) || orphan?.error_message">
                     <base-alert
                         v-slot="{ dismiss }"
                         class="mb-4 dark:border-darkmode-400 dark:bg-darkmode-400"
@@ -135,7 +147,11 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                                 <svg-loader class="me-3 h-6 w-6" name="icon-triangle-exclamation" />
                             </span>
 
-                            <span class="text-slate-800 dark:text-slate-500">
+                            <span v-if="orphan?.error_message" class="text-slate-800 dark:text-slate-500">
+                                {{ orphan.error_message }}</span
+                            >
+
+                            <span v-else class="text-slate-800 dark:text-slate-500">
                                 {{
                                     $tc(
                                         'bulk_update_orphans_eid_suit_infos_warning_single',
@@ -155,6 +171,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                 </div>
 
                 <base-form-switch-input
+                    :checked="orphansStore.selectedOrphans.includes(orphan.id)"
                     @update:model-value="
                         ($event) => {
                             if ($event) {
@@ -273,46 +290,6 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
 
                     <div class="col-span-12 grid grid-cols-12 items-center gap-2">
                         <div class="col-span-5 mt-1 rtl:!font-semibold">
-                            {{ $t('clothes_shop_location') }}
-                        </div>
-
-                        <div class="col-span-7">
-                            <shop-address-field
-                                v-model:address="orphan.eid_suit.clothes_shop_address"
-                                v-model:location="orphan.eid_suit.clothes_shop_location"
-                                :disabled="
-                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
-                                "
-                                :select_location_label="$t('select_location')"
-                                @update:address="handleUpdate(orphan, 'clothes_shop_address')"
-                                @update:location="handleUpdate(orphan, 'clothes_shop_location')"
-                            >
-                            </shop-address-field>
-                        </div>
-                    </div>
-
-                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
-                        <div class="col-span-5 mt-1 rtl:!font-semibold">
-                            {{ $t('shoes_shop_location') }}
-                        </div>
-
-                        <div class="col-span-7">
-                            <shop-address-field
-                                v-model:address="orphan.eid_suit.shoes_shop_address"
-                                v-model:location="orphan.eid_suit.shoes_shop_location"
-                                :disabled="
-                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
-                                "
-                                :select_location_label="$t('select_location')"
-                                @update:address="handleUpdate(orphan, 'shoes_shop_address')"
-                                @update:location="handleUpdate(orphan, 'shoes_shop_location')"
-                            >
-                            </shop-address-field>
-                        </div>
-                    </div>
-
-                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
-                        <div class="col-span-5 mt-1 rtl:!font-semibold">
                             {{ $t('designated_member') }}
                         </div>
 
@@ -322,7 +299,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                             class="col-span-7"
                             @focusin="selectOrphan(orphan)"
                             @focusout="deSelectOrphan(orphan)"
-                            @update:model-value="handleUpdate(orphan, 'user_id')"
+                            @update:model-value="handleUpdate(orphan, 'user_id', orphan.eid_suit.user_id)"
                         >
                         </members-filter-drop-down>
                     </div>
@@ -342,7 +319,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                             create-option
                             @focusin="selectOrphan(orphan)"
                             @focusout="deSelectOrphan(orphan)"
-                            @update:model-value="handleUpdate(orphan, 'clothes_shop_name')"
+                            @update:model-value="handleUpdate(orphan, 'clothes_shop_name', orphan.eid_suit.user_id)"
                         ></base-combobox>
                     </div>
 
@@ -361,8 +338,34 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                             create-option
                             @focusin="selectOrphan(orphan)"
                             @focusout="deSelectOrphan(orphan)"
-                            @update:model-value="handleUpdate(orphan, 'clothes_shop_phone_number')"
+                            @update:model-value="
+                                handleUpdate(orphan, 'clothes_shop_phone_number', orphan.eid_suit.user_id)
+                            "
                         ></base-combobox>
+                    </div>
+
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('clothes_shop_location') }}
+                        </div>
+
+                        <div class="col-span-7">
+                            <shop-address-field
+                                v-model:address="orphan.eid_suit.clothes_shop_address"
+                                v-model:location="orphan.eid_suit.clothes_shop_location"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                :select_location_label="$t('select_location')"
+                                @focusin="selectOrphan(orphan)"
+                                @focusout="deSelectOrphan(orphan)"
+                                @update:address="handleUpdate(orphan, 'clothes_shop_address', orphan.eid_suit.user_id)"
+                                @update:location="
+                                    handleUpdate(orphan, 'clothes_shop_location', orphan.eid_suit.user_id)
+                                "
+                            >
+                            </shop-address-field>
+                        </div>
                     </div>
 
                     <div class="col-span-12 grid grid-cols-12 items-center gap-2">
@@ -380,7 +383,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                             create-option
                             @focusin="selectOrphan(orphan)"
                             @focusout="deSelectOrphan(orphan)"
-                            @update:model-value="handleUpdate(orphan, 'shoes_shop_name')"
+                            @update:model-value="handleUpdate(orphan, 'shoes_shop_name', orphan.eid_suit.user_id)"
                         ></base-combobox>
                     </div>
 
@@ -399,8 +402,32 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                             create-option
                             @focusin="selectOrphan(orphan)"
                             @focusout="deSelectOrphan(orphan)"
-                            @update:model-value="handleUpdate(orphan, 'shoes_shop_phone_number')"
+                            @update:model-value="
+                                handleUpdate(orphan, 'shoes_shop_phone_number', orphan.eid_suit.user_id)
+                            "
                         ></base-combobox>
+                    </div>
+
+                    <div class="col-span-12 grid grid-cols-12 items-center gap-2">
+                        <div class="col-span-5 mt-1 rtl:!font-semibold">
+                            {{ $t('shoes_shop_location') }}
+                        </div>
+
+                        <div class="col-span-7">
+                            <shop-address-field
+                                v-model:address="orphan.eid_suit.shoes_shop_address"
+                                v-model:location="orphan.eid_suit.shoes_shop_location"
+                                :disabled="
+                                    orphan.eid_suit.user_id && $page.props.auth.user.id !== orphan.eid_suit.user_id
+                                "
+                                :select_location_label="$t('select_location')"
+                                @focusin="selectOrphan(orphan)"
+                                @focusout="deSelectOrphan(orphan)"
+                                @update:address="handleUpdate(orphan, 'shoes_shop_address', orphan.eid_suit.user_id)"
+                                @update:location="handleUpdate(orphan, 'shoes_shop_location', orphan.eid_suit.user_id)"
+                            >
+                            </shop-address-field>
+                        </div>
                     </div>
 
                     <div class="col-span-12 grid grid-cols-12 items-center gap-2">
@@ -419,7 +446,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                                 @focusout="deSelectOrphan(orphan)"
                                 @mouseenter="selectOrphan(orphan)"
                                 @mouseleave="deSelectOrphan(orphan)"
-                                @update:model-value="handleUpdate(orphan, 'pants_completed')"
+                                @update:model-value="handleUpdate(orphan, 'pants_completed', orphan.eid_suit.user_id)"
                             ></base-form-switch-input>
                         </base-form-switch>
                     </div>
@@ -440,7 +467,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                                 @focusout="deSelectOrphan(orphan)"
                                 @mouseenter="selectOrphan(orphan)"
                                 @mouseleave="deSelectOrphan(orphan)"
-                                @update:model-value="handleUpdate(orphan, 'shirt_completed')"
+                                @update:model-value="handleUpdate(orphan, 'shirt_completed', orphan.eid_suit.user_id)"
                             ></base-form-switch-input>
                         </base-form-switch>
                     </div>
@@ -461,7 +488,7 @@ const deSelectOrphan = (orphan: EidSuitOrphansResource) => {
                                 @focusout="deSelectOrphan(orphan)"
                                 @mouseenter="selectOrphan(orphan)"
                                 @mouseleave="deSelectOrphan(orphan)"
-                                @update:model-value="handleUpdate(orphan, 'shoes_completed')"
+                                @update:model-value="handleUpdate(orphan, 'shoes_completed', orphan.eid_suit.user_id)"
                             ></base-form-switch-input>
                         </base-form-switch>
                     </div>

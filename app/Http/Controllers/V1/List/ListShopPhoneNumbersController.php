@@ -22,7 +22,7 @@ class ListShopPhoneNumbersController extends Controller
             $mergedPhoneNumbers->map(function ($phoneNumber) {
                 return [
                     'label' => $phoneNumber,
-                    'value' => str_replace(' ', '_', strtolower($phoneNumber)),
+                    'value' => $phoneNumber,
                 ];
             })
         );

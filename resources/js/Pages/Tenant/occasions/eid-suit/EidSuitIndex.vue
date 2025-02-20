@@ -8,7 +8,7 @@ import { useMembersStore } from '@/stores/members'
 import { useOrphansStore } from '@/stores/orphans'
 import { useSettingsStore } from '@/stores/settings'
 import { Head, router } from '@inertiajs/vue3'
-import { defineAsyncComponent, nextTick, onMounted, ref } from 'vue'
+import { defineAsyncComponent, nextTick, onMounted, onUnmounted, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -134,6 +134,12 @@ onMounted(async () => {
         eidSuitsStore.getShopPhoneNumbers(),
         useMembersStore().getMembers()
     ])
+})
+
+onUnmounted(() => {
+    useEidSuitsStore().$reset()
+
+    useOrphansStore().$reset()
 })
 </script>
 

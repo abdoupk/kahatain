@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useEidSuitsStore } from '@/stores/eid-suits'
 import { ref } from 'vue'
 
 import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
@@ -13,7 +14,7 @@ defineProps<{
     select_location_label: string
 }>()
 
-const address = defineModel('address', { default: '' })
+const address = defineModel('address')
 
 const location = defineModel('location', { default: null })
 
@@ -30,8 +31,9 @@ const showMapModal = () => {
             class="w-full"
             v-model="address"
             :load-options="loadShopOwnerAddresses"
-            :options="[]"
+            :options="useEidSuitsStore().shopAddresses"
             create-option
+            v-bind="$attrs"
         ></base-combobox>
 
         <base-tippy :content="$t(select_location_label)" class="ms-2 mt-3">

@@ -12,6 +12,9 @@ import TheAlertDismissButton from '@/Components/Base/Alert/TheAlertDismissButton
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
+import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
+import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
+import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
@@ -41,6 +44,9 @@ const inputs = ref({
     shoes_shop_location: null,
     shoes_shop_name: '',
     shoes_shop_phone_number: '',
+    pants_completed: false,
+    shoes_completed: false,
+    shirt_completed: false,
     note: '',
     ids: [],
     user_id: ''
@@ -75,7 +81,7 @@ const handleSubmit = () => {
             ? inputs.value.clothes_shop_phone_number?.value
             : inputs.value.clothes_shop_phone_number,
         clothes_shop_address: inputs.value.clothes_shop_address?.missing
-            ? inputs.value.clothes_shop_address?.value
+            ? inputs.value.clothes_shop_address?.label
             : inputs.value.clothes_shop_address,
         shoes_shop_address: inputs.value.shoes_shop_address?.missing
             ? inputs.value.shoes_shop_address?.value
@@ -93,7 +99,15 @@ const handleSubmit = () => {
             nextTick(() => {
                 showSuccessNotification.value = false
 
-                useOrphansStore().orphans = []
+                useOrphansStore().selectedOrphans = []
+
+                useEidSuitsStore().$reset()
+
+                useEidSuitsStore().getShopNames()
+
+                useEidSuitsStore().getShopAddresses()
+
+                useEidSuitsStore().getShopPhoneNumbers()
 
                 form.value.reset()
             })
@@ -151,7 +165,10 @@ watch(
                 shoes_shop_location: a.eid_suit.shoes_shop_location,
                 shoes_shop_phone_number: a.eid_suit.shoes_shop_phone_number,
                 note: a.eid_suit.note,
-                user_id: a.eid_suit.user_id
+                user_id: a.eid_suit.user_id,
+                pants_completed: a.eid_suit.pants_completed,
+                shoes_completed: a.eid_suit.shoes_completed,
+                shirt_completed: a.eid_suit.shirt_completed
             }
         }
     }
@@ -164,7 +181,7 @@ watch(
         :focusable-input="firstInputRef"
         :loading
         :open
-        :title="$t('bulk_update')"
+        :title="orphansStore.selectedOrphans.length <= 1 ? $t('update') : $t('bulk_update')"
         modal-type="update"
         size="lg"
         @close="
@@ -283,6 +300,7 @@ watch(
                 </base-form-label>
 
                 <shop-address-field
+                    id="clothes_shop_address"
                     v-model:address="inputs.clothes_shop_address"
                     v-model:location="inputs.clothes_shop_location"
                     :select_location_label="$t('select_location')"
@@ -349,6 +367,50 @@ watch(
                 <base-form-input-error :form field_name="shoes_shop_address"></base-form-input-error>
             </div>
             <!-- End: Shoes Shop address  -->
+
+            <div class="col-span-12 mt-2 grid grid-cols-12 gap-4">
+                <div class="col-span-4">
+                    <base-form-switch>
+                        <base-form-switch-input
+                            id="pants_completed"
+                            v-model="inputs.pants_completed"
+                            type="checkbox"
+                        ></base-form-switch-input>
+
+                        <base-form-switch-label htmlFor="pants_completed">
+                            {{ $t('pants_completed') }}
+                        </base-form-switch-label>
+                    </base-form-switch>
+                </div>
+
+                <div class="col-span-4">
+                    <base-form-switch>
+                        <base-form-switch-input
+                            id="shoes_completed"
+                            v-model="inputs.shoes_completed"
+                            type="checkbox"
+                        ></base-form-switch-input>
+
+                        <base-form-switch-label htmlFor="shoes_completed">
+                            {{ $t('shoes_completed') }}
+                        </base-form-switch-label>
+                    </base-form-switch>
+                </div>
+
+                <div class="col-span-4">
+                    <base-form-switch>
+                        <base-form-switch-input
+                            id="shirt_completed"
+                            v-model="inputs.shirt_completed"
+                            type="checkbox"
+                        ></base-form-switch-input>
+
+                        <base-form-switch-label htmlFor="shirt_completed">
+                            {{ $t('shirt_completed') }}
+                        </base-form-switch-label>
+                    </base-form-switch>
+                </div>
+            </div>
 
             <div class="col-span-12">
                 <base-form-label htmlFor="note">

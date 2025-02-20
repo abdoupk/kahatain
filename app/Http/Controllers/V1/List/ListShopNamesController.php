@@ -22,7 +22,7 @@ class ListShopNamesController extends Controller
             $mergedNames->map(function ($name) {
                 return [
                     'label' => $name,
-                    'value' => str_replace(' ', '_', strtolower($name)),
+                    'value' => $name,
                 ];
             })
         );

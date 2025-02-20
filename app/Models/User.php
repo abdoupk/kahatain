@@ -115,11 +115,6 @@ class User extends Authenticatable
         return $models->load(['roles', 'zone', 'branch', 'academicLevel', 'committees', 'competences']);
     }
 
-    public function shouldBeSearchable(): bool
-    {
-        return ! $this->roles->pluck('name')->contains('super_admin');
-    }
-
     public function toSearchableArray(): array
     {
         return [

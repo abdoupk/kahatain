@@ -22,7 +22,7 @@ class ListShopAdressesController extends Controller
             $mergedAdresses->map(function ($address) {
                 return [
                     'label' => $address,
-                    'value' => str_replace(' ', '_', strtolower($address)),
+                    'value' => $address,
                 ];
             })
         );
