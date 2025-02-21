@@ -39,6 +39,8 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'created_by')->nullable();
             $table->softDeletes();
+
+            $table->index(['tenant_id']);
         });
 
         Schema::create('password_reset_tokens', static function (Blueprint $table) {

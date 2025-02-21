@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Finance::class, 'zakat_id');
             $table->foreignIdFor(Family::class);
             $table->foreignIdFor(Tenant::class);
+
+            $table->index(['tenant_id']);
         });
     }
 };

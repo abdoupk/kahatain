@@ -20,6 +20,8 @@ return new class extends Migration
 
             $table->primary(['role_id', 'model_uuid', 'model_type']);
             $table->index(['model_uuid', 'model_type'], 'model_has_roles_model_id_model_type_index');
+
+            $table->index(['tenant_id']);
         });
     }
 

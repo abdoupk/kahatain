@@ -28,6 +28,8 @@ return new class extends Migration
             $table->boolean('shoes_completed')->nullable();
             $table->boolean('pants_completed')->nullable();
             $table->timestamps();
+
+            $table->index(['tenant_id']);
         });
     }
 };

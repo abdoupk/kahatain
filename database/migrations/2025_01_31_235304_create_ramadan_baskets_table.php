@@ -19,6 +19,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['inventory_id']);
+
+            $table->index(['tenant_id']);
         });
     }
 };

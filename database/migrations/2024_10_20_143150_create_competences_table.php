@@ -14,6 +14,8 @@ return new class extends Migration
             $table->string('name')->index('idx_competences_name');
             $table->foreignIdFor(Tenant::class);
             $table->timestamps();
+
+            $table->index(['tenant_id']);
         });
     }
 

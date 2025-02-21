@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(Preview::class);
 
             $table->index(['id'], 'idx_member_preview_id');
+
+            $table->index(['tenant_id']);
         });
     }
 

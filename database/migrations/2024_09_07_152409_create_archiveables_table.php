@@ -17,6 +17,8 @@ return new class extends Migration
             $table->uuid('archiveable_id');
             $table->string('archiveable_type');
             $table->foreignIdFor(Tenant::class);
+
+            $table->index(['tenant_id']);
         });
     }
 

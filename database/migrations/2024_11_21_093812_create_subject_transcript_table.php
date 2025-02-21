@@ -17,6 +17,8 @@ return new class extends Migration
             $table->float('grade')->nullable();
             $table->foreignIdFor(Tenant::class);
             $table->foreignIdFor(Transcript::class);
+
+            $table->index(['tenant_id']);
         });
     }
 

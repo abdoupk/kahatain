@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(AcademicLevel::class);
             $table->float('average', 2);
             $table->timestamps();
+
+            $table->index(['tenant_id']);
         });
     }
 

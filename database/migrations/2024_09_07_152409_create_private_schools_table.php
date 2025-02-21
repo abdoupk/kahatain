@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignIdFor(\App\Models\User::class, 'created_by');
             $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();
+
+            $table->index(['tenant_id']);
         });
     }
 

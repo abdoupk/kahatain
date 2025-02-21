@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users')->onDelete('cascade');
             $table->foreignIdFor(Competence::class)->references('id')->on('competences')->onDelete('cascade');
             $table->foreignIdFor(Tenant::class)->references('id')->on('tenants')->onDelete('cascade');
+
+            $table->index(['tenant_id']);
         });
     }
 

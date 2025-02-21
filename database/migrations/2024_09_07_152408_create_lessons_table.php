@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreignIdFor(Tenant::class);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['tenant_id']);
         });
     }
 

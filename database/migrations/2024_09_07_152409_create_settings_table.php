@@ -30,6 +30,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['id'], 'idx_settings_id');
+
+            $table->index(['tenant_id']);
         });
     }
 

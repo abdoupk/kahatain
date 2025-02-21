@@ -26,6 +26,8 @@ return new class extends Migration
             $table->foreignIdFor(Tenant::class);
 
             $table->index(['id'], 'idx_incomes_id');
+
+            $table->index(['tenant_id']);
         });
     }
 

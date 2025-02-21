@@ -14,11 +14,13 @@ return new class extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('domain');
+            $table->text('domain')->index();
             $table->foreignIdFor(Tenant::class);
             $table->timestamps();
 
             $table->index(['id'], 'idx_domains_id');
+
+            $table->index(['tenant_id']);
         });
     }
 

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('occasion');
             $table->json('metadata')->nullable();
             $table->timestamps();
+
+            $table->index(['tenant_id']);
         });
     }
 

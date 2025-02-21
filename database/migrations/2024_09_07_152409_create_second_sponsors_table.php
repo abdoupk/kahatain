@@ -29,6 +29,8 @@ return new class extends Migration
 
             $table->index(['id'], 'idx_second_sponsors_id');
             $table->index(['first_name', 'last_name'], 'idx_second_sponsors_name');
+
+            $table->index(['tenant_id']);
         });
     }
 

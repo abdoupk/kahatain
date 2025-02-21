@@ -69,15 +69,6 @@ class TenantSeeder extends Seeder
                 'domain' => $tenant?->infos['domain'],
             ]);
 
-            $zones = Zone::factory()->count(10)->create(['tenant_id' => $tenant->id]);
-
-            competence::factory()->count(10)->create(['tenant_id' => $tenant->id]);
-
-            $branches = Branch::factory(fake()->numberBetween(1, 12))->create([
-                'tenant_id' => $tenant?->id,
-                'president_id' => $tenant->members->random()->first()->id,
-            ]);
-
             User::factory()
                 ->hasAttached(
                     Competence::factory()->count(
@@ -97,9 +88,20 @@ class TenantSeeder extends Seeder
                 ->count(10)
                 ->create([
                     'tenant_id' => $tenant?->id,
-                    'branch_id' => $branches->random()?->id,
-                    'zone_id' => $zones->random()?->id,
                 ]);
+
+            Zone::factory()->count(10)->create(
+                [
+                    'tenant_id' => $tenant->id,
+                    'created_by' => $tenant->members->random()->first()?->id,
+                ]);
+
+            competence::factory()->count(10)->create(['tenant_id' => $tenant->id]);
+
+            Branch::factory(fake()->numberBetween(1, 12))->create([
+                'tenant_id' => $tenant?->id,
+                'president_id' => $tenant->members->random()->first()?->id,
+            ]);
 
             for ($i = 0; $i < fake()->numberBetween(3, 13); $i++) {
                 RamadanBasket::factory()

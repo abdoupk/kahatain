@@ -27,6 +27,8 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();
 
             $table->index(['id'], 'idx_finances_id');
+
+            $table->index(['tenant_id']);
         });
     }
 
