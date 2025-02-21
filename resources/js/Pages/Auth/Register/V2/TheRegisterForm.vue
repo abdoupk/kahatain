@@ -54,7 +54,7 @@ const submit = () => {
 
             setTimeout(() => {
                 window.location.href = response.data.url
-            }, 1000)
+            }, 200)
         }
     })
 }

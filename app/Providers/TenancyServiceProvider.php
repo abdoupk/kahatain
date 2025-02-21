@@ -92,7 +92,8 @@ class TenancyServiceProvider extends ServiceProvider
     protected function makeTenancyMiddlewareHighestPriority(): void
     {
         $tenancyMiddleware = [
-            Middleware\PreventAccessFromCentralDomains::class, Middleware\InitializeTenancyByDomain::class,
+            Middleware\PreventAccessFromCentralDomains::class,
+            Middleware\InitializeTenancyByDomain::class,
             Middleware\InitializeTenancyBySubdomain::class,
             Middleware\InitializeTenancyByDomainOrSubdomain::class,
             Middleware\InitializeTenancyByPath::class,

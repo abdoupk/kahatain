@@ -38,6 +38,8 @@ return Application::configure(basePath: dirname(__DIR__))
             TeamsPermissionMiddleware::class,
             App\Http\Middleware\HandleInertiaRequests::class,
         ]);
+
+        $middleware->group('universal', []);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (TenantCouldNotBeIdentifiedException $e, Request $request) {
