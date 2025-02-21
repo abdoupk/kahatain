@@ -18,6 +18,14 @@ const form = useForm({
 const submit = () => {
     // eslint-disable-next-line no-undef
     form.post(route('tenant.login'), {
+        fresh: true,
+        replace: true,
+        showProgress: false,
+        onSuccess: () => {
+            window.stop()
+
+            window.location.reload()
+        },
         onFinish: () => {
             form.reset('password')
         }
