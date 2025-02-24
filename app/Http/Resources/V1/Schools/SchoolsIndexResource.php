@@ -16,6 +16,7 @@ class SchoolsIndexResource extends JsonResource
             'name' => $this->name,
             'quota' => $this->lessons->sum('quota'),
             'created_at' => $this->created_at,
+            'should_print' => $this->events_with_orphans_count > 0,
         ];
     }
 }

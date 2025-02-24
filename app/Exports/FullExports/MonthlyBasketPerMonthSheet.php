@@ -27,20 +27,16 @@ class MonthlyBasketPerMonthSheet implements FromCollection, WithEvents, WithHead
             ->whereOccasion('monthly_basket')
             ->whereYear('created_at', $this->year)
             ->whereMonth('created_at', $this->month)
-            ->get()->map(function (Archive $archive) {
-                return $archive->listFamilies->map(function (Family $family) {
-                    return [
-                        $family->sponsor->getName(),
-                        $family->sponsor->formattedPhoneNumber(),
-                        $family->address,
-                        $family->zone->name,
-                        $family->branch->name,
-                        formatCurrency($family->total_income ?? 0),
-                        $family->income_rate,
-                        $family->start_date->format('Y-m-d'),
-                    ];
-                });
-            });
+            ->get()->map(fn (Archive $archive) => $archive->listFamilies->map(fn (Family $family) => [
+                $family->sponsor->getName(),
+                $family->sponsor->formattedPhoneNumber(),
+                $family->address,
+                $family->zone?->name,
+                $family->branch?->name,
+                formatCurrency($family->total_income ?? 0),
+                $family->income_rate,
+                $family->start_date->format('Y-m-d'),
+            ]));
     }
 
     public function title(): string

@@ -21,9 +21,8 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ secondSponsor: SecondSponsorType }>()
 
-const inputs = reactive<FamilyUpdateSecondSponsorFormType>(omit(props.secondSponsor, ['id',
-'family_id',
-'name']))
+// eslint-disable-next-line array-element-newline
+const inputs = reactive<FamilyUpdateSecondSponsorFormType>(omit(props.secondSponsor, ['id', 'family_id', 'name']))
 
 const form = useForm('put', route('tenant.families.second-sponsor-update', props.secondSponsor.family_id), inputs)
 
@@ -47,7 +46,7 @@ const submit = () => {
 
 <template>
     <!-- BEGIN: Second Sponsor Information -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">
                 {{ secondSponsor.name }}
@@ -81,15 +80,7 @@ const submit = () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"> </base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -112,15 +103,7 @@ const submit = () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"> </base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -143,15 +126,7 @@ const submit = () => {
                         @change="form?.validate('degree_of_kinship')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('degree_of_kinship')"
-                            class="mt-2 text-danger"
-                            data-test="error_degree_of_kinship_message"
-                        >
-                            {{ form.errors.degree_of_kinship }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="degree_of_kinship"> </base-form-input-error>
                 </div>
                 <!-- END: Degree of Kinship -->
 
@@ -182,11 +157,7 @@ const submit = () => {
                         </base-input-group-text>
                     </base-input-group>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('income')" class="mt-2 text-danger" data-test="error_income_message">
-                            {{ form.errors.income }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="income"> </base-form-input-error>
                 </div>
                 <!-- END: Income -->
 
@@ -209,11 +180,7 @@ const submit = () => {
                         @change="form?.validate('address')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
-                            {{ form.errors.address }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="address"> </base-form-input-error>
                 </div>
                 <!-- END: Address -->
 
@@ -237,15 +204,7 @@ const submit = () => {
                         @keydown="allowOnlyNumbersOnKeyDown"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('phone_number')"
-                            class="mt-2 text-danger"
-                            data-test="error_phone_number_message"
-                        >
-                            {{ form.errors.phone_number }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="phone_number"> </base-form-input-error>
                 </div>
                 <!-- END: Phone Number -->
 
@@ -256,6 +215,7 @@ const submit = () => {
                             type="checkbox"
                             v-model="form.with_family"
                         ></base-form-switch-input>
+
                         <base-form-switch-label htmlFor="with_family">
                             {{ $t('housing.label.with_family') }}
                         </base-form-switch-label>

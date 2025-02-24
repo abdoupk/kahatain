@@ -1,60 +1,86 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
-import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
-import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
-import BaseTabGroup from '@/Components/Base/headless/Tab/BaseTabGroup.vue'
-import BaseTabList from '@/Components/Base/headless/Tab/BaseTabList.vue'
-import BaseTabPanel from '@/Components/Base/headless/Tab/BaseTabPanel.vue'
-import BaseTabPanels from '@/Components/Base/headless/Tab/BaseTabPanels.vue'
+import { useCreateFamilyStore } from '@/stores/create-family'
+import { useMembersStore } from '@/stores/members'
+import { onMounted, ref } from 'vue'
+
+import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
+import BaseClassicEditor from '@/Components/Base/editor/BaseClassicEditor.vue'
+import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
+import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
+
+import { $t } from '@/utils/i18n'
 
 defineProps<CreateFamilyStepProps>()
+
+const createFamilyStore = useCreateFamilyStore()
+
+const vueSelectInspectorsMembers = ref([])
+
+onMounted(async () => {
+    await useMembersStore().getMembers()
+
+    vueSelectInspectorsMembers.value = useMembersStore().findMembersByIds(createFamilyStore.family.inspectors_members)
+})
 </script>
 
 <template>
     <div
-        v-if="currentStep === 5"
+        v-if="createFamilyStore.current_step === 5"
         class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
-        <div class="mb-6 hidden text-lg font-medium lg:block">
+        <div class="mb-6 hidden text-lg font-medium lg:block rtl:font-bold">
             {{ $t('families.create_family.stepFive') }}
         </div>
 
-        <base-tab-group class="mt-5">
-            <base-tab-list class="md:flex" variant="link-tabs">
-                <base-tab>
-                    <base-tab-button as="button" class="w-full py-2" type="button">
-                        {{ $t('sponsorship for the family') }}
-                    </base-tab-button>
-                </base-tab>
+        <div class="mt-5 grid grid-cols-12 gap-4 gap-y-5">
+            <div class="col-span-12">
+                <base-form-label for="report">
+                    {{ $t('the_report') }}
+                </base-form-label>
 
-                <base-tab>
-                    <base-tab-button as="button" class="w-full py-2" type="button">
-                        {{ $t('sponsorship for the sponsor') }}
-                    </base-tab-button>
-                </base-tab>
+                <base-classic-editor
+                    id="report"
+                    v-model="createFamilyStore.family.report"
+                    @blur="form?.validate('report')"
+                ></base-classic-editor>
 
-                <base-tab>
-                    <base-tab-button as="button" class="w-full py-2" type="button">
-                        {{ $t('sponsorship for the orphans') }}
-                    </base-tab-button>
-                </base-tab>
-            </base-tab-list>
+                <base-form-input-error :form field_name="report"></base-form-input-error>
+            </div>
 
-            <base-tab-panels>
-                <base-tab-panel class="p-5">
-                    <slot name="FamilySponsorShipForm"></slot>
-                </base-tab-panel>
+            <div class="col-span-12 sm:col-span-8">
+                <base-form-label for="inspectors_members">
+                    {{ $t('inspectors_members') }}
+                </base-form-label>
 
-                <base-tab-panel class="p-5">
-                    <slot name="SponsorSponsorShipForm"></slot>
-                </base-tab-panel>
+                <base-list-box
+                    v-model="createFamilyStore.family.inspectors_members"
+                    :model-value="createFamilyStore.family.inspectors_members"
+                    :options="members"
+                    :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('inspectors_members') })"
+                    label-key="name"
+                    multiple
+                    value-key="id"
+                ></base-list-box>
 
-                <base-tab-panel class="p-5">
-                    <slot name="OrphansSponsorShipForm"></slot>
-                </base-tab-panel>
-            </base-tab-panels>
-        </base-tab-group>
+                <base-form-input-error :form field_name="inspectors_members"></base-form-input-error>
+            </div>
+
+            <div class="col-span-12 sm:col-span-4">
+                <base-form-label for="preview_date">
+                    {{ $t('preview_date') }}
+                </base-form-label>
+
+                <base-v-calendar
+                    id="preview_date"
+                    v-model:date="createFamilyStore.family.preview_date"
+                ></base-v-calendar>
+
+                <base-form-input-error :form field_name="preview_date"></base-form-input-error>
+            </div>
+        </div>
 
         <slot></slot>
     </div>

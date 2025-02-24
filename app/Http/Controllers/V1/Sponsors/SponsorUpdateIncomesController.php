@@ -7,6 +7,8 @@ use App\Http\Requests\V1\Sponsors\SponsorIncomesUpdateRequest;
 use App\Jobs\V1\Sponsor\SponsorUpdatedJob;
 use App\Models\Sponsor;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class SponsorUpdateIncomesController extends Controller implements HasMiddleware
 {
@@ -15,14 +17,30 @@ class SponsorUpdateIncomesController extends Controller implements HasMiddleware
         return ['can:update_sponsors'];
     }
 
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
     public function __invoke(SponsorIncomesUpdateRequest $request, Sponsor $sponsor)
     {
         $sponsor->incomes()->update([
-            ...$request->except('total_income'),
-            'total_income' => array_sum($request->except('total_income')),
+            ...$request->only(['incomes.casnos', 'incomes.ccp', 'incomes.cnr', 'incomes.cnas', 'incomes.other_income', 'incomes.pension', 'incomes.account'])['incomes'],
+            'total_income' => setTotalIncomeAttribute($request->incomes, $sponsor),
         ]);
 
+        $income = $sponsor->incomes()->first();
+
         monthlySponsorship($sponsor->load('family')->family);
+
+        addToMediaCollection($income, $request->validated('incomes.bank_file'), 'bank_files');
+
+        addToMediaCollection($income, $request->validated('incomes.ccp_file'), 'ccp_files');
+
+        addToMediaCollection($income, $request->validated('incomes.casnos_file'), 'casnos_files');
+
+        addToMediaCollection($income, $request->validated('incomes.cnas_file'), 'cnas_files');
+
+        addToMediaCollection($income, $request->validated('incomes.cnr_file'), 'cnr_files');
 
         dispatch(new SponsorUpdatedJob($sponsor, auth()->user()));
 

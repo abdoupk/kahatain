@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { IndexParams, InventoryIndexResource, PaginationData } from '@/types/types'
 
+import { inventorySorts } from '@/constants/sorts'
 import { useInventoryStore } from '@/stores/inventory'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -13,7 +14,9 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
-const ItemCreateEditModal = defineAsyncComponent(() => import('@/Pages/Tenant/inventory/ItemCreateEditModal.vue'))
+const ItemCreateEditModal = defineAsyncComponent(
+    () => import('@/Pages/Tenant/inventory/create/ItemCreateEditModal.vue')
+)
 
 const ItemShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/inventory/ItemShowModal.vue'))
 
@@ -86,7 +89,7 @@ const closeDeleteModal = () => {
 const sort = (field: string) => handleSort(field, params.value)
 
 const deleteItem = () => {
-    router.delete(route('tenant.inventory.destroy', selectedItemId.value), {
+    router.delete(route('tenant.items.destroy', selectedItemId.value), {
         preserveScroll: true,
         onStart: () => {
             deleteProgress.value = true
@@ -96,7 +99,7 @@ const deleteItem = () => {
                 params.value.page = params.value.page - 1
             }
 
-            getDataForIndexPages(route('tenant.financial.index'), params.value, {
+            getDataForIndexPages(route('tenant.inventory.index'), params.value, {
                 onStart: () => {
                     closeDeleteModal()
                 },
@@ -176,17 +179,23 @@ watchEffect(async () => {
                 :filters="[]"
                 :pagination-data="items"
                 :params="params"
+                :sortableFields="inventorySorts"
                 :title="$t('the_inventory')"
                 :url="route('tenant.inventory.index')"
                 entries="items"
                 export-pdf-url=""
                 export-xlsx-url=""
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
                     <base-tippy v-if="hasPermission('add_to_inventory')" :content="$t('add_new_item')">
-                        <base-button class="me-2 shadow-md" variant="primary" @click.prevent="showCreateModal">
+                        <base-button
+                            class="me-2 whitespace-nowrap shadow-md"
+                            variant="primary"
+                            @click.prevent="showCreateModal"
+                        >
                             <svg-loader name="icon-plus"></svg-loader>
                         </base-button>
                     </base-tippy>
@@ -232,12 +241,14 @@ watchEffect(async () => {
 
             <the-no-results-table v-else></the-no-results-table>
 
-            <delete-modal
-                :deleteProgress
-                :open="deleteModalStatus"
-                @close="closeDeleteModal"
-                @delete="deleteItem"
-            ></delete-modal>
+            <delete-modal :deleteProgress :open="deleteModalStatus" @close="closeDeleteModal" @delete="deleteItem">
+                {{ $t('Do you really want to delete this inventory item?') }}
+                <br />
+
+                {{ $t('will bee remove related items in the monthly basket and ramadan basket.') }}
+
+                {{ $t('This process cannot be undone.') }}
+            </delete-modal>
 
             <item-create-edit-modal
                 :open="createUpdateModalStatus"

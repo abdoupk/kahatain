@@ -22,8 +22,8 @@ yarn-error.log
 /.nyc_output/
 /tests/cypress/cypress-coverage/
 /tests/cypress/screenshots/
-/storage/
-
+/storage
+stats.html
 /caddy
 frankenphp
 frankenphp-worker.php

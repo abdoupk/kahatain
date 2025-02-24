@@ -10,17 +10,22 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportFamiliesRamadanBasketXlsxController extends Controller
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     /**
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function __invoke(): BinaryFileResponse
     {
-        return Excel::download(new FamiliesRamadanBasketIndexExport, 'exports.ramadan_basket_'.now()->year.'.xlsx');
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
+        return Excel::download(
+            new FamiliesRamadanBasketIndexExport,
+            __(
+                'exports.ramadan_basket_families',
+                ['date' => now()->year]).'.xlsx'
+        );
     }
 }

@@ -34,6 +34,7 @@ class CreateInventoryItemNotification extends Notification implements ShouldQueu
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.inventory.index'

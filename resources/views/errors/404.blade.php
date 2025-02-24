@@ -11,7 +11,11 @@
     <title> {{ config('app.name', 'Laravel') }} - {{ __('page_not_found') }}</title>
 
     <link rel="icon" href="/logo.png">
-    @vite('resources/css/app.css')
+    {{ Vite::useBuildDirectory('build/dashboard') }}
+
+    <style>
+        {!! Vite::content('resources/css/app.css') !!}
+    </style>
 </head>
 
 <body>

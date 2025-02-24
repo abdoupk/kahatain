@@ -1,29 +1,24 @@
 <script lang="ts" setup>
-import type { FilterValueType } from '@/types/types'
-
 import { useBranchesStore } from '@/stores/branches'
 import { onMounted } from 'vue'
 
-import FilterValueDropDown from '@/Components/Global/filters/FilterValueDropDown.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
-import { $t } from '@/utils/i18n'
-
-const value = defineModel<FilterValueType>('value', {
-    default: {
-        id: '',
-        name: $t('filters.select_an_option')
-    }
-})
+const value = defineModel('value')
 
 const branchesStore = useBranchesStore()
 
-onMounted(() => {
-    if (branchesStore.branches.length === 0) {
-        branchesStore.getBranches()
-    }
+onMounted(async () => {
+    await branchesStore.getBranches()
 })
 </script>
 
 <template>
-    <filter-value-drop-down v-model:value="value" :data="branchesStore.branches"></filter-value-drop-down>
+    <base-list-box
+        v-model="value"
+        :options="branchesStore.branches"
+        class="mt-2"
+        label-key="name"
+        value-key="id"
+    ></base-list-box>
 </template>

@@ -11,6 +11,8 @@ import type {
     ThemesType
 } from '@/types/types'
 
+import { $t } from '@/utils/i18n'
+
 export const placementClasses: Record<IPlacement['placement'], string> = {
     'top-start': 'start-0 bottom-[100%]',
     top: 'start-[50%] translate-x-[-50%] bottom-[100%]',
@@ -44,13 +46,13 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
         lat: null,
         lng: null
     },
-    start_date: new Date(),
+    start_date: null,
     sponsor: {
         first_name: '',
         is_unemployed: false,
         last_name: '',
         phone_number: '',
-        birth_date: new Date(),
+        birth_date: null,
         father_name: '',
         mother_name: '',
         birth_certificate_number: '',
@@ -138,10 +140,10 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
     branch_id: '',
     family_sponsorship: {
         monthly_allowance: null,
-        ramadan_basket: null,
+        ramadan_basket: true,
         zakat: null,
         housing_assistance: null,
-        eid_al_adha: null
+        eid_al_adha: true
     },
     sponsor_sponsorship: {
         medical_sponsorship: null,
@@ -151,13 +153,13 @@ export const createFamilyFormAttributes: CreateFamilyForm = {
     },
     orphans_sponsorship: [
         {
-            medical_sponsorship: false,
-            university_scholarship: false,
-            association_trips: false,
-            summer_camp: false,
-            eid_suit: false,
-            private_lessons: false,
-            school_bag: false
+            medical_sponsorship: true,
+            university_scholarship: true,
+            association_trips: true,
+            summer_camp: true,
+            eid_suit: true,
+            private_lessons: true,
+            school_bag: true
         }
     ],
     submitted: false
@@ -190,8 +192,7 @@ export const createFamilyStepsTitles = [
     'families.create_family.stepTwo',
     'families.create_family.stepThree',
     'families.create_family.stepFour',
-    'families.create_family.stepFive',
-    'families.create_family.stepSix'
+    'families.create_family.stepFive'
 ]
 
 export const createFamilyStepOneErrorProps: CreateFamilyStepOneProps[] = [
@@ -207,64 +208,66 @@ export const createFamilyStepThreeErrorProps = ['orphans']
 
 export const createFamilyStepFourErrorProps = ['housing', 'furnishings']
 
-export const createFamilyStepSixErrorProps = ['report', 'preview_date', 'inspectors_members']
-
-export const createFamilyStepFiveErrorProps = ['sponsorship']
+export const createFamilyStepFiveErrorProps = ['report', 'preview_date', 'inspectors_members']
 
 export const needStatuses = [
     {
-        label: 'pending',
+        label: $t('pending'),
         value: 'pending'
     },
     {
-        label: 'in_progress',
+        label: $t('in_progress'),
         value: 'in_progress'
     },
     {
-        label: 'completed',
+        label: $t('completed'),
         value: 'completed'
     },
     {
-        label: 'rejected',
+        label: $t('rejected'),
         value: 'rejected'
     }
 ]
 
 export const financialTransactionSpecifications = [
     {
-        label: 'drilling_wells',
+        label: $t('drilling_wells'),
         value: 'drilling_wells'
     },
     {
-        label: 'monthly_sponsorship',
+        label: $t('monthly_sponsorship'),
         value: 'monthly_sponsorship'
     },
     {
-        label: 'eid_el_adha',
+        label: $t('eid_el_adha'),
         value: 'eid_el_adha'
     },
     {
-        label: 'eid_el_fitr',
-        value: 'eid_el_fitr'
+        label: $t('zakat_el_fitr'),
+        value: 'zakat_el_fitr'
     },
     {
-        label: 'school_entry',
+        label: $t('school_entry'),
         value: 'school_entry'
     },
     {
-        label: 'analysis',
+        label: $t('analysis'),
         value: 'analysis'
     },
     {
-        label: 'therapy',
+        label: $t('zakat'),
+        value: 'zakat'
+    },
+    {
+        label: $t('therapy'),
         value: 'therapy'
     },
     {
-        label: 'ramadan_basket',
+        label: $t('ramadan_basket'),
         value: 'ramadan_basket'
     },
     {
-        label: 'other',
+        label: $t('other'),
         value: 'other'
     }
 ]
@@ -282,14 +285,19 @@ export const permissions = {
     settings: ['update', 'view'],
     occasions: ['save', 'view', 'export'],
     needs: ['create', 'delete', 'list', 'update', 'view'],
-    schools: ['create', 'delete', 'list', 'update', 'view'],
+    schools: ['create', 'delete', 'list', 'update', 'view', 'print'],
     lessons: ['create', 'delete', 'list', 'update', 'view'],
     archive: ['export', 'list', 'view'],
     trash: ['destroy', 'list', 'restore'],
     committees: ['create', 'delete', 'list', 'update', 'view'],
-    benefactors: ['create', 'delete', 'list', 'update', 'view'],
+    benefactors: ['create', 'delete', 'list', 'update', 'view', 'add_new_sponsorship'],
     sponsorships: ['create'],
-    monthly_sponsorships: ['update']
+    transcripts: ['create', 'delete', 'list', 'update', 'view'],
+    students: ['list_students', 'start_new_academic_year', 'export_school_supplies', 'view_transcripts_students'],
+    college_students: ['list'],
+    trainees_orphans: ['list'],
+    monthly_sponsorships: ['update_settings', 'update_monthly_basket'],
+    ramadan_baskets: ['update_settings', 'update_ramadan_basket']
 }
 
 const monthAbbreviationsFrench = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']

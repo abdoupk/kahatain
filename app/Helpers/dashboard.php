@@ -57,9 +57,15 @@ function getStatisticsForDashboardReport($table, $currentMonth, $currentYear, $p
 
 function generateFinancialReport(): array
 {
+    $monthIndex = date('n') - 1;
+
     $year = date('Y');
 
-    $monthIndex = date('n') - 1;
+    if ($monthIndex === 0) {
+        $monthIndex = 11;
+
+        $year--;
+    }
 
     $data = DB::table('finances')
         ->selectRaw('CASE WHEN amount >= 0 THEN \'incomes\' ELSE \'expenses\' END AS sign, EXTRACT(MONTH FROM created_at) as month, SUM(amount) as total')

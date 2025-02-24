@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\RegisterTenantRequest;
+use App\Models\City;
 use App\Models\Domain;
 use App\Models\Tenant;
 use Illuminate\Http\JsonResponse;
@@ -14,6 +15,8 @@ class RegisteredTenantController extends Controller
 {
     public function store(RegisterTenantRequest $request): JsonResponse
     {
+        $city = City::find($request->city_id);
+
         $tenant = Tenant::create([
             'infos' => [
                 'super_admin' => [
@@ -24,6 +27,13 @@ class RegisteredTenantController extends Controller
                 ],
                 'domain' => $request->domain,
                 'association' => $request->association,
+                'city_id' => $request->city_id,
+                'city' => [
+                    'id' => $request->city_id,
+                    'daira_name' => $city->daira_name,
+                    'wilaya_code' => $city->wilaya_code,
+                    'wilaya_name' => $city->wilaya_name,
+                ],
             ],
         ]);
 

@@ -14,6 +14,9 @@ export interface AddSchoolLessonType {
     academic_level_id: number | null
     quota: number | null
     subject_id: number | null
+    start_date: string
+    end_date: string
+    id?: string
 }
 
 export type EventType = {
@@ -32,6 +35,29 @@ export type LevelType = {
 export interface AcademicLevelType {
     levels: LevelType[]
     phase: string
+    phase_key: string
+    subjects?: {
+        id: string
+        name: string
+    }
+}
+
+type PhaseType = {
+    level: string
+    id: string
+    orphans_count: number
+    transcripts?: {
+        first_trimester_transcripts_count: number
+        second_trimester_transcripts_count: number
+        third_trimester_transcripts_count: number
+    }
+    achievement_percentage?: number
+}
+
+export interface AcademicLevelsIndexResource {
+    primary: PhaseType[]
+    middle: PhaseType[]
+    secondary: PhaseType[]
 }
 
 export interface LessonShowType {

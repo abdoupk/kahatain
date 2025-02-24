@@ -4,21 +4,38 @@
 
 /** @noinspection NullPointerExceptionInspection */
 
+use App\Helpers\PdfMerger;
+use App\Models\Family;
+use App\Models\Income;
+use App\Models\Orphan;
+use App\Models\Sponsor;
+use App\Models\Spouse;
+use App\Models\Tenant;
+use App\Models\UniversitySpeciality;
 use App\Models\User;
-use App\Models\VocationalTraining;
+use App\Models\VocationalTrainingSpeciality;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Builder;
 use LaravelIdea\Helper\App\Models\_IH_User_C;
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
+use setasign\Fpdi\PdfParser\Filter\FilterException;
+use setasign\Fpdi\PdfParser\PdfParserException;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
+use setasign\Fpdi\PdfReader\PdfReaderException;
 use Spatie\Browsershot\Browsershot;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @throws Throwable
  * @throws CouldNotTakeBrowsershot
  */
-function saveToPDF(string $directory, string $variableName, callable $function, $date = null): StreamedResponse
+function saveToPDF(string $directory, string $variableName, callable $function, string|null|Carbon $date = null, string $attribute = '', string $pageType = 'A4', ?bool $landscape = true): StreamedResponse
 {
     $disk = Storage::disk('public');
 
@@ -26,29 +43,38 @@ function saveToPDF(string $directory, string $variableName, callable $function, 
         $disk->makeDirectory($directory);
     }
 
-    $pdfName = Str::replace('-', '_', explode('/', "{$directory}/{$variableName}")[1]);
+    $pdfName = Str::replace('-', '_', explode('/', "$directory/$variableName")[1]);
 
     $pdfName = __('exports.'.$pdfName, [
         'date' => $date,
+        'attribute' => $attribute,
     ]);
 
-    $pdfFile = "{$directory}/{$pdfName}".'.pdf';
+    $pdfFile = "$directory/$pdfName".'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
-    Browsershot::html(view("pdf.{$directory}", [
+    $browsershot = Browsershot::html(view("pdf.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
     ])
         ->render())
         ->ignoreHttpsErrors()
         ->noSandbox()
-        ->format('A4')
-        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
-        ->margins(2, 4, 2, 4)
-        ->landscape()
-        ->save($pdfPath);
+        ->format($pageType);
+
+    if (! app()->environment('local')) {
+        $browsershot->setNodeBinary(config('app.browsershot.node_binary'));
+        $browsershot->setNpmBinary(config('app.browsershot.npm_binary'));
+    }
+
+    $browsershot->margins(2, 4, 2, 4);
+
+    if ($landscape === true) {
+        $browsershot->landscape();
+    }
+
+    $browsershot->save($pdfPath);
 
     return $disk->download($pdfFile);
 }
@@ -61,11 +87,13 @@ function saveArchiveToPDF(
     string $directory,
     callable $function,
     string $date,
-    ?string $variableName = 'sponsorships'
+    ?string $variableName = 'families',
+    ?string $attribute = '',
+    string $pageType = 'A4'
 ): StreamedResponse {
     $disk = Storage::disk('public');
 
-    if (! $disk->directoryExists("archives/{$directory}")) {
+    if (! $disk->directoryExists("archives/$directory")) {
         $disk->makeDirectory($directory);
     }
 
@@ -74,25 +102,29 @@ function saveArchiveToPDF(
         '_',
         explode(
             '/',
-            "archives/{$directory}/sponsorships"
+            "archives/$directory/sponsorships"
         )[1]
-    ), ['date' => $date]);
+    ), ['date' => $date, 'attribute' => $attribute]);
 
-    $pdfFile = "{$directory}/{$pdfName}".'.pdf';
+    $pdfFile = "$directory/".Str::slug($pdfName, '-', 'ar').'.pdf';
 
     $pdfPath = $disk->path($pdfFile);
 
-    Browsershot::html(view("pdf.occasions.{$directory}", [
+    $browsershot = Browsershot::html(view("pdf.occasions.$directory", [
         $variableName => $function(),
         'title' => $pdfName,
     ])
         ->render())
         ->ignoreHttpsErrors()
         ->noSandbox()
-        ->format('A4')
-        ->setNodeBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/node')
-        ->setNpmBinary('/home/abdou/.nvm/versions/node/v22.9.0/bin/npm')
-        ->margins(2, 4, 2, 4)
+        ->format($pageType);
+
+    if (! app()->environment('local')) {
+        $browsershot->setNodeBinary(config('app.browsershot.node_binary'));
+        $browsershot->setNpmBinary(config('app.browsershot.npm_binary'));
+    }
+
+    $browsershot->margins(2, 4, 2, 4)
         ->landscape()
         ->save($pdfPath);
 
@@ -116,17 +148,15 @@ function generateFormatedConditions(): array
 {
     $filters = (array) request()->input('filters', []);
 
-    if ($filters) {
+    if ($filters !== []) {
         /** @phpstan-ignore-next-line */
-        return array_map(static function (array $condition) {
-            return [
-                $condition['field'],
-                $condition['operator'],
-                str_contains($condition['value'], ' ')
-                    ? '"'.$condition['value'].'"'
-                    : $condition['value'],
-            ];
-        }, $filters);
+        return array_map(static fn (array $condition) => [
+            $condition['field'],
+            $condition['operator'],
+            str_contains((string) $condition['value'], ' ')
+                ? '"'.$condition['value'].'"'
+                : $condition['value'],
+        ], $filters);
     }
 
     return [];
@@ -136,27 +166,25 @@ function generateFilterConditions(?string $additional_filters = ''): string
 {
     $filters = array_merge(generateFormatedConditions());
 
-    if (! $filters) {
+    if ($filters === []) {
         return 'tenant_id = '.tenant('id').' '.$additional_filters;
     }
 
-    return implode(' AND ', array_map(static function ($condition) {
-        return implode(' ', $condition);
-    }, $filters)).' '.$additional_filters;
+    return implode(' AND ', array_map(static fn ($condition) => implode(' ', $condition), $filters)).' '.$additional_filters;
 }
 
 function generateFormattedSort(): array
 {
     $directions = (array) request()->input('directions', []);
 
-    if ($directions) {
+    if ($directions !== []) {
         /** @phpstan-ignore-next-line */
         return array_map(static function (string $value, string $key) {
-            if ($key === 'orphan.birth_date') {
-                return $value === 'desc' ? "{$key}:asc" : "{$key}:desc";
+            if ($key === 'birth_date' || $key === 'orphan.birth_date') {
+                return $value === 'desc' ? "$key:asc" : "$key:desc";
             }
 
-            return "{$key}:{$value}";
+            return "$key:$value";
         }, array_values($directions), array_keys($directions));
     }
 
@@ -165,7 +193,7 @@ function generateFormattedSort(): array
 
 function search(Model $model, ?string $additional_filters = '', ?int $limit = null): Builder
 {
-    if (! $limit) {
+    if ($limit === null || $limit === 0) {
         $limit = request()->integer('perPage', 10);
     }
 
@@ -173,7 +201,7 @@ function search(Model $model, ?string $additional_filters = '', ?int $limit = nu
         $additional_filters .= ' AND __soft_deleted = 0';
     }
 
-    $query = trim(request()->input('search', '')) ?? '';
+    $query = trim((string) request()->input('search', '')) ?? '';
 
     $meilisearchOptions = [
         'filter' => generateFilterConditions($additional_filters).' AND tenant_id = '.tenant('id'),
@@ -203,7 +231,7 @@ function formatedVocationalTrainingSpecialities(): array
 {
     $formattedArray = [];
 
-    $rows = VocationalTraining::get();
+    $rows = VocationalTrainingSpeciality::get();
 
     foreach ($rows as $row) {
         $formattedArray[$row['division']]['division'] = $row['division'];
@@ -214,11 +242,38 @@ function formatedVocationalTrainingSpecialities(): array
     return array_values($formattedArray);
 }
 
-function formatCurrency(float $amount): false|string
+function searchVocationalTrainingSpecialities(): \Illuminate\Support\Collection
+{
+    $vocationalTrainingSpecialities = VocationalTrainingSpeciality::search(trim((string) request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+        $options['limit'] = 100;
+
+        return $meilisearch->search($query, $options);
+    })->get()->map(fn ($vocationalTrainingSpeciality) => [
+        'name' => $vocationalTrainingSpeciality->speciality,
+        'id' => $vocationalTrainingSpeciality->speciality,
+    ]);
+
+    $universitySpecialities = UniversitySpeciality::search(trim((string) request()->input('search', '')) ?? '', function ($meilisearch, $query, array $options) {
+        $options['limit'] = 100;
+
+        return $meilisearch->search($query, $options);
+    })->get()->map(fn ($universitySpeciality) => [
+        'name' => $universitySpeciality->speciality,
+        'id' => $universitySpeciality->speciality,
+    ]);
+
+    return collect(array_merge($vocationalTrainingSpecialities->toArray(), $universitySpecialities->toArray()));
+}
+
+function formatCurrency(?float $amount): false|string
 {
     $formatter = new NumberFormatter(app()->getLocale().'_DZ', NumberFormatter::CURRENCY);
 
-    return $formatter->formatCurrency($amount, 'DZD');
+    if ($amount) {
+        return $formatter->formatCurrency($amount, 'DZD');
+    }
+
+    return $formatter->formatCurrency(0, 'DZD');
 }
 
 function calculateAge($birthDate): string
@@ -243,10 +298,10 @@ function calculateAge($birthDate): string
 
 function formatPhoneNumber($phone): string
 {
-    return substr($phone, 0, 4).'-'.
-        substr($phone, 4, 2).'-'.
-        substr($phone, 6, 2).'-'.
-        substr($phone, 8, 2);
+    return substr((string) $phone, 0, 4).'-'.
+        substr((string) $phone, 4, 2).'-'.
+        substr((string) $phone, 6, 2).'-'.
+        substr((string) $phone, 8, 2);
 }
 
 function getUsersShouldBeNotified(
@@ -259,9 +314,7 @@ function getUsersShouldBeNotified(
     return User::with(['roles.permissions'])
         ->whereHas(
             'settings',
-            function ($query) use ($notificationType) {
-                return $query->where("notifications->{$notificationType}", true);
-            }
+            fn ($query) => $query->where("notifications->$notificationType", true)
         )
         ->where(function ($query) use ($permissions): void {
             $query->whereHas('roles', function ($query): void {
@@ -278,4 +331,95 @@ function getUsersShouldBeNotified(
         })
         ->where('users.id', '!=', $userToExclude->id)
         ->get();
+}
+
+function getFileNameFromTemporaryPath($url): string
+{
+    if ($url === '' || $url === null) {
+        return '';
+    }
+    $path = parse_url((string) $url, PHP_URL_PATH);
+
+    return substr($path, strpos($path, 'tmp/'));
+}
+
+/**
+ * @throws FileIsTooBig
+ * @throws FileDoesNotExist
+ */
+function addToMediaCollection(Family|Tenant|Orphan|Sponsor|Spouse|Income $model, string|array|null $files, string $collectionName, ?bool $clearCollection = true): void
+{
+    if ($clearCollection === true) {
+        $model->clearMediaCollection($collectionName);
+    }
+
+    if ($files === null || $files === '') {
+        return;
+    }
+
+    if (! is_array($files)) {
+        $files = [$files];
+    }
+
+    foreach ($files as $file) {
+        if (Storage::disk('public')->exists(getFileNameFromTemporaryPath($file))) {
+            $model->addMediaFromDisk(getFileNameFromTemporaryPath($file), 'public')->toMediaCollection($collectionName);
+        }
+    }
+}
+
+/**
+ * @throws CrossReferenceException
+ * @throws FileDoesNotExist
+ * @throws FileIsTooBig
+ * @throws FilterException
+ * @throws PdfParserException
+ * @throws PdfReaderException
+ * @throws PdfTypeException
+ */
+function mergePdf(Family|Tenant|Orphan|Sponsor|Spouse|Income $model): void
+{
+    $pdfFiles = [];
+
+    $model->clearMediaCollection('merged_files');
+
+    $model->getMedia('*')->each(function (Media $media) use (&$pdfFiles): void {
+        if ($media->type === 'pdf') {
+            $pdfFiles[] = $media->getPath();
+        }
+    });
+
+    if ($pdfFiles !== []) {
+        $fileName = Str::random(20).'.pdf';
+
+        (new PdfMerger)->merge($pdfFiles, storage_path($fileName));
+
+        $model->addMedia(storage_path($fileName))->toMediaCollection('merged_files');
+    }
+}
+
+function getImageData(Income|Family|Sponsor|Spouse $model, string $collection): array
+{
+    [$width, $height] = getimagesize($model->getFirstMediaPath($collection));
+
+    return [
+        'thumb' => $model->getFirstMediaUrl($collection, 'thumb'),
+        'original' => $model->getFirstMediaUrl($collection),
+        'width' => $width,
+        'height' => $height,
+    ];
+}
+
+function getFormatedData(Sponsor|Family|Income|Spouse $model): array
+{
+    return [
+        'files' => [
+            'pdf' => $model->getFirstMediaUrl('merged_files'),
+            'images' => array_filter($model->getMedia('*')->map(function (Media $media) use ($model) {
+                if ($media->type === 'image') {
+                    return getImageData($model, $media->collection_name);
+                }
+            })->toArray()),
+        ],
+    ];
 }

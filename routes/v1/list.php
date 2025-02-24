@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\AcademicLevel\AcademicLevelIndexController;
 use App\Http\Controllers\V1\Branches\ListBranchesController;
 use App\Http\Controllers\V1\Competences\CompetenceIndexController;
+use App\Http\Controllers\V1\List\ListAvailableZakat;
 use App\Http\Controllers\V1\List\ListBabyMilkController;
 use App\Http\Controllers\V1\List\ListBenefactorsController;
 use App\Http\Controllers\V1\List\ListClothesSizesController;
@@ -14,7 +15,11 @@ use App\Http\Controllers\V1\List\ListMembersController;
 use App\Http\Controllers\V1\List\ListRolesController;
 use App\Http\Controllers\V1\List\ListSchoolsController;
 use App\Http\Controllers\V1\List\ListShoesSizesController;
+use App\Http\Controllers\V1\List\ListShopAdressesController;
+use App\Http\Controllers\V1\List\ListShopNamesController;
+use App\Http\Controllers\V1\List\ListShopPhoneNumbersController;
 use App\Http\Controllers\V1\List\ListSubjectsController;
+use App\Http\Controllers\V1\Universities\UniversitySpecialitiesListController;
 use App\Http\Controllers\V1\VocationalTraining\VocationalTrainingIndexController;
 use App\Http\Controllers\V1\Zones\ListZonesController;
 
@@ -81,6 +86,11 @@ Route::prefix('list')->name('list.')->group(function (): void {
     )->name('vocational-trainings-specialities');
 
     Route::get(
+        'university-specialities',
+        UniversitySpecialitiesListController::class
+    )->name('university-specialities');
+
+    Route::get(
         'competences',
         CompetenceIndexController::class
     )->name('competences');
@@ -94,4 +104,21 @@ Route::prefix('list')->name('list.')->group(function (): void {
         'benefactors',
         ListBenefactorsController::class
     )->name('benefactors');
+
+    Route::get(
+        'available-zakats',
+        ListAvailableZakat::class
+    )->name('available-zakats');
+
+    Route::get('list-shop-names',
+        ListShopNamesController::class
+    )->name('list-shop-names');
+
+    Route::get('list-shop-adresses',
+        ListShopAdressesController::class
+    )->name('list-shop-adresses');
+
+    Route::get('list-shop-phone-numbers',
+        ListShopPhoneNumbersController::class
+    )->name('list-shop-phone-numbers');
 });

@@ -1,6 +1,21 @@
+<script lang="ts" setup>
+import { Form } from 'laravel-precognition-vue/dist/types'
+
+defineProps<{
+    field_name: string
+    form: Form<unknown>
+}>()
+</script>
 <template>
     <transition>
-        <slot></slot>
+        <div
+            v-bind="$attrs"
+            v-if="form?.invalid(field_name)"
+            class="mt-2 text-danger"
+            :data-test="`error_${field_name}_message`"
+        >
+            {{ form.errors[field_name] }}
+        </div>
     </transition>
 </template>
 

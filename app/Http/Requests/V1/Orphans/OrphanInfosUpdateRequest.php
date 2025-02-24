@@ -2,41 +2,20 @@
 
 namespace App\Http\Requests\V1\Orphans;
 
+use App\Rules\UpdateBabyNeedsRule;
+use App\Rules\UpdateOrphanClothesRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrphanInfosUpdateRequest extends FormRequest
 {
-    public function messages(): array
+    public function attributes(): array
     {
         return [
-            'pants_size.required_without' => __(
-                'validation.required',
-                ['attribute' => __('pants_size')]
-            ),
-            'shoes_size.required_without' => __(
-                'validation.required',
-                ['attribute' => __('shoes_size')]
-            ),
-            'shirt_size.required_without' => __(
-                'validation.required',
-                ['attribute' => __('shirt_size')]
-            ),
-            'baby_milk_type.required_without' => __(
-                'validation.required',
-                ['attribute' => __('baby_milk_type')]
-            ),
-            'baby_milk_quantity.required_without' => __(
-                'validation.required',
-                ['attribute' => __('baby_milk_quantity')]
-            ),
-            'diapers_type.required_without' => __(
-                'validation.required',
-                ['attribute' => __('diapers_type')]
-            ),
-            'diapers_quantity.required_without' => __(
-                'validation.required',
-                ['attribute' => __('diapers_quantity')]
-            ),
+            'health_status' => __('health_status'),
+            'academic_level_id' => __('academic_level'),
+            'family_status' => __('family_status'),
+            'baby_milk_quantity' => __('baby_milk_quantity'),
+            'diapers_quantity' => __('diapers_quantity'),
         ];
     }
 
@@ -48,16 +27,23 @@ class OrphanInfosUpdateRequest extends FormRequest
             'birth_date' => 'required|date',
             'family_status' => 'nullable',
             'health_status' => 'required',
-            'academic_level_id' => 'required|integer',
-            'shoes_size' => 'required_without:baby_milk_quantity,baby_milk_type,diapers_quantity,diapers_type',
-            'pants_size' => 'required_without:baby_milk_quantity,baby_milk_type,diapers_quantity,diapers_type',
-            'shirt_size' => 'required_without:baby_milk_quantity,baby_milk_type,diapers_quantity,diapers_type',
+            'academic_level_id' => 'nullable|uuid|exists:academic_levels,id',
+            'shoes_size' => [new UpdateOrphanClothesRule],
+            'pants_size' => [new UpdateOrphanClothesRule],
+            'shirt_size' => [new UpdateOrphanClothesRule],
             'gender' => 'required',
+            'photo' => 'nullable|string',
+            'ccp' => 'nullable|string',
+            'phone_number' => 'nullable|string',
             'note' => 'nullable',
-            'baby_milk_quantity' => 'required_without:shoes_size,shoes_size,shirt_size',
-            'diapers_quantity' => 'required_without:shoes_size,shoes_size,shirt_size',
-            'baby_milk_type' => 'required_without:shoes_size,shoes_size,shirt_size',
-            'diapers_type' => 'required_without:shoes_size,shoes_size,shirt_size',
+            'baby_milk_quantity' => [new UpdateBabyNeedsRule],
+            'diapers_quantity' => [new UpdateBabyNeedsRule],
+            'baby_milk_type' => [new UpdateBabyNeedsRule],
+            'diapers_type' => [new UpdateBabyNeedsRule],
+            'institution_id' => 'nullable|uuid',
+            'institution_type' => 'nullable|string',
+            'speciality_id' => 'nullable|integer',
+            'speciality_type' => 'nullable|string',
         ];
     }
 

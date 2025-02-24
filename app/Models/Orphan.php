@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\OrphanFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,97 +13,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property string $id
- * @property string $first_name
- * @property string $last_name
- * @property Carbon $birth_date
- * @property string|null $family_status
- * @property string $health_status
- * @property int|null $academic_level_id
- * @property int|null $vocational_training_id
- * @property string|null $shoes_size
- * @property string|null $pants_size
- * @property string|null $shirt_size
- * @property string $gender
- * @property float|null $income
- * @property bool $is_handicapped
- * @property bool $is_unemployed
- * @property string|null $note
- * @property string $tenant_id
- * @property string $family_id
- * @property string $sponsor_id
- * @property string $created_by
- * @property string|null $deleted_by
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read Collection<int, AcademicAchievement> $academicAchievements
- * @property-read int|null $academic_achievements_count
- * @property-read AcademicLevel|null $academicLevel
- * @property-read Collection<int, Archive> $archives
- * @property-read int|null $archives_count
- * @property-read Baby|null $babyNeeds
- * @property-read Collection<int, CollegeAchievement> $collegeAchievements
- * @property-read int|null $college_achievements_count
- * @property-read User $creator
- * @property-read Collection<int, EventOccurrence> $events
- * @property-read int|null $events_count
- * @property-read Family $family
- * @property-read AcademicAchievement|null $lastAcademicYearAchievement
- * @property-read Collection<int, Need> $needs
- * @property-read int|null $needs_count
- * @property-read ClothesSize|null $pantsSize
- * @property-read ClothesSize|null $shirtSize
- * @property-read ShoeSize|null $shoesSize
- * @property-read Sponsor $sponsor
- * @property-read OrphanSponsorship|null $sponsorships
- * @property-read Tenant $tenant
- * @property-read VocationalTraining|null $vocationalTraining
- * @property-read Collection<int, VocationalTrainingAchievement> $vocationalTrainingAchievements
- * @property-read int|null $vocational_training_achievements_count
- *
- * @method static OrphanFactory factory($count = null, $state = [])
- * @method static Builder|Orphan newModelQuery()
- * @method static Builder|Orphan newQuery()
- * @method static Builder|Orphan onlyTrashed()
- * @method static Builder|Orphan query()
- * @method static Builder|Orphan whereAcademicLevelId($value)
- * @method static Builder|Orphan whereBirthDate($value)
- * @method static Builder|Orphan whereCreatedAt($value)
- * @method static Builder|Orphan whereCreatedBy($value)
- * @method static Builder|Orphan whereDeletedAt($value)
- * @method static Builder|Orphan whereDeletedBy($value)
- * @method static Builder|Orphan whereFamilyId($value)
- * @method static Builder|Orphan whereFamilyStatus($value)
- * @method static Builder|Orphan whereFirstName($value)
- * @method static Builder|Orphan whereGender($value)
- * @method static Builder|Orphan whereHealthStatus($value)
- * @method static Builder|Orphan whereId($value)
- * @method static Builder|Orphan whereIncome($value)
- * @method static Builder|Orphan whereIsHandicapped($value)
- * @method static Builder|Orphan whereIsUnemployed($value)
- * @method static Builder|Orphan whereLastName($value)
- * @method static Builder|Orphan whereNote($value)
- * @method static Builder|Orphan wherePantsSize($value)
- * @method static Builder|Orphan whereShirtSize($value)
- * @method static Builder|Orphan whereShoesSize($value)
- * @method static Builder|Orphan whereSponsorId($value)
- * @method static Builder|Orphan whereTenantId($value)
- * @method static Builder|Orphan whereUpdatedAt($value)
- * @method static Builder|Orphan whereVocationalTrainingId($value)
- * @method static Builder|Orphan withTrashed()
- * @method static Builder|Orphan withoutTrashed()
- *
- * @mixin Eloquent
- */
-class Orphan extends Model
+class Orphan extends Model implements HasMedia
 {
-    use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
+    use BelongsToTenant, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'first_name',
@@ -114,9 +28,11 @@ class Orphan extends Model
         'gender',
         'birth_date',
         'family_status',
+        'academic_average',
         'health_status',
         'academic_level_id',
-        'vocational_training_id',
+        'speciality_id',
+        'speciality_type',
         'academic_year',
         'shoes_size',
         'pants_size',
@@ -130,6 +46,10 @@ class Orphan extends Model
         'created_by',
         'deleted_by',
         'deleted_at',
+        'ccp',
+        'phone_number',
+        'institution_id',
+        'institution_type',
     ];
 
     protected static function boot(): void
@@ -141,8 +61,24 @@ class Orphan extends Model
                 $model->created_by = auth()->id();
             }
 
-            if ($model->is_unemployed) {
-                $model->income = setUnemployedOrphanIncome($model);
+            $model->family_status = setOrphanFamilyStatus($model);
+
+            $model->is_unemployed = setOrphanEmploymentStatus($model);
+
+            if ($model->is_handicapped) {
+                $model->income = setHandicappedOrphanIncome($model);
+            } elseif ($model->birth_date->age > 18) {
+                $model->income = calculateOrphanExactIncome($model);
+            }
+        });
+
+        static::updating(function (self $model): void {
+            $model->family_status = setOrphanFamilyStatus($model);
+
+            $model->is_unemployed = setOrphanEmploymentStatus($model);
+
+            if ($model->is_handicapped) {
+                $model->income = setHandicappedOrphanIncome($model);
             } elseif ($model->birth_date->age > 18) {
                 $model->income = calculateOrphanExactIncome($model);
             }
@@ -184,15 +120,24 @@ class Orphan extends Model
 
     public function toSearchableArray(): array
     {
+        /* @var UniversitySpeciality | VocationalTrainingSpeciality $speciality */
+
+        /* @var University | VocationalTrainingCenter | School $institution */
+
+        $speciality = $this->speciality;
+        $institution = $this->institution;
+
         return [
             'name' => $this->getName(),
             'birth_date' => strtotime($this->birth_date),
             'readable_birth_date' => $this->birth_date,
             'health_status' => $this->health_status,
+            'phone_number' => $this->phone_number,
+            'ccp' => $this->ccp,
             'family_status' => [
-                'ar' => __('family_statuses.'.$this->family_status, locale: 'ar'),
-                'fr' => __('family_statuses.'.$this->family_status, locale: 'fr'),
-                'en' => __('family_statuses.'.$this->family_status, locale: 'en'),
+                'ar' => $this->family_status ? __('family_statuses.'.$this->family_status, locale: 'ar') : '',
+                'fr' => $this->family_status ? __('family_statuses.'.$this->family_status, locale: 'fr') : '',
+                'en' => $this->family_status ? __('family_statuses.'.$this->family_status, locale: 'en') : '',
             ],
             'shoes_size' => $this->shoesSize?->label,
             'shirt_size' => $this->shirtSize?->label,
@@ -204,68 +149,53 @@ class Orphan extends Model
             'note' => $this->note,
             'academic_level' => [
                 'id' => $this->academic_level_id,
+                'i_id' => $this->academicLevel?->i_id,
                 'level' => $this->academicLevel?->level,
                 'phase' => $this->academicLevel?->phase,
+                'phase_key' => $this->academicLevel?->phase_key,
             ],
-            'academic_achievements' => $this->academicAchievements
-                ->map(function (AcademicAchievement $academicAchievement) {
-                    return [
-                        'id' => $academicAchievement->id,
-                        'academic_level' => $academicAchievement->academicLevel?->level,
-                        'academic_year' => $academicAchievement->academic_year,
-                        'first_trimester' => (float) number_format($academicAchievement->first_trimester, 2),
-                        'second_trimester' => (float) number_format($academicAchievement->second_trimester, 2),
-                        'third_trimester' => (float) number_format($academicAchievement->third_trimester, 2),
-                        'average' => (float) number_format($academicAchievement->average, 2),
-                    ];
-                })->toArray(),
-            'college_achievements' => $this->collegeAchievements
-                ->map(function (CollegeAchievement $collegeAchievement) {
-                    return [
-                        'id' => $collegeAchievement->id,
-                        'academic_level' => $collegeAchievement->academicLevel?->level,
-                        'academic_year' => $collegeAchievement->year,
-                        'first_semester' => (float) number_format(
-                            $collegeAchievement->first_semester,
-                            2
-                        ),
-                        'second_semester' => (float) number_format(
-                            $collegeAchievement->second_semester,
-                            2
-                        ),
-                        'average' => (float) number_format(
-                            $collegeAchievement->average,
-                            2
-                        ),
-                        'speciality' => $collegeAchievement->speciality,
-                        'university' => $collegeAchievement->university,
-                    ];
-                })->toArray(),
-            'vocational_training_achievements' => $this->vocationalTrainingAchievements
-                ->map(function (
-                    VocationalTrainingAchievement $vocationalTrainingAchievement
-                ) {
-                    return [
-                        'id' => $vocationalTrainingAchievement->id,
-                        'vocational_training_speciality' => $vocationalTrainingAchievement
-                            ->vocationalTraining?->speciality,
-                        'vocational_training_division' => $vocationalTrainingAchievement
-                            ->vocationalTraining?->division,
-                        'institute' => $vocationalTrainingAchievement->institute,
-                    ];
-                })->toArray(),
-            'sponsorships' => [
-                'medical_sponsorship' => boolval($this->sponsorships?->medical_sponsorship),
-                'university_scholarship' => boolval($this->sponsorships?->university_scholarship),
-                'association_trips' => boolval($this->sponsorships?->association_trips),
-                'summer_camp' => boolval($this->sponsorships?->summer_camp),
-                'eid_suit' => boolval($this->sponsorships?->eid_suit),
-                'private_lessons' => boolval($this->sponsorships?->private_lessons),
-                'school_bag' => boolval($this->sponsorships?->school_bag),
+            'institution' => [
+                'id' => $this->institution_id,
+                'name' => $institution?->getName(),
+            ],
+            'speciality' => [
+                'id' => $speciality?->id,
+                'speciality' => $speciality?->speciality,
+            ],
+            'eid_suit' => [
+                'id' => $this->eidSuit?->id,
+                'shoes_shop_name' => $this->eidSuit?->shoes_shop_name,
+                'shoes_shop_address' => $this->eidSuit?->shoes_shop_address,
+                'shoes_shop_phone_number' => $this->eidSuit?->shoes_shop_phone_number,
+                'clothes_shop_name' => $this->eidSuit?->clothes_shop_name,
+                'clothes_shop_address' => $this->eidSuit?->clothes_shop_address,
+                'clothes_shop_phone_number' => $this->eidSuit?->clothes_shop_phone_number,
+                'clothes_shop_location' => $this->eidSuit?->clothes_shop_location,
+                'shoes_shop_location' => $this->eidSuit?->shoes_shop_location,
             ],
             'tenant_id' => $this->tenant_id,
             'family_id' => $this->family_id,
+            'family' => [
+                'id' => $this->family_id,
+                'name' => $this->family->name,
+                'income_rate' => (float) $this->family->income_rate,
+                'zone' => [
+                    'id' => $this->family->zone_id,
+                    'name' => $this->family->zone?->name,
+                ],
+                'branch' => [
+                    'id' => $this->family->branch_id,
+                    'name' => $this->family->branch?->name,
+                ],
+            ],
+            'sponsor' => [
+                'id' => $this->sponsor_id,
+                'name' => $this->sponsor->getName(),
+                'phone_number' => $this->sponsor?->phone_number,
+            ],
+            'academic_average' => (float) $this->academic_average,
             'created_at' => strtotime($this->created_at),
+            'updated_at' => strtotime($this->updated_at),
         ];
     }
 
@@ -283,29 +213,16 @@ class Orphan extends Model
     {
         return $models->load([
             'academicLevel',
-            'academicAchievements.academicLevel',
-            'sponsorships',
-            'collegeAchievements.academicLevel',
-            'vocationalTrainingAchievements.vocationalTraining',
+            'speciality',
+            'eidSuit',
             'shoesSize',
             'shirtSize',
             'pantsSize',
+            'family.zone',
+            'family.branch',
+            'institution',
+            'sponsor',
         ]);
-    }
-
-    public function academicAchievements(): HasMany
-    {
-        return $this->hasMany(AcademicAchievement::class);
-    }
-
-    public function lastAcademicYearAchievement(): HasOne
-    {
-        return $this->hasOne(AcademicAchievement::class, 'orphan_id')->with('academicLevel')
-            ->where(function ($query): void {
-                $query->whereRaw('academic_achievements.academic_year = ?', now()->year)
-                    ->orWhereRaw('academic_achievements.academic_year = ? ', now()->year - 1);
-            })
-            ->latest('academic_achievements.academic_year');
     }
 
     public function creator(): BelongsTo
@@ -316,24 +233,11 @@ class Orphan extends Model
         );
     }
 
-    public function vocationalTrainingAchievements(): HasMany
-    {
-        return $this->hasMany(VocationalTrainingAchievement::class);
-    }
-
     public function academicLevel(): BelongsTo
     {
         return $this->belongsTo(
             AcademicLevel::class,
             'academic_level_id'
-        );
-    }
-
-    public function vocationalTraining(): BelongsTo
-    {
-        return $this->belongsTo(
-            VocationalTraining::class,
-            'vocational_training_id'
         );
     }
 
@@ -345,25 +249,6 @@ class Orphan extends Model
             'orphan_id',
             'event_occurrence_id'
         );
-    }
-
-    public function collegeAchievements(): HasMany
-    {
-        return $this->hasMany(CollegeAchievement::class);
-    }
-
-    public function formatedLastAcademicYear(): string
-    {
-        if (is_null($this->lastAcademicYearAchievement)) {
-            return '';
-        }
-
-        return $this->
-            lastAcademicYearAchievement?->academicLevel
-                ->level
-            .' ('.
-            $this->lastAcademicYearAchievement?->academic_year
-            .')';
     }
 
     public function archives(): MorphToMany
@@ -380,15 +265,15 @@ class Orphan extends Model
 
         $needs = $this->needs();
 
-        $sponsorships = $this->sponsorships();
+        $transcripts = $this->transcripts();
 
         $this->babyNeeds()->unsearchable();
 
         $needs->unsearchable();
 
-        $sponsorships->unsearchable();
+        $transcripts->unsearchable();
 
-        $sponsorships->delete();
+        $transcripts->delete();
 
         $needs->update([
             'deleted_by' => auth()->id(),
@@ -406,9 +291,9 @@ class Orphan extends Model
         );
     }
 
-    public function sponsorships(): HasOne
+    public function transcripts(): HasMany
     {
-        return $this->hasOne(OrphanSponsorship::class);
+        return $this->hasMany(Transcript::class);
     }
 
     public function babyNeeds(): HasOne
@@ -430,15 +315,9 @@ class Orphan extends Model
 
         $needs = $this->needs();
 
-        $sponsorships = $this->sponsorships();
-
         $this->babyNeeds()->unsearchable();
 
         $needs->unsearchable();
-
-        $sponsorships->unsearchable();
-
-        $sponsorships->forceDelete();
 
         $needs->forceDelete();
 
@@ -455,19 +334,28 @@ class Orphan extends Model
 
         $needs = $this->needs()->withTrashed();
 
-        $sponsorships = $this->sponsorships()->withTrashed();
-
         $baby->searchable();
 
         $needs->searchable();
 
-        $sponsorships->searchable();
-
         $needs->restore();
 
         $baby->restore();
+    }
 
-        $sponsorships->restore();
+    public function eidSuit(): HasOne
+    {
+        return $this->hasOne(OrphanEidSuit::class);
+    }
+
+    public function institution(): BelongsTo
+    {
+        return $this->morphTo();
+    }
+
+    public function speciality(): BelongsTo
+    {
+        return $this->morphTo();
     }
 
     protected function casts(): array

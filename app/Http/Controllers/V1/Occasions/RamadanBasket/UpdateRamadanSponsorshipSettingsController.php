@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\Occasions\RamadanBasket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Occasions\RamadanBasket\UpdateRamadanSponsorshipSettingsRequest;
+use App\Jobs\V1\Occasion\RamadanSponsorshipSettingsUpdatedJob;
 
 class UpdateRamadanSponsorshipSettingsController extends Controller
 {
@@ -15,7 +16,7 @@ class UpdateRamadanSponsorshipSettingsController extends Controller
 
         auth()->user()->tenant->update(['calculation' => json_encode($data)]);
 
-        //        dispatch(new MonthlySponsorshipSettingsUpdatedJob(auth()->user()));
+        dispatch(new RamadanSponsorshipSettingsUpdatedJob(auth()->user()));
 
         return response('', 204);
     }

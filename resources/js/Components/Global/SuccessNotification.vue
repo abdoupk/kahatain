@@ -33,7 +33,7 @@ watch(props, (value) => {
         <svg-loader class="h-4 w-4 fill-success" name="icon-check-circle"></svg-loader>
 
         <div class="mx-4">
-            <div class="font-medium">
+            <div class="font-medium rtl:!font-semibold">
                 {{ props.title }}
             </div>
             <div v-if="props.message" class="mt-1 text-slate-500">{{ props.message }}}</div>

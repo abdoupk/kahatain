@@ -57,11 +57,14 @@ export type ThemesType = 'icewall' | 'rubick' | 'enigma' | 'tinker'
 
 export type LayoutsType = 'side_menu' | 'simple_menu' | 'top_menu'
 
+export type FontSizeType = 'font_size_xs' | 'font_size_sm' | 'font_size_base' | 'font_size_lg' | 'font_size_xl'
+
 export interface ISettingState {
     appearance: AppearanceType
     colorScheme: ColorSchemesType
     theme: ThemesType
     layout: LayoutsType
+    fontSize: FontSizeType
     hints: {
         [key: string]: boolean
     }
@@ -70,6 +73,17 @@ export interface ISettingState {
 export type SVGType =
     | 'icon-hands-holding-child'
     | 'icon-map'
+    | 'icon-arrow-down-arrow-up'
+    | 'icon-user-helmet-safety'
+    | 'icon-meat'
+    | 'icon-sparkles'
+    | 'icon-clock-rotate-left'
+    | 'icon-link'
+    | 'icon-external-link'
+    | 'icon-grid'
+    | 'icon-arrows-rotate'
+    | 'icon-user-graduate'
+    | 'icon-zakat'
     | 'icon-head-side-gear'
     | 'icon-trash-undo'
     | 'icon-donate'
@@ -198,31 +212,6 @@ export interface Commune {
 
 export type LangType = 'ar' | 'en' | 'fr'
 
-export type RegisterForm = {
-    association: string
-    domain: string
-    address: string
-    city: string
-    first_name: string
-    last_name: string
-    phone: string
-    email: string
-    password: string
-    password_confirmation: string
-    association_email: string
-    landline: string
-    phones: string[]
-    ccp: string
-    cpa: string
-    links: { [key: string]: string }
-}
-
-export interface RegistrationStepProps {
-    currentStep: number
-    totalSteps: number
-    form?: Form<RegisterForm>
-}
-
 export type RegisterStepOneProps = typeof registerStepOneErrorProps
 
 export type RegisterStepTwoProps = typeof registerStepTwoErrorProps
@@ -257,6 +246,20 @@ export interface Zone {
     name: string
     description?: string
     geom?: object
+}
+
+export interface Transcript {
+    id: string
+    trimester: string
+    orphan_id: string
+    average: number | null
+    academic_level?: {
+        id: number
+        level: string
+        phase: string
+        phase_key: string
+    }
+    subjects: SubjectType[]
 }
 
 export interface Benefactor {
@@ -359,13 +362,11 @@ export interface CreateNeedForm {
 
 export interface CreateSponsorshipForm {
     amount: number | null
+    until: Date | string
     sponsorship_type: string
     recipientable_type: 'orphan' | 'family'
     recipientable_id: string
-    benefactor: {
-        id: string
-        name: string
-    }
+    benefactor: string
     shop: {
         name: string
         phone: string
@@ -404,6 +405,7 @@ export interface FamiliesIndexResource {
     name: string
     start_date: Date
     file_number: number
+    orphans_count: number
     zone: Zone
     address: string
     sponsor: {
@@ -456,6 +458,54 @@ export interface EidAlAdhaFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+    status: FamilyEidAlAdhaStatusType
+}
+
+export type FamilyEidAlAdhaStatusType = 'benefit' | 'benefactor' | 'sacrificed' | 'meat' | 'dont_benefit'
+
+export interface ZakatFamiliesResource {
+    id: string
+    address: string
+    zone: {
+        id: string
+        name: string
+    }
+    branch: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    orphans_count: number
+    total_income: number
+    income_rate: number
+    aggregate_zakat_benefit: number | null
+}
+
+export interface MeatDistributionFamiliesResource {
+    id: string
+    address: string
+    zone: {
+        id: string
+        name: string
+    }
+    branch: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    orphans_count: number
+    total_income: number
+    income_rate: number
+    aggregate_white_meat_benefit: number | null
+    aggregate_red_meat_benefit: number | null
 }
 
 export interface RamadanBasketFamiliesResource {
@@ -477,6 +527,10 @@ export interface RamadanBasketFamiliesResource {
     orphans_count: number
     total_income: number
     income_rate: number
+    basket_from_benefactor: number
+    amount_from_benefactor: number
+    ramadan_sponsorship_difference: number
+    ramadan_basket_category: string
 }
 
 export interface MonthlySponsorshipFamiliesResource {
@@ -529,7 +583,7 @@ export interface SchoolEntryOrphansResource {
         name: string
         academic_phase: string
         academic_level: string
-        last_year_average: string
+        academic_average: number
     }
 }
 
@@ -574,6 +628,22 @@ export interface EidSuitOrphansResource {
         shirt_size: string
         age: number
     }
+    eid_suit: {
+        shoes_shop_name: string | null
+        shoes_shop_phone_number: string | null
+        clothes_shop_name: string | null
+        clothes_shop_phone_number: string | null
+        note: string | null
+        user_id: string
+        clothes_shop_address: string
+        clothes_shop_location: string
+        shoes_shop_address: string
+        shoes_shop_location: string
+        shirt_completed: boolean
+        shoes_completed: boolean
+        pants_completed: boolean
+        completed: boolean
+    }
 }
 
 export interface InventoryIndexResource {
@@ -588,14 +658,20 @@ export interface InventoryIndexResource {
 export interface OrphansIndexResource {
     id: string
     name: string
+    income_rate: number
     birth_date: string
     family_status: string
     health_status: string
+    age: number
     academic_level: string
     academic_level_phase: string
     shoes_size: string
     pants_size: string
     shirt_size: string
+    baby_milk_type: string
+    baby_milk_quantity: string
+    baby_diapers_type: string
+    baby_diapers_quantity: string
     note?: string
     income: number
 }
@@ -604,6 +680,7 @@ export interface SponsorsIndexResource {
     id: string
     name: string
     phone_number: string
+    income_rate: number
     birth_date: string
     academic_level: string
     academic_level_phase: string
@@ -628,11 +705,13 @@ export interface IndexParams {
     directions?: {
         [key: string]: 'asc' | 'desc'
     }
-    filters?: {
-        field: string
-        value: string
-        operator: string
-    }[]
+    filters?:
+        | {
+              field: string
+              value: string
+              operator: string
+          }[]
+        | null
     archive?: string
 }
 
@@ -654,6 +733,10 @@ type SponsorType = {
     is_unemployed: boolean
     gender: 'male' | 'female'
     ccp: string
+    photo: string
+    birth_certificate_file: string
+    diploma_file: string
+    no_remarriage_file: string
 }
 
 type SecondSponsorType = {
@@ -673,6 +756,8 @@ type SpouseType = {
     death_date: string
     function: string
     income: number
+    death_certificate_file: string
+    type: 'father' | 'mother'
 }
 
 export type OrphanType = {
@@ -682,19 +767,25 @@ export type OrphanType = {
     family_status: string
     health_status: string
     academic_level_id: number | null
-    vocational_training_id: number | null
+    speciality_id: number | null
+    speciality_type: string | null
     shoes_size: string
     pants_size: string
     shirt_size: string
+    photo: string
     income: number | null
     note: string
     gender: 'male' | 'female'
     baby_milk_quantity: number
     baby_milk_type: string
     diapers_type: string
+    ccp?: string
+    phone_number?: string
     diapers_quantity: number
     is_handicapped: boolean
     is_unemployed: boolean
+    institution_id: string
+    institution_type: string
 }
 
 export type IncomeType = {
@@ -703,21 +794,25 @@ export type IncomeType = {
     cnas: number
     pension: number
     other_income: number
-    account: number
+    account: {
+        bank: {
+            performance_grant: number | null
+            monthly_income: number | null
+            balance: number | null
+        }
+        ccp: {
+            performance_grant: number | null
+            monthly_income: number | null
+            balance: number | null
+        }
+    }
+    cnas_file: string
+    cnr_file: string
+    casnos_file: string
+    bank_file: string
+    ccp_file: string
+    total_income?: number
 }
-
-export type FamilySponsorship = 'monthly_allowance' | 'ramadan_basket' | 'zakat' | 'housing_assistance' | 'eid_al_adha'
-
-export type SponsorSponsorship = 'medical_sponsorship' | 'literacy_lessons' | 'direct_sponsorship' | 'project_support'
-
-export type OrphanSponsorship =
-    | 'medical_sponsorship'
-    | 'university_scholarship'
-    | 'association_trips'
-    | 'summer_camp'
-    | 'eid_suit'
-    | 'private_lessons'
-    | 'school_bag'
 
 export type FurnishingsType =
     | 'television'
@@ -739,12 +834,13 @@ export type CreateFamilyForm = {
         lng: number | null
     }
     zone_id: string
-    start_date: string
-    file_number: string
+    start_date: string | Date | null
+    file_number: number
+    residence_certificate_file: string
     sponsor: SponsorType
     incomes: IncomeType
     second_sponsor: SecondSponsorType
-    spouse: SpouseType
+    deceased: SpouseType[]
     orphans: OrphanType[]
     housing: {
         housing_type: {
@@ -761,9 +857,7 @@ export type CreateFamilyForm = {
     preview_date: string
     inspectors_members: string | string[]
     branch_id: string
-    family_sponsorship: Record<FamilySponsorship, string | number | null>
-    sponsor_sponsorship: Record<SponsorSponsorship, string | number | null>
-    orphans_sponsorship: Array<Record<OrphanSponsorship, any>>
+    city_id: number
 }
 
 export type InspectorsMembersType = Array<{ id: string; name: string }>
@@ -778,8 +872,6 @@ export interface CreateFamilyStepProps {
     members?: InspectorsMembersType
     form?: Form<CreateFamilyForm>
 }
-
-export interface FamilyShow {}
 
 export type CreateFamilyStepOneProps = typeof createFamilyStepOneErrorProps
 
@@ -803,6 +895,11 @@ export interface NeedsIndexResource {
         id: string
         type: string
         name: string
+        family: {
+            zone: Zone
+            branch: Branch
+            address: string
+        }
     }
     note: string
     created_at: string | Date
@@ -834,6 +931,7 @@ export interface BranchesIndexResource {
         name?: string
     }
     families_count?: string
+    members_count?: string
     created_at: string
 }
 
@@ -860,7 +958,7 @@ export interface BenefactorsIndexResource extends RecipientType {
 export interface ListBoxFilter {
     field: string
     label: string
-    type: 'object' | 'string' | 'date' | 'number'
+    type: 'object' | 'string' | 'date' | 'number' | 'select' | 'boolean'
     icon: SVGType
     operators: Array<ListBoxOperator>
 }
@@ -871,12 +969,6 @@ export interface ListBoxOperator {
 }
 
 export type FilterValueType = string | { id: string; name: string }
-
-export type FilterValueSponsorshipType = string | { label: string; value: string }
-
-export type ShoesSizesType = { id: number; label: string }[]
-
-export type ClothesSizesType = { id: number; label: string }[]
 
 export type SubjectType = { id: number; name: string }
 
@@ -890,6 +982,7 @@ export interface SchoolsIndexResource {
     name: string
     quota?: number
     created_at: Date | string
+    should_print?: boolean
 }
 
 export interface DatabaseNotification {
@@ -900,7 +993,7 @@ export interface DatabaseNotification {
             name: string
         }
         metadata: {
-            created_at: string
+            processed_at: string
             url: string
             [key: string]: string
         }
@@ -954,7 +1047,10 @@ export type AuthInformation = {
     phone: string
     gender: 'male' | 'female'
     address: string
-    qualification: string
+    competences: {
+        id: string
+        name: string
+    }[]
 }
 
 export type ArchiveOccasionType = {
@@ -966,16 +1062,6 @@ export type ArchiveOccasionType = {
     created_at: string | Date
     id: string
     date?: number | string
-}
-
-export type Diaper = {
-    id: string
-    name: string
-}
-
-export type BabyMilk = {
-    id: string
-    name: string
 }
 
 export type SiteSettingsType = {
@@ -1007,4 +1093,47 @@ export type Committee = {
 export interface CommitteesIndexResource extends Zone {
     created_at: string
     members_count?: number
+}
+
+type TrimesterType = {
+    id: string
+    trimester: string
+    average: number
+}
+
+export interface OrphansTranscriptsIndexResource {
+    id: string
+    name: string
+    birth_date: string
+    academic_average: number
+    institution: {
+        id: string
+        name: string
+    }
+    sponsor: {
+        id: string
+        name: string
+        phone_number: string
+    }
+    academic_level: {
+        id: string
+        level: string
+        phase: string
+        phase_key: string
+    }
+    transcripts: {
+        first_trimester: TrimesterType | null
+        second_trimester: TrimesterType | null
+        third_trimester: TrimesterType | null
+    }
+}
+
+export type UploadedFilesType = {
+    pdf: string
+    images: {
+        thumbnail: string
+        original: string
+        width: number
+        height: number
+    }[]
 }

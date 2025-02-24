@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Artisan;
 use DB;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Seeder;
@@ -16,8 +17,7 @@ class CitySeeder extends Seeder
      */
     public function run(): void
     {
-        $jsonPath = database_path('data/cities.json');
-        $cities = json_decode(File::get($jsonPath), true, 512, JSON_THROW_ON_ERROR);
+        $cities = json_decode(File::get(database_path('data/cities.json')), true, 512, JSON_THROW_ON_ERROR);
 
         DB::table('cities')->insert(array_map(static function ($city) {
             return [
@@ -32,7 +32,10 @@ class CitySeeder extends Seeder
                 'wilaya_code' => $city['wilaya_code'],
                 'wilaya_name' => $city['wilaya_name'],
                 'wilaya_name_ascii' => $city['wilaya_name_ascii'],
+                'commune_code' => $city['commune_code'],
             ];
         }, $cities));
+
+        Artisan::call('scout:import', ['model' => 'App\\Models\\City']);
     }
 }

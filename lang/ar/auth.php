@@ -28,9 +28,9 @@ return [
     ],
     'placeholders' => [
         'tomselect' => 'قم بتحديد :attribute',
-        'fill' => 'قم بادخال :attribute',
-        'facebook' => 'facebokk link',
-        'twitter' => 'twiter link',
+        'fill' => 'قم بإدخال :attribute',
+        'facebook' => 'facebook link',
+        'twitter' => 'twitter link',
         'instagram' => 'instagram link',
     ],
     'Login' => 'تسجيل الدخول',

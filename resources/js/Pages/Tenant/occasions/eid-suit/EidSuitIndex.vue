@@ -2,11 +2,17 @@
 import type { ArchiveOccasionType, EidSuitOrphansResource, IndexParams, PaginationData } from '@/types/types'
 
 import { eidSuitsFilters } from '@/constants/filters'
+import { eidSuitSorts } from '@/constants/sorts'
+import { useEidSuitsStore } from '@/stores/eid-suits'
+import { useMembersStore } from '@/stores/members'
+import { useOrphansStore } from '@/stores/orphans'
 import { useSettingsStore } from '@/stores/settings'
-import { Head } from '@inertiajs/vue3'
-import { defineAsyncComponent, ref } from 'vue'
+import { Head, router } from '@inertiajs/vue3'
+import { defineAsyncComponent, nextTick, onMounted, onUnmounted, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
+
+import InfosEditModal from '@/Pages/Tenant/occasions/eid-suit/InfosEditModal.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
@@ -49,7 +55,19 @@ const exportable = ref(!!props.archive?.created_at && hasPermission('export_occa
 
 const loading = ref(false)
 
+const loadingReset = ref(false)
+
+const showWarningModalStatusForReset = ref(false)
+
+const eidSuitsStore = useEidSuitsStore()
+
+const handleReset = () => {
+    showWarningModalStatusForReset.value = true
+}
+
 const showWarningModalStatus = ref(false)
+
+const showEditModalStatus = ref(false)
 
 const sort = (field: string) => handleSort(field, params.value)
 
@@ -73,10 +91,56 @@ const save = () => {
     })
 }
 
+const reset = () => {
+    loadingReset.value = true
+
+    router.patch(
+        route('tenant.occasions.eid-suit.reset'),
+        {},
+        {
+            onSuccess: () => {
+                getDataForIndexPages(route('tenant.occasions.eid-suit.index'), params.value, {
+                    preserveScroll: true,
+                    preserveState: false,
+                    only: ['orphans']
+                })
+            },
+            onFinish: () => {
+                nextTick(() => {
+                    loadingReset.value = false
+
+                    setTimeout(() => {
+                        showWarningModalStatusForReset.value = false
+                    }, 300)
+                })
+            }
+        }
+    )
+}
+
 const handleSave = () => {
     if (props.archive?.created_at) showWarningModalStatus.value = true
     else save()
 }
+
+const showBulkUpdateModal = () => {
+    showEditModalStatus.value = true
+}
+
+onMounted(async () => {
+    await Promise.all([
+        eidSuitsStore.getShopNames(),
+        eidSuitsStore.getShopAddresses(),
+        eidSuitsStore.getShopPhoneNumbers(),
+        useMembersStore().getMembers()
+    ])
+})
+
+onUnmounted(() => {
+    useEidSuitsStore().$reset()
+
+    useOrphansStore().$reset()
+})
 </script>
 
 <template>
@@ -85,17 +149,19 @@ const handleSave = () => {
     <suspense>
         <div>
             <the-table-header
-                :exportable
                 :filters="eidSuitsFilters"
                 :pagination-data="orphans"
                 :params="params"
+                :sortableFields="eidSuitSorts"
                 :title="$t('list', { attribute: $t('the_orphans_eid_suit') })"
                 :url="route('tenant.occasions.eid-suit.index')"
                 entries="orphans"
                 export-pdf-url="tenant.occasions.eid-suit.export.pdf"
                 export-xlsx-url="tenant.occasions.eid-suit.export.xlsx"
+                exportable
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>
@@ -114,11 +180,30 @@ const handleSave = () => {
                     <base-button
                         v-if="hasPermission('save_occasions')"
                         :disabled="loading"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="handleSave"
                     >
                         {{ $t('save') }}
+                    </base-button>
+
+                    <base-button
+                        v-if="useOrphansStore().selectedOrphans.length"
+                        :disabled="loading"
+                        class="me-2 whitespace-nowrap"
+                        variant="outline-success"
+                        @click.prevent="showBulkUpdateModal"
+                    >
+                        {{ $t('bulk_update') }}
+                    </base-button>
+
+                    <base-button
+                        :disabled="loadingReset"
+                        class="me-2 whitespace-nowrap shadow-md"
+                        variant="outline-danger"
+                        @click.prevent="handleReset"
+                    >
+                        {{ $t('reset_eid_suit_data') }}
                     </base-button>
                 </template>
             </the-table-header>
@@ -129,6 +214,7 @@ const handleSave = () => {
                 <the-table-footer
                     :pagination-data="orphans"
                     :params
+                    class="mt-4"
                     :url="route('tenant.occasions.eid-suit.index')"
                 ></the-table-footer>
             </template>
@@ -143,6 +229,21 @@ const handleSave = () => {
             >
                 {{ $t('exports.archive.warnings.eid_suit') }}
             </the-warning-modal>
+
+            <the-warning-modal
+                :on-progress="loadingReset"
+                :open="showWarningModalStatusForReset"
+                @accept="reset"
+                @close="showWarningModalStatusForReset = false"
+            >
+                {{ $t('reset_eid_suit_data') }}
+            </the-warning-modal>
+
+            <infos-edit-modal
+                :open="showEditModalStatus"
+                :orphan-id="null"
+                @close="showEditModalStatus = false"
+            ></infos-edit-modal>
         </div>
 
         <template #fallback>

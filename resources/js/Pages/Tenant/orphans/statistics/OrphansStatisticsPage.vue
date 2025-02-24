@@ -8,8 +8,6 @@ import type {
     OrphansByGenderType,
     OrphansByPantsAndShirtSizeType,
     OrphansByShoeSizeType,
-    OrphansBySponsorshipType,
-    OrphansByVocationalTrainingType,
     OrphansByZoneType,
     OrphansGroupHealthStatusType
 } from '@/types/statistics'
@@ -46,14 +44,6 @@ const OrphansByPantsAndShirtSize = defineAsyncComponent(
 
 const OrphansByShoeSize = defineAsyncComponent(() => import('@/Pages/Tenant/orphans/statistics/OrphansByShoeSize.vue'))
 
-const OrphansBySponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/orphans/statistics/OrphansBySponsorship.vue')
-)
-
-const OrphansByVocationalTraining = defineAsyncComponent(
-    () => import('@/Pages/Tenant/orphans/statistics/OrphansByVocationalTraining.vue')
-)
-
 const OrphansByZone = defineAsyncComponent(() => import('@/Pages/Tenant/orphans/statistics/OrphansByZone.vue'))
 
 const OrphansGroupHealthStatus = defineAsyncComponent(
@@ -67,14 +57,12 @@ defineOptions({
 defineProps<{
     orphansByFamilyStatus: OrphansByFamilyStatusType
     orphansByAcademicLevel: OrphansByAcademicLevelType
-    orphansBySponsorship: OrphansBySponsorshipType
     orphansByGender: OrphansByGenderType
     orphansByAge: OrphansByAgeType
     orphansByZone: OrphansByZoneType
     orphansByBranch: OrphansByBranchType
     orphansByPantsAndShirtSize: OrphansByPantsAndShirtSizeType
     orphansByShoeSize: OrphansByShoeSizeType
-    orphansByVocationalTraining: OrphansByVocationalTrainingType
     orphansByCreatedDate: OrphansByCreatedDateType
     orphansGroupHealthStatus: OrphansGroupHealthStatusType
 }>()
@@ -114,20 +102,6 @@ defineProps<{
                 </the-statistic-box>
             </div>
             <!-- End: orphansByAcademicLevel -->
-
-            <!-- Begin: orphansBySponsorship -->
-            <div class="col-span-12 lg:col-span-6">
-                <the-statistic-box>
-                    <template #title> {{ $t('statistics.orphans.titles.orphans_by_sponsorship') }}</template>
-
-                    <template #chart>
-                        <suspense suspensible>
-                            <orphans-by-sponsorship :orphansBySponsorship></orphans-by-sponsorship>
-                        </suspense>
-                    </template>
-                </the-statistic-box>
-            </div>
-            <!-- End: orphansBySponsorship -->
 
             <!-- Begin: orphansByGender -->
             <div class="col-span-12 lg:col-span-6">
@@ -214,22 +188,6 @@ defineProps<{
                 </the-statistic-box>
             </div>
             <!-- End: orphansByShoeSize -->
-
-            <!-- Begin: orphansByVocationalTraining -->
-            <div class="col-span-12 lg:col-span-6">
-                <the-statistic-box>
-                    <template #title> {{ $t('statistics.orphans.titles.orphans_by_vocational_training') }}</template>
-
-                    <template #chart>
-                        <suspense suspensible>
-                            <orphans-by-vocational-training
-                                :orphansByVocationalTraining
-                            ></orphans-by-vocational-training>
-                        </suspense>
-                    </template>
-                </the-statistic-box>
-            </div>
-            <!-- End: orphansByVocationalTraining -->
 
             <!-- Begin: orphansByCreatedDate -->
             <div class="col-span-12 lg:col-span-6">

@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3'
 import { defineAsyncComponent } from 'vue'
 
-import { formatCurrency, hasPermission } from '@/utils/helper'
+import { formatCurrency, formatDate, hasPermission } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const BaseTable = defineAsyncComponent(() => import('@/Components/Base/table/BaseTable.vue'))
@@ -54,6 +54,10 @@ const emit = defineEmits(['delete-sponsorship'])
                             {{ $t('added_at') }}
                         </base-th-table>
 
+                        <base-th-table class="whitespace-nowrap">
+                            {{ $t('validation.attributes.until') }}
+                        </base-th-table>
+
                         <base-th-table class="whitespace-nowrap">{{ $t('created_by') }}</base-th-table>
 
                         <base-th-table v-if="editable" class="whitespace-nowrap">
@@ -90,6 +94,10 @@ const emit = defineEmits(['delete-sponsorship'])
                             {{ sponsorship.readable_created_at }}
                         </base-td-table>
 
+                        <base-td-table class="whitespace-nowrap">
+                            {{ formatDate(sponsorship.until) }}
+                        </base-td-table>
+
                         <base-td-table>
                             <Link
                                 :href="route('tenant.members.index') + '?show=' + sponsorship.creator?.id"
@@ -102,7 +110,7 @@ const emit = defineEmits(['delete-sponsorship'])
                         <base-td-table v-if="editable">
                             <a
                                 v-if="hasPermission('delete_sponsorships')"
-                                class="flex items-center text-danger"
+                                class="flex items-center justify-center text-danger"
                                 href="javascript:void(0)"
                                 @click="emit('delete-sponsorship', index)"
                             >

@@ -19,12 +19,13 @@ class FamiliesIndexResource extends JsonResource
             'name' => $this->name,
             'address' => $this->address,
             'sponsor' => [
-                'id' => $this->sponsor->id,
-                'name' => $this->sponsor->getName(),
+                'id' => $this->sponsor?->id,
+                'name' => $this->sponsor?->getName(),
             ],
             'zone' => ZoneResource::make($this->whenLoaded('zone')),
             'start_date' => $this->start_date,
             'file_number' => $this->file_number,
+            'orphans_count' => $this->orphans_count,
         ];
     }
 }

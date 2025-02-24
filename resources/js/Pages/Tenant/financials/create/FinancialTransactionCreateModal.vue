@@ -126,7 +126,7 @@ const modalType = computed(() => {
         :modal-type="modalType"
         :open
         :title="modalTitle"
-        size="xl"
+        size="lg"
         @close="emit('close')"
         @handle-submit="handleSubmit"
     >
@@ -139,9 +139,8 @@ const modalType = computed(() => {
 
                 <base-form-input
                     id="the_amount"
-                    ref="firstInputRef"
                     v-model="form.amount"
-                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.amount') })"
+                    :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.the_amount') })"
                     type="number"
                     @change="form.validate('amount')"
                 />

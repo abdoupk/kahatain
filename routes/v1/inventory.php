@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\V1\Inventory\InventoryIndexController;
+use App\Http\Controllers\V1\Inventory\InventoryItemsSearchController;
 use App\Http\Controllers\V1\Inventory\ItemDeleteController;
 use App\Http\Controllers\V1\Inventory\ItemDetailsController;
 use App\Http\Controllers\V1\Inventory\ItemShowController;
@@ -48,4 +49,10 @@ Route::prefix('inventory')->group(function (): void {
         ItemDeleteController::class
     )
         ->name('items.destroy');
+
+    Route::get(
+        'search',
+        InventoryItemsSearchController::class
+    )
+        ->name('items.search');
 });

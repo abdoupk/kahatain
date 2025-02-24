@@ -9,6 +9,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Storage;
 
 class SiteSettingUpdateInfosController extends Controller implements HasMiddleware
 {
@@ -19,7 +20,7 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
 
     public function __invoke(UpdateSiteInfosRequest $request): ResponseFactory|Response|Application
     {
-        $data = $request->except('super_admin');
+        $data = $request->except(['super_admin', 'logo']);
 
         $superAdmin = User::whereId($request->super_admin)->first();
 
@@ -37,6 +38,20 @@ class SiteSettingUpdateInfosController extends Controller implements HasMiddlewa
         auth()->user()->tenant()->update([
             'data->infos' => $data,
         ]);
+
+        if ($request->logo === null) {
+            auth()->user()->tenant->clearMediaCollection('logos');
+        } elseif ($request->logo && $request->logo !== auth()->user()->tenant->getFirstMediaUrl('logos')) {
+            $path = parse_url($request->logo, PHP_URL_PATH);
+
+            $desiredPart = substr($path, strpos($path, 'tmp/'));
+
+            if (Storage::disk('public')->exists($desiredPart)) {
+                auth()->user()->tenant->clearMediaCollection('logos');
+
+                auth()->user()->tenant->addMediaFromDisk($desiredPart, 'public')->toMediaCollection('logos');
+            }
+        }
 
         return response('', 204);
     }

@@ -40,7 +40,7 @@ Route::prefix('lessons')->name('lessons.')->group(function (): void {
         ->middleware([HandlePrecognitiveRequests::class]);
 
     Route::put(
-        '{lesson}',
+        'update-dates/{lesson}',
         LessonUpdateDatesController::class
     )
         ->name('update-dates');

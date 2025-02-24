@@ -6,9 +6,10 @@ import { Link } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 
 import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateModal.vue'
-import MenuLink from '@/Pages/Tenant/orphans/details/MenuLink.vue'
+import MenuLink from '@/Pages/Tenant/orphans/edit/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import TheAvatar from '@/Components/Global/TheAvatar.vue'
 
 const props = defineProps<{ orphan: OrphanUpdateFormType }>()
 
@@ -36,6 +37,22 @@ const showNeedCreateModal = () => {
     <div class="col-span-12 flex flex-col-reverse lg:col-span-4 lg:block 2xl:col-span-3">
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
+                <div class="image-fit h-12 w-12">
+                    <img v-if="orphan.photo" :src="orphan.photo" alt="" class="rounded-full" />
+                    <the-avatar v-else :gender="orphan.gender" :name></the-avatar>
+                </div>
+
+                <div class="me-auto ms-4">
+                    <div class="text-base font-bold">{{ name }}</div>
+
+                    <Link
+                        :href="route('tenant.members.index') + '?show=' + orphan.creator?.id"
+                        class="font-semibold text-slate-500"
+                    >
+                        {{ orphan.creator?.name }}
+                    </Link>
+                </div>
+
                 <div class="me-auto ms-4">
                     <div class="text-base font-bold">{{ name }}</div>
 
@@ -51,16 +68,22 @@ const showNeedCreateModal = () => {
             <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">
                 <menu-link class="!mt-0" icon="icon-memo-circle-info" view-name="general_information"></menu-link>
 
-                <menu-link icon="icon-couple" view-name="sponsorships_information"></menu-link>
-            </div>
-
-            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">
-                <menu-link class="!mt-0" icon="icon-books" view-name="academic_achievement"></menu-link>
+                <menu-link icon="icon-books" view-name="academic_achievement"></menu-link>
 
                 <menu-link icon="icon-diploma" view-name="college_achievement"></menu-link>
 
                 <menu-link icon="icon-file-certificate" view-name="vocational_training_achievement"></menu-link>
+
+                <!--                <menu-link icon="icon-couple" view-name="sponsorships_information"></menu-link>-->
             </div>
+
+            <!--            <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">-->
+            <!--                <menu-link class="!mt-0" icon="icon-books" view-name="academic_achievement"></menu-link>-->
+
+            <!--                <menu-link icon="icon-diploma" view-name="college_achievement"></menu-link>-->
+
+            <!--                <menu-link icon="icon-file-certificate" view-name="vocational_training_achievement"></menu-link>-->
+            <!--            </div>-->
 
             <div class="flex border-t border-slate-200/60 p-5 dark:border-darkmode-400">
                 <base-button class="px-2 py-1" type="button" variant="primary" @click.prevent="showNeedCreateModal">

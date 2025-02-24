@@ -171,7 +171,7 @@ const modalType = computed(() => {
             <the-zone-drawer-modal
                 :open="showZoneDrawerModal"
                 :zone="form.geom"
-                title="hello"
+                :title="zonesStore.zone.id ? $t('edit_in_map') : $t('draw_in_map')"
                 @close="showZoneDrawerModal = false"
                 @set-zone="form.geom = $event"
             ></the-zone-drawer-modal>

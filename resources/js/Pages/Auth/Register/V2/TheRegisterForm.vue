@@ -7,6 +7,7 @@ import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
 import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
+import TheCitySelector from '@/Components/Global/CitySelector/TheCitySelector.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 
 import { $t } from '@/utils/i18n'
@@ -20,7 +21,8 @@ const form = useForm('post', '/register', {
     domain: '',
     email: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
+    city_id: ''
 })
 
 const blurDomainField = (event: Event) => {
@@ -52,7 +54,7 @@ const submit = () => {
 
             setTimeout(() => {
                 window.location.href = response.data.url
-            }, 1000)
+            }, 200)
         }
     })
 }
@@ -62,7 +64,7 @@ const submit = () => {
     <!-- BEGIN: Register Form -->
     <form class="my-10 flex h-full py-5 xl:my-0 xl:h-auto xl:py-0" @submit.prevent="submit">
         <div
-            class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:ms-20 xl:w-auto xl:bg-transparent xl:p-0 xl:shadow-none"
+            class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:ms-20 xl:w-[439px] xl:bg-transparent xl:p-0 xl:shadow-none"
         >
             <h2 class="intro-x text-center text-2xl font-bold xl:text-start xl:text-3xl">
                 {{ $t('the_register') }}
@@ -101,7 +103,8 @@ const submit = () => {
                     v-model="form.email"
                     :placeholder="$t('validation.attributes.email')"
                     autofocus
-                    class="intro-x mt-4 block min-w-full px-4 py-3 xl:min-w-[350px]"
+                    class="intro-x mt-4 block min-w-full px-4 py-3 placeholder:text-end xl:min-w-[350px]"
+                    dir="auto"
                     type="text"
                 />
 
@@ -112,7 +115,8 @@ const submit = () => {
                 <base-form-input
                     v-model="form.password"
                     :placeholder="$t('validation.attributes.password')"
-                    class="intro-x mt-4 block min-w-full px-4 py-3 xl:min-w-[350px]"
+                    class="intro-x mt-4 block min-w-full px-4 py-3 placeholder:text-end xl:min-w-[350px]"
+                    dir="auto"
                     type="password"
                 />
 
@@ -123,7 +127,8 @@ const submit = () => {
                 <base-form-input
                     v-model="form.password_confirmation"
                     :placeholder="$t('validation.attributes.password_confirmation')"
-                    class="intro-x mt-4 block min-w-full px-4 py-3 xl:min-w-[350px]"
+                    class="intro-x mt-4 block min-w-full px-4 py-3 placeholder:text-end xl:min-w-[350px]"
+                    dir="auto"
                     type="password"
                 />
 
@@ -165,12 +170,15 @@ const submit = () => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('domain')" class="mt-2 text-danger">
-                        {{ form.errors.domain }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="domain"></base-form-input-error>
                 <!-- END: Domain Field -->
+
+                <the-city-selector
+                    v-model:city-id="form.city_id"
+                    :error-message="form.errors.city_id"
+                    city=""
+                    class="intro-x !z-[60] mt-4 w-full"
+                ></the-city-selector>
             </div>
 
             <div class="intro-x mt-5 text-center xl:mt-8 xl:text-start">

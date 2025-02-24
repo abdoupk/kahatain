@@ -1,14 +1,9 @@
 <script lang="ts" setup>
 import { useFamiliesStore } from '@/stores/families'
 
-import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 
-const value = defineModel<{ id: string; name: string }>('value', {
-    default: {
-        id: '',
-        name: ''
-    }
-})
+const value = defineModel('value')
 
 const familiesStore = useFamiliesStore()
 
@@ -20,5 +15,12 @@ function loadFamilies(query: string, setOptions: (results: { id: string; name: s
 </script>
 
 <template>
-    <filter-person-drop-down v-model="value" :load-options="loadFamilies"></filter-person-drop-down>
+    <base-combobox
+        v-model="value"
+        :load-options="loadFamilies"
+        :options="[]"
+        class="mt-0"
+        label-key="name"
+        value-key="id"
+    ></base-combobox>
 </template>

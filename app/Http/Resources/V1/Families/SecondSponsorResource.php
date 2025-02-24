@@ -17,7 +17,7 @@ class SecondSponsorResource extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'degree_of_kinship' => $this->degree_of_kinship,
-            'phone_number' => $this->phone_number,
+            'phone_number' => formatPhoneNumber($this->phone_number),
             'address' => $this->address,
             'income' => $this->income,
             'with_family' => $this->with_family,

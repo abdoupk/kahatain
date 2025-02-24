@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { CreateSponsorshipForm } from '@/types/types'
 
+import { useSponsorshipsStore } from '@/stores/sponsorships'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -19,11 +20,7 @@ defineProps<{
 
 const emit = defineEmits(['removeInterval'])
 
-const minimum = defineModel('minimum')
-
-const maximum = defineModel('maximum')
-
-const value = defineModel('value')
+const sponsorshipsStore = useSponsorshipsStore()
 </script>
 
 <template>
@@ -37,9 +34,9 @@ const value = defineModel('value')
             <base-input-group>
                 <base-form-input
                     id="minimum"
-                    v-model="minimum"
-                    type="number"
+                    v-model="sponsorshipsStore.monthly_sponsorship.categories[index].minimum"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.minimum') })"
+                    type="number"
                     @change="form.validate(`categories.${index}.minimum`)"
                 ></base-form-input>
 
@@ -65,9 +62,9 @@ const value = defineModel('value')
             <base-input-group>
                 <base-form-input
                     id="maximum"
-                    v-model="maximum"
-                    type="number"
+                    v-model="sponsorshipsStore.monthly_sponsorship.categories[index].maximum"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.maximum') })"
+                    type="number"
                     @change="form.validate(`categories.${index}.maximum`)"
                 ></base-form-input>
 
@@ -94,13 +91,13 @@ const value = defineModel('value')
                 <base-input-group class="grow">
                     <base-form-input
                         id="value"
-                        v-model="value"
-                        type="number"
+                        v-model="sponsorshipsStore.monthly_sponsorship.categories[index].value"
                         :placeholder="$t('auth.placeholders.fill', { attribute: $t('the_percentage') })"
+                        type="number"
                         @change="form.validate(`categories.${index}.value`)"
                     ></base-form-input>
 
-                    <base-input-group-text> % </base-input-group-text>
+                    <base-input-group-text> %</base-input-group-text>
                 </base-input-group>
 
                 <svg-loader

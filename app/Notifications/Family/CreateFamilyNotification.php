@@ -25,8 +25,8 @@ class CreateFamilyNotification extends Notification implements ShouldQueue
         return [
             'data' => [
                 'name' => $this->family->getName(),
-                'zone' => $this->family->zone->name,
-                'branch' => $this->family->branch->name,
+                'zone' => $this->family->zone?->name,
+                'branch' => $this->family->branch?->name,
             ],
             'user' => [
                 'id' => $this->user->id,
@@ -34,7 +34,7 @@ class CreateFamilyNotification extends Notification implements ShouldQueue
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
-                'created_at' => $this->family->created_at,
+                'processed_at' => $this->family->created_at,
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.families.show',
@@ -49,8 +49,8 @@ class CreateFamilyNotification extends Notification implements ShouldQueue
         return new BroadcastMessage([
             'data' => [
                 'name' => $this->family->getName(),
-                'zone' => $this->family->zone->name,
-                'branch' => $this->family->branch->name,
+                'zone' => $this->family->zone?->name,
+                'branch' => $this->family->branch?->name,
             ],
             'user' => [
                 'id' => $this->user->id,

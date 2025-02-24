@@ -20,6 +20,11 @@ class IncomeResource extends JsonResource
             'account' => $this->account,
             'other_income' => $this->other_income,
             'total_income' => $this->total_income,
+            'cnas_file' => $this->getFirstMediaUrl('cnas_files'),
+            'cnr_file' => $this->getFirstMediaUrl('cnr_files'),
+            'casnos_file' => $this->getFirstMediaUrl('casnos_files'),
+            'bank_file' => $this->getFirstMediaUrl('bank_files'),
+            'ccp_file' => $this->getFirstMediaUrl('ccp_files'),
         ];
     }
 }

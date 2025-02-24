@@ -18,7 +18,7 @@ const SvgLoader = defineAsyncComponent(() => import('@/Components/SvgLoader.vue'
 <template>
     <base-menu-items class="mt-px w-56 bg-primary text-white">
         <base-menu-header class="font-normal">
-            <div class="font-medium">
+            <div class="font-medium rtl:!font-semibold">
                 {{ $page.props.auth.user?.first_name + ' ' + $page.props.auth.user?.last_name }}
             </div>
 

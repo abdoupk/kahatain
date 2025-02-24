@@ -1,16 +1,25 @@
 <?php
 
 use App\Models\Orphan;
-use App\Models\OrphanSponsorship;
 
 function getOrphansByFamilyStatus(): array
 {
-    $orphans = Orphan::select('family_status', DB::raw('count(*) as total'))->where('family_status', '!=', null)->groupBy('family_status')->get();
+    $orphans = Orphan::select(
+        DB::raw("
+        CASE
+            WHEN gender = 'male' AND family_status IN ('professionals', 'professional_boy') THEN 'professional_boy'
+            WHEN gender = 'female' AND family_status IN ('professionals', 'professional_girl') THEN 'professional_girl'
+            ELSE family_status
+        END AS group_label
+    "),
+        DB::raw('COUNT(*) as total')
+    )
+        ->whereNotNull('family_status')
+        ->groupBy('group_label')
+        ->get();
 
     return [
-        'labels' => $orphans->pluck('family_status')->map(function (string $familyStatus) {
-            return __('family_statuses.'.$familyStatus);
-        })->toArray(),
+        'labels' => $orphans->pluck('group_label')->map(fn (string $familyStatus) => __('family_statuses.'.$familyStatus))->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
     ];
 }
@@ -26,42 +35,14 @@ function getOrphansByAcademicLevel(): array
         ->groupBy('academic_level_id')
         ->get();
 
-    $result = $orphans->groupBy(function ($orphan) {
-        return $orphan->academicLevel->phase;
-    })->map(function ($group) {
-        return [
-            'total' => $group->first()->total,
-            'phase' => $group->first()->academicLevel->phase,
-        ];
-    })->values()->toArray();
+    $result = $orphans->groupBy(fn ($orphan) => $orphan->academicLevel?->phase)->map(fn ($group) => [
+        'total' => $group->first()->total,
+        'phase' => $group->first()->academicLevel?->phase,
+    ])->values()->toArray();
 
     return [
         'labels' => array_column($result, 'phase'),
         'data' => array_column($result, 'total'),
-    ];
-}
-
-function getOrphansBySponsorship(): array
-{
-    $sponsorships = OrphanSponsorship::selectRaw('
-    SUM(CASE WHEN medical_sponsorship THEN 1 ELSE 0 END) AS medical_sponsorship_count,
-    SUM(CASE WHEN university_scholarship THEN 1 ELSE 0 END) AS university_scholarship_count,
-    SUM(CASE WHEN association_trips THEN 1 ELSE 0 END) AS association_trips_count,
-    SUM(CASE WHEN eid_suit THEN 1 ELSE 0 END) AS eid_suit_count,
-    SUM(CASE WHEN private_lessons THEN 1 ELSE 0 END) AS private_lessons_count,
-     SUM(CASE WHEN school_bag THEN 1 ELSE 0 END) AS school_bag_count,
-     SUM(CASE WHEN summer_camp THEN 1 ELSE 0 END) AS summer_camp_count
-')
-        ->first();
-
-    return [
-        'medical_sponsorship' => $sponsorships->medical_sponsorship_count,
-        'university_scholarship' => $sponsorships->university_scholarship_count,
-        'association_trips' => $sponsorships->association_trips_count,
-        'eid_suit' => $sponsorships->eid_suit_count,
-        'private_lessons' => $sponsorships->private_lessons_count,
-        'school_bag' => $sponsorships->school_bag_count,
-        'summer_camp' => $sponsorships->summer_camp_count,
     ];
 }
 
@@ -83,9 +64,7 @@ function getOrphansByAge(): array
         ->get();
 
     return [
-        'age' => array_reverse($orphans->pluck('age')->map(function (int $age) {
-            return trans_choice('age_years', $age, ['value' => $age]);
-        })->toArray()),
+        'age' => array_reverse($orphans->pluck('age')->map(fn (int $age) => trans_choice('age_years', $age, ['value' => $age]))->toArray()),
         'data' => array_reverse($orphans->pluck('count')->toArray()),
     ];
 }
@@ -120,7 +99,7 @@ function getOrphansByBranch(): array
 
 function getByPantsAndShirtSize(): array
 {
-    $shirt_sizes = Orphan::whereNotNull('shirt_size')->selectRaw('shirt_size, COUNT(*) as total')
+    $shirt_sizes = Orphan::whereNotNull('shirt_size')->whereNotNull('pants_size')->selectRaw('shirt_size, COUNT(*) as total')
         ->with('shirtSize:id,label')
         ->groupBy('shirt_size')
         ->get()
@@ -175,32 +154,6 @@ function getOrphansByShoeSize(): array
     return [
         'labels' => $orphans->pluck('shoesSize.label')->toArray(),
         'data' => $orphans->pluck('total')->toArray(),
-    ];
-}
-
-function getOrphansByVocationalTraining(): array
-{
-    $orphans = Orphan::whereNotNull('vocational_training_id')
-        ->select(
-            'vocational_training_id',
-            DB::raw('count(*) as total')
-        )
-        ->with('vocationalTraining:id,division')
-        ->groupBy('vocational_training_id')
-        ->get();
-
-    $result = $orphans->groupBy(function ($orphan) {
-        return $orphan->vocationalTraining->division;
-    })->map(function ($group) {
-        return [
-            'total' => $group->first()->total,
-            'division' => $group->first()->vocationalTraining->division,
-        ];
-    })->values()->toArray();
-
-    return [
-        'labels' => array_column($result, 'division'),
-        'data' => array_column($result, 'total'),
     ];
 }
 

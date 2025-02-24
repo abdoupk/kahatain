@@ -9,6 +9,11 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ItemDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:delete_from_inventory'];
+    }
+
     public function __invoke(Inventory $item)
     {
         $item->delete();
@@ -16,10 +21,5 @@ class ItemDeleteController extends Controller implements HasMiddleware
         dispatch(new InventoryItemTrashedJob($item, auth()->user()));
 
         return redirect()->back();
-    }
-
-    public static function middleware()
-    {
-        return ['can:delete_from_inventory'];
     }
 }

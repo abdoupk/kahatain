@@ -19,7 +19,7 @@ defineProps<{
             twMerge(['flex h-[50px] items-center text-white', level == 'first' && 'px-6', level != 'first' && 'px-4'])
         "
         :href="menu.subMenu ? '#' : menu.url"
-        @click="linkTo(menu, $event)"
+        @click.prevent="linkTo(menu, $event)"
     >
         <div>
             <!-- TODO: fix width and height  -->

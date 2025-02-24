@@ -1,4 +1,11 @@
-import type { AppearanceType, ColorSchemesType, ISettingState, LayoutsType, ThemesType } from '@/types/types'
+import type {
+    AppearanceType,
+    ColorSchemesType,
+    FontSizeType,
+    ISettingState,
+    LayoutsType,
+    ThemesType
+} from '@/types/types'
 
 import axios from 'axios'
 import { defineStore } from 'pinia'
@@ -9,6 +16,7 @@ export const useSettingsStore = defineStore('settings', {
         colorScheme: 'theme-1',
         theme: 'tinker',
         layout: 'side-menu',
+        fontSize: 'font_size_base',
         hints: {
             ramadan_basket: true,
             monthly_basket: true,
@@ -49,6 +57,14 @@ export const useSettingsStore = defineStore('settings', {
                 this.layout = layout
 
                 await axios.put(route('tenant.profile.settings.update'), { layout })
+            }
+        },
+
+        async changeFontSize(fontSize: FontSizeType) {
+            if (this.fontSize !== fontSize) {
+                this.fontSize = fontSize
+
+                await axios.put(route('tenant.profile.settings.update'), { fontSize })
             }
         },
 

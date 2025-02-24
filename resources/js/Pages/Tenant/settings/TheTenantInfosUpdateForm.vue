@@ -96,15 +96,7 @@ const submit = () => {
                         @change="form?.validate('association')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('association')"
-                            class="mt-2 text-danger"
-                            data-test="error_association_message"
-                        >
-                            {{ form.errors.association }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="association"> </base-form-input-error>
                 </div>
                 <!-- END: Association Name -->
 
@@ -163,11 +155,7 @@ const submit = () => {
                         </base-input-group-text>
                     </base-input-group>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('domain')" class="mt-2 text-danger" data-test="error_domain_message">
-                            {{ form.errors.domain }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="domain"> </base-form-input-error>
                 </div>
                 <!-- END: Domain -->
 
@@ -190,11 +178,7 @@ const submit = () => {
                         @change="form?.validate('address')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
-                            {{ form.errors.address }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="address"> </base-form-input-error>
                 </div>
                 <!-- END: Address -->
 
@@ -218,7 +202,12 @@ const submit = () => {
                         {{ $t('validation.attributes.logo') }}
                     </base-form-label>
 
-                    <base-file-pond id="logo" :files="form.logo"></base-file-pond>
+                    <base-file-pond
+                        id="logo"
+                        :allow-multiple="false"
+                        :files="settings.logo"
+                        @update:files="form.logo = $event[0]"
+                    ></base-file-pond>
                 </div>
 
                 <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">

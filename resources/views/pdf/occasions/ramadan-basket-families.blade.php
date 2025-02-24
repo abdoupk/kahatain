@@ -17,18 +17,6 @@
         </x-th>
 
         <x-th>
-            {{ __('validation.attributes.address') }}
-        </x-th>
-
-        <x-th>
-            {{ __('orphans_count') }}
-        </x-th>
-
-        <x-th>
-            {{ __('incomes.label.total_income') }}
-        </x-th>
-
-        <x-th>
             {{ __('income_rate') }}
         </x-th>
 
@@ -39,45 +27,65 @@
         <x-th>
             {{ __('the_zone') }}
         </x-th>
+
+        <x-th>
+            {{ __('filters.amount_from_benefactor') }}
+        </x-th>
+
+        <x-th>
+            {{ __('filters.basket_from_benefactor') }}
+        </x-th>
+
+        <x-th>
+            {{ __('monthly_sponsorship.difference') }}
+        </x-th>
+
+        <x-th>
+            {{ __('ramadan_basket_category') }}
+        </x-th>
     </x-slot>
 
     <x-slot name="tbody">
-        @foreach ($sponsorships as $sponsorship)
+        @foreach ($families as $family)
             <tr>
                 <x-td class="text-center">
                     {{ $loop->iteration }}
                 </x-td>
 
                 <x-td>
-                    {{ $sponsorship->family->sponsor->getName() }}
+                    {{ $family->sponsor->getName() }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->sponsor->formattedPhoneNumber() }}
-                </x-td>
-
-                <x-td>
-                    {{ $sponsorship->family->address }}
+                    {{ $family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->orphans_count }}
-                </x-td>
-
-                <x-td class="text-center">
-                    {{ formatCurrency($sponsorship->family->total_income) }}
-                </x-td>
-
-                <x-td class="text-center">
-                    {{ $sponsorship->family->income_rate }}
+                    {{ formatCurrency($family->income_rate) }}
                 </x-td>
 
                 <x-td class="max-w-28 truncate text-center">
-                    {{ $sponsorship->family->branch->name }}
+                    {{ $family->branch?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->zone->name }}
+                    {{ $family->zone?->name ?? '————' }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount')) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount')) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->ramadan_sponsorship_difference) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ $family->ramadan_basket_category ?? '————'  }}
                 </x-td>
             </tr>
         @endforeach

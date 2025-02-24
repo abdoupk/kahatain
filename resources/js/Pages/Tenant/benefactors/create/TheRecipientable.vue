@@ -3,17 +3,17 @@ import { defineAsyncComponent } from 'vue'
 
 import { $t } from '@/utils/i18n'
 
+const BaseInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseInputError.vue'))
+
 const FamilySelector = defineAsyncComponent(() => import('@/Pages/Tenant/benefactors/create/TheFamilySelector.vue'))
 
 const OrphanSelector = defineAsyncComponent(() => import('@/Pages/Tenant/needs/create/OrphanSelector.vue'))
 
-const BaseFormInputError = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormInputError.vue'))
-
 const BaseFormLabel = defineAsyncComponent(() => import('@/Components/Base/form/BaseFormLabel.vue'))
 
-const BaseVueSelect = defineAsyncComponent(() => import('@/Components/Base/vue-select/BaseVueSelect.vue'))
+const BaseListBox = defineAsyncComponent(() => import('@/Components/Base/headless/Listbox/BaseListBox.vue'))
 
-const recipientType = defineModel('recipientType', { default: 'family' })
+const recipientType = defineModel('recipientType', { default: 'orphan' })
 
 const recipient = defineModel('recipient', { default: '' })
 
@@ -21,18 +21,14 @@ defineProps<{ errorMessage?: string | string[] }>()
 
 const recipientTypes = [
     {
-        label: 'the_orphan',
+        label: $t('the_orphan'),
         value: 'orphan'
     },
     {
-        label: 'the_family',
+        label: $t('the_family'),
         value: 'family'
     }
 ]
-
-const recipientTypesLabels = ({ label }: { label: string }) => {
-    return $t(label)
-}
 </script>
 
 <template>
@@ -42,50 +38,32 @@ const recipientTypesLabels = ({ label }: { label: string }) => {
                 {{ $t('recipient_type') }}
             </base-form-label>
 
-            <div>
-                <!-- @vue-ignore -->
-                <base-vue-select
-                    id="recipient_type"
-                    :custom-label="recipientTypesLabels"
-                    :options="recipientTypes"
-                    :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('recipient_type') })"
-                    class="h-full w-full"
-                    label="label"
-                    track_by="value"
-                    @update:value="
-                        (type) => {
-                            recipientType = type.value
-
-                            recipient = ''
-                        }
-                    "
-                >
-                </base-vue-select>
-            </div>
+            <base-list-box
+                id="university_speciality"
+                v-model="recipientType"
+                :model-value="recipientType"
+                :options="recipientTypes"
+                :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('recipient_type') })"
+                @update:model-value="recipient = ''"
+            ></base-list-box>
         </div>
 
         <div>
-            <base-form-label for="recipient">{{ $t('the_recipient') }}</base-form-label>
+            <base-form-label for="recipient">
+                {{ $t('the_recipient') }}
+            </base-form-label>
 
             <div>
-                <orphan-selector
-                    v-if="recipientType === 'orphan'"
-                    v-model:orphan="recipient"
-                    @update:selected-orphan="(orphan) => (recipient = orphan)"
-                ></orphan-selector>
+                <orphan-selector v-if="recipientType === 'orphan'" v-model:orphan="recipient"></orphan-selector>
 
-                <family-selector
-                    v-else
-                    v-model:family="recipient"
-                    @update:selected-family="(family) => (recipient = family)"
-                ></family-selector>
+                <family-selector v-else v-model:family="recipient"></family-selector>
             </div>
 
-            <base-form-input-error>
-                <div v-if="errorMessage" class="mt-2 text-red-600">
+            <base-input-error v-if="errorMessage">
+                <div class="mt-2 text-danger">
                     {{ $t('validation.required', { attribute: $t('the_recipient') }) }}
                 </div>
-            </base-form-input-error>
+            </base-input-error>
         </div>
     </div>
 </template>

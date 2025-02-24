@@ -4,7 +4,7 @@ import type { EventType, SchoolType } from '@/types/lessons'
 import { useLessonsStore } from '@/stores/lessons'
 import { type EventApi } from '@fullcalendar/core'
 import { Head, router } from '@inertiajs/vue3'
-import { defineAsyncComponent, ref } from 'vue'
+import { defineAsyncComponent, nextTick, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
@@ -54,9 +54,9 @@ const handleEventChange = (event: EventApi) => {
         .then(() => {
             showSuccessNotificationStatus.value = true
 
-            setTimeout(() => {
+            nextTick(() => {
                 showSuccessNotificationStatus.value = false
-            }, 1000)
+            })
         })
 }
 
@@ -97,9 +97,9 @@ const deleteLesson = () => {
 const handleEditLesson = () => {
     actionsModalStatus.value = false
 
-    setTimeout(() => {
+    nextTick(() => {
         createModalStatus.value = true
-    }, 200)
+    })
 }
 </script>
 

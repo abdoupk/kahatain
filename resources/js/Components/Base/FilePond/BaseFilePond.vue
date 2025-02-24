@@ -1,75 +1,100 @@
 <script lang="ts" setup>
-import axios from 'axios'
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import 'filepond/dist/filepond.min.css'
-import vueFilePond from 'vue-filepond'
+import ar_AR from 'filepond/locale/ar-ar.js'
+import { ref } from 'vue'
+import vueFilePond, { setOptions } from 'vue-filepond'
 
-defineProps<{
+const props = defineProps<{
     files?: string[]
+    isPicture?: boolean
 }>()
-
-const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview)
 
 const server = {
     process: (fieldName, file, metadata, load, error, progress) => {
-        const formData = new FormData()
+        if (!hasFiles.value) {
+            // Related to aborting the request
+            const CancelToken = axios.CancelToken
 
-        formData.append(fieldName, file, file.name)
+            const source = CancelToken.source()
 
-        axios
-            .post(route('tenant.upload.logo'), formData, {
+            const formData = new FormData()
+
+            formData.append(fieldName, file, file.name)
+
+            // The request itself
+            axios({
+                method: 'post',
+                url: route('tenant.upload.file'),
+                data: formData,
+                cancelToken: source.token,
                 onUploadProgress: (e) => {
+                    // Updating progress indicator
                     progress(e.lengthComputable, e.loaded, e.total)
                 }
-            })
-            .then((response) => {
-                load(response.data.filepath)
-            })
-            .catch(() => {
-                error('Upload failed')
-            })
+            }).then((response) => {
+                // Passing the file id to FilePond
+                load(response.data)
 
-        return {
-            abort: () => {
-                // Handle aborting the request
-            }
+                emit('update:files', [response.data])
+            })
+        } else {
+            progress(1)
+
+            load(props.files)
         }
     },
+
     revert: (filename, load) => {
-        axios
-            .delete(route('tenant.delete.logo'))
-            .then(() => {
-                load(filename)
-            })
-            .catch(() => {
-                load(filename)
-            })
-    },
-    load: (source, load, error, progress, abort) => {
-        axios.get(source).then((response) => {
-            load(response.data)
-        })
+        load()
     }
 }
 
-const handleFilePondInit = () => {
-    console.log('FilePond has initialized')
+const emit = defineEmits(['update:files'])
+
+const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFileValidateSize)
+
+setOptions({
+    ...ar_AR
+})
+
+function handleRemoveFile() {
+    hasFiles.value = false
+
+    emit('update:files', [])
+}
+
+const hasFiles = ref(false)
+
+function handleInit() {
+    if (props.files) {
+        hasFiles.value = true
+    }
 }
 </script>
 
 <template>
     <no-ssr>
         <file-pond
-            ref="pond"
             :credits="false"
             :files
             :server
+            :styleButtonProcessItemPosition="isPicture ? 'center bottom' : undefined"
+            :styleButtonRemoveItemPosition="isPicture ? 'center bottom' : undefined"
+            :styleLoadIndicatorPosition="isPicture ? 'center bottom' : undefined"
+            :stylePanelLayout="isPicture ? 'compact circle' : undefined"
+            :styleProgressIndicatorPosition="isPicture ? 'center bottom' : undefined"
             accepted-file-types="image/jpeg, image/png"
-            allow-multiple="false"
-            allow-replace="true"
-            @init="handleFilePondInit"
+            maxFileSize="10MB"
+            v-bind="$attrs"
+            @init="handleInit"
+            @removefile="handleRemoveFile"
         />
     </no-ssr>
 </template>
+<style lang="postcss">
+@import '/resources/css/vendors/filepond.css';
+</style>

@@ -22,6 +22,7 @@ class BranchesIndexResource extends JsonResource
                 'name' => $this->president->getName(),
             ]),
             'families_count' => $this->families_count,
+            'members_count' => $this->members_count,
             'created_at' => $this->created_at->translatedFormat('j F Y'),
         ];
     }

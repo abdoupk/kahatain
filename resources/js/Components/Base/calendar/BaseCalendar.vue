@@ -51,9 +51,7 @@ const options: CalendarOptions = {
             document.querySelectorAll('#checkbox-events').length &&
             (document.querySelectorAll('#checkbox-events')[0] as HTMLInputElement)?.checked
         ) {
-            ;
-
-(info.draggedEl.parentNode as HTMLElement).remove()
+            ;(info.draggedEl.parentNode as HTMLElement).remove()
 
             if (document.querySelectorAll('#calendar-events')[0].children.length == 1) {
                 document.querySelectorAll('#calendar-no-events')[0].classList.remove('hidden')

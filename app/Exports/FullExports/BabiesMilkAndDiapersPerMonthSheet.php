@@ -22,21 +22,17 @@ class BabiesMilkAndDiapersPerMonthSheet implements FromCollection, WithEvents, W
             ->whereOccasion('babies_milk_and_diapers')
             ->whereYear('created_at', $this->year)
             ->whereMonth('created_at', $this->month)
-            ->get()->map(function (Archive $archive) {
-                return $archive->listBabies->map(function (Baby $baby) {
-                    return [
-                        $baby->orphan->sponsor->getName(),
-                        $baby->orphan->sponsor->formattedPhoneNumber(),
-                        $baby->orphan->getName(),
-                        calculateAge($baby->orphan->birth_date),
-                        __($baby->orphan->gender),
-                        $baby->babyMilk->name,
-                        $baby->baby_milk_quantity,
-                        $baby->diapers->name,
-                        $baby->diapers_quantity,
-                    ];
-                });
-            });
+            ->get()->map(fn (Archive $archive) => $archive->listBabies->map(fn (Baby $baby) => [
+                $baby->orphan->sponsor->getName(),
+                $baby->orphan->sponsor->formattedPhoneNumber(),
+                $baby->orphan->getName(),
+                calculateAge($baby->orphan->birth_date),
+                __($baby->orphan->gender),
+                $baby?->babyMilk?->name,
+                $baby->baby_milk_quantity,
+                $baby?->diapers?->name,
+                $baby->diapers_quantity,
+            ]));
     }
 
     public function title(): string

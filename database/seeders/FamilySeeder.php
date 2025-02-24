@@ -14,7 +14,6 @@ use App\Models\Sponsor;
 use App\Models\Spouse;
 use App\Models\Tenant;
 use App\Models\User;
-use App\Models\VocationalTraining;
 use App\Models\Zone;
 use Illuminate\Database\Seeder;
 use JsonException;
@@ -23,14 +22,19 @@ class FamilySeeder extends Seeder
 {
     public function run(): void
     {
-        Tenant::select('id')->get()->each(
+        Tenant::with('members')->get()->each(
             /**
              * @throws JsonException
              */
             function (Tenant $tenant) {
                 for ($i = 0; $i < 10; $i++) {
+                    $sponsor_first_name = fake('ar_SA')->firstName();
+                    $sponsor_last_name = fake('ar_SA')->lastName();
                     $family = Family::factory()
                         ->hasHousing(1, [
+                            'tenant_id' => $tenant->id,
+                        ])
+                        ->hasFurnishings(1, [
                             'tenant_id' => $tenant->id,
                         ])
                         ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Family $family) use ($tenant) {
@@ -47,6 +51,7 @@ class FamilySeeder extends Seeder
                             'branch_id' => Branch::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
                             'zone_id' => Zone::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
                             'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()->id,
+                            'name' => $sponsor_first_name.' '.$sponsor_last_name,
                         ]);
 
                     Spouse::factory()->create([
@@ -69,14 +74,14 @@ class FamilySeeder extends Seeder
                             'tenant_id' => $tenant->id,
                             'family_id' => $family->id,
                             'created_by' => User::whereTenantId($tenant->id)->inRandomOrder()->first()?->id,
+                            'first_name' => $sponsor_first_name,
+                            'last_name' => $sponsor_last_name,
                         ]);
 
                     for ($j = 0; $j < fake()->numberBetween(2, 6); $j++) {
 
-                        $orphan = Orphan::factory();
-
                         if ($i == 0) {
-                            $orphan = $orphan
+                            $orphan = Orphan::factory()
                                 ->hasAid(fake()->numberBetween(0, 3), function (array $attributes, Orphan $orphan) use ($tenant) {
                                     return [
                                         'tenant_id' => $orphan->tenant_id,
@@ -86,34 +91,22 @@ class FamilySeeder extends Seeder
                                         'recipientable_id' => $orphan->id,
                                         'recipientable_type' => 'orphan',
                                     ];
-                                });
-                        }
-                        $orphan = $orphan->hasAcademicAchievements(3, function (array $attributes, Orphan $orphan) {
-                            return [
-                                'tenant_id' => $orphan->tenant_id,
-                                'orphan_id' => $orphan->id,
-                            ];
-                        })
-                            ->hasVocationalTrainingAchievements(2, function (array $attributes, Orphan $orphan) {
-                                return [
-                                    'tenant_id' => $orphan->tenant_id,
-                                    'vocational_training_id' => VocationalTraining::inRandomOrder()->first()?->id,
-                                    'orphan_id' => $orphan->id,
-                                ];
-                            })
-                            ->hasCollegeAchievements(3, function (array $attributes, Orphan $orphan) {
-                                return [
-                                    'tenant_id' => $orphan->tenant_id,
-                                    'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
-                                    'orphan_id' => $orphan->id,
-                                ];
-                            })
-                            ->create([
+                                })->create([
+                                    'tenant_id' => $tenant->id,
+                                    'family_id' => $family?->id,
+                                    'created_by' => User::whereTenantId($tenant->id)->first()?->id,
+                                    'sponsor_id' => $sponsor->id,
+                                ]);
+                        } else {
+                            $orphan = Orphan::factory()->create([
                                 'tenant_id' => $tenant->id,
                                 'family_id' => $family?->id,
                                 'created_by' => User::whereTenantId($tenant->id)->first()?->id,
+                                'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
                                 'sponsor_id' => $sponsor->id,
                             ]);
+                        }
+
                         Baby::factory()->create([
                             'tenant_id' => $tenant->id,
                             'orphan_id' => $orphan->id,

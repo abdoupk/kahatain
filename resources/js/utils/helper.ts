@@ -1,4 +1,4 @@
-import type { AppearanceType, ColorSchemesType, IndexParams, ListBoxFilter } from '@/types/types'
+import type { AppearanceType, ColorSchemesType, FontSizeType, IndexParams, ListBoxFilter } from '@/types/types'
 
 import { router, usePage } from '@inertiajs/vue3'
 import dayjs from 'dayjs'
@@ -7,6 +7,7 @@ import 'dayjs/locale/fr'
 import { computed } from 'vue'
 
 import { $t, getLocale } from '@/utils/i18n'
+import { searchShopOwnerAddress, searchShopOwnerName, searchShopOwnerPhoneNumber } from '@/utils/search'
 
 const downloadFile = (url: string, filename: string) => {
     const a = document.createElement('a')
@@ -60,6 +61,23 @@ const slideUp = (el: HTMLElement, duration = 300, callback = (el: HTMLElement) =
 
         callback(el)
     }, duration)
+}
+
+function generateUUID() {
+    const bytes = new Uint8Array(16)
+    crypto.getRandomValues(bytes)
+
+    // Set UUID version (4) in the 7th byte
+    bytes[6] = (bytes[6] & 0x0f) | 0x40
+
+    // Set UUID variant (RFC 4122) in the 9th byte
+    bytes[8] = (bytes[8] & 0x3f) | 0x80
+
+    return [...bytes]
+        .map((b, i) =>
+            [4, 6, 8, 10].includes(i) ? `-${b.toString(16).padStart(2, '0')}` : b.toString(16).padStart(2, '0')
+        )
+        .join('')
 }
 
 const setSlideProperties = (el: HTMLElement) => {
@@ -134,13 +152,19 @@ const setColorSchemeClass = (colorScheme: ColorSchemesType, appearance: Appearan
     appearance === 'dark' && el.classList.add('dark')
 }
 
+const setFontSizeClass = (fontSize: FontSizeType) => {
+    const el = document.querySelectorAll('html')[0]
+
+    el.classList.add(fontSize.replaceAll('_', '-'))
+}
+
 const isEmpty = (value) => {
     if (Array.isArray(value)) {
         return value.length === 0 || value.every((item) => isEmpty(item))
     } else if (typeof value === 'object' && value !== null) {
         return Object.keys(value).length === 0 || Object.values(value).every((item) => isEmpty(item))
     } else {
-        return value === null || value === undefined || value === ''
+        return value === null || value === undefined || value === '' || value === false || value === 0
     }
 }
 const omit = (obj: any, props: any): any => {
@@ -235,6 +259,7 @@ const pathNameOfCurrentPage = (): string => {
 }
 
 const formatDate = (date: string | Date, dateStyle: 'full' | 'long' | 'medium' | 'short' | undefined) => {
+    if (!date) return '————'
     try {
         return new Intl.DateTimeFormat(`${getLocale()}-DZ`, {
             dateStyle
@@ -280,27 +305,23 @@ const handleSponsorship = (sponsorshipValue: string) => {
     if (!isNaN(parsedValue)) {
         return formatCurrency(parsedValue)
     } else {
-        return sponsorshipValue
+        return sponsorshipValue || '————'
     }
 }
 
 const handleFurnishings = (sponsorshipValue) => {
-    if (sponsorshipValue === '0') {
-        return $t('no')
+    let text: string
+    if (sponsorshipValue.checked) {
+        text = $t('yes')
+    } else {
+        text = $t('no')
     }
 
-    if (sponsorshipValue === '1') {
-        return $t('yes')
+    if (sponsorshipValue.note && sponsorshipValue.note.length > 0) {
+        text += ` (${sponsorshipValue.note})`
     }
 
-    return sponsorshipValue
-}
-
-const groupByKey = (arr, key) => {
-    return arr.reduce((acc, current) => {
-        ;(acc[current[key]] = acc[current[key]] || []).push(current)
-        return acc
-    }, {})
+    return text
 }
 
 const formatNumber = (value: number) => {
@@ -315,34 +336,24 @@ function setDateToCurrentTime(value: string | Date) {
         .add(currentTime.valueOf() - currentTime.startOf('day').valueOf(), 'millisecond')
 }
 
-function getAcademicLevelFromId(id, academicLevels) {
-    if (!id) return ''
-    else {
-        return academicLevels.reduce((acc, curr) => {
-            const level = curr.levels.find((level) => Number(level.id) === id)
+function setTimeFromDate(dateStr: string | Date, dateAndTimeStr: string | Date) {
+    // Parse the input strings into Day.js objects
+    const date = dayjs(dateStr)
+    const dateAndTime = dayjs(dateAndTimeStr)
 
-            if (level) acc = level
-
-            return acc
-        }, {})
-    }
-}
-
-function getVocationalTrainingSpecialityFromId(id, specialities) {
-    if (!id) return ''
-    else {
-        return specialities.reduce((acc, curr) => {
-            const speciality = curr.specialities.find((speciality) => Number(speciality.id) === id[0])
-
-            if (speciality) acc = speciality
-
-            return acc
-        }, {})
-    }
+    // Update the time of 'date' to match 'dateAndTime'
+    return date
+        .set('hour', dateAndTime.hour())
+        .set('minute', dateAndTime.minute())
+        .set('second', dateAndTime.second())
+        .set('millisecond', dateAndTime.millisecond())
+        .toDate()
 }
 
 function handleFilterValue(filter: ListBoxFilter, value): string {
-    if (filter.type === 'date') {
+    if (filter.field === 'furnishings') {
+        return true
+    } else if (filter.type === 'date') {
         const convertedDate = Date.parse(value) / 1000
 
         if (isNaN(convertedDate)) return ''
@@ -352,13 +363,10 @@ function handleFilterValue(filter: ListBoxFilter, value): string {
         if (value.value !== '') return true
 
         return ''
-    } else if (filter.field === 'family_sponsorships' || filter.field === 'sponsorships') {
-        if (value.value !== '') return true
-
-        return ''
     } else if (filter.type === 'object') {
         if (value?.id !== undefined) return value.id
-        else return value.value
+        else if (value?.value !== undefined) return value.value
+        return value
     } else if (filter.type === 'number') {
         if (typeof value === 'object') return ''
     } else if (filter.field === 'roles' || filter.field === 'committees' || filter.field === 'competences') {
@@ -368,16 +376,11 @@ function handleFilterValue(filter: ListBoxFilter, value): string {
 }
 
 const handleFilterName = (field: ListBoxFilter, value: { value: string } | string): string => {
-    const isSponsorship = ['family_sponsorships', 'sponsor_sponsorships'].includes(field.label)
-
-    const isOrphanSponsorship = field.label === 'orphan_sponsorships'
-
     if (field.field === 'sponsorship' && typeof value !== 'string') {
         return `${value.value}`
-    } else if (isSponsorship && typeof value !== 'string') {
-        return `${field.label}.${value.value}`
-    } else if (isOrphanSponsorship && typeof value !== 'string') {
-        return `${field.field}.${value.value}`
+    } else if (field.field === 'furnishings') {
+        if (typeof value === 'string') return `${field.label}.${value}.checked`
+        return ''
     } else {
         return field.field || field
     }
@@ -410,7 +413,7 @@ const formatFilters = (filters) => {
                 }
             })
             .filter((filter) => filter?.operator && filter.operator !== '')
-            .filter((filter) => filter?.value !== undefined && filter.value !== '')
+            .filter((filter) => filter?.value !== null && filter?.value !== undefined && filter.value !== '')
             .filter((filter) => filter?.field)
     }
 }
@@ -422,7 +425,7 @@ const getDataForIndexPages = (url: string, params: IndexParams, options: object)
 const formatParams = (params: IndexParams) => {
     let data = { ...params }
 
-    if (params.search === '' || params.search === undefined) {
+    if (params?.search === '' || params?.search === undefined) {
         delete data.search
     }
 
@@ -501,7 +504,6 @@ function getMarkerRegionIcon(color) {
                 </g>
               </svg>
             `)
-
 }
 
 function sumObjectValues(obj): number {
@@ -551,41 +553,57 @@ const groupRecentActivitiesByDate = (activities) => {
     }, {})
 }
 
+function loadShopOwnerNames(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerName(query).then((results) => {
+        setOptions(results)
+    })
+}
+
+function loadShopOwnerPhoneNumbers(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerPhoneNumber(query).then((results) => {
+        setOptions(results)
+    })
+}
+
+function loadShopOwnerAddresses(query: string, setOptions: (results: { id: string; name: string }[]) => void) {
+    searchShopOwnerAddress(query).then((results) => {
+        setOptions(results)
+    })
+}
+
 export {
     isEqual,
+    removeEmptyKeys,
     getLeafletMapConfig,
     groupRecentActivitiesByDate,
+    generateUUID,
+    loadShopOwnerNames,
+    loadShopOwnerPhoneNumbers,
     hasPermission,
+    loadShopOwnerAddresses,
     getRandomItemWithoutRepeat,
     isOlderThan,
     addOpacityToHexColor,
-    addOpacityToHexColors,
     sumObjectValues,
     formatFilters,
     getDataForIndexPages,
     handleFilterValue,
     formatDate,
     formatUrl,
-    combineDateAndTime,
-    getAcademicLevelFromId,
-    getVocationalTrainingSpecialityFromId,
     setDateToCurrentTime,
     formatNumber,
     isAssociationNameLatin,
-    groupByKey,
     handleSponsorship,
     handleFurnishings,
     formatCurrency,
     handleSort,
     omit,
     toRaw,
-    toRGB,
     slideUp,
     debounce,
     slideDown,
     setDarkModeClass,
     isEmpty,
-    getResultsSize,
     setColorSchemeClass,
     allowOnlyNumbersOnKeyDown,
     formatDateAndTime,
@@ -595,5 +613,7 @@ export {
     getMarkerIcon,
     formatParams,
     formatDateAndTimeShort,
-    downloadFile
+    setFontSizeClass,
+    downloadFile,
+    setTimeFromDate
 }

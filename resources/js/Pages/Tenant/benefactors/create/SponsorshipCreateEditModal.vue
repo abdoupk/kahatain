@@ -7,6 +7,8 @@ import { computed, defineAsyncComponent, ref } from 'vue'
 import { allowOnlyNumbersOnKeyDown } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
+const BaseVCalendar = defineAsyncComponent(() => import('@/Components/Base/VCalendar/BaseVCalendar.vue'))
+
 const TheBenefactorSelector = defineAsyncComponent(
     () => import('@/Pages/Tenant/benefactors/create/TheBenefactorSelector.vue')
 )
@@ -56,7 +58,7 @@ const form = computed(() => {
         })
     }
 
-    return useForm('post', route('tenant.monthly-sponsorship.store'), { ...sponsorship.sponsorship })
+    return useForm('post', route('tenant.benefactors.store-sponsorship'), { ...sponsorship.sponsorship })
 })
 
 // Define custom event emitter for 'close' event
@@ -131,40 +133,22 @@ const modalType = computed(() => {
             <!--Begin: Recipient Type-->
             <div class="col-span-12">
                 <the-recipientable
+                    v-model:recipient="form.recipientable_id"
                     v-model:recipient-type="form.recipientable_type"
                     :error-message="form.errors.recipientable_id"
-                    @update:recipient="
-                        (value) => {
-                            form.recipientable_id = value.id
-                        }
-                    "
                 ></the-recipientable>
             </div>
             <!--End: Recipient Type-->
 
             <!--Begin: The Benefactor-->
-            <div class="col-span-12 sm:col-span-6">
+            <div class="col-span-6 sm:col-span-6">
                 <base-form-label for="benefactor">
                     {{ $t('the_benefactor') }}
                 </base-form-label>
 
-                <div>
-                    <the-benefactor-selector
-                        v-model:benefactor="form.benefactor"
-                        :benefactor="form.benefactor.id"
-                        @update:selected-benefactor="(benefactor) => (form.benefactor = benefactor)"
-                    ></the-benefactor-selector>
-                </div>
+                <the-benefactor-selector v-model="form.benefactor"></the-benefactor-selector>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('benefactor.id')"
-                        class="mt-2 text-danger"
-                        data-test="error_start_date_message"
-                    >
-                        {{ form.errors['benefactor.id'] }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="benefactor"></base-form-input-error>
             </div>
             <!--Begin: The Benefactor-->
 
@@ -201,20 +185,12 @@ const modalType = computed(() => {
                     </option>
                 </base-form-select>
 
-                <base-form-input-error>
-                    <div
-                        v-if="form?.invalid('sponsorship_type')"
-                        class="mt-2 text-danger"
-                        data-test="error_start_date_message"
-                    >
-                        {{ form.errors.sponsorship_type }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="sponsorship_type"></base-form-input-error>
             </div>
             <!--End: Sponsorship Type-->
 
             <!--Begin: The amount-->
-            <div class="col-span-12 sm:col-span-6">
+            <div class="z-[2] col-span-12 sm:col-span-6">
                 <base-form-label for="amount">
                     {{ $t('the_amount') }}
                 </base-form-label>
@@ -236,17 +212,28 @@ const modalType = computed(() => {
                     </base-input-group-text>
                 </base-input-group>
 
-                <base-form-input-error>
-                    <div v-if="form?.invalid('amount')" class="mt-2 text-danger" data-test="error_start_date_message">
-                        {{ form.errors.amount }}
-                    </div>
-                </base-form-input-error>
+                <base-form-input-error :form field_name="amount"></base-form-input-error>
             </div>
             <!--End: The amount-->
 
+            <!--Begin: Until-->
+            <div class="col-span-12 sm:col-span-6">
+                <base-form-label for="until">
+                    {{ $t('validation.attributes.until') }}
+                </base-form-label>
+
+                <base-v-calendar id="until" v-model:date="form.until"></base-v-calendar>
+
+                <base-form-input-error :form field_name="until"></base-form-input-error>
+            </div>
+            <!--End: Until-->
+
             <!--Begin: The shop-->
-            <div v-if="form.sponsorship_type === 'monthly_basket'" class="col-span-12 grid grid-cols-12 gap-4 gap-y-3">
-                <h3 class="col-span-12 text-base rtl:font-semibold">
+            <div
+                v-if="form.sponsorship_type === 'monthly_basket'"
+                class="col-span-12 mt-4 grid grid-cols-12 gap-4 gap-y-3"
+            >
+                <h3 class="col-span-12 text-lg rtl:font-semibold">
                     {{ $t('shop_information') }}
                 </h3>
 
@@ -264,7 +251,7 @@ const modalType = computed(() => {
                         @change="form?.validate('shop.name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
+                    <base-form-input-error :form field_name="shop.name">
                         <div
                             v-if="form?.invalid('shop.name')"
                             class="mt-2 text-danger"
@@ -292,15 +279,7 @@ const modalType = computed(() => {
                         @keydown="allowOnlyNumbersOnKeyDown"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('shop.phone')"
-                            class="mt-2 text-danger"
-                            data-test="error_start_date_message"
-                        >
-                            {{ form.errors['shop.phone'] }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="shop.phone"></base-form-input-error>
                 </div>
                 <!-- End: The shopKeeper phone number-->
 
@@ -318,15 +297,7 @@ const modalType = computed(() => {
                         @change="form?.validate('shop.address')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('shop.address')"
-                            class="mt-2 text-danger"
-                            data-test="error_start_date_message"
-                        >
-                            {{ form.errors['shop.address'] }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="shop.address"></base-form-input-error>
                 </div>
                 <!-- End: The shopKeeper address-->
             </div>

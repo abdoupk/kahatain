@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Family;
+use App\Models\Inventory;
+use App\Models\Orphan;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,14 +18,16 @@ return new class extends Migration
         Schema::create('babies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('baby_milk_quantity')->nullable();
-            $table->uuid('baby_milk_type')->nullable();
+            $table->foreignIdFor(Inventory::class, 'baby_milk_type')->nullable();
             $table->integer('diapers_quantity')->nullable();
-            $table->uuid('diapers_type')->nullable();
-            $table->uuid('orphan_id');
-            $table->uuid('family_id');
-            $table->uuid('tenant_id');
+            $table->foreignIdFor(Inventory::class, 'diapers_type')->nullable();
+            $table->foreignIdFor(Orphan::class);
+            $table->foreignIdFor(Family::class);
+            $table->foreignIdFor(Tenant::class);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['tenant_id']);
         });
     }
 

@@ -17,8 +17,6 @@ class SponsorUpdateSponsorshipsController extends Controller implements HasMiddl
 
     public function __invoke(SponsorSponsorshipsUpdateRequest $request, Sponsor $sponsor)
     {
-        $sponsor->sponsorships()->update($request->validated());
-
         dispatch(new SponsorUpdatedJob($sponsor, auth()->user()));
 
         return response('', 201);

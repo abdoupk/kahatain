@@ -22,8 +22,6 @@ class ExportArchiveFamiliesEidAlAdhaPDFController extends Controller implements 
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('eid-al-adha-families', function () {
-            return listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport();
-        }, $archive->created_at->year);
+        return saveArchiveToPDF('eid-al-adha-families', fn () => listOfFamiliesBenefitingFromTheEidAlAdhaSponsorshipForExport(), $archive->created_at->year);
     }
 }

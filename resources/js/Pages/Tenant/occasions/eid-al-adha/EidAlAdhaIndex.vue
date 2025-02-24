@@ -2,12 +2,15 @@
 import type { ArchiveOccasionType, EidAlAdhaFamiliesResource, IndexParams, PaginationData } from '@/types/types'
 
 import { eidAlAdhaFilters } from '@/constants/filters'
+import { eidAlAdhaSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { Head } from '@inertiajs/vue3'
-import { defineAsyncComponent, ref } from 'vue'
+import { useForm } from 'laravel-precognition-vue'
+import { defineAsyncComponent, nextTick, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
@@ -52,7 +55,25 @@ const loading = ref(false)
 
 const showWarningModalStatus = ref(false)
 
+const showSuccessNotification = ref(false)
+
 const sort = (field: string) => handleSort(field, params.value)
+
+const handleChangeStatus = (data: { id: string; status: string }) => {
+    useForm('patch', route('tenant.occasions.eid-al-adha.change-status', data.id), {
+        status: data.status
+    }).submit({
+        onSuccess: () => {
+            showSuccessNotification.value = true
+
+            nextTick(() => {
+                showSuccessNotification.value = false
+            })
+        },
+        preserveScroll: true,
+        preserveState: true
+    })
+}
 
 const save = () => {
     getDataForIndexPages(route('tenant.occasions.eid-al-adha.save-to-archive'), params.value, {
@@ -87,6 +108,8 @@ const handleSave = () => {
         <div>
             <the-table-header
                 :exportable
+                :sortableFields="eidAlAdhaSorts"
+                sortable
                 :filters="eidAlAdhaFilters"
                 :pagination-data="families"
                 :params="params"
@@ -115,7 +138,7 @@ const handleSave = () => {
                     <base-button
                         v-if="hasPermission('save_occasions')"
                         :disabled="loading"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="handleSave"
                     >
@@ -125,7 +148,7 @@ const handleSave = () => {
             </the-table-header>
 
             <template v-if="families.data.length > 0">
-                <data-table :families :params @sort="sort"></data-table>
+                <data-table :families :params @sort="sort" @change-status="handleChangeStatus"></data-table>
 
                 <the-table-footer
                     :pagination-data="families"
@@ -144,6 +167,11 @@ const handleSave = () => {
             >
                 {{ $t('exports.archive.warnings.eid_al_adha') }}
             </the-warning-modal>
+
+            <success-notification
+                :open="showSuccessNotification"
+                :title="$t('successfully_updated')"
+            ></success-notification>
         </div>
 
         <template #fallback>

@@ -7,10 +7,10 @@ import { computed, ref } from 'vue'
 import TheNeedable from '@/Pages/Tenant/needs/TheNeedable.vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
-import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 import CreateEditModal from '@/Components/Global/CreateEditModal.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 
@@ -24,14 +24,8 @@ const props = defineProps<{
     showTheNeedable?: boolean
 }>()
 
-// Get the needs store
 const needsStore = useNeedsStore()
 
-const needStatusesLabels = ({ label }: { label: string }) => {
-    return $t(label)
-}
-
-// Initialize a ref for loading state
 const loading = ref(false)
 
 const showSuccessNotification = ref(false)
@@ -48,10 +42,8 @@ const form = computed(() => {
     return useForm('post', route('tenant.needs.store'), omit({ ...needsStore.need }, ['id']))
 })
 
-// Define custom event emitter for 'close' event
 const emit = defineEmits(['close'])
 
-// Function to handle success and close the slideover after a delay
 const handleSuccess = () => {
     if (!props.closeOnly) {
         setTimeout(() => {
@@ -69,7 +61,6 @@ const handleSuccess = () => {
     emit('close')
 }
 
-// Function to handle form submission
 const handleSubmit = async () => {
     loading.value = true
 
@@ -89,15 +80,12 @@ const handleSubmit = async () => {
     }
 }
 
-// Compute the slideover title based on the need id
 const modalTitle = computed(() => {
     return needsStore.need.id ? $t('modal_update_title', { attribute: $t('the_demand') }) : $t('new need')
 })
 
-// Initialize a ref for the first input element
 const firstInputRef = ref<HTMLElement>()
 
-// Compute the slideover type based on the need id
 const modalType = computed(() => {
     return needsStore.need.id ? 'update' : 'create'
 })
@@ -130,9 +118,7 @@ const modalType = computed(() => {
                     @change="form.validate('subject')"
                 />
 
-                <div v-if="form.errors?.subject" class="mt-2">
-                    <base-input-error :message="form.errors.subject"></base-input-error>
-                </div>
+                <base-form-input-error :form field_name="subject"></base-form-input-error>
             </div>
             <!-- End: Subject  -->
 
@@ -142,30 +128,15 @@ const modalType = computed(() => {
                     {{ $t('validation.attributes.status') }}
                 </base-form-label>
 
-                <div>
-                    <!-- @vue-ignore -->
-                    <base-vue-select
-                        v-model:value="form.formatted_status"
-                        :custom-label="needStatusesLabels"
-                        :options="needStatuses"
-                        :placeholder="
-                            $t('auth.placeholders.tomselect', { attribute: $t('validation.attributes.the_status') })
-                        "
-                        label="label"
-                        track_by="value"
-                        @update:value="
-                            (status) => {
-                                form.status = status.value
+                <base-list-box
+                    v-model="form.status"
+                    :options="needStatuses"
+                    :placeholder="
+                        $t('auth.placeholders.tomselect', { attribute: $t('validation.attributes.the_status') })
+                    "
+                />
 
-                                form?.validate('status')
-                            }
-                        "
-                    ></base-vue-select>
-                </div>
-
-                <div v-if="form.errors?.status" class="mt-2">
-                    <base-input-error :message="form.errors.status"></base-input-error>
-                </div>
+                <base-form-input-error :form field_name="status"></base-form-input-error>
             </div>
             <!-- End: Status  -->
 
@@ -196,9 +167,7 @@ const modalType = computed(() => {
                     @change="form.validate('demand')"
                 />
 
-                <div v-if="form.errors?.demand" class="mt-2">
-                    <base-input-error :message="form.errors.demand"></base-input-error>
-                </div>
+                <base-form-input-error :form field_name="demand"></base-form-input-error>
             </div>
             <!-- End: Demand-->
 
@@ -216,9 +185,7 @@ const modalType = computed(() => {
                     @change="form.validate('note')"
                 />
 
-                <div v-if="form.errors?.note" class="mt-2">
-                    <base-input-error :message="form.errors.note"></base-input-error>
-                </div>
+                <base-form-input-error :form field_name="note"></base-form-input-error>
             </div>
             <!-- End: Note-->
         </template>

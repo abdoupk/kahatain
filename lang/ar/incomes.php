@@ -11,7 +11,11 @@ return [
         'pension' => 'منحة مجاهد - Pension',
         'cnas' => 'أجير - CNAS',
         'other_income' => 'مصدر اخر',
-        'account' => 'كشف الحساب',
-        'total_income' => 'الدخل الاجمالي',
+        'ccp_account' => 'كشف الحساب البريدي',
+        'bank_account' => 'كشف الحساب البنكي',
+        'total_income' => 'الدخل الإجمالي',
+        'balance' => 'الرصيد',
+        'performance_grant' => 'منحة المردودية',
+        'monthly_income' => 'الدخل الشهري',
     ],
 ];

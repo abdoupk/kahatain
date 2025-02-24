@@ -4,7 +4,7 @@ import type { FamilySponsorshipType, FamilyUpdateSponsorShipsFormType } from '@/
 import { useForm } from 'laravel-precognition-vue'
 import { reactive, ref } from 'vue'
 
-import FamilySponsorShipForm from '@/Pages/Tenant/families/create/stepFive/FamilySponsorShipForm.vue'
+import FamilySponsorShipForm from '@/Pages/Tenant/families/create/stepFiveOld/FamilySponsorShipForm.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
@@ -38,7 +38,7 @@ const submit = () => {
 
 <template>
     <!-- BEGIN: Family SponsorShip -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ $t('family_sponsorship') }}</h2>
         </div>

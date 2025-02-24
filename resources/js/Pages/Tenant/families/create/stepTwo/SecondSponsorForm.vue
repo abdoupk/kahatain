@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import type { CreateFamilyForm } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
+import { onMounted } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
+import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
@@ -15,19 +19,11 @@ import { $t } from '@/utils/i18n'
 
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
-const firstName = defineModel('first_name')
+const createFamilyStore = useCreateFamilyStore()
 
-const lastName = defineModel('last_name')
-
-const phone = defineModel('phone')
-
-const degreeOfKinship = defineModel('degree_of_kinship')
-
-const income = defineModel('income')
-
-const address = defineModel('address')
-
-const withFamily = defineModel('withFamily')
+onMounted(() => {
+    document.getElementById('first_name')?.focus()
+})
 </script>
 
 <template>
@@ -39,7 +35,7 @@ const withFamily = defineModel('withFamily')
 
             <base-form-input
                 id="first_name"
-                v-model="firstName"
+                v-model="createFamilyStore.family.second_sponsor.first_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.first_name')
@@ -55,23 +51,7 @@ const withFamily = defineModel('withFamily')
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.first_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_first_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.first_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.first_name"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -81,7 +61,7 @@ const withFamily = defineModel('withFamily')
 
             <base-form-input
                 id="last_name"
-                v-model="lastName"
+                v-model="createFamilyStore.family.second_sponsor.last_name"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.last_name')
@@ -97,23 +77,7 @@ const withFamily = defineModel('withFamily')
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.last_name'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_last_name_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.last_name']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.last_name"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -123,7 +87,7 @@ const withFamily = defineModel('withFamily')
 
             <base-form-input
                 id="degree_of_kinship"
-                v-model="degreeOfKinship"
+                v-model="createFamilyStore.family.second_sponsor.degree_of_kinship"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.degree_of_kinship')
@@ -139,23 +103,7 @@ const withFamily = defineModel('withFamily')
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.degree_of_kinship'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_degree_of_kinship_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.degree_of_kinship']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.degree_of_kinship"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -165,7 +113,7 @@ const withFamily = defineModel('withFamily')
 
             <base-form-input
                 id="phone"
-                v-model="phone"
+                v-model="createFamilyStore.family.second_sponsor.phone_number"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.phone')
@@ -183,23 +131,7 @@ const withFamily = defineModel('withFamily')
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.phone_number'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_phone_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.phone_number']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.phone_number"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -209,7 +141,7 @@ const withFamily = defineModel('withFamily')
 
             <base-form-input
                 id="address"
-                v-model="address"
+                v-model="createFamilyStore.family.second_sponsor.address"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('validation.attributes.address')
@@ -225,23 +157,7 @@ const withFamily = defineModel('withFamily')
                 "
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            //@ts-ignore
-                            'second_sponsor.address'
-                        )
-                    "
-                    class="mt-2 text-danger"
-                    data-test="error_address_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.address']
-                    }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="second_sponsor.address"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
@@ -249,47 +165,42 @@ const withFamily = defineModel('withFamily')
                 {{ $t('validation.attributes.income') }}
             </base-form-label>
 
-            <base-form-input
-                id="income"
-                v-model="income"
-                :placeholder="
-                    $t('auth.placeholders.fill', {
-                        attribute: $t('validation.attributes.income')
-                    })
-                "
-                autofocus
-                type="text"
-                @change="
-                    form?.validate(
-                        //@ts-ignore
-                        'second_sponsor.income'
-                    )
-                "
-                @keydown="allowOnlyNumbersOnKeyDown"
-            ></base-form-input>
-
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
+            <base-input-group>
+                <!-- @vue-ignore -->
+                <base-form-input
+                    id="income"
+                    v-model="createFamilyStore.family.second_sponsor.income"
+                    :placeholder="
+                        $t('auth.placeholders.fill', {
+                            attribute: $t('validation.attributes.income')
+                        })
+                    "
+                    type="text"
+                    @change="
+                        form?.validate(
                             //@ts-ignore
                             'second_sponsor.income'
                         )
                     "
-                    class="mt-2 text-danger"
-                    data-test="error_income_message"
-                >
-                    {{
-                        //@ts-ignore
-                        form.errors['second_sponsor.income']
-                    }}
-                </div>
-            </base-form-input-error>
+                    @keydown="allowOnlyNumbersOnKeyDown"
+                    maxlength="10"
+                ></base-form-input>
+
+                <base-input-group-text>
+                    {{ $t('DA') }}
+                </base-input-group-text>
+            </base-input-group>
+
+            <base-form-input-error :form field_name="second_sponsor.income"> </base-form-input-error>
         </div>
 
         <div class="intro-y col-span-12 sm:col-span-6">
             <base-form-switch>
-                <base-form-switch-input id="with_family" type="checkbox" v-model="withFamily"></base-form-switch-input>
+                <base-form-switch-input
+                    id="with_family"
+                    type="checkbox"
+                    v-model="createFamilyStore.family.second_sponsor.with_family"
+                ></base-form-switch-input>
                 <base-form-switch-label htmlFor="with_family">
                     {{ $t('housing.label.with_family') }}
                 </base-form-switch-label>

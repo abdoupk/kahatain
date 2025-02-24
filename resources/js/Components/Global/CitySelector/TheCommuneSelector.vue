@@ -2,11 +2,11 @@
 import type { CityType, Commune } from '@/types/types'
 
 import { useCityStore } from '@/stores/city'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted } from 'vue'
 
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 const props = defineProps<{
     errorMessage?: string | string[]
@@ -14,8 +14,6 @@ const props = defineProps<{
 }>()
 
 const commune = defineModel<Commune>('commune')
-
-const selectedCommune = ref<Commune>()
 
 const cityStore = useCityStore()
 
@@ -25,20 +23,9 @@ onMounted(async () => {
 
         cityStore.getCommune(props.city.id)
 
-        selectedCommune.value = cityStore.commune
+        commune.value = cityStore.commune?.id
     }
 })
-
-const handleChange = () => {
-    commune.value = selectedCommune.value
-}
-
-watch(
-    () => commune.value,
-    (value) => {
-        selectedCommune.value = value
-    }
-)
 </script>
 
 <template>
@@ -47,24 +34,20 @@ watch(
             {{ $t('commune') }}
         </base-form-label>
 
-        <div>
-            <!-- @vue-ignore -->
-            <base-vue-select
-                id="communes"
-                v-model:value="selectedCommune"
-                :options="cityStore.communes"
-                :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('commune') })"
-                class="tom-select w-full"
-                label="commune_name"
-                track-by="id"
-                @update:value="handleChange"
-            ></base-vue-select>
-        </div>
+        <base-list-box
+            id="communes"
+            v-model="commune"
+            :model-value="commune"
+            :options="cityStore.communes"
+            :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('commune') })"
+            label-key="commune_name"
+            value-key="id"
+        ></base-list-box>
 
-        <base-form-input-error>
-            <div v-if="errorMessage" class="mt-2 text-danger">
+        <base-input-error v-if="errorMessage">
+            <div class="mt-2 text-danger">
                 {{ Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }}
             </div>
-        </base-form-input-error>
+        </base-input-error>
     </div>
 </template>

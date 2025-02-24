@@ -1,14 +1,9 @@
 <script lang="ts" setup>
 import { useSponsorsStore } from '@/stores/sponsors'
 
-import FilterPersonDropDown from '@/Components/Global/filters/FilterPersonDropDown.vue'
+import BaseCombobox from '@/Components/Base/headless/Combobox/BaseCombobox.vue'
 
-const value = defineModel<{ id: string; name: string }>('value', {
-    default: {
-        id: '',
-        name: ''
-    }
-})
+const value = defineModel('value')
 
 const sponsorsStore = useSponsorsStore()
 
@@ -20,5 +15,11 @@ function loadSponsors(query: string, setOptions: (results: { id: string; name: s
 </script>
 
 <template>
-    <filter-person-drop-down v-model="value" :load-options="loadSponsors"></filter-person-drop-down>
+    <base-combobox
+        v-model="value"
+        :load-options="loadSponsors"
+        :options="[]"
+        label-key="name"
+        value-key="id"
+    ></base-combobox>
 </template>

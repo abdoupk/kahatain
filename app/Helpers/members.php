@@ -3,7 +3,7 @@
 /** @noinspection UnknownInspectionInspection */
 
 use App\Models\Committee;
-use App\Models\competence;
+use App\Models\Competence;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,7 +13,7 @@ function getMembers(): LengthAwarePaginator
 {
     return search(User::getModel())
         ->query(fn ($query) => $query->with('zone'))
-        ->paginate(perPage: request()?->integer('perPage', 10));
+        ->paginate(perPage: request()->integer('perPage', 10));
 }
 
 function searchMembers(): Collection
@@ -23,7 +23,7 @@ function searchMembers(): Collection
 
 function syncCompetences(array $competenceNames, User $user): void
 {
-    $allCompetenceIds = collect($competenceNames)->map(fn ($competenceName) => competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();
+    $allCompetenceIds = collect($competenceNames)->map(fn ($competenceName) => Competence::firstOrCreate(['name' => $competenceName['name']]))->pluck('id')->toArray();
 
     $user->competences()->sync($allCompetenceIds);
 }

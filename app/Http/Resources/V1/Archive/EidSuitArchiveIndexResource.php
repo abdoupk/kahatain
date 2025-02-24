@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Archive;
 
+use App\Models\Orphan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,17 +20,17 @@ class EidSuitArchiveIndexResource extends JsonResource
             ],
             'family' => [
                 'zone' => [
-                    'id' => $this->family?->zone->id,
-                    'name' => $this->family?->zone->name,
+                    'id' => $this->family?->zone?->id,
+                    'name' => $this->family?->zone?->name,
                 ],
                 'address' => $this->family->address,
             ],
             'orphan' => [
                 'id' => $this->id,
                 'name' => $this->getName(),
-                'shirt_size' => $this->shirtSize->label,
-                'pants_size' => $this->pantsSize->label,
-                'shoes_size' => $this->shoesSize->label,
+                'shirt_size' => $this->shirtSize?->label,
+                'pants_size' => $this->pantsSize?->label,
+                'shoes_size' => $this->shoesSize?->label,
             ],
         ];
     }

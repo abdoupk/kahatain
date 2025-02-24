@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\AcademicLevel;
+use App\Models\Family;
+use App\Models\Sponsor;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,26 +17,32 @@ return new class extends Migration
     {
         Schema::create('orphans', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('first_name');
-            $table->text('last_name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->date('birth_date')->index('idx_orphans_birth_date');
-            $table->text('family_status')->nullable()->index('idx_orphans_family_status');
-            $table->text('health_status')->index('idx_orphans_health_status');
-            $table->integer('academic_level_id')->nullable()->index('idx_orphans_academic_level');
-            $table->integer('vocational_training_id')->nullable();
-            $table->text('shoes_size')->nullable()->index('idx_orphans_shoes_size');
-            $table->text('pants_size')->nullable()->index('idx_orphans_pants_size');
-            $table->text('shirt_size')->nullable()->index('idx_orphans_shirt_size');
-            $table->text('gender');
+            $table->string('family_status')->nullable()->index('idx_orphans_family_status');
+            $table->string('health_status')->nullable()->index('idx_orphans_health_status');
+            $table->foreignIdFor(AcademicLevel::class)->nullable()->index('idx_orphans_academic_level');
+            $table->string('shoes_size')->nullable()->index('idx_orphans_shoes_size');
+            $table->string('pants_size')->nullable()->index('idx_orphans_pants_size');
+            $table->string('shirt_size')->nullable()->index('idx_orphans_shirt_size');
+            $table->string('gender');
             $table->float('income')->nullable();
             $table->boolean('is_handicapped');
             $table->boolean('is_unemployed');
+            $table->string('ccp')->nullable();
+            $table->float('academic_average')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->uuid('institution_id')->nullable();
+            $table->string('institution_type')->nullable();
+            $table->integer('speciality_id')->nullable();
+            $table->string('speciality_type')->nullable();
             $table->text('note')->nullable()->index('idx_orphans_note');
-            $table->uuid('tenant_id')->index('idx_orphans_tenant_id');
-            $table->uuid('family_id')->index('idx_orphans_family_id');
-            $table->uuid('sponsor_id');
-            $table->uuid('created_by')->index('idx_orphans_created_by');
-            $table->uuid('deleted_by')->nullable()->index('idx_orphans_deleted_by');
+            $table->foreignIdFor(Tenant::class)->index('idx_orphans_tenant_id');
+            $table->foreignIdFor(Family::class)->index('idx_orphans_family_id');
+            $table->foreignIdFor(Sponsor::class);
+            $table->foreignIdFor(\App\Models\User::class, 'created_by')->index('idx_orphans_created_by');
+            $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable()->index('idx_orphans_deleted_by');
             $table->timestamps();
             $table->softDeletes();
 

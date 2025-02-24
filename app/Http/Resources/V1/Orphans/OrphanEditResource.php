@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\V1\Orphans;
 
-use App\Http\Resources\AcademicAchievementResource;
 use App\Http\Resources\V1\Members\MemberResource;
 use App\Models\Orphan;
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ class OrphanEditResource extends JsonResource
     public function toArray(Request $request): array
     {
         $babyNeeds = now()->diff($this->birth_date)->y < 2
-            ? $this->babyNeeds->only(
+            ? $this?->babyNeeds->only(
                 [
                     'baby_milk_quantity',
                     'baby_milk_type',
@@ -37,8 +36,7 @@ class OrphanEditResource extends JsonResource
             'birth_date' => $this->birth_date,
             'family_status' => $this->family_status,
             'health_status' => $this->health_status,
-            'academic_level_id' => $this->academicLevel?->id,
-            'last_academic_year_achievement' => $this->formatedLastAcademicYear(),
+            'academic_level_id' => $this->academic_level_id,
             ...$babyNeeds,
             'shoes_size' => $this->shoes_size,
             'pants_size' => $this->pants_size,
@@ -46,19 +44,23 @@ class OrphanEditResource extends JsonResource
             'gender' => $this->gender,
             'note' => $this->note,
             'income' => $this->income,
-
-            'academic_achievements' => AcademicAchievementResource::collection(
-                $this->whenLoaded('academicAchievements')
-            ),
-            'sponsorships' => new OrphanSponsorshipResource(
-                $this->whenLoaded('sponsorships')
-            ),
-            'vocational_training_achievements' => VocationalTrainingAchievementResource::collection(
-                $this->whenLoaded('vocationalTrainingAchievements')
-            ),
-            'college_achievements' => CollegeAchievementResource::collection(
-                $this->whenLoaded('collegeAchievements')
-            ),
+            'photo' => $this->getFirstMediaUrl('photos'),
+            'institution_id' => $this->institution_id,
+            'institution_type' => $this->institution_type,
+            'institution' => [
+                'id' => $this->institution_id,
+                'name' => $this->institution?->getName(),
+            ],
+            'speciality_id' => $this->speciality_id,
+            'speciality_type' => $this->speciality_type,
+            'speciality' => [
+                'id' => $this->speciality_id,
+                'name' => $this->speciality?->getName(),
+            ],
+            'ccp' => $this->ccp,
+            'is_handicapped' => $this->is_handicapped,
+            'is_unemployed' => $this->is_unemployed,
+            'phone_number' => $this->phone_number,
         ];
     }
 }

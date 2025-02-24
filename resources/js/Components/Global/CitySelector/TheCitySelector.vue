@@ -33,7 +33,6 @@ defineProps<{
         ></the-wilaya-selector>
 
         <the-daira-selector
-            v-model:daira="daira"
             :city
             @update:model-value="
                 () => {
@@ -48,7 +47,7 @@ defineProps<{
             v-model:commune="commune"
             :city
             :errorMessage
-            @update:commune="cityId = $event?.id"
+            @update:commune="cityId = $event"
         ></the-commune-selector>
     </div>
 </template>

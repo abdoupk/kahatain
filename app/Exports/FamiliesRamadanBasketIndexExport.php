@@ -21,7 +21,7 @@ class FamiliesRamadanBasketIndexExport implements FromView, WithEvents
     public function view(): View
     {
         return view('pdf.occasions.ramadan-basket-families', [
-            'sponsorships' => listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(),
+            'families' => listOfFamiliesBenefitingFromTheRamadanBasketSponsorshipForExport(),
         ]);
     }
 }

@@ -8,6 +8,7 @@ interface State {
     school: CreateSchoolForm & {
         id?: string
         lessons_count?: number
+        quota?: number
         readable_created_at?: string
         creator?: {
             id: string
@@ -30,7 +31,9 @@ export const useSchoolsStore = defineStore('schools', {
                 {
                     quota: null,
                     academic_level_id: null,
-                    subject_id: null
+                    subject_id: null,
+                    start_date: new Date(),
+                    end_date: new Date()
                 }
             ]
         },
@@ -69,6 +72,34 @@ export const useSchoolsStore = defineStore('schools', {
             return this.schools
                 .find((school) => school.id === schoolId)
                 .subjects.find((subject) => subject.id === subjectId)
+        },
+
+        async searchSchools(search: string, phase_key: string, city_id: number) {
+            const { data: schools } = await axios.get(
+                route('tenant.schools.search-schools', {
+                    search,
+                    phase_key,
+                    city_id
+                })
+            )
+
+            return schools
+        },
+
+        async searchAllPhasesSchools(search: string) {
+            const { data: schools } = await axios.get(
+                route('tenant.schools.search-all-phases-schools', {
+                    search
+                })
+            )
+
+            return schools
+        },
+
+        async searchUniversities(search: string) {
+            const { data: universities } = await axios.get(route('tenant.schools.search-universities', { search }))
+
+            return universities
         }
     }
 })

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable array-element-newline */
 import { type CkeditorElement, type CkeditorEmit, type CkeditorProps as GlobalCkeditorProps, init } from './ckeditor'
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -17,7 +18,40 @@ interface CkeditorProps extends GlobalCkeditorProps {
 const props = withDefaults(defineProps<CkeditorProps>(), {
     as: 'div',
     config: () => ({
-        language: getLocale()
+        language: getLocale(),
+        toolbar: {
+            items: [
+                'undo',
+                'redo',
+                '|',
+                'heading',
+                '|',
+                'fontfamily',
+                'fontsize',
+                'fontColor',
+                'fontBackgroundColor',
+                '|',
+                'bold',
+                'italic',
+                'strikethrough',
+                'subscript',
+                'superscript',
+                'code',
+                '|',
+                'link',
+                'insertTable',
+                'blockQuote',
+                '|',
+                'alignment',
+                '|',
+                'bulletedList',
+                'numberedList',
+                'todoList',
+                'outdent',
+                'indent'
+            ],
+            shouldNotGroupWhenFull: true
+        }
     })
 })
 

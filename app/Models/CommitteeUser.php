@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class CommitteeUser extends Pivot
 {
-    use HasUuids;
+    use BelongsToTenant, HasUuids;
 
     public $timestamps = false;
 

@@ -1,4 +1,4 @@
-import { PositionType } from '@/types/types'
+import { PositionType, UploadedFilesType } from '@/types/types'
 
 export interface OrphanType {
     id: string
@@ -26,8 +26,11 @@ export interface SpouseType {
     name: string
     birth_date: string
     death_date: string
+    death_certificate_file: string
     function: string
     income: string
+    files?: UploadedFilesType
+    type: 'father' | 'mother'
 }
 
 interface IncomeType {
@@ -61,6 +64,7 @@ export interface SponsorType {
         name: string
     }
     incomes: IncomeType
+    files?: UploadedFilesType
 }
 
 export interface SecondSponsorType {
@@ -111,34 +115,6 @@ export interface FamilyEditHousingType {
     other_properties: string
 }
 
-export interface FamilySponsorshipType {
-    family_id: string
-    monthly_allowance: string
-    ramadan_basket: string
-    zakat: string
-    housing_assistance: string
-    eid_al_adha: string
-}
-
-export interface OrphanSponsorshipType {
-    id: string
-    medical_sponsorship: boolean
-    university_scholarship: boolean
-    association_trips: boolean
-    summer_camp: boolean
-    eid_suit: boolean
-    private_lessons: boolean
-    school_bag: boolean
-}
-
-export interface SponsorSponsorshipType {
-    id: string
-    medical_sponsorship: string | boolean
-    literacy_lessons: string | boolean
-    direct_sponsorship: string | boolean
-    project_support: string | boolean
-}
-
 export interface PreviewType {
     family_id: string
     report: string
@@ -155,18 +131,35 @@ export interface FamilyShowType {
     address: string
     file_number: string
     start_date: Date
+    files: UploadedFilesType
     branch: string
     zone: string
     orphans: OrphanType[]
-    spouse: SpouseType
+    deceased: SpouseType[]
     sponsor: SponsorType
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType
     housing: HousingType
-    family_sponsorships: FamilySponsorshipType
-    orphans_sponsorships: OrphanSponsorshipType[]
-    sponsor_sponsorships: SponsorSponsorshipType
     preview: PreviewType
+    total_income: number
+    amount_from_association: number
+    difference_after_monthly_sponsorship: number
+    ramadan_sponsorship_difference: number
+    monthly_sponsorship_rate: number
+    aggregate_red_meat_benefit: number
+    aggregate_white_meat_benefit: number
+    aggregate_zakat_benefit: number
+    difference_before_monthly_sponsorship: number
+    basket_from_association: boolean
+    basket_from_benefactor: number
+    amount_from_benefactor: number
+    income_rate: number
+    ramadan_basket_category: string
+    location: {
+        lat: number
+        lng: number
+    }
+    orphan_count: number
 }
 
 export interface FamilyEditType {
@@ -177,9 +170,10 @@ export interface FamilyEditType {
     start_date: Date
     branch_id: string
     zone_id: string
-    spouse: SpouseType
+    deceased: SpouseType[]
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType
+    residence_certificate_file: string | null
     housing: {
         id: string
         family_id: string
@@ -191,7 +185,6 @@ export interface FamilyEditType {
         number_of_rooms: number
         other_properties: string
     }
-    family_sponsorships: FamilySponsorshipType
     preview: PreviewType
     creator: {
         id: string
@@ -208,6 +201,7 @@ export interface FamilyUpdateFormType {
     start_date: Date
     branch_id: string
     zone_id: string
+    residence_certificate_file: string | null
     spouse: SpouseType
     second_sponsor: SecondSponsorType
     furnishings: FurnishingType

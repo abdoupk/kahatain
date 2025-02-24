@@ -9,15 +9,15 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class EventForceDeleteController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:destroy_trash'];
+    }
+
     public function __invoke(Event $event): Response
     {
         $event->forceDelete();
 
         return response('', 204);
-    }
-
-    public static function middleware()
-    {
-        return ['can:destroy_trash'];
     }
 }

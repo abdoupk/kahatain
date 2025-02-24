@@ -3,7 +3,10 @@ import { defineStore } from 'pinia'
 
 export const useOrphansStore = defineStore('orphan', {
     state: () => ({
-        orphans: []
+        orphans: [],
+        selectedOrphan: '',
+        selectedOrphans: [],
+        eidSuitInfos: {}
     }),
     actions: {
         async getOrphans() {
@@ -16,6 +19,14 @@ export const useOrphansStore = defineStore('orphan', {
             const { data: orphans } = await axios.get(route('tenant.orphans.search', { search }))
 
             return orphans
+        },
+
+        async getEidSuitInfos(id: string) {
+            const { data: data } = await axios.get(route('tenant.occasions.eid-suit.show', id))
+
+            this.eidSuitInfos = data.eid_suit
+
+            return data
         }
     }
 })

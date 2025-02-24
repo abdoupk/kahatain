@@ -7,10 +7,16 @@ use App\Http\Resources\V1\Occasions\SchoolEntryResource;
 use App\Models\Archive;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SchoolEntryIndexController extends Controller implements HasMiddleware
 {
-    public function __invoke()
+    public static function middleware()
+    {
+        return ['can:view_occasions'];
+    }
+
+    public function __invoke(): Response
     {
         return Inertia::render('Tenant/occasions/school-entry/SchoolEntryIndex', [
             'orphans' => SchoolEntryResource::collection(listOfOrphansBenefitingFromTheSchoolEntrySponsorship()),
@@ -18,10 +24,5 @@ class SchoolEntryIndexController extends Controller implements HasMiddleware
             'archive' => fn () => Archive::with('savedBy:id,first_name,last_name')->whereOccasion('school_entry')
                 ->whereYear('created_at', now()->year)->select(['id', 'saved_by', 'created_at'])->first(),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_occasions'];
     }
 }

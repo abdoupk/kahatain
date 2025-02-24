@@ -18,6 +18,14 @@ const form = useForm({
 const submit = () => {
     // eslint-disable-next-line no-undef
     form.post(route('tenant.login'), {
+        fresh: true,
+        replace: true,
+        showProgress: false,
+        onSuccess: () => {
+            window.stop()
+
+            window.location.reload()
+        },
         onFinish: () => {
             form.reset('password')
         }
@@ -43,7 +51,8 @@ const submit = () => {
                     v-model="form.email"
                     :placeholder="$t('validation.attributes.email')"
                     autofocus
-                    class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px]"
+                    class="intro-x block min-w-full px-4 py-3 placeholder:text-end xl:min-w-[350px]"
+                    dir="auto"
                     type="text"
                 />
 
@@ -52,7 +61,8 @@ const submit = () => {
                 <base-form-input
                     v-model="form.password"
                     :placeholder="$t('validation.attributes.password')"
-                    class="intro-x mt-4 block min-w-full px-4 py-3 xl:min-w-[350px]"
+                    class="intro-x mt-4 block min-w-full px-4 py-3 placeholder:text-end xl:min-w-[350px]"
+                    dir="auto"
                     type="password"
                 />
                 <base-input-error :message="form.errors.password" class="mt-2"></base-input-error>

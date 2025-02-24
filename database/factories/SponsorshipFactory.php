@@ -16,6 +16,7 @@ class SponsorshipFactory extends Factory
             'created_by' => fake()->uuid,
             'benefactor_id' => fake()->uuid,
             'sponsorship_type' => fake()->randomElement(['monthly_basket', 'educational_sponsorship', 'grant', 'social_sponsorship']),
+            'until' => fake()->randomElement([null, now()->subDays(rand(1, 60))]),
             'created_at' => now(),
             'updated_at' => now(),
         ];

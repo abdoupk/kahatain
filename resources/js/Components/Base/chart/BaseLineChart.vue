@@ -13,6 +13,7 @@ const props = defineProps<{
     height?: number
     lineColor?: string
     labels: string[]
+    callback?: (tickValue: number) => string
     datasets: {
         label: string
         data: number[]
@@ -80,7 +81,8 @@ const options = computed<ChartOptions>(() => {
                     font: {
                         size: 12
                     },
-                    color: labelColor
+                    color: labelColor,
+                    callback: props?.callback
                 },
                 grid: {
                     color: darkMode.value ? gridDarkColor : gridLightColor,

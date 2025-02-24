@@ -83,12 +83,18 @@ export const useCityStore = defineStore('city', {
             this.wilaya = this.wilayas.find((wilaya) => wilaya.wilaya_code == wilaya_code)
         },
 
-        getDaira(daira_name: string | undefined) {
+        getDairaByName(daira_name: string | undefined) {
             if (typeof daira_name === 'undefined' || daira_name == '') this.daira = { daira_name: '' }
 
             this.daira = this.dairas.find((daira) => daira.daira_name == daira_name)
 
-            this.wilaya.wilaya_code = this.daira.wilaya_code
+            this.wilaya.wilaya_code = this.daira?.wilaya_code
+        },
+
+        getDairaById(id: number | undefined) {
+            if (typeof id === 'undefined' || id == '') this.daira = { id: '' }
+
+            this.daira = this.dairas.find((daira) => daira?.id == id)
         },
 
         getCommune(id: number) {

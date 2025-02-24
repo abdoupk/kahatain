@@ -5,9 +5,13 @@ namespace Database\Factories;
 use App\Models\AcademicLevel;
 use App\Models\ClothesSize;
 use App\Models\Orphan;
+use App\Models\School;
 use App\Models\ShoeSize;
+use App\Models\University;
+use App\Models\UniversitySpeciality;
 use App\Models\User;
-use App\Models\VocationalTraining;
+use App\Models\VocationalTrainingCenter;
+use App\Models\VocationalTrainingSpeciality;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrphanFactory extends Factory
@@ -56,14 +60,44 @@ class OrphanFactory extends Factory
             $unemployed = true;
         }
 
+        $institution_id = null;
+
+        $institution_type = fake()->randomElement(['school', 'university', 'vocational_training_center']);
+
+        if ($institution_type === 'vocational_training_center') {
+            $institution_id = VocationalTrainingCenter::inRandomOrder()->first()?->id;
+        }
+
+        if ($institution_type === 'school') {
+            $institution_id = School::inRandomOrder()->first()?->id;
+        }
+
+        if ($institution_type === 'university') {
+            $institution_id = University::inRandomOrder()->first()?->id;
+        }
+
+        $speciality_type = null;
+        $speciality_id = null;
+
+        if ($institution_type === 'university') {
+            $speciality_id = UniversitySpeciality::inRandomOrder()->first()?->id;
+            $speciality_type = 'university_speciality';
+        }
+
+        if ($institution_type === 'vocational_training_center') {
+            $speciality_id = VocationalTrainingSpeciality::inRandomOrder()->first()?->id;
+            $speciality_type = 'vocational_training_speciality';
+        }
+
         return [
             'first_name' => fake('ar_SA')->firstName,
             'last_name' => fake('ar_SA')->lastName,
             'birth_date' => $birth_date->toDate(),
             'family_status' => $family_status,
             'health_status' => fake('ar_SA')->realText('10'),
-            'academic_level_id' => AcademicLevel::inRandomOrder()->first()->id,
-            'vocational_training_id' => VocationalTraining::inRandomOrder()->first()->id,
+            'academic_level_id' => AcademicLevel::inRandomOrder()->first()?->id,
+            'speciality_id' => $speciality_id,
+            'speciality_type' => $speciality_type,
             'shoes_size' => ShoeSize::inRandomOrder()->first()->id,
             'pants_size' => ClothesSize::inRandomOrder()->first()->id,
             'shirt_size' => ClothesSize::inRandomOrder()->first()->id,
@@ -74,6 +108,8 @@ class OrphanFactory extends Factory
             'is_unemployed' => $unemployed,
             'tenant_id' => fake()->uuid,
             'family_id' => fake()->uuid,
+            'institution_id' => $institution_id,
+            'institution_type' => $institution_type,
             'created_at' => now()->subDays(fake()->numberBetween(0, 35)),
             'updated_at' => now()->subDays(fake()->numberBetween(0, 35)),
             'created_by' => User::inRandomOrder()->first()?->id,

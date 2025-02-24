@@ -24,7 +24,9 @@ const deleteButtonRef = ref(null)
 
                 <div class="mt-2 text-slate-500">
                     <slot>
-                        {{ $t('Do you really want to delete this record?') }} <br />
+                        {{ $t('Do you really want to delete this record?') }}
+                        <br />
+
                         {{ $t('This process cannot be undone.') }}
                     </slot>
                 </div>

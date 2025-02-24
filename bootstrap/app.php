@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
 use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -21,6 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
             Route::middleware('web')->group(base_path('routes/tenant.php'));
 
+            Route::get('test', fn () => 'test');
+
             Route::middleware('guest')->group(base_path('routes/v1/registration.php'));
 
             Route::middleware('api')->group(base_path('routes/v1/api.php'));
@@ -34,10 +37,17 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             TeamsPermissionMiddleware::class,
             App\Http\Middleware\HandleInertiaRequests::class,
-            Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        $middleware->group('universal', []);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function (TenantCouldNotBeIdentifiedException $e, Request $request) {
+            return Inertia::render('ErrorPage', ['status' => 400, 'tenantDontFound' => true])
+                ->toResponse($request)
+                ->setStatusCode(400);
+        });
+
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
             if (! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
                 return Inertia::render('ErrorPage', ['status' => $response->getStatusCode()])

@@ -5,21 +5,23 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\Archive\ArchiveDetailsBabiesMilkAndDiapersController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsEidAlAdhaController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsEidSuitController;
+use App\Http\Controllers\V1\Archive\ArchiveDetailsMeatDistributionController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlyBasketController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsMonthlySponsorshipController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsRamadanBasketController;
 use App\Http\Controllers\V1\Archive\ArchiveDetailsSchoolEntryController;
+use App\Http\Controllers\V1\Archive\ArchiveDetailsZakatController;
 use App\Http\Controllers\V1\Archive\ArchiveIndexController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveBabiesMilkAndDiapersPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveBabiesMilkAndDiapersXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesEidAlAdhaPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesEidAlAdhaXlsxController;
-use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlyBasketPDFController;
-use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlyBasketXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesMonthlySponsorshipXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesRamadanBasketXlsxController;
+use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesZakatPDFController;
+use App\Http\Controllers\V1\Archive\Exports\ExportArchiveFamiliesZakatXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansEidSuitPDFController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansEidSuitXlsxController;
 use App\Http\Controllers\V1\Archive\Exports\ExportArchiveOrphansSchoolEntryPDFController;
@@ -55,6 +57,16 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
             )->name('ramadan-basket');
 
             Route::get(
+                'zakat/{archive}',
+                ArchiveDetailsZakatController::class
+            )->name('zakat');
+
+            Route::get(
+                'meat-distribution/{archive}',
+                ArchiveDetailsMeatDistributionController::class
+            )->name('meat-distribution');
+
+            Route::get(
                 'school-entry/{archive}',
                 ArchiveDetailsSchoolEntryController::class
             )->name('school-entry');
@@ -80,16 +92,6 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
             'eid-al-adha/export-xlsx/{archive}',
             ExportArchiveFamiliesEidAlAdhaXlsxController::class
         )->name('eid-al-adha.xlsx');
-
-        Route::get(
-            'monthly-basket/export-pdf/{archive}',
-            ExportArchiveFamiliesMonthlyBasketPDFController::class
-        )->name('monthly-basket.pdf');
-
-        Route::get(
-            'monthly-basket/export-xlsx/{archive}',
-            ExportArchiveFamiliesMonthlyBasketXlsxController::class
-        )->name('monthly-basket.xlsx');
 
         Route::get(
             'ramadan-basket/export-pdf/{archive}',
@@ -140,5 +142,15 @@ Route::prefix('archive')->name('archive.')->group(function (): void {
             'monthly-sponsorship/export-xlsx/{archive}',
             ExportArchiveFamiliesMonthlySponsorshipXlsxController::class
         )->name('monthly-sponsorship.xlsx');
+
+        Route::get(
+            'zakat/export-pdf/{archive}',
+            ExportArchiveFamiliesZakatPDFController::class
+        )->name('zakat.pdf');
+
+        Route::get(
+            'zakat/export-xlsx/{archive}',
+            ExportArchiveFamiliesZakatXlsxController::class
+        )->name('zakat.xlsx');
     });
 });

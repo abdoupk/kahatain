@@ -10,19 +10,17 @@ use Throwable;
 
 class ExportBabiesPDFController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:export_occasions'];
+    }
+
     /**
      * @throws CouldNotTakeBrowsershot
      * @throws Throwable
      */
     public function __invoke(): StreamedResponse
     {
-        return saveToPDF('occasions/babies-milk-and-diapers', 'babies', function () {
-            return getBabiesForExport();
-        }, now()->translatedFormat('F Y'));
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_occasions'];
+        return saveToPDF('occasions/babies-milk-and-diapers', 'babies', fn () => getBabiesForExport(), now()->translatedFormat('F Y'));
     }
 }

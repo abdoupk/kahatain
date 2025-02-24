@@ -37,7 +37,7 @@ const setTimes = (value: string | Date) => {
 
     startDate.value = formattedDate.toDate()
 
-    endDate.value = formattedDate.add(1, 'hour').toDate()
+    endDate.value = formattedDate.toDate()
 
     return formattedDate
 }
@@ -59,7 +59,7 @@ onMounted(() => {
 <template>
     <!-- Begin: Date Range-->
     <div class="col-span-12 grid grid-cols-12 gap-4">
-        <div class="col-span-12 sm:col-span-4">
+        <div class="col-span-12 sm:col-span-3">
             <base-form-label for="date">
                 {{ $t('validation.attributes.date') }}
             </base-form-label>
@@ -67,7 +67,7 @@ onMounted(() => {
             <base-v-calendar v-model:date="date" mode="date"></base-v-calendar>
         </div>
 
-        <div class="col-span-12 sm:col-span-4">
+        <div class="col-span-12 sm:col-span-3">
             <base-form-label for="start_date">
                 {{ $t('validation.attributes.start_date') }}
             </base-form-label>
@@ -80,14 +80,10 @@ onMounted(() => {
                 mode="time"
             ></base-v-calendar>
 
-            <base-form-input-error>
-                <div v-if="form?.invalid('start_date')" class="mt-2 text-danger" data-test="error_start_date_message">
-                    {{ form.errors.start_date }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="start_date"></base-form-input-error>
         </div>
 
-        <div class="col-span-12 sm:col-span-4">
+        <div class="col-span-12 sm:col-span-3">
             <base-form-label for="end_date">
                 {{ $t('validation.attributes.end_date') }}
             </base-form-label>
@@ -100,12 +96,29 @@ onMounted(() => {
                 mode="time"
             ></base-v-calendar>
 
-            <base-form-input-error>
-                <div v-if="form?.invalid('end_date')" class="mt-2 text-danger" data-test="error_end_date_message">
-                    {{ form.errors.end_date }}
-                </div>
-            </base-form-input-error>
+            <base-form-input-error :form field_name="end_date"></base-form-input-error>
         </div>
+
+        <!-- Begin: Until-->
+        <div class="col-span-12 sm:col-span-3">
+            <base-form-label htmlFor="until">
+                {{ $t('validation.attributes.until') }}
+            </base-form-label>
+
+            <base-v-calendar
+                id="until"
+                v-model:date="until"
+                :disabled="!disabled"
+                :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.until') })"
+                mode="date"
+                type="text"
+            ></base-v-calendar>
+
+            <div v-if="form.errors?.until" class="mt-2">
+                <base-input-error :message="form.errors.until"></base-input-error>
+            </div>
+        </div>
+        <!-- End: Until-->
     </div>
     <!-- End: Date Range-->
 
@@ -147,25 +160,4 @@ onMounted(() => {
         </div>
     </div>
     <!-- End: Interval-->
-
-    <!-- Begin: Until-->
-    <div class="col-span-12 sm:col-span-6">
-        <base-form-label htmlFor="until">
-            {{ $t('validation.attributes.until') }}
-        </base-form-label>
-
-        <base-v-calendar
-            id="until"
-            v-model:date="until"
-            :disabled="!disabled"
-            :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.until') })"
-            mode="date"
-            type="text"
-        ></base-v-calendar>
-
-        <div v-if="form.errors?.until" class="mt-2">
-            <base-input-error :message="form.errors.until"></base-input-error>
-        </div>
-    </div>
-    <!-- End: Until-->
 </template>

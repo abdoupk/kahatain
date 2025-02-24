@@ -9,6 +9,10 @@ import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateM
 import MenuLink from '@/Pages/Tenant/sponsors/details/MenuLink.vue'
 
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
+import TheAvatar from '@/Components/Global/TheAvatar.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
+
+import { hasPermission } from '@/utils/helper'
 
 const props = defineProps<{ sponsor: SponsorShowType }>()
 
@@ -32,6 +36,11 @@ const showNeedCreateModal = () => {
     <div class="col-span-12 flex flex-col-reverse lg:col-span-4 lg:block 2xl:col-span-3">
         <div class="intro-y box mt-5 lg:mt-0">
             <div class="relative flex items-center p-5">
+                <div class="image-fit h-12 w-12">
+                    <img v-if="sponsor.photo" :src="sponsor.photo" alt="" class="rounded-full" />
+                    <the-avatar v-else :gender="sponsor.gender" :name="sponsor.name"></the-avatar>
+                </div>
+
                 <div class="me-auto ms-4">
                     <div class="text-base font-bold">{{ sponsor.name }}</div>
 
@@ -42,6 +51,12 @@ const showNeedCreateModal = () => {
                         {{ sponsor.creator?.name }}
                     </Link>
                 </div>
+
+                <Link v-if="hasPermission('edit_sponsors')" :href="route('tenant.sponsors.edit', sponsor.id)">
+                    <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
+
+                    <span class="ms-1 rtl:!font-semibold"> {{ $t('edit') }}</span>
+                </Link>
             </div>
 
             <div class="border-t border-slate-200/60 p-5 dark:border-darkmode-400">
@@ -49,7 +64,7 @@ const showNeedCreateModal = () => {
 
                 <menu-link icon="icon-couple" view-name="incomes_information"></menu-link>
 
-                <menu-link icon="icon-couple" view-name="sponsorships_information"></menu-link>
+                <!--                <menu-link icon="icon-couple" view-name="sponsorships_information"></menu-link>-->
             </div>
 
             <div class="flex border-t border-slate-200/60 p-5 dark:border-darkmode-400">

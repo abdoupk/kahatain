@@ -25,19 +25,15 @@ class MemberDetailsResource extends JsonResource
             'phone' => formatPhoneNumber($this->phone),
             'zone' => ZoneResource::make($this->whenLoaded('zone')),
             'branch' => ZoneResource::make($this->whenLoaded('branch')),
-            'readable_committees' => $this->whenLoaded('committees', function () {
-                return $this->committees->pluck('name')->implode(__('glue'));
-            }),
-            'readable_competences' => $this->whenLoaded('competences', function () {
-                return $this->competences->pluck('name')->implode(__('glue'));
-            }),
+            'readable_committees' => $this->whenLoaded('committees', fn () => $this->committees->pluck('name')->implode(__('glue'))),
+            'readable_competences' => $this->whenLoaded('competences', fn () => $this->competences->pluck('name')->implode(__('glue'))),
             'readable_created_at' => $this->created_at->translatedFormat('j F Y H:i A'),
             'creator' => MemberResource::make($this->whenLoaded('creator')),
             'readable_roles' => $this->roles->pluck('name')->implode(__('glue')),
             'workplace' => $this->workplace,
             'function' => $this->function,
             'address' => $this->address,
-            'academic_level' => $this->academicLevel->level.' ('.$this->academicLevel->phase.')',
+            'academic_level' => $this->academicLevel?->level ? $this->academicLevel?->level.' ('.$this->academicLevel?->phase.')' : null,
         ];
     }
 }

@@ -1,5 +1,4 @@
-import type { SponsorSponsorshipType } from '@/types/families'
-import type { IncomeType, Zone } from '@/types/types'
+import { IncomeType, UploadedFilesType, Zone } from '@/types/types'
 
 export interface SponsorShowType {
     id: string
@@ -26,12 +25,31 @@ export interface SponsorShowType {
     orphans_count: number
     birth_certificate_number: string
     card_number: string
-    incomes: IncomeType
-    sponsorships: SponsorSponsorshipType
+    incomes: {
+        cnr: number
+        casnos: number
+        cnas: number
+        pension: number
+        other_income: number
+        account: {
+            bank: {
+                performance_grant: number | null
+                monthly_income: number | null
+                balance: number | null
+            }
+            ccp: {
+                performance_grant: number | null
+                monthly_income: number | null
+                balance: number | null
+            }
+        }
+        files: UploadedFilesType
+    }
     creator: {
         id: string
         name: string
     }
+    files: UploadedFilesType
 }
 
 export interface SponsorUpdateFormType {
@@ -56,5 +74,8 @@ export interface SponsorUpdateFormType {
         name: string
     }
     incomes: IncomeType
-    sponsorships: SponsorSponsorshipType
+    photo: string
+    birth_certificate_file: string
+    diploma_file: string
+    no_remarriage_file: string
 }

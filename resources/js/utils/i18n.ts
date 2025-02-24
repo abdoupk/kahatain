@@ -1,3 +1,5 @@
+import ar from '../../../public/locales/ar.json'
+
 import type { LangType } from '@/types/types'
 
 import { type App, ref } from 'vue'
@@ -7,9 +9,7 @@ const locale = ref('ar') // default locale
 const langData = ref<Record<string, string>>({})
 
 async function fetchLocale() {
-    const response = await fetch(`/locales/${locale.value}.json`)
-
-    langData.value = await response.json()
+    langData.value = ar
 }
 
 function setLocale(newLocale: LangType) {

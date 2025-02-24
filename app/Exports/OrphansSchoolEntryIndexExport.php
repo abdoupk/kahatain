@@ -21,7 +21,7 @@ class OrphansSchoolEntryIndexExport implements FromView, WithEvents
     public function view(): View
     {
         return view('pdf.occasions.school-entry', [
-            'sponsorships' => listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(),
+            'orphans' => listOfOrphansBenefitingFromTheSchoolEntrySponsorshipForExport(),
         ]);
     }
 }

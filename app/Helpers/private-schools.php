@@ -21,7 +21,7 @@ use Recurr\Transformer\ArrayTransformer;
 function getSchools(): LengthAwarePaginator
 {
     return search(PrivateSchool::getModel())
-        ->query(fn ($query) => $query->with('lessons'))
+        ->query(fn ($query) => $query->with('lessons')->withCount('eventsWithOrphans'))
         ->paginate(perPage: request()->integer('perPage', 10));
 }
 
@@ -33,18 +33,14 @@ function getLessons(): Collection
         },
         ])
         ->get()
-        ->map(function ($event) {
-            return $event->occurrences->map(function ($occurrence) use ($event) {
-                return [
-                    'id' => $occurrence->id,
-                    'title' => $event->title,
-                    'color' => $event->color,
-                    'start' => $occurrence->start_date,
-                    'end' => $occurrence->end_date,
-                    //                    'url' => route('tenant.lessons.details-lesson', $occurrence->id),
-                ];
-            });
-        })->flatten(1);
+        ->map(fn ($event) => $event->occurrences->map(fn ($occurrence) => [
+            'id' => $occurrence->id,
+            'title' => $event->title,
+            'color' => $event->color,
+            'start' => $occurrence->start_date,
+            'end' => $occurrence->end_date,
+            //                    'url' => route('tenant.lessons.details-lesson', $occurrence->id),
+        ]))->flatten(1);
 }
 
 function formatedAcademicLevels(): array
@@ -53,6 +49,8 @@ function formatedAcademicLevels(): array
 
     foreach (AcademicLevel::all() as $row) {
         $formattedArray[$row['phase']]['phase'] = $row['phase'];
+
+        $formattedArray[$row['phase']]['phase_key'] = $row['phase_key'];
 
         $formattedArray[$row['phase']]['levels'][] = ['name' => $row['level'], 'id' => $row['id']];
     }
@@ -88,12 +86,10 @@ function formatDateFromTo($dateFrom, $dateTo): string
  */
 function generateOccurrences(Event $event, string $lesson_id, array $orphans): void
 {
-    $formatted = array_map(function ($orphan) use ($lesson_id) {
-        return [
-            'orphan_id' => $orphan,
-            'lesson_id' => $lesson_id,
-        ];
-    }, $orphans);
+    $formatted = array_map(fn ($orphan) => [
+        'orphan_id' => $orphan,
+        'lesson_id' => $lesson_id,
+    ], $orphans);
 
     if (! $event->interval || ! $event->frequency) {
         $event_occurrence = $event->occurrences()->create([
@@ -121,7 +117,7 @@ function generateOccurrences(Event $event, string $lesson_id, array $orphans): v
     $rule->setEndDate($event->end_date);
     $rule->setFreq(Str::upper($frequency));
     $rule->setInterval($interval);
-    $rule->setUntil(Carbon::parse($event->until));
+    $rule->setUntil($event->until ? Carbon::parse($event->until) : Carbon::create(now()->year, 7, 5));
     $rule->setWeekStart('SU');
 
     $transformer = new ArrayTransformer;

@@ -7,6 +7,7 @@ import type {
 } from '@/types/types'
 
 import { monthlySponsorshipFilters } from '@/constants/filters'
+import { monthlySponsorshipSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
@@ -76,7 +77,7 @@ sponsorshipsStore.monthly_sponsorship = props.settings
 const sort = (field: string) => handleSort(field, params.value)
 
 const save = () => {
-    getDataForIndexPages(route('tenant.monthly-sponsorship.save-to-archive'), params.value, {
+    getDataForIndexPages(route('tenant.occasions.monthly-sponsorship.save-to-archive'), params.value, {
         onStart: () => {
             loading.value = true
         },
@@ -107,6 +108,8 @@ const showSettingsModal = () => {
 
     sponsorshipsStore.getMonthlySponsorshipSettings()
 
+    sponsorshipsStore.getMonthlyBasketItems(1)
+
     showSettingsModalStatus.value = true
 }
 </script>
@@ -121,13 +124,15 @@ const showSettingsModal = () => {
                 :filters="monthlySponsorshipFilters"
                 :pagination-data="families"
                 :params="params"
+                :sortableFields="monthlySponsorshipSorts"
                 :title="$t('list', { attribute: $t('the_families_monthly_basket') })"
-                :url="route('tenant.monthly-sponsorship.index')"
+                :url="route('tenant.occasions.monthly-sponsorship.index')"
                 entries="families"
-                export-pdf-url="tenant.monthly-sponsorship.export.pdf"
-                export-xlsx-url="tenant.monthly-sponsorship.export.xlsx"
+                export-pdf-url="tenant.occasions.monthly-sponsorship.export.pdf"
+                export-xlsx-url="tenant.occasions.monthly-sponsorship.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>
@@ -146,14 +151,18 @@ const showSettingsModal = () => {
                     <base-button
                         v-if="hasPermission('save_occasions')"
                         :disabled="loading"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="handleSave"
                     >
                         {{ $t('save') }}
                     </base-button>
 
-                    <base-button class="me-2" @click.prevent="showSettingsModal">
+                    <base-button
+                        v-if="hasPermission(['update_settings', 'update_monthly_basket'])"
+                        class="me-2"
+                        @click.prevent="showSettingsModal"
+                    >
                         <base-tippy :content="$t('settings')">
                             <svg-loader name="icon-gear"></svg-loader>
                         </base-tippy>
@@ -167,7 +176,7 @@ const showSettingsModal = () => {
                 <the-table-footer
                     :pagination-data="families"
                     :params
-                    :url="route('tenant.monthly-sponsorship.index')"
+                    :url="route('tenant.occasions.monthly-sponsorship.index')"
                     class="mt-2"
                 ></the-table-footer>
             </template>

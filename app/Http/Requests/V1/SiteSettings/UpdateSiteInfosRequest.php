@@ -24,6 +24,7 @@ class UpdateSiteInfosRequest extends FormRequest
             'address' => 'nullable',
             'city_id' => 'nullable',
             'super_admin' => 'required|uuid|exists:users,id',
+            'logo' => 'nullable|string',
         ];
     }
 

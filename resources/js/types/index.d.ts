@@ -2,6 +2,7 @@ import type {
     AppearanceType,
     ColorSchemesType,
     DatabaseNotification,
+    FontSizeType,
     LayoutsType,
     PaginationData,
     PositionType,
@@ -27,6 +28,7 @@ export interface UserSettings {
     color_scheme: ColorSchemesType
     theme: ThemesType
     appearance: AppearanceType
+    font_size: FontSizeType
     notifications: {
         families_changes: boolean
         branches_and_zones_changes: boolean

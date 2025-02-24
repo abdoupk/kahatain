@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { twMerge } from 'tailwind-merge'
 import { computed } from 'vue'
 
@@ -10,7 +10,9 @@ defineOptions({
 
 const attrs = useComputedAttrs()
 
-const computedClass = computed(() => twMerge(['cursor-pointer ms-2', typeof attrs.class === 'string' && attrs.class]))
+const computedClass = computed(() =>
+    twMerge(['cursor-pointer ms-2 rtl:font-semibold', typeof attrs.class === 'string' && attrs.class])
+)
 </script>
 
 <template>

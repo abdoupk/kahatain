@@ -5,12 +5,17 @@ namespace App\Http\Controllers\V1\Families;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Families\CreateFamilyRequest;
 use App\Jobs\V1\Family\FamilyCreatedJob;
+use App\Models\Branch;
 use App\Models\Family;
 use App\Models\Sponsor;
+use App\Models\Spouse;
+use Arr;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Throwable;
 
 class FamilyStoreController extends Controller implements HasMiddleware
@@ -32,7 +37,6 @@ class FamilyStoreController extends Controller implements HasMiddleware
                         ...$request->only(
                             'address',
                             'zone_id',
-                            'file_number',
                             'start_date',
                             'branch_id',
                             'location'
@@ -40,8 +44,11 @@ class FamilyStoreController extends Controller implements HasMiddleware
                         'name' => $request->validated('sponsor.first_name')
                             .'  '.
                             $request->validated('sponsor.last_name'),
+                        'file_number' => Branch::with('city')->find($request->validated('branch_id'))->city->commune_code.'/'.Family::count() + 1,
                     ]
                 );
+
+                addToMediaCollection($family, $request->validated('residence_file'), 'residence_files');
 
                 $sponsor = $this->storeSponsor($request, $family);
 
@@ -49,15 +56,13 @@ class FamilyStoreController extends Controller implements HasMiddleware
 
                 $this->storeOrphans($request, $family, $sponsor);
 
-                if (! empty(array_filter($request->validated('second_sponsor')))) {
+                if (array_filter($request->validated('second_sponsor')) !== []) {
                     $family->secondSponsor()->create($request->validated('second_sponsor'));
                 }
 
-                $family->deceased()->create($request->validated('spouse'));
+                $this->storeDeceased($request, $family);
 
                 $this->storeHousingInformations($family, $request);
-
-                $this->storeSponsorships($family, $request, $sponsor);
 
                 monthlySponsorship($family);
 
@@ -70,14 +75,39 @@ class FamilyStoreController extends Controller implements HasMiddleware
         return response('', 422);
     }
 
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
     private function storeSponsor(CreateFamilyRequest $request, Model|Family $family): Sponsor
     {
-        $sponsor = $family->sponsor()->create([...$request->validated('sponsor')]);
+        $sponsor = $family->sponsor()->create(Arr::except($request->validated('sponsor'), ['photo', 'diploma_file', 'no_remarriage_file', 'birth_certificate_file']));
 
-        $sponsor->incomes()->create([
-            ...$request->validated('incomes'),
-            'total_income' => array_sum($request->validated('incomes')),
+        $income = $sponsor->incomes()->create([
+            ...$request->only(
+                ['incomes.casnos', 'incomes.ccp', 'incomes.account', 'incomes.cnr',
+                    'incomes.cnas', 'incomes.other_income', 'incomes.pension']
+            )['incomes'],
+            'total_income' => setTotalIncomeAttribute($request->incomes, $sponsor),
         ]);
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.diploma_file'), 'diploma_files');
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.birth_certificate_file'), 'birth_certificate_files');
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.photo'), 'photos');
+
+        addToMediaCollection($income, $request->validated('incomes.bank_file'), 'bank_files');
+
+        addToMediaCollection($income, $request->validated('incomes.ccp_file'), 'ccp_files');
+
+        addToMediaCollection($income, $request->validated('incomes.casnos_file'), 'casnos_files');
+
+        addToMediaCollection($income, $request->validated('incomes.cnas_file'), 'cnas_files');
+
+        addToMediaCollection($income, $request->validated('incomes.cnr_file'), 'cnr_files');
+
+        addToMediaCollection($sponsor, $request->validated('sponsor.no_remarriage_file'), 'no_remarriage_files');
 
         return $sponsor;
     }
@@ -92,29 +122,37 @@ class FamilyStoreController extends Controller implements HasMiddleware
         $preview->inspectors()->sync($request->validated('inspectors_members'));
     }
 
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
     public function storeOrphans(CreateFamilyRequest $request, Model|Family $family, Sponsor $sponsor): void
     {
-        $validatedOrphans = $request->orphans;
+        $target = $request->validated('orphans');
+        $validatedOrphans = data_forget($target, 'orphans.*.vocational_training_id');
         $babiesToCreate = [];
 
         $orphans = $family->orphans()->createMany(array_map(static function ($orphan) use ($sponsor) {
             $orphan['sponsor_id'] = $sponsor->id;
 
-            return array_filter($orphan, function ($key) {
-                return ! in_array($key, [
-                    'baby_milk_quantity',
-                    'baby_milk_type',
-                    'diapers_quantity',
-                    'diapers_type',
-                    'vocational_training_id',
-                ]);
-            }, ARRAY_FILTER_USE_KEY);
+            unset($orphan['photo']);
+
+            return array_filter($orphan, fn ($key) => ! in_array($key, [
+                'baby_milk_quantity',
+                'baby_milk_type',
+                'diapers_quantity',
+                'diapers_type',
+            ]), ARRAY_FILTER_USE_KEY);
         }, $validatedOrphans));
 
         foreach ($validatedOrphans as $key => $orphan) {
             $orphan = array_filter($orphan);
 
-            if (! empty($orphan) && isset(
+            if (isset($orphan['photo'])) {
+                addToMediaCollection($orphans[$key], $orphan['photo'], 'photos');
+            }
+
+            if ($orphan !== [] && isset(
                 $orphan['baby_milk_quantity'],
                 $orphan['baby_milk_type'],
                 $orphan['diapers_quantity'],
@@ -128,22 +166,24 @@ class FamilyStoreController extends Controller implements HasMiddleware
                     'orphan_id' => $orphans[$key]->id,
                 ];
             }
-
-            $orphans[$key]->sponsorships()->create([
-                ...$request->validated('orphans_sponsorship')[$key],
-            ]);
-
-            if (isset($orphan['vocational_training_id'])) {
-                $orphans[$key]->vocationalTrainingAchievements()->create([
-                    'year' => now()->year,
-                    'vocational_training_id' => $request->validated('orphans')[$key]['vocational_training_id'],
-                ]);
-            }
         }
 
-        if (! empty($babiesToCreate)) {
+        if ($babiesToCreate !== []) {
             $family->babies()->createMany($babiesToCreate);
         }
+    }
+
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
+    private function storeDeceased(CreateFamilyRequest $request, Family $family)
+    {
+        $deceased = $family->deceased()->createMany(array_map(fn ($item) => Arr::except($item, ['death_certificate_file']), $request->validated('deceased')));
+
+        $deceased->each(function (Spouse $deceased, $index) use ($request): void {
+            addToMediaCollection($deceased, $request->validated('deceased')[$index]['death_certificate_file'], 'death_certificate_files', false);
+        });
     }
 
     public function storeHousingInformations(Model|Family $family, CreateFamilyRequest $request): void
@@ -156,13 +196,8 @@ class FamilyStoreController extends Controller implements HasMiddleware
             'other_properties' => $request->validated('other_properties'),
         ]);
 
-        $family->furnishings()->create($request->validated('furnishings'));
-    }
-
-    public function storeSponsorships(Model|Family $family, CreateFamilyRequest $request, Sponsor $sponsor): void
-    {
-        $family->sponsorships()->create($request->validated('family_sponsorship'));
-
-        $sponsor->sponsorships()->create($request->validated('sponsor_sponsorship'));
+        $family->furnishings()->create([
+            ...$request->validated('furnishings'),
+        ]);
     }
 }

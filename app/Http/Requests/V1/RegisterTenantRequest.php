@@ -12,6 +12,13 @@ use Illuminate\Validation\Rules\Password;
  */
 class RegisterTenantRequest extends FormRequest
 {
+    public function attributes(): array
+    {
+        return [
+            'city_id' => __('commune'),
+        ];
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -32,6 +39,7 @@ class RegisterTenantRequest extends FormRequest
             'password' => ['required', 'confirmed', Password::defaults()],
             'association' => 'required|string|max:255',
             'domain' => [new RegistrationDomainRequiredRule, 'string', 'max:255'],
+            'city_id' => 'required|exists:cities,id',
         ];
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 uses(
-    Tests\DuskTestCase::class,
+    //    Tests\DuskTestCase::class,
     // Illuminate\Foundation\Testing\DatabaseMigrations::class,
 )->in('Browser');
 
@@ -51,3 +51,5 @@ function something()
 {
     // ..
 }
+
+// arch()->preset()->php();

@@ -21,7 +21,7 @@ class OrphansEidSuitIndexExport implements FromView, WithEvents
     public function view(): View
     {
         return view('pdf.occasions.eid-suit', [
-            'sponsorships' => listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(),
+            'orphans' => listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(),
         ]);
     }
 }

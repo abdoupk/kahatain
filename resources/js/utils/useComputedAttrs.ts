@@ -1,4 +1,3 @@
-import { computedEager } from '@vueuse/core'
 import { computed, useAttrs } from 'vue'
 
 export const useComputedAttrs = () => {

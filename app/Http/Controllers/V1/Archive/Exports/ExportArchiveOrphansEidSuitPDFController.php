@@ -10,19 +10,17 @@ use Throwable;
 
 class ExportArchiveOrphansEidSuitPDFController extends Controller
 {
+    public static function middleware()
+    {
+        return ['can:export_archive'];
+    }
+
     /**
      * @throws Throwable
      * @throws CouldNotTakeBrowsershot
      */
     public function __invoke(Archive $archive): StreamedResponse
     {
-        return saveArchiveToPDF('eid-suit', function () {
-            return listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport();
-        }, $archive->created_at->year);
-    }
-
-    public static function middleware()
-    {
-        return ['can:export_archive'];
+        return saveArchiveToPDF('eid-suit', fn () => listOfOrphansBenefitingFromTheEidSuitSponsorshipForExport(), $archive->created_at->year, 'orphans');
     }
 }

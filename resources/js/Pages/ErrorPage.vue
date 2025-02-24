@@ -8,9 +8,14 @@ import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
     status: number
+    tenantDontFound?: boolean
 }>()
 
 const title = computed(() => {
+    if (props.tenantDontFound) {
+        return $t('errors.titles.400')
+    }
+
     return {
         503: $t('errors.titles.503'),
         500: $t('errors.titles.500'),
@@ -20,6 +25,10 @@ const title = computed(() => {
 })
 
 const description = computed(() => {
+    if (props.tenantDontFound) {
+        return $t('errors.descriptions.400')
+    }
+
     return {
         503: $t('errors.descriptions.503'),
         500: $t('errors.descriptions.500'),
@@ -52,9 +61,9 @@ const description = computed(() => {
                     </div>
 
                     <base-button
-                        :as="Link"
+                        :as="tenantDontFound ? 'a' : Link"
+                        :href="tenantDontFound ? 'https://kahatain-dz.com' : '/'"
                         class="intro-x mt-10 border-white px-4 py-3 text-white dark:border-darkmode-400 dark:text-slate-200"
-                        href="/"
                     >
                         {{ $t('errors.back to home') }}
                     </base-button>

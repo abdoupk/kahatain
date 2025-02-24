@@ -6,7 +6,7 @@ import { computed } from 'vue'
 import BaseChart from '@/Components/Base/chart/BaseChart.vue'
 
 import { extractColor, getColor } from '@/utils/colors'
-import { getLocale } from '@/utils/i18n'
+import { $t, getLocale } from '@/utils/i18n'
 
 const props = defineProps<{
     width?: number
@@ -27,7 +27,7 @@ const darkMode = computed(() => useSettingsStore().appearance === 'dark')
 
 const data = computed<ChartData>(() => {
     return {
-        labels: props.labels,
+        labels: props.labels.map((label) => $t(label)),
         datasets: props.datasets.map((dataset) => {
             return {
                 data: dataset.data,
@@ -46,6 +46,8 @@ const data = computed<ChartData>(() => {
 
 const options = computed<ChartOptions>(() => {
     return {
+        responsive: true,
+        maintainAspectRatio: false, // Ensures proper scaling
         elements: {
             line: {
                 borderWidth: 2

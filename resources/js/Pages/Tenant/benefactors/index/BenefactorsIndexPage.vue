@@ -2,6 +2,7 @@
 import type { FamiliesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { benefactorsFilters } from '@/constants/filters'
+import { benefactorsSorts } from '@/constants/sorts'
 import { useBenefactorsStore } from '@/stores/benefactors'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head, router } from '@inertiajs/vue3'
@@ -173,6 +174,7 @@ watchEffect(async () => {
                 :filters="benefactorsFilters"
                 :pagination-data="benefactors"
                 :params="params"
+                :sortableFields="benefactorsSorts"
                 :title="$t('list', { attribute: $t('the_benefactors') })"
                 :url="route('tenant.benefactors.index')"
                 entries="benefactors"
@@ -180,19 +182,24 @@ watchEffect(async () => {
                 export-xlsx-url=""
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
                     <base-button
                         v-if="hasPermission('create_benefactors')"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="showCreateModal"
                     >
                         {{ $tc('add new', 1, { attribute: $t('benefactor') }) }}
                     </base-button>
 
-                    <base-button class="me-2" @click.prevent="showAddNewSponsorshipModal">
+                    <base-button
+                        v-if="hasPermission('add_new_sponsorship_benefactors')"
+                        class="me-2"
+                        @click.prevent="showAddNewSponsorshipModal"
+                    >
                         <base-tippy :content="$tc('add new', 0, { attribute: $t('sponsorship') })">
                             <svg-loader name="icon-plus"></svg-loader>
                         </base-tippy>

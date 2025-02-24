@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1\Sponsors;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\Sponsors\SponsorShowResource;
+use App\Http\Resources\V1\Sponsors\SponsorDetailResource;
 use App\Models\Sponsor;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
@@ -21,13 +21,12 @@ class SponsorShowController extends Controller implements HasMiddleware
         return Inertia::render(
             'Tenant/sponsors/details/SponsorDetailPage',
             [
-                'sponsor' => new SponsorShowResource(
+                'sponsor' => new SponsorDetailResource(
                     $sponsor->load(
-                        'sponsorships',
                         'academicLevel',
                         'family.zone',
                         'family.branch',
-                        'incomes',
+                        'incomes.media',
                         'creator'
                     )->loadCount('orphans')
                 ),

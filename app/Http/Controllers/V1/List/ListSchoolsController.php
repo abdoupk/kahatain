@@ -10,6 +10,6 @@ class ListSchoolsController extends Controller
 {
     public function __invoke()
     {
-        return response()->json(ListSchoolsResource::collection(PrivateSchool::with('subjects')->latest()->get()));
+        return response()->json(ListSchoolsResource::collection(PrivateSchool::with('subjects.academicLevel')->latest()->get()));
     }
 }

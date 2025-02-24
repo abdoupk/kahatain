@@ -1,20 +1,19 @@
 <script lang="ts" setup>
 import type { FamilyShowType } from '@/types/families'
+import { PaginationData } from '@/types/types'
 
 import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, provide, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
+import HistoryIndexPage from '@/Pages/Tenant/families/details/history/HistoryIndexPage.vue'
+
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
 import { $t } from '@/utils/i18n'
 
 const FamilyMenu = defineAsyncComponent(() => import('@/Pages/Tenant/families/details/FamilyMenu.vue'))
-
-const TheFamilySponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/details/TheFamilySponsorship.vue')
-)
 
 const TheGeneralInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheGeneralInformation.vue')
@@ -28,10 +27,6 @@ const TheOrphansInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheOrphansInformation.vue')
 )
 
-const TheOrphansSponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/details/TheOrphansSponsorship.vue')
-)
-
 const TheReport = defineAsyncComponent(() => import('@/Pages/Tenant/families/details/TheReport.vue'))
 
 const TheSecondSponsorInformation = defineAsyncComponent(
@@ -42,10 +37,6 @@ const TheSponsorInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheSponsorInformation.vue')
 )
 
-const TheSponsorSponsorship = defineAsyncComponent(
-    () => import('@/Pages/Tenant/families/details/TheSponsorSponsorship.vue')
-)
-
 const TheSpouseInformation = defineAsyncComponent(
     () => import('@/Pages/Tenant/families/details/TheSpouseInformation.vue')
 )
@@ -54,7 +45,11 @@ defineOptions({
     layout: TheLayout
 })
 
-defineProps<{ family: FamilyShowType }>()
+defineProps<{
+    family: FamilyShowType
+    archives: PaginationData<unknown>
+    needs: PaginationData<unknown>
+}>()
 
 const view = ref('general_information')
 
@@ -71,7 +66,9 @@ provide('familyDetailView', { view, updateView })
     <suspense>
         <div>
             <div class="intro-y mt-8 flex items-center">
-                <h2 class="me-auto text-lg font-medium ltr:capitalize">{{ $t('family details') }}</h2>
+                <h2 class="me-auto text-lg font-medium ltr:capitalize">
+                    {{ $t('family details') }}
+                </h2>
             </div>
 
             <div class="mt-5 grid grid-cols-12 gap-6">
@@ -107,26 +104,18 @@ provide('familyDetailView', { view, updateView })
 
                         <the-report v-if="view === 'the_report'" :preview="family.preview"></the-report>
 
-                        <the-family-sponsorship
-                            v-if="view === 'family_sponsorship'"
-                            :sponsorships="family.family_sponsorships"
-                        ></the-family-sponsorship>
-
-                        <the-sponsor-sponsorship
-                            v-if="view === 'sponsor_sponsorship'"
-                            :sponsorships="family.sponsor_sponsorships"
-                        ></the-sponsor-sponsorship>
-
-                        <the-orphans-sponsorship
-                            v-if="view === 'orphans_sponsorship'"
-                            :sponsor-ships="family.orphans_sponsorships"
-                        ></the-orphans-sponsorship>
-
                         <the-spouse-information
                             v-if="view === 'spouse_information'"
-                            :spouse="family.spouse"
+                            :deceased="family.deceased"
                         ></the-spouse-information>
                     </div>
+
+                    <history-index-page
+                        v-if="view === 'family_benefit_history'"
+                        :archives
+                        :family-id="family.id"
+                        :needs
+                    ></history-index-page>
                 </div>
             </div>
         </div>

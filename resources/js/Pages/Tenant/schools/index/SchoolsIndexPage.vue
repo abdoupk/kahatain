@@ -2,6 +2,7 @@
 import type { SubjectType } from '@/types/lessons'
 import type { IndexParams, PaginationData, SchoolsIndexResource } from '@/types/types'
 
+import { privateSchoolsSorts } from '@/constants/sorts'
 import { useSchoolsStore } from '@/stores/schools'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -13,7 +14,7 @@ import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $tc } from '@/utils/i18n'
 
-const SchoolShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/schools/SchoolShowModal.vue'))
+const SchoolShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/schools/details/SchoolShowModal.vue'))
 
 const SchoolCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/schools/create/SchoolCreateModal.vue'))
 
@@ -153,18 +154,20 @@ watchEffect(async () => {
                 :filters="[]"
                 :pagination-data="schools"
                 :params="params"
+                :sortableFields="privateSchoolsSorts"
                 :title="$t('list', { attribute: $t('the_schools') })"
                 :url="route('tenant.schools.index')"
                 entries="schools"
                 export-pdf-url=""
                 export-xlsx-url=""
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
                     <base-button
                         v-if="hasPermission('create_schools')"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="showCreateModal"
                     >

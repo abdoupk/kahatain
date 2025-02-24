@@ -21,6 +21,8 @@ defineProps<{
             twMerge([
                 'relative mb-1 flex h-[50px] items-center rounded-xl ps-5 text-slate-600 dark:text-slate-300',
 
+                $page.url === menu.url && '!cursor-default',
+
                 !menu.active && level != 'first' && 'text-slate-600 dark:text-slate-400',
                 menu.active && level == 'first' && 'bg-slate-100 dark:bg-transparent',
 
@@ -52,7 +54,7 @@ defineProps<{
         :href="menu.subMenu ? 'javascript:' : menu.url"
         class="side-menu"
         tag="a"
-        @click="linkTo(menu, $event)"
+        @click.prevent="linkTo(menu, $event)"
     >
         <div
             :class="
@@ -70,8 +72,12 @@ defineProps<{
             :class="
                 twMerge([
                     'ms-3 hidden w-full items-center xl:flex',
-                    menu.active && level == 'first' && 'z-10 font-medium text-primary dark:text-slate-300',
-                    menu.active && level != 'first' && 'font-medium text-slate-700 dark:text-slate-300',
+                    menu.active &&
+                        level == 'first' &&
+                        'z-10 font-medium text-primary dark:text-slate-300 rtl:font-semibold',
+                    menu.active &&
+                        level != 'first' &&
+                        'font-medium text-slate-700 dark:text-slate-300 rtl:font-semibold',
                     !menu.active && 'dark:text-slate-400'
                 ])
             "

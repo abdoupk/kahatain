@@ -33,7 +33,7 @@ defineProps<{
                                 </Link>
                             </div>
                             <div class="me-auto ms-4">
-                                <div class="font-medium">{{ transaction.receiver.name }}</div>
+                                <div class="font-medium rtl:!font-semibold">{{ transaction.receiver.name }}</div>
                                 <div class="mt-0.5 text-xs text-slate-500">
                                     {{ transaction.date }}
                                 </div>

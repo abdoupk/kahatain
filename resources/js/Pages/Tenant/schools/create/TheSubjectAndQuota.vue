@@ -8,7 +8,9 @@ import { useSubjectsStore } from '@/stores/subjects'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { onMounted, ref } from 'vue'
 
+import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
+import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
@@ -27,6 +29,10 @@ const emit = defineEmits(['removeLesson'])
 const academicLevel = defineModel('academicLevel')
 
 const quota = defineModel('quota')
+
+const startDate = defineModel('startDate')
+
+const endDate = defineModel('endDate')
 
 const academicLevels = ref([])
 
@@ -90,8 +96,44 @@ onMounted(async () => {
         </div>
         <!-- End: Subject-->
 
-        <!-- Begin: Quota-->
+        <!-- Begin: Start Date-->
         <div class="col-span-12 sm:col-span-4">
+            <base-form-label for="start_date">
+                {{ $t('validation.attributes.start_date') }}
+            </base-form-label>
+
+            <base-v-calendar
+                v-model:date="startDate"
+                :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.start_date') })"
+                hide-time-header
+                is24hr
+                mode="time"
+            ></base-v-calendar>
+
+            <base-form-input-error :field_name="`lessons.${index}.start_date`" :form></base-form-input-error>
+        </div>
+        <!-- End: Start Date-->
+
+        <!-- Begin: End Date-->
+        <div class="col-span-12 sm:col-span-4">
+            <base-form-label for="end_date">
+                {{ $t('validation.attributes.end_date') }}
+            </base-form-label>
+
+            <base-v-calendar
+                v-model:date="endDate"
+                :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.end_date') })"
+                hide-time-header
+                is24hr
+                mode="time"
+            ></base-v-calendar>
+
+            <base-form-input-error :field_name="`lessons.${index}.end_date`" :form></base-form-input-error>
+        </div>
+        <!-- End: End Date-->
+
+        <!-- Begin: Quota-->
+        <div class="col-span-12 sm:col-span-3">
             <base-form-label htmlFor="quota">
                 {{ $t('validation.attributes.quota') }}
             </base-form-label>

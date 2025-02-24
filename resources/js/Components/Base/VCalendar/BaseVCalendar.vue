@@ -24,13 +24,12 @@ const popover = ref({
 </script>
 
 <template>
-    <DatePicker
+    <date-picker
         v-model="date"
         :is-dark="settingsStore.appearance === 'dark'"
         :locale="getLocale()"
         :masks="masks"
         :popover
-        :update-on-input="false"
         borderless
         color="primary"
         mode="date"
@@ -49,9 +48,13 @@ const popover = ref({
                         }
                     "
                 >
-                    <svg-loader v-if="$attrs?.mode === 'time'" class="h-4 w-4 fill-current" name="icon-clock" />
+                    <svg-loader
+                        v-if="$attrs?.mode === 'time'"
+                        class="h-4 w-4 fill-current"
+                        name="icon-clock"
+                    ></svg-loader>
 
-                    <svg-loader v-else class="h-4 w-4 fill-current" name="icon-calendar" />
+                    <svg-loader v-else class="h-4 w-4 fill-current" name="icon-calendar"></svg-loader>
                 </div>
 
                 <base-form-input
@@ -65,7 +68,7 @@ const popover = ref({
                 ></base-form-input>
             </div>
         </template>
-    </DatePicker>
+    </date-picker>
 </template>
 
 <style lang="postcss">

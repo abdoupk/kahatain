@@ -20,6 +20,8 @@ defineProps<{
             twMerge([
                 'relative me-1 flex h-[55px] items-center rounded-full px-5 text-white xl:h-[47px] xl:rounded-lg',
 
+                $page.url === menu.url && '!cursor-default',
+
                 level != 'first' && 'me-0 px-0',
                 level == 'first' && 'mt-[3px]',
                 level == 'first' && menu.active && 'bg-slate-100 dark:bg-darkmode-700 xl:bg-primary',
@@ -58,7 +60,9 @@ defineProps<{
             :class="
                 twMerge([
                     'z-10 ms-3 flex w-full items-center whitespace-nowrap dark:text-slate-400',
-                    level == 'first' && menu.active && 'font-medium text-slate-800 dark:text-white xl:text-white',
+                    level == 'first' &&
+                        menu.active &&
+                        'font-medium text-slate-800 dark:text-white xl:text-white rtl:font-semibold',
                     level == 'first' && '-mt-[3px]'
                 ])
             "

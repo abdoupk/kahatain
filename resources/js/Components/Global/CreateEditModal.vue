@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useWindowSize } from '@vueuse/core'
 import { defineAsyncComponent } from 'vue'
 
 import TheModalLoader from '@/Components/Global/TheModalLoader.vue'
@@ -25,31 +26,38 @@ defineProps<{
     open: boolean
     title: string
     loading: boolean
+    disabled?: boolean
     modalType: 'create' | 'update'
     focusableInput?: HTMLElement
 }>()
+
+const { width } = useWindowSize()
 
 const emit = defineEmits(['close', 'handleSubmit'])
 </script>
 
 <template>
-    <base-dialog :initialFocus="focusableInput" :open @close="emit('close')">
+    <base-dialog :initialFocus="focusableInput" :open :staticBackdrop="width < 768" @close="emit('close')">
         <base-dialog-panel>
             <suspense suspensible>
                 <template #default>
-                    <form @submit.prevent="emit('handleSubmit')">
+                    <form id="create-edit-modal-form" @submit.prevent="emit('handleSubmit')">
                         <base-dialog-title>
                             <h2 class="me-auto text-base ltr:font-medium rtl:font-semibold">
                                 {{ title }}
                             </h2>
 
-                            <a class="absolute end-0 top-0 me-3 mt-3" href="#" @click="emit('close')">
+                            <span class="absolute end-0 top-0 me-3 mt-3 cursor-pointer" @click.prevent="emit('close')">
                                 <svg-loader class="h-5 w-5 fill-current" name="icon-x-mark"></svg-loader>
-                            </a>
+                            </span>
                         </base-dialog-title>
 
-                        <base-dialog-description class="grid grid-cols-12 gap-4 gap-y-3">
+                        <base-dialog-description v-if="$slots.description" class="grid grid-cols-12 gap-4 gap-y-3">
                             <slot name="description"></slot>
+                        </base-dialog-description>
+
+                        <base-dialog-description v-else>
+                            <slot name="body"></slot>
                         </base-dialog-description>
 
                         <base-dialog-footer class="flex justify-end">
@@ -62,7 +70,9 @@ const emit = defineEmits(['close', 'handleSubmit'])
                                 {{ $t('cancel') }}
                             </base-button>
 
-                            <base-button :disabled="loading" class="w-20" type="submit" variant="primary">
+                            <slot name="extraButtons"></slot>
+
+                            <base-button :disabled="loading || disabled" class="w-20" type="submit" variant="primary">
                                 <spinner-button-loader :show="loading"></spinner-button-loader>
 
                                 {{ $t(modalType) }}

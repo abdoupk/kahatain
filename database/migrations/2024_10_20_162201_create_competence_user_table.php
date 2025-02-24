@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Competence;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('competence_user', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignUuid('competence_id')->references('id')->on('competences')->onDelete('cascade');
-            $table->foreignUuid('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\User::class)->references('id')->on('users')->onDelete('cascade');
+            $table->foreignIdFor(Competence::class)->references('id')->on('competences')->onDelete('cascade');
+            $table->foreignIdFor(Tenant::class)->references('id')->on('tenants')->onDelete('cascade');
+
+            $table->index(['tenant_id']);
         });
     }
 

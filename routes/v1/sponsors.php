@@ -14,7 +14,6 @@ use App\Http\Controllers\V1\Sponsors\SponsorsIndexController;
 use App\Http\Controllers\V1\Sponsors\SponsorsStatisticsController;
 use App\Http\Controllers\V1\Sponsors\SponsorUpdateIncomesController;
 use App\Http\Controllers\V1\Sponsors\SponsorUpdateInfosController;
-use App\Http\Controllers\V1\Sponsors\SponsorUpdateSponsorshipsController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::prefix('sponsors')->name('sponsors.')->group(function (): void {
@@ -42,13 +41,6 @@ Route::prefix('sponsors')->name('sponsors.')->group(function (): void {
         SponsorUpdateIncomesController::class
     )
         ->name('incomes-update')
-        ->middleware([HandlePrecognitiveRequests::class]);
-
-    Route::put(
-        'sponsorships/{sponsor}',
-        SponsorUpdateSponsorshipsController::class
-    )
-        ->name('sponsorships-update')
         ->middleware([HandlePrecognitiveRequests::class]);
 
     Route::get(

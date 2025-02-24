@@ -32,6 +32,9 @@ class DeleteNeedNotification extends Notification implements ShouldQueue
                 'name' => $this->user->getName(),
                 'gender' => $this->user->gender,
             ],
+            'metadata' => [
+                'processed_at' => now(),
+            ],
         ];
     }
 

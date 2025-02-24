@@ -115,3 +115,44 @@ export type FinancesByTypeType = {
 }
 
 export type FinancesByMonthType = FinancialReportsType
+
+export type SchoolEntryStatisticsType = {
+    year: string
+    male_count: number
+    female_count: number
+}[]
+
+export type EidAlAdhaStatisticsType = {
+    year: string
+    orphans_count: number
+}[]
+
+export type ZakatStatisticsType = {
+    year: string
+    orphans_count: number
+}[]
+
+export type RamadanBasketStatisticsType = {
+    year: string
+    orphans_count: number
+}[]
+
+export type MonthlySponsorshipStatisticsType = {
+    year: string
+    orphans_count: number
+}[]
+
+export type EidSuitStatisticsType = {
+    year: string
+    orphans_count: number
+}[]
+
+export type BabiesMilkAndDiapersStatisticsType = {
+    year: string
+    orphans_count: number
+}[]
+
+export type MeatDistributionStatisticsType = {
+    year: string
+    orphans_count: number
+}[]

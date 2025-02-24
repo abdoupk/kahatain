@@ -2,6 +2,7 @@
 import type { CommitteesIndexResource, IndexParams, PaginationData } from '@/types/types'
 
 import { committeesFilters } from '@/constants/filters'
+import { committeesSorts } from '@/constants/sorts'
 import { useCommitteesStore } from '@/stores/committees'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -161,12 +162,14 @@ watchEffect(async () => {
                 export-xlsx-url=""
                 filterable
                 searchable
+                :sortableFields="committeesSorts"
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
                     <base-button
                         v-if="hasPermission('create_committees')"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="showCreateModal"
                     >

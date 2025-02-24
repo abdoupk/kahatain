@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +15,10 @@ return new class extends Migration
         Schema::create('archiveables', function (Blueprint $table) {
             $table->uuid('archive_id');
             $table->uuid('archiveable_id');
-            $table->text('archiveable_type');
-            $table->uuid('tenant_id');
+            $table->string('archiveable_type');
+            $table->foreignIdFor(Tenant::class);
+
+            $table->index(['tenant_id']);
         });
     }
 

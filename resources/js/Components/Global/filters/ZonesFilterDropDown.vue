@@ -1,17 +1,10 @@
 <script lang="ts" setup>
-import type { FilterValueType } from '@/types/types'
-
 import { useZonesStore } from '@/stores/zones'
 import { onMounted } from 'vue'
 
-import FilterValueDropDown from '@/Components/Global/filters/FilterValueDropDown.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
-const value = defineModel<FilterValueType>('value', {
-    default: {
-        id: '',
-        name: ''
-    }
-})
+const value = defineModel('value')
 
 const zonesStore = useZonesStore()
 
@@ -23,5 +16,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <filter-value-drop-down v-model:value="value" :data="zonesStore.zones"></filter-value-drop-down>
+    <base-list-box
+        v-model="value"
+        :options="zonesStore.zones"
+        class="mt-2"
+        label-key="name"
+        value-key="id"
+    ></base-list-box>
 </template>

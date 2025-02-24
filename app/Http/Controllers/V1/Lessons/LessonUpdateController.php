@@ -26,8 +26,8 @@ class LessonUpdateController extends Controller implements HasMiddleware
     {
         if (! $request->update_this_and_all_coming) {
             $eventOccurrence->update([
-                'start_date' => Carbon::parse($request->start_date)->addHour(),
-                'end_date' => Carbon::parse($request->start_date)->addHour(),
+                'start_date' => Carbon::parse($request->start_date),
+                'end_date' => Carbon::parse($request->end_date),
             ]);
         } else {
             $eventOccurrence->orphans()->detach();
@@ -36,8 +36,8 @@ class LessonUpdateController extends Controller implements HasMiddleware
 
             $eventOccurrence->event()->update([
                 ...$request->only(['color', 'until', 'frequency', 'title', 'interval']),
-                'start_date' => Carbon::parse($request->start_date)->addHour(),
-                'end_date' => Carbon::parse($request->start_date)->addHour(),
+                'start_date' => Carbon::parse($request->start_date),
+                'end_date' => Carbon::parse($request->end_date),
             ]);
 
             $eventOccurrence->event->occurrences()->where('start_date', '>=', $eventOccurrence->start_date)->delete();

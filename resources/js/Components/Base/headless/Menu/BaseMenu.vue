@@ -23,9 +23,9 @@ const computedClass = computed(() => twMerge(['relative', typeof attrs.class ===
 </script>
 
 <template>
-    <headless-menu as="template">
+    <headless-menu as="template" v-slot="{ close }">
         <component :is="as" :class="computedClass" v-bind="attrs.attrs">
-            <slot></slot>
+            <slot :close="close"></slot>
         </component>
     </headless-menu>
 </template>

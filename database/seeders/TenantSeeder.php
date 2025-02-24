@@ -4,10 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Branch;
 use App\Models\Committee;
-use App\Models\competence;
+use App\Models\Competence;
 use App\Models\Domain;
 use App\Models\Finance;
 use App\Models\Inventory;
+use App\Models\MonthlyBasket;
+use App\Models\RamadanBasket;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\Zone;
@@ -27,6 +29,13 @@ class TenantSeeder extends Seeder
                 ],
                 'domain' => 'foo.'.config('app.domain'),
                 'association' => 'kafil el yatim El-bayadh ',
+                'city_id' => 1144,
+                'city' => [
+                    'id' => 1144,
+                    'daira_name' => 'البيض',
+                    'wilaya_code' => '32',
+                    'wilaya_name' => 'البيض',
+                ],
             ],
         ]);
 
@@ -40,6 +49,13 @@ class TenantSeeder extends Seeder
                 ],
                 'domain' => 'bar.'.config('app.domain'),
                 'association' => 'kafil el yatim El-bayadh 02',
+                'city_id' => 1144,
+                'city' => [
+                    'id' => 1144,
+                    'daira_name' => 'البيض',
+                    'wilaya_code' => '32',
+                    'wilaya_name' => 'البيض',
+                ],
             ],
         ]);
 
@@ -51,15 +67,6 @@ class TenantSeeder extends Seeder
             Domain::factory()->create([
                 'tenant_id' => $tenant?->id,
                 'domain' => $tenant?->infos['domain'],
-            ]);
-
-            $zones = Zone::factory()->count(10)->create(['tenant_id' => $tenant->id]);
-
-            competence::factory()->count(10)->create(['tenant_id' => $tenant->id]);
-
-            $branches = Branch::factory(fake()->numberBetween(1, 12))->create([
-                'tenant_id' => $tenant?->id,
-                'president_id' => $tenant->members->random()->first()->id,
             ]);
 
             User::factory()
@@ -81,15 +88,36 @@ class TenantSeeder extends Seeder
                 ->count(10)
                 ->create([
                     'tenant_id' => $tenant?->id,
-                    'branch_id' => $branches->random()?->id,
-                    'zone_id' => $zones->random()?->id,
                 ]);
 
-            Inventory::factory()->count(fake()->numberBetween(10, 25))->create([
+            Zone::factory()->count(10)->create(
+                [
+                    'tenant_id' => $tenant->id,
+                    'created_by' => $tenant->members->random()->first()?->id,
+                ]);
+
+            competence::factory()->count(10)->create(['tenant_id' => $tenant->id]);
+
+            Branch::factory(fake()->numberBetween(1, 12))->create([
                 'tenant_id' => $tenant?->id,
-                'deleted_by' => $tenant->members->random()->first()->id,
-                'created_by' => $tenant->members->random()->first()->id,
+                'president_id' => $tenant->members->random()->first()?->id,
             ]);
+
+            for ($i = 0; $i < fake()->numberBetween(3, 13); $i++) {
+                RamadanBasket::factory()
+                    ->for(Inventory::factory()->state([
+                        'tenant_id' => $tenant->id,
+                        'created_by' => $tenant->members->random()->first()->id,
+                    ]))
+                    ->create(['tenant_id' => $tenant->id]);
+
+                MonthlyBasket::factory()
+                    ->for(Inventory::factory()->state([
+                        'tenant_id' => $tenant->id,
+                        'created_by' => $tenant->members->random()->first()->id,
+                    ]))
+                    ->create(['tenant_id' => $tenant->id]);
+            }
 
             Finance::factory()->count(fake()->numberBetween(13, 89))->create([
                 'tenant_id' => $tenant->id,

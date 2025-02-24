@@ -4,6 +4,7 @@ import type { ProvideSlideover } from './BaseSlideover.vue'
 import type { ExtractProps } from '@/types/utils'
 
 import { DialogPanel as HeadlessDialogPanel, TransitionChild } from '@headlessui/vue'
+import { useWindowSize } from '@vueuse/core'
 import { twMerge } from 'tailwind-merge'
 import { computed, inject } from 'vue'
 
@@ -21,6 +22,8 @@ const { as = 'div' } = defineProps<PanelProps>()
 
 const slideover = inject<ProvideSlideover>('slideover')
 
+const { width } = useWindowSize()
+
 const attrs = useComputedAttrs()
 
 const computedClass = computed(() =>
@@ -30,7 +33,7 @@ const computedClass = computed(() =>
         slideover?.size == 'sm' && 'sm:w-[300px]',
         slideover?.size == 'lg' && 'sm:w-[600px]',
         slideover?.size == 'xl' && 'sm:w-[600px] lg:w-[900px]',
-        slideover?.zoom.value && 'scale-105',
+        slideover?.zoom.value && width < 768 && 'scale-105',
         typeof attrs.class === 'string' && attrs.class
     ])
 )
@@ -45,7 +48,7 @@ const computedClass = computed(() =>
         leave="ease-in-out duration-[400ms]"
         leave-from="opacity-100"
         leave-to="opacity-0"
-        class="fixed inset-0 bg-black/60"
+        class="fixed inset-0 bg-gradient-to-b from-theme-1/50 via-theme-2/50 to-black/50 backdrop-blur-sm"
         aria-hidden="true"
     />
     <transition-child

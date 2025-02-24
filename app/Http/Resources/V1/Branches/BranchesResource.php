@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\V1\Branches;
 
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property string id
- * @property string $name
+ * @mixin Branch
  */
 class BranchesResource extends JsonResource
 {

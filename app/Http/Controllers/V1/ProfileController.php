@@ -4,9 +4,9 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ProfileUpdateRequest;
+use App\Http\Resources\ProfileShowResource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,9 +19,9 @@ class ProfileController extends Controller
     public function edit(): Response
     {
         return Inertia::render('Profile/TheProfilePage', [
-            'data' => new JsonResource(auth()->user()->only([
-                'email', 'first_name', 'last_name', 'phone', 'gender', 'address', 'qualification',
-            ])),
+            'data' => new ProfileShowResource(
+                auth()->user()->load('competences')
+            ),
         ]);
     }
 
@@ -30,7 +30,11 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): \Illuminate\Http\Response
     {
-        $request->user()?->fill($request->validated());
+        $request->user()?->update($request->except('competences'));
+
+        if ($request->competences) {
+            syncCompetences($request->competences, $request->user());
+        }
 
         if ($request->user()?->isDirty('email')) {
             $request->user()->email_verified_at = null;

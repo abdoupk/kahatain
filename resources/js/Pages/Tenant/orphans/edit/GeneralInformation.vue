@@ -3,9 +3,11 @@ import type { AcademicLevelType } from '@/types/lessons'
 import type { OrphanUpdateFormType } from '@/types/orphans'
 
 import { useAcademicLevelsStore } from '@/stores/academic-level'
+import { Link } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -13,16 +15,22 @@ import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import BaseFormSelect from '@/Components/Base/form/BaseFormSelect.vue'
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
+import BaseInputGroup from '@/Components/Base/form/InputGroup/BaseInputGroup.vue'
+import BaseInputGroupText from '@/Components/Base/form/InputGroup/BaseInputGroupText.vue'
+import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
+import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
+import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
-import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
+import TheAcademicInfos from '@/Components/Global/TheAcademicInfos.vue'
 import TheBabyMilkSelector from '@/Components/Global/TheBabyMilkSelector.vue'
 import TheClothesSizeSelector from '@/Components/Global/TheClothesSizeSelector.vue'
 import TheDiapersSelector from '@/Components/Global/TheDiapersSelector.vue'
 import TheFamilyStatusSelector from '@/Components/Global/TheFamilyStatusSelector.vue'
 import TheShoesSizeSelector from '@/Components/Global/TheShoesSizeSelector.vue'
+import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { isOlderThan, omit } from '@/utils/helper'
+import { hasPermission, isOlderThan, omit } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -31,23 +39,45 @@ const props = defineProps<{
 
 const emit = defineEmits(['orphan-updated'])
 
-// eslint-disable-next-line array-element-newline
-const inputs = reactive<OrphanUpdateFormType>(
-    // eslint-disable-next-line array-element-newline
-    omit(props.orphan, [
-        'sponsorships',
-        'vocational_training_achievements',
-        'last_academic_year_achievement',
-        'academic_achievements',
-        'college_achievements',
-        'id',
-        'creator'
-    ])
-)
+const inputs = reactive<OrphanUpdateFormType>(omit(props.orphan, ['id', 'creator']))
 
 const form = useForm('put', route('tenant.orphans.infos-update', props.orphan.id), inputs)
 
+const pic = ref(props.orphan.photo)
+
 const updateSuccess = ref(false)
+
+const isOlderThan18 = computed(() => isOlderThan(form.birth_date, 18))
+
+const isShouldHasIncome = computed(() => {
+    if (!isOlderThan18.value) return false
+
+    const phase = useAcademicLevelsStore().getPhaseFromId(form.academic_level_id)
+
+    if (
+        // eslint-disable-next-line array-element-newline
+        [
+            'secondary_education',
+            'middle_education',
+            'primary_education',
+            'license',
+            'master',
+            'doctorate',
+            'university'
+        ].includes(phase)
+    )
+        return false
+
+    return !form.is_handicapped
+})
+
+const isShouldHasUnemploymentBenefit = computed(() => {
+    const phase = useAcademicLevelsStore().getPhaseFromId(form.academic_level_id)
+
+    if (['paramedical', 'vocational_training'].includes(phase)) return false
+
+    return isShouldHasIncome.value
+})
 
 const submit = () => {
     form.submit({
@@ -77,12 +107,33 @@ onMounted(async () => {
 
 <template>
     <!-- BEGIN: Orphan Information -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-            <h2 class="me-auto text-xl font-bold">{{ $t('display information') }}</h2>
+            <h2 class="me-auto text-xl font-bold">
+                {{ $t('display information') }}
+            </h2>
+
+            <Link v-if="hasPermission('show_orphans')" :href="route('tenant.orphans.show', orphan.id)">
+                <svg-loader class="inline h-4 w-4" name="icon-eye"></svg-loader>
+
+                {{ $t('show') }}
+            </Link>
         </div>
 
         <form @submit.prevent="submit">
+            <!-- Begin: Photo -->
+            <div class="me-2 ms-auto mt-2 h-36 w-36">
+                <base-file-pond
+                    id="photo"
+                    :allow-multiple="false"
+                    :files="pic"
+                    :labelIdle="$t('upload-files.labelIdle.orphan_photo')"
+                    is-picture
+                    @update:files="form.photo = $event[0]"
+                ></base-file-pond>
+            </div>
+            <!-- End: Photo -->
+
             <div class="grid grid-cols-12 gap-4 p-5">
                 <!-- BEGIN: First Name -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -103,15 +154,7 @@ onMounted(async () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"></base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -134,87 +177,9 @@ onMounted(async () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"></base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
-
-                <!-- BEGIN: BirthDate -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="birth_date">
-                        {{ $t('validation.attributes.spouse.birth_date') }}
-                    </base-form-label>
-
-                    <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_date_message"
-                        >
-                            {{ form.errors.birth_date }}
-                        </div>
-                    </base-form-input-error>
-                </div>
-                <!-- END: BirthDate -->
-
-                <!-- BEGIN: Family Status -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="family_status">
-                        {{ $t('family_status') }}
-                    </base-form-label>
-
-                    <the-family-status-selector
-                        id="family_status"
-                        v-model:family-status="form.family_status"
-                        @update:family-status="form?.validate(`family_status`)"
-                    >
-                    </the-family-status-selector>
-
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('family_status')"
-                            class="mt-2 text-danger"
-                            data-test="error_family_status_message"
-                        >
-                            {{ form.errors.family_status }}
-                        </div>
-                    </base-form-input-error>
-                </div>
-                <!-- END: Family Status -->
-
-                <!-- BEGIN: Academic Level -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="academic_level_id">
-                        {{ $t('academic_level') }}
-                    </base-form-label>
-
-                    <div>
-                        <the-academic-level-selector
-                            id="academic_level_id"
-                            v-model:academic-level="form.academic_level_id"
-                            :academicLevels
-                        ></the-academic-level-selector>
-                    </div>
-
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('academic_level_id')"
-                            class="mt-2 text-danger"
-                            data-test="error_academic_level_message"
-                        >
-                            {{ form.errors.academic_level_id }}
-                        </div>
-                    </base-form-input-error>
-                </div>
-                <!-- END: Academic Level -->
 
                 <!-- BEGIN: Gender -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -237,13 +202,62 @@ onMounted(async () => {
                         <option value="female">{{ $t('female') }}</option>
                     </base-form-select>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('gender')" class="mt-2 text-danger" data-test="error_gender_message">
-                            {{ form.errors.gender }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="gender"></base-form-input-error>
                 </div>
                 <!-- END: Gender -->
+
+                <!-- BEGIN: BirthDate -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="birth_date">
+                        {{ $t('validation.attributes.spouse.birth_date') }}
+                    </base-form-label>
+
+                    <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
+
+                    <base-form-input-error :form field_name="birth_date"></base-form-input-error>
+                </div>
+                <!-- END: BirthDate -->
+
+                <!-- BEGIN: Family Status -->
+                <div v-if="isOlderThan(form.birth_date, 18)" class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="family_status">
+                        {{ $t('family_status') }}
+                    </base-form-label>
+
+                    <the-family-status-selector
+                        id="family_status"
+                        v-model:birth-date="form.birth_date"
+                        v-model:family-status="form.family_status"
+                        v-model:gender="form.gender"
+                        :allow-empty="true"
+                        @update:family-status="form?.validate(`family_status`)"
+                    >
+                    </the-family-status-selector>
+
+                    <base-form-input-error :form field_name="family_status"></base-form-input-error>
+                </div>
+                <!-- END: Family Status -->
+
+                <!-- BEGIN: Academic Level -->
+                <the-academic-infos
+                    v-model:academic-level="form.academic_level_id"
+                    v-model:ccp="form.ccp"
+                    v-model:institution="form.institution"
+                    v-model:institution-type="form.institution_type"
+                    v-model:phone-number="form.phone_number"
+                    v-model:speciality-id="form.speciality_id"
+                    v-model:speciality-type="form.speciality_type"
+                    :birth-date="form.birth_date"
+                    :form
+                    academic_level_id_field_name="academic_level_id"
+                    birth_date_field_name="birth_date"
+                    ccp_field_name="ccp"
+                    institution_field_name="institution_id"
+                    phone_number_field_name="phone_number"
+                    vocational_training_id_field_name="vocational_training_id"
+                    @update:institution="form.institution_id = $event.id"
+                ></the-academic-infos>
+                <!-- END: Academic Level -->
 
                 <template v-if="isOlderThan(form.birth_date, 2)">
                     <!-- BEGIN: Pants Size -->
@@ -261,15 +275,7 @@ onMounted(async () => {
                             ></the-clothes-size-selector>
                         </div>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('pants_size')"
-                                class="mt-2 text-danger"
-                                data-test="error_pants_size_message"
-                            >
-                                {{ form.errors.pants_size }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="pants_size"></base-form-input-error>
                     </div>
                     <!-- END: Pants Size -->
 
@@ -288,15 +294,7 @@ onMounted(async () => {
                             ></the-clothes-size-selector>
                         </div>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('shirt_size')"
-                                class="mt-2 text-danger"
-                                data-test="error_shirt_size_message"
-                            >
-                                {{ form.errors.shirt_size }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="shirt_size"></base-form-input-error>
                     </div>
                     <!-- END: Shirt Size -->
 
@@ -314,15 +312,7 @@ onMounted(async () => {
                             ></the-shoes-size-selector>
                         </div>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('shoes_size')"
-                                class="mt-2 text-danger"
-                                data-test="error_shoes_size_message"
-                            >
-                                {{ form.errors.shoes_size }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="shoes_size"></base-form-input-error>
                     </div>
                     <!-- END: Shoes Size -->
                 </template>
@@ -340,22 +330,14 @@ onMounted(async () => {
                             @update:diaper="form?.validate('diapers_type')"
                         ></the-diapers-selector>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('diapers_type')"
-                                class="mt-2 text-danger"
-                                data-test="error_diapers_type_message"
-                            >
-                                {{ form.errors.diapers_type }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="diapers_type"></base-form-input-error>
                     </div>
                     <!-- END: Diapers Type -->
 
                     <!-- BEGIN: Diapers Quantity -->
                     <div class="col-span-12 @xl:col-span-6">
                         <base-form-label for="diapers_quantity">
-                            {{ $t('diapers_quantity') }}
+                            {{ $t('diapers_quantity_label') }}
                         </base-form-label>
 
                         <base-form-input
@@ -371,15 +353,7 @@ onMounted(async () => {
                             @change="form?.validate('diapers_quantity')"
                         ></base-form-input>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('diapers_quantity')"
-                                class="mt-2 text-danger"
-                                data-test="error_diapers_quantity_message"
-                            >
-                                {{ form.errors.diapers_quantity }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="diapers_quantity"></base-form-input-error>
                     </div>
                     <!-- END: Diapers Quantity -->
 
@@ -395,22 +369,14 @@ onMounted(async () => {
                             @update:baby-milk="form?.validate('baby_milk_type')"
                         ></the-baby-milk-selector>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('baby_milk_type')"
-                                class="mt-2 text-danger"
-                                data-test="error_baby_milk_type_message"
-                            >
-                                {{ form.errors.baby_milk_type }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="baby_milk_type"></base-form-input-error>
                     </div>
                     <!-- END: Baby Milk Type -->
 
                     <!-- BEGIN: Baby Milk Quantity -->
                     <div class="col-span-12 @xl:col-span-6">
                         <base-form-label for="baby_milk_quantity">
-                            {{ $t('baby_milk_quantity') }}
+                            {{ $t('baby_milk_quantity_label') }}
                         </base-form-label>
 
                         <base-form-input
@@ -426,54 +392,71 @@ onMounted(async () => {
                             @change="form?.validate('baby_milk_quantity')"
                         ></base-form-input>
 
-                        <base-form-input-error>
-                            <div
-                                v-if="form?.invalid('baby_milk_quantity')"
-                                class="mt-2 text-danger"
-                                data-test="error_baby_milk_quantity_message"
-                            >
-                                {{ form.errors.baby_milk_quantity }}
-                            </div>
-                        </base-form-input-error>
+                        <base-form-input-error :form field_name="baby_milk_quantity"></base-form-input-error>
                     </div>
                     <!-- END: Baby Milk Quantity -->
                 </template>
 
+                <div class="col-span-12 grid grid-cols-12 gap-4 sm:col-span-6 sm:mt-8">
+                    <!--Begin: Handicapped-->
+                    <div class="col-span-6 sm:col-span-3">
+                        <base-form-switch class="text-lg">
+                            <base-form-switch-input
+                                :id="`is_handicapped`"
+                                v-model="form.is_handicapped"
+                                type="checkbox"
+                            ></base-form-switch-input>
+
+                            <base-form-switch-label :htmlFor="`is_handicapped`" class="whitespace-nowrap text-nowrap">
+                                {{ $t('handicapped') }}
+                            </base-form-switch-label>
+                        </base-form-switch>
+                    </div>
+                    <!--END: Handicapped-->
+
+                    <!--Begin: Unemployed-->
+                    <div v-if="isShouldHasUnemploymentBenefit" class="col-span-6 ms-0 sm:col-span-3 sm:ms-12">
+                        <base-form-switch class="text-lg">
+                            <base-form-switch-input
+                                :id="`is_unemployed`"
+                                v-model="form.is_unemployed"
+                                type="checkbox"
+                            ></base-form-switch-input>
+
+                            <base-form-switch-label :htmlFor="`is_unemployed`" class="whitespace-nowrap text-nowrap">
+                                {{ $t('unemployed') }}
+                            </base-form-switch-label>
+                        </base-form-switch>
+                    </div>
+                    <!--END: Unemployed-->
+                </div>
+
                 <!-- Begin: Income-->
-                <div class="col-span-12 sm:col-span-6">
+                <div v-if="isShouldHasIncome && !form.is_unemployed" class="col-span-12 sm:col-span-6">
                     <base-form-label for="income">
                         {{ $t('validation.attributes.income') }}
                     </base-form-label>
 
-                    <base-form-input
-                        v-model="form.income"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.income')
-                            })
-                        "
-                        data-test="orphan_income"
-                        type="text"
-                        @change="form?.validate('income')"
-                    ></base-form-input>
-
-                    <base-form-input-error>
-                        <div
-                            v-if="
-                                form?.invalid(
-                                    //@ts-ignore
-                                    `orphans.${index}.income`
-                                )
+                    <base-input-group>
+                        <base-form-input
+                            v-model="form.income"
+                            :placeholder="
+                                $t('auth.placeholders.fill', {
+                                    attribute: $t('validation.attributes.income')
+                                })
                             "
-                            class="mt-2 text-danger"
-                            data-test="error_income_message"
-                        >
-                            {{
-                                //@ts-ignore
-                                form.errors[`orphans.${index}.income`]
-                            }}
-                        </div>
-                    </base-form-input-error>
+                            data-test="orphan_income"
+                            maxlength="12"
+                            type="text"
+                            @change="form?.validate('income')"
+                        ></base-form-input>
+
+                        <base-input-group-text>
+                            {{ $t('DA') }}
+                        </base-input-group-text>
+                    </base-input-group>
+
+                    <base-form-input-error :form field_name="income"></base-form-input-error>
                 </div>
                 <!-- End: Income-->
 
@@ -496,11 +479,7 @@ onMounted(async () => {
                         @change="form?.validate('note')"
                     ></base-form-text-area>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('note')" class="mt-2 text-danger" data-test="error_note_message">
-                            {{ form.errors.note }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form="form" field_name="note"></base-form-input-error>
                 </div>
                 <!-- END: Notes -->
 

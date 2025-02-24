@@ -13,7 +13,7 @@ import { $t } from '@/utils/i18n'
 const props = defineProps<{
     open: boolean
     title: string
-    location: PositionType
+    location: PositionType | null
 }>()
 
 const emit = defineEmits(['close', 'set-location'])
@@ -38,6 +38,8 @@ const setLocation = (location) => {
 <template>
     <show-modal :open :title size="xl" @close="emit('close')">
         <template #description>
+            <slot></slot>
+
             <div class="col-span-12 h-80 overflow-hidden rounded-md bg-slate-200">
                 <the-family-location-selector
                     :location

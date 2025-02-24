@@ -23,27 +23,34 @@ class PermissionSeeder extends Seeder
             'financial_transactions' => ['create', 'delete', 'export', 'list', 'update', 'view'],
             'settings' => ['update', 'view'],
             'needs' => ['create', 'delete', 'list', 'update', 'view'],
-            'schools' => ['create', 'delete', 'list', 'update', 'view'],
+            'schools' => ['create', 'delete', 'list', 'update', 'view', 'print'],
             'lessons' => ['create', 'delete', 'list', 'update', 'view'],
             'committees' => ['create', 'delete', 'list', 'update', 'view'],
-            'benefactors' => ['create', 'delete', 'list', 'update', 'view'],
+            'benefactors' => ['create', 'delete', 'list', 'update', 'view', 'add_new_sponsorship'],
             'sponsorships' => ['create'],
-            'monthly_sponsorships' => ['update'],
+            'monthly_sponsorships' => ['update_settings', 'update_monthly_basket'],
+            'ramadan_baskets' => ['update_settings', 'update_ramadan_basket'],
             'archive' => ['export', 'list', 'view'],
             'trash' => ['destroy', 'list', 'restore'],
             'occasions' => ['save', 'view', 'export'],
+            'transcripts' => ['create', 'delete', 'list', 'update', 'view'],
+            'college_students' => ['list'],
+            'trainees_orphans' => ['list'],
         ];
 
-        $inventoryPermissions = ['add_to_inventory', 'delete_from_inventory', 'list_items', 'update_inventory', 'view_item'];
+        $additionalPermissions = [
+            'inventory' => ['add_to_inventory', 'delete_from_inventory', 'list_items', 'update_inventory', 'view_item'],
+            'students' => ['list_students', 'start_new_academic_year', 'export_school_supplies', 'view_transcripts_students'],
+        ];
 
-        foreach ($permissions as $key => $value) {
+        // Combine all permissions into one array
+        $allPermissions = array_merge($permissions, $additionalPermissions);
+
+        // Create permissions
+        foreach ($allPermissions as $key => $value) {
             foreach ($value as $permission) {
-                Permission::create(['name' => $permission.'_'.$key, 'guard_name' => 'web']);
+                Permission::create(['name' => $permission.($key !== 'inventory' && $key !== 'students' ? '_'.$key : ''), 'guard_name' => 'web']);
             }
-        }
-
-        foreach ($inventoryPermissions as $item) {
-            Permission::create(['name' => $item, 'guard_name' => 'web']);
         }
     }
 }

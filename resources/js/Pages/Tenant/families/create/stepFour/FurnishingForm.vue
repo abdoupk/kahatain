@@ -1,92 +1,18 @@
 <script lang="ts" setup>
-import type { FurnishingsType } from '@/types/types'
-
-import { type ModelRef, onMounted, ref } from 'vue'
+import { useCreateFamilyStore } from '@/stores/create-family'
+import { usePage } from '@inertiajs/vue3'
+import { onMounted } from 'vue'
 
 import BaseFormTextArea from '@/Components/Base/form/BaseFormTextArea.vue'
 import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
 import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
 import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 
-const emit = defineEmits(['update:furnishings'])
-
-const items = ref<Record<FurnishingsType, boolean>>({
-    television: false,
-    refrigerator: false,
-    fireplace: false,
-    washing_machine: false,
-    water_heater: false,
-    oven: false,
-    wardrobe: false,
-    cupboard: false,
-    covers: false,
-    mattresses: false,
-    other_furnishings: false
-})
-
-const television = defineModel('television')
-
-const refrigerator = defineModel('refrigerator')
-
-const fireplace = defineModel('fireplace')
-
-const washingMachine = defineModel('washingMachine')
-
-const waterHeater = defineModel('waterHeater')
-
-const oven = defineModel('oven')
-
-const wardrobe = defineModel('wardrobe')
-
-const cupboard = defineModel('cupboard')
-
-const covers = defineModel('covers')
-
-const mattresses = defineModel('mattresses')
-
-const valueMap: Record<FurnishingsType, ModelRef<unknown>> = {
-    television: television,
-    refrigerator: refrigerator,
-    fireplace: fireplace,
-    washing_machine: washingMachine,
-    water_heater: waterHeater,
-    oven: oven,
-    wardrobe: wardrobe,
-    cupboard: cupboard,
-    covers: covers,
-    mattresses: mattresses,
-    other_furnishings: mattresses
-}
-
-const toggle = (key: FurnishingsType) => {
-    items.value[key] = !items.value[key]
-
-    if (!items.value[key]) valueMap[key].value = null
-
-    emit('update:furnishings', items.value)
-}
+const createFamilyStore = useCreateFamilyStore()
 
 onMounted(() => {
-    const keys = [
-        'television',
-        'refrigerator',
-        'fireplace',
-        'washingMachine',
-        'washing_machine',
-        'waterHeater',
-        'water_heater',
-        'oven',
-        'wardrobe',
-        'cupboard',
-        'covers',
-        'mattresses'
-    ]
-
-    for (const key of keys) {
-        if (eval(key + '.value')) {
-            // @ts-ignore
-            items.value[key] = true
-        }
+    if (usePage().component !== 'Tenant/families/edit/FamilyEditPage') {
+        document.getElementById('television')?.focus()
     }
 })
 </script>
@@ -100,9 +26,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="television"
-                            :checked="items.television"
+                            v-model="createFamilyStore.family.furnishings.television.checked"
                             type="checkbox"
-                            @change="toggle('television')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="television">
@@ -112,8 +37,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="television"
-                        :disabled="!items.television"
+                        v-model="createFamilyStore.family.furnishings.television.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -130,9 +54,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="refrigerator"
-                            :checked="items.refrigerator"
+                            v-model="createFamilyStore.family.furnishings.refrigerator.checked"
                             type="checkbox"
-                            @change="toggle('refrigerator')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="refrigerator">
@@ -142,8 +65,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="refrigerator"
-                        :disabled="!items.refrigerator"
+                        v-model="createFamilyStore.family.furnishings.refrigerator.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -160,9 +82,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="fireplace"
-                            :checked="items.fireplace"
+                            v-model="createFamilyStore.family.furnishings.fireplace.checked"
                             type="checkbox"
-                            @change="toggle('fireplace')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="fireplace">
@@ -172,8 +93,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="fireplace"
-                        :disabled="!items.fireplace"
+                        v-model="createFamilyStore.family.furnishings.fireplace.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -190,9 +110,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="washing_machine"
-                            :checked="items.washing_machine"
+                            v-model="createFamilyStore.family.furnishings.washing_machine.checked"
                             type="checkbox"
-                            @change="toggle('washing_machine')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="washing_machine">
@@ -202,8 +121,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="washingMachine"
-                        :disabled="!items.washing_machine"
+                        v-model="createFamilyStore.family.furnishings.washing_machine.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -220,9 +138,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="water_heater"
-                            :checked="items.water_heater"
+                            v-model="createFamilyStore.family.furnishings.water_heater.checked"
                             type="checkbox"
-                            @change="toggle('water_heater')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="water_heater">
@@ -232,8 +149,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="waterHeater"
-                        :disabled="!items.water_heater"
+                        v-model="createFamilyStore.family.furnishings.water_heater.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -250,9 +166,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="oven"
-                            :checked="items.oven"
+                            v-model="createFamilyStore.family.furnishings.oven.checked"
                             type="checkbox"
-                            @change="toggle('oven')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="oven">
@@ -262,8 +177,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="oven"
-                        :disabled="!items.oven"
+                        v-model="createFamilyStore.family.furnishings.oven.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -280,9 +194,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="wardrobe"
-                            :checked="items.wardrobe"
+                            v-model="createFamilyStore.family.furnishings.wardrobe.checked"
                             type="checkbox"
-                            @change="toggle('wardrobe')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="wardrobe">
@@ -292,8 +205,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="wardrobe"
-                        :disabled="!items.wardrobe"
+                        v-model="createFamilyStore.family.furnishings.wardrobe.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -310,9 +222,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="cupboard"
-                            :checked="items.cupboard"
+                            v-model="createFamilyStore.family.furnishings.cupboard.checked"
                             type="checkbox"
-                            @change="toggle('cupboard')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="cupboard">
@@ -322,8 +233,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="cupboard"
-                        :disabled="!items.cupboard"
+                        v-model="createFamilyStore.family.furnishings.cupboard.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -340,9 +250,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="covers"
-                            :checked="items.covers"
+                            v-model="createFamilyStore.family.furnishings.covers.checked"
                             type="checkbox"
-                            @change="toggle('covers')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="covers">
@@ -352,8 +261,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="covers"
-                        :disabled="!items.covers"
+                        v-model="createFamilyStore.family.furnishings.covers.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"
@@ -370,9 +278,8 @@ onMounted(() => {
                     <base-form-switch class="text-lg">
                         <base-form-switch-input
                             id="mattresses"
-                            :checked="items.mattresses"
+                            v-model="createFamilyStore.family.furnishings.mattresses.checked"
                             type="checkbox"
-                            @change="toggle('mattresses')"
                         ></base-form-switch-input>
 
                         <base-form-switch-label htmlFor="mattresses">
@@ -382,8 +289,7 @@ onMounted(() => {
                 </div>
                 <div class="col-span-12 mt-2 lg:col-span-8 lg:mt-0">
                     <base-form-text-area
-                        v-model="mattresses"
-                        :disabled="!items.mattresses"
+                        v-model="createFamilyStore.family.furnishings.mattresses.note"
                         :placeholder="$t('notes')"
                         class="w-full md:w-3/4"
                         rows="4"

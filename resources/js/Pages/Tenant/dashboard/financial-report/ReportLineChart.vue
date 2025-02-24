@@ -8,7 +8,7 @@ import BaseChart from '@/Components/Base/chart/BaseChart.vue'
 import { extractColor, getColor, labelColor } from '@/utils/colors'
 import { abbreviationMonths } from '@/utils/constants'
 import { formatCurrency } from '@/utils/helper'
-import { getLocale } from '@/utils/i18n'
+import { $t, getLocale } from '@/utils/i18n'
 
 const props = defineProps<{
     width?: number
@@ -28,7 +28,7 @@ const data = computed<ChartData>(() => {
         labels: abbreviationMonths[getLocale()],
         datasets: [
             {
-                label: '# of Votes',
+                label: $t('the_income'),
                 data: props.financialReports.incomes,
                 borderWidth: 2,
                 borderColor: colorScheme.value ? extractColor('primary', 0.8) : '',
@@ -37,7 +37,7 @@ const data = computed<ChartData>(() => {
                 tension: 0.4
             },
             {
-                label: '# of Votes',
+                label: $t('the_expense'),
                 data: props.financialReports.expenses,
                 borderWidth: 2,
                 borderDash: [2, 2],

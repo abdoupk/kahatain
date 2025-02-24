@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Income;
+use App\Models\Sponsor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IncomeFactory extends Factory
@@ -12,19 +13,28 @@ class IncomeFactory extends Factory
     public function definition(): array
     {
         $incomes = [
-            'cnr' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'cnas' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'casnos' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'pension' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
-            'account' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+            'cnr' => fake()->boolean(13),
+            'cnas' => fake()->boolean(13),
+            'casnos' => fake()->boolean(13),
+            'pension' => fake()->boolean(13),
+            'account' => [
+                'ccp' => [
+                    'monthly_income' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+                    'balance' => fake()->randomElement([fake()->numberBetween(1000, 5000), 0]),
+                    'performance_grant' => fake()->randomElement([fake()->numberBetween(1000, 5000), 0]),
+                ],
+                'bank' => [
+                    'monthly_income' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
+                    'balance' => fake()->randomElement([fake()->numberBetween(1000, 5000), 0]),
+                    'performance_grant' => fake()->randomElement([fake()->numberBetween(1000, 5000), 0]),
+                ],
+            ],
             'other_income' => fake()->randomElement([fake()->numberBetween(1000, 5000), null]),
         ];
 
         return [
             ...$incomes,
-            'total_income' => array_reduce($incomes, function ($carry, $item) {
-                return $carry + $item;
-            }, 0),
+            'total_income' => setTotalIncomeAttribute($incomes, Sponsor::inRandomOrder()->first()),
             'sponsor_id' => fake()->uuid,
             'tenant_id' => fake()->uuid,
         ];

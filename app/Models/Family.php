@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Database\Factories\FamilyFactory;
 use DB;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,101 +11,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
-/**
- * @property int $id
- * @property string $name
- * @property string $report
- * @property string $tenant_id
- * @property string|null $created_at
- * @property string|null $updated_at
- *
- * @method static Builder|Family newModelQuery()
- * @method static Builder|Family newQuery()
- * @method static Builder|Family query()
- * @method static Builder|Family whereCreatedAt($value)
- * @method static Builder|Family whereId($value)
- * @method static Builder|Family whereName($value)
- * @method static Builder|Family whereReport($value)
- * @method static Builder|Family whereTenantId($value)
- * @method static Builder|Family whereUpdatedAt($value)
- *
- * @property-read Collection<int, Furnishing> $furnishings
- * @property-read int|null $furnishings_count
- * @property-read Collection<int, Orphan> $orphans
- * @property-read int|null $orphans_count
- * @property-read SecondSponsor|null $secondSponsor
- * @property-read Sponsor|null $sponsor
- * @property-read Collection<int, FamilySponsorship> $sponsorships
- * @property-read int|null $sponsorships_count
- * @property-read Spouse|null $spouse
- * @property-read Tenant $tenant
- *
- * @method static FamilyFactory factory($count = null, $state = [])
- *
- * @property string $zone_id
- * @property string $address
- * @property int $file_number
- * @property string $start_date
- * @property-read Zone|null $zone
- *
- * @method static Builder|Family whereAddress($value)
- * @method static Builder|Family whereFileNumber($value)
- * @method static Builder|Family whereStartDate($value)
- * @method static Builder|Family whereZoneId($value)
- *
- * @property Carbon|null $deleted_at
- *
- * @method static Builder|Family onlyTrashed()
- * @method static Builder|Family whereDeletedAt($value)
- * @method static Builder|Family withTrashed()
- * @method static Builder|Family withoutTrashed()
- *
- * @property string|null $branch_id
- *
- * @method static Builder|Family whereBranchId($value)
- *
- * @property-read Spouse|null $deceased
- * @property-read Housing|null $housing
- * @property-read Preview|null $preview
- * @property-read Collection<int, Baby> $babies
- * @property-read int|null $babies_count
- * @property-read Collection<int, OrphanSponsorship> $orphansSponsorships
- * @property-read int|null $orphans_sponsorships_count
- * @property-read Collection<int, SponsorSponsorship> $sponsorSponsorships
- * @property-read int|null $sponsor_sponsorships_count
- * @property-read Branch|null $branch
- * @property string|null $created_by
- * @property-read User|null $creator
- *
- * @method static Builder|Family whereCreatedBy($value)
- *
- * @property float|null $income_rate
- * @property float|null $total_income
- * @property string|null $deleted_by
- * @property-read Collection<int, Archive> $archives
- * @property-read int|null $archives_count
- * @property-read Collection<int, Need> $orphansNeeds
- * @property-read int|null $orphans_needs_count
- * @property-read Collection<int, Need> $sponsorsNeeds
- * @property-read int|null $sponsors_needs_count
- *
- * @method static Builder|Family whereDeletedBy($value)
- * @method static Builder|Family whereIncomeRate($value)
- * @method static Builder|Family whereTotalIncome($value)
- *
- * @mixin Eloquent
- */
-class Family extends Model
+class Family extends Model implements HasMedia
 {
-    use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
+    use BelongsToTenant, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -126,7 +39,14 @@ class Family extends Model
         'difference_after_monthly_sponsorship',
         'monthly_sponsorship_rate',
         'amount_from_association',
-        'difference',
+        'difference_before_ramadan_sponsorship',
+        'ramadan_basket_category',
+        'ramadan_sponsorship_difference',
+        'aggregate_zakat_benefit',
+        'aggregate_white_meat_benefit',
+        'aggregate_red_meat_benefit',
+        'deletion_reason',
+        'eid_al_adha_status',
     ];
 
     protected static function boot(): void
@@ -152,56 +72,27 @@ class Family extends Model
     {
         $this->unsearchable();
 
-        $this->orphansSponsorships->unsearchable();
+        $this->orphans()->unsearchable();
 
-        $this->sponsorSponsorships->unsearchable();
+        $this->babies()->unsearchable();
 
-        $this->orphans->unsearchable();
+        $this->orphansNeeds()->unsearchable();
 
-        $this->babies->unsearchable();
-
-        $this->orphansNeeds->unsearchable();
-
-        $this->sponsorsNeeds->unsearchable();
+        $this->sponsorsNeeds()->unsearchable();
 
         $this->sponsor()->unsearchable();
 
-        $this->sponsorships->unsearchable();
-
-        $this->preview->unsearchable();
+        $this->preview()->unsearchable();
     }
 
-    public function sponsor(): HasOne
+    public function orphans(): HasMany
     {
-        return $this->hasOne(Sponsor::class);
+        return $this->hasMany(Orphan::class);
     }
 
-    public function sponsorships(): HasOne
+    public function babies(): HasMany
     {
-        return $this->hasOne(FamilySponsorship::class);
-    }
-
-    public function aid(): MorphMany
-    {
-        return $this->morphMany(
-            Sponsorship::class,
-            'recipientable',
-        );
-    }
-
-    public function sponsorSponsorships(): HasOneThrough
-    {
-        return $this->hasOneThrough(SponsorSponsorship::class, Sponsor::class);
-    }
-
-    public function branch(): BelongsTo
-    {
-        return $this->belongsTo(Branch::class);
-    }
-
-    public function orphansSponsorships(): HasManyThrough
-    {
-        return $this->hasManyThrough(OrphanSponsorship::class, Orphan::class);
+        return $this->hasMany(Baby::class);
     }
 
     public function orphansNeeds(): HasManyThrough
@@ -212,6 +103,29 @@ class Family extends Model
     public function sponsorsNeeds(): HasManyThrough
     {
         return $this->hasManyThrough(Need::class, Sponsor::class, 'id', 'needable_id', 'id', 'id');
+    }
+
+    public function sponsor(): HasOne
+    {
+        return $this->hasOne(Sponsor::class);
+    }
+
+    public function preview(): HasOne
+    {
+        return $this->hasOne(Preview::class);
+    }
+
+    public function aid(): MorphMany
+    {
+        return $this->morphMany(
+            Sponsorship::class,
+            'recipientable',
+        );
+    }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function zone(): BelongsTo
@@ -234,8 +148,9 @@ class Family extends Model
                 'branch',
                 'sponsor.incomes',
                 'orphans',
-                'sponsorships',
                 'aid',
+                'housing',
+                'furnishings',
             ]
         );
     }
@@ -269,29 +184,30 @@ class Family extends Model
                 'degree_of_kinship' => $this->secondSponsor?->degree_of_kinship,
                 'address' => $this->secondSponsor?->address,
             ],
+            'housing' => $this->housing?->only(['id', 'name', 'value', 'number_of_rooms', 'housing_receipt_number', 'other_properties']),
+            'furnishings' => $this->furnishings?->only(['television', 'refrigerator', 'fireplace', 'washing_machine', 'water_heater', 'oven', 'wardrobe', 'cupboard', 'covers', 'mattresses', 'other_furnishings']),
             'branch' => $this->branch?->only(['id', 'name']),
             'total_income' => $this->total_income,
             'orphans_count' => $this->orphans->count(),
-            'family_sponsorships' => [
-                'monthly_allowance' => boolval($this->sponsorships?->monthly_allowance),
-                'ramadan_basket' => boolval($this->sponsorships?->ramadan_basket),
-                'zakat' => boolval($this->sponsorships?->zakat),
-                'housing_assistance' => boolval($this->sponsorships?->housing_assistance),
-                'eid_el_adha' => boolval($this->sponsorships?->eid_al_adha),
-            ],
             'income_rate' => $this->income_rate,
             'difference_before_monthly_sponsorship' => $this->difference_before_monthly_sponsorship,
             'difference_after_monthly_sponsorship' => $this->difference_after_monthly_sponsorship,
-            'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate,
+            'monthly_sponsorship_rate' => $this->monthly_sponsorship_rate * 100,
             'amount_from_association' => $this->amount_from_association,
-            'basket_from_association' => $this->difference_after_monthly_sponsorship > 0,
+            'aggregate_zakat_benefit' => $this->aggregate_zakat_benefit,
+            'basket_from_association' => $this->difference_before_monthly_sponsorship > 0,
             'amount_from_benefactor' => $this->aid->where('sponsorship_type', '!=', 'monthly_basket')->sum('amount'),
             'basket_from_benefactor' => $this->aid->where('sponsorship_type', '=', 'monthly_basket')->sum('amount'),
+            'ramadan_basket_category' => $this->ramadan_basket_category,
+            'ramadan_sponsorship_difference' => $this->ramadan_sponsorship_difference,
             'created_at' => strtotime($this->created_at),
             '_geo' => [
                 'lat' => $this->location['lat'],
                 'lng' => $this->location['lng'],
             ],
+            'aggregate_white_meat_benefit' => $this->aggregate_white_meat_benefit,
+            'aggregate_red_meat_benefit' => $this->aggregate_red_meat_benefit,
+            'eid_al_adha_status' => $this->eid_al_adha_status,
         ];
     }
 
@@ -310,35 +226,27 @@ class Family extends Model
         return $this->morphToMany(Archive::class, 'archiveable');
     }
 
-    public function deleteWithRelationships(): void
+    public function deleteWithRelationships(string $userId, string $reason): void
     {
-        $this->delete();
+        $this->update([
+            'deletion_reason' => $reason,
+        ]);
 
         $this->babies()->delete();
 
         DB::table('needs')->where('needable_id', $this->sponsor->id)
             ->orWhereIn('needable_id', $this->orphans->pluck('id'))
-            ->update(['deleted_at' => now(), 'deleted_by' => auth()->user()->id]);
+            ->update(['deleted_at' => now(), 'deleted_by' => $userId]);
 
         $this->sponsor()->update([
             'deleted_at' => now(),
-            'deleted_by' => auth()->user()->id,
+            'deleted_by' => $userId,
         ]);
 
         $this->orphans()->update([
             'deleted_at' => now(),
-            'deleted_by' => auth()->user()->id,
+            'deleted_by' => $userId,
         ]);
-    }
-
-    public function babies(): HasMany
-    {
-        return $this->hasMany(Baby::class);
-    }
-
-    public function orphans(): HasMany
-    {
-        return $this->hasMany(Orphan::class);
     }
 
     public function forceDeleteWithRelationships(): void
@@ -368,9 +276,9 @@ class Family extends Model
         $this->preview()->forceDelete();
     }
 
-    public function deceased(): HasOne
+    public function deceased(): HasMany
     {
-        return $this->hasOne(Spouse::class);
+        return $this->hasMany(Spouse::class);
     }
 
     public function housing(): HasOne
@@ -393,9 +301,9 @@ class Family extends Model
         return $this->hasOne(SecondSponsor::class);
     }
 
-    public function preview(): HasOne
+    public function eidAlAdhas(): HasMany
     {
-        return $this->hasOne(Preview::class);
+        return $this->hasMany(FamilyEidAlAdha::class);
     }
 
     protected function casts(): array

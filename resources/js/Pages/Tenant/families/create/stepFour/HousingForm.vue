@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { CreateFamilyForm } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import type { Form } from 'laravel-precognition-vue/dist/types'
 import { onMounted, ref } from 'vue'
 
@@ -21,9 +22,7 @@ export type HousingType = 'independent' | 'with_family' | 'tenant' | 'inheritanc
 
 defineProps<{ form: Form<CreateFamilyForm> }>()
 
-const numberOfRooms = defineModel('numberOfRooms')
-
-const housingReceiptNumber = defineModel('housingReceiptNumber')
+const createFamilyStore = useCreateFamilyStore()
 
 const items = ref<Record<HousingType, boolean>>({
     independent: false,
@@ -33,41 +32,35 @@ const items = ref<Record<HousingType, boolean>>({
     other: false
 })
 
-const housingType = defineModel<{
-    name: HousingType
-    value: string | number | boolean | null
-}>('housingType', {
-    default: {
-        value: null,
-        name: 'independent'
-    }
-})
-
 const toggle = (key: HousingType, value?: string | number | boolean) => {
-    if (housingType.value) housingType.value.name = key
+    createFamilyStore.family.housing.housing_type.name = key
 
     items.value[key] = !items.value[key]
 
-    Object.keys(items.value).forEach((item) => {
-        if (item !== key) items.value[item as HousingType] = false
-    })
+    Object.keys(items.value)
+        .filter((item) => item !== key)
+        .forEach((item) => {
+            items.value[item as HousingType] = false
+        })
 
-    if (housingType.value) {
-        value ? (housingType.value.value = value) : (housingType.value.value = null)
-    }
+    value
+        ? (createFamilyStore.family.housing.housing_type.value = value)
+        : (createFamilyStore.family.housing.housing_type.value = null)
 }
 
 const setValue = (event: Event) => {
-    if (housingType.value) housingType.value.value = (event.target as HTMLInputElement).value
+    createFamilyStore.family.housing.housing_type.value = (event.target as HTMLInputElement).value
 }
 
 onMounted(() => {
-    if (housingType.value) items.value[housingType.value.name] = true
+    document.getElementById('independent')?.focus()
+
+    items.value[createFamilyStore.family.housing.housing_type.name] = true
 })
 </script>
 
 <template>
-    <base-form-input-error>
+    <transition>
         <base-alert
             v-if="
                 form.invalid(
@@ -90,7 +83,7 @@ onMounted(() => {
                 form.errors['housing_type.value']
             }}
         </base-alert>
-    </base-form-input-error>
+    </transition>
 
     <div class="intro-x mt-6">
         <div class="flex gap-16">
@@ -98,7 +91,7 @@ onMounted(() => {
                 <!-- @vue-ignore -->
                 <base-form-switch-input
                     id="independent"
-                    :checked="housingType?.name === 'independent' && housingType?.value === true"
+                    :checked="items.independent"
                     type="checkbox"
                     @change="(event) => toggle('independent', event.target.checked)"
                 ></base-form-switch-input>
@@ -108,25 +101,6 @@ onMounted(() => {
                 </base-form-switch-label>
             </base-form-switch>
         </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.independent'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.independent']
-                    }}
-                </div>
-            </base-form-input-error>
-        </div>
     </div>
 
     <div class="intro-x mt-6">
@@ -135,7 +109,7 @@ onMounted(() => {
                 <!-- @vue-ignore -->
                 <base-form-switch-input
                     id="with_family"
-                    :checked="housingType?.name === 'with_family' && housingType?.value === true"
+                    :checked="items.with_family"
                     type="checkbox"
                     @change="(event) => toggle('with_family', event.target.checked)"
                 ></base-form-switch-input>
@@ -145,25 +119,6 @@ onMounted(() => {
                 </base-form-switch-label>
             </base-form-switch>
         </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.with_family'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.with_family']
-                    }}
-                </div>
-            </base-form-input-error>
-        </div>
     </div>
 
     <div class="intro-x mt-6">
@@ -171,7 +126,7 @@ onMounted(() => {
             <base-form-switch class="w-full text-lg md:w-1/2">
                 <base-form-switch-input
                     id="inheritance"
-                    :checked="housingType?.name === 'inheritance'"
+                    :checked="items.inheritance"
                     type="checkbox"
                     @change="toggle('inheritance')"
                 ></base-form-switch-input>
@@ -183,33 +138,20 @@ onMounted(() => {
 
             <div class="mt-2 w-full md:mt-0">
                 <base-form-input
-                    :disabled="housingType?.name !== 'inheritance' || !items.inheritance"
+                    :disabled="
+                        createFamilyStore.family.housing.housing_type.name !== 'inheritance' || !items.inheritance
+                    "
                     :placeholder="$t('housing.placeholders.inheritance')"
-                    :value="housingType?.name === 'inheritance' ? housingType?.value : null"
+                    :value="
+                        createFamilyStore.family.housing.housing_type.name === 'inheritance'
+                            ? createFamilyStore.family.housing.housing_type.value
+                            : null
+                    "
                     class="w-full md:w-3/4"
                     type="number"
                     @input="setValue"
                 ></base-form-input>
             </div>
-        </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.inheritance'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.inheritance']
-                    }}
-                </div>
-            </base-form-input-error>
         </div>
     </div>
 
@@ -218,7 +160,7 @@ onMounted(() => {
             <base-form-switch class="w-full text-lg md:w-1/2">
                 <base-form-switch-input
                     id="tenant"
-                    :checked="housingType?.name === 'tenant'"
+                    :checked="items.tenant"
                     type="checkbox"
                     @change="toggle('tenant')"
                 ></base-form-switch-input>
@@ -232,9 +174,13 @@ onMounted(() => {
                 <base-input-group class="w-5/6">
                     <!-- @vue-ignore -->
                     <base-form-input
-                        :disabled="housingType?.name !== 'tenant' || !items.tenant"
+                        :disabled="createFamilyStore.family.housing.housing_type.name !== 'tenant' || !items.tenant"
                         :placeholder="$t('housing.placeholders.tenant')"
-                        :value="housingType?.name === 'tenant' ? housingType?.value : null"
+                        :value="
+                            createFamilyStore.family.housing.housing_type.name === 'tenant'
+                                ? createFamilyStore.family.housing.housing_type.value
+                                : null
+                        "
                         class="w-full md:w-3/4"
                         type="text"
                         @input="setValue"
@@ -247,25 +193,6 @@ onMounted(() => {
                 </base-input-group>
             </div>
         </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.tenant'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.tenant']
-                    }}
-                </div>
-            </base-form-input-error>
-        </div>
     </div>
 
     <div class="intro-x mt-6">
@@ -273,7 +200,7 @@ onMounted(() => {
             <base-form-switch class="w-full text-lg md:w-1/2">
                 <base-form-switch-input
                     id="other"
-                    :checked="housingType?.name === 'other'"
+                    :checked="items.other"
                     type="checkbox"
                     @change="toggle('other')"
                 ></base-form-switch-input>
@@ -285,33 +212,18 @@ onMounted(() => {
 
             <div class="mt-2 w-full md:mt-0">
                 <base-form-input
-                    :disabled="housingType?.name !== 'other' || !items.other"
+                    :disabled="createFamilyStore.family.housing.housing_type.name !== 'other' || !items.other"
                     :placeholder="$t('housing.placeholders.other')"
-                    :value="housingType?.name === 'other' ? housingType.value : null"
+                    :value="
+                        createFamilyStore.family.housing.housing_type.name === 'other'
+                            ? createFamilyStore.family.housing.housing_type.value
+                            : null
+                    "
                     class="w-full md:w-3/4"
                     type="text"
                     @input="setValue"
                 ></base-form-input>
             </div>
-        </div>
-
-        <div class="grid grid-cols-12">
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.other'
-                        )
-                    "
-                    class="col-start-5 col-end-12 -ms-1 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.other']
-                    }}
-                </div>
-            </base-form-input-error>
         </div>
     </div>
 
@@ -324,7 +236,7 @@ onMounted(() => {
 
         <div class="w-full">
             <base-form-input
-                v-model="numberOfRooms"
+                v-model="createFamilyStore.family.housing.number_of_rooms"
                 :placeholder="
                     $t('auth.placeholders.fill', {
                         attribute: $t('housing.label.number_of_rooms')
@@ -335,26 +247,15 @@ onMounted(() => {
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.number_of_rooms'
-                        )
-                    "
-                    class="col-start-5 col-end-12 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.number_of_rooms']
-                    }}
-                </div>
+            <base-form-input-error :form class="col-span-12 lg:col-start-5" field_name="housing.number_of_rooms">
             </base-form-input-error>
         </div>
     </div>
 
-    <div class="intro-x mt-6 flex flex-col md:flex-row md:gap-16">
+    <div
+        v-if="createFamilyStore.family.housing.housing_type.name !== 'independent'"
+        class="intro-x mt-6 flex flex-col md:flex-row md:gap-16"
+    >
         <div class="w-full text-lg md:w-1/2">
             <p class="md:ms-11">
                 {{ $t('housing.label.housing_receipt_number') }}
@@ -363,28 +264,26 @@ onMounted(() => {
 
         <div class="mt-2 w-full md:mt-0">
             <base-form-input
-                v-model="housingReceiptNumber"
+                v-model="createFamilyStore.family.housing.housing_receipt_number"
                 :placeholder="$t('housing.placeholders.housing_receipt_number')"
                 class="w-full md:w-3/4"
                 type="text"
             ></base-form-input>
 
-            <base-form-input-error>
-                <div
-                    v-if="
-                        form?.invalid(
-                            // @ts-ignore
-                            'housing.housing_receipt_number'
-                        )
-                    "
-                    class="col-start-5 col-end-12 mt-2 text-danger"
-                >
-                    {{
-                        // @ts-ignore
-                        form.errors['housing.housing_receipt_number']
-                    }}
-                </div>
+            <base-form-input-error :form class="col-span-12 lg:col-start-5" field_name="housing.housing_receipt_number">
             </base-form-input-error>
         </div>
     </div>
 </template>
+
+<style lang="css">
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>

@@ -37,7 +37,7 @@ const printPdf = () => {
 </script>
 
 <template>
-    <base-menu>
+    <base-menu class="z-[60]">
         <base-menu-button :as="BaseButton" class="!box px-2">
             <span class="flex h-5 w-5 items-center justify-center">
                 <svg-loader class="h-5 w-5 fill-current" name="icon-file-export" />

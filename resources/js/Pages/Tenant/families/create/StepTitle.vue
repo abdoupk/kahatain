@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+import { useCreateFamilyStore } from '@/stores/create-family'
+
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 
 interface Props {
-    currentStep: number
     index: number
     title: string
 }
 
 defineProps<Props>()
+
+const createFamilyStore = useCreateFamilyStore()
 
 const emit = defineEmits(['goTo'])
 
@@ -19,7 +22,7 @@ const handleClick = (index: number) => emit('goTo', index)
         <!-- TODO: fix animation delay   -->
         <transition :duration="150" mode="out-in" type="transition">
             <base-button
-                v-if="index <= currentStep"
+                v-if="index <= createFamilyStore.current_step"
                 class="h-10 w-10 rounded-full"
                 type="button"
                 variant="primary"
@@ -38,14 +41,14 @@ const handleClick = (index: number) => emit('goTo', index)
             </base-button>
         </transition>
         <div
-            :class="{ 'font-medium': currentStep === index }"
-            class="ms-3 block text-base text-slate-600 transition-all duration-150 dark:text-slate-400 lg:hidden"
+            :class="{ 'font-medium rtl:font-bold': createFamilyStore.current_step === index }"
+            class="ms-3 block text-base text-slate-600 transition-all duration-150 dark:text-slate-400 lg:hidden rtl:font-semibold"
         >
             {{ $t(title) }}
         </div>
 
         <div
-            :style="{ width: currentStep - 1 >= index ? '100%' : '0%' }"
+            :style="{ width: createFamilyStore.current_step - 1 >= index ? '100%' : '0%' }"
             class="absolute start-1/2 top-4 -z-10 hidden h-[3px] w-0 bg-primary transition-all duration-500 lg:block"
         ></div>
     </div>

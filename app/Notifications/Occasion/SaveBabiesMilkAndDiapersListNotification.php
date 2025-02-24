@@ -33,6 +33,7 @@ class SaveBabiesMilkAndDiapersListNotification extends Notification implements S
                 'gender' => $this->user->gender,
             ],
             'metadata' => [
+                'processed_at' => now(),
                 'url' => tenant_route(
                     $this->user->tenant->domains->first()->domain,
                     'tenant.occasions.babies-milk-and-diapers.index'

@@ -2,15 +2,15 @@
 import type { IndexParams, PaginationData, SponsorsIndexResource } from '@/types/types'
 
 import { sponsorsFilters } from '@/constants/filters'
-import { Head, router } from '@inertiajs/vue3'
+import { sponsorsSorts } from '@/constants/sorts'
+import { Head } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref } from 'vue'
 
 import TheLayout from '@/Layouts/TheLayout.vue'
 
 import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 
-import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
-import { $tc } from '@/utils/i18n'
+import { handleSort, hasPermission } from '@/utils/helper'
 
 const DataTable = defineAsyncComponent(() => import('@/Pages/Tenant/sponsors/index/DataTable.vue'))
 
@@ -19,10 +19,6 @@ const TheNoResultsTable = defineAsyncComponent(() => import('@/Components/Global
 const TheTableFooter = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheTableFooter.vue'))
 
 const TheTableHeader = defineAsyncComponent(() => import('@/Components/Global/DataTable/TheTableHeader.vue'))
-
-const DeleteModal = defineAsyncComponent(() => import('@/Components/Global/DeleteModal.vue'))
-
-const SuccessNotification = defineAsyncComponent(() => import('@/Components/Global/SuccessNotification.vue'))
 
 defineOptions({
     layout: TheLayout
@@ -42,58 +38,7 @@ const params = ref<IndexParams>({
     search: props.params.search
 })
 
-const deleteModalStatus = ref<boolean>(false)
-
-const deleteProgress = ref<boolean>(false)
-
-const showSuccessNotification = ref<boolean>(false)
-
-const selectedSponsorId = ref<string>('')
-
-const closeDeleteModal = () => {
-    deleteModalStatus.value = false
-
-    selectedSponsorId.value = ''
-
-    deleteProgress.value = false
-}
-
 const sort = (field: string) => handleSort(field, params.value)
-
-const deleteSponsor = () => {
-    router.delete(route('tenant.sponsors.destroy', selectedSponsorId.value), {
-        preserveScroll: true,
-        onStart: () => {
-            deleteProgress.value = true
-        },
-        onSuccess: () => {
-            if (props.sponsors.meta.last_page < params.value.page) {
-                params.value.page = params.value.page - 1
-            }
-
-            getDataForIndexPages(route('tenant.sponsors.index'), params.value, {
-                onStart: () => {
-                    closeDeleteModal()
-                },
-                onFinish: () => {
-                    showSuccessNotification.value = true
-
-                    setTimeout(() => {
-                        showSuccessNotification.value = false
-                    }, 2000)
-                },
-                preserveScroll: true,
-                preserveState: true
-            })
-        }
-    })
-}
-
-const showDeleteModal = (sponsorId: string) => {
-    selectedSponsorId.value = sponsorId
-
-    deleteModalStatus.value = true
-}
 </script>
 
 <template>
@@ -106,6 +51,7 @@ const showDeleteModal = (sponsorId: string) => {
                 :filters="sponsorsFilters"
                 :pagination-data="sponsors"
                 :params="params"
+                :sortableFields="sponsorsSorts"
                 :title="$t('list', { attribute: $t('the_sponsors') })"
                 :url="route('tenant.sponsors.index')"
                 entries="sponsors"
@@ -113,11 +59,12 @@ const showDeleteModal = (sponsorId: string) => {
                 export-xlsx-url="tenant.sponsors.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             ></the-table-header>
 
             <template v-if="sponsors.data.length > 0">
-                <data-table :params :sponsors @showDeleteModal="showDeleteModal" @sort="sort"></data-table>
+                <data-table :params :sponsors @sort="sort"></data-table>
 
                 <the-table-footer
                     :pagination-data="sponsors"
@@ -127,18 +74,6 @@ const showDeleteModal = (sponsorId: string) => {
             </template>
 
             <the-no-results-table v-else></the-no-results-table>
-
-            <delete-modal
-                :deleteProgress
-                :open="deleteModalStatus"
-                @close="closeDeleteModal"
-                @delete="deleteSponsor"
-            ></delete-modal>
-
-            <success-notification
-                :open="showSuccessNotification"
-                :title="$tc('successfully_trashed', 0, { attribute: $t('the_sponsor') })"
-            ></success-notification>
         </div>
 
         <template #fallback>

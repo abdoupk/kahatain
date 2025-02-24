@@ -7,7 +7,7 @@ parameters:
     paths:
         - app/
 
-    level: 9
+    level: max
     ignoreErrors:
         - identifier: missingType.iterableValue
         - identifier: missingType.generics

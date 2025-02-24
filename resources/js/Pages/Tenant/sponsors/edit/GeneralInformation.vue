@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { $t } from '../../../../utils/i18n'
-
 import type { AcademicLevelType } from '@/types/lessons'
 import type { SponsorUpdateFormType } from '@/types/sponsors'
 
@@ -8,6 +6,7 @@ import { useAcademicLevelsStore } from '@/stores/academic-level'
 import { useForm } from 'laravel-precognition-vue'
 import { onMounted, reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -18,7 +17,8 @@ import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
 import TheSponsorTypeSelector from '@/Components/Global/TheSponsorTypeSelector.vue'
 
-import { omit } from '@/utils/helper'
+import { allowOnlyNumbersOnKeyDown, omit } from '@/utils/helper'
+import { $t } from '@/utils/i18n'
 
 const props = defineProps<{ sponsor: SponsorUpdateFormType }>()
 
@@ -33,6 +33,14 @@ const inputs = reactive<SponsorUpdateFormType>(
 const form = useForm('put', route('tenant.sponsors.infos-update', props.sponsor.id), inputs)
 
 const updateSuccess = ref(false)
+
+const _photo = ref(form.photo)
+
+const _diplomaFile = ref(form.diploma_file)
+
+const _noRemarriageFile = ref(form.no_remarriage_file)
+
+const _birthCertificateFile = ref(form.birth_certificate_file)
 
 const submit = () => {
     form.submit({
@@ -62,12 +70,23 @@ onMounted(async () => {
 
 <template>
     <!-- BEGIN: Sponsor Information -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ $t('display information') }}</h2>
         </div>
 
         <form @submit.prevent="submit">
+            <div class="me-2 ms-auto h-36 w-36">
+                <base-file-pond
+                    id="photo"
+                    :allow-multiple="false"
+                    :files="_photo"
+                    :labelIdle="$t('upload-files.labelIdle.sponsor_photo')"
+                    is-picture
+                    @update:files="form.photo = $event[0]"
+                ></base-file-pond>
+            </div>
+
             <div class="grid grid-cols-12 gap-4 p-5">
                 <!-- BEGIN: First Name -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -88,15 +107,7 @@ onMounted(async () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"></base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -119,15 +130,7 @@ onMounted(async () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"></base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -138,17 +141,34 @@ onMounted(async () => {
                     </base-form-label>
 
                     <base-v-calendar v-model:date="form.birth_date"></base-v-calendar>
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_date_message"
-                        >
-                            {{ form.errors.birth_date }}
-                        </div>
-                    </base-form-input-error>
+
+                    <base-form-input-error :form field_name="birth_date"></base-form-input-error>
                 </div>
                 <!-- END: BirthDate -->
+
+                <!-- Begin: Phone Number -->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label for="phone_number">
+                        {{ $t('validation.attributes.phone') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="phone_number"
+                        v-model="form.phone_number"
+                        :placeholder="
+                            $t('auth.placeholders.fill', {
+                                attribute: $t('validation.attributes.phone')
+                            })
+                        "
+                        maxlength="10"
+                        type="text"
+                        @change="form?.validate('phone_number')"
+                        @keydown="allowOnlyNumbersOnKeyDown"
+                    ></base-form-input>
+
+                    <base-form-input-error :form field_name="sponsor.phone_number"></base-form-input-error>
+                </div>
+                <!-- End: Phone Number -->
 
                 <!-- BEGIN: Father Name -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -169,15 +189,7 @@ onMounted(async () => {
                         @change="form?.validate('father_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('father_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_father_name_message"
-                        >
-                            {{ form.errors.father_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="father_name"></base-form-input-error>
                 </div>
                 <!-- END: Father Name -->
 
@@ -200,15 +212,7 @@ onMounted(async () => {
                         @change="form?.validate('mother_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('mother_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_mother_name_message"
-                        >
-                            {{ form.errors.mother_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="mother_name"></base-form-input-error>
                 </div>
                 <!-- END: Mother Name -->
 
@@ -231,15 +235,7 @@ onMounted(async () => {
                         @change="form?.validate('birth_certificate_number')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_certificate_number')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_certificate_number_message"
-                        >
-                            {{ form.errors.birth_certificate_number }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_certificate_number"></base-form-input-error>
                 </div>
                 <!-- END: Birth Certificate number -->
 
@@ -258,15 +254,13 @@ onMounted(async () => {
                             })
                         "
                         data-test="sponsor_ccp"
+                        maxlength="12"
                         type="text"
                         @change="form?.validate('ccp')"
+                        @keydown="allowOnlyNumbersOnKeyDown"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('ccp')" class="mt-2 text-danger" data-test="error_ccp_message">
-                            {{ form.errors.ccp }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="ccp"></base-form-input-error>
                 </div>
                 <!-- END: CCP -->
 
@@ -289,15 +283,7 @@ onMounted(async () => {
                         @change="form?.validate('function')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('function')"
-                            class="mt-2 text-danger"
-                            data-test="error_function_message"
-                        >
-                            {{ form.errors.function }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="function"></base-form-input-error>
                 </div>
                 <!-- END: Function (job) -->
 
@@ -315,15 +301,7 @@ onMounted(async () => {
                         ></the-academic-level-selector>
                     </div>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('academic_level_id')"
-                            class="mt-2 text-danger"
-                            data-test="error_academic_level_message"
-                        >
-                            {{ form.errors.academic_level_id }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="academic_level_id"></base-form-input-error>
                 </div>
                 <!-- END: Academic Level -->
 
@@ -346,13 +324,32 @@ onMounted(async () => {
                         @change="form?.validate('diploma')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('diploma')" class="mt-2 text-danger" data-test="error_diploma_message">
-                            {{ form.errors.diploma }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="diploma"></base-form-input-error>
                 </div>
                 <!-- END: Diploma -->
+
+                <!-- BEGIN: Health Status -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="health_status">
+                        {{ $t('validation.attributes.sponsor.health_status') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        id="health_status"
+                        v-model="form.health_status"
+                        :placeholder="
+                            $t('auth.placeholders.fill', {
+                                attribute: $t('validation.attributes.sponsor.health_status')
+                            })
+                        "
+                        data-test="sponsor_health_status"
+                        type="text"
+                        @change="form?.validate('health_status')"
+                    ></base-form-input>
+
+                    <base-form-input-error :form field_name="health_status"></base-form-input-error>
+                </div>
+                <!-- END: Health Status -->
 
                 <!-- BEGIN: Sponsor Type -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -366,17 +363,65 @@ onMounted(async () => {
                         @update:type="form?.validate('sponsor_type')"
                     ></the-sponsor-type-selector>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('sponsor_type')"
-                            class="mt-2 text-danger"
-                            data-test="error_sponsor_type_message"
-                        >
-                            {{ form.errors.sponsor_type }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="sponsor_type"></base-form-input-error>
                 </div>
                 <!-- END: Sponsor Type -->
+
+                <!-- Begin: Upload files  -->
+                <div class="col-span-12 mt-6">
+                    <h1 class="mb-6 text-lg rtl:!font-semibold">{{ $t('upload-files.files') }}</h1>
+
+                    <div class="grid grid-cols-12 gap-3">
+                        <div class="col-span-12 lg:col-span-6">
+                            <base-form-label class="mb-2" for="birth_certificate_file">
+                                {{ $t('upload-files.labels.birth_certificate') }}
+                            </base-form-label>
+
+                            <base-file-pond
+                                id="birth_certificate_file"
+                                :allow-multiple="false"
+                                :files="_birthCertificateFile"
+                                :is-picture="false"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_birth_certificate')"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
+                                @update:files="form.birth_certificate_file = $event[0]"
+                            ></base-file-pond>
+                        </div>
+
+                        <div class="col-span-12 lg:col-span-6">
+                            <base-form-label class="mb-2" for="diploma_file">
+                                {{ $t('diploma') }}
+                            </base-form-label>
+
+                            <base-file-pond
+                                id="diploma_file"
+                                :allow-multiple="false"
+                                :files="_diplomaFile"
+                                :is-picture="false"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_diploma')"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
+                                @update:files="form.diploma_file = $event[0]"
+                            ></base-file-pond>
+                        </div>
+
+                        <div class="col-span-12 lg:col-span-6">
+                            <base-form-label class="mb-2" for="no_remarriage_file">
+                                {{ $t('no_remarriage') }}
+                            </base-form-label>
+
+                            <base-file-pond
+                                id="no_remarriage_file"
+                                :allow-multiple="false"
+                                :files="_noRemarriageFile"
+                                :is-picture="false"
+                                :label-idle="$t('upload-files.labelIdle.sponsor_no_remarriage')"
+                                accepted-file-types="image/jpeg, image/png, application/pdf"
+                                @update:files="form.no_remarriage_file = $event[0]"
+                            ></base-file-pond>
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Upload Files   -->
 
                 <base-button :disabled="form.processing" class="col-span-12 !mt-0 w-20" type="submit" variant="primary">
                     {{ $t('save') }}

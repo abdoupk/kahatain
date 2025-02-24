@@ -1,4 +1,5 @@
-<script setup lang="ts">
+<script lang="ts" setup>
+import { useWindowSize } from '@vueuse/core'
 import ChartJs, { type ChartConfiguration } from 'chart.js/auto'
 import { type CanvasHTMLAttributes, inject, onMounted, ref, watch } from 'vue'
 
@@ -24,6 +25,8 @@ defineOptions({
 const props = defineProps<ChartProps>()
 
 const chartRef = ref<ChartElement>()
+
+const { width: windowWidth } = useWindowSize()
 
 const init = (el: ChartElement, props: ChartProps) => {
     const canvas = el?.getContext('2d')
@@ -73,7 +76,7 @@ onMounted(() => {
     <div
         :style="{
             width: `${width}px`,
-            height: `${height}px`
+            height: windowWidth < 512 ? '239px' : `${height}px`
         }"
     >
         <canvas ref="chartRef" :class="$attrs.class"></canvas>

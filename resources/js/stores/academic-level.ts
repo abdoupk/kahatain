@@ -39,7 +39,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
 
             return this.academicLevels.filter((academicLevel) =>
                 // eslint-disable-next-line array-element-newline
-                ['الطور الابتدائي', 'الطور الثانوي', 'الطور المتوسط'].includes(academicLevel.phase)
+                ['primary_education', 'middle_education', 'secondary_education'].includes(academicLevel.phase_key)
             )
         },
 
@@ -62,7 +62,17 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
                 await this.getAcademicLevels()
             }
 
-            return this.academicLevels.filter((academicLevel) => academicLevel.phase === 'الطور الجامعي')
+            return this.academicLevels.filter((academicLevel) => academicLevel.phase_key === 'university')
+        },
+
+        async getAcademicLevelsForTraineesForSelect() {
+            if (this.academicLevels.length == 0) {
+                await this.getAcademicLevels()
+            }
+
+            return this.academicLevels.filter((academicLevel) =>
+                ['paramedical', 'vocational_training'].includes(academicLevel.phase_key)
+            )
         },
 
         async getAcademicLevelsForSponsorsForSelectFilterValue() {
@@ -101,9 +111,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
             return this.academicLevels
                 .filter(
                     (academicLevel) =>
-                        !['الطور الابتدائي',
-'الطور المتوسط',
-'الطور الثانوي'].includes(academicLevel.phase)
+                        !['الطور الابتدائي', 'الطور المتوسط', 'الطور الثانوي'].includes(academicLevel.phase)
                 )
                 .flatMap(({ levels, phase }) =>
                     levels
@@ -120,7 +128,7 @@ export const useAcademicLevelsStore = defineStore('academic-levels', {
                 const level = item.levels.find((level) => level.id === id)
 
                 if (level) {
-                    return item.phase
+                    return item.phase_key
                 }
             }
 

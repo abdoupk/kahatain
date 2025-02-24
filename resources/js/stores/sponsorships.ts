@@ -1,6 +1,24 @@
-import type { CreateSponsorshipForm } from '@/types/types'
+import type { CreateSponsorshipForm, PaginationData } from '@/types/types'
 
 import { defineStore } from 'pinia'
+
+export type MonthlyBasket = {
+    id: string
+    name: string
+    status: boolean
+    inventory_id: string
+    qty_for_family: number
+    unit: 'kg' | 'piece' | 'liter'
+}
+
+export type RamadanBasket = {
+    id: string
+    name: string
+    status: boolean
+    inventory_id: string
+    qty_for_family: number
+    unit: 'kg' | 'piece' | 'liter'
+}
 
 interface State {
     sponsorship: CreateSponsorshipForm & {
@@ -32,8 +50,10 @@ interface State {
             minimum: number | null
             maximum: number | null
             category: string | null
-        }
+        }[]
     }
+    ramadan_basket: PaginationData<RamadanBasket>
+    monthly_basket: PaginationData<MonthlyBasket>
 }
 
 export const useSponsorshipsStore = defineStore('sponsorships', {
@@ -44,15 +64,13 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             sponsorship_type: '',
             recipientable_type: 'family',
             recipientable_id: '',
-            benefactor: {
-                id: '',
-                name: ''
-            },
+            benefactor: '',
             shop: {
                 name: '',
                 phone: '',
                 address: ''
-            }
+            },
+            until: null
         },
         monthly_sponsorship: {
             categories: [
@@ -79,11 +97,15 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
                     category: null
                 }
             ]
-        }
+        },
+        ramadan_basket: [],
+        monthly_basket: []
     }),
     actions: {
         async getMonthlySponsorshipSettings() {
-            const { data: monthly_sponsorship } = await axios.get(route('tenant.monthly-sponsorship.get-settings'))
+            const { data: monthly_sponsorship } = await axios.get(
+                route('tenant.occasions.monthly-sponsorship.get-settings')
+            )
 
             this.monthly_sponsorship = monthly_sponsorship
         },
@@ -92,6 +114,44 @@ export const useSponsorshipsStore = defineStore('sponsorships', {
             const { data: ramadan_sponsorship } = await axios.get(route('tenant.occasions.ramadan-basket.get-settings'))
 
             this.ramadan_sponsorship = ramadan_sponsorship
+        },
+
+        async getMonthlyBasketItems(page: number) {
+            const { data: monthly_basket } = await axios.get(
+                route(
+                    'tenant.occasions.monthly-sponsorship.get-items',
+                    { page },
+                    {
+                        preserveState: false,
+                        preserveScroll: false
+                    }
+                )
+            )
+
+            this.monthly_basket = monthly_basket
+        },
+
+        async getRamadanBasketItems(page: number) {
+            const { data: ramadan_basket } = await axios.get(
+                route(
+                    'tenant.occasions.ramadan-basket.get-items',
+                    { page },
+                    {
+                        preserveState: false,
+                        preserveScroll: false
+                    }
+                )
+            )
+
+            this.ramadan_basket = ramadan_basket
+        },
+
+        async getRamadanBasketCategories() {
+            const { data: ramadan_categories } = await axios.get(
+                route('tenant.occasions.ramadan-basket.get-categories')
+            )
+
+            return ramadan_categories
         }
     }
 })

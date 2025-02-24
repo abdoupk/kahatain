@@ -10,16 +10,16 @@ use Inertia\Response;
 
 class SiteSettingsIndexController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return ['can:view_settings'];
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('Tenant/settings/SettingsIndexPage', [
             'settings' => SiteSettingsIndexResource::make(auth()->user()->tenant),
             'calculation' => json_decode(auth()->user()->tenant->calculation),
         ]);
-    }
-
-    public static function middleware()
-    {
-        return ['can:view_settings'];
     }
 }

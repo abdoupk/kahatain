@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cities', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->integer('id')->primary()->index();
             $table->string('commune_name')->index('idx_cities_commune_name');
             $table->string('commune_name_ascii');
             $table->string('daira_name')->index('idx_cities_daira_name');
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('post_code', 5)->index('idx_cities_post_code');
+
+            $table->string('commune_code', 4)->nullable();
 
             $table->index(['id'], 'idx_cities_id');
         });

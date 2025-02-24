@@ -2,16 +2,26 @@
 
 const LIMIT = 5000;
 
-const DONATION_SPECIFICATION = ['drilling_wells', 'monthly_sponsorship',
-    'eid_el_adha', 'eid_el_fitr', 'other', 'school_entry', 'analysis',
-    'therapy', 'ramadan_basket',
-];
+const FILTER_STUDENTS = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';
 
-const FILTER_RAMADAN_BASKET = 'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
+const FILTER_SCHOOL_ENTRY = 'AND academic_level.phase_key IN [primary_education, middle_education, secondary_education]';
 
-const FILTER_EID_SUIT = 'AND eid_suit = true AND eid_suit IS NOT NULL';
+const FILTER_COLLEGE_STUDENTS = 'AND academic_level.phase_key IN [licence, master, doctorate]';
 
-const FILTER_EID_AL_ADHA = 'AND eid_al_adha != false AND eid_al_adha IS NOT NULL';
+const FILTER_TRAINEES_ORPHANS = 'AND academic_level.phase_key IN [paramedical, vocational_training]';
+
+const FILTER_RAMADAN_BASKET = '';
+// 'AND ramadan_basket != false AND ramadan_basket IS NOT NULL';
+
+function FILTER_EID_SUIT(): string
+{
+    $less_than_six_years = strtotime('now - 6 years');
+
+    return "AND ( birth_date IS NOT EMPTY AND birth_date >= $less_than_six_years OR is_handicapped = true OR academic_level.phase_key IN [primary_education, middle_education, secondary_education] )";
+}
+
+const FILTER_EID_AL_ADHA = '';
+// 'AND eid_al_adha != false AND eid_al_adha IS NOT NULL';
 
 const CALCULATION = [
     'weights' => [
@@ -72,12 +82,12 @@ const CALCULATION = [
     ],
     'percentage_of_contribution' => [
         'sponsor' => [
-            'other' => 100,
-            'widow' => 100,
             'widower' => 100,
-            'mother_of_a_supported_childhood' => 100,
-            'widowers_wife' => 100,
+            'widow' => 100,
             'widows_husband' => 100,
+            'widowers_wife' => 100,
+            'other' => 100,
+            'mother_of_a_supported_childhood' => 100,
         ],
         'orphans' => [
             'male_gt_18' => [
@@ -104,12 +114,12 @@ const CALCULATION = [
     ],
     'unemployed_contribution' => [
         'sponsor' => [
-            'other' => 0.00,
-            'widow' => 0.00,
             'widower' => 0.00,
-            'mother_of_a_supported_childhood' => 0.00,
-            'widowers_wife' => 0.00,
+            'widow' => 0.00,
             'widows_husband' => 15000.00,
+            'widowers_wife' => 0.00,
+            'other' => 0.00,
+            'mother_of_a_supported_childhood' => 0.00,
         ],
         'orphans' => [
             'male_gt_18' => [
@@ -132,7 +142,7 @@ const CALCULATION = [
         'university_scholarship_master_two' => 7200.00,
         'university_scholarship_doctorate' => 36000.00,
         'unemployment_benefit' => 15000.00,
-        'threshold' => 8000.00,
+        'threshold' => 6000.00,
         'association_basket_value' => 4000.00,
         'categories' => [
             [
@@ -158,17 +168,28 @@ const CALCULATION = [
             [
                 'minimum' => 0,
                 'maximum' => 25000,
-                'category' => 'الصف الأول',
+                'category' => 'الصنف الأول',
             ],
             [
                 'minimum' => 25000,
                 'maximum' => 50000,
-                'category' => 'الصف الثاني',
+                'category' => 'الصنف الثاني',
             ],
             [
                 'minimum' => 50000,
-                'maximum' => PHP_FLOAT_MAX,
-                'category' => 'الصف الثالث',
+                'maximum' => 80000,
+                'category' => 'الصنف الثالث',
+            ],
+        ],
+    ],
+    'eid_al_adha_sponsorship' => [
+        'threshold' => 10000.00,
+        'categories' => [
+            'meat' => [
+                'individuals_count' => 3,
+            ],
+            'benefits' => [
+                'individuals_count' => 3,
             ],
         ],
     ],

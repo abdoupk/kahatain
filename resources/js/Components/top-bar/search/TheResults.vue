@@ -46,7 +46,7 @@ defineProps<{
                         <img :alt="option.title" :src="option.image" class="rounded-full" />
                     </div>
 
-                    <div class="ms-3 ltr:capitalize">
+                    <div class="ms-3 whitespace-nowrap ltr:capitalize">
                         {{ option.title }}
                     </div>
 

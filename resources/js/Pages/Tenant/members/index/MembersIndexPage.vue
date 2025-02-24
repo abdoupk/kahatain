@@ -2,6 +2,7 @@
 import type { IndexParams, MembersIndexResource, PaginationData } from '@/types/types'
 
 import { membersFilters } from '@/constants/filters'
+import { memberSorts } from '@/constants/sorts'
 import { useMembersStore } from '@/stores/members'
 import { Head, router } from '@inertiajs/vue3'
 import { defineAsyncComponent, ref, watchEffect } from 'vue'
@@ -13,7 +14,7 @@ import TheContentLoader from '@/Components/Global/theContentLoader.vue'
 import { getDataForIndexPages, handleSort, hasPermission } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
-const MemberCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/MemberCreateModal.vue'))
+const MemberCreateModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/create/MemberCreateModal.vue'))
 
 const MemberShowModal = defineAsyncComponent(() => import('@/Pages/Tenant/members/MemberShowModal.vue'))
 
@@ -158,13 +159,15 @@ watchEffect(async () => {
                 export-pdf-url=""
                 export-xlsx-url=""
                 filterable
+                :sortableFields="memberSorts"
+                sortable
                 searchable
                 @change-filters="params.filters = $event"
             >
                 <template #ExtraButtons>
                     <base-button
                         v-if="hasPermission('create_members')"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="showCreateModal"
                     >

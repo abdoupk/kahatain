@@ -3,16 +3,16 @@
 return [
     'dashboard' => [
         'general_reports' => 'تقارير عامة',
-        'total_branches' => 'اجمالي الفروع',
-        'total_families' => 'اجمالي الأسر',
-        'total_members' => 'اجمالي الأعضاء',
-        'total_orphans' => 'اجمالي الأيتام',
+        'total_branches' => 'إجمالي الفروع',
+        'total_families' => 'إجمالي الأسر',
+        'total_members' => 'إجمالي الأعضاء',
+        'total_orphans' => 'إجمالي الأيتام',
         'financial_report' => 'تقارير المالية',
-        'total_needs' => 'اجمالي الاحتياجات',
-        'needs_count' => '{0} لم يتم اضافة اي احتياج | {1} احتياج | {2} احتياجين | [3,10] :count احتياجات |  [11,*] :count احتياج',
+        'total_needs' => 'إجمالي الاحتياجات',
+        'needs_count' => '{0} لم يتم إضافة اي احتياج | {1} احتياج | {2} احتياجين | [3,10] :count احتياجات |  [11,*] :count احتياج',
         'needs_by_needable_type' => 'الاحتياجات حسب المستفيدين',
         'orphans_by_gender' => 'الأيتام حسب الجنس',
-        'orphans_count' => '{0} لم يتم اضافة اي يتيم | {1} يتيم | {2} يتيمين | [3,10] :count أيتام |  [11,*] :count يتيم',
+        'orphans_count' => '{0} لم يتم إضافة اي يتيم | {1} يتيم | {2} يتيمين | [3,10] :count أيتام |  [11,*] :count يتيم',
     ],
     'handicapped' => 'معاقين',
     'healthy' => 'الأصحاء',
@@ -31,7 +31,7 @@ return [
     ],
     'orphans' => [
         'titles' => [
-            'orphans_by_family_status' => 'الأيتام حسب حالة العائلية',
+            'orphans_by_family_status' => 'الأيتام حسب حالة العائلية',
             'orphans_by_academic_level' => 'الأيتام حسب الطور الدراسي',
             'orphans_by_sponsorship' => 'الأيتام حسب الكفالات',
             'orphans_by_gender' => 'الأيتام حسب الجنس',
@@ -39,7 +39,7 @@ return [
             'orphans_by_zone' => 'توزيع الأيتام حسب المناطق',
             'orphans_by_branch' => 'توزيع الأيتام حسب الفروع',
             'orphans_by_pants_and_shirt_size' => 'مقاس القميص و السراويل',
-            'orphans_by_shoe_size' => 'مقاس الاحذية',
+            'orphans_by_shoe_size' => 'مقاس الأحذية',
             'orphans_by_vocational_training' => 'الأيتام حسب تخصصات التكوين المهني',
             'orphans_by_created_date' => 'الأيتام حسب تاريخ بدء التكفل',
             'orphans_group_health_status' => 'الأيتام حسب الحالة الصحية',
@@ -65,5 +65,17 @@ return [
         'labels' => [
         ],
     ],
-    'header' => 'الإحصائيات الخاصة ب:attribute',
+    'occasions' => [
+        'titles' => [
+            'babies_milk_and_diapers' => 'الاستفادة من الحليب والحفاضات',
+            'eid_suit' => 'الاستفادة من بدلة العيد',
+            'eid_al_adha' => 'الاستفادة من الأضحية',
+            'ramadan_basket' => 'الاستفادة من القفة الرمضانية',
+            'school_entry' => 'الاستفادة من الحقيبة المدرسية',
+            'monthly_sponsorship' => 'الاستفادة من الكفالة الشهرية',
+            'zakat' => ' الاستفادة من الزكاة',
+            'meat_distribution' => 'الاستفادة من توزيع اللحوم',
+        ],
+    ],
+    'header' => 'الإحصائيات الخاصة ب:attribute',
 ];

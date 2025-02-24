@@ -4,8 +4,8 @@ import type { FamilyEditType, FamilyUpdateFormType } from '@/types/families'
 import { useForm } from 'laravel-precognition-vue'
 import { reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
-import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
@@ -27,12 +27,16 @@ const inputs = reactive<FamilyUpdateFormType>(
         'furnishings',
         'second_sponsor',
         'preview',
+        'deceased',
         'name',
+        'creator',
         'spouse'
     ])
 )
 
 const form = useForm('put', route('tenant.families.infos-update', props.family.id), inputs)
+
+const _residenceCertificateFile = ref(props.family.residence_certificate_file)
 
 const updateSuccess = ref(false)
 
@@ -54,7 +58,7 @@ const submit = () => {
 
 <template>
     <!-- BEGIN: Family Information -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ family.name }}</h2>
 
@@ -67,38 +71,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div class="grid grid-cols-12 gap-4 p-5">
-                <!-- BEGIN: File Number -->
-                <div class="col-span-12 @xl:col-span-6">
-                    <base-form-label for="file_number">
-                        {{ $t('validation.attributes.file_number') }}
-                    </base-form-label>
-
-                    <base-form-input
-                        id="file_number"
-                        v-model="form.file_number"
-                        :placeholder="
-                            $t('auth.placeholders.fill', {
-                                attribute: $t('validation.attributes.file_number')
-                            })
-                        "
-                        data-test="orphan_file_number"
-                        type="text"
-                        @change="form?.validate('file_number')"
-                    ></base-form-input>
-
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('file_number')"
-                            class="mt-2 text-danger"
-                            data-test="error_file_number_message"
-                        >
-                            {{ form.errors.file_number }}
-                        </div>
-                    </base-form-input-error>
-                </div>
-                <!-- END: File Number -->
-
-                <!-- BEGIN: Branch -->
+                <!-- BEGIN: Zone -->
                 <div class="col-span-12 @xl:col-span-6">
                     <base-form-label for="zone_id">
                         {{ $t('validation.attributes.zone_id') }}
@@ -110,13 +83,9 @@ const submit = () => {
                         @update:zone="form?.validate('zone_id')"
                     ></the-zone-selector>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('zone_id')" class="mt-2 text-danger" data-test="error_zone_id_message">
-                            {{ form.errors.zone_id }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="zone_id"></base-form-input-error>
                 </div>
-                <!-- END: Branch -->
+                <!-- END: Zone -->
 
                 <!-- BEGIN: Zone -->
                 <div class="col-span-12 @xl:col-span-6">
@@ -130,7 +99,7 @@ const submit = () => {
                         @update:branch="form?.validate('branch_id')"
                     ></the-branch-selector>
 
-                    <base-form-input-error>
+                    <base-form-input-error :form field_name="branch_id">
                         <div
                             v-if="form?.invalid('branch_id')"
                             class="mt-2 text-danger"
@@ -155,19 +124,37 @@ const submit = () => {
                         @input="form?.validate('address')"
                     ></the-address-field>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('address')" class="mt-2 text-danger" data-test="error_address_message">
-                            {{ form.errors.address }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="address"></base-form-input-error>
                 </div>
                 <!-- END: Address -->
 
-                <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
-                    {{ $t('save') }}
+                <!-- BEGIN: Address -->
+                <div class="col-span-12 @xl:col-span-6 @xl:col-start-1">
+                    <base-form-label for="birth_certificate_file">
+                        {{ $t('upload-files.labels.residence_certificate') }}
+                    </base-form-label>
 
-                    <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
-                </base-button>
+                    <base-file-pond
+                        id="birth_certificate_file"
+                        :allow-multiple="false"
+                        :files="_residenceCertificateFile"
+                        :is-picture="false"
+                        :labelIdle="$t('upload-files.labelIdle.residence_certificate')"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        @update:files="form.residence_certificate_file = $event[0]"
+                    ></base-file-pond>
+
+                    <base-form-input-error :form field_name="address"></base-form-input-error>
+                </div>
+                <!-- END: Address -->
+
+                <div class="col-span-12">
+                    <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
+                        {{ $t('save') }}
+
+                        <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
+                    </base-button>
+                </div>
             </div>
         </form>
     </div>

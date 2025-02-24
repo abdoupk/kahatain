@@ -7,7 +7,8 @@ return [
     'school_entry' => 'دخول المدرسي لسنة :year',
     'monthly_basket' => 'قفة الشهرية لشهر :date',
     'monthly_sponsorship' => 'كفالة الشهرية لشهر :date',
+    'zakat' => 'تقسيم زكاة بقيمة :amount على :count عائلة',
     'babies_milk_and_diapers' => 'حليب الأطفال والحفاضات لشهر :date',
-    'families_count' => 'عدد العائلات المستفيدة',
+    'families_count' => 'عدد العائلات المستفيدة',
     'saved_by' => 'حفظ بواسطة',
 ];

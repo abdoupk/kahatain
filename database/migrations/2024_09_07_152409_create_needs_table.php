@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,16 +15,16 @@ return new class extends Migration
         Schema::create('needs', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('demand');
-            $table->text('subject');
-            $table->text('status');
-            $table->text('needable_type');
+            $table->string('subject');
+            $table->string('status');
+            $table->string('needable_type');
             $table->uuid('needable_id');
-            $table->uuid('tenant_id');
+            $table->foreignIdFor(Tenant::class);
             $table->text('note')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->uuid('created_by')->nullable();
-            $table->uuid('deleted_by')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'created_by')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'deleted_by')->nullable();
 
             $table->index(['needable_type', 'needable_id']);
         });

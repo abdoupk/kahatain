@@ -15,7 +15,11 @@ interface CkeditorProps extends GlobalCkeditorProps {
 const props = withDefaults(defineProps<CkeditorProps>(), {
     as: 'div',
     config: () => ({
-        language: getLocale()
+        language: getLocale(),
+        toolbar: {
+            items: [],
+            shouldNotGroupWhenFull: true
+        }
     })
 })
 

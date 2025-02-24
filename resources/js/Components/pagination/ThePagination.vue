@@ -31,7 +31,7 @@ const dir = usePage().props.language !== 'ar' ? 'ltr' : 'rtl'
 const pagination = computedEager((): (number | null)[] => {
     const res = []
 
-    const minPaginationElems = 5 + rangeSize * 2
+    const minPaginationElems = 3 + rangeSize * 2
 
     let rangeStart = pages <= minPaginationElems ? 1 : modelValue - rangeSize
 
@@ -139,7 +139,7 @@ function goToNext(): void {
             :key="`pagination-page-${page}`"
             :active-color="activeColor"
             :current="modelValue"
-            :page="page"
+            :page
             @update="updatePageHandler"
         />
 

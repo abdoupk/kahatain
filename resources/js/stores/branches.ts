@@ -21,7 +21,7 @@ interface State {
         families_count: number
         city: CityType
     }
-    branches: { id: string; name: string }[]
+    branches: { id: string; name: string; city_id: number }[]
 }
 
 export const useBranchesStore = defineStore('branches', {

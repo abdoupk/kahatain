@@ -101,7 +101,7 @@ const options = computed<ChartOptions>(() => {
 
 <template>
     <suspense v-if="data.datasets[0].data.length" suspensible>
-        <base-chart :data :height :options :width type="line" />
+        <base-chart :data :height :options :width type="line"></base-chart>
     </suspense>
 
     <the-no-data-chart v-else></the-no-data-chart>

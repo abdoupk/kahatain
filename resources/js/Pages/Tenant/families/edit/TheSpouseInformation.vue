@@ -4,6 +4,7 @@ import type { FamilyUpdateSpouseFormType, SpouseType } from '@/types/families'
 import { useForm } from 'laravel-precognition-vue'
 import { reactive, ref } from 'vue'
 
+import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
 import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
@@ -20,9 +21,11 @@ import { $t } from '@/utils/i18n'
 const props = defineProps<{ spouse: SpouseType }>()
 
 // eslint-disable-next-line array-element-newline
-const inputs = reactive<FamilyUpdateSpouseFormType>(omit(props.spouse, ['id', 'family_id', 'name']))
+const inputs = reactive<FamilyUpdateSpouseFormType>(omit(props.spouse, ['id', 'family_id', 'name', 'files']))
 
-const form = useForm('put', route('tenant.families.spouse-update', props.spouse.family_id), inputs)
+const form = useForm('put', route('tenant.families.spouse-update', props.spouse.id), inputs)
+
+const deathCertificateFile = ref(props.spouse.death_certificate_file)
 
 const updateSuccess = ref(false)
 
@@ -44,7 +47,7 @@ const submit = () => {
 
 <template>
     <!-- BEGIN: Spouse Information -->
-    <div class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div class="intro-y box !z-0 col-span-12 @container 2xl:col-span-6">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
             <h2 class="me-auto text-xl font-bold">{{ spouse.name }}</h2>
         </div>
@@ -70,15 +73,7 @@ const submit = () => {
                         @change="form?.validate('first_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('first_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_first_name_message"
-                        >
-                            {{ form.errors.first_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="first_name"></base-form-input-error>
                 </div>
                 <!-- END: First Name -->
 
@@ -101,15 +96,7 @@ const submit = () => {
                         @change="form?.validate('last_name')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('last_name')"
-                            class="mt-2 text-danger"
-                            data-test="error_last_name_message"
-                        >
-                            {{ form.errors.last_name }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="last_name"></base-form-input-error>
                 </div>
                 <!-- END: Last Name -->
 
@@ -121,15 +108,7 @@ const submit = () => {
 
                     <base-v-calendar id="birth_date" v-model:date="form.birth_date"></base-v-calendar>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('birth_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_birth_date_message"
-                        >
-                            {{ form.errors.birth_date }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="birth_date"></base-form-input-error>
                 </div>
                 <!-- END: Birth Date -->
 
@@ -141,15 +120,7 @@ const submit = () => {
 
                     <base-v-calendar id="death_date" v-model:date="form.death_date"></base-v-calendar>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('death_date')"
-                            class="mt-2 text-danger"
-                            data-test="error_death_date_message"
-                        >
-                            {{ form.errors.death_date }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="death_date"></base-form-input-error>
                 </div>
                 <!-- END: Death Date -->
 
@@ -172,15 +143,7 @@ const submit = () => {
                         @change="form?.validate('function')"
                     ></base-form-input>
 
-                    <base-form-input-error>
-                        <div
-                            v-if="form?.invalid('function')"
-                            class="mt-2 text-danger"
-                            data-test="error_function_message"
-                        >
-                            {{ form.errors.function }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="function"></base-form-input-error>
                 </div>
                 <!-- END: Function (Job) -->
 
@@ -211,19 +174,35 @@ const submit = () => {
                         </base-input-group-text>
                     </base-input-group>
 
-                    <base-form-input-error>
-                        <div v-if="form?.invalid('income')" class="mt-2 text-danger" data-test="error_income_message">
-                            {{ form.errors.income }}
-                        </div>
-                    </base-form-input-error>
+                    <base-form-input-error :form field_name="income"></base-form-input-error>
                 </div>
                 <!-- END: Income -->
 
-                <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
-                    {{ $t('save') }}
+                <!-- BEGIN: Death certificate file -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="death_certificate_file">
+                        {{ $t('upload-files.labels.death_certificate') }}
+                    </base-form-label>
 
-                    <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
-                </base-button>
+                    <base-file-pond
+                        id="death_certificate_file"
+                        :allow-multiple="false"
+                        :files="deathCertificateFile"
+                        :is-picture="false"
+                        :label-idle="$t('upload-files.labelIdle.spouse_death_certificate')"
+                        accepted-file-types="image/jpeg, image/png, application/pdf"
+                        @update:files="form.death_certificate_file = $event[0]"
+                    ></base-file-pond>
+                </div>
+                <!-- END: Death certificate file -->
+
+                <div class="col-span-12">
+                    <base-button :disabled="form.processing" class="!mt-0 w-20" type="submit" variant="primary">
+                        {{ $t('save') }}
+
+                        <spinner-button-loader :show="form.processing" class="ms-auto"></spinner-button-loader>
+                    </base-button>
+                </div>
             </div>
         </form>
     </div>

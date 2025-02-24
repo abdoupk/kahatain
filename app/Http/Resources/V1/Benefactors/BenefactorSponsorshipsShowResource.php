@@ -23,6 +23,7 @@ class BenefactorSponsorshipsShowResource extends JsonResource
                 'recipientable_type' => $this->recipientable_type,
             ],
             'sponsorship_type' => $this->sponsorship_type,
+            'until' => $this->until,
         ];
     }
 }

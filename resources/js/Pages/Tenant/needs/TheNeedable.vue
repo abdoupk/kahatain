@@ -2,32 +2,17 @@
 import OrphanSelector from '@/Pages/Tenant/needs/create/OrphanSelector.vue'
 import SponsorSelector from '@/Pages/Tenant/needs/create/SponsorSelector.vue'
 
-import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
-import BaseVueSelect from '@/Components/Base/vue-select/BaseVueSelect.vue'
+import BaseInputError from '@/Components/Base/form/BaseInputError.vue'
+import BaseListBox from '@/Components/Base/headless/Listbox/BaseListBox.vue'
 
 import { $t } from '@/utils/i18n'
 
-const needableType = defineModel('needableType', { default: 'orphan' })
+const needableType = defineModel('needableType', { default: '' })
 
 const needable = defineModel('needable', { default: '' })
 
 defineProps<{ errorMessage?: string | string[] }>()
-
-const needableTypes = [
-    {
-        label: 'the_orphan',
-        value: 'orphan'
-    },
-    {
-        label: 'the_sponsor',
-        value: 'sponsor'
-    }
-]
-
-const needableTypesLabels = ({ label }: { label: string }) => {
-    return $t(label)
-}
 </script>
 
 <template>
@@ -37,50 +22,31 @@ const needableTypesLabels = ({ label }: { label: string }) => {
                 {{ $t('needable_type') }}
             </base-form-label>
 
-            <div>
-                <!-- @vue-ignore -->
-                <base-vue-select
-                    id="needable_type"
-                    :custom-label="needableTypesLabels"
-                    :options="needableTypes"
-                    :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('needable_type') })"
-                    class="h-full w-full"
-                    label="label"
-                    track_by="value"
-                    @update:value="
-                        (type) => {
-                            needableType = type.value
-
-                            needable = ''
-                        }
-                    "
-                >
-                </base-vue-select>
-            </div>
+            <base-list-box
+                v-model="needableType"
+                :options="[
+                    { value: 'orphan', label: $t('the_orphan') },
+                    { value: 'sponsor', label: $t('the_sponsor') }
+                ]"
+                :placeholder="$t('auth.placeholders.tomselect', { attribute: $t('needable_type') })"
+                @update:model-value="needable = ''"
+            />
         </div>
 
         <div>
             <base-form-label for="needable">{{ $t('the_requester') }}</base-form-label>
 
             <div>
-                <orphan-selector
-                    v-if="needableType === 'orphan'"
-                    v-model:orphan="needable"
-                    @update:selected-orphan="(orphan) => (needable = orphan)"
-                ></orphan-selector>
+                <orphan-selector v-if="needableType === 'orphan'" v-model:orphan="needable"></orphan-selector>
 
-                <sponsor-selector
-                    v-else
-                    v-model:sponsor="needable"
-                    @update:selected-sponsor="(sponsor) => (needable = sponsor)"
-                ></sponsor-selector>
+                <sponsor-selector v-else v-model:sponsor="needable"></sponsor-selector>
             </div>
 
-            <base-form-input-error>
-                <div v-if="errorMessage" class="mt-2 text-red-600">
+            <base-input-error v-if="errorMessage">
+                <div class="mt-2 text-danger">
                     {{ $t('validation.required', { attribute: $t('the_requester') }) }}
                 </div>
-            </base-form-input-error>
+            </base-input-error>
         </div>
     </div>
 </template>

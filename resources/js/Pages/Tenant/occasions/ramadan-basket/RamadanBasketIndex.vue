@@ -2,6 +2,7 @@
 import type { ArchiveOccasionType, IndexParams, PaginationData, RamadanBasketFamiliesResource } from '@/types/types'
 
 import { ramadanBasketFilters } from '@/constants/filters'
+import { ramadanBasketSorts } from '@/constants/sorts'
 import { useSettingsStore } from '@/stores/settings'
 import { useSponsorshipsStore } from '@/stores/sponsorships'
 import { Head } from '@inertiajs/vue3'
@@ -93,6 +94,8 @@ const showSettingsModal = () => {
 
     sponsorshipsStore.getRamadanSponsorshipSettings()
 
+    sponsorshipsStore.getRamadanBasketItems(1)
+
     showSettingsModalStatus.value = true
 }
 </script>
@@ -107,6 +110,7 @@ const showSettingsModal = () => {
                 :filters="ramadanBasketFilters"
                 :pagination-data="families"
                 :params="params"
+                :sortableFields="ramadanBasketSorts"
                 :title="$t('list', { attribute: $t('the_families_ramadan_basket') })"
                 :url="route('tenant.occasions.ramadan-basket.index')"
                 entries="families"
@@ -114,6 +118,7 @@ const showSettingsModal = () => {
                 export-xlsx-url="tenant.occasions.ramadan-basket.export.xlsx"
                 filterable
                 searchable
+                sortable
                 @change-filters="params.filters = $event"
             >
                 <template #Hints>
@@ -132,14 +137,18 @@ const showSettingsModal = () => {
                     <base-button
                         v-if="hasPermission('save_occasions')"
                         :disabled="loading"
-                        class="me-2 shadow-md"
+                        class="me-2 whitespace-nowrap shadow-md"
                         variant="primary"
                         @click.prevent="handleSave"
                     >
                         {{ $t('save') }}
                     </base-button>
 
-                    <base-button class="me-2" @click.prevent="showSettingsModal">
+                    <base-button
+                        v-if="hasPermission(['update_settings', 'update_ramadan_basket'])"
+                        class="me-2"
+                        @click.prevent="showSettingsModal"
+                    >
                         <base-tippy :content="$t('settings')">
                             <svg-loader name="icon-gear"></svg-loader>
                         </base-tippy>
@@ -154,6 +163,7 @@ const showSettingsModal = () => {
                     :pagination-data="families"
                     :params
                     :url="route('tenant.occasions.ramadan-basket.index')"
+                    class="lg:mt-4"
                 ></the-table-footer>
             </template>
 

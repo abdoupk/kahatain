@@ -21,6 +21,8 @@ use App\Exports\FullExports\SponsorsExport;
 use App\Exports\FullExports\UsersExport;
 use App\Exports\FullExports\ZonesExport;
 use App\Models\Archive;
+use App\Models\Family;
+use App\Models\Orphan;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Notifications\SiteSettings\ExportCompleteNotification;
@@ -31,6 +33,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Maatwebsite\Excel\Facades\Excel;
 use Notification;
+use PhpOffice\PhpSpreadsheet\Exception;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Storage;
 use ZipArchive;
 
@@ -40,6 +44,10 @@ class ExportDataJob implements ShouldQueue
 
     public function __construct(public string $path, public string $tenant) {}
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function handle(): void
     {
         $zip = new ZipArchive;
@@ -62,6 +70,8 @@ class ExportDataJob implements ShouldQueue
 
         $this->exportRamadanBasketFamiliesList($zip);
 
+        $this->exportFiles($zip);
+
         $zip->close();
 
         $this->cleanup();
@@ -78,6 +88,10 @@ class ExportDataJob implements ShouldQueue
         );
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportToExcel(ZipArchive $zip): void
     {
         $files = [
@@ -88,7 +102,8 @@ class ExportDataJob implements ShouldQueue
             __('the_sponsors').'.xlsx' => new SponsorsExport,
             __('the_families').'.xlsx' => new FamiliesExport,
             __('the_schools').'.xlsx' => new SchoolsExport,
-            __('the_lessons').'.xlsx' => new LessonsExport,
+            // TODO add lessons
+            // __('the_lessons').'.xlsx' => new LessonsExport,
             __('the_needs').'.xlsx' => new NeedsExport,
             __('search.babies').'.xlsx' => new BabiesExport,
             __('the_inventory').'.xlsx' => new InventoryExport,
@@ -114,6 +129,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportBabiesMilkAndDiapers(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('babies_milk_and_diapers')
@@ -122,7 +141,7 @@ class ExportDataJob implements ShouldQueue
 
         if (! empty($years)) {
             foreach ($years as $year) {
-                $fileName = "{$year}/".__('exports.babies_milk_and_diapers').'.xlsx';
+                $fileName = "$year/".__('exports.babies_milk_and_diapers').'.xlsx';
 
                 Excel::store(new BabiesMilkAndDiapersListExport($year), $fileName);
 
@@ -131,6 +150,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportMonthlyBasketFamiliesList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('monthly_basket')
@@ -139,7 +162,7 @@ class ExportDataJob implements ShouldQueue
 
         if (! empty($years)) {
             foreach ($years as $year) {
-                $fileName = "{$year}/".__('the_families_monthly_basket').'.xlsx';
+                $fileName = "$year/".__('the_families_monthly_basket').'.xlsx';
 
                 Excel::store(new MonthlyBasketFamiliesExport($year), $fileName);
 
@@ -148,6 +171,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportSchoolEntryOrphansList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('school_entry')
@@ -163,6 +190,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportEidSuitOrphansList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('eid_suit')
@@ -178,6 +209,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportEidAlAdhaFamiliesList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('eid_al_adha')
@@ -193,6 +228,10 @@ class ExportDataJob implements ShouldQueue
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     private function exportRamadanBasketFamiliesList(ZipArchive $zip): void
     {
         $years = Archive::whereOccasion('ramadan_basket')
@@ -205,6 +244,112 @@ class ExportDataJob implements ShouldQueue
             Excel::store(new RamadanBasketFamiliesListExport($years), $fileName);
 
             $zip->addFile(Storage::path($fileName), $fileName);
+        }
+    }
+
+    private function exportFiles(ZipArchive $zip): void
+    {
+        Family::with(['sponsor.incomes', 'spouse', 'orphans'])->each(function (Family $family) use ($zip): void {
+            $folderName = __('upload-files.files').'/'.$family->name;
+
+            $zip->addEmptyDir($folderName);
+
+            $residenceFile = $family->getFirstMedia('residence_files');
+
+            if ($residenceFile instanceof Media) {
+                $zip->addFile($residenceFile->getPath(), "$folderName/".__('upload-files.labels.residence_certificate').'.'.$residenceFile->extension);
+            }
+
+            $this->generateSponsorFiles($family, $zip, $folderName);
+
+            $this->generateIncomesFiles($family, $zip, $folderName);
+
+            $this->generateOrphanFiles($family, $zip, $folderName);
+
+            $this->generateDeathCertificateFiles($family, $zip, $folderName);
+        });
+    }
+
+    private function generateSponsorFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $sponsorPhoto = $family->sponsor->getFirstMedia('photos');
+
+        if ($sponsorPhoto) {
+            $zip->addFile($sponsorPhoto->getPath(), "$folderName/".__('the_photos')."/{$family->sponsor->getName()}".'.'.$sponsorPhoto->extension);
+        }
+
+        $sponsorDiplomaFile = $family->sponsor->getFirstMedia('diploma_files');
+
+        if ($sponsorDiplomaFile) {
+            $zip->addFile($sponsorDiplomaFile->getPath(), "$folderName".'/'.__('diploma').'.'.$sponsorDiplomaFile->extension);
+        }
+
+        $sponsorNoRemarriageFile = $family->sponsor->getFirstMedia('no_remarriage_files');
+
+        if ($sponsorNoRemarriageFile) {
+            $zip->addFile($sponsorNoRemarriageFile->getPath(), "$folderName/".__('no_remarriage').'.'.$sponsorNoRemarriageFile->extension);
+        }
+
+        $sponsorBirthCertificateFile = $family->sponsor->getFirstMedia('birth_certificate_files');
+
+        if ($sponsorBirthCertificateFile) {
+            $zip->addFile($sponsorBirthCertificateFile->getPath(), "$folderName/".__('upload-files.labels.birth_certificate').'.'.$sponsorBirthCertificateFile->extension);
+        }
+    }
+
+    private function generateIncomesFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $zip->addEmptyDir("$folderName/".__('incomes_files'));
+
+        $cnrFile = $family->sponsor->incomes->getFirstMedia('cnr_files');
+
+        if ($cnrFile) {
+            $zip->addFile($cnrFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.cnr').'.'.$cnrFile->extension);
+        }
+
+        $cnasFile = $family->sponsor->incomes->getFirstMedia('cnas_files');
+
+        if ($cnasFile) {
+            $zip->addFile($cnasFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.cnas').'.'.$cnasFile->extension);
+        }
+
+        $ccpFile = $family->sponsor->incomes->getFirstMedia('ccp_files');
+
+        if ($ccpFile) {
+            $zip->addFile($ccpFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.ccp').'.'.$ccpFile->extension);
+        }
+
+        $bankFile = $family->sponsor->incomes->getFirstMedia('bank_files');
+
+        if ($bankFile) {
+            $zip->addFile($bankFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.bank').'.'.$bankFile->extension);
+        }
+
+        $casnosFile = $family->sponsor->incomes->getFirstMedia('casnos_files');
+
+        if ($casnosFile) {
+            $zip->addFile($casnosFile->getPath(), "$folderName/".__('incomes_files').'/'.__('upload-files.labels.casnos').'.'.$casnosFile->extension);
+        }
+    }
+
+    private function generateOrphanFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $family->orphans->each(function (Orphan $orphan) use ($zip, $folderName): void {
+            $orphanPhoto = $orphan->getFirstMedia('photos');
+
+            if ($orphanPhoto instanceof Media) {
+                $zip->addFile($orphanPhoto->getPath(), "$folderName/".__('the_photos')."/{$orphan->getName()}".
+                    '.'.$orphanPhoto->extension);
+            }
+        });
+    }
+
+    private function generateDeathCertificateFiles(Family $family, ZipArchive $zip, string $folderName): void
+    {
+        $deathCertificateFile = $family->spouse->getFirstMedia('death_certificate_files');
+
+        if ($deathCertificateFile) {
+            $zip->addFile($deathCertificateFile->getPath(), "$folderName/".__('upload-files.labels.death_certificate').'.'.$deathCertificateFile->extension);
         }
     }
 

@@ -11,7 +11,7 @@ class ListShoesSizesController extends Controller
     public function __invoke()
     {
         return response()->json(JsonResource::collection(ShoeSize::all()->map(fn ($shoeSize) => [
-            'id' => $shoeSize->id,
+            'id' => $shoeSize->label,
             'name' => $shoeSize->label,
         ])));
     }

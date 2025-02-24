@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\V1\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\V1\CitySearchController;
 use App\Http\Controllers\V1\Trash\TrashIndexController;
-use App\Http\Controllers\V1\UploadLogoController;
+use App\Http\Controllers\V1\UploadFileController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -26,26 +26,17 @@ Route::middleware([
             Route::post(
                 'login',
                 [AuthenticatedSessionController::class, 'store']
-            );
-        });
-
-        Route::middleware('guest')->group(function (): void {
-            Route::post(
-                'login',
-                [AuthenticatedSessionController::class, 'store']
             )->name('login');
         });
 
         Route::middleware('auth')->group(function (): void {
-            require __DIR__.'/v1/academic-achievements.php';
-
             require __DIR__.'/v1/archive.php';
 
             require __DIR__.'/v1/benefactors.php';
 
             require __DIR__.'/v1/branches.php';
 
-            require __DIR__.'/v1/college-achievements.php';
+            require __DIR__.'/v1/college-students.php';
 
             require __DIR__.'/v1/committees.php';
 
@@ -63,13 +54,9 @@ Route::middleware([
 
             require __DIR__.'/v1/members.php';
 
-            require __DIR__.'/v1/monthly-sponsorship.php';
-
             require __DIR__.'/v1/needs.php';
 
             require __DIR__.'/v1/notifications.php';
-
-            require __DIR__.'/v1/occasions.php';
 
             require __DIR__.'/v1/orphans.php';
 
@@ -85,9 +72,36 @@ Route::middleware([
 
             require __DIR__.'/v1/sponsors.php';
 
-            require __DIR__.'/v1/vocational-training-achievements.php';
+            require __DIR__.'/v1/students.php';
+
+            require __DIR__.'/v1/trainees.php';
+
+            require __DIR__.'/v1/transcripts.php';
+
+            require __DIR__.'/v1/vocational-training.php';
 
             require __DIR__.'/v1/zones.php';
+
+            Route::prefix('projects')->name('occasions.')
+                ->group(function (): void {
+                    require __DIR__.'/v1/occasions/ramadan-basket.php';
+
+                    require __DIR__.'/v1/occasions/babies-milk-and-diapers.php';
+
+                    require __DIR__.'/v1/occasions/eid-al-adha.php';
+
+                    require __DIR__.'/v1/occasions/eid-suit.php';
+
+                    require __DIR__.'/v1/occasions/monthly-sponsorship.php';
+
+                    require __DIR__.'/v1/occasions/occasions-statistics.php';
+
+                    require __DIR__.'/v1/occasions/school-entry.php';
+
+                    require __DIR__.'/v1/occasions/zakat.php';
+
+                    require __DIR__.'/v1/occasions/meat-distribution.php';
+                });
 
             Route::get('trash', TrashIndexController::class)->name('trash');
 
@@ -98,11 +112,7 @@ Route::middleware([
                 [AuthenticatedSessionController::class, 'destroy']
             )->name('logout');
 
-            Route::post('upload-logo', UploadLogoController::class)->name('upload.logo');
-
-            Route::delete('delete-logo', function () {
-                ray('upload');
-            })->name('delete.logo');
+            Route::post('upload-file', UploadFileController::class)->name('upload.file');
         });
     });
 });

@@ -16,6 +16,8 @@ class LessonsResource extends JsonResource
             'subject_id' => $this->subject_id,
             'academic_level_id' => $this->academic_level_id,
             'quota' => $this->quota,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
         ];
     }
 }

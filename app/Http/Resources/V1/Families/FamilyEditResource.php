@@ -16,14 +16,14 @@ class FamilyEditResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
-            'file_number' => $this->file_number,
             'start_date' => $this->start_date,
 
             'branch_id' => $this->branch_id,
             'zone_id' => $this->zone_id,
             'location' => $this->location,
+            'residence_certificate_file' => $this->getFirstMediaUrl('residence_files'),
 
-            'spouse' => new SpouseResource($this->whenLoaded('deceased')),
+            'deceased' => SpouseResource::collection($this->whenLoaded('deceased')),
 
             'second_sponsor' => new SecondSponsorResource($this->whenLoaded('secondSponsor')),
 
@@ -32,8 +32,6 @@ class FamilyEditResource extends JsonResource
             'creator' => new MemberResource($this->whenLoaded('creator')),
 
             'housing' => new FamilyEditHousingResource($this->whenLoaded('housing')),
-
-            'family_sponsorships' => new FamilyEditSponsorshipResource($this->whenLoaded('sponsorships')),
 
             'preview' => new FamilyEditPreviewResource($this->whenLoaded('preview')),
         ];

@@ -5,6 +5,8 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { createPinia } from 'pinia'
 import { DefineComponent, createSSRApp, h } from 'vue'
 
+import i18n from '@/utils/i18n'
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
 createServer((page) =>
@@ -18,8 +20,9 @@ createServer((page) =>
             return createSSRApp({
                 render: () => h(App, props)
             })
-                .use(createPinia())
                 .use(plugin)
+                .use(createPinia())
+                .use(i18n)
         }
     })
 )

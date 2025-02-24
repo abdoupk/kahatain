@@ -1,0 +1,169 @@
+.font-size-xs {
+    body {
+        font-size: 0.625rem !important;
+    }
+
+    .text-xs {
+        font-size: 0.5rem !important;
+    }
+
+    .text-sm {
+        font-size: 0.625rem !important;
+    }
+
+    .text-base {
+        font-size: 0.75rem !important;
+    }
+
+    .text-lg {
+        font-size: 0.875rem !important;
+    }
+
+    .text-xl {
+        font-size: 1rem !important;
+    }
+
+    .text-2xl {
+        font-size: 1.125rem !important;
+    }
+
+    .text-3xl {
+        font-size: 1.25rem !important;
+    }
+}
+
+.font-size-sm {
+    body {
+        font-size: 0.75rem !important;
+    }
+
+    .text-xs {
+        font-size: 0.625rem !important;
+    }
+
+    .text-sm {
+        font-size: 0.75rem !important;
+    }
+
+    .text-base {
+        font-size: 0.875rem !important;
+    }
+
+    .text-lg {
+        font-size: 1rem !important;
+    }
+
+    .text-xl {
+        font-size: 1.125rem !important;
+    }
+
+    .text-2xl {
+        font-size: 1.25rem !important;
+    }
+
+    .text-3xl {
+        font-size: 1.5rem !important;
+    }
+}
+
+.font-size-base {
+    body {
+        font-size: 0.875rem !important;
+    }
+
+    .text-xs {
+        font-size: 0.75rem !important;
+    }
+
+    .text-sm {
+        font-size: 0.875rem !important;
+    }
+
+    .text-base {
+        font-size: 1rem !important;
+    }
+
+    .text-lg {
+        font-size: 1.125rem !important;
+    }
+
+    .text-xl {
+        font-size: 1.25rem !important;
+    }
+
+    .text-2xl {
+        font-size: 1.5rem !important;
+    }
+
+    .text-3xl {
+        font-size: 1.75rem !important;
+    }
+}
+
+.font-size-lg {
+    body {
+        font-size: 1rem !important;
+    }
+
+    .text-xs {
+        font-size: 0.875rem !important;
+    }
+
+    .text-sm {
+        font-size: 1rem !important;
+    }
+
+    .text-base {
+        font-size: 1.125rem !important;
+    }
+
+    .text-lg {
+        font-size: 1.25rem !important;
+    }
+
+    .text-xl {
+        font-size: 1.5rem !important;
+    }
+
+    .text-2xl {
+        font-size: 1.75rem !important;
+    }
+
+    .text-3xl {
+        font-size: 2rem !important;
+    }
+}
+
+.font-size-xl {
+    body {
+        font-size: 1.25rem !important;
+    }
+
+    .text-xs {
+        font-size: 1rem !important;
+    }
+
+    .text-sm {
+        font-size: 1.25rem !important;
+    }
+
+    .text-base {
+        font-size: 1.5rem !important;
+    }
+
+    .text-lg {
+        font-size: 1.75rem !important;
+    }
+
+    .text-xl {
+        font-size: 2rem !important;
+    }
+
+    .text-2xl {
+        font-size: 2.5rem !important;
+    }
+
+    .text-3xl {
+        font-size: 3rem !important;
+    }
+}

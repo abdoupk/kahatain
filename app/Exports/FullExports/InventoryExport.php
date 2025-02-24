@@ -31,9 +31,8 @@ class InventoryExport implements FromCollection, WithEvents, WithHeadings, WithM
         return [
             __('item_name'),
             __('validation.attributes.qty'),
-            __('validation.attributes.qty_for_family'),
             __('created_by'),
-            __('created_at'),
+            __('added_at'),
         ];
     }
 
@@ -42,7 +41,6 @@ class InventoryExport implements FromCollection, WithEvents, WithHeadings, WithM
         return [
             $row->name,
             $row->qty.'('.__($row->unit).')',
-            $row->type === null ? '' : $row->qty_for_family,
             $row->creator?->getName(),
             $row->created_at->format('Y-m-d'),
         ];

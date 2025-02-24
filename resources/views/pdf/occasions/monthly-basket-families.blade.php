@@ -56,8 +56,8 @@
                     {{ $sponsorship->family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
-                <x-td>
-                    {{ $sponsorship->family->address }}
+                <x-td class="truncate max-w-28">
+                    {{ $sponsorship->family->address ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
@@ -69,15 +69,15 @@
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->income_rate }}
+                    {{ formatCurrency($sponsorship->family->income_rate) }}
                 </x-td>
 
                 <x-td class="max-w-28 truncate text-center">
-                    {{ $sponsorship->family->branch->name }}
+                    {{ $sponsorship->family->branch?->name ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->zone->name }}
+                    {{ $sponsorship->family->zone?->name ?? '————' }}
                 </x-td>
             </tr>
         @endforeach

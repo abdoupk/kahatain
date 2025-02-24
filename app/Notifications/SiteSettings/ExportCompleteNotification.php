@@ -17,7 +17,7 @@ class ExportCompleteNotification extends Notification implements ShouldQueue
     public function __construct(public Tenant $tenant)
     {
         $this->metaData = [
-            'created_at' => now(),
+            'processed_at' => now(),
             'subject' => 'data_exported',
             'url' => tenant_route(
                 $this->tenant->domains->first()

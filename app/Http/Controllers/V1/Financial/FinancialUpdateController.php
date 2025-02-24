@@ -17,7 +17,7 @@ class FinancialUpdateController extends Controller implements HasMiddleware
     public function __invoke(FinancialUpdateRequest $request, Finance $finance)
     {
         $finance->update([
-            ...$request->only(['specification', 'description', 'date']),
+            ...$request->only(['specification', 'description', 'date', 'name']),
             'amount' => $request->type === 'income' ? abs($request->amount) : abs($request->amount) * -1,
         ]);
 

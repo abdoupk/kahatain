@@ -23,6 +23,7 @@ class Sponsorship extends Model
         'shop',
         'created_by',
         'deleted_by',
+        'until',
         'tenant_id',
     ];
 

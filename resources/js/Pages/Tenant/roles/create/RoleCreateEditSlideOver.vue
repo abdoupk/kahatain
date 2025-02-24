@@ -2,7 +2,7 @@
 import { useRolesStore } from '@/stores/roles'
 import { router } from '@inertiajs/vue3'
 import { useForm } from 'laravel-precognition-vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
@@ -95,12 +95,66 @@ const modalType = computed(() => {
 })
 
 const checkAll = (model: keyof typeof permissions, checked: boolean) => {
-    const suffix = model === 'inventory' ? '' : `_${model}`
+    const suffix = model === 'students' || model === 'inventory' ? '' : `_${model}`
 
     permissions[model].forEach((permission: string) => {
-        form.value.permissions[`${permission}${suffix}`] = checked
+        rolesStore.role.permissions[`${permission}${suffix}`] = checked
     })
 }
+
+const handleCheckboxUpdate = (key: string, permission: string, value: boolean) => {
+    if (key === 'list' && !value) {
+        permissions[permission].forEach((key: string) => {
+            rolesStore.role.permissions[`${key}_${permission}`] = false
+        })
+    } else if (key !== 'list' && value) {
+        if (permissions[permission].includes('list')) rolesStore.role.permissions[`list_${permission}`] = true
+    }
+
+    rolesStore.role.permissions = Object.assign(form.value.permissions, {
+        [`${key}_${permission}`]: value
+    })
+}
+
+const handleCheckboxUpdateForInventory = (permission: string, value: boolean) => {
+    rolesStore.role.permissions[permission] = value
+
+    if (permission === 'list_items' && !value) {
+        permissions['inventory'].forEach((_key: string) => {
+            rolesStore.role.permissions[_key] = false
+        })
+    } else {
+        rolesStore.role.permissions['list_items'] = true
+    }
+
+    rolesStore.role.permissions = Object.assign(form.value.permissions, {
+        [permission]: value
+    })
+}
+
+const handleCheckboxUpdateForStudents = (permission: string, value: boolean) => {
+    rolesStore.role.permissions[permission] = value
+
+    if (permission === 'list_students' && !value) {
+        permissions['students'].forEach((_key: string) => {
+            rolesStore.role.permissions[_key] = false
+        })
+    } else {
+        rolesStore.role.permissions['list_students'] = true
+    }
+
+    rolesStore.role.permissions = Object.assign(form.value.permissions, {
+        [permission]: value
+    })
+}
+
+watch(
+    () => rolesStore.role,
+    (value) => {
+        form.value.setData(value)
+    },
+    { deep: true }
+)
 </script>
 
 <template>
@@ -115,7 +169,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
         @handle-submit="handleSubmit"
     >
         <template #description>
-            <div class="col-span-12">
+            <div class="w-3/5">
                 <base-form-label htmlFor="name">
                     {{ $t('validation.attributes.role_name') }}
                 </base-form-label>
@@ -123,7 +177,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
                 <base-form-input
                     id="name"
                     ref="firstInputRef"
-                    v-model="form.name"
+                    v-model="rolesStore.role.name"
                     :placeholder="$t('auth.placeholders.fill', { attribute: $t('validation.attributes.role_name') })"
                     type="text"
                 />
@@ -149,24 +203,34 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
                         ></base-form-check-input>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-3">
+                    <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
                         <div v-for="permission in permissionMaps" :key="permission">
                             <base-form-switch>
                                 <base-form-switch-input
-                                    v-if="key !== 'inventory'"
+                                    v-if="key === 'inventory'"
                                     :id="`${permission}_${key}`"
-                                    v-model="form.permissions[`${permission}_${key}`]"
+                                    :model-value="rolesStore.role.permissions[permission]"
                                     type="checkbox"
+                                    @update:model-value="handleCheckboxUpdateForInventory(permission, $event)"
+                                ></base-form-switch-input>
+
+                                <base-form-switch-input
+                                    v-else-if="key === 'students'"
+                                    :id="`${permission}_${key}`"
+                                    :model-value="rolesStore.role.permissions[permission]"
+                                    type="checkbox"
+                                    @update:model-value="handleCheckboxUpdateForStudents(permission, $event)"
                                 ></base-form-switch-input>
 
                                 <base-form-switch-input
                                     v-else
                                     :id="`${permission}_${key}`"
-                                    v-model="form.permissions[permission]"
+                                    :model-value="rolesStore.role.permissions[`${permission}_${key}`]"
                                     type="checkbox"
+                                    @update:model-value="handleCheckboxUpdate(permission, key, $event)"
                                 ></base-form-switch-input>
 
-                                <base-form-switch-label class="whitespace-nowrap" :for="`${permission}_${key}`">
+                                <base-form-switch-label :for="`${permission}_${key}`" class="truncate">
                                     <template v-if="permission === 'list'">
                                         {{
                                             $t('permissions.list', {
@@ -174,6 +238,7 @@ const checkAll = (model: keyof typeof permissions, checked: boolean) => {
                                             })
                                         }}
                                     </template>
+
                                     <template v-else>
                                         {{ `${$t(`permissions.${permission}`)}` }}
                                     </template>

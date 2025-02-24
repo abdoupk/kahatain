@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import type { CreateFamilyStepProps } from '@/types/types'
 
+import { useCreateFamilyStore } from '@/stores/create-family'
 import { computed } from 'vue'
+
+import IncomeForm from '@/Pages/Tenant/families/create/stepTwo/IncomeForm.vue'
+import SecondSponsorForm from '@/Pages/Tenant/families/create/stepTwo/SecondSponsorForm.vue'
+import SponsorForm from '@/Pages/Tenant/families/create/stepTwo/SponsorForm.vue'
+import SpouseForm from '@/Pages/Tenant/families/create/stepTwo/SpouseForm.vue'
 
 import BaseTab from '@/Components/Base/headless/Tab/BaseTab.vue'
 import BaseTabButton from '@/Components/Base/headless/Tab/BaseTabButton.vue'
@@ -14,6 +20,8 @@ import SvgLoader from '@/Components/SvgLoader.vue'
 import { checkErrors } from '@/utils/helper'
 
 const props = defineProps<CreateFamilyStepProps>()
+
+const createFamilyStore = useCreateFamilyStore()
 
 const sponsorErrors = computed(() => {
     return checkErrors('^sponsor.+', props?.form?.errors)
@@ -28,20 +36,24 @@ const incomeErrors = computed(() => {
 })
 
 const spouseErrors = computed(() => {
-    return checkErrors('^spouse', props?.form?.errors)
+    return checkErrors('^deceased', props?.form?.errors)
 })
+
+const handleTabChange = (index) => {
+    createFamilyStore.tab_index = index
+}
 </script>
 
 <template>
     <div
-        v-if="currentStep === 2"
+        v-if="createFamilyStore.current_step === 2"
         class="mt-10 border-t border-slate-200/60 px-5 pt-10 dark:border-darkmode-400 sm:px-20"
     >
-        <div class="mb-6 hidden text-lg font-medium lg:block">
+        <div class="mb-6 hidden text-lg lg:block rtl:font-bold">
             {{ $t('families.create_family.stepTwo') }}
         </div>
 
-        <base-tab-group class="mt-5">
+        <base-tab-group :selectedIndex="createFamilyStore.tab_index" class="mt-5" @change="handleTabChange">
             <base-tab-list class="md:flex" variant="link-tabs">
                 <base-tab>
                     <base-tab-button as="button" class="w-full py-2" type="button">
@@ -54,7 +66,8 @@ const spouseErrors = computed(() => {
                         ></svg-loader>
                     </base-tab-button>
                 </base-tab>
-                <base-tab>
+
+                <base-tab :disabled="createFamilyStore.family.sponsor.is_unemployed">
                     <base-tab-button as="button" class="w-full py-2" type="button">
                         {{ $t('income information') }}
 
@@ -92,18 +105,19 @@ const spouseErrors = computed(() => {
             </base-tab-list>
             <base-tab-panels>
                 <base-tab-panel class="p-5">
-                    <slot name="sponsorForm"></slot>
-                </base-tab-panel>
-                <base-tab-panel class="p-5">
-                    <slot name="incomeForm"></slot>
+                    <sponsor-form :form></sponsor-form>
                 </base-tab-panel>
 
                 <base-tab-panel class="p-5">
-                    <slot name="secondSponsorForm"></slot>
+                    <income-form :form></income-form>
                 </base-tab-panel>
 
                 <base-tab-panel class="p-5">
-                    <slot name="spouseForm"></slot>
+                    <second-sponsor-form :form></second-sponsor-form>
+                </base-tab-panel>
+
+                <base-tab-panel class="p-5">
+                    <spouse-form :form></spouse-form>
                 </base-tab-panel>
             </base-tab-panels>
         </base-tab-group>

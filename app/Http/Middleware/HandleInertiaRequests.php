@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\City;
 use Arr;
+use Cache;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -15,19 +16,17 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $this->getAuthData(),
-                'settings' => auth()->user()?->settings,
+                'settings' => auth()->user()?->load('settings')->settings,
             ],
             'association' => tenant('infos')['association'] ?? null,
             'association_coordinates' => [
                 'lat' => $this->getCoordinates()?->latitude ?? null,
                 'lng' => $this->getCoordinates()?->longitude ?? null,
             ] ?? null,
-            'language' => auth()->user()?->settings?->locale ?? null,
-            'ziggy' => function () use ($request) {
-                return array_merge((new Ziggy)->toArray(), [
-                    'location' => $request->url(),
-                ]);
-            },
+            'language' => 'ar',
+            'ziggy' => fn () => array_merge((new Ziggy)->toArray(), [
+                'location' => $request->url(),
+            ]),
         ]);
     }
 
@@ -66,8 +65,10 @@ class HandleInertiaRequests extends Middleware
             return null;
         }
 
-        return City::whereId($city_id)
-            ->select(['latitude', 'longitude'])
-            ->first();
+        return Cache::rememberForever(
+            'city-coordinates-'.$city_id,
+            fn () => City::whereId($city_id)
+                ->select(['latitude', 'longitude'])
+                ->first());
     }
 }

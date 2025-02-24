@@ -8,20 +8,21 @@ use App\Http\Resources\V1\Schools\SchoolsIndexResource;
 use App\Models\Subject;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SchoolsIndexController extends Controller implements HasMiddleware
 {
-    public function __invoke()
-    {
-        return Inertia::render('Tenant/schools/index/SchoolsIndexPage', [
-            'schools' => SchoolsIndexResource::collection(getSchools()),
-            'subjects' => SubjectResource::collection(Subject::all()),
-            'params' => getParams(),
-        ]);
-    }
-
     public static function middleware()
     {
         return ['can:list_schools'];
+    }
+
+    public function __invoke(): Response
+    {
+        return Inertia::render('Tenant/schools/index/SchoolsIndexPage', [
+            'schools' => fn () => SchoolsIndexResource::collection(getSchools()),
+            'subjects' => fn () => SubjectResource::collection(Subject::all()),
+            'params' => getParams(),
+        ]);
     }
 }

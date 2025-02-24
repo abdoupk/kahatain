@@ -14,7 +14,12 @@ export const useSizesStore = defineStore('sizes', {
 
             const response = await axios.get(route('tenant.list.clothes-sizes'))
 
-            this.clothesSizes = response.data
+            this.clothesSizes = response.data.map(function (datum) {
+                return {
+                    id: String(datum.id),
+                    name: datum.name
+                }
+            })
         },
 
         async getShoesSizes() {
@@ -24,7 +29,12 @@ export const useSizesStore = defineStore('sizes', {
 
             const response = await axios.get(route('tenant.list.shoes-sizes'))
 
-            this.shoesSizes = response.data
+            this.shoesSizes = response.data.map(function (datum) {
+                return {
+                    id: String(datum.id),
+                    name: datum.name
+                }
+            })
         },
 
         findClothesSizeById(id: string) {

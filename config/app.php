@@ -16,6 +16,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     'domain' => env('DOMAIN', 'kafil.elyatim.dev'),
+    'server_ip' => env('SERVER_IP', '127.0.0.1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,6 +124,11 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+
+    'browsershot' => [
+        'npm_binary' => env('BROWSERSHOT_NPM_BINARY', 'npm'),
+        'node_binary' => env('BROWSERSHOT_NODE_BINARY', 'node'),
     ],
 
 ];

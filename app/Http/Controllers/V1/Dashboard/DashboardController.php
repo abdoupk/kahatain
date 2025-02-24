@@ -34,23 +34,21 @@ class DashboardController extends Controller
 
     private function getRecentActivities()
     {
-        return auth()->user()->notifications->take(5)->map(function ($notification) {
-            return [
-                'id' => $notification->id,
-                'user' => [
-                    'id' => $notification->data['user']['id'],
-                    'name' => $notification->data['user']['name'],
-                    'gender' => $notification->data['user']['gender'],
-                ],
-                'formatted_date' => $notification->created_at->translatedFormat('H:i A'),
-                'date' => $notification->created_at,
-                'message' => trans_choice(
-                    'notifications.'.$notification->type,
-                    $notification->data['user']['gender'] === 'male' ? 1 : 0,
-                    $notification->data['data']
-                ),
-            ];
-        })->toArray();
+        return auth()->user()->notifications->take(4)->map(fn ($notification) => [
+            'id' => $notification->id,
+            'user' => [
+                'id' => $notification->data['user']['id'],
+                'name' => $notification->data['user']['name'],
+                'gender' => $notification->data['user']['gender'],
+            ],
+            'formatted_date' => $notification->created_at->translatedFormat('H:i A'),
+            'date' => $notification->created_at,
+            'message' => trans_choice(
+                'notifications.'.$notification->type,
+                $notification->data['user']['gender'] === 'male' ? 1 : 0,
+                $notification->data['data']
+            ),
+        ])->toArray();
     }
 
     private function getRecentTransactions(): array
@@ -61,18 +59,16 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get()
-            ->map(function (Finance $finance) {
-                return [
-                    'id' => $finance->id,
-                    'amount' => $finance->amount,
-                    'receiver' => [
-                        'id' => $finance->receiver?->id,
-                        'name' => $finance->receiver?->getName(),
-                        'gender' => $finance->receiver?->gender,
-                    ],
-                    'date' => $finance->date->translatedFormat('j F Y'),
-                ];
-            })->toArray();
+            ->map(fn (Finance $finance) => [
+                'id' => $finance->id,
+                'amount' => $finance->amount,
+                'receiver' => [
+                    'id' => $finance->receiver?->id,
+                    'name' => $finance->receiver?->getName(),
+                    'gender' => $finance->receiver?->gender,
+                ],
+                'date' => $finance->date->translatedFormat('j F Y'),
+            ])->toArray();
     }
 
     private function getComingEvents(): array
@@ -81,14 +77,12 @@ class DashboardController extends Controller
             ->whereMonth('start_date', '=', date('m'))
             ->take(3)
             ->get()
-            ->map(function (EventOccurrence $eventOccurrence) {
-                return [
-                    'id' => $eventOccurrence->id,
-                    'title' => $eventOccurrence->event->title,
-                    'date' => $eventOccurrence->start_date,
-                    'color' => $eventOccurrence->event->color,
-                ];
-            })->toArray();
+            ->map(fn (EventOccurrence $eventOccurrence) => [
+                'id' => $eventOccurrence->id,
+                'title' => $eventOccurrence->event->title,
+                'date' => $eventOccurrence->start_date,
+                'color' => $eventOccurrence->event->color,
+            ])->toArray();
     }
 
     private function getRecentFamilies(): array
@@ -98,22 +92,20 @@ class DashboardController extends Controller
             ->latest()
             ->take(4)
             ->get()
-            ->map(function (Family $family) {
-                return [
-                    'id' => $family->id,
-                    'name' => $family->name,
-                    'address' => $family->address,
-                    'zone' => [
-                        'id' => $family->zone?->id,
-                        'name' => $family->zone?->name,
-                    ],
-                    'branch' => [
-                        'id' => $family->branch?->id,
-                        'name' => $family->branch?->name,
-                    ],
-                    'orphans_count' => $family->orphans_count,
-                ];
-            })->toArray();
+            ->map(fn (Family $family) => [
+                'id' => $family->id,
+                'name' => $family->name,
+                'address' => $family->address,
+                'zone' => [
+                    'id' => $family->zone?->id,
+                    'name' => $family->zone?->name,
+                ],
+                'branch' => [
+                    'id' => $family->branch?->id,
+                    'name' => $family->branch?->name,
+                ],
+                'orphans_count' => $family->orphans_count,
+            ])->toArray();
     }
 
     private function getRecentNeeds(): array
@@ -124,19 +116,17 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get()
-            ->map(function (Need $need) {
-                return [
-                    'id' => $need->id,
-                    'status' => $need->status,
-                    'subject' => $need->subject,
-                    'demand' => $need->demand,
-                    'date' => $need->created_at->diffForHumans(),
-                    'needable' => [
-                        'id' => $need->needable?->id,
-                        'name' => $need->needable?->getName(),
-                        'type' => $need->needable_type,
-                    ],
-                ];
-            })->toArray();
+            ->map(fn (Need $need) => [
+                'id' => $need->id,
+                'status' => $need->status,
+                'subject' => $need->subject,
+                'demand' => $need->demand,
+                'date' => $need->created_at->diffForHumans(),
+                'needable' => [
+                    'id' => $need->needable?->id,
+                    'name' => $need->needable?->getName(),
+                    'type' => $need->needable_type,
+                ],
+            ])->toArray();
     }
 }

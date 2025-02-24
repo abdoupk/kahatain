@@ -33,8 +33,8 @@ class LessonStoreController extends Controller implements HasMiddleware
         $event = Event::create([
             ...$request->except(['orphans', 'subject_id', 'academic_level_id', 'school_id', 'start_date', 'end_date']),
             'lesson_id' => $lesson->id,
-            'start_date' => Carbon::parse($request->start_date)->addHour(),
-            'end_date' => Carbon::parse($request->start_date)->addHour(),
+            'start_date' => Carbon::parse($request->start_date),
+            'end_date' => Carbon::parse($request->end_date),
         ]);
 
         dispatch(new LessonCreatedJob($event, auth()->user()));

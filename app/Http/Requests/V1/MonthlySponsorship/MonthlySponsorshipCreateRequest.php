@@ -19,7 +19,7 @@ class MonthlySponsorshipCreateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'benefactor.id' => __('the_benefactor'),
+            'benefactor' => __('the_benefactor'),
             'sponsorship_type' => __('sponsorship_type'),
             'shop.name' => __('shop.name'),
             'shop.address' => __('shop.address'),
@@ -33,7 +33,7 @@ class MonthlySponsorshipCreateRequest extends FormRequest
 
         return [
             'amount' => 'required|integer',
-            'benefactor.id' => 'required|uuid|exists:benefactors,id',
+            'benefactor' => 'required|uuid|exists:benefactors,id',
             'recipientable_id' => 'required|uuid',
             'recipientable_type' => 'required|string',
             'sponsorship_type' => ['required', 'string', Rule::in(['monthly_basket', 'educational_sponsorship', 'grant', 'social_sponsorship'])],
@@ -41,6 +41,7 @@ class MonthlySponsorshipCreateRequest extends FormRequest
             'shop.name' => $requiredShop,
             'shop.address' => $requiredShop,
             'shop.phone' => $requiredShop,
+            'until' => 'nullable|date',
         ];
     }
 

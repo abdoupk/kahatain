@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import type { OrphanType } from '@/types/families'
 
-import { formatDate, isOlderThan } from '@/utils/helper'
+import { Link } from '@inertiajs/vue3'
+
+import SvgLoader from '@/Components/SvgLoader.vue'
+
+import { formatDate, hasPermission, isOlderThan } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{ orphans: OrphanType[] }>()
@@ -9,9 +13,19 @@ defineProps<{ orphans: OrphanType[] }>()
 
 <template>
     <!-- BEGIN: Orphans Information -->
-    <div v-for="orphan in orphans" :key="orphan.id" class="intro-y box col-span-12 @container 2xl:col-span-6">
+    <div v-for="orphan in orphans" :key="orphan.id" class="intro-y box col-span-12 @container 2xl:col-span-9">
         <div class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-            <h2 class="me-auto text-xl font-bold">{{ orphan.name }}</h2>
+            <h2 class="me-auto text-xl font-bold">
+                <Link v-if="hasPermission('view_orphans')" :href="route('tenant.orphans.show', orphan.id)">
+                    {{ orphan.name }}
+                </Link>
+            </h2>
+
+            <Link v-if="hasPermission('edit_orphans')" :href="route('tenant.orphans.edit', orphan.id)">
+                <svg-loader class="inline h-4 w-4" name="icon-pen"></svg-loader>
+
+                {{ $t('edit') }}
+            </Link>
         </div>
 
         <div class="grid grid-cols-12 gap-4 p-5">
@@ -27,7 +41,7 @@ defineProps<{ orphans: OrphanType[] }>()
                 <h2 class="text-lg font-semibold">{{ $t('health_status') }}</h2>
 
                 <h3 class="text-base font-medium">
-                    {{ orphan.health_status }}
+                    {{ orphan.health_status || '————' }}
                 </h3>
             </div>
 
@@ -35,15 +49,15 @@ defineProps<{ orphans: OrphanType[] }>()
                 <h2 class="text-lg font-semibold">{{ $t('family_status') }}</h2>
 
                 <h3 class="text-base font-medium">
-                    {{ $t(`family_statuses.${orphan.family_status}`) }}
+                    {{ orphan.family_status ? $t(`family_statuses.${orphan.family_status}`) : '————' }}
                 </h3>
             </div>
 
-            <div v-if="orphan.family_status" class="col-span-12 @xl:col-span-6">
+            <div v-if="orphan.academic_level" class="col-span-12 @xl:col-span-6">
                 <h2 class="text-lg font-semibold">{{ $t('academic_level') }}</h2>
 
                 <h3 class="text-base font-medium">
-                    {{ orphan.academic_level }}
+                    {{ orphan.academic_level || '————' }}
                 </h3>
             </div>
 
@@ -60,7 +74,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('pants_size') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.pants_size }}
+                        {{ orphan.pants_size || '————' }}
                     </h3>
                 </div>
 
@@ -68,7 +82,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('shirt_size') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.shirt_size }}
+                        {{ orphan.shirt_size || '————' }}
                     </h3>
                 </div>
 
@@ -76,7 +90,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('shoes_size') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.shoes_size }}
+                        {{ orphan.shoes_size || '————' }}
                     </h3>
                 </div>
             </template>
@@ -86,7 +100,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('diapers_type') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.diapers_type }}
+                        {{ orphan.baby_needs?.diapers_type || '————' }}
                     </h3>
                 </div>
 
@@ -94,7 +108,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('diapers_quantity') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.diapers_quantity }}
+                        {{ orphan.baby_needs?.diapers_quantity || '————' }}
                     </h3>
                 </div>
 
@@ -102,7 +116,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('baby_milk_type') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.baby_milk_type }}
+                        {{ orphan.baby_needs?.baby_milk_type || '————' }}
                     </h3>
                 </div>
 
@@ -110,7 +124,7 @@ defineProps<{ orphans: OrphanType[] }>()
                     <h2 class="text-lg font-semibold">{{ $t('baby_milk_quantity') }}</h2>
 
                     <h3 class="text-base font-medium">
-                        {{ orphan.baby_needs?.baby_milk_quantity }}
+                        {{ orphan.baby_needs?.baby_milk_quantity || '————' }}
                     </h3>
                 </div>
             </template>

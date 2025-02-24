@@ -31,37 +31,44 @@
         <x-th>
             {{ __('income_rate') }}
         </x-th>
+
+        <x-th>
+            {{ __('notes') }}
+        </x-th>
     </x-slot>
 
     <x-slot name="tbody">
-        @foreach ($sponsorships as $sponsorship)
+        @foreach ($families as $family)
             <tr>
                 <x-td class="text-center">
                     {{ $loop->iteration }}
                 </x-td>
 
                 <x-td>
-                    {{ $sponsorship->family->sponsor->getName() }}
+                    {{ $family->sponsor->getName() }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->sponsor->formattedPhoneNumber() }}
+                    {{ $family->sponsor->formattedPhoneNumber() }}
                 </x-td>
 
-                <x-td>
-                    {{ $sponsorship->family->address }}
-                </x-td>
-
-                <x-td class="text-center">
-                    {{ $sponsorship->orphans_count }}
+                <x-td class="min-w-36 truncate">
+                    {{ $family->address ?? '————' }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ formatCurrency($sponsorship->family->total_income) }}
+                    {{ $family->orphans_count }}
                 </x-td>
 
                 <x-td class="text-center">
-                    {{ $sponsorship->family->income_rate }}
+                    {{ formatCurrency($family->total_income) }}
+                </x-td>
+
+                <x-td class="text-center">
+                    {{ formatCurrency($family->income_rate) }}
+                </x-td>
+
+                <x-td class="min-w-36">
                 </x-td>
             </tr>
         @endforeach
