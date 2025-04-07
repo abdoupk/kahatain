@@ -20,7 +20,7 @@ use Throwable;
 
 class FamilyStoreController extends Controller implements HasMiddleware
 {
-    public static function middleware()
+    public static function middleware(): array
     {
         return ['can:create_families'];
     }
