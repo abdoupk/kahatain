@@ -54,6 +54,10 @@ it('correctly calculates total income for sponsor when other income is not null 
 })->group('incomes');
 
 it('correctly calculates total income for sponsor when other income is null and account is not null when is unemployed', function () {
+    $this->family->sponsor->update([
+        'is_unemployed' => true,
+    ]);
+
     $this->incomes = $this->family->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
         'other_income' => null,
@@ -71,10 +75,14 @@ it('correctly calculates total income for sponsor when other income is null and 
         ],
     ]);
 
-    expect(setTotalIncomeAttribute($this->incomes->toArray(), $this->family->sponsor))->toBe(4000.0);
+    expect(setTotalIncomeAttribute($this->incomes->toArray(), $this->family->sponsor))->toBe(15000.0);
 })->group('incomes');
 
 it('correctly calculates total income for sponsor when other income is not null and account is not null when is unemployed', function () {
+    $this->family->sponsor->update([
+        'is_unemployed' => true,
+    ]);
+
     $this->incomes = $this->family->sponsor->incomes()->create([
         'tenant_id' => $this->tenant->id,
         'other_income' => 4000,
@@ -92,5 +100,5 @@ it('correctly calculates total income for sponsor when other income is not null 
         ],
     ]);
 
-    expect(setTotalIncomeAttribute($this->incomes->toArray(), $this->family->sponsor))->toBe(8000.0);
+    expect(setTotalIncomeAttribute($this->incomes->toArray(), $this->family->sponsor))->toBe(19000.0);
 })->group('incomes');
