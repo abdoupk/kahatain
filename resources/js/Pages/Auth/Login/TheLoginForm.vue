@@ -21,11 +21,6 @@ const submit = () => {
         fresh: true,
         replace: true,
         showProgress: false,
-        onSuccess: () => {
-            window.stop()
-
-            window.location.reload()
-        },
         onFinish: () => {
             form.reset('password')
         }
