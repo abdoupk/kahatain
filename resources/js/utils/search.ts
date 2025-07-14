@@ -109,7 +109,6 @@ export const search = async (q: string) => {
                 attributesToRetrieve: ['id', 'name', 'address.zone.name'],
                 attributesToSearchOn: [
                     'name',
-                    'phone',
                     'file_number',
                     'address.zone.name',
                     'address.address',
