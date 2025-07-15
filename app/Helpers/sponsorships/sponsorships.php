@@ -72,8 +72,7 @@ function calculateAssociationMonthlySponsorship(Family $family, float $differenc
     $associationBasketValue = json_decode((string) $family->tenant['calculation'], true)['monthly_sponsorship']['association_basket_value'] ?? 0;
 
     return ($differenceBeforeSponsorship * $sponsorshipRate)
-        - (($differenceBeforeSponsorship > 0 ? 1 : 0) * $associationBasketValue)
-        + $family->aid()->sum('amount');
+        - ((($differenceBeforeSponsorship > 0 ? 1 : 0) * $associationBasketValue) + $family->aid()->sum('amount'));
 }
 
 function getPercentageForIncomeRate(Family $family, float $differenceBeforeSponsorship): float
