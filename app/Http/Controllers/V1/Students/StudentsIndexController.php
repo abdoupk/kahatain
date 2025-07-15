@@ -9,7 +9,7 @@ use Inertia\Response;
 
 class StudentsIndexController extends Controller implements HasMiddleware
 {
-    public static function middleware()
+    public static function middleware(): array
     {
         return ['can:list_students'];
     }

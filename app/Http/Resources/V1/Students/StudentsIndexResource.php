@@ -13,9 +13,9 @@ class StudentsIndexResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getName(),
-            'academicLevel' => $this->academicLevel->level,
-            'institution' => $this->institution->getName(),
+            'name' => $this?->getName(),
+            'academicLevel' => $this->academicLevel?->level,
+            'institution' => $this->institution?->getName(),
             'address' => $this->family->address,
             'academic_average' => $this->academic_average ? number_format($this->academic_average, 2) : '————',
             'zone' => [
