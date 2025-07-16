@@ -64,7 +64,7 @@ class CreateFamilyRequest extends FormRequest
             'orphans.*.health_status' => 'nullable|string',
             'orphans.*.academic_level_id' => 'nullable|uuid|exists:academic_levels,id',
             'orphans.*.gender' => 'required|in:male,female',
-            'orphans.*.ccp' => ['nullable', 'string', 'regex:/^\d{12}$/', 'unique:App\Models\Orphan,ccp'],
+            'orphans.*.ccp' => ['nullable', 'string', 'unique:App\Models\Orphan,ccp'],
             'orphans.*.phone_number' => ['nullable', 'string', 'regex:/^(06|07|05)\d{8}$/', 'unique:App\Models\Orphan,phone_number'],
             'orphans.*.institution' => 'nullable|string',
             'sponsor.first_name' => 'required|string',
@@ -85,7 +85,7 @@ class CreateFamilyRequest extends FormRequest
             'sponsor.photo' => 'nullable|string',
             'sponsor.no_remarriage_file' => 'nullable|string',
             'sponsor.birth_certificate_file' => 'nullable|string',
-            'sponsor.ccp' => ['required', 'string', 'regex:/^\d{12}$/', 'unique:sponsors,ccp,NULL,id,deleted_at,NULL'],
+            'sponsor.ccp' => ['required', 'string', 'unique:sponsors,ccp,NULL,id,deleted_at,NULL'],
             'second_sponsor.first_name' => 'nullable|string',
             'second_sponsor.last_name' => 'nullable|string',
             'second_sponsor.phone_number' => 'nullable|string',
@@ -143,29 +143,30 @@ class CreateFamilyRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation(): void
-    {
-        if ($this->has('sponsor.ccp') && strlen((string) $this->get('sponsor')['ccp']) >= 10) {
-            $this->merge([
-                'sponsor' => [
-                    ...$this->get('sponsor'),
-                    'ccp' => str_pad((string) $this->get('sponsor.ccp'), 12, '0', STR_PAD_LEFT),
-                ],
-            ]);
-        }
-
-        if ($this->has('orphans')) {
-            $orphans = $this->input('orphans');
-
-            $modifiedCcp = array_map(function ($orphan) {
-                if (isset($orphan['ccp']) && strlen((string) $orphan['ccp']) >= 10) {
-                    $orphan['ccp'] = str_pad((string) $orphan['ccp'], 12, '0', STR_PAD_LEFT);
-                }
-
-                return $orphan;
-            }, $orphans);
-
-            $this->merge(['orphans' => $modifiedCcp]);
-        }
-    }
+    //    public function prepareForValidation(): void
+    //    {
+    //        if ($this->has('sponsor.ccp') && strlen((string) $this->get('sponsor')['ccp']) >= 10) {
+    //            ray(str_pad((string) $this->get('sponsor.ccp'), 12, '0', STR_PAD_LEFT));
+    //            $this->merge([
+    //                'sponsor' => [
+    //                    ...$this->get('sponsor'),
+    //                    'ccp' => str_pad((string) $this->get('sponsor.ccp'), 12, '0', STR_PAD_LEFT),
+    //                ],
+    //            ]);
+    //        }
+    //
+    //        if ($this->has('orphans')) {
+    //            $orphans = $this->input('orphans');
+    //
+    //            $modifiedCcp = array_map(function ($orphan) {
+    //                if (isset($orphan['ccp']) && strlen((string) $orphan['ccp']) >= 10) {
+    //                    $orphan['ccp'] = str_pad((string) $orphan['ccp'], 12, '0', STR_PAD_LEFT);
+    //                }
+    //
+    //                return $orphan;
+    //            }, $orphans);
+    //
+    //            $this->merge(['orphans' => $modifiedCcp]);
+    //        }
+    //    }
 }

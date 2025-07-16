@@ -446,7 +446,6 @@ onMounted(async () => {
                                 })
                             "
                             data-test="orphan_income"
-                            maxlength="12"
                             type="text"
                             @change="form?.validate('income')"
                         ></base-form-input>

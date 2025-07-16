@@ -20,7 +20,7 @@ class SponsorInfosUpdateRequest extends FormRequest
             'academic_level_id' => 'nullable|uuid|exists:academic_levels,id',
             'birth_certificate_number' => 'required',
             'birth_date' => 'required',
-            'ccp' => ['nullable', 'string', 'regex:/^\d{12}$/'],
+            'ccp' => ['nullable', 'string'],
             'diploma' => 'required|string',
             'father_name' => 'required',
             'first_name' => 'required',

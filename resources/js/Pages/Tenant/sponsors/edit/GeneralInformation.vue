@@ -254,7 +254,6 @@ onMounted(async () => {
                             })
                         "
                         data-test="sponsor_ccp"
-                        maxlength="12"
                         type="text"
                         @change="form?.validate('ccp')"
                         @keydown="allowOnlyNumbersOnKeyDown"

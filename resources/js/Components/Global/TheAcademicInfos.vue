@@ -251,7 +251,6 @@ function loadVocationalTrainingCenters(query: string, setOptions: (results: { id
                 :id="ccp_field_name"
                 v-model="ccp"
                 :placeholder="$t('auth.placeholders.fill', { attribute: $t('ccp') })"
-                maxlength="12"
                 @keydown="allowOnlyNumbersOnKeyDown"
             ></base-form-input>
 
