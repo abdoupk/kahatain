@@ -138,7 +138,6 @@ onMounted(async () => {
                     )
                 "
                 @keydown="allowOnlyNumbersOnKeyDown"
-                maxlength="12"
             ></base-form-input>
 
             <base-form-input-error :form field_name="sponsor.ccp"> </base-form-input-error>
