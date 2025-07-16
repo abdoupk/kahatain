@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\ZoneFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,9 +12,48 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $name
+ * @property string $description
+ * @property array<array-key, mixed>|null $geom
+ * @property string $tenant_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property string $created_by
+ * @property string|null $deleted_by
+ * @property-read User $creator
+ * @property-read Collection<int, Family> $families
+ * @property-read int|null $families_count
+ * @property-read Collection<int, User> $members
+ * @property-read int|null $members_count
+ * @property-read Tenant $tenant
+ *
+ * @method static ZoneFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Zone newModelQuery()
+ * @method static Builder<static>|Zone newQuery()
+ * @method static Builder<static>|Zone onlyTrashed()
+ * @method static Builder<static>|Zone query()
+ * @method static Builder<static>|Zone whereCreatedAt($value)
+ * @method static Builder<static>|Zone whereCreatedBy($value)
+ * @method static Builder<static>|Zone whereDeletedAt($value)
+ * @method static Builder<static>|Zone whereDeletedBy($value)
+ * @method static Builder<static>|Zone whereDescription($value)
+ * @method static Builder<static>|Zone whereGeom($value)
+ * @method static Builder<static>|Zone whereId($value)
+ * @method static Builder<static>|Zone whereName($value)
+ * @method static Builder<static>|Zone whereTenantId($value)
+ * @method static Builder<static>|Zone whereUpdatedAt($value)
+ * @method static Builder<static>|Zone withTrashed()
+ * @method static Builder<static>|Zone withoutTrashed()
+ *
+ * @mixin Eloquent
+ */
 class Zone extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;

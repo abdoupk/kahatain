@@ -2,9 +2,23 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Sushi\Sushi;
 
+/**
+ * @property int $id
+ * @property float|null $label
+ *
+ * @method static Builder<static>|ShoeSize newModelQuery()
+ * @method static Builder<static>|ShoeSize newQuery()
+ * @method static Builder<static>|ShoeSize query()
+ * @method static Builder<static>|ShoeSize whereId($value)
+ * @method static Builder<static>|ShoeSize whereLabel($value)
+ *
+ * @mixin Eloquent
+ */
 class ShoeSize extends Model
 {
     use Sushi;
