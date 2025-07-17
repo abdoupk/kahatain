@@ -614,5 +614,6 @@
     "shoes_completed": "الأحذية",
     "update_orphan_eid_suit_infos": "{0} :user_name F update :orphan_name infos|{1} :user_name M update :orphan_name infos",
     "bulk_update_orphans_eid_suit_infos_warning_single": "{0} :user_name هي العضو المكلف بكسوة اليتيم المراد تحديث بياناته |{1} :user_name هو العضو المكلف بكسوة اليتيم المراد تحديث بياناته",
-    "bulk_update_orphans_eid_suit_infos_warning_multiple": "{0} :user_name هي العضو المكلف بكسوة الأيتام المراد تحديث بياناتهم |{1} :user_name هو العضو المكلف بكسوة الأيتام المراد تحديث بياناتهم"
+    "bulk_update_orphans_eid_suit_infos_warning_multiple": "{0} :user_name هي العضو المكلف بكسوة الأيتام المراد تحديث بياناتهم |{1} :user_name هو العضو المكلف بكسوة الأيتام المراد تحديث بياناتهم",
+    "last_updated_at": "تاريخ اخر تحيين"
 }

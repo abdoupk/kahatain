@@ -11,7 +11,7 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
-import { formatCurrency } from '@/utils/helper'
+import { formatCurrency, formatDate } from '@/utils/helper'
 
 defineProps<{
     orphans: PaginationData<SchoolEntryOrphansResource>
@@ -22,7 +22,7 @@ const emit = defineEmits(['sort'])
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+    <div class="intro-y !z-30 col-span-12 mb-2 hidden !overflow-auto @3xl:block">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -77,6 +77,15 @@ const emit = defineEmits(['sort'])
                         @click="emit('sort', 'family.income_rate')"
                     >
                         {{ $t('income_rate') }}
+                    </the-table-th>
+
+                    <the-table-th
+                        :direction="params.directions && params.directions['family.last_updated_at']"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'family.last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
                     </the-table-th>
                 </base-tr-table>
             </base-thead-table>
@@ -145,6 +154,12 @@ const emit = defineEmits(['sort'])
                     <the-table-td class="text-center">
                         <div class="whitespace-nowrap">
                             {{ formatCurrency(orphan.family.income_rate) }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(orphan.family.last_updated_at, 'long') }}
                         </div>
                     </the-table-td>
                 </base-tr-table>

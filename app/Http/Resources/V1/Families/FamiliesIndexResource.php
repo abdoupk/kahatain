@@ -24,6 +24,7 @@ class FamiliesIndexResource extends JsonResource
             ],
             'zone' => ZoneResource::make($this->whenLoaded('zone')),
             'start_date' => $this->start_date,
+            'last_updated_at' => $this->last_updated_at,
             'file_number' => $this->file_number,
             'orphans_count' => $this->orphans_count,
         ];

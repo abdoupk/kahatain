@@ -40,6 +40,7 @@ class MonthlySponsorshipResource extends JsonResource
                 'basket_from_association' => $this->difference_before_monthly_sponsorship > 0,
                 'amount_from_association' => $this->amount_from_association,
             ]),
+            'last_updated_at' => $this->last_updated_at,
         ];
     }
 }

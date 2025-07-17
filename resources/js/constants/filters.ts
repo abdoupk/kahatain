@@ -145,6 +145,13 @@ export const familiesFilters: ListBoxFilter[] = [
         operators: filterDateOperators
     },
     {
+        icon: 'icon-calendar',
+        field: 'last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
+    },
+    {
         icon: 'icon-hands-holding-heart',
         field: 'furnishings',
         label: 'furnishings',
@@ -343,6 +350,13 @@ export const eidAlAdhaFilters: ListBoxFilter[] = [
         operators: filterObjectOperators
     },
     {
+        icon: 'icon-calendar',
+        field: 'last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
+    },
+    {
         icon: 'icon-map-location-dot',
         field: 'address.zone.id',
         label: 'zone',
@@ -386,6 +400,13 @@ export const zakatFilters: ListBoxFilter[] = [
         label: 'branch',
         type: 'object',
         operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
     },
     {
         icon: 'icon-map-location-dot',
@@ -440,6 +461,13 @@ export const meatDistributionFilters: ListBoxFilter[] = [
         operators: filterObjectOperators
     },
     {
+        icon: 'icon-calendar',
+        field: 'last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
+    },
+    {
         icon: 'icon-children',
         field: 'orphans_count',
         label: 'orphans_count',
@@ -483,6 +511,13 @@ export const schoolEntryFilters: ListBoxFilter[] = [
         label: 'sponsor',
         type: 'object',
         operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'family.last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
     },
     {
         icon: 'icon-hashtag',
@@ -552,6 +587,13 @@ export const eidSuitsFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-calendar',
+        field: 'family.last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
+    },
+    {
+        icon: 'icon-calendar',
         field: 'birth_date',
         label: 'birth_date',
         type: 'date',
@@ -608,6 +650,13 @@ export const ramadanBasketFilters: ListBoxFilter[] = [
         label: 'zone',
         type: 'object',
         operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
     },
     {
         icon: 'icon-children',
@@ -667,6 +716,13 @@ export const monthlySponsorshipFilters: ListBoxFilter[] = [
         label: 'branch',
         type: 'object',
         operators: filterObjectOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
     },
     {
         icon: 'icon-map-location-dot',
@@ -793,6 +849,13 @@ export const babiesMilkAndDiapersFilters: ListBoxFilter[] = [
         label: 'income_rate',
         type: 'number',
         operators: filterNumberOperators
+    },
+    {
+        icon: 'icon-calendar',
+        field: 'family.last_updated_at',
+        label: 'last_updated_at',
+        type: 'date',
+        operators: filterDateOperators
     },
     {
         icon: 'icon-hands-holding-child',

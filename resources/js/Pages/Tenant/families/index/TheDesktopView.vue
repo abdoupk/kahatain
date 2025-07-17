@@ -69,6 +69,15 @@ const emit = defineEmits(['sort'])
                         {{ $t('validation.attributes.starting_sponsorship_date') }}
                     </the-table-th>
 
+                    <the-table-th
+                        :direction="params.directions?.last_updated_at"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
+                    </the-table-th>
+
                     <the-table-th v-if="hasPermission(['update_families', 'delete_families'])" class="text-center">
                         {{ $t('actions') }}
                     </the-table-th>
@@ -117,6 +126,12 @@ const emit = defineEmits(['sort'])
                     <the-table-td class="w-40 text-start">
                         <div class="whitespace-nowrap">
                             {{ formatDate(family.start_date, 'long') }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(family.last_updated_at, 'long') }}
                         </div>
                     </the-table-td>
 

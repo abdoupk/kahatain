@@ -11,7 +11,7 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
-import { formatCurrency } from '@/utils/helper'
+import { formatCurrency, formatDate } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -128,6 +128,15 @@ const emit = defineEmits(['sort'])
                         {{ $t('monthly_sponsorship.monthly_sponsorship_rate') }}
                     </the-table-th>
 
+                    <the-table-th
+                        :direction="params.directions?.last_updated_at"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
+                    </the-table-th>
+
                     <the-table-th class="text-center">
                         {{ $t('validation.attributes.sponsor.phone_number') }}
                     </the-table-th>
@@ -221,6 +230,12 @@ const emit = defineEmits(['sort'])
 
                     <the-table-td class="text-center">
                         <div class="whitespace-nowrap">{{ family.monthly_sponsorship_rate }} %</div>
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(family.last_updated_at, 'long') }}
+                        </div>
                     </the-table-td>
 
                     <the-table-td class="text-nowrap text-center">

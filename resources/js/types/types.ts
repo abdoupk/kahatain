@@ -404,6 +404,7 @@ export interface FamiliesIndexResource {
     id: string
     name: string
     start_date: Date
+    last_updated_at: Date
     file_number: number
     orphans_count: number
     zone: Zone
@@ -459,6 +460,7 @@ export interface EidAlAdhaFamiliesResource {
     total_income: number
     income_rate: number
     status: FamilyEidAlAdhaStatusType
+    last_updated_at: Date
 }
 
 export type FamilyEidAlAdhaStatusType = 'benefit' | 'benefactor' | 'sacrificed' | 'meat' | 'dont_benefit'
@@ -483,6 +485,7 @@ export interface ZakatFamiliesResource {
     total_income: number
     income_rate: number
     aggregate_zakat_benefit: number | null
+    last_updated_at: Date
 }
 
 export interface MeatDistributionFamiliesResource {
@@ -506,6 +509,7 @@ export interface MeatDistributionFamiliesResource {
     income_rate: number
     aggregate_white_meat_benefit: number | null
     aggregate_red_meat_benefit: number | null
+    last_updated_at: Date
 }
 
 export interface RamadanBasketFamiliesResource {
@@ -531,6 +535,7 @@ export interface RamadanBasketFamiliesResource {
     amount_from_benefactor: number
     ramadan_sponsorship_difference: number
     ramadan_basket_category: string
+    last_updated_at: Date
 }
 
 export interface MonthlySponsorshipFamiliesResource {
@@ -561,6 +566,7 @@ export interface MonthlySponsorshipFamiliesResource {
         basket_from_association: boolean
         basket_from_benefactor: number
     }
+    last_updated_at: Date
 }
 
 export interface SchoolEntryOrphansResource {
@@ -577,6 +583,7 @@ export interface SchoolEntryOrphansResource {
         }
         address: string
         income_rate: number
+        last_updated_at: Date
     }
     orphan: {
         id: string
@@ -593,6 +600,9 @@ export interface BabiesMilkAndDiapersResource {
         id: string
         name: string
         phone_number: string
+    }
+    family: {
+        last_updated_at: Date
     }
     orphan: {
         id: string
@@ -619,6 +629,7 @@ export interface EidSuitOrphansResource {
         }
         address: string
         income_rate: number
+        last_updated_at: Date
     }
     orphan: {
         id: string

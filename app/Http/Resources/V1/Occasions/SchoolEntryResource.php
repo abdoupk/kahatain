@@ -27,6 +27,7 @@ class SchoolEntryResource extends JsonResource
                 ],
                 'address' => $this->family->address,
                 'income_rate' => $this->family->income_rate,
+                'last_updated_at' => $this->family->last_updated_at,
             ],
             'orphan' => [
                 'id' => $this->id,

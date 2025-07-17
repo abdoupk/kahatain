@@ -108,6 +108,7 @@ class Baby extends Model
             'family' => [
                 'id' => $this->family_id,
                 'name' => $this->orphan->family->name,
+                'last_updated_at' => (int)strtotime($this->orphan->family->last_updated_at),
             ],
             'sponsor' => [
                 'id' => $this->orphan->sponsor?->id,

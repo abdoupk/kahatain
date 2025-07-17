@@ -281,6 +281,7 @@ class Orphan extends Model implements HasMedia
                 'id' => $this->family_id,
                 'name' => $this->family->name,
                 'income_rate' => (float) $this->family->income_rate,
+                'last_updated_at' => (int)strtotime($this->family->last_updated_at),
                 'zone' => [
                     'id' => $this->family->zone_id,
                     'name' => $this->family->zone?->name,

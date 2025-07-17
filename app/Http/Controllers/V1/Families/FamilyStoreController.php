@@ -45,6 +45,7 @@ class FamilyStoreController extends Controller implements HasMiddleware
                             .'  '.
                             $request->validated('sponsor.last_name'),
                         'file_number' => Branch::with('city')->find($request->validated('branch_id'))->city->commune_code.'/'.Family::count() + 1,
+                        'last_updated_at' => now(),
                     ]
                 );
 

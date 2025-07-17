@@ -11,6 +11,7 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
+import { formatDate } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -22,7 +23,7 @@ const emit = defineEmits(['sort'])
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+    <div class="intro-y !z-30 col-span-12 mb-2 hidden !overflow-auto @3xl:block">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -84,6 +85,15 @@ const emit = defineEmits(['sort'])
                     <the-table-th class="text-center">
                         {{ $t('validation.attributes.sponsor.phone_number') }}
                     </the-table-th>
+
+                    <the-table-th
+                        :direction="params.directions && params.directions['family.last_updated_at']"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'family.last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
+                    </the-table-th>
                 </base-tr-table>
             </base-thead-table>
 
@@ -138,6 +148,12 @@ const emit = defineEmits(['sort'])
 
                     <the-table-td class="whitespace-nowrap text-center">
                         {{ orphan.sponsor.phone_number }}
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(orphan.family?.last_updated_at, 'long') }}
+                        </div>
                     </the-table-td>
                 </base-tr-table>
             </base-tbody-table>

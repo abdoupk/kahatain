@@ -13,7 +13,7 @@ import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
-import { formatCurrency } from '@/utils/helper'
+import { formatCurrency, formatDate } from '@/utils/helper'
 import { $t } from '@/utils/i18n'
 
 defineProps<{
@@ -25,7 +25,7 @@ const emit = defineEmits(['sort', 'change-status'])
 </script>
 
 <template>
-    <div class="intro-y !z-30 col-span-12 hidden overflow-auto @3xl:block lg:overflow-visible">
+    <div class="intro-y !z-30 col-span-12 mb-2 hidden !overflow-auto @3xl:block">
         <base-table class="mt-2 border-separate border-spacing-y-[10px]">
             <base-thead-table>
                 <base-tr-table>
@@ -67,6 +67,15 @@ const emit = defineEmits(['sort', 'change-status'])
                         @click="emit('sort', 'orphans_count')"
                     >
                         {{ $t('children_count') }}
+                    </the-table-th>
+
+                    <the-table-th
+                        :direction="params.directions?.last_updated_at"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
                     </the-table-th>
 
                     <the-table-th
@@ -140,6 +149,12 @@ const emit = defineEmits(['sort', 'change-status'])
                     <the-table-td class="text-center">
                         <div class="whitespace-nowrap">
                             {{ family.orphans_count }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(family.last_updated_at, 'long') }}
                         </div>
                     </the-table-td>
 
