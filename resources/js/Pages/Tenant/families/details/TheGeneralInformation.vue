@@ -191,6 +191,16 @@ defineProps<{ family: FamilyShowType }>()
                     {{ family.ramadan_basket_category }}
                 </h3>
             </div>
+
+            <div class="col-span-12 @xl:col-span-6">
+                <h2 class="text-lg font-semibold">
+                    {{ $t('last_updated_at') }}
+                </h2>
+
+                <h3 class="text-base">
+                    {{ family.last_updated_at }}
+                </h3>
+            </div>
         </div>
     </div>
     <!-- END: General Information -->

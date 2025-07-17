@@ -5,6 +5,7 @@ import { useForm } from 'laravel-precognition-vue'
 import { reactive, ref } from 'vue'
 
 import BaseFilePond from '@/Components/Base/FilePond/BaseFilePond.vue'
+import BaseVCalendar from '@/Components/Base/VCalendar/BaseVCalendar.vue'
 import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
@@ -33,6 +34,8 @@ const inputs = reactive<FamilyUpdateFormType>(
         'spouse'
     ])
 )
+
+inputs.last_updated_at = null
 
 const form = useForm('put', route('tenant.families.infos-update', props.family.id), inputs)
 
@@ -127,6 +130,22 @@ const submit = () => {
                     <base-form-input-error :form field_name="address"></base-form-input-error>
                 </div>
                 <!-- END: Address -->
+
+                <!-- BEGIN: Last Updated At -->
+                <div class="col-span-12 @xl:col-span-6">
+                    <base-form-label for="address">
+                        {{ $t('last_updated_at') }}
+                    </base-form-label>
+
+                    <base-v-calendar
+                        id="last_updated_at"
+                        v-model:date="form.last_updated_at"
+                        mode="dateTime"
+                    ></base-v-calendar>
+
+                    <base-form-input-error :form field_name="last_updated_at"></base-form-input-error>
+                </div>
+                <!-- END: Last Updated At -->
 
                 <!-- BEGIN: Address -->
                 <div class="col-span-12 @xl:col-span-6 @xl:col-start-1">

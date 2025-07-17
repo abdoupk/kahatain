@@ -264,7 +264,7 @@ class Family extends Model implements HasMedia
             'name' => $this->name,
             'tenant_id' => $this->tenant_id,
             'start_date' => (int) strtotime($this->start_date),
-            'last_updated_at' => (int)strtotime($this->last_updated_at),
+            'last_updated_at' => (int) strtotime($this->last_updated_at),
             'file_number' => $this->file_number,
             'address' => [
                 'address' => $this->address,
@@ -413,6 +413,7 @@ class Family extends Model implements HasMedia
     {
         return [
             'start_date' => 'date',
+            'last_updated_at' => 'date',
             'preview_date' => 'date',
             'location' => 'array',
         ];

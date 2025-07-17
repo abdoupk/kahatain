@@ -155,6 +155,7 @@ export interface FamilyShowType {
     amount_from_benefactor: number
     income_rate: number
     ramadan_basket_category: string
+    last_updated_at: string
     location: {
         lat: number
         lng: number
@@ -197,6 +198,7 @@ export interface FamilyUpdateFormType {
     name: string
     address: string
     location: PositionType
+    last_updated_at: Date | null
     file_number: string
     start_date: Date
     branch_id: string
