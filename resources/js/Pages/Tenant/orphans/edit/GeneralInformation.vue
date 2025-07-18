@@ -218,6 +218,28 @@ onMounted(async () => {
                 </div>
                 <!-- END: BirthDate -->
 
+                <!-- Begin: Health Status-->
+                <div class="col-span-12 sm:col-span-6">
+                    <base-form-label :for="`health_status`">
+                        {{ $t('validation.attributes.sponsor.health_status') }}
+                    </base-form-label>
+
+                    <base-form-input
+                        :id="`health_status`"
+                        v-model="form.health_status"
+                        :placeholder="
+                            $t('auth.placeholders.fill', {
+                                attribute: $t('validation.attributes.sponsor.health_status')
+                            })
+                        "
+                        type="text"
+                        @change="form?.validate('health_status')"
+                    ></base-form-input>
+
+                    <base-form-input-error :field_name="`orphans.${index}.health_status`" :form></base-form-input-error>
+                </div>
+                <!-- End: Health Status-->
+
                 <!-- BEGIN: Family Status -->
                 <div v-if="isOlderThan(form.birth_date, 18)" class="col-span-12 @xl:col-span-6">
                     <base-form-label for="family_status">

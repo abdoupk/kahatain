@@ -2,15 +2,57 @@
 
 namespace App\Models;
 
+use Database\Factories\ArchiveFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $tenant_id
+ * @property string $saved_by
+ * @property string $occasion
+ * @property array<array-key, mixed>|null $metadata
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Baby> $babies
+ * @property-read int|null $babies_count
+ * @property-read Collection<int, Family> $families
+ * @property-read int|null $families_count
+ * @property-read Collection<int, Baby> $listBabies
+ * @property-read int|null $list_babies_count
+ * @property-read Collection<int, Family> $listFamilies
+ * @property-read int|null $list_families_count
+ * @property-read Collection<int, Orphan> $listOrphans
+ * @property-read int|null $list_orphans_count
+ * @property-read Collection<int, Orphan> $orphans
+ * @property-read int|null $orphans_count
+ * @property-read User $savedBy
+ * @property-read Tenant $tenant
+ *
+ * @method static ArchiveFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Archive newModelQuery()
+ * @method static Builder<static>|Archive newQuery()
+ * @method static Builder<static>|Archive query()
+ * @method static Builder<static>|Archive whereCreatedAt($value)
+ * @method static Builder<static>|Archive whereId($value)
+ * @method static Builder<static>|Archive whereMetadata($value)
+ * @method static Builder<static>|Archive whereOccasion($value)
+ * @method static Builder<static>|Archive whereSavedBy($value)
+ * @method static Builder<static>|Archive whereTenantId($value)
+ * @method static Builder<static>|Archive whereUpdatedAt($value)
+ *
+ * @mixin Eloquent
+ */
 class Archive extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable;

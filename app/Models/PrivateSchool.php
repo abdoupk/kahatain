@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\PrivateSchoolFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,9 +13,44 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $name
+ * @property string $tenant_id
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string $created_by
+ * @property string|null $deleted_by
+ * @property-read User $creator
+ * @property-read Collection<int, EventOccurrence> $eventsWithOrphans
+ * @property-read int|null $events_with_orphans_count
+ * @property-read Collection<int, Lesson> $lessons
+ * @property-read int|null $lessons_count
+ * @property-read Tenant $tenant
+ *
+ * @method static PrivateSchoolFactory factory($count = null, $state = [])
+ * @method static Builder<static>|PrivateSchool newModelQuery()
+ * @method static Builder<static>|PrivateSchool newQuery()
+ * @method static Builder<static>|PrivateSchool onlyTrashed()
+ * @method static Builder<static>|PrivateSchool query()
+ * @method static Builder<static>|PrivateSchool whereCreatedAt($value)
+ * @method static Builder<static>|PrivateSchool whereCreatedBy($value)
+ * @method static Builder<static>|PrivateSchool whereDeletedAt($value)
+ * @method static Builder<static>|PrivateSchool whereDeletedBy($value)
+ * @method static Builder<static>|PrivateSchool whereId($value)
+ * @method static Builder<static>|PrivateSchool whereName($value)
+ * @method static Builder<static>|PrivateSchool whereTenantId($value)
+ * @method static Builder<static>|PrivateSchool whereUpdatedAt($value)
+ * @method static Builder<static>|PrivateSchool withTrashed()
+ * @method static Builder<static>|PrivateSchool withoutTrashed()
+ *
+ * @mixin Eloquent
+ */
 class PrivateSchool extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;

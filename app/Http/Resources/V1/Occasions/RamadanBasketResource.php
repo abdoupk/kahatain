@@ -36,6 +36,7 @@ class RamadanBasketResource extends JsonResource
             ]),
             'ramadan_sponsorship_difference' => $this->ramadan_sponsorship_difference,
             'ramadan_basket_category' => $this->ramadan_basket_category,
+            'last_updated_at' => $this->last_updated_at,
         ];
     }
 }

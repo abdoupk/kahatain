@@ -19,7 +19,7 @@ import TheTableTdActions from '@/Components/Global/DataTable/TheTableTdActions.v
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 import SvgLoader from '@/Components/SvgLoader.vue'
 
-import { formatCurrency } from '@/utils/helper'
+import { formatCurrency, formatDate } from '@/utils/helper'
 import { $t, $tc } from '@/utils/i18n'
 
 const props = defineProps<{
@@ -158,6 +158,15 @@ watch(
                     </the-table-th>
 
                     <the-table-th
+                        :direction="params.directions && params.directions['family.last_updated_at']"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'family.last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
+                    </the-table-th>
+
+                    <the-table-th
                         :direction="params.directions && params.directions['sponsor.name']"
                         class="text-start"
                         sortable
@@ -228,6 +237,12 @@ watch(
                     <the-table-td class="text-center">
                         <div class="whitespace-nowrap">
                             {{ formatCurrency(orphan.family.income_rate) }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(orphan.family.last_updated_at, 'long') }}
                         </div>
                     </the-table-td>
 

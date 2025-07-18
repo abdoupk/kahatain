@@ -32,6 +32,7 @@ class MeatDistributionArchiveIndexResource extends JsonResource
             'income_rate' => $this->income_rate,
             'aggregate_white_meat_benefit' => $this->aggregate_white_meat_benefit,
             'aggregate_red_meat_benefit' => $this->aggregate_red_meat_benefit,
+            'last_updated_at' => $this->last_updated_at,
         ];
     }
 }

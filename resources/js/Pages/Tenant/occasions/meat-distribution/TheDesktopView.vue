@@ -13,7 +13,7 @@ import BaseTippy from '@/Components/Base/tippy/BaseTippy.vue'
 import TheTableTd from '@/Components/Global/DataTable/TheTableTd.vue'
 import TheTableTh from '@/Components/Global/DataTable/TheTableTh.vue'
 
-import { formatCurrency } from '@/utils/helper'
+import { formatCurrency, formatDate } from '@/utils/helper'
 
 const props = defineProps<{
     families: PaginationData<MeatDistributionFamiliesResource>
@@ -133,6 +133,15 @@ const checkAll = ($event) => {
                     >
                         {{ $t('income_rate') }}
                     </the-table-th>
+
+                    <the-table-th
+                        :direction="params.directions?.last_updated_at"
+                        class="text-center"
+                        sortable
+                        @click="emit('sort', 'last_updated_at')"
+                    >
+                        {{ $t('last_updated_at') }}
+                    </the-table-th>
                 </base-tr-table>
             </base-thead-table>
 
@@ -211,6 +220,12 @@ const checkAll = ($event) => {
                     <the-table-td class="text-center">
                         <div class="whitespace-nowrap">
                             {{ formatCurrency(family.income_rate) }}
+                        </div>
+                    </the-table-td>
+
+                    <the-table-td class="w-40 text-center">
+                        <div class="whitespace-nowrap">
+                            {{ formatDate(family.last_updated_at, 'long') }}
                         </div>
                     </the-table-td>
                 </base-tr-table>

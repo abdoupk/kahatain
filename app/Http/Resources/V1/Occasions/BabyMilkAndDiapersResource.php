@@ -29,6 +29,9 @@ class BabyMilkAndDiapersResource extends JsonResource
                 'diapers_type' => $this?->diapers?->name,
                 'age' => calculateAge($this->orphan->birth_date),
             ],
+            'family' => [
+                'last_updated_at' => $this->orphan->family->last_updated_at,
+            ],
         ];
     }
 }

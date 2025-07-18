@@ -31,6 +31,7 @@ class ZakatResource extends JsonResource
             'total_income' => $this->total_income,
             'income_rate' => $this->income_rate,
             'aggregate_zakat_benefit' => $this->aggregate_zakat_benefit,
+            'last_updated_at' => $this->last_updated_at,
         ];
     }
 }

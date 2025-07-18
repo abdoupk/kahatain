@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\PreviewFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,9 +12,43 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $report
+ * @property Carbon $preview_date
+ * @property string $family_id
+ * @property string $tenant_id
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Family|null $family
+ * @property-read MemberPreview|null $pivot
+ * @property-read Collection<int, User> $inspectors
+ * @property-read int|null $inspectors_count
+ * @property-read Tenant|null $tenant
+ *
+ * @method static PreviewFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Preview newModelQuery()
+ * @method static Builder<static>|Preview newQuery()
+ * @method static Builder<static>|Preview onlyTrashed()
+ * @method static Builder<static>|Preview query()
+ * @method static Builder<static>|Preview whereCreatedAt($value)
+ * @method static Builder<static>|Preview whereDeletedAt($value)
+ * @method static Builder<static>|Preview whereFamilyId($value)
+ * @method static Builder<static>|Preview whereId($value)
+ * @method static Builder<static>|Preview wherePreviewDate($value)
+ * @method static Builder<static>|Preview whereReport($value)
+ * @method static Builder<static>|Preview whereTenantId($value)
+ * @method static Builder<static>|Preview whereUpdatedAt($value)
+ * @method static Builder<static>|Preview withTrashed()
+ * @method static Builder<static>|Preview withoutTrashed()
+ *
+ * @mixin Eloquent
+ */
 class Preview extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes, SoftDeletes;

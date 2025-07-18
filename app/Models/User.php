@@ -6,6 +6,9 @@ use App\Enums\ColorScheme;
 use App\Enums\FontSize;
 use App\Enums\Layout;
 use App\Enums\Theme;
+use Database\Factories\UserFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,12 +17,96 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
 use Spatie\Permission\Traits\HasRoles;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string|null $phone
+ * @property string|null $address
+ * @property array<array-key, mixed>|null $location
+ * @property string|null $workplace
+ * @property string|null $function
+ * @property string|null $zone_id
+ * @property string|null $branch_id
+ * @property string $email
+ * @property string|null $gender
+ * @property string|null $qualification
+ * @property Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
+ * @property string $tenant_id
+ * @property string|null $academic_level_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $deleted_by
+ * @property string|null $created_by
+ * @property Carbon|null $deleted_at
+ * @property-read AcademicLevel|null $academicLevel
+ * @property-read Branch|null $branch
+ * @property-read CompetenceUser|CommitteeUser|null $pivot
+ * @property-read Collection<int, Committee> $committees
+ * @property-read int|null $committees_count
+ * @property-read Collection<int, Competence> $competences
+ * @property-read int|null $competences_count
+ * @property-read User|null $creator
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read Collection<int, Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read Collection<int, Role> $roles
+ * @property-read int|null $roles_count
+ * @property-read Settings|null $settings
+ * @property-read Tenant $tenant
+ * @property-read Collection<int, PersonalAccessToken> $tokens
+ * @property-read int|null $tokens_count
+ * @property-read Zone|null $zone
+ *
+ * @method static UserFactory factory($count = null, $state = [])
+ * @method static Builder<static>|User newModelQuery()
+ * @method static Builder<static>|User newQuery()
+ * @method static Builder<static>|User onlyTrashed()
+ * @method static Builder<static>|User permission($permissions, $without = false)
+ * @method static Builder<static>|User query()
+ * @method static Builder<static>|User role($roles, $guard = null, $without = false)
+ * @method static Builder<static>|User whereAcademicLevelId($value)
+ * @method static Builder<static>|User whereAddress($value)
+ * @method static Builder<static>|User whereBranchId($value)
+ * @method static Builder<static>|User whereCreatedAt($value)
+ * @method static Builder<static>|User whereCreatedBy($value)
+ * @method static Builder<static>|User whereDeletedAt($value)
+ * @method static Builder<static>|User whereDeletedBy($value)
+ * @method static Builder<static>|User whereEmail($value)
+ * @method static Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static Builder<static>|User whereFirstName($value)
+ * @method static Builder<static>|User whereFunction($value)
+ * @method static Builder<static>|User whereGender($value)
+ * @method static Builder<static>|User whereId($value)
+ * @method static Builder<static>|User whereLastName($value)
+ * @method static Builder<static>|User whereLocation($value)
+ * @method static Builder<static>|User wherePassword($value)
+ * @method static Builder<static>|User wherePhone($value)
+ * @method static Builder<static>|User whereQualification($value)
+ * @method static Builder<static>|User whereRememberToken($value)
+ * @method static Builder<static>|User whereTenantId($value)
+ * @method static Builder<static>|User whereUpdatedAt($value)
+ * @method static Builder<static>|User whereWorkplace($value)
+ * @method static Builder<static>|User whereZoneId($value)
+ * @method static Builder<static>|User withTrashed()
+ * @method static Builder<static>|User withoutPermission($permissions)
+ * @method static Builder<static>|User withoutRole($roles, $guard = null)
+ * @method static Builder<static>|User withoutTrashed()
+ *
+ * @mixin Eloquent
+ */
 class User extends Authenticatable
 {
     use BelongsToTenant, HasApiTokens, HasFactory, HasRoles, HasUuids, Notifiable, Searchable, SoftDeletes;

@@ -97,4 +97,5 @@ return [
     'school' => 'المؤسسة التربوية',
     'university' => 'الجامعة',
     'institute' => 'المعهد',
+    'last_updated_at' => 'تاريخ اخر تحيين',
 ];

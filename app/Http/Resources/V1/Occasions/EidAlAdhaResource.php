@@ -31,6 +31,7 @@ class EidAlAdhaResource extends JsonResource
             'total_income' => $this->total_income,
             'income_rate' => $this->income_rate,
             'status' => $this->eid_al_adha_status,
+            'last_updated_at' => $this->last_updated_at,
         ];
     }
 }

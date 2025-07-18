@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\NeedFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,9 +12,51 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Searchable;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
+/**
+ * @property string $id
+ * @property string $demand
+ * @property string $subject
+ * @property string $status
+ * @property string $needable_type
+ * @property string $needable_id
+ * @property string $tenant_id
+ * @property string|null $note
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $created_by
+ * @property string|null $deleted_by
+ * @property-read User|null $creator
+ * @property-read Model|Eloquent $needable
+ * @property-read Tenant $tenant
+ *
+ * @method static NeedFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Need newModelQuery()
+ * @method static Builder<static>|Need newQuery()
+ * @method static Builder<static>|Need onlyTrashed()
+ * @method static Builder<static>|Need query()
+ * @method static Builder<static>|Need whereCreatedAt($value)
+ * @method static Builder<static>|Need whereCreatedBy($value)
+ * @method static Builder<static>|Need whereDeletedAt($value)
+ * @method static Builder<static>|Need whereDeletedBy($value)
+ * @method static Builder<static>|Need whereDemand($value)
+ * @method static Builder<static>|Need whereId($value)
+ * @method static Builder<static>|Need whereNeedableId($value)
+ * @method static Builder<static>|Need whereNeedableType($value)
+ * @method static Builder<static>|Need whereNote($value)
+ * @method static Builder<static>|Need whereStatus($value)
+ * @method static Builder<static>|Need whereSubject($value)
+ * @method static Builder<static>|Need whereTenantId($value)
+ * @method static Builder<static>|Need whereUpdatedAt($value)
+ * @method static Builder<static>|Need withTrashed()
+ * @method static Builder<static>|Need withoutTrashed()
+ *
+ * @mixin Eloquent
+ */
 class Need extends Model
 {
     use BelongsToTenant, HasFactory, HasUuids, Searchable, SoftDeletes;
