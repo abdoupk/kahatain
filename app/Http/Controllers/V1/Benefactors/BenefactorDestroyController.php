@@ -27,6 +27,8 @@ class BenefactorDestroyController extends Controller implements HasMiddleware
                 monthlySponsorship($recipientable->family);
             }
         });
+
+        $benefactor->sponsorships()->delete();
         
         $benefactor->delete();
 
