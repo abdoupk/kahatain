@@ -16,6 +16,18 @@ class BenefactorDestroyController extends Controller implements HasMiddleware
 
     public function __invoke(Benefactor $benefactor)
     {
+        $benefactor->sponsorships()->each(function (Sponsorship $sponsorship) {
+            $recipientable= $sponsorship->recipientable();
+
+            if ($recipientable instanceof Family) {
+                monthlySponsorship($recipientable);
+            }
+
+            else{
+                monthlySponsorship($recipientable->family);
+            }
+        });
+        
         $benefactor->delete();
 
         dispatch(new BenefactorTrashedJob($benefactor, auth()->user()));
