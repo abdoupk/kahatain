@@ -122,7 +122,7 @@ function calculateWeightForOrphanBelow18(Orphan $orphan, $weights): float
         return $weights['lt_18']['during_academic_season']['baby'];
     }
 
-    if ($orphan->birth_date->age <= 5 && $orphan->birth_date->age > 2) {
+    if ($orphan->birth_date->age <= 6 && $orphan->birth_date->age > 2) {
         return $weights['lt_18']['during_academic_season']['below_school_age'];
     }
 
