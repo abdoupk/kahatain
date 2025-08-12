@@ -17,8 +17,8 @@ const emit = defineEmits(['showDeleteModal'])
 </script>
 
 <template>
-    <div class="col-span-12 my-8 grid grid-cols-12 gap-4 @3xl:hidden">
-        <div v-for="family in families.data" :key="family.id" class="intro-y !z-10 col-span-12 @xl:col-span-6">
+    <div class="@3xl:hidden col-span-12 my-8 grid grid-cols-12 gap-4">
+        <div v-for="family in families.data" :key="family.id" class="intro-y @xl:col-span-6 !z-10 col-span-12">
             <div class="box p-5">
                 <div class="flex">
                     <div class="me-3 truncate ltr:font-medium rtl:text-lg rtl:font-semibold">
@@ -80,7 +80,7 @@ const emit = defineEmits(['showDeleteModal'])
 
                             <Link
                                 v-if="hasPermission('update_families')"
-                                :href="route('tenant.families.show', family.id)"
+                                :href="route('tenant.families.edit', family.id)"
                                 class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                                 >{{ $t('edit') }}
                             </Link>
