@@ -18,9 +18,9 @@ function monthlySponsorship(Family $family): void
 
     $weights = calculateWeights($family, $calculations);
 
-    $income_rate = calculateIncomeRate($family, $weights);
-
     $total_income = calculateTotalIncomes($family);
+
+    $income_rate = calculateIncomeRate($family, $weights);
 
     $differenceBeforeSponsorship = calculateDifferenceBeforeMonthlySponsorship($weights, $income_rate, $calculations);
 

@@ -38,7 +38,6 @@ class SponsorUpdateInfosController extends Controller implements HasMiddleware
      */
     public function __invoke(SponsorInfosUpdateRequest $request, Sponsor $sponsor)
     {
-        ray($request->all());
         $sponsor->update($request->except(['photo', 'diploma_file', 'birth_certificate_file', 'no_remarriage_file']));
 
         if ($request->sponsor_type !== $sponsor->sponsor_type) {
@@ -56,6 +55,8 @@ class SponsorUpdateInfosController extends Controller implements HasMiddleware
         addToMediaCollection($sponsor, $request->photo, 'photos');
 
         mergePdf($sponsor);
+
+        monthlySponsorship($sponsor->load('family')->family);
 
         dispatch(new SponsorUpdatedJob($sponsor, auth()->user()));
 
