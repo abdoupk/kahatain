@@ -28,6 +28,8 @@ class OrphanEditResource extends JsonResource
                 'diapers_type' => null,
             ];
 
+        ray($babyNeeds);
+
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
