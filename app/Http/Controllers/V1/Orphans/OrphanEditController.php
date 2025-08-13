@@ -18,6 +18,16 @@ class OrphanEditController extends Controller implements HasMiddleware
 
     public function __invoke(Orphan $orphan): Response
     {
+        ray($orphan->load(
+            'babyNeeds',
+            'creator',
+            'shoesSize',
+            'pantsSize',
+            'shirtSize',
+            'media',
+            'institution'
+        ));
+
         return Inertia::render(
             'Tenant/orphans/edit/OrphanEditPage',
             [
