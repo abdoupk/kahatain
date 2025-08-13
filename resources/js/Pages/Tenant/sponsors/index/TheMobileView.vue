@@ -78,7 +78,7 @@ defineProps<{
 
                             <Link
                                 v-if="hasPermission('update_sponsors')"
-                                :href="route('tenant.sponsors.show', sponsor.id)"
+                                :href="route('tenant.sponsors.edit', sponsor.id)"
                                 class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                                 >{{ $t('edit') }}
                             </Link>

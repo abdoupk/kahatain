@@ -13,7 +13,7 @@ class OrphanEditResource extends JsonResource
     public function toArray(Request $request): array
     {
         $babyNeeds = now()->diff($this->birth_date)->y < 2
-            ? $this?->babyNeeds->only(
+            ? $this?->babyNeeds?->only(
                 [
                     'baby_milk_quantity',
                     'baby_milk_type',
@@ -21,14 +21,17 @@ class OrphanEditResource extends JsonResource
                     'diapers_type',
                 ]
             )
-            : [
+            ?? [
+                'baby_milk_quantity' => null,
+                'baby_milk_type' => null,
+                'diapers_quantity' => null,
+                'diapers_type' => null,
+            ] : [
                 'baby_milk_quantity' => null,
                 'baby_milk_type' => null,
                 'diapers_quantity' => null,
                 'diapers_type' => null,
             ];
-
-        ray($babyNeeds);
 
         return [
             'id' => $this->id,

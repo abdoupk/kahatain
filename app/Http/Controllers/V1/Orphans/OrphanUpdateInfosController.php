@@ -34,7 +34,7 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
         ]);
 
         if (now()->diff($orphan->birth_date)->y < 2) {
-            $orphan->babyNeeds()->update($request->only(
+            $orphan->babyNeeds()->updateOrCreate($request->only(
                 ['baby_milk_quantity',
                     'baby_milk_type',
                     'diapers_quantity',
