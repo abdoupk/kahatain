@@ -27,7 +27,8 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
     public function __invoke(OrphanInfosUpdateRequest $request, Orphan $orphan): ResponseFactory|Application|Response
     {
         $orphan->update([
-            ...$request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type', 'photo', 'institution', 'speciality']),
+            ...$request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type', 'photo', 'institution', 'speciality', 'academic_level_id']),
+            'academic_level_id' => is_string($request->academic_level_id) ? $request->academic_level_id : $request->get('academic_level_id')['id'] ?? null,
             'institution_id' => $request->institution,
             'speciality_id' => $request->speciality ? $request->speciality['id'] : null,
         ]);
