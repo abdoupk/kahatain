@@ -111,7 +111,7 @@ defineProps<{
 
                             <Link
                                 v-if="hasPermission('update_orphans')"
-                                :href="route('tenant.orphans.show', orphan.id)"
+                                :href="route('tenant.orphans.edit', orphan.id)"
                                 class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                                 >{{ $t('edit') }}
                             </Link>

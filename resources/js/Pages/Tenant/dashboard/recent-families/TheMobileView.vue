@@ -75,7 +75,7 @@ const emit = defineEmits(['deleteFamily'])
 
                             <Link
                                 v-if="hasPermission('update_families')"
-                                :href="route('tenant.families.show', family.id)"
+                                :href="route('tenant.families.edit', family.id)"
                                 class="me-2 font-semibold text-slate-500 dark:text-slate-400"
                                 >{{ $t('edit') }}
                             </Link>
