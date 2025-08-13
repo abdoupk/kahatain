@@ -75,6 +75,7 @@ export interface SponsorUpdateFormType {
     }
     incomes: IncomeType
     photo: string
+    is_unemployed: boolean
     birth_certificate_file: string
     diploma_file: string
     no_remarriage_file: string

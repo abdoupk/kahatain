@@ -124,6 +124,10 @@
         "report-dir": "tests/cypress/cypress-coverage"
     },
     "trustedDependencies": [
-        "core-js-pure"
+        "core-js-pure",
+        "cypress",
+        "esbuild",
+        "puppeteer",
+        "vue-demi"
     ]
 }

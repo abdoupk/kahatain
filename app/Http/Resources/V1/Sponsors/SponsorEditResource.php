@@ -33,6 +33,7 @@ class SponsorEditResource extends JsonResource
             'birth_certificate_file' => $this->getFirstMediaUrl('birth_certificate_files'),
             'no_remarriage_file' => $this->getFirstMediaUrl('no_remarriage_files'),
             'photo' => $this->getFirstMediaUrl('photos'),
+            'is_unemployed' => $this->is_unemployed,
 
             'incomes' => new IncomeResource($this->whenLoaded('incomes')),
             'creator' => new MemberResource($this->whenLoaded('creator')),

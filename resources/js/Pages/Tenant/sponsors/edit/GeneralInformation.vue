@@ -12,6 +12,9 @@ import BaseButton from '@/Components/Base/button/BaseButton.vue'
 import BaseFormInput from '@/Components/Base/form/BaseFormInput.vue'
 import BaseFormInputError from '@/Components/Base/form/BaseFormInputError.vue'
 import BaseFormLabel from '@/Components/Base/form/BaseFormLabel.vue'
+import BaseFormSwitch from '@/Components/Base/form/form-switch/BaseFormSwitch.vue'
+import BaseFormSwitchInput from '@/Components/Base/form/form-switch/BaseFormSwitchInput.vue'
+import BaseFormSwitchLabel from '@/Components/Base/form/form-switch/BaseFormSwitchLabel.vue'
 import SpinnerButtonLoader from '@/Components/Global/SpinnerButtonLoader.vue'
 import SuccessNotification from '@/Components/Global/SuccessNotification.vue'
 import TheAcademicLevelSelector from '@/Components/Global/TheAcademicLevelSelector.vue'
@@ -365,6 +368,22 @@ onMounted(async () => {
                     <base-form-input-error :form field_name="sponsor_type"></base-form-input-error>
                 </div>
                 <!-- END: Sponsor Type -->
+
+                <!--Begin: Unemployed-->
+                <div class="col-span-5 mt-6 flex items-center sm:col-span-6">
+                    <base-form-switch class="text-lg">
+                        <base-form-switch-input
+                            id="is_unemployed"
+                            v-model="form.is_unemployed"
+                            type="checkbox"
+                        ></base-form-switch-input>
+
+                        <base-form-switch-label class="whitespace-nowrap" htmlFor="is_unemployed">
+                            {{ $t('unemployed') }}
+                        </base-form-switch-label>
+                    </base-form-switch>
+                </div>
+                <!--END: Unemployed-->
 
                 <!-- Begin: Upload files  -->
                 <div class="col-span-12 mt-6">
