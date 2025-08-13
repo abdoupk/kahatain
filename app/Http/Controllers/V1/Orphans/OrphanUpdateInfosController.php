@@ -40,7 +40,11 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
                     'diapers_quantity',
                     'diapers_type',
                 ]
-            ));
+            ),
+                [
+                    'family_id' => $orphan->family_id,  // Get from orphan
+                ]
+            );
         }
 
         monthlySponsorship($orphan->load('family')->family);
