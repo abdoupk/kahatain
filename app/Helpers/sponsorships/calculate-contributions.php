@@ -77,8 +77,7 @@ function calculateContributionsForMaleOrphan(Orphan $orphan, array $calculations
             'professional_boy' => $unemployedContribution['professional_boy'],
             'unemployed' => $unemployedContribution['unemployed'],
             'married_with_family' => $unemployedContribution['married_with_family'],
-        };
-        //        + (float) $unemploymentBenefit
+        } + (float) $unemploymentBenefit;
     }
 
     if ($orphan->academicLevel?->phase_key === 'university' && $orphan->academicLevel?->level === 'متخرج') {
@@ -106,10 +105,10 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
         return $atHomeWithNoIncome;
     }
 
-    if ($orphan->is_unemployed && $orphan->family_status === 'at_home_with_no_income') {
+    if ($orphan->is_unemployed) {
         $unemploymentBenefit = $calculations['monthly_sponsorship']['unemployment_benefit'];
 
-        return $atHomeWithNoIncome;
+        return $atHomeWithNoIncome + (float) $unemploymentBenefit;
     }
 
     if (! $orphan->is_unemployed) {
