@@ -28,6 +28,8 @@ class OrphanUpdateInfosController extends Controller implements HasMiddleware
     {
         $orphan->update([
             ...$request->except(['baby_milk_quantity', 'baby_milk_type', 'diapers_quantity', 'diapers_type', 'photo', 'institution', 'speciality', 'academic_level_id']),
+            'is_unemployed' => $request->is_unemployed,
+            'is_handicapped' => $request->is_handicapped,
             'academic_level_id' => is_string($request->academic_level_id) ? $request->academic_level_id : $request->get('academic_level_id')['id'] ?? null,
             'institution_id' => is_string($request->institution_id) ? $request->institution_id : $request->get('institution_id')['id'] ?? null,
             'speciality_id' => $request->speciality ? $request->speciality['id'] : null,
