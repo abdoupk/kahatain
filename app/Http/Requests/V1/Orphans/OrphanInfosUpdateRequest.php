@@ -41,6 +41,8 @@ class OrphanInfosUpdateRequest extends FormRequest
             'baby_milk_type' => [new UpdateBabyNeedsRule],
             'diapers_type' => [new UpdateBabyNeedsRule],
             'institution_id' => 'nullable|uuid',
+            'is_unemployed' => 'nullable|boolean',
+            'is_handicapped' => 'nullable|boolean',
             'institution_type' => 'nullable|string',
             'speciality_id' => 'nullable|integer',
             'speciality_type' => 'nullable|string',
