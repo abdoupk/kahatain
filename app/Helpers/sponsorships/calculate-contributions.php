@@ -105,7 +105,7 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
         return $atHomeWithNoIncome;
     }
 
-    if ($orphan->is_unemployed) {
+    if ($orphan->is_unemployed && $orphan->family_status === 'at_home_with_no_income') {
         $unemploymentBenefit = $calculations['monthly_sponsorship']['unemployment_benefit'];
 
         return $atHomeWithNoIncome + (float) $unemploymentBenefit;
