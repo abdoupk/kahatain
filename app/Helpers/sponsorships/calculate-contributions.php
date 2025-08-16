@@ -126,7 +126,7 @@ function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculatio
 
     $unemploymentBenefit = $calculations['monthly_sponsorship']['unemployment_benefit'];
 
-    return $atHomeWithNoIncome + (float) $unemploymentBenefit;
+    return $atHomeWithNoIncome;
 }
 
 function calculateContributionsForSecondSponsor(Family $family): float
