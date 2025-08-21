@@ -5,6 +5,7 @@ import { useNeedsStore } from '@/stores/needs'
 import { Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
+import OrphanCreateModal from '@/Pages/Tenant/families/OrphanCreateModal.vue'
 import MenuLink from '@/Pages/Tenant/families/details/MenuLink.vue'
 import NeedCreateUpdateModal from '@/Pages/Tenant/needs/create/NeedCreateUpdateModal.vue'
 
@@ -19,10 +20,16 @@ const needsStore = useNeedsStore()
 
 const needCreateModalStatus = ref<boolean>(false)
 
+const orphanCreateModalStatus = ref<boolean>(false)
+
 const showNeedCreateModal = () => {
     needsStore.$reset()
 
     needCreateModalStatus.value = true
+}
+
+const showOrphanCreateModal = () => {
+    orphanCreateModalStatus.value = true
 }
 </script>
 
@@ -80,6 +87,15 @@ const showNeedCreateModal = () => {
                 <base-button class="px-2 py-1" type="button" variant="primary" @click.prevent="showNeedCreateModal">
                     {{ $t('new need') }}
                 </base-button>
+
+                <base-button
+                    class="ms-auto px-2 py-1"
+                    type="button"
+                    variant="secondary"
+                    @click.prevent="showOrphanCreateModal"
+                >
+                    {{ $t('new orphan') }}
+                </base-button>
             </div>
         </div>
     </div>
@@ -91,4 +107,10 @@ const showNeedCreateModal = () => {
         show-the-needable
         @close="needCreateModalStatus = false"
     ></need-create-update-modal>
+
+    <orphan-create-modal
+        :family-id="family.id"
+        :open="orphanCreateModalStatus"
+        @close="orphanCreateModalStatus = false"
+    ></orphan-create-modal>
 </template>

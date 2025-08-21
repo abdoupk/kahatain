@@ -49,7 +49,7 @@ class FamilyShowResource extends JsonResource
 
             'preview' => new PreviewResource($this->whenLoaded('preview')),
 
-            'last_updated_at' => $this->last_updated_at->translatedFormat('j F Y'),
+            'last_updated_at' => $this->last_updated_at?->translatedFormat('j F Y'),
         ];
     }
 }

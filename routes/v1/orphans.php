@@ -11,6 +11,7 @@ use App\Http\Controllers\V1\Orphans\OrphanRestoreController;
 use App\Http\Controllers\V1\Orphans\OrphanShowController;
 use App\Http\Controllers\V1\Orphans\OrphansIndexController;
 use App\Http\Controllers\V1\Orphans\OrphansStatisticsController;
+use App\Http\Controllers\V1\Orphans\OrphanStoreController;
 use App\Http\Controllers\V1\Orphans\OrphanUpdateInfosController;
 use App\Http\Controllers\V1\Orphans\OrphanUpdateSponsorshipsController;
 use App\Http\Controllers\V1\Orphans\SearchOrphansController;
@@ -92,4 +93,6 @@ Route::prefix('orphans')->name('orphans.')->group(function (): void {
         OrphansStatisticsController::class
     )
         ->name('statistics');
+
+    Route::post('', OrphanStoreController::class)->name('store');
 });
