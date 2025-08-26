@@ -87,14 +87,14 @@ function calculateContributionsForMaleOrphan(Orphan $orphan, array $calculations
     $calculations = $calculations['percentage_of_contribution']['orphans']['male_gt_18'];
 
     return match ($orphan->family_status) {
-        'college_boy' => $calculations['college_boy'] * $orphan->income,
-        'worker_with_family' => $calculations['worker_with_family'] * $orphan->income,
-        'worker_outside_family' => $calculations['worker_outside_family'] * $orphan->income,
-        'married_with_family' => $calculations['married_with_family'] * $orphan->income,
-        'married_outside_family' => $calculations['married_outside_family'] * $orphan->income,
-        'professional_boy' => $unemployedContribution['professional_boy'],
+        'college_boy' => $calculations['college_boy'] * $orphan->income / 100,
+        'worker_with_family' => $calculations['worker_with_family'] * $orphan->income / 100,
+        'worker_outside_family' => $calculations['worker_outside_family'] * $orphan->income / 100,
+        'married_with_family' => $calculations['married_with_family'] * $orphan->income / 100,
+        'married_outside_family' => $calculations['married_outside_family'] * $orphan->income / 100,
+        'professional_boy' => $unemployedContribution['professional_boy'] / 100,
         default => $unemployedContribution['unemployed']
-    } / 100;
+    };
 }
 
 function calculateContributionsForFemaleOrphan(Orphan $orphan, array $calculations): float
