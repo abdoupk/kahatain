@@ -64,13 +64,13 @@ function validateClothesAttributes($birthDate, $academicLevelId, $familyStatus, 
 
 function setOrphanEmploymentStatus(Orphan $orphan): ?bool
 {
-    if (in_array($orphan->family_status, ['unemployed', 'at_home_with_no_income'])) {
-        return true;
-    }
-
-    if ($orphan->academicLevel?->level && $orphan->academicLevel->phase_key === 'university') {
-        return true;
-    }
+    //    if (in_array($orphan->family_status, ['unemployed', 'at_home_with_no_income'])) {
+    //        return true;
+    //    }
+    //
+    //    if ($orphan->academicLevel?->level && $orphan->academicLevel->phase_key === 'university') {
+    //        return true;
+    //    }
 
     return $orphan->is_unemployed;
 }

@@ -165,7 +165,7 @@ class Orphan extends Model implements HasMedia
 
             $model->family_status = setOrphanFamilyStatus($model);
 
-            //            $model->is_unemployed = setOrphanEmploymentStatus($model);
+            $model->is_unemployed = setOrphanEmploymentStatus($model);
 
             if ($model->is_handicapped) {
                 $model->income = setHandicappedOrphanIncome($model);
@@ -177,7 +177,7 @@ class Orphan extends Model implements HasMedia
         static::updating(function (self $model): void {
             $model->family_status = setOrphanFamilyStatus($model);
 
-            //            $model->is_unemployed = setOrphanEmploymentStatus($model);
+            $model->is_unemployed = setOrphanEmploymentStatus($model);
 
             if ($model->is_handicapped) {
                 $model->income = setHandicappedOrphanIncome($model);
