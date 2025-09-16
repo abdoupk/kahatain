@@ -528,7 +528,7 @@ export const schoolEntryFilters: ListBoxFilter[] = [
     },
     {
         icon: 'icon-graduation-cap',
-        field: 'last_academic_year_achievement.academic_level.id',
+        field: 'academic_level.id',
         label: 'orphan.academic_level',
         type: 'object',
         operators: filterObjectOperators
